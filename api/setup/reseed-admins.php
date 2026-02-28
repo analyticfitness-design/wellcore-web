@@ -11,7 +11,7 @@ $results = [];
 
 // --- Single Jefe Admin ---
 $admins = [
-    ['CoachDann', 'KingLord6962', 'Coach Dann', 'jefe'],
+    ['CoachDann', 'QY@P6Ak2?', 'Coach Dann', 'jefe'],
 ];
 
 foreach ($admins as [$username, $password, $name, $role]) {

@@ -54,7 +54,7 @@ $results[] = "admins: cleared";
 $db->exec("SET FOREIGN_KEY_CHECKS = 1");
 
 $username = 'CoachDann';
-$password = 'KingLord6962';
+$password = 'QY@P6Ak2?';
 $name     = 'Coach Dann';
 $role     = 'jefe';
 $hash     = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);

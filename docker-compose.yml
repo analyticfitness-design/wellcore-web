@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # PHP 8.2 + Apache - WellCore v5
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wellcore-app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APACHE_LOG_DIR=/var/log/apache2
+      - PHP_ENV=development
+    depends_on:
+      - db
+    networks:
+      - wellcore-network
+    restart: unless-stopped
+
+  # MySQL 8.0 - WellCore Database
+  db:
+    image: mysql:8.0
+    container_name: wellcore-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: wellcore_fitness
+      MYSQL_USER: wellcore
+      MYSQL_PASSWORD: 01e3951218591b77af8e
+      MYSQL_ROOT_PASSWORD: RootWellCore2026!
+      MYSQL_INITDB_SKIP_TZINFO: "yes"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./api/db:/docker-entrypoint-initdb.d
+    networks:
+      - wellcore-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # phpMyAdmin - Interfaz para MySQL (opcional)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: wellcore-phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: wellcore
+      PMA_PASSWORD: 01e3951218591b77af8e
+      UPLOAD_LIMIT: 300000000
+    depends_on:
+      - db
+    networks:
+      - wellcore-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  wellcore-network:
+    driver: bridge

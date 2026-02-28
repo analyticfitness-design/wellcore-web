@@ -1,0 +1,18 @@
+{
+  "enabledMcpjsonServers": [
+    "photoshop",
+    "premiere-pro",
+    "premiere-pro-adb",
+    "after-effects",
+    "illustrator",
+    "filesystem",
+    "mysql-wellcore",
+    "mysql-proway",
+    "github",
+    "playwright",
+    "puppeteer",
+    "premiere-cep",
+    "sound-design"
+  ],
+  "enableAllProjectMcpServers": true
+}

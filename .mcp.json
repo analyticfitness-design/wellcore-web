@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "chrome-devtools-mcp",
+        "--browserUrl",
+        "http://127.0.0.1:9222"
+      ],
+      "description": "Chrome DevTools Protocol - Debugging y testing en navegador"
+    },
+    "filesystem": {
+      "command": "node",
+      "args": [
+        "-e",
+        "require('@modelcontextprotocol/server-filesystem').createServer()"
+      ],
+      "description": "Acceso al sistema de archivos local"
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "description": "Integración con GitHub - PRs, issues, repositorios"
+    }
+  }
+}
