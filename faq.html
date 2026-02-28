@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Base de Conocimiento — WellCore Fitness</title>
+  <meta name="description" content="Respuestas completas sobre planes, entrenamiento, nutricion, proceso y pagos. Todo lo que necesitas saber antes de empezar con WellCore Fitness." />
+  <meta property="og:title" content="FAQ — Base de Conocimiento — WellCore Fitness">
+  <meta property="og:description" content="Respuestas completas sobre planes, entrenamiento, nutricion, proceso y pagos. Todo lo que necesitas saber antes de empezar con WellCore Fitness.">
+  <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+  <meta property="og:url" content="https://wellcorefitness.com/faq.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wellcorefitness.com/faq.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+
+    /* ============================================================
+       FAQ — KNOWLEDGE BASE / SOPORTE TECNICO
+       WellCore Fitness v3
+    ============================================================ */
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --card:      #18181b;
+      --border:    rgba(255,255,255,0.06);
+      --red:       #E31E24;
+      --red-dark:  #B8181D;
+      --red-dim:   rgba(227,30,36,0.08);
+      --accent:    #00D9FF;
+      --accent-dim:rgba(0,217,255,0.12);
+      --green:     #22C55E;
+      --white:     #ffffff;
+      --gray:      rgba(255,255,255,0.45);
+      --gray-dim:  rgba(255,255,255,0.18);
+      --gray-faint:rgba(255,255,255,0.08);
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ---- NAVBAR ---- */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 72px; display: flex; align-items: center;
+      background: rgba(10,10,10,0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      width: 100%; max-width: 1280px; margin: 0 auto;
+      padding: 0 32px; display: flex; align-items: center;
+      justify-content: space-between; gap: 32px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); transition: color 0.1s linear;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: #fff; }
+    .nav-cta {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--red);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-hamburger {
+      display: none; background: none; border: none;
+      color: #fff; font-size: 18px; cursor: pointer;
+    }
+    #navMobileMenu {
+      display: none; position: fixed; top: 72px; left: 0; right: 0;
+      background: rgba(10,10,10,0.98); padding: 24px 32px;
+      z-index: 999; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    #navMobileMenu ul {
+      list-style: none; padding: 0; margin: 0 0 20px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .nav-mobile-link {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .nav-mobile-cta {
+      display: inline-block; background: var(--red); color: #fff;
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 12px 24px;
+    }
+    @media (max-width: 991px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* ---- SECTION DIVIDER ---- */
+    .section-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    }
+
+    /* ---- HERO SECTION ---- */
+    .faq-hero {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      background-image: linear-gradient(180deg, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.97) 100%), url('images/fotos/faq-01.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .faq-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(227,30,36,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .faq-hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
+    }
+    .faq-hero-label {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 20px;
+    }
+    .faq-hero-title {
+      font-family: var(--font-head); font-size: clamp(72px, 9vw, 120px);
+      line-height: 0.9; letter-spacing: 2px;
+      color: var(--white); margin-bottom: 24px;
+    }
+    .faq-hero-title span { color: var(--red); }
+    .faq-hero-desc {
+      font-size: 14px; color: var(--gray);
+      line-height: 1.8; max-width: 420px; margin-bottom: 32px;
+    }
+    .faq-hero-stats { display: flex; gap: 40px; }
+    .faq-stat-num {
+      font-family: var(--font-mono); font-size: 28px;
+      font-weight: 400; color: var(--white); display: block;
+    }
+    .faq-stat-label {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray-dim);
+    }
+
+    /* ---- SEARCH BOX ---- */
+    .faq-search-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 48px; position: relative;
+    }
+    .search-label {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 16px;
+    }
+    .faq-search-box {
+      display: flex; align-items: center;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      transition: border-color 0.1s linear;
+    }
+    .faq-search-box:focus-within { border-color: var(--red); }
+    .faq-search-icon {
+      padding: 0 18px; color: var(--gray-dim); font-size: 14px;
+      flex-shrink: 0;
+    }
+    #faqSearch {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--white); font-family: var(--font-mono);
+      font-size: 14px; letter-spacing: 1px;
+      padding: 16px 0; caret-color: var(--red);
+    }
+    #faqSearch::placeholder { color: rgba(255,255,255,0.2); }
+    .search-clear {
+      padding: 0 18px; cursor: pointer; background: none; border: none;
+      color: rgba(255,255,255,0.2); font-size: 12px;
+      transition: color 0.1s linear; display: none;
+    }
+    .search-clear:hover { color: var(--red); }
+    .search-hint {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 1px; color: var(--gray-dim);
+      margin-top: 12px;
+    }
+    #searchResultCount {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 2px; color: var(--red);
+      margin-top: 10px; display: none;
+    }
+    .quick-tag {
+      background: none; border: 1px solid var(--border);
+      color: rgba(255,255,255,0.35); font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 12px; cursor: pointer; transition: all 0.1s linear;
+    }
+    .quick-tag:hover { border-color: var(--red); color: var(--red); }
+
+    /* ---- MAIN LAYOUT ---- */
+    .faq-main {
+      max-width: 1280px; margin: 0 auto; padding: 80px 32px 120px;
+    }
+
+    /* ---- TABS ---- */
+    .faq-tabs-bar {
+      display: flex; gap: 0; border-bottom: 1px solid var(--border);
+      margin-bottom: 64px; overflow-x: auto; scrollbar-width: none;
+    }
+    .faq-tabs-bar::-webkit-scrollbar { display: none; }
+    .faq-tab-btn {
+      background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--gray-dim); cursor: pointer; padding: 16px 28px;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      transition: color 0.1s linear, border-color 0.1s linear;
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 10px;
+      position: relative; bottom: -1px;
+    }
+    .faq-tab-btn:hover { color: rgba(255,255,255,0.6); }
+    .faq-tab-btn.active { color: var(--white); border-bottom-color: var(--red); }
+    .faq-tab-count {
+      background: var(--gray-faint); color: var(--gray-dim);
+      font-size: 10px; letter-spacing: 1px; padding: 2px 7px;
+      border-radius: 0;
+    }
+    .faq-tab-btn.active .faq-tab-count {
+      background: var(--red-dim); color: var(--red);
+    }
+
+    /* ---- CATEGORY PANEL ---- */
+    .faq-panel { display: none; }
+    .faq-panel.active { display: block; }
+
+    .faq-category-header {
+      display: flex; align-items: flex-start; gap: 32px;
+      margin-bottom: 40px; padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-cat-icon {
+      width: 56px; height: 56px; flex-shrink: 0;
+      background: var(--red-dim); border: 1px solid rgba(227,30,36,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--red); font-size: 20px;
+    }
+    .faq-cat-tag {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 8px;
+    }
+    .faq-cat-title {
+      font-family: var(--font-head); font-size: 42px;
+      letter-spacing: 1px; color: var(--white); margin-bottom: 8px;
+    }
+    .faq-cat-desc { font-size: 14px; color: var(--gray); }
+
+    /* ---- ACCORDION ---- */
+    .faq-accordion { display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border: 1px solid var(--border); border-top: none;
+      transition: background 0.1s linear;
+    }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-item.open { background: var(--surface); }
+    .faq-question {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 24px 28px; display: flex; align-items: flex-start;
+      gap: 20px; text-align: left; transition: background 0.1s linear;
+    }
+    .faq-question:hover { background: rgba(255,255,255,0.02); }
+    .faq-qnum {
+      font-family: var(--font-mono); font-size: 11px;
+      font-weight: 500; letter-spacing: 1px;
+      color: var(--red); flex-shrink: 0; padding-top: 2px;
+      min-width: 36px;
+    }
+    .faq-qtext {
+      flex: 1; font-size: 15px; font-weight: 500;
+      color: rgba(255,255,255,0.85); line-height: 1.4;
+    }
+    .faq-item.open .faq-qtext { color: var(--white); }
+    .faq-icon {
+      flex-shrink: 0; width: 28px; height: 28px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-dim); font-size: 10px;
+      transition: transform 0.1s linear, border-color 0.1s linear, color 0.1s linear;
+      margin-top: 2px;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      border-color: var(--red); color: var(--red);
+    }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .faq-answer-inner { padding: 0 28px 28px 84px; }
+    .faq-answer-inner p {
+      font-size: 14px; color: var(--gray); line-height: 1.9;
+      margin-bottom: 12px;
+    }
+    .faq-answer-inner p:last-child { margin-bottom: 0; }
+    .faq-answer-inner ul {
+      margin: 12px 0; padding-left: 0; list-style: none;
+    }
+    .faq-answer-inner ul li {
+      font-size: 14px; color: var(--gray); line-height: 1.8;
+      padding-left: 20px; position: relative; margin-bottom: 6px;
+    }
+    .faq-answer-inner ul li::before {
+      content: '/';
+      position: absolute; left: 0;
+      font-family: var(--font-mono); color: var(--red); font-size: 12px;
+    }
+    .faq-answer-inner strong { color: var(--white); font-weight: 600; }
+    .faq-answer-inner .answer-tag {
+      display: inline-block; background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.2);
+      color: var(--red); font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 4px 10px; margin-bottom: 12px;
+    }
+    .faq-answer-divider {
+      height: 1px; background: var(--border); margin: 16px 0;
+    }
+
+    /* ---- SEARCH RESULTS ---- */
+    #searchResultsPanel { display: none; }
+    #searchResultsPanel.active { display: block; }
+    .search-result-item {
+      border: 1px solid var(--border); border-top: none;
+      padding: 20px 28px;
+      display: flex; align-items: flex-start; gap: 20px;
+      cursor: pointer; transition: background 0.1s linear;
+    }
+    .search-result-item:first-child { border-top: 1px solid var(--border); }
+    .search-result-item:hover { background: var(--surface); }
+    .sri-cat {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red); flex-shrink: 0; min-width: 100px;
+    }
+    .sri-q { font-size: 14px; color: rgba(255,255,255,0.8); flex: 1; }
+    .sri-arrow {
+      margin-left: auto; color: var(--gray-dim); font-size: 11px;
+      flex-shrink: 0;
+    }
+    .search-result-item:hover .sri-arrow { color: var(--red); }
+
+    /* ---- NO RESULTS ---- */
+    #noResults {
+      display: none; text-align: center; padding: 80px 32px;
+    }
+    #noResults .nr-icon {
+      font-size: 32px; color: var(--gray-dim); margin-bottom: 20px;
+    }
+    #noResults h3 {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 12px;
+    }
+    #noResults p { font-size: 14px; color: var(--gray-dim); }
+
+    /* ---- QUICK LINKS ---- */
+    .faq-quicklinks {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+    .ql-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    }
+    .ql-label {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gray-dim); margin-bottom: 24px; display: block;
+    }
+    .ql-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    }
+    .ql-item {
+      border: 1px solid var(--border); border-right: none;
+      padding: 28px 24px; cursor: pointer;
+      transition: background 0.1s linear;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .ql-item:last-child { border-right: 1px solid var(--border); }
+    .ql-item:hover { background: var(--surface); }
+    .ql-item-icon { font-size: 16px; color: var(--red); margin-bottom: 4px; }
+    .ql-item-name {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .ql-item-count {
+      font-family: var(--font-mono); font-size: 22px; color: var(--white);
+    }
+
+    /* ---- CTA SECTION ---- */
+    .faq-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 80px 64px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .faq-cta::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(227,30,36,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .faq-cta-tag {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 20px;
+    }
+    .faq-cta h2 {
+      font-family: var(--font-head); font-size: clamp(42px, 5vw, 72px);
+      letter-spacing: 2px; color: var(--white); margin-bottom: 16px;
+    }
+    .faq-cta p {
+      font-size: 14px; color: var(--gray); max-width: 440px;
+      margin: 0 auto 40px;
+    }
+    .faq-cta-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-cta-primary {
+      background: var(--red); color: var(--white);
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 16px 40px; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: opacity 0.1s linear; text-decoration: none;
+    }
+    .btn-cta-primary:hover { opacity: 0.88; }
+    .btn-cta-secondary {
+      background: transparent; color: rgba(255,255,255,0.6);
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 15px 40px;
+      border: 1px solid var(--border);
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: color 0.1s linear, border-color 0.1s linear; text-decoration: none;
+    }
+    .btn-cta-secondary:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+    /* ---- FOOTER ---- */
+    #footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 0;
+    }
+    .footer-grid-wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px; padding-bottom: 40px;
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 1.5px; color: rgba(255,255,255,0.18);
+    }
+    .footer-legal a {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); margin-left: 24px;
+    }
+    .footer-legal a:hover { color: #fff; }
+    .footer-col-title {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 20px; display: block;
+    }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { font-size: 14px; color: rgba(255,255,255,0.4); transition: color 0.1s linear; }
+    .footer-links a:hover { color: #fff; }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+      .faq-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .faq-search-wrap { padding: 32px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .ql-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .faq-hero { padding: 60px 0 40px; }
+      .faq-hero-inner { padding: 0 20px; }
+      .faq-main { padding: 48px 20px 80px; }
+      .faq-tabs-bar { margin-bottom: 40px; }
+      .faq-tab-btn { padding: 14px 18px; }
+      .faq-answer-inner { padding: 0 20px 24px 20px; }
+      .faq-category-header { gap: 20px; }
+      .faq-cat-title { font-size: 32px; }
+      .faq-cta { padding: 48px 24px; }
+      .ql-grid { grid-template-columns: repeat(2, 1fr); }
+      .ql-inner { padding: 0 20px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 576px) {
+      body { font-size: 17px; line-height: 1.75; }
+    }
+    @media (max-width: 480px) {
+      .section-wrap, .faq-wrap { padding: 0 16px; }
+    }
+  /* v5 preloader */
+  .v5-preloader{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s,visibility .6s}
+  .v5-preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+  .v5-preloader-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:#fff}
+  .v5-preloader-logo span{color:#E31E24}
+  .v5-preloader-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
+  .v5-preloader-fill{height:100%;background:#E31E24;width:0;animation:preloaderFill 1.2s cubic-bezier(.4,0,.2,1) forwards}
+  @keyframes preloaderFill{0%{width:0}100%{width:100%}}
+  /* v5 scroll reveal */
+  [data-v5-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+  [data-v5-reveal].revealed{opacity:1;transform:translateY(0)}
+  [data-v5-delay="1"]{transition-delay:.1s}[data-v5-delay="2"]{transition-delay:.2s}[data-v5-delay="3"]{transition-delay:.3s}
+  /* v5 btn sweep */
+  .btn-red{position:relative;overflow:hidden}
+  .btn-red .btn-bg{position:absolute;inset:0;background:#B8181D;transform:translateY(101%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:0}
+  .btn-red:hover .btn-bg{transform:translateY(0)}
+  .btn-red .btn-text{position:relative;z-index:1}
+  </style>
+<link rel="stylesheet" href="css/wellcore-v5.css">
+</head>
+<body>
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html">
+      <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:36px;width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="metodo.html">Metodo</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="coaches.html">Coaches</a></li>
+      <li><a href="planes.html">Planes</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="faq.html" class="active">FAQ</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+      <a href="pagar.html" class="nav-cta">Empezar &rarr;</a>
+    </div>
+    <button class="nav-hamburger" id="navToggle" aria-label="Menu">
+      &#9776;
+    </button>
+  </div>
+</nav>
+<div id="navMobileMenu">
+  <ul>
+    <li><a href="metodo.html" class="nav-mobile-link">Metodo</a></li>
+    <li><a href="nosotros.html" class="nav-mobile-link">Nosotros</a></li>
+    <li><a href="coaches.html" class="nav-mobile-link">Coaches</a></li>
+    <li><a href="planes.html" class="nav-mobile-link">Planes</a></li>
+    <li><a href="proceso.html" class="nav-mobile-link">Proceso</a></li>
+    <li><a href="blog/index.html" class="nav-mobile-link">Blog</a></li>
+    <li><a href="faq.html" class="nav-mobile-link" style="color:#fff;">FAQ</a></li>
+    <li><a href="login.html" class="nav-mobile-link" style="color:#fff;background:var(--red);padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;">MI CUENTA</a></li>
+  </ul>
+  <a href="pagar.html" class="nav-mobile-cta">Empezar ahora</a>
+</div>
+
+<!-- HERO -->
+<section class="faq-hero">
+  <div class="faq-hero-inner">
+    <div data-aos="fade-right" data-aos-duration="700">
+      <span class="faq-hero-label">// BASE DE CONOCIMIENTO</span>
+      <h1 class="faq-hero-title">BASE<br>DE<br><span>DATOS</span></h1>
+      <p class="faq-hero-desc">Todo lo que necesitas saber antes, durante y despues de tu transformacion con WellCore. Respuestas precisas, sin rodeos.</p>
+      <div class="faq-hero-stats">
+        <div>
+          <span class="faq-stat-num">25</span>
+          <span class="faq-stat-label">// preguntas</span>
+        </div>
+        <div>
+          <span class="faq-stat-num">05</span>
+          <span class="faq-stat-label">// categorias</span>
+        </div>
+        <div>
+          <span class="faq-stat-num">&lt;2m</span>
+          <span class="faq-stat-label">// lectura</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-search-wrap" data-aos="fade-left" data-aos-duration="700">
+      <span class="search-label">// BUSCAR EN LA BASE DE DATOS</span>
+      <div class="faq-search-box">
+        <span class="faq-search-icon" style="color:var(--gray);">&#8981;</span>
+        <input type="text" id="faqSearch" placeholder="Escribe tu pregunta..." autocomplete="off" spellcheck="false" />
+        <button class="search-clear" id="searchClear" title="Limpiar">&#10005;</button>
+      </div>
+      <p class="search-hint">// Ej: "principiante", "reembolso", "macros", "lesion"</p>
+      <p id="searchResultCount"></p>
+      <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:12px;">// Mas buscado:</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="quick-tag" data-tag="principiante">principiante</button>
+          <button class="quick-tag" data-tag="reembolso">reembolso</button>
+          <button class="quick-tag" data-tag="coach">coach</button>
+          <button class="quick-tag" data-tag="macros">macros</button>
+          <button class="quick-tag" data-tag="lesion">lesion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK LINKS -->
+<div class="faq-quicklinks">
+  <div class="ql-inner">
+    <span class="ql-label">// NAVEGAR POR CATEGORIA</span>
+    <div class="ql-grid">
+      <div class="ql-item" onclick="switchTab('planes')">
+        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <span class="ql-item-name">Planes</span>
+        <span class="ql-item-count">06</span>
+      </div>
+      <div class="ql-item" onclick="switchTab('entrenamiento')">
+        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <span class="ql-item-name">Entrenamiento</span>
+        <span class="ql-item-count">05</span>
+      </div>
+      <div class="ql-item" onclick="switchTab('nutricion')">
+        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <span class="ql-item-name">Nutricion</span>
+        <span class="ql-item-count">05</span>
+      </div>
+      <div class="ql-item" onclick="switchTab('proceso')">
+        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <span class="ql-item-name">Proceso</span>
+        <span class="ql-item-count">05</span>
+      </div>
+      <div class="ql-item" onclick="switchTab('pagos')">
+        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <span class="ql-item-name">Pagos</span>
+        <span class="ql-item-count">04</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN FAQ CONTENT -->
+<main class="faq-main">
+
+  <!-- TABS BAR -->
+  <div class="faq-tabs-bar" id="faqTabsBar">
+    <button class="faq-tab-btn active" data-tab="planes" onclick="switchTab('planes')">
+      <span style="color:#00D9FF;font-weight:700;">//</span> Planes <span class="faq-tab-count">06</span>
+    </button>
+    <button class="faq-tab-btn" data-tab="entrenamiento" onclick="switchTab('entrenamiento')">
+      <span style="color:#00D9FF;font-weight:700;">//</span> Entrenamiento <span class="faq-tab-count">05</span>
+    </button>
+    <button class="faq-tab-btn" data-tab="nutricion" onclick="switchTab('nutricion')">
+      <span style="color:#00D9FF;font-weight:700;">//</span> Nutricion <span class="faq-tab-count">05</span>
+    </button>
+    <button class="faq-tab-btn" data-tab="proceso" onclick="switchTab('proceso')">
+      <span style="color:#00D9FF;font-weight:700;">//</span> Proceso <span class="faq-tab-count">05</span>
+    </button>
+    <button class="faq-tab-btn" data-tab="pagos" onclick="switchTab('pagos')">
+      <span style="color:#00D9FF;font-weight:700;">//</span> Pagos <span class="faq-tab-count">04</span>
+    </button>
+  </div>
+
+  <!-- SEARCH RESULTS AREA -->
+  <div id="searchResultsPanel"></div>
+  <div id="noResults">
+    <div class="nr-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+    <h3>Sin resultados</h3>
+    <p>Intenta con otras palabras clave o navega por las categorias.</p>
+  </div>
+
+  <!-- ===================== PLANES ===================== -->
+  <div class="faq-panel active" id="panel-planes">
+    <div class="faq-category-header" data-aos="fade-up">
+      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div>
+        <span class="faq-cat-tag">// CATEGORIA 01</span>
+        <h2 class="faq-cat-title">PLANES Y SUSCRIPCIONES</h2>
+        <p class="faq-cat-desc">Todo sobre planes de coaching, diferencias, precios y condiciones de contratacion.</p>
+      </div>
+    </div>
+    <div class="faq-accordion">
+
+      <div class="faq-item" data-category="planes" data-keywords="principiante nuevo empezar sin experiencia gimnasio basico">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q01</span>
+          <span class="faq-qtext">¿Cual plan me conviene si soy principiante?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// RECOMENDADO PARA PRINCIPIANTES</span>
+            <p>Si estas comenzando desde cero o llevas menos de 12 meses entrenando de forma consistente, el <strong>Plan Metodo</strong> es el punto de entrada correcto. Esta disenado para construir bases solidas: patrones de movimiento, habitos alimenticios y una relacion sana con el entrenamiento.</p>
+            <p>El Plan Metodo incluye:</p>
+            <ul>
+              <li>Programa de entrenamiento progresivo adaptado a tu nivel</li>
+              <li>Plan nutricional con estructura de macros personalizada</li>
+              <li>Acompanamiento semanal con tu coach asignado</li>
+              <li>Acceso a biblioteca de ejercicios con tecnica en video</li>
+            </ul>
+            <div class="faq-answer-divider"></div>
+            <p>No necesitas experiencia previa. El programa empieza desde donde estas, no desde donde deberas estar.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="planes" data-keywords="cambiar plan upgrade downgrade suscripcion metodo elite">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q02</span>
+          <span class="faq-qtext">¿Puedo cambiar de plan despues de suscribirme?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Si. Puedes hacer un <strong>upgrade o downgrade de plan en cualquier momento</strong>, con efecto en el siguiente ciclo de facturacion. No cobramos penalizaciones por cambio de plan.</p>
+            <p>El proceso es simple:</p>
+            <ul>
+              <li>Accede a tu panel de cliente</li>
+              <li>Ve a "Mi Suscripcion" y selecciona "Cambiar Plan"</li>
+              <li>El cambio se aplica en el siguiente ciclo</li>
+              <li>Tu coach recibe notificacion y ajusta tu programa</li>
+            </ul>
+            <p>Si tienes dudas sobre que plan conviene mas segun tu progreso, puedes consultarlo con tu coach en el check-in semanal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="planes" data-keywords="diferencia metodo elite premium basico comparacion">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q03</span>
+          <span class="faq-qtext">¿Que diferencia hay entre el Plan Metodo y el Plan Elite?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Ambos planes incluyen entrenamiento y nutricion personalizados. La diferencia esta en la <strong>frecuencia de acompanamiento y el nivel de personalizacion</strong>:</p>
+            <div class="faq-answer-divider"></div>
+            <p><strong>Plan Metodo:</strong></p>
+            <ul>
+              <li>Check-in semanal escrito con tu coach</li>
+              <li>Ajuste mensual de programa y macros</li>
+              <li>Soporte por chat 3 veces por semana</li>
+            </ul>
+            <div class="faq-answer-divider"></div>
+            <p><strong>Plan Elite:</strong></p>
+            <ul>
+              <li>Check-in semanal por videollamada (30 min)</li>
+              <li>Ajuste quincenal de programa y macros</li>
+              <li>Soporte prioritario ilimitado</li>
+              <li>Analisis de composicion corporal mensual</li>
+              <li>Acceso a protocolos de periodizacion avanzada</li>
+            </ul>
+            <p>El Plan Elite esta pensado para personas con objetivos competitivos, atletas o quienes quieren maximizar resultados en el menor tiempo posible.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="planes" data-keywords="precio mensual pago unico cobro facturacion recurrente">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q04</span>
+          <span class="faq-qtext">¿El precio es mensual o hay pago unico?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// MODELO DE SUSCRIPCION</span>
+            <p>WellCore funciona con un modelo de <strong>suscripcion mensual recurrente</strong>. No hay pago unico porque el coaching es un servicio continuo que requiere actualizacion constante de tu programa segun tu progreso.</p>
+            <p>La suscripcion se renueva automaticamente cada 30 dias desde la fecha de tu primer pago. Puedes cancelar en cualquier momento antes de la proxima fecha de renovacion sin cargo adicional.</p>
+            <p>Tambien ofrecemos modalidades trimestrales y anuales con descuento incluido (ver Q05).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="planes" data-keywords="descuento trimestral anual ahorro oferta semestral precio">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q05</span>
+          <span class="faq-qtext">¿Hay descuentos por pago trimestral o anual?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Si. Mientras mayor sea el compromiso, mayor el ahorro:</p>
+            <ul>
+              <li><strong>Mensual:</strong> Precio base sin descuento</li>
+              <li><strong>Trimestral (3 meses):</strong> 10% de descuento sobre el total</li>
+              <li><strong>Anual (12 meses):</strong> 20% de descuento, equivale a 9.6 meses al precio de 12</li>
+            </ul>
+            <p>Los planes trimestrales y anuales se pagan en un solo cobro al suscribirse. No son renovaciones automaticas, sino ciclos cerrados con opcion de renovar al vencimiento.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="planes" data-keywords="compartir plan cuenta otra persona familia pareja acceso multiple">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q06</span>
+          <span class="faq-qtext">¿Puedo compartir el plan con alguien mas?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>No. Cada suscripcion es <strong>estrictamente personal e intransferible</strong>. El programa se construye en funcion de tus medidas, historial, objetivos, limitaciones y datos biometricos individuales. Compartirlo con otra persona viola los terminos de servicio y hace el plan inefectivo para ambas personas.</p>
+            <p>Si quieres entrenar en pareja o en familia, contamos con una tarifa especial para cuentas vinculadas. Consulta con soporte para conocer las condiciones.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== ENTRENAMIENTO ===================== -->
+  <div class="faq-panel" id="panel-entrenamiento">
+    <div class="faq-category-header" data-aos="fade-up">
+      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div>
+        <span class="faq-cat-tag">// CATEGORIA 02</span>
+        <h2 class="faq-cat-title">ENTRENAMIENTO</h2>
+        <p class="faq-cat-desc">Como funciona tu programa de entrenamiento, frecuencia, adaptaciones y actualizaciones.</p>
+      </div>
+    </div>
+    <div class="faq-accordion">
+
+      <div class="faq-item" data-category="entrenamiento" data-keywords="gym gimnasio casa home workout sin equipo entrenamiento domicilio">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q07</span>
+          <span class="faq-qtext">¿Necesito ir al gym o puedo entrenar en casa?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// FLEXIBLE</span>
+            <p>Puedes entrenar en cualquier entorno. Al completar tu formulario de onboarding seleccionas el tipo de entrenamiento que prefieres:</p>
+            <ul>
+              <li><strong>Gym completo:</strong> Pesas libres, maquinas y equipo profesional</li>
+              <li><strong>Home gym:</strong> Mancuernas, bandas elasticas o equipo basico</li>
+              <li><strong>Sin equipo (bodyweight):</strong> Solo tu cuerpo como resistencia</li>
+              <li><strong>Hibrido:</strong> Combinacion de gym y casa segun tu semana</li>
+            </ul>
+            <p>Tu coach disenar el programa especificamente para el equipamiento disponible. Si tu situacion cambia (viaje, mudanza, nuevo gym), se ajusta el programa sin costo adicional.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="entrenamiento" data-keywords="cuantos dias semana entrenar frecuencia sesiones rutina">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q08</span>
+          <span class="faq-qtext">¿Cuantos dias a la semana debo entrenar?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>El programa se adapta a tu disponibilidad real, no a un ideal teorico. Durante el onboarding declaras cuantos dias puedes comprometerte de forma sostenible:</p>
+            <ul>
+              <li><strong>3 dias / semana:</strong> Full body o push-pull-legs comprimido. Ideal para agendas apretadas.</li>
+              <li><strong>4 dias / semana:</strong> Upper-lower split o push-pull. Balance optimo entre volumen y recuperacion.</li>
+              <li><strong>5 dias / semana:</strong> Mayor especificidad por grupo muscular. Para objetivos de hipertrofia avanzada.</li>
+            </ul>
+            <p>La recomendacion minima para ver resultados consistentes es <strong>3 sesiones semanales</strong>. Mas sesiones no siempre es mejor: la recuperacion es parte del programa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="entrenamiento" data-keywords="lesion lesionado limitacion fisica rodilla espalda adaptacion">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q09</span>
+          <span class="faq-qtext">¿Que pasa si tengo una lesion o limitacion fisica?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// PROTOCOLO DE ADAPTACION</span>
+            <p>Tu programa se construye considerando tus condiciones fisicas reales. En el formulario de onboarding declaras historial de lesiones, cirugias, dolores cronicos o limitaciones de movilidad.</p>
+            <p>Nuestros coaches estan capacitados para <strong>disenar programas alrededor de las limitaciones</strong>, incluyendo:</p>
+            <ul>
+              <li>Sustitucion de ejercicios que comprometan la zona afectada</li>
+              <li>Protocolo de fortalecimiento preventivo</li>
+              <li>Progresion conservadora en rangos de movimiento reducido</li>
+              <li>Coordinacion con tu fisioterapeuta si ya estas en tratamiento</li>
+            </ul>
+            <p><strong>Importante:</strong> WellCore no reemplaza el diagnostico medico. Si tienes una lesion activa, obtene clearing de tu medico antes de iniciar cualquier programa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="entrenamiento" data-keywords="warm up calentamiento cool down estiramiento incluido sesion">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q10</span>
+          <span class="faq-qtext">¿El programa incluye warm-up y cool-down?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Si. Cada sesion esta estructurada en tres bloques:</p>
+            <ul>
+              <li><strong>Warm-up (8-12 min):</strong> Activacion neuromuscular, movilidad articular y potenciacion del patron de movimiento principal de la sesion</li>
+              <li><strong>Bloque principal (35-55 min):</strong> Trabajo con sets, reps, RIR (reps en reserva) y tiempos de descanso especificados</li>
+              <li><strong>Cool-down (5-8 min):</strong> Estiramiento estatico y respiracion para acelerar recuperacion</li>
+            </ul>
+            <p>El warm-up no es opcional. Esta disenado especificamente para los ejercicios de esa sesion y reduce significativamente el riesgo de lesion.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="entrenamiento" data-keywords="actualiza programa frecuencia cambio progresion meseta periodizacion">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q11</span>
+          <span class="faq-qtext">¿Cada cuanto se actualiza el programa de entrenamiento?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Los programas siguen bloques de <strong>periodizacion de 4 a 6 semanas</strong>. Al finalizar cada bloque, tu coach analiza el progreso y ajusta:</p>
+            <ul>
+              <li>Volumen total (series y repeticiones)</li>
+              <li>Intensidad (porcentaje de carga o RIR objetivo)</li>
+              <li>Seleccion de ejercicios (variantes, angulos, equipamiento)</li>
+              <li>Frecuencia por grupo muscular</li>
+            </ul>
+            <p>Fuera del ciclo programado, se realizan ajustes puntuales si el check-in semanal revela fatiga acumulada, meseta o cambio en disponibilidad. La progresion es continua y basada en datos.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== NUTRICION ===================== -->
+  <div class="faq-panel" id="panel-nutricion">
+    <div class="faq-category-header" data-aos="fade-up">
+      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div>
+        <span class="faq-cat-tag">// CATEGORIA 03</span>
+        <h2 class="faq-cat-title">NUTRICION</h2>
+        <p class="faq-cat-desc">Plan nutricional, personalizacion, restricciones alimenticias y suplementacion.</p>
+      </div>
+    </div>
+    <div class="faq-accordion">
+
+      <div class="faq-item" data-category="nutricion" data-keywords="plan nutricional recetas especificas comidas menu diario">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q12</span>
+          <span class="faq-qtext">¿El plan nutricional incluye recetas especificas?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Depende del enfoque que elijas en el onboarding. WellCore ofrece dos modalidades:</p>
+            <ul>
+              <li><strong>Plan de macros flexible:</strong> Recibes tus objetivos de proteina, carbohidratos y grasas diarios. Eliges los alimentos dentro de esos limites. Es el enfoque mas sostenible a largo plazo.</li>
+              <li><strong>Plan de comidas estructurado:</strong> Recibes un menu semanal con comidas, cantidades y preparaciones especificas. Incluye acceso a la biblioteca de recetas WellCore.</li>
+            </ul>
+            <p>La mayoria de clientes empieza con el plan estructurado para familiarizarse con las porciones y luego migra al plan flexible. Tu coach guia ese proceso.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="nutricion" data-keywords="vegetariano vegano plant based sin carne restriccion dietetica">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q13</span>
+          <span class="faq-qtext">¿Puedo seguir el plan si soy vegetariano o vegano?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// TOTALMENTE COMPATIBLE</span>
+            <p>Si. Los planes nutricionales se construyen adaptados a tu patron alimenticio. Durante el onboarding declaras:</p>
+            <ul>
+              <li>Tipo de dieta (vegetariano, vegano, omnivoro, pescetariano, etc.)</li>
+              <li>Alimentos que no consumes o no te gustan</li>
+              <li>Alergias o intolerancias alimenticias</li>
+              <li>Preferencias culturales o religiosas</li>
+            </ul>
+            <p>Para dietas plant-based, prestamos especial atencion a la <strong>completitud proteica</strong>, densidad de micronutrientes y posibles necesidades de suplementacion especifica (B12, omega-3, hierro).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="nutricion" data-keywords="suplementos proteina creatina necesito comprar obligatorio whey">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q14</span>
+          <span class="faq-qtext">¿Necesito comprar suplementos para seguir el programa?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag" style="background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.2);color:#4ade80;">// RESPUESTA: NO</span>
+            <p><strong>No. Los suplementos no son necesarios ni obligatorios.</strong> El programa de nutricion esta disenado para funcionar completamente con alimentos reales.</p>
+            <p>Si ya usas o quieres usar suplementos, tu coach puede orientarte. Los unicos con evidencia cientifica solida son:</p>
+            <ul>
+              <li><strong>Creatina monohidrato:</strong> Mejora de fuerza y potencia, respaldada por decenas de meta-analisis</li>
+              <li><strong>Proteina en polvo:</strong> Solo como conveniencia, no como necesidad</li>
+              <li><strong>Vitamina D y Omega-3:</strong> Para poblaciones con deficiencia o dietas restrictivas</li>
+            </ul>
+            <p>Rechazamos activamente la venta de suplementos. No tenemos comisiones ni acuerdos con marcas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="nutricion" data-keywords="calculo macros proteina calorias tdee metabolismo calorico">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q15</span>
+          <span class="faq-qtext">¿Como funciona el calculo de macros?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>El calculo toma en cuenta multiples variables individuales, no es una formula generica:</p>
+            <ul>
+              <li><strong>TDEE real:</strong> Calculado a partir de peso, talla, composicion corporal estimada y nivel de actividad</li>
+              <li><strong>Objetivo metabolico:</strong> Deficit (perdida de grasa), superavit (ganancia muscular) o mantenimiento</li>
+              <li><strong>Proteina basada en masa magra:</strong> 1.6 a 2.2g por kg de masa muscular, no de peso corporal total</li>
+              <li><strong>Carbohidratos y grasas:</strong> Distribuidos segun preferencia, tipo de dieta y timing de entrenamiento</li>
+            </ul>
+            <p>Los macros se ajustan cada 2-4 semanas segun tu progreso real (cambio de peso, fotos, niveles de energia). No son estaticos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="nutricion" data-keywords="no me gusta alimento sustitucion intercambiar comida cambiar">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q16</span>
+          <span class="faq-qtext">¿Que pasa si no me gusta algun alimento del plan?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Un plan que no puedes seguir no es un buen plan. Si hay alimentos que no consumes o no te gustan, tu coach los sustituye por equivalentes nutricionales sin burocracia:</p>
+            <ul>
+              <li>Notifica a tu coach via chat o en el check-in semanal</li>
+              <li>Indica el alimento y, si quieres, una alternativa de preferencia</li>
+              <li>El coach actualiza el plan con equivalentes que mantengan los macros y micronutrientes relevantes</li>
+            </ul>
+            <p>No existe limite de sustituciones. El objetivo es que el plan sea <strong>sostenible, no perfectamente optimo sobre papel</strong>. La adherencia supera a la precision.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== PROCESO ===================== -->
+  <div class="faq-panel" id="panel-proceso">
+    <div class="faq-category-header" data-aos="fade-up">
+      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div>
+        <span class="faq-cat-tag">// CATEGORIA 04</span>
+        <h2 class="faq-cat-title">PROCESO Y SEGUIMIENTO</h2>
+        <p class="faq-cat-desc">Flujo de trabajo, check-ins, comunicacion con tu coach y casos especiales.</p>
+      </div>
+    </div>
+    <div class="faq-accordion">
+
+      <div class="faq-item" data-category="proceso" data-keywords="cuanto tiempo demora recibo plan pago entrega onboarding inicio">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q17</span>
+          <span class="faq-qtext">¿Cuanto tiempo desde que pago hasta que recibo mi plan?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// TIEMPO DE ENTREGA: 48-72H</span>
+            <p>El proceso post-pago es el siguiente:</p>
+            <ul>
+              <li><strong>Hora 0:</strong> Confirmacion de pago y acceso al formulario de onboarding</li>
+              <li><strong>Horas 0-24:</strong> Completas el formulario (medidas, historial, fotos, disponibilidad, objetivos)</li>
+              <li><strong>Horas 24-72:</strong> Tu coach revisa el formulario y construye tu programa personalizado</li>
+              <li><strong>Hora 72 max:</strong> Recibes tu programa en el panel de cliente y bienvenida de tu coach</li>
+            </ul>
+            <p>En la practica, la mayoria de clientes recibe su programa en <strong>menos de 48 horas</strong> si completan el onboarding rapidamente. El reloj empieza cuando completas el formulario.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="proceso" data-keywords="seguimiento semanal check in reporte progreso fotos como funciona">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q18</span>
+          <span class="faq-qtext">¿Como funciona el seguimiento semanal?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Cada semana, en el dia que eliges, completas un <strong>check-in semanal</strong> desde tu panel de cliente que incluye:</p>
+            <ul>
+              <li>Registro de peso semanal (promedio de la semana)</li>
+              <li>Nivel de energia y calidad de sueno</li>
+              <li>Adherencia al plan de nutricion (porcentaje estimado)</li>
+              <li>Sensaciones en el entrenamiento (fatiga, fuerza, recuperacion)</li>
+              <li>Foto de progreso cada 2 semanas (opcional pero recomendada)</li>
+            </ul>
+            <p>Tu coach revisa el check-in en maximo 24 horas y responde con feedback especifico, ajustes si corresponde, y orientacion para la semana siguiente. No es un proceso automatizado: cada respuesta es escrita por tu coach.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="proceso" data-keywords="cuantas veces hablo coach comunicacion mensajes soporte contacto">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q19</span>
+          <span class="faq-qtext">¿Cuantas veces por semana hablo con mi coach?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Depende del plan:</p>
+            <ul>
+              <li><strong>Plan Metodo:</strong> 1 check-in semanal escrito + soporte por chat 3 veces por semana en horario habil</li>
+              <li><strong>Plan Elite:</strong> 1 check-in semanal por videollamada (30 min) + soporte prioritario sin limite de frecuencia</li>
+            </ul>
+            <p>Nuestro compromiso es que ninguna duda quede sin respuesta por mas de <strong>24 horas habiles</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="proceso" data-keywords="check in elite videollamada llamada analisis evaluacion profundo">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q20</span>
+          <span class="faq-qtext">¿Que es el Check-in Elite?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// EXCLUSIVO PLAN ELITE</span>
+            <p>El Check-in Elite es la sesion semanal de seguimiento por videollamada de 30 minutos. Permite:</p>
+            <ul>
+              <li>Revision de tecnica en vivo (muestras un ejercicio, el coach corrige en tiempo real)</li>
+              <li>Discusion profunda de datos biometricos y tendencias de progreso</li>
+              <li>Ajuste inmediato de variables de entrenamiento y nutricion</li>
+              <li>Planificacion estrategica de las proximas semanas</li>
+              <li>Espacio para preguntas sin limite de tiempo</li>
+            </ul>
+            <p>Las sesiones se agendan con 48h de anticipacion via el panel de cliente. Se puede reprogramar con 12h de aviso sin penalizacion.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="proceso" data-keywords="pausar programa viaje vacaciones pausa temporal suspender">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q21</span>
+          <span class="faq-qtext">¿Puedo pausar el programa si viajo?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Si. Puedes <strong>pausar tu suscripcion hasta 14 dias por ciclo mensual</strong> sin perder tiempo ni dinero. El cobro queda en suspension durante la pausa y se reactiva cuando retomas.</p>
+            <p>Si vas a viajar, lo mejor es notificar a tu coach con anticipacion. En la mayoria de casos el coach puede disenar una <strong>rutina de viaje</strong> adaptada al equipamiento disponible (hotel, parques, bodyweight).</p>
+            <p>Para pausas mayores a 14 dias, se puede gestionar una pausa extendida en casos justificados. Contacta a soporte para coordinar.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== PAGOS ===================== -->
+  <div class="faq-panel" id="panel-pagos">
+    <div class="faq-category-header" data-aos="fade-up">
+      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div>
+        <span class="faq-cat-tag">// CATEGORIA 05</span>
+        <h2 class="faq-cat-title">PAGOS Y SEGURIDAD</h2>
+        <p class="faq-cat-desc">Metodos de pago, cancelacion, reembolsos y seguridad de tus datos financieros.</p>
+      </div>
+    </div>
+    <div class="faq-accordion">
+
+      <div class="faq-item" data-category="pagos" data-keywords="metodos pago tarjeta credito debito transferencia paypal nequi">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q22</span>
+          <span class="faq-qtext">¿Que metodos de pago aceptan?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Aceptamos los siguientes metodos:</p>
+            <ul>
+              <li><strong>Tarjeta de credito o debito:</strong> Visa, Mastercard, American Express</li>
+              <li><strong>PayPal:</strong> Cuenta personal o pagos con tarjeta via PayPal</li>
+              <li><strong>Transferencia bancaria:</strong> Disponible para planes trimestrales y anuales</li>
+              <li><strong>Nequi / Daviplata:</strong> Para clientes en Colombia</li>
+            </ul>
+            <p>Todos los pagos son procesados a traves de pasarelas certificadas PCI-DSS. WellCore nunca almacena los datos de tu tarjeta directamente en nuestros servidores.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="pagos" data-keywords="cancelar suscripcion baja darme de baja cobro como">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q23</span>
+          <span class="faq-qtext">¿Como cancelo mi suscripcion?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Puedes cancelar en cualquier momento, sin justificacion ni periodos de aviso obligatorio:</p>
+            <ul>
+              <li>Accede a tu panel de cliente</li>
+              <li>Ve a "Configuracion — Suscripcion"</li>
+              <li>Selecciona "Cancelar suscripcion" y confirma</li>
+              <li>Recibes confirmacion por email de inmediato</li>
+            </ul>
+            <p>La cancelacion tiene efecto al finalizar el ciclo actual. Si cancelas el dia 15 y tu ciclo vence el dia 28, sigues teniendo acceso hasta el dia 28 sin cargo adicional.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="pagos" data-keywords="reembolso devolucion dinero garantia insatisfecho politica">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q24</span>
+          <span class="faq-qtext">¿Hay politica de reembolso?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// GARANTIA DE 7 DIAS</span>
+            <p>Si. Ofrecemos una <strong>garantia de satisfaccion de 7 dias</strong> para nuevos clientes. Si en los primeros 7 dias desde que recibes tu programa completo no estas satisfecho con la calidad, te devolvemos el dinero sin preguntas.</p>
+            <p>Condiciones:</p>
+            <ul>
+              <li>Solicitud dentro de los 7 dias calendario desde la entrega del programa</li>
+              <li>No aplica para planes ya pausados o cancelados y reactivados</li>
+              <li>No aplica para renovaciones de ciclos posteriores (solo primer mes)</li>
+            </ul>
+            <p>Para solicitar el reembolso: info@wellcorefitness.com con asunto "REEMBOLSO [tu nombre]". El proceso tarda 5-7 dias habiles segun el banco.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="pagos" data-keywords="pagos seguros seguridad datos tarjeta encriptacion fraude ssl pci">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span class="faq-qnum">Q25</span>
+          <span class="faq-qtext">¿Los pagos son seguros?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <span class="answer-tag">// CERTIFICACION PCI-DSS</span>
+            <p>Si. La seguridad es gestionada por pasarelas externas certificadas bajo el estandar <strong>PCI-DSS Nivel 1</strong>, el mas alto de la industria:</p>
+            <ul>
+              <li>Los datos de tu tarjeta nunca pasan por los servidores de WellCore</li>
+              <li>Toda la comunicacion esta cifrada bajo TLS 1.3 (HTTPS)</li>
+              <li>El proveedor de pago cumple con normativas de proteccion de datos en cada region</li>
+              <li>Deteccion automatica de fraude en tiempo real</li>
+            </ul>
+            <p>Nunca vendemos ni compartimos datos personales con terceros.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ============================================================
+     TRUST METRICS BAND
+============================================================ -->
+<section style="padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);">// NUMEROS QUE RESPALDAN LAS RESPUESTAS</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);" data-aos="fade-up">
+      <div style="padding:40px 32px;border-right:1px solid var(--border);text-align:center;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">350<span style="color:var(--red);font-size:28px;">+</span></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Clientes transformados</span>
+      </div>
+      <div style="padding:40px 32px;border-right:1px solid var(--border);text-align:center;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">91<span style="color:var(--red);font-size:28px;">%</span></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Adherencia promedio</span>
+      </div>
+      <div style="padding:40px 32px;border-right:1px solid var(--border);text-align:center;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">&lt;48<span style="color:var(--red);font-size:28px;">h</span></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Tiempo entrega plan</span>
+      </div>
+      <div style="padding:40px 32px;text-align:center;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">4.9<span style="color:var(--red);font-size:28px;">/5</span></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Satisfaccion clientes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESULTADOS ESPERADOS (FAQ EXTRA)
+============================================================ -->
+<section style="padding:100px 0;border-bottom:1px solid var(--border);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start;">
+      <div data-aos="fade-right" data-aos-duration="700">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:20px;">// RESULTADOS</span>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,80px);letter-spacing:2px;color:#fff;line-height:0.9;margin-bottom:28px;">LO QUE<br>PUEDES<br>ESPERAR</h2>
+        <p style="font-size:14px;color:var(--gray);line-height:1.9;margin-bottom:16px;">Los resultados son reales cuando el programa es real. En WellCore no prometemos numeros magicos porque la biologia individual varia. Lo que si garantizamos es un proceso estructurado, basado en evidencia y con el soporte necesario para maximizar tu progreso.</p>
+        <p style="font-size:14px;color:var(--gray);line-height:1.9;">Los promedios de nuestros clientes hablan de resultados sostenibles, no de transformaciones express que se revierten en semanas.</p>
+      </div>
+      <div data-aos="fade-left" data-aos-duration="700">
+        <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);">
+          <div style="padding:28px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:20px;">
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;">//</div>
+            <div>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Perdida de grasa</p>
+              <p style="font-size:14px;color:var(--gray);">Promedio de <strong style="color:#fff;">0.5 a 1% del peso corporal por semana</strong> en fase de deficit. Sostenible y sin destruir masa muscular.</p>
+            </div>
+          </div>
+          <div style="padding:28px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:20px;">
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+            <div>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Ganancia muscular</p>
+              <p style="font-size:14px;color:var(--gray);">Entre <strong style="color:#fff;">1 a 2 kg de masa magra por mes</strong> para principiantes. Avanzados: 0.25 a 0.5 kg mensual (biologicamente normal).</p>
+            </div>
+          </div>
+          <div style="padding:28px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:20px;">
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;">//</div>
+            <div>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Mejora de fuerza</p>
+              <p style="font-size:14px;color:var(--gray);">Los clientes reportan en promedio <strong style="color:#fff;">15 a 30% de incremento en lifts principales</strong> al finalizar el primer bloque de 12 semanas.</p>
+            </div>
+          </div>
+          <div style="padding:28px 28px;display:flex;align-items:flex-start;gap:20px;">
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;">//</div>
+            <div>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Tiempo para ver resultados</p>
+              <p style="font-size:14px;color:var(--gray);">Cambios visibles en composicion corporal a partir de la <strong style="color:#fff;">semana 4-6</strong>. Resultados fotograficamente evidentes entre semana 8 y 12.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMPARISON TABLE: PLANES
+============================================================ -->
+<section style="padding:100px 0;border-bottom:1px solid var(--border);background:var(--surface);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// COMPARATIVA RAPIDA</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">METODO vs ELITE</h2>
+    </div>
+    <div style="overflow-x:auto;" data-aos="fade-up" data-aos-delay="100">
+      <table style="width:100%;border-collapse:collapse;border:1px solid var(--border);font-size:14px;">
+        <thead>
+          <tr>
+            <th style="padding:20px 24px;text-align:left;background:var(--card);border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// CARACTERISTICA</th>
+            <th style="padding:20px 24px;text-align:center;background:var(--card);border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;">Plan Metodo</th>
+            <th style="padding:20px 24px;text-align:center;background:rgba(227,30,36,0.08);border-bottom:1px solid rgba(227,30,36,0.2);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);">Plan Elite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Programa de entrenamiento personalizado</td>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;color:#22C55E;">&#10003;</td>
+            <td style="padding:18px 24px;border-bottom:1px solid rgba(227,30,36,0.1);text-align:center;color:#22C55E;">&#10003;</td>
+          </tr>
+          <tr>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Plan nutricional con macros</td>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;color:#22C55E;">&#10003;</td>
+            <td style="padding:18px 24px;border-bottom:1px solid rgba(227,30,36,0.1);text-align:center;color:#22C55E;">&#10003;</td>
+          </tr>
+          <tr>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Check-in semanal</td>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);">Escrito</td>
+            <td style="padding:18px 24px;border-bottom:1px solid rgba(227,30,36,0.1);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red);">Videollamada 30min</td>
+          </tr>
+          <tr>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Soporte por chat</td>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);">3x semana</td>
+            <td style="padding:18px 24px;border-bottom:1px solid rgba(227,30,36,0.1);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red);">Ilimitado / prioritario</td>
+          </tr>
+          <tr>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Ajuste de programa</td>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);">Mensual</td>
+            <td style="padding:18px 24px;border-bottom:1px solid rgba(227,30,36,0.1);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red);">Quincenal</td>
+          </tr>
+          <tr>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Analisis de composicion corporal</td>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;color:rgba(255,255,255,0.2);">&mdash;</td>
+            <td style="padding:18px 24px;border-bottom:1px solid rgba(227,30,36,0.1);text-align:center;color:#22C55E;">&#10003;</td>
+          </tr>
+          <tr>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Periodizacion avanzada</td>
+            <td style="padding:18px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;color:rgba(255,255,255,0.2);">&mdash;</td>
+            <td style="padding:18px 24px;border-bottom:1px solid rgba(227,30,36,0.1);text-align:center;color:#22C55E;">&#10003;</td>
+          </tr>
+          <tr>
+            <td style="padding:18px 24px;border-right:1px solid var(--border);color:var(--gray);">Garantia de 7 dias</td>
+            <td style="padding:18px 24px;border-right:1px solid var(--border);text-align:center;color:#22C55E;">&#10003;</td>
+            <td style="padding:18px 24px;text-align:center;color:#22C55E;">&#10003;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:40px;" data-aos="fade-up" data-aos-delay="150">
+      <a href="pagar.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:16px 40px;">
+        Ver precios completos &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESS TIMELINE
+============================================================ -->
+<section style="padding:100px 0;border-bottom:1px solid var(--border);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// TU PRIMER MES CON WELLCORE</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">DE PAGO<br>A RESULTADOS</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
+      <div style="padding:40px 32px;border-right:1px solid var(--border);position:relative;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);display:block;margin-bottom:16px;">DIA 01</span>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#fff;margin-bottom:12px;">PAGO Y ACCESO</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Recibes confirmacion inmediata y acceso al formulario de onboarding. El proceso comienza.</p>
+      </div>
+      <div style="padding:40px 32px;border-right:1px solid var(--border);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);display:block;margin-bottom:16px;">DIA 02-03</span>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#fff;margin-bottom:12px;">TU PROGRAMA</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Tu coach analiza el onboarding y construye tu programa personalizado de entrenamiento y nutricion.</p>
+      </div>
+      <div style="padding:40px 32px;border-right:1px solid var(--border);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);display:block;margin-bottom:16px;">SEMANA 01-04</span>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#fff;margin-bottom:12px;">ADAPTACION</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Primeras 4 semanas de adaptacion. Tomas el ritmo del programa, estableces habitos y tu cuerpo responde.</p>
+      </div>
+      <div style="padding:40px 32px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);display:block;margin-bottom:16px;">SEMANA 04+</span>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#fff;margin-bottom:12px;">RESULTADOS</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Los datos de progreso muestran cambios medibles. El coach ajusta el programa para el siguiente bloque.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+============================================================ -->
+<section style="padding:100px 0;border-bottom:1px solid var(--border);background:var(--surface);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// CLIENTES QUE YA LO HICIERON</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">SIN FILTROS</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
+      <div style="padding:36px 32px;border-right:1px solid var(--border);">
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+        </div>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;font-style:italic;margin-bottom:24px;">"Lleve 2 anos intentando perder los mismos 10 kilos. En 16 semanas con WellCore los perdi y encima gane musculo. El check-in semanal fue lo que lo cambio todo: no dejaba que me desviara."</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:var(--gray-faint);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray-dim);">JM</div>
+          <div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;">Juan M.</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--gray-dim);">Plan Metodo &mdash; 16 semanas</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding:36px 32px;border-right:1px solid var(--border);">
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+        </div>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;font-style:italic;margin-bottom:24px;">"La diferencia con otros planes que habia probado es que WellCore me explica el por que de cada decision. No es solo 'haz esto'. Es 'haz esto porque tu cuerpo responde asi'. Eso lo cambia todo."</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:var(--gray-faint);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray-dim);">VR</div>
+          <div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;">Valeria R.</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--gray-dim);">Plan Elite &mdash; 24 semanas</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding:36px 32px;">
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+          <span style="color:var(--red);font-size:10px;">&#9733;</span>
+        </div>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;font-style:italic;margin-bottom:24px;">"Soy muy esceptico de los programas online. Decidi probar por la garantia de 7 dias. Nunca necesite usarla. En la primera semana ya vi que esto era distinto. Voy por mi quinta renovacion."</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:var(--gray-faint);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray-dim);">RS</div>
+          <div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;">Roberto S.</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--gray-dim);">Plan Metodo &mdash; 5 meses</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section style="padding: 0 32px 120px; max-width:1280px; margin:0 auto;">
+  <div class="faq-cta" data-aos="fade-up">
+    <span class="faq-cta-tag">// ¿SIGUES CON DUDAS?</span>
+    <h2>NO ENCONTRASTE<br>TU RESPUESTA</h2>
+    <p>Habla directamente con nuestro equipo. Respondemos en menos de 24 horas. Sin bots, sin formularios eternos.</p>
+    <div class="faq-cta-btns">
+      <a href="https://wa.me/573124904720" class="btn-cta-primary">
+        <span style="color:#25d366;font-weight:700;">WA</span> Escribir por WhatsApp
+      </a>
+      <a href="mailto:info@wellcorefitness.com" class="btn-cta-secondary">
+        <span style="color:var(--red);font-weight:700;">//</span> Enviar email
+      </a>
+    </div>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);margin-top:32px;text-transform:uppercase;">
+      // Tiempo de respuesta promedio: 4.2 horas habiles
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     CIENCIA DETRAS DEL METODO
+============================================================ -->
+<section style="padding:100px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:flex-start;" data-aos="fade-up">
+      <div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:20px;">// LA CIENCIA IMPORTA</span>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;line-height:0.92;margin-bottom:28px;">POR QUE<br>BASADO EN<br>EVIDENCIA</h2>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">En fitness existe mas desinformacion que en casi cualquier otra industria. Cada anio aparecen nuevas "dietas revolucionarias", "metodos secretos" y "hacks metabolicos". La ciencia nos da un filtro para separar lo que funciona de lo que solo suena bien.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);">
+        <div style="padding:32px 28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Estudios peer-reviewed</p>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">Todos los protocolos de WellCore estan respaldados por investigacion revisada por pares, no por testimonios aislados o logica intuitiva.</p>
+        </div>
+        <div style="padding:32px 28px;border-bottom:1px solid var(--border);">
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Actualizacion constante</p>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">La ciencia del ejercicio avanza rapidamente. Los protocolos de WellCore se revisan y actualizan trimestralmente con la literatura mas reciente.</p>
+        </div>
+        <div style="padding:32px 28px;border-right:1px solid var(--border);">
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Datos del cliente</p>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">Cada decision de ajuste de programa se toma con datos reales del cliente, no con promedios poblacionales. Tu respuesta individual supera cualquier formula generica.</p>
+        </div>
+        <div style="padding:32px 28px;">
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Cero pseudociencia</p>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">Si algo no tiene evidencia solida, no esta en nuestros programas. Aunque sea popular en redes sociales o lo recomiende un influencer con millones de seguidores.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WELLCORE VS GENERICO
+============================================================ -->
+<section style="padding:100px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// POR QUE WELLCORE Y NO OTRO</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">LA DIFERENCIA<br>ES EL METODO</h2>
+    </div>
+    <div style="overflow-x:auto;" data-aos="fade-up" data-aos-delay="100">
+      <table style="width:100%;border-collapse:collapse;border:1px solid var(--border);font-size:14px;min-width:700px;">
+        <thead>
+          <tr>
+            <th style="padding:20px 24px;text-align:left;background:var(--card);border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);"></th>
+            <th style="padding:20px 24px;text-align:center;background:rgba(227,30,36,0.08);border-bottom:1px solid rgba(227,30,36,0.2);border-right:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);">WellCore</th>
+            <th style="padding:20px 24px;text-align:center;background:var(--card);border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);">Programa Generico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Plan de entrenamiento</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80;">100% personalizado</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);">Plantilla generica</td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Seguimiento de progreso</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80;">Check-in semanal con coach</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);">Sin seguimiento</td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Ajuste de programa</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80;">Continuo basado en datos</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);">Estatico o inexistente</td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Base nutricional</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80;">Macros individualizados</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);">Dieta restrictiva fija</td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--gray);">Soporte directo</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80;">Coach humano certificado</td>
+            <td style="padding:16px 24px;border-bottom:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);">Bot o sin soporte</td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px;border-right:1px solid var(--border);color:var(--gray);">Garantia</td>
+            <td style="padding:16px 24px;border-right:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80;">7 dias sin preguntas</td>
+            <td style="padding:16px 24px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);">Sin garantia</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACTO DIRECTO
+============================================================ -->
+<section style="padding:80px 0;border-bottom:1px solid var(--border);background:var(--surface);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" data-aos="fade-up">
+      <div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// SOPORTE DIRECTO</span>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,56px);letter-spacing:2px;color:#fff;margin-bottom:16px;line-height:0.92;">CANALES DE<br>CONTACTO</h2>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">Para preguntas que no encontraste en la base de datos, el equipo de soporte responde en menos de 24 horas habiles. Preferimos WhatsApp para consultas rapidas y email para temas que requieren documentacion.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);">
+        <a href="https://wa.me/573124904720" style="display:flex;align-items:center;gap:20px;padding:24px 28px;border-bottom:1px solid var(--border);transition:background 0.1s linear;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='none'">
+          <div style="width:44px;height:44px;background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.2);display:flex;align-items:center;justify-content:center;color:#25d366;font-size:18px;flex-shrink:0;"><span style="color:#25d366;font-weight:700;">WA</span></div>
+          <div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;margin-bottom:4px;">WhatsApp</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.8);">+57 300 123 4567</span>
+          </div>
+          <span style="margin-left:auto;color:var(--gray-dim);font-size:11px;">&rarr;</span>
+        </a>
+        <a href="mailto:info@wellcorefitness.com" style="display:flex;align-items:center;gap:20px;padding:24px 28px;border-bottom:1px solid var(--border);transition:background 0.1s linear;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='none'">
+          <div style="width:44px;height:44px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:16px;flex-shrink:0;"><span style="color:var(--red);font-weight:700;">//</span></div>
+          <div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;margin-bottom:4px;">Email soporte</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.8);">info@wellcorefitness.com</span>
+          </div>
+          <span style="margin-left:auto;color:var(--gray-dim);font-size:11px;">&rarr;</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:20px;padding:20px 28px;">
+          <span style="color:var(--gray-dim);font-size:14px;flex-shrink:0;font-weight:700;">//</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--gray-dim);">Lunes a Viernes &mdash; 8:00am a 7:00pm (COT) &mdash; Respuesta en &lt;24h habiles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MITOS Y VERDADES
+============================================================ -->
+<section style="padding:100px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// LO QUE TODO EL MUNDO CREE Y ESTA MAL</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">MITOS<br>DESMONTADOS</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+        <div style="padding:28px 32px;border-right:1px solid var(--border);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"Para perder peso hay que comer lo menos posible."</p>
+        </div>
+        <div style="padding:28px 32px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">Comer demasiado poco activa la termogenesis adaptativa: el cuerpo reduce el metabolismo para sobrevivir. Un deficit de 300-500 kcal sobre el TDEE real es suficiente y mas sostenible.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+        <div style="padding:28px 32px;border-right:1px solid var(--border);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"El cardio es lo mejor para perder grasa."</p>
+        </div>
+        <div style="padding:28px 32px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">El entrenamiento de fuerza genera mayor gasto calorico post-ejercicio (EPOC) y preserva masa muscular durante el deficit. Combinacion optima: fuerza + deficit nutricional + cardio moderado.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+        <div style="padding:28px 32px;border-right:1px solid var(--border);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"Si como carbohidratos de noche engorda."</p>
+        </div>
+        <div style="padding:28px 32px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">El cuerpo no tiene reloj para almacenar grasa. Lo que determina la composicion corporal es el balance calorico total del dia, no el momento en que consumes los macros.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;">
+        <div style="padding:28px 32px;border-right:1px solid var(--border);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"Sudar mas significa quemar mas grasa."</p>
+        </div>
+        <div style="padding:28px 32px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <p style="font-size:14px;color:var(--gray);line-height:1.7;">El sudor es un mecanismo de termorregulacion, no de quema de grasa. La cantidad de sudor depende de temperatura, humedad y genetica individual. No correlaciona con el gasto calorico del ejercicio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PREGUNTAS ADICIONALES EN TEXTO
+============================================================ -->
+<section style="padding:80px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
+    <div style="text-align:center;margin-bottom:48px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// PREGUNTAS FRECUENTES ADICIONALES</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,56px);letter-spacing:2px;color:#fff;">MAS RESPUESTAS</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
+      <div style="padding:36px 32px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:12px;">¿Tienen app movil?</p>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">El panel de cliente esta optimizado para movil via navegador. No requiere descarga de app. Puedes acceder a tu programa, registrar entrenamientos y hacer check-in desde cualquier dispositivo.</p>
+      </div>
+      <div style="padding:36px 32px;border-bottom:1px solid var(--border);">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:12px;">¿Puedo elegir mi coach?</p>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">En el onboarding puedes indicar preferencias de perfil de coach. El equipo fundador asigna segun afinidad tecnica y disponibilidad. Si despues de las primeras 2 semanas quieres cambiar, se gestiona sin costo.</p>
+      </div>
+      <div style="padding:36px 32px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:12px;">¿Cuantos clientes tiene cada coach?</p>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">Limitamos el numero de clientes activos por coach para garantizar la calidad del seguimiento. Cada coach maneja entre 15 y 25 clientes activos simultaneamente, dependiendo de la intensidad del plan.</p>
+      </div>
+      <div style="padding:36px 32px;border-bottom:1px solid var(--border);">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:12px;">¿Es para hombres y mujeres?</p>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">Si. Los programas se disenan considerando las diferencias fisiologicas entre hombres y mujeres, incluyendo hormonales, de composicion corporal y de respuesta al entrenamiento. No es el mismo programa para todos.</p>
+      </div>
+      <div style="padding:36px 32px;border-right:1px solid var(--border);">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:12px;">¿Funciona si tengo mas de 40 anos?</p>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">Si, con adaptaciones especificas. La progresion de carga es mas conservadora, la recuperacion recibe mas atencion y la nutricion proteica se ajusta a las necesidades de preservacion muscular propias de esa etapa.</p>
+      </div>
+      <div style="padding:36px 32px;">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:12px;">¿Trabajan con atletas competitivos?</p>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;">Si. El Plan Elite esta pensado para atletas con objetivos de rendimiento o competencia. Incluye periodizacion por fases de competencia, protocolo de peak week y ajustes de carga segun calendario de competicion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-grid-wrap">
+    <div class="footer-grid">
+      <div>
+        <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:32px;width:auto;margin-bottom:24px;" />
+        <p style="font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;max-width:260px;">Coaching fitness basado en ciencia. Transforma tu cuerpo con metodologia validada.</p>
+      </div>
+      <div>
+        <span class="footer-col-title">Navegacion</span>
+        <ul class="footer-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="metodo.html">Metodo</a></li>
+          <li><a href="planes.html">Planes</a></li>
+          <li><a href="coaches.html">Coaches</a></li>
+          <li><a href="blog/index.html">Blog</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer-col-title">Servicios</span>
+        <ul class="footer-links">
+          <li><a href="planes.html">Plan Metodo</a></li>
+          <li><a href="planes.html">Plan Elite</a></li>
+          <li><a href="proceso.html">Como Funciona</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer-col-title">Contacto</span>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/573124904720"><span style="color:var(--red);margin-right:8px;font-weight:700;">WA</span>WhatsApp</a></li>
+          <li><a href="mailto:info@wellcorefitness.com"><span style="color:var(--red);margin-right:8px;font-weight:700;">//</span>Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 WellCore Fitness &mdash; Todos los derechos reservados</span>
+      <div class="footer-legal">
+        <a href="legal/privacidad.html">Privacidad</a>
+        <a href="legal/terminos.html">Terminos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 700, once: true, offset: 60 });
+
+  /* ---- NAVBAR MOBILE ---- */
+  var navToggle = document.getElementById('navToggle');
+  var navMobileMenu = document.getElementById('navMobileMenu');
+  if (navToggle) {
+    navToggle.addEventListener('click', function() {
+      var isOpen = navMobileMenu.style.display === 'block';
+      navMobileMenu.style.display = isOpen ? 'none' : 'block';
+      navToggle.textContent = isOpen ? '\u2630' : '\u2715';
+    });
+  }
+
+  /* ---- ACCORDION ---- */
+  function toggleFAQ(btn) {
+    var item   = btn.closest('.faq-item');
+    var answer = item.querySelector('.faq-answer');
+    var isOpen = item.classList.contains('open');
+
+    var siblings = btn.closest('.faq-accordion').querySelectorAll('.faq-item');
+    siblings.forEach(function(s) {
+      s.classList.remove('open');
+      s.querySelector('.faq-answer').style.maxHeight = null;
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  /* ---- TABS ---- */
+  function switchTab(tabId) {
+    clearSearch();
+
+    document.querySelectorAll('.faq-tab-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.tab === tabId);
+    });
+    document.querySelectorAll('.faq-panel').forEach(function(panel) {
+      panel.classList.toggle('active', panel.id === 'panel-' + tabId);
+    });
+
+    var tabsBar = document.getElementById('faqTabsBar');
+    if (tabsBar) {
+      var y = tabsBar.getBoundingClientRect().top + window.scrollY - 88;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }
+
+  /* ---- SEARCH (using DOM methods, no innerHTML for user data) ---- */
+  var searchInput  = document.getElementById('faqSearch');
+  var searchClear  = document.getElementById('searchClear');
+  var resultCount  = document.getElementById('searchResultCount');
+  var resultsPanel = document.getElementById('searchResultsPanel');
+  var noResultsEl  = document.getElementById('noResults');
+  var tabsBarEl    = document.getElementById('faqTabsBar');
+
+  var CAT_LABELS = {
+    planes: 'Planes', entrenamiento: 'Entrenamiento',
+    nutricion: 'Nutricion', proceso: 'Proceso', pagos: 'Pagos'
+  };
+
+  function clearSearch() {
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    resultCount.style.display = 'none';
+    resultCount.textContent = '';
+    while (resultsPanel.firstChild) { resultsPanel.removeChild(resultsPanel.firstChild); }
+    resultsPanel.classList.remove('active');
+    noResultsEl.style.display = 'none';
+    tabsBarEl.style.display = 'flex';
+
+    var panels = document.querySelectorAll('.faq-panel');
+    var tabBtns = document.querySelectorAll('.faq-tab-btn');
+    panels.forEach(function(p, i) { p.classList.toggle('active', i === 0); });
+    tabBtns.forEach(function(b, i) { b.classList.toggle('active', i === 0); });
+  }
+
+  function doSearch(query) {
+    var q = query.trim().toLowerCase();
+    if (!q) { clearSearch(); return; }
+
+    searchClear.style.display = 'block';
+
+    var allItems = document.querySelectorAll('.faq-item');
+    var matches = [];
+
+    allItems.forEach(function(item) {
+      var qTextEl  = item.querySelector('.faq-qtext');
+      var qNumEl   = item.querySelector('.faq-qnum');
+      var ansEl    = item.querySelector('.faq-answer-inner');
+      var keywords = (item.dataset.keywords || '').toLowerCase();
+      var qText    = qTextEl ? qTextEl.textContent.toLowerCase() : '';
+      var ansText  = ansEl   ? ansEl.textContent.toLowerCase()   : '';
+
+      if (qText.includes(q) || keywords.includes(q) || ansText.includes(q)) {
+        matches.push({
+          item: item,
+          qNum: qNumEl ? qNumEl.textContent : '',
+          qText: qTextEl ? qTextEl.textContent : '',
+          cat: item.dataset.category || '',
+          panelId: 'panel-' + (item.dataset.category || '')
+        });
+      }
+    });
+
+    tabsBarEl.style.display = 'none';
+    document.querySelectorAll('.faq-panel').forEach(function(p) { p.classList.remove('active'); });
+
+    if (matches.length === 0) {
+      while (resultsPanel.firstChild) { resultsPanel.removeChild(resultsPanel.firstChild); }
+      resultsPanel.classList.remove('active');
+      noResultsEl.style.display = 'block';
+      resultCount.style.display = 'none';
+      return;
+    }
+
+    noResultsEl.style.display = 'none';
+    resultCount.style.display = 'block';
+    resultCount.textContent = '// ' + matches.length + ' resultado' + (matches.length !== 1 ? 's' : '') + ' encontrado' + (matches.length !== 1 ? 's' : '');
+
+    while (resultsPanel.firstChild) { resultsPanel.removeChild(resultsPanel.firstChild); }
+
+    matches.forEach(function(m, idx) {
+      var row = document.createElement('div');
+      row.className = 'search-result-item';
+      if (idx === 0) row.style.borderTop = '1px solid rgba(255,255,255,0.06)';
+
+      var catEl = document.createElement('span');
+      catEl.className = 'sri-cat';
+      catEl.textContent = CAT_LABELS[m.cat] || m.cat;
+
+      var qEl = document.createElement('span');
+      qEl.className = 'sri-q';
+      qEl.textContent = m.qText;
+
+      var arrowEl = document.createElement('span');
+      arrowEl.className = 'sri-arrow';
+      arrowEl.textContent = '\u2192';
+
+      row.appendChild(catEl);
+      row.appendChild(qEl);
+      row.appendChild(arrowEl);
+
+      var panelId = m.panelId;
+      var qNum    = m.qNum;
+      row.addEventListener('click', function() { goToQuestion(panelId, qNum); });
+      resultsPanel.appendChild(row);
+    });
+
+    resultsPanel.classList.add('active');
+  }
+
+  function goToQuestion(panelId, qNum) {
+    var tabId = panelId.replace('panel-', '');
+    clearSearch();
+    switchTab(tabId);
+    setTimeout(function() {
+      var items = document.querySelectorAll('#' + panelId + ' .faq-item');
+      items.forEach(function(item) {
+        var numEl = item.querySelector('.faq-qnum');
+        if (numEl && numEl.textContent === qNum) {
+          toggleFAQ(item.querySelector('.faq-question'));
+          var y = item.getBoundingClientRect().top + window.scrollY - 120;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    }, 120);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) { doSearch(e.target.value); });
+    searchInput.addEventListener('keydown', function(e) { if (e.key === 'Escape') clearSearch(); });
+  }
+  if (searchClear) { searchClear.addEventListener('click', clearSearch); }
+
+  document.querySelectorAll('.quick-tag').forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      searchInput.value = tag.dataset.tag;
+      doSearch(tag.dataset.tag);
+      searchInput.focus();
+    });
+  });
+
+  /* ---- RESPONSIVE TABLE SCROLL HINT ---- */
+  var tables = document.querySelectorAll('table');
+  tables.forEach(function(table) {
+    var wrapper = table.closest('[style*="overflow-x"]');
+    if (wrapper && window.innerWidth < 768) {
+      var hint = document.createElement('p');
+      hint.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-bottom:8px;';
+      hint.textContent = '// Desliza horizontalmente para ver mas';
+      wrapper.parentNode.insertBefore(hint, wrapper);
+    }
+  });
+
+  /* ---- SCROLL PROGRESS INDICATOR ---- */
+  var progressBar = document.createElement('div');
+  progressBar.style.cssText = 'position:fixed;top:72px;left:0;height:2px;background:#E31E24;z-index:999;transition:width 0.1s;width:0%;';
+  document.body.appendChild(progressBar);
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = Math.min(progress, 100) + '%';
+  });
+</script>
+
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  📞
+</a>
+<script src="js/chat-widget.js" defer></script>
+<script src="js/v5-effects.js" defer></script>
+</body>
+</html>

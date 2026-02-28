@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#080808"/><stop offset="100%" stop-color="#100808"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="50"/></filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="1000" cy="300" r="350" fill="#E31E24" opacity="0.07" filter="url(#blur)"/>
+  <circle cx="300" cy="600" r="250" fill="#E31E24" opacity="0.04" filter="url(#blur)"/>
+  <!-- Grid -->
+  <line x1="0" y1="135" x2="1200" y2="135" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="270" x2="1200" y2="270" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="405" x2="1200" y2="405" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="540" x2="1200" y2="540" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="300" y1="0" x2="300" y2="675" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="675" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="900" y1="0" x2="900" y2="675" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <!-- Progress bar chart concept -->
+  <rect x="720" y="480" width="40" height="120" rx="1" fill="rgba(227,30,36,0.15)" stroke="#E31E24" stroke-width="1" opacity="0.6"/>
+  <rect x="780" y="420" width="40" height="180" rx="1" fill="rgba(227,30,36,0.2)" stroke="#E31E24" stroke-width="1" opacity="0.7"/>
+  <rect x="840" y="340" width="40" height="260" rx="1" fill="rgba(227,30,36,0.3)" stroke="#E31E24" stroke-width="1" opacity="0.8"/>
+  <rect x="900" y="260" width="40" height="340" rx="1" fill="#E31E24" opacity="0.5"/>
+  <rect x="960" y="180" width="40" height="420" rx="1" fill="#E31E24" opacity="0.7"/>
+  <text x="740" y="500" text-anchor="middle" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.3)">W1</text>
+  <text x="800" y="500" text-anchor="middle" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.3)">W4</text>
+  <text x="860" y="500" text-anchor="middle" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.3)">W8</text>
+  <text x="920" y="500" text-anchor="middle" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.3)">W12</text>
+  <text x="980" y="500" text-anchor="middle" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.3)">W16</text>
+  <!-- Left content -->
+  <text x="64" y="240" font-family="Arial Black,Arial" font-size="11" font-weight="900" fill="#E31E24" letter-spacing="4" opacity="0.9">ENTRENAMIENTO</text>
+  <text x="60" y="300" font-family="Arial Black,Arial" font-size="68" font-weight="900" fill="white" opacity="0.92">HIPER-</text>
+  <text x="60" y="368" font-family="Arial Black,Arial" font-size="68" font-weight="900" fill="white" opacity="0.92">TROFIA</text>
+  <line x1="60" y1="388" x2="260" y2="388" stroke="#E31E24" stroke-width="3"/>
+  <text x="60" y="422" font-family="Arial" font-size="13" fill="rgba(255,255,255,0.45)" letter-spacing="1">Mecanismos del crecimiento muscular</text>
+  <rect x="0" y="659" width="1200" height="3" fill="#E31E24" opacity="0.7"/>
+  <text x="750" y="150" font-family="Arial Black,Arial" font-size="96" font-weight="900" fill="rgba(227,30,36,0.05)" letter-spacing="-3">MPS</text>
+</svg>

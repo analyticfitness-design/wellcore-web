@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIENDA — WellCore Fitness</title>
+  <meta name="description" content="Tienda WellCore Fitness. Suplementos, accesorios y equipamiento para tu entrenamiento. Envios a toda Latinoamerica.">
+  <meta property="og:title" content="TIENDA — WellCore Fitness">
+  <meta property="og:description" content="Tienda WellCore Fitness. Suplementos, accesorios y equipamiento para tu entrenamiento. Envios a toda Latinoamerica.">
+  <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+  <meta property="og:url" content="https://wellcorefitness.com/tienda.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wellcorefitness.com/tienda.html">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <!-- WellCore V5 Design System -->
+  <link rel="stylesheet" href="css/wellcore-v5.css">
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES — DESIGN B: GRID COMMERCE
+    ============================================================ */
+    :root {
+      --red:           #E31E24;
+      --red-dark:      #B8181D;
+      --bg:            #070709;
+      --surface:       #0f0f12;
+      --surface-2:     #17171b;
+      --border:        #222226;
+      --gray:          #A1A1AA;
+      --accent:        #00D9FF;
+      --accent-dim:    rgba(0,217,255,0.15);
+      --green:         #22C55E;
+      --white:         #FFFFFF;
+      --price-color:   #00D9FF;
+      --mono-dim:      rgba(161,161,170,0.5);
+      --red-neon:      rgba(227,30,36,0.2);
+      --grid-line:     rgba(255,255,255,0.04);
+
+      --font-mono:   'JetBrains Mono', monospace;
+      --font-display:'Bebas Neue', cursive;
+      --font-body:   'Inter', sans-serif;
+
+      --sidebar-w:   200px;
+      --navbar-h:    64px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       GRID LINE BACKGROUND
+    ============================================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--navbar-h);
+      background: var(--bg);
+      border-top: 3px solid var(--red);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--red); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--mono-dim);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: 0.1s linear;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--white); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-tagline {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.1s linear, background 0.1s linear;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-btn:hover {
+      border-color: var(--accent);
+      background: rgba(0,217,255,0.05);
+    }
+
+    .cart-count {
+      background: var(--red);
+      color: var(--white);
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 5px;
+      min-width: 18px;
+      text-align: center;
+      line-height: 14px;
+    }
+
+    /* ============================================================
+       PAGE WRAPPER
+    ============================================================ */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-height: calc(100vh - var(--navbar-h));
+    }
+
+    /* ============================================================
+       LEFT SIDEBAR
+    ============================================================ */
+    #sidebar {
+      width: var(--sidebar-w);
+      min-height: 100%;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 32px 20px;
+      position: sticky;
+      top: var(--navbar-h);
+      height: calc(100vh - var(--navbar-h));
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    #sidebar::-webkit-scrollbar { width: 3px; }
+    #sidebar::-webkit-scrollbar-track { background: transparent; }
+    #sidebar::-webkit-scrollbar-thumb { background: var(--border); }
+
+    .sidebar-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--mono-dim);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .sidebar-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .filter-item input[type="radio"] {
+      appearance: none;
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.1s linear;
+    }
+
+    .filter-item input[type="radio"]:checked {
+      border-color: var(--red);
+      background: var(--red);
+      box-shadow: 0 0 6px rgba(227,30,36,0.4);
+    }
+
+    .filter-item label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.1s linear;
+    }
+
+    .filter-item:hover label,
+    .filter-item input:checked + label { color: var(--white); }
+
+    .sort-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: var(--gray);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 0;
+      cursor: pointer;
+      transition: 0.1s linear;
+    }
+
+    .sort-btn:hover,
+    .sort-btn.active { color: var(--accent); }
+
+    .product-count {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      margin-top: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ============================================================
+       MAIN CONTENT
+    ============================================================ */
+    #main-content {
+      flex: 1;
+      padding: 40px 40px 80px;
+      min-width: 0;
+    }
+
+    /* ============================================================
+       BREADCRUMB / PAGE HEADER
+    ============================================================ */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .breadcrumb span { color: var(--white); }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .page-title-sub {
+      color: var(--red);
+    }
+
+    .header-meta {
+      text-align: right;
+    }
+
+    .header-meta .meta-line {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    .header-meta .meta-line span { color: var(--accent); }
+
+    /* ============================================================
+       HERO FEATURE BANNER
+    ============================================================ */
+    #hero-feature {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      margin-bottom: 48px;
+      overflow: hidden;
+      min-height: 300px;
+    }
+
+    #hero-feature::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+        rgba(227,30,36,0.12) 0%,
+        transparent 50%,
+        rgba(0,217,255,0.04) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--red);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      z-index: 2;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 1;
+      padding: 56px 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-cat {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: 64px;
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      max-width: 500px;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 380px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+
+    .hero-price-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .hero-price {
+      font-family: var(--font-display);
+      font-size: 52px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .hero-stock {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+    }
+
+    .hero-stock strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 14px 32px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.1s linear;
+      max-width: fit-content;
+      border: 4px solid var(--red);
+    }
+
+    .hero-cta:hover {
+      background: #c0181d;
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, #1a0002 0%, #0a0a0a 50%, #0d0d10 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid var(--border);
+      overflow: hidden;
+      min-height: 300px;
+    }
+
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: rgba(227,30,36,0.08);
+      transform: rotate(25deg);
+    }
+
+    .hero-right-icon {
+      font-size: 96px;
+      color: rgba(255,255,255,0.12);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-right-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--mono-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       SECTION DIVIDER
+    ============================================================ */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--mono-dim);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-count {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============================================================
+       PRODUCTS GRID
+    ============================================================ */
+    #products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    /* ============================================================
+       PRODUCT CARD
+    ============================================================ */
+    .product-card {
+      background: var(--surface);
+      position: relative;
+      transition: 0.1s linear;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover { background: var(--surface-2); }
+
+    .product-card.featured {
+      grid-column: span 2;
+    }
+
+    /* Card Top Bar */
+    .card-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge-new {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--red);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .badge-new::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 6px rgba(227,30,36,0.6);
+      flex-shrink: 0;
+    }
+
+    .badge-dest {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .badge-dest::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(0,217,255,0.6);
+      flex-shrink: 0;
+    }
+
+    .card-stock {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .stock-ok { color: var(--mono-dim); }
+    .stock-low { color: var(--red); }
+
+    /* Product Image */
+    .product-img {
+      height: 180px;
+      background: linear-gradient(135deg, #1a0002 0%, #0a0a0a 50%, #0d0d10 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .product-card.featured .product-img { height: 260px; }
+
+    .product-img::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: rgba(227,30,36,0.08);
+      transform: rotate(25deg);
+    }
+
+    .product-img span {
+      font-size: 48px;
+      color: rgba(255,255,255,0.15);
+      position: relative;
+      z-index: 1;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .product-card.featured .product-img span { font-size: 72px; }
+
+    /* Card Body */
+    .card-body {
+      padding: 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-cat {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--mono-dim);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .product-card.featured .card-name { font-size: 24px; }
+
+    .card-desc {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--mono-dim);
+      line-height: 1.5;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .product-card.featured .card-desc { -webkit-line-clamp: 4; }
+
+    .card-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    /* Card Footer */
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .product-price {
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-size: 26px;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .product-card.featured .product-price { font-size: 32px; }
+
+    .card-meta-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-meta-item {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--mono-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card-meta-item span {
+      color: var(--gray);
+      display: block;
+      font-size: 10px;
+    }
+
+    .add-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 7px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.1s linear, background 0.1s linear, color 0.1s linear;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .add-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,217,255,0.06);
+    }
+
+    .add-btn:active { transform: scale(0.97); }
+
+    /* ============================================================
+       EMPTY STATE
+    ============================================================ */
+    #empty-state {
+      display: none;
+      text-align: center;
+      padding: 80px 40px;
+      grid-column: 1 / -1;
+    }
+
+    #empty-state span {
+      font-size: 48px;
+      color: var(--border);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    #empty-state p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--mono-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       CART DRAWER
+    ============================================================ */
+    #cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s linear;
+    }
+
+    #cart-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 380px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.1s linear;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #cart-drawer.active {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .cart-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .cart-title span {
+      color: var(--mono-dim);
+      font-weight: 400;
+    }
+
+    .cart-close {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.1s linear, color 0.1s linear;
+    }
+
+    .cart-close:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0;
+    }
+
+    .cart-items::-webkit-scrollbar { width: 3px; }
+    .cart-items::-webkit-scrollbar-track { background: transparent; }
+    .cart-items::-webkit-scrollbar-thumb { background: var(--border); }
+
+    .cart-item {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .cart-item-name {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      margin-bottom: 6px;
+      grid-column: 1 / -1;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .qty-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      width: 24px;
+      height: 24px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.1s linear, color 0.1s linear;
+      line-height: 1;
+    }
+
+    .qty-btn:hover {
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .qty-display {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .cart-item-price {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .cart-item-remove {
+      background: transparent;
+      border: none;
+      color: var(--mono-dim);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 4px;
+      transition: 0.1s linear;
+    }
+
+    .cart-item-remove:hover { color: var(--red); }
+
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .cart-empty span {
+      font-size: 40px;
+      color: var(--border);
+      margin-bottom: 16px;
+    }
+
+    .cart-empty p {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--mono-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    .cart-footer {
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-row:last-of-type { border-bottom: none; }
+
+    .cart-row-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .cart-row-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .cart-total-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .cart-total-value {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .checkout-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: var(--red);
+      border: none;
+      color: var(--white);
+      padding: 16px 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.1s linear;
+      border: 4px solid var(--red);
+    }
+
+    .checkout-btn:hover { background: #c0181d; }
+
+    /* ============================================================
+       TOAST NOTIFICATION
+    ============================================================ */
+    #toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 12px 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      z-index: 300;
+      opacity: 0;
+      transition: opacity 0.1s linear, transform 0.1s linear;
+      white-space: nowrap;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 32px 40px 32px calc(var(--sidebar-w) + 40px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.06em;
+    }
+
+    .footer-brand span { color: var(--red); }
+
+    .footer-mono {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--mono-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1200px) {
+      #products-grid { grid-template-columns: repeat(3, 1fr); }
+      .product-card.featured { grid-column: span 2; }
+    }
+
+    @media (max-width: 900px) {
+      #sidebar {
+        position: fixed;
+        left: -220px;
+        top: var(--navbar-h);
+        height: calc(100vh - var(--navbar-h));
+        z-index: 150;
+        transition: left 0.1s linear;
+      }
+      #sidebar.open { left: 0; }
+      #main-content { padding: 24px 20px 60px; }
+      #products-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-card.featured { grid-column: span 2; }
+      .hero-name { font-size: 44px; }
+      #footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 640px) {
+      #hero-feature { grid-template-columns: 1fr; }
+      .hero-right { min-height: 180px; }
+      .hero-left { padding: 40px 24px 32px; }
+      .hero-name { font-size: 36px; }
+      #products-grid { grid-template-columns: 1fr; }
+      .product-card.featured { grid-column: span 1; }
+      .page-title { font-size: 36px; }
+      #cart-drawer { width: 100vw; }
+      .nav-links { display: none; }
+      .nav-tagline { display: none; }
+    }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .hidden { display: none !important; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+    /* ============================================================
+       RESPONSIVE MOBILE — CORRECCIONES ADICIONALES
+    ============================================================ */
+
+    /* --- Hover effect navbar links --- */
+    .nav-links a {
+      transition: 0.1s linear;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 100%;
+      height: 1px;
+      background: #E31E24;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      transition: transform 0.1s linear;
+    }
+    .nav-links a:hover {
+      color: #fff;
+    }
+    .nav-links a:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* --- Botón para abrir filtros en mobile --- */
+    .filter-toggle-btn {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: border-color 0.1s linear, color 0.1s linear;
+    }
+    .filter-toggle-btn:hover { border-color: var(--red); color: var(--white); }
+
+    /* --- Overlay para sidebar mobile --- */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 149;
+    }
+    #sidebar-overlay.active { display: block; }
+
+    @media (max-width: 900px) {
+      /* Mostrar botón de filtros */
+      .filter-toggle-btn { display: flex; }
+
+      /* Page header flex-wrap */
+      .page-header { flex-wrap: wrap; gap: 12px; }
+      .header-meta { text-align: left; }
+    }
+
+    @media (max-width: 768px) {
+      /* Navbar padding */
+      #navbar { padding: 0 20px; }
+
+      /* Main content */
+      #main-content { padding: 20px 16px 60px; }
+
+      /* Page header */
+      .page-header { flex-direction: column; align-items: flex-start; gap: 12px; padding-bottom: 16px; }
+      .page-title { font-size: 40px; }
+      .header-meta { text-align: left; }
+      .header-meta .meta-line { line-height: 1.6; }
+
+      /* Hero feature */
+      #hero-feature { grid-template-columns: 1fr; }
+      .hero-right { min-height: 160px; }
+      .hero-left { padding: 40px 20px 28px; }
+      .hero-name { font-size: 38px; }
+      .hero-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+      /* Products grid: 2 col */
+      #products-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-card.featured { grid-column: span 2; }
+
+      /* Footer */
+      #footer { padding: 20px 16px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      /* Navbar */
+      #navbar { padding: 0 16px; }
+      .nav-logo { font-size: 20px; }
+      .cart-btn { padding: 6px 10px; font-size: 10px; }
+
+      /* Main content */
+      #main-content { padding: 16px 12px 48px; }
+
+      /* Page title */
+      .page-title { font-size: 32px; }
+
+      /* Hero feature */
+      .hero-name { font-size: 28px; }
+      .hero-tagline { font-size: 11px; }
+      .hero-price { font-size: 40px; }
+      .hero-left { padding: 32px 16px 24px; }
+
+      /* Products grid: 1 col */
+      #products-grid { grid-template-columns: 1fr; }
+      .product-card.featured { grid-column: span 1; }
+
+      /* Cart drawer full width */
+      #cart-drawer { width: 100vw; }
+
+      /* Toast */
+      #toast { width: calc(100vw - 32px); white-space: normal; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- V5 PRELOADER -->
+<div id="v5-preloader" class="v5-preloader">
+  <div class="v5-preloader-logo">WELL<span>CORE</span></div>
+  <div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div>
+</div>
+
+<!-- ================================================================
+     NAVBAR
+================================================================ -->
+<nav id="navbar" role="navigation" aria-label="Navegacion principal">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">WELL<span>CORE</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="metodo.html">M&eacute;todo</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="planes.html">Planes</a></li>
+      <li><a href="#" class="active">Tienda</a></li>
+      <li><a href="blog/">Blog</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="coaches.html">Coaches</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+    <button class="cart-btn" id="cart-toggle-btn" aria-label="Abrir carrito">
+      <span style="color:#00D9FF;font-weight:700">&#9671;</span>
+      CARRITO
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Overlay sidebar mobile -->
+<div id="sidebar-overlay"></div>
+
+<!-- ================================================================
+     PAGE WRAPPER
+================================================================ -->
+<div class="page-wrapper">
+
+  <!-- LEFT SIDEBAR -->
+  <aside id="sidebar" role="complementary" aria-label="Filtros de productos">
+    <p class="sidebar-label">FILTROS</p>
+    <hr class="sidebar-divider" />
+
+    <div class="filter-group" role="radiogroup" aria-label="Categoria de productos">
+      <label class="filter-item">
+        <input type="radio" name="category" value="all" checked />
+        <span>TODOS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="proteinas" />
+        <span>PROTEINAS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="creatinas" />
+        <span>CREATINAS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="aminoacidos" />
+        <span>AMINOACIDOS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="pre-entrenos" />
+        <span>PRE-ENTRENOS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="quemadores" />
+        <span>QUEMADORES</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="vitaminas" />
+        <span>VITAMINAS / SALUD</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="naturales" />
+        <span>NATURALES</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="combos" />
+        <span>COMBOS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="accesorios" />
+        <span>ACCESORIOS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="category" value="digital" />
+        <span>DIGITAL</span>
+      </label>
+    </div>
+
+    <hr class="sidebar-divider" />
+
+    <p class="sidebar-label">MARCA</p>
+    <div class="filter-group" role="radiogroup" aria-label="Filtro por marca">
+      <label class="filter-item">
+        <input type="radio" name="brand" value="all" checked />
+        <span>TODAS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="brand" value="hi-tech" />
+        <span>HI-TECH PHARMA</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="brand" value="macroblends" />
+        <span>MACROBLENDS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="brand" value="hard-supps" />
+        <span>HARD SUPPS</span>
+      </label>
+      <label class="filter-item">
+        <input type="radio" name="brand" value="nutramerican" />
+        <span>NUTRAMERICAN</span>
+      </label>
+    </div>
+
+    <hr class="sidebar-divider" />
+
+    <p class="sidebar-label">PRECIO</p>
+    <button class="sort-btn active" id="sort-asc" data-sort="asc">Bajo &rarr; Alto</button>
+    <button class="sort-btn" id="sort-desc" data-sort="desc">Alto &rarr; Bajo</button>
+
+    <hr class="sidebar-divider" />
+
+    <p class="product-count" id="product-count">40 PRODUCTOS</p>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content" role="main">
+
+    <!-- PAGE HEADER -->
+    <header class="page-header" data-v5-reveal>
+      <div>
+        <p class="breadcrumb">WELLCORE FITNESS &rsaquo; <span>TIENDA</span></p>
+        <h1 class="page-title">SUPLEMENTOS <span class="page-title-sub">WELLCORE</span></h1>
+        <!-- Botón filtros solo visible en mobile -->
+        <button class="filter-toggle-btn" id="filterToggleBtn" aria-label="Abrir filtros">
+          <span style="color:#00D9FF;font-weight:700">//</span> FILTROS
+        </button>
+      </div>
+      <div class="header-meta">
+        <p class="meta-line">PRODUCTOS DISPONIBLES: <span id="available-count">57</span></p>
+        <p class="meta-line">ENVIOS: <span>SOLO COLOMBIA</span></p>
+        <p class="meta-line">PAGOS SEGUROS: <span>SSL 256-BIT</span></p>
+      </div>
+    </header>
+
+    <!-- HERO FEATURE BANNER -->
+    <section id="hero-feature" aria-label="Producto destacado" data-v5-reveal>
+      <span class="hero-badge">&#9679; PRODUCTO DESTACADO</span>
+      <div class="hero-left">
+        <p class="hero-cat">PROTEINA / MACROBLENDS</p>
+        <h2 class="hero-name">PROTEINA WHEY BLEND 4 LB</h2>
+        <p class="hero-tagline">
+          Proteina de suero de leche blend premium de 4 libras.<br />
+          60 servicios de pura proteina de alta calidad para construccion muscular.<br />
+          Disponible en Vainilla, Caramelo, Chocolate y Cookies &amp; Cream.
+        </p>
+        <div class="hero-meta">
+          <div>
+            <span class="hero-price-label">PRECIO COP</span>
+            <span class="hero-price">$280.000</span>
+          </div>
+          <div>
+            <p class="hero-stock">ENVIO GRATIS</p>
+            <p class="hero-stock"><strong>SOLO COLOMBIA</strong></p>
+          </div>
+        </div>
+        <button class="hero-cta btn-v5 btn-v5-primary" onclick="heroAddToCart()">
+          <div class="btn-bg"></div>
+          <span class="btn-text">AGREGAR AL CARRITO &rarr;</span>
+        </button>
+      </div>
+      <div class="hero-right" style="background-image:url('https://suplementosgainslab.com/cdn/shop/files/whey_4lb_vainilla-removebg-preview.png');background-size:contain;background-repeat:no-repeat;background-position:center">
+        <span class="hero-right-label">WHEY BLEND &mdash; 4 LB &mdash; 60 SERVICIOS</span>
+      </div>
+    </section>
+
+    <!-- PRODUCTS SECTION HEADER -->
+    <div class="section-header">
+      <span class="section-label">CATALOGO</span>
+      <div class="section-line"></div>
+      <span class="section-count" id="grid-count">40 ITEMS</span>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div id="products-grid" role="list" aria-label="Catalogo de productos">
+      <!-- Cards injected by JS -->
+      <div id="empty-state" role="listitem">
+        <span style="font-size:48px;color:var(--border);font-weight:700;font-family:var(--font-mono)">//</span>
+        <p>SIN PRODUCTOS EN ESTA CATEGORIA</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ================================================================
+     CART OVERLAY & DRAWER
+================================================================ -->
+<div id="cart-overlay" role="presentation" tabindex="-1"></div>
+
+<aside id="cart-drawer" role="dialog" aria-modal="true" aria-label="Carrito de compras">
+  <div class="cart-header">
+    <span class="cart-title">MI CARRITO <span id="cart-header-count">[0 ITEMS]</span></span>
+    <button class="cart-close" id="cart-close-btn" aria-label="Cerrar carrito">
+      &#10005;
+    </button>
+  </div>
+
+  <div class="cart-items" id="cart-items-container">
+    <div class="cart-empty" id="cart-empty-msg">
+      <span style="font-size:40px;color:var(--border);font-weight:700;font-family:var(--font-mono);display:block;margin-bottom:16px">//</span>
+      <p>TU CARRITO<br />ESTA VACIO</p>
+    </div>
+  </div>
+
+  <div class="cart-footer" id="cart-footer">
+    <div class="cart-row">
+      <span class="cart-row-label">SUBTOTAL</span>
+      <span class="cart-row-value" id="cart-subtotal">$0</span>
+    </div>
+    <div class="cart-row">
+      <span class="cart-row-label">ENVIO</span>
+      <span class="cart-row-value">GRATIS COLOMBIA</span>
+    </div>
+    <div class="cart-total-row">
+      <span class="cart-total-label">TOTAL ESTIMADO</span>
+      <span class="cart-total-value" id="cart-total">$0</span>
+    </div>
+    <button class="checkout-btn" onclick="proceedCheckout()">
+      PROCEDER AL CHECKOUT
+      &rarr;
+    </button>
+  </div>
+</aside>
+
+<!-- TOAST -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer id="footer" role="contentinfo">
+  <div class="footer-brand">WELL<span>CORE</span> FITNESS</div>
+  <p class="footer-mono">TIENDA OFICIAL &mdash; &copy; 2026 &mdash; SOLO ENVIOS EN COLOMBIA</p>
+  <p class="footer-mono">TODOS LOS PRECIOS EN COP (PESOS COLOMBIANOS)</p>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+/* ================================================================
+   PRODUCT DATA
+================================================================ */
+const PRODUCTS = [
+  // ── PROTEINAS ──────────────────────────────────────────
+  { id:'whey-4lb', name:'Proteina Whey Blend 4 LB', brand:'MACROBLENDS', cat:'proteinas', desc:'Blend de proteina de suero con 60 servicios por envase. Combina whey concentrate e isolate para un perfil de aminoacidos completo con absorcion rapida y sostenida. Disponible en 4 sabores con excelente solubilidad.', price:280000, img:'images/shop/whey-4lb.png', servings:'60 servicios', weight:'4 LB', flavors:['Vainilla','Caramelo','Chocolate','Cookies & Cream'], stock:15, badge:'DESTACADO', featured:true },
+  { id:'whey-2lb', name:'Proteina Whey Blend 2 LB', brand:'MACROBLENDS', cat:'proteinas', desc:'Version de 2 libras del Whey Blend de Macroblends con 30 servicios. Misma formula de proteina blend con absorcion rapida y perfil completo de aminoacidos. Presentacion ideal para quienes prueban por primera vez.', price:180000, img:'images/shop/whey-2lb.png', servings:'30 servicios', weight:'2 LB', flavors:['Caramelo','Chocolate','Cookies & Cream','Vainilla'], stock:20, badge:null, featured:false },
+  { id:'perfect-2lb', name:'Proteina Perfect Blend 2 LB', brand:'MACROBLENDS', cat:'proteinas', desc:'Formula de proteina multi-fuente que combina distintas velocidades de absorcion para un aporte proteico prolongado. Contiene enzimas digestivas que mejoran la biodisponibilidad. Opcion versatil para post-entreno y entre comidas.', price:165000, img:'images/shop/perfect-2lb.png', servings:'30 servicios', weight:'2 LB', flavors:null, stock:10, badge:null, featured:false },
+  { id:'xl-food-3lb', name:'XL Food Blend 3 LB', brand:'MACROBLENDS', cat:'proteinas', desc:'Gainer premium de 3 libras con ratio equilibrado de proteina y carbohidratos de calidad. Disenado para atletas en fase de volumen que necesitan aporte calorico extra. Ideal para hardgainers y metabolismo acelerado.', price:96000, img:'images/shop/xl-food-3lb.png', servings:'15 servicios', weight:'3 LB', flavors:['Vainilla'], stock:8, badge:null, featured:false },
+  { id:'evo-10lb', name:'Evolution Mass 10 LB', brand:'SMART NUTRITION', cat:'proteinas', desc:'Mass gainer de 10 libras con alto contenido calorico. Formulado con proteina de suero, carbohidratos complejos y MCTs para energia sostenida. 40 servicios, el mejor costo por servicio del mercado.', price:250000, img:'images/shop/evo-10lb.png', servings:'40 servicios', weight:'10 LB', flavors:null, stock:5, badge:null, featured:false },
+
+  // ── CREATINAS ──────────────────────────────────────────
+  { id:'cr2-60', name:'CR2 Creatina 60 Servicios', brand:'MACROBLENDS', cat:'creatinas', desc:'Creatina monohidrato saborizada con 60 servicios. La creatina es el suplemento mas investigado del mundo con evidencia solida en fuerza, potencia y rendimiento. Formula CR2 con sistemas de transporte mejorados.', price:110000, img:'images/shop/cr2-60.png', servings:'60 servicios', weight:'300g', flavors:['Pina Colada','Fresa','Tropical'], stock:25, badge:'DESTACADO', featured:true },
+  { id:'cr2-30', name:'CR2 Creatina 30 Servicios', brand:'MACROBLENDS', cat:'creatinas', desc:'Presentacion de 30 servicios de la creatina saborizada CR2. Formato ideal para probar el producto o ciclos de mantenimiento. Perfecta como primera creatina o como opcion de viaje.', price:65000, img:'images/shop/cr2-30.png', servings:'30 servicios', weight:'150g', flavors:['Maracuya'], stock:15, badge:null, featured:false },
+  { id:'cr-pure', name:'CR-PURE Creatina Creapure', brand:'MACROBLENDS', cat:'creatinas', desc:'Creatina monohidrato con certificacion Creapure de Alemania, pureza superior al 99.95%. Sin sabor, sin aditivos. Aumenta fuerza maxima entre 5-10% y masa magra en 1-2 kg en 4-12 semanas.', price:120000, img:'images/shop/cr-pure.png', servings:'60 servicios', weight:'300g', flavors:null, stock:10, badge:'PREMIUM', featured:false },
+  { id:'crea-stack', name:'Creatina Crea Stack', brand:'NUTRAMERICAN', cat:'creatinas', desc:'Stack de creatinas que combina multiples formas del compuesto para maximizar la saturacion muscular. Incluye monohidrato, HCL y complejo de transporte. Para atletas avanzados en fuerza y potencia.', price:160000, img:'images/shop/crea-stack.png', servings:'60 servicios', weight:'400g', flavors:null, stock:8, badge:null, featured:false },
+  { id:'creatina-iron', name:'Creatina Monohidrato', brand:'IRON NUTRITION', cat:'creatinas', desc:'Creatina monohidrato micronizada sin sabor de grado farmaceutico. 66 servicios — uno de los mejores rendimientos por gramo del mercado. Se mezcla con cualquier bebida sin alterar sabor.', price:120000, img:'images/shop/creatina-iron.png', servings:'66 servicios', weight:'400g', flavors:null, stock:12, badge:null, featured:false },
+
+  // ── AMINOACIDOS ─────────────────────────────────────────
+  { id:'eaas-prec', name:'EAAs Precision', brand:'HI-TECH', cat:'aminoacidos', desc:'Formula completa de 9 aminoacidos esenciales en ratio cientificamente validado. Los EAAs son bloques fundamentales para sintesis proteica muscular. Superior a BCAAs solos segun investigaciones recientes.', price:160000, img:'images/shop/eaas-precision.png', servings:'30 servicios', weight:'390g', flavors:['Fruit Punch','Blueberry'], stock:18, badge:null, featured:false },
+  { id:'bcaa-sup', name:'BCAA Supreme', brand:'HI-TECH', cat:'aminoacidos', desc:'Aminoacidos de cadena ramificada en ratio 2:1:1 optimizado con electrolitos y vitaminas B. Formulado para recuperacion e hidratacion durante el entrenamiento. Util en sesiones largas o entrenamientos en ayunas.', price:160000, img:'images/shop/bcaa-supreme.png', servings:'30 servicios', weight:'390g', flavors:['Sandia','Blueberry'], stock:15, badge:null, featured:false },
+  { id:'eaas-mix', name:'EAAs Mix 30 Servicios', brand:'MACROBLENDS', cat:'aminoacidos', desc:'Mezcla de aminoacidos esenciales saborizada con 30 servicios y 4 sabores. Formula economica con todos los EAAs para activar sintesis proteica. Baja en calorias, ideal intra-entreno sin afectar deficit calorico.', price:125000, img:'images/shop/eaas-mix.png', servings:'30 servicios', weight:'330g', flavors:['Pina Colada','Zarzamora','Limonada Cherry','Maracuya'], stock:20, badge:'NUEVO', featured:true },
+
+  // ── PRE-ENTRENOS ────────────────────────────────────────
+  { id:'mesomorph', name:'Mesomorph Pre-Workout', brand:'HI-TECH', cat:'pre-entrenos', desc:'Pre-entreno de alta estimulacion para atletas avanzados. Energia maxima, foco mental intenso y pump vascular extremo. Uno de los mas potentes del mercado. No recomendado para principiantes.', price:170000, img:'images/shop/mesomorph.png', servings:'25 servicios', weight:'388g', flavors:null, stock:10, badge:'DESTACADO', featured:true },
+  { id:'rm-pre', name:'RM Pre-Entreno 30 servs', brand:'MACROBLENDS', cat:'pre-entrenos', desc:'Pre-entreno con formula balanceada para energia sostenida sin crash. Combina cafeina con L-teanina para estimulacion limpia. Incluye beta-alanina y citrulina para resistencia y pump.', price:155000, img:'images/shop/rm-pre.png', servings:'30 servicios', weight:'300g', flavors:['Cherry'], stock:8, badge:null, featured:false },
+  { id:'neuro-freak', name:'Neuro Freak', brand:'HARD SUPPS', cat:'pre-entrenos', desc:'Nootropico pre-entrenamiento para maximizar la conexion mente-musculo y foco mental. Prioriza concentracion sobre estimulacion pura. Ideal para sesiones tecnicas y entrenamientos nocturnos.', price:140000, img:'images/shop/neuro-freak.png', servings:'30 servicios', weight:'250g', flavors:null, stock:6, badge:null, featured:false },
+
+  // ── QUEMADORES ──────────────────────────────────────────
+  { id:'lipodrene', name:'Lipodrene', brand:'HI-TECH', cat:'quemadores', desc:'Termogenico de referencia con formula original de Hi-Tech Pharma. Mas de 20 anos en el mercado. Actua sobre multiples vias metabolicas para aumentar gasto calorico en reposo. 90 capsulas, ciclo de 30-45 dias.', price:165000, img:'images/shop/lipodrene.webp', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:10, badge:null, featured:false },
+  { id:'lipo-xtreme', name:'Lipodrene Xtreme', brand:'HI-TECH', cat:'quemadores', desc:'Version de mayor potencia del Lipodrene clasico. Formulado para usuarios experimentados con tolerancia a termogenicos. 90 capsulas. Combinar con dieta hipocalorica y ejercicio.', price:165000, img:'images/shop/lipo-xtreme.webp', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:8, badge:null, featured:false },
+  { id:'lipo-elite', name:'Lipodrene Elite', brand:'HI-TECH', cat:'quemadores', desc:'Formulacion premium de la linea Lipodrene con ingredientes exclusivos. Control de peso avanzado con enfoque en preservacion muscular durante deficit calorico. 90 capsulas para ciclo completo.', price:165000, img:'images/shop/lipo-elite.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:8, badge:null, featured:false },
+  { id:'burner-stack', name:'Burner Stack', brand:'NUTRAMERICAN', cat:'quemadores', desc:'Stack quemador de grasa con formula sinergica de ingredientes termogenicos y lipoliticos. Metabolismo basal, oxidacion de grasa y control de apetito. 60 capsulas, ciclo de 30 dias.', price:140000, img:'images/shop/burner-stack.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:10, badge:null, featured:false },
+
+  // ── VITAMINAS / SALUD ───────────────────────────────────
+  { id:'musclevite', name:'MuscleVite Multivitaminico', brand:'HI-TECH', cat:'vitaminas', desc:'Multivitaminico de grado atletico con 120 tabletas para deportistas de alto rendimiento. Cubre micronutrientes que se depletan con ejercicio intenso: zinc, magnesio, complejo B y antioxidantes.', price:170000, img:'images/shop/musclevite.png', servings:'120 tabletas', weight:'120 tabs', flavors:null, stock:12, badge:null, featured:false },
+  { id:'multi-core', name:'Multi Core Multivitaminico', brand:'HARD SUPPS', cat:'vitaminas', desc:'Multivitaminico esencial con minerales clave en 60 capsulas. Cubre necesidades basicas sin sobredosificar. Formula directa y economica. Base de suplementacion para cualquier persona activa.', price:95000, img:'images/shop/multi-core.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:15, badge:null, featured:false },
+  { id:'omega-3', name:'Omega 3', brand:'MACROBLENDS', cat:'vitaminas', desc:'Aceite de pescado con EPA y DHA de alta concentracion en 60 softgels. Evidencia robusta en salud cardiovascular y reduccion de inflamacion. Esencial para atletas con alta frecuencia de entrenamiento.', price:70000, img:'images/shop/omega-3.png', servings:'60 softgels', weight:'60 caps', flavors:null, stock:20, badge:null, featured:false },
+  { id:'fish-oil', name:'Fish Oil', brand:'HI-TECH', cat:'vitaminas', desc:'Aceite de pescado premium Hi-Tech con ratio optimizado omega 3-6-9. 90 softgels para 3 meses. Procesado molecularmente para eliminar metales pesados. Recuperacion, funcion cerebral y salud articular.', price:90000, img:'images/shop/fish-oil.png', servings:'90 softgels', weight:'90 caps', flavors:null, stock:10, badge:null, featured:false },
+  { id:'greens-mix', name:'Greens Mix', brand:'MACROBLENDS', cat:'vitaminas', desc:'Superalimentos verdes en polvo con 30 servicios. Concentrado de vegetales, frutas, enzimas y probioticos. Complementa dietas altas en proteina. No reemplaza vegetales, pero cubre brechas nutricionales.', price:99000, img:'images/shop/greens-mix.png', servings:'30 servicios', weight:'250g', flavors:null, stock:8, badge:null, featured:false },
+  { id:'liver-rx', name:'Liver-RX', brand:'HI-TECH', cat:'vitaminas', desc:'Protector hepatico avanzado con silimarina, NAC y complejo hepatoprotector. Para suplementacion intensiva o dietas altas en proteina. 90 capsulas, ciclo de 30 dias. Esencial en protocolos de salud integral.', price:110000, img:'images/shop/liver-rx.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:10, badge:null, featured:false },
+  { id:'milk-thistle', name:'Milk Thistle / Silimarina', brand:'HI-TECH', cat:'vitaminas', desc:'Silimarina pura estandarizada en 90 capsulas. Uno de los protectores hepaticos mas estudiados con decadas de investigacion. Antioxidante hepatico que promueve regeneracion celular. Mantenimiento a largo plazo.', price:100000, img:'images/shop/milk-thistle.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:15, badge:null, featured:false },
+
+  // ── POTENCIADORES NATURALES ─────────────────────────────
+  { id:'turkesterone', name:'Turkesterone 650', brand:'HI-TECH', cat:'naturales', desc:'Ecdysterona vegetal en capsulas de 650mg. Estudios preliminares sugieren mejoras en sintesis proteica y masa magra sin afectar el eje hormonal. No es esteroide. Para atletas naturales.', price:200000, img:'images/shop/turkesterone.webp', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:10, badge:'DESTACADO', featured:true },
+  { id:'ashwagandha', name:'Ashwagandha KSM-66', brand:'HI-TECH', cat:'naturales', desc:'Extracto KSM-66, el adaptogeno con mayor respaldo cientifico. Reduccion de cortisol del 27-30%, mejora en testosterona y calidad del sueno. 60 capsulas para ciclo de 2 meses.', price:160000, img:'images/shop/ashwagandha.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:12, badge:null, featured:false },
+  { id:'tonkat-ali', name:'Tonkat Ali 100:1', brand:'HI-TECH', cat:'naturales', desc:'Extracto de Tongkat Ali ratio 100:1, uno de los mas potentes del mercado. Mejoras en testosterona libre, composicion corporal y bienestar en hombres. Sinergia comprobada con ashwagandha.', price:150000, img:'images/shop/tonkat-ali.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:8, badge:null, featured:false },
+  { id:'shilajit', name:'Extracto de Shilajit', brand:'HI-TECH', cat:'naturales', desc:'Shilajit purificado del Himalaya con acido fulvico y 80+ minerales traza. Mejoras en testosterona, energia mitocondrial y absorcion de nutrientes. 60 capsulas libres de metales pesados.', price:130000, img:'images/shop/shilajit.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:10, badge:null, featured:false },
+  { id:'berberine', name:'Berberine', brand:'HI-TECH', cat:'naturales', desc:'Berberina de alta pureza, 90 capsulas. Evidencia robusta en control glucemico y composicion corporal. Meta-analisis la situan a la par de metformina. Util en recomposicion corporal.', price:130000, img:'images/shop/berberine.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:8, badge:null, featured:false },
+  { id:'testo-rage', name:'Testo Rage', brand:'HARD SUPPS', cat:'naturales', desc:'Potenciador de testosterona Hard Supps con formula herbal concentrada. Extractos estandarizados para optimizacion hormonal. 60 capsulas, ciclo de 30 dias. Combinar con entrenamiento de fuerza y sueno.', price:150000, img:'images/shop/testo-rage.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:6, badge:null, featured:false },
+  { id:'zma', name:'ZMA', brand:'HARD SUPPS', cat:'naturales', desc:'Formula clasica ZMA: Zinc, Magnesio y B6 en proporciones validadas. Mejora calidad del sueno, recuperacion y niveles hormonales. 90 capsulas, 30 dias. Tomar 30 min antes de dormir.', price:95000, img:'images/shop/ZMA.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:15, badge:null, featured:false },
+  { id:'hmb-1000', name:'HMB 1000', brand:'HARD SUPPS', cat:'naturales', desc:'Beta-Hidroxi-Beta-Metilbutirato, 1000mg por capsula. Metabolito de leucina con evidencia en prevencion de catabolismo muscular. 90 capsulas. Beneficioso en fase de corte para preservar masa muscular.', price:90000, img:'images/shop/hmb-1000.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:10, badge:null, featured:false },
+  { id:'l-arginina', name:'L-Arginina', brand:'HARD SUPPS', cat:'naturales', desc:'L-Arginina pura, precursor del oxido nitrico. Vasodilatacion para mejor flujo sanguineo, nutrientes y pump muscular. 60 capsulas. Tomar pre-entreno o dividir la dosis.', price:80000, img:'images/shop/l-arginina.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:12, badge:null, featured:false },
+  { id:'resveratrol', name:'Resveratrol', brand:'HI-TECH', cat:'naturales', desc:'Antioxidante polifenolico de uvas y vino tinto en capsulas de alta potencia. Investigaciones en propiedades anti-envejecimiento y salud cardiovascular. 60 capsulas para proteccion celular contra estres oxidativo.', price:120000, img:'images/shop/resveratrol.png', servings:'60 capsulas', weight:'60 caps', flavors:null, stock:10, badge:null, featured:false },
+
+  // ── COMBOS ──────────────────────────────────────────────
+  { id:'combo-bulk', name:'Combo Bulk', brand:'WELLCORE', cat:'combos', desc:'Pack de volumen: Proteina + Creatina, los dos suplementos con mayor evidencia para ganancia muscular. Ahorro significativo vs compra por separado. Ideal para iniciar suplementacion.', price:240000, img:'images/shop/combo-bulk.png', servings:null, weight:null, flavors:null, stock:5, badge:null, featured:false },
+  { id:'combo-pump', name:'Combo Pump', brand:'WELLCORE', cat:'combos', desc:'Pack de pump: Pre-entreno + L-Arginina para maxima vasodilatacion. Arginina como precursora de oxido nitrico combinada con vasodilatadores del pre genera efecto sinergico. Para sesiones de hipertrofia.', price:235000, img:'images/shop/combo-pump.png', servings:null, weight:null, flavors:null, stock:5, badge:null, featured:false },
+
+  // ── NUTRAMERICAN — NUEVOS ────────────────────────────
+  { id:'bipro-09lb', name:'Proteina Aislada BiPro Classic 0.9 LB', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Proteina isolate de alta pureza en presentacion compacta. Baja en grasa, carbohidratos y lactosa. BiPro es la marca colombiana de referencia en proteina aislada.', price:85000, img:'images/shop/bipro-09lb.png', servings:'12 servicios', weight:'0.9 LB', flavors:null, stock:10, badge:null, featured:false },
+  { id:'bipro-2lb', name:'Proteina BiPro Classic 2 LB', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Proteina aislada BiPro Classic en 2 libras. Formula colombiana con isolate de alta biodisponibilidad. La presentacion mas popular de la linea.', price:165000, img:'images/shop/bipro-2lb.png', servings:'30 servicios', weight:'2 LB', flavors:null, stock:12, badge:null, featured:false },
+  { id:'bipro-capuccino-3lb', name:'Proteina BiPro Capuccino 3 LB', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Proteina isolate BiPro sabor capuccino con crema whisky en 3 libras. Sabor premium con la calidad de proteina aislada BiPro.', price:225000, img:'images/shop/bipro-capuccino-3lb.png', servings:'45 servicios', weight:'3 LB', flavors:['Capuccino Crema Whisky'], stock:8, badge:null, featured:false },
+  { id:'bipro-pina-3lb', name:'Proteina BiPro Pina Colada 3 LB', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Proteina isolate BiPro Classic sabor pina colada en 3 libras. Sabor tropical refrescante con la misma pureza de la linea.', price:225000, img:'images/shop/bipro-pina-3lb.png', servings:'45 servicios', weight:'3 LB', flavors:['Pina Colada'], stock:8, badge:null, featured:false },
+  { id:'iso-clean-2lb', name:'Proteina ISO Clean 2 LB', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Proteina isolate ISO Clean con filtracion avanzada para maxima pureza. Bajo contenido de grasa y lactosa. Para atletas que exigen la mayor calidad.', price:180000, img:'images/shop/iso-clean-2lb.webp', servings:'30 servicios', weight:'2 LB', flavors:null, stock:8, badge:null, featured:false },
+  { id:'megaplex-10lb', name:'Megaplex Creatine Power 10 LB', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Hipercalorico con creatina incorporada en 10 libras. El mass gainer colombiano mas completo. Ideal para ectomorfos con requerimientos caloricos altos.', price:235000, img:'images/shop/megaplex-10lb.png', servings:'40 servicios', weight:'10 LB', flavors:null, stock:5, badge:null, featured:false },
+  { id:'megaplex-2lb', name:'Megaplex Creatine Power 2 LB', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Hipercalorico con creatina en presentacion de 2 libras. Opcion economica para ganancia de peso y masa muscular.', price:65000, img:'images/shop/megaplex-2lb.png', servings:'8 servicios', weight:'2 LB', flavors:null, stock:10, badge:null, featured:false },
+  { id:'protein-pancake', name:'Protein Pancake & Waffle', brand:'NUTRAMERICAN', cat:'proteinas', desc:'Mezcla para pancakes y waffles con proteina. Solo agregar agua. Desayuno alto en proteina facil y rapido.', price:44000, img:'images/shop/protein-pancake.png', servings:'10 servicios', weight:'500g', flavors:null, stock:15, badge:'NUEVO', featured:false },
+
+  // ── HI-TECH PHARMA — NUEVOS ──────────────────────────
+  { id:'nac', name:'NAC / N-Acetilcisteina', brand:'HI-TECH', cat:'vitaminas', desc:'Precursor del glutation, el antioxidante maestro del cuerpo. Proteccion hepatica y recuperacion del estres oxidativo del ejercicio.', price:100000, img:'images/shop/nac.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:12, badge:null, featured:false },
+  { id:'vitamina-d3', name:'Vitamina D3', brand:'HI-TECH', cat:'vitaminas', desc:'Vitamina D3 de alta potencia. Critica para salud osea, funcion inmune y niveles hormonales optimos. Basico para todo atleta.', price:75000, img:'images/shop/vitamina-d3.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:15, badge:null, featured:false },
+  { id:'vitamina-c-1000', name:'Vitamina C 1000 MG', brand:'HI-TECH', cat:'vitaminas', desc:'Vitamina C en dosis de 1000mg para soporte inmunologico y antioxidante. Apoya la sintesis de colageno para salud articular.', price:100000, img:'images/shop/vitamina-c-1000.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:15, badge:null, featured:false },
+  { id:'l-glutamine', name:'L-Glutamina', brand:'HI-TECH', cat:'aminoacidos', desc:'Aminoacido mas abundante en el musculo. Apoya recuperacion muscular, salud intestinal y funcion inmune. Se puede agregar a cualquier batido.', price:140000, img:'images/shop/l-glutamine.png', servings:'60 servicios', weight:'300g', flavors:null, stock:10, badge:null, featured:false },
+  { id:'yohimbine', name:'Yohimbine HCL', brand:'HI-TECH', cat:'quemadores', desc:'Antagonista alfa-2 para movilizacion de grasa rebelde. Efectiva en abdomen bajo y espalda baja. Tomar en ayunas antes de cardio.', price:90000, img:'images/shop/yohimbine.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:8, badge:null, featured:false },
+  { id:'magnesio-glicinato', name:'Glicinato de Magnesio', brand:'HI-TECH', cat:'vitaminas', desc:'Magnesio glicinato de alta biodisponibilidad. Participa en 300+ reacciones enzimaticas. Tomar antes de dormir para mejor sueno.', price:100000, img:'images/shop/magnesio-glicinato.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:12, badge:null, featured:false },
+  { id:'colageno-peptidos', name:'Peptidos de Colageno', brand:'HI-TECH', cat:'vitaminas', desc:'Colageno hidrolizado para salud articular, piel y tejido conectivo. Especialmente recomendado para atletas mayores de 30 anos.', price:190000, img:'images/shop/colageno-peptidos.png', servings:'30 servicios', weight:'300g', flavors:null, stock:8, badge:null, featured:false },
+  { id:'lipo-hardcore', name:'Lipodrene Hardcore', brand:'HI-TECH', cat:'quemadores', desc:'La version mas agresiva de la linea Lipodrene. Solo para usuarios experimentados con alta tolerancia a estimulantes.', price:165000, img:'images/shop/lipo-hardcore.png', servings:'90 capsulas', weight:'90 caps', flavors:null, stock:6, badge:null, featured:false },
+  { id:'combo-vital', name:'Combo Vital Hi-Tech', brand:'HI-TECH', cat:'combos', desc:'Pack de salud integral Hi-Tech. Suplementos esenciales para bienestar y soporte del atleta a precio especial.', price:270000, img:'images/shop/combo-vital.png', servings:null, weight:null, flavors:null, stock:5, badge:null, featured:false },
+
+  // ── HARD SUPPS / MACROBLENDS — NUEVOS ─────────────────
+  { id:'combo-preworkout-hs', name:'Combo Pre-Workout Hard Supps', brand:'HARD SUPPS', cat:'combos', desc:'Pack pre-entreno Hard Supps con todo para sesiones de maxima intensidad a precio especial.', price:160000, img:'images/shop/combo-preworkout-hs.png', servings:null, weight:null, flavors:null, stock:5, badge:null, featured:false },
+
+  // ── ACCESORIOS ────────────────────────────────────────
+  { id:'bandas-resistencia-x5', name:'Bandas de Resistencia Set x5', brand:'WELLCORE', cat:'accesorios', desc:'Set de 5 bandas elasticas de latex premium con 5 niveles de resistencia progresivos. Ideales para calentamiento, activacion glute, rehabilitacion y entrenamiento en casa. Incluyen bolsa de transporte.', price:44900, img:'images/shop/bandas-resistencia.png', servings:null, weight:'5 bandas', flavors:null, stock:30, badge:null, featured:false },
+  { id:'shaker-wellcore-700ml', name:'Shaker WellCore 700ml', brand:'WELLCORE', cat:'accesorios', desc:'Mezclador de 700ml con compartimento inferior. Tapa a prueba de fugas, bola mezcladora de acero inoxidable. Libre de BPA, apto para lavavajillas. Diseno WellCore con acabado mate.', price:24900, img:'images/shop/shaker-wellcore.png', servings:null, weight:'700ml', flavors:null, stock:50, badge:null, featured:false },
+  { id:'guantes-entrenamiento', name:'Guantes de Entrenamiento', brand:'WELLCORE', cat:'accesorios', desc:'Guantes con palma de microfibra de agarre reforzado y respaldo de malla transpirable. Cierre de velcro ajustable. Costuras dobles en zonas de alto desgaste. Tallas S, M, L y XL.', price:29900, img:'images/shop/guantes-entrenamiento.png', servings:null, weight:null, flavors:['S','M','L','XL'], stock:25, badge:null, featured:false },
+  { id:'foam-roller-45cm', name:'Foam Roller 45cm', brand:'WELLCORE', cat:'accesorios', desc:'Rodillo de espuma de alta densidad para liberacion miofascial, recuperacion muscular y movilidad articular. Textura con relieves de masaje. Soporta hasta 150kg. Ideal para warm-up y cool-down.', price:39900, img:'images/shop/foam-roller.png', servings:null, weight:'45cm', flavors:null, stock:20, badge:null, featured:false },
+
+  // ── DIGITAL ───────────────────────────────────────────
+  { id:'guia-nutricion-wellcore', name:'Guia Nutricion WellCore PDF', brand:'WELLCORE', cat:'digital', desc:'Guia digital de nutricion de 85 paginas con plan personalizable por fase. Incluye calculadora de macros, 4 plantillas de menu semanal, lista de compras y tablas de equivalencias. Acceso inmediato.', price:19900, img:'images/shop/guia-nutricion.png', servings:null, weight:'PDF 85 pags', flavors:null, stock:999, badge:'DESTACADO', featured:true },
+  { id:'pack-recetas-fitness-50', name:'Pack Recetas Fitness 50+', brand:'WELLCORE', cat:'digital', desc:'Mas de 50 recetas altas en proteina con macros exactos por porcion, tiempo de preparacion e ingredientes accesibles. Categorias: desayunos, almuerzos, cenas, snacks y postres fitness. PDF descargable.', price:14900, img:'images/shop/pack-recetas.png', servings:null, weight:'PDF 50+ recetas', flavors:null, stock:999, badge:'NUEVO', featured:false }
+];
+
+/* ================================================================
+   STATE
+================================================================ */
+let cart    = JSON.parse(localStorage.getItem('wc_cart_b') || '[]');
+let currentCat   = 'all';
+let currentBrand = 'all';
+let currentSort  = 'asc';
+
+/* ================================================================
+   HELPERS
+================================================================ */
+function formatCOP(n) {
+  return '$' + n.toLocaleString('es-CO');
+}
+
+function getBrandSlug(brand) {
+  var map = {'HI-TECH':'hi-tech','MACROBLENDS':'macroblends','HARD SUPPS':'hard-supps','NUTRAMERICAN':'nutramerican','IRON NUTRITION':'iron-nutrition','SMART NUTRITION':'smart-nutrition','WELLCORE':'wellcore','INSANE LABZ':'insane-labz'};
+  return map[brand] || brand.toLowerCase().replace(/\s+/g,'-');
+}
+
+/* ================================================================
+   RENDER PRODUCTS
+================================================================ */
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  const emptyState = document.getElementById('empty-state');
+
+  // Filter by category
+  let filtered = currentCat === 'all'
+    ? [...PRODUCTS]
+    : PRODUCTS.filter(p => p.cat === currentCat);
+
+  // Filter by brand
+  if (currentBrand !== 'all') {
+    filtered = filtered.filter(p => getBrandSlug(p.brand) === currentBrand);
+  }
+
+  // Sort
+  filtered.sort((a, b) =>
+    currentSort === 'asc' ? a.price - b.price : b.price - a.price
+  );
+
+  // Remove old cards (keep empty state)
+  grid.querySelectorAll('.product-card').forEach(c => c.remove());
+
+  // Update counts
+  const count = filtered.length;
+  document.getElementById('product-count').textContent = count + ' PRODUCTO' + (count !== 1 ? 'S' : '');
+  document.getElementById('grid-count').textContent = count + ' ITEM' + (count !== 1 ? 'S' : '');
+  document.getElementById('available-count').textContent = count;
+
+  if (count === 0) {
+    emptyState.style.display = 'block';
+    return;
+  }
+  emptyState.style.display = 'none';
+
+  filtered.forEach(product => {
+    const card = buildCard(product);
+    grid.appendChild(card);
+  });
+}
+
+function buildCard(product) {
+  const isLowStock = product.stock < 10;
+  const isFeatured = product.featured;
+
+  const card = document.createElement('article');
+  card.className = 'product-card' + (isFeatured ? ' featured' : '');
+  card.setAttribute('role', 'listitem');
+  card.setAttribute('data-id', product.id);
+  card.setAttribute('data-cat', product.cat);
+
+  // Badge
+  var badgeEl = document.createElement('span');
+  if (product.badge === 'NUEVO') {
+    badgeEl.className = 'badge-new';
+    badgeEl.textContent = 'NUEVO';
+  } else if (product.badge === 'DESTACADO') {
+    badgeEl.className = 'badge-dest';
+    badgeEl.textContent = 'DESTACADO';
+  } else if (product.badge === 'PREMIUM') {
+    badgeEl.className = 'badge-dest';
+    badgeEl.style.background = 'var(--accent)';
+    badgeEl.style.color = '#000';
+    badgeEl.textContent = 'PREMIUM';
+  }
+
+  // Stock
+  var stockEl = document.createElement('span');
+  stockEl.className = isLowStock ? 'card-stock stock-low' : 'card-stock stock-ok';
+  stockEl.textContent = 'STOCK: ' + product.stock;
+
+  // Topbar
+  var topbar = document.createElement('div');
+  topbar.className = 'card-topbar';
+  topbar.appendChild(badgeEl);
+  topbar.appendChild(stockEl);
+
+  // Product image
+  var imgDiv = document.createElement('div');
+  imgDiv.className = 'product-img';
+  if (product.img) {
+    var imgEl = document.createElement('img');
+    imgEl.src = product.img;
+    imgEl.alt = product.name;
+    imgEl.loading = 'lazy';
+    imgEl.style.cssText = 'max-width:80%;max-height:140px;object-fit:contain;position:relative;z-index:1';
+    imgDiv.appendChild(imgEl);
+  } else {
+    var placeholder = document.createElement('span');
+    placeholder.style.cssText = 'font-size:48px;color:rgba(255,255,255,0.10);font-weight:700;font-family:var(--font-mono)';
+    placeholder.textContent = '\u25C7';
+    imgDiv.appendChild(placeholder);
+  }
+
+  // Card body
+  var body = document.createElement('div');
+  body.className = 'card-body';
+
+  // Brand + Category line
+  var catLine = document.createElement('p');
+  catLine.className = 'card-cat';
+  catLine.textContent = product.brand + ' / ' + product.cat.toUpperCase().replace('-',' ');
+
+  // Name
+  var nameEl = document.createElement('h3');
+  nameEl.className = 'card-name';
+  nameEl.textContent = product.name.toUpperCase();
+
+  // Description
+  var descEl = document.createElement('p');
+  descEl.className = 'card-desc';
+  descEl.textContent = product.desc || '';
+
+  // Meta row (servings + weight)
+  var metaRow = null;
+  if (product.servings || product.weight) {
+    metaRow = document.createElement('div');
+    metaRow.className = 'card-meta-row';
+    if (product.servings) {
+      var sItem = document.createElement('div');
+      sItem.className = 'card-meta-item';
+      sItem.textContent = 'SERVINGS';
+      var sVal = document.createElement('span');
+      sVal.textContent = product.servings;
+      sItem.appendChild(sVal);
+      metaRow.appendChild(sItem);
+    }
+    if (product.weight) {
+      var wItem = document.createElement('div');
+      wItem.className = 'card-meta-item';
+      wItem.textContent = 'PESO';
+      var wVal = document.createElement('span');
+      wVal.textContent = product.weight;
+      wItem.appendChild(wVal);
+      metaRow.appendChild(wItem);
+    }
+  }
+
+  // Flavors
+  var flavorsEl = null;
+  if (product.flavors && product.flavors.length > 0) {
+    flavorsEl = document.createElement('p');
+    flavorsEl.style.cssText = 'font-size:9px;color:var(--gray);letter-spacing:0.06em;margin-top:4px';
+    flavorsEl.textContent = product.flavors.join(' | ');
+  }
+
+  // Divider
+  var hr = document.createElement('hr');
+  hr.className = 'card-divider';
+
+  // Footer
+  var footer = document.createElement('div');
+  footer.className = 'card-footer';
+
+  var priceEl = document.createElement('span');
+  priceEl.className = 'product-price';
+  priceEl.textContent = formatCOP(product.price);
+
+  var addBtn = document.createElement('button');
+  addBtn.className = 'add-btn';
+  addBtn.textContent = 'AGREGAR \u2192';
+  addBtn.setAttribute('data-pid', product.id);
+  addBtn.addEventListener('click', function() { addToCart(product.id); });
+
+  footer.appendChild(priceEl);
+  footer.appendChild(addBtn);
+
+  body.appendChild(catLine);
+  body.appendChild(nameEl);
+  body.appendChild(descEl);
+  if (metaRow) body.appendChild(metaRow);
+  if (flavorsEl) body.appendChild(flavorsEl);
+  body.appendChild(hr);
+  body.appendChild(footer);
+
+  card.appendChild(topbar);
+  card.appendChild(imgDiv);
+  card.appendChild(body);
+
+  return card;
+}
+
+/* ================================================================
+   HERO ADD TO CART
+================================================================ */
+function heroAddToCart() {
+  addToCart('whey-4lb');
+}
+
+/* ================================================================
+   CART FUNCTIONS
+================================================================ */
+function addToCart(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  const existing = cart.find(item => item.id === productId);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+  }
+
+  saveCart();
+  updateCartUI();
+  showToast('AGREGADO: ' + product.name.substring(0, 28).toUpperCase() + (product.name.length > 28 ? '...' : ''));
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(item => item.id !== productId);
+  saveCart();
+  updateCartUI();
+}
+
+function updateQty(productId, delta) {
+  const item = cart.find(i => i.id === productId);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    removeFromCart(productId);
+    return;
+  }
+  saveCart();
+  updateCartUI();
+}
+
+function saveCart() {
+  localStorage.setItem('wc_cart_b', JSON.stringify(cart));
+}
+
+function getCartTotal() {
+  return cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+}
+
+function getCartItemCount() {
+  return cart.reduce((sum, item) => sum + item.qty, 0);
+}
+
+function updateCartUI() {
+  const total      = getCartTotal();
+  const itemCount  = getCartItemCount();
+
+  // Update count badges
+  document.getElementById('cart-count').textContent         = itemCount;
+  document.getElementById('cart-header-count').textContent  = '[' + itemCount + ' ' + (itemCount === 1 ? 'ITEM' : 'ITEMS') + ']';
+  document.getElementById('cart-subtotal').textContent      = formatCOP(total);
+  document.getElementById('cart-total').textContent         = formatCOP(total);
+
+  const container = document.getElementById('cart-items-container');
+  const emptyMsg  = document.getElementById('cart-empty-msg');
+
+  // Clear existing items (except empty message)
+  container.querySelectorAll('.cart-item').forEach(el => el.remove());
+
+  if (cart.length === 0) {
+    emptyMsg.style.display = 'flex';
+    document.getElementById('cart-footer').style.opacity = '0.4';
+    document.getElementById('cart-footer').style.pointerEvents = 'none';
+    return;
+  }
+
+  emptyMsg.style.display = 'none';
+  document.getElementById('cart-footer').style.opacity = '1';
+  document.getElementById('cart-footer').style.pointerEvents = 'all';
+
+  cart.forEach(function(item) {
+    var el = document.createElement('div');
+    el.className = 'cart-item';
+
+    var nameSpan = document.createElement('span');
+    nameSpan.className = 'cart-item-name';
+    nameSpan.textContent = item.name.toUpperCase();
+
+    var controls = document.createElement('div');
+    controls.className = 'cart-item-controls';
+
+    var minusBtn = document.createElement('button');
+    minusBtn.className = 'qty-btn';
+    minusBtn.textContent = '-';
+    minusBtn.setAttribute('aria-label', 'Reducir cantidad');
+    minusBtn.addEventListener('click', (function(pid){ return function(){ updateQty(pid, -1); }; })(item.id));
+
+    var qtySpan = document.createElement('span');
+    qtySpan.className = 'qty-display';
+    qtySpan.textContent = item.qty;
+
+    var plusBtn = document.createElement('button');
+    plusBtn.className = 'qty-btn';
+    plusBtn.textContent = '+';
+    plusBtn.setAttribute('aria-label', 'Aumentar cantidad');
+    plusBtn.addEventListener('click', (function(pid){ return function(){ updateQty(pid, 1); }; })(item.id));
+
+    controls.appendChild(minusBtn);
+    controls.appendChild(qtySpan);
+    controls.appendChild(plusBtn);
+
+    var priceSpan = document.createElement('span');
+    priceSpan.className = 'cart-item-price';
+    priceSpan.textContent = formatCOP(item.price * item.qty);
+
+    var removeBtn = document.createElement('button');
+    removeBtn.className = 'cart-item-remove';
+    removeBtn.textContent = '\u2715';
+    removeBtn.setAttribute('aria-label', 'Eliminar producto');
+    removeBtn.addEventListener('click', (function(pid){ return function(){ removeFromCart(pid); }; })(item.id));
+
+    el.appendChild(nameSpan);
+    el.appendChild(controls);
+    el.appendChild(priceSpan);
+    el.appendChild(removeBtn);
+    container.appendChild(el);
+  });
+}
+
+/* ================================================================
+   CART DRAWER TOGGLE
+================================================================ */
+function openCart() {
+  document.getElementById('cart-drawer').classList.add('active');
+  document.getElementById('cart-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cart-drawer').classList.remove('active');
+  document.getElementById('cart-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('cart-toggle-btn').addEventListener('click', openCart);
+document.getElementById('cart-close-btn').addEventListener('click', closeCart);
+document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeCart();
+});
+
+/* ================================================================
+   CHECKOUT (PLACEHOLDER)
+================================================================ */
+function proceedCheckout() {
+  if (cart.length === 0) { showToast('El carrito está vacío'); return; }
+  closeCart();
+  window.location.href = 'checkout-tienda.html';
+}
+
+/* ================================================================
+   TOAST
+================================================================ */
+let toastTimeout;
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+/* ================================================================
+   FILTERS
+================================================================ */
+document.querySelectorAll('input[name="category"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    currentCat = this.value;
+    renderProducts();
+  });
+});
+
+/* ================================================================
+   BRAND FILTER
+================================================================ */
+document.querySelectorAll('input[name="brand"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    currentBrand = this.value;
+    renderProducts();
+  });
+});
+
+/* ================================================================
+   SORT
+================================================================ */
+document.getElementById('sort-asc').addEventListener('click', function() {
+  currentSort = 'asc';
+  document.getElementById('sort-asc').classList.add('active');
+  document.getElementById('sort-desc').classList.remove('active');
+  renderProducts();
+});
+
+document.getElementById('sort-desc').addEventListener('click', function() {
+  currentSort = 'desc';
+  document.getElementById('sort-desc').classList.add('active');
+  document.getElementById('sort-asc').classList.remove('active');
+  renderProducts();
+});
+
+/* ================================================================
+   INIT
+================================================================ */
+renderProducts();
+updateCartUI();
+
+/* ================================================================
+   SIDEBAR MOBILE TOGGLE
+================================================================ */
+(function() {
+  const filterBtn = document.getElementById('filterToggleBtn');
+  const sidebar   = document.getElementById('sidebar');
+  const overlay   = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (filterBtn) {
+    filterBtn.addEventListener('click', function() {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+  }
+  if (overlay) {
+    overlay.addEventListener('click', closeSidebar);
+  }
+
+  // Cerrar sidebar al seleccionar filtro en mobile
+  document.querySelectorAll('#sidebar input[name="category"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      if (window.innerWidth <= 900) { closeSidebar(); }
+    });
+  });
+})();
+</script>
+
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  📞
+</a>
+
+<!-- AOS + V5 Effects -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="js/v5-effects.js" defer></script>
+<script>
+  AOS.init({ duration: 500, easing: 'linear', once: true, offset: 60 });
+</script>
+</body>
+</html>

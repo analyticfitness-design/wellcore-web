@@ -1,0 +1,51 @@
+# WellCore Fitness — API directory protection
+# Prevents direct directory listings and protects sensitive files
+
+# Disable directory listing globally
+Options -Indexes
+
+# Block direct access to config and includes from the web
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block access to config directory
+    RewriteRule ^config/         - [F,L]
+
+    # Block access to includes directory
+    RewriteRule ^includes/       - [F,L]
+
+    # Block access to logs directory
+    RewriteRule ^logs/           - [F,L]
+
+    # Block access to setup scripts in production
+    # Comment out to run migrations, then re-enable
+    RewriteRule ^setup/          - [F,L]
+</IfModule>
+
+# Deny access to .log files via web
+<Files "*.log">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Deny access to .sql dump files
+<Files "*.sql">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Deny access to .env files
+<Files ".env">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Force UTF-8 for PHP responses
+AddDefaultCharset UTF-8
+
+# PHP settings for the API
+<IfModule mod_php.c>
+    php_value expose_php Off
+    php_value display_errors Off
+    php_value log_errors On
+</IfModule>

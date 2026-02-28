@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Coach — WellCore Fitness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & VARIABLES ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#E31E24;
+  --red-dark:#B8181D;
+  --bg:#0a0a0a;
+  --surface:#111113;
+  --surface-2:#1a1a1d;
+  --border:#252528;
+  --gray:#A1A1AA;
+  --accent:#00D9FF;
+  --green:#22C55E;
+  --gold:#FFD700;
+  --white:#FFFFFF;
+  --sidebar-w:260px;
+  --topbar-h:60px;
+  --transition:0.1s linear;
+  --radius:0;
+  --radius-lg:0;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:'Inter',sans-serif}
+img{max-width:100%}
+ul{list-style:none}
+input,textarea,select{font-family:'Inter',sans-serif}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:0}
+::-webkit-scrollbar-thumb:hover{background:#333336}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;
+  width:var(--sidebar-w);
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  z-index:200;
+  transition:transform var(--transition);
+}
+.sidebar-logo{
+  padding:24px 22px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;flex-direction:column;
+  gap:1px;
+}
+.logo-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.75rem;
+  letter-spacing:.12em;
+  color:var(--white);
+  line-height:1;
+}
+.logo-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;
+  letter-spacing:.35em;
+  color:var(--red);
+  font-weight:600;
+  text-transform:uppercase;
+}
+.sidebar-nav{
+  flex:1;overflow-y:auto;
+  padding:14px 0;
+  display:flex;flex-direction:column;
+  gap:2px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 20px;
+  border-left:2px solid transparent;
+  cursor:pointer;
+  transition:all var(--transition);
+  color:var(--gray);
+  font-size:.855rem;
+  font-weight:500;
+  user-select:none;
+  position:relative;
+}
+.nav-item:hover{
+  color:var(--white);
+  background:rgba(255,255,255,0.04);
+  border-left-color:rgba(227,30,36,0.3);
+}
+.nav-item.active{
+  color:var(--white);
+  background:rgba(227,30,36,0.08);
+  border-left-color:var(--red);
+}
+.nav-icon{
+  width:18px;height:18px;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sidebar-user{
+  padding:16px 20px;
+  border-top:1px solid var(--border);
+  display:flex;flex-direction:column;gap:4px;
+}
+.sidebar-user-name{
+  font-size:.855rem;
+  font-weight:600;
+  color:var(--white);
+}
+.sidebar-user-role{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.1em;
+  color:var(--red);
+  text-transform:uppercase;
+}
+
+/* ===== TOPBAR ===== */
+.topbar{
+  position:sticky;top:0;
+  height:var(--topbar-h);
+  background:rgba(17,17,19,0.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+  display:flex;align-items:center;
+  padding:0 24px;
+  gap:14px;
+  z-index:100;
+}
+.hamburger{
+  display:none;
+  background:none;border:none;
+  color:var(--gray);padding:6px;
+  border-radius:0;
+  transition:color var(--transition);
+  font-size:1.1rem;
+}
+.hamburger:hover{color:var(--white)}
+.breadcrumb{
+  flex:1;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;color:var(--gray);
+}
+.breadcrumb span{color:var(--red)}
+.topbar-right{
+  display:flex;align-items:center;gap:14px;
+  margin-left:auto;
+}
+.online-indicator{
+  display:flex;align-items:center;gap:6px;
+  font-size:.72rem;color:var(--accent);
+  font-family:'JetBrains Mono',monospace;
+}
+.pulse-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent);
+  animation:pulse-glow 2s ease-in-out infinite;
+}
+@keyframes pulse-glow{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,217,255,.6)}
+  50%{box-shadow:0 0 0 5px rgba(0,217,255,0)}
+}
+.topbar-coach-name{font-size:.855rem;font-weight:600;color:var(--white)}
+.btn-logout-top{
+  background:none;border:1px solid var(--border);
+  color:var(--gray);border-radius:0;
+  padding:5px 12px;font-size:.75rem;font-weight:500;
+  transition:all var(--transition);
+}
+.btn-logout-top:hover{border-color:var(--red);color:var(--red)}
+
+/* ===== MAIN WRAP ===== */
+.main-wrap{margin-left:var(--sidebar-w)}
+.content-area{padding:28px 32px;max-width:1100px}
+
+/* ===== OVERLAY ===== */
+.sidebar-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:199;backdrop-filter:blur(2px);
+}
+
+/* ===== SECTIONS ===== */
+.section{display:none}
+.section.active{display:block}
+.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.2rem;letter-spacing:.06em;
+  margin-bottom:24px;
+  color:var(--white);
+}
+.section-title span{color:var(--red)}
+
+/* ===== KPI GRID ===== */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:14px;
+  margin-bottom:28px;
+}
+.kpi-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  transition:border-color var(--transition);
+}
+.kpi-card:hover{border-color:var(--red)}
+.kpi-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;font-weight:500;
+  letter-spacing:.1em;
+  color:var(--gray);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.kpi-value{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.7rem;letter-spacing:.04em;
+  color:var(--white);line-height:1;
+  margin-bottom:6px;
+}
+
+/* ===== DATA TABLE ===== */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;color:var(--gray);
+  text-transform:uppercase;letter-spacing:.08em;
+  padding:10px 14px;text-align:left;
+  border-bottom:2px solid var(--red);
+}
+.data-table td{
+  padding:12px 14px;font-size:.85rem;
+  border-bottom:1px solid var(--border);
+}
+.data-table tr:hover td{background:rgba(255,255,255,0.02)}
+.table-wrap{overflow-x:auto;margin-bottom:24px}
+
+/* ===== BADGES ===== */
+.badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;font-weight:600;
+  letter-spacing:.05em;
+  padding:3px 8px;
+  border-radius:0;
+  display:inline-block;
+  text-transform:uppercase;
+}
+.badge-esencial{background:rgba(161,161,170,0.15);color:var(--gray);border:1px solid rgba(161,161,170,0.25)}
+.badge-metodo{background:rgba(0,217,255,0.1);color:var(--accent);border:1px solid rgba(0,217,255,0.25)}
+.badge-elite{background:linear-gradient(135deg,#b8860b,#ffd700);color:#000;border:none}
+.badge-activo{background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.25)}
+.badge-inactivo{background:rgba(227,30,36,0.1);color:var(--red);border:1px solid rgba(227,30,36,0.25)}
+.badge-click{background:rgba(161,161,170,0.1);color:var(--gray);border:1px solid rgba(161,161,170,0.2)}
+.badge-converted{background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.25)}
+
+/* ===== FORM STYLES ===== */
+.form-group{margin-bottom:16px}
+.form-label{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  color:var(--gray);text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:6px;display:block;
+}
+.form-input,.form-select,.form-textarea{
+  width:100%;background:var(--surface-2);
+  border:1px solid var(--border);color:var(--white);
+  padding:10px 14px;font-size:.88rem;
+  border-radius:0;outline:none;
+  transition:border-color 0.1s linear;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.form-select option{background:var(--surface-2);color:var(--white)}
+
+/* ===== BUTTONS ===== */
+.btn-primary{
+  background:var(--red);color:white;border:none;
+  padding:10px 24px;font-weight:600;font-size:.88rem;
+  cursor:pointer;border-radius:0;
+  transition:background 0.1s linear;
+}
+.btn-primary:hover{background:var(--red-dark)}
+.btn-outline{
+  background:none;border:1px solid var(--border);
+  color:var(--gray);padding:8px 18px;
+  font-size:.82rem;cursor:pointer;border-radius:0;
+  transition:all 0.1s linear;
+}
+.btn-outline:hover{border-color:var(--red);color:var(--red)}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px 24px;
+  margin-bottom:18px;
+}
+.card-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;font-weight:600;
+  letter-spacing:.1em;
+  color:var(--gray);
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--gray);
+  font-size:.88rem;
+}
+
+/* ===== CHECKBOX / TOGGLE ===== */
+.checkbox-group{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-bottom:12px;
+}
+.checkbox-item{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  padding:8px 14px;
+  cursor:pointer;
+  transition:border-color 0.1s linear;
+  font-size:.82rem;
+}
+.checkbox-item:hover{border-color:var(--red)}
+.checkbox-item input[type="checkbox"]{
+  accent-color:var(--red);
+  width:14px;height:14px;
+  cursor:pointer;
+}
+.toggle-row{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:16px;
+}
+.toggle-switch{
+  position:relative;width:40px;height:22px;
+}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{
+  position:absolute;inset:0;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  cursor:pointer;
+  transition:background 0.1s linear;
+}
+.toggle-slider::before{
+  content:'';position:absolute;
+  width:16px;height:16px;
+  left:2px;bottom:2px;
+  background:var(--gray);
+  transition:transform 0.1s linear;
+}
+.toggle-switch input:checked + .toggle-slider{background:var(--red);border-color:var(--red)}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(18px);background:var(--white)}
+
+/* ===== BRAND SECTION ===== */
+.brand-layout{
+  display:grid;
+  grid-template-columns:1fr .67fr;
+  gap:24px;
+}
+.brand-preview{
+  width:100%;height:200px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:16px;
+  display:flex;flex-direction:column;
+  gap:12px;
+}
+.brand-preview-topbar{
+  height:8px;
+  border-radius:0;
+}
+.brand-preview-card{
+  flex:1;
+  border:1px solid var(--border);
+  padding:12px;
+  display:flex;flex-direction:column;
+  gap:6px;
+}
+.brand-preview-kpi{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;
+  color:var(--white);
+}
+.brand-preview-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.55rem;
+  color:var(--gray);
+  text-transform:uppercase;
+}
+.brand-preview-btn{
+  align-self:flex-start;
+  padding:4px 14px;
+  font-size:.65rem;
+  color:var(--white);
+  border:none;
+  cursor:default;
+}
+.color-picker-wrap{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:16px;
+}
+.color-picker-wrap input[type="color"]{
+  width:44px;height:44px;
+  border:1px solid var(--border);
+  background:none;
+  cursor:pointer;
+  padding:0;
+}
+.color-hex{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.82rem;
+  color:var(--accent);
+  letter-spacing:.06em;
+}
+.upload-area{
+  border:2px dashed var(--border);
+  padding:28px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color 0.1s linear;
+  margin-bottom:16px;
+}
+.upload-area:hover{border-color:var(--red)}
+.upload-area p{
+  font-size:.82rem;
+  color:var(--gray);
+}
+.upload-area small{
+  font-size:.68rem;
+  color:var(--border);
+  display:block;
+  margin-top:6px;
+}
+.logo-preview{
+  max-width:120px;
+  max-height:60px;
+  margin:10px auto 0;
+  display:none;
+}
+
+/* ===== REFERRAL LINK ===== */
+.referral-link-wrap{
+  display:flex;gap:0;
+  margin-bottom:24px;
+}
+.referral-link-wrap textarea{
+  flex:1;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  color:var(--accent);
+  padding:10px 14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;
+  resize:none;
+  border-radius:0;
+  outline:none;
+  height:44px;
+}
+.referral-link-wrap button{
+  background:var(--red);
+  border:none;
+  color:var(--white);
+  padding:10px 18px;
+  font-size:.78rem;
+  font-weight:600;
+  cursor:pointer;
+  border-radius:0;
+  transition:background 0.1s linear;
+  white-space:nowrap;
+}
+.referral-link-wrap button:hover{background:var(--red-dark)}
+
+/* ===== TICKET FILTERS ===== */
+.ticket-filter.active{
+  border-color:var(--red);
+  color:var(--red);
+}
+.badge-status{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;
+  font-weight:600;
+  letter-spacing:.06em;
+  padding:3px 8px;
+  text-transform:uppercase;
+}
+.badge-open{background:rgba(227,30,36,0.15);color:#E31E24;border:1px solid rgba(227,30,36,0.3)}
+.badge-in_progress{background:rgba(0,217,255,0.1);color:var(--accent);border:1px solid rgba(0,217,255,0.2)}
+.badge-closed{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)}
+.badge-normal{background:var(--surface-2);color:var(--gray);border:1px solid var(--border)}
+.badge-alta{background:rgba(227,30,36,0.12);color:#E31E24;border:1px solid rgba(227,30,36,0.25)}
+.sla-warn{color:#F59E0B}
+.sla-ok{color:var(--green)}
+.sla-expired{color:#E31E24}
+
+/* ===== RESOURCE CARDS ===== */
+.resource-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+}
+.resource-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--red);
+  padding:22px 20px;
+  display:flex;flex-direction:column;
+  gap:10px;
+  transition:border-color 0.1s linear;
+}
+.resource-card:hover{border-color:var(--red)}
+.resource-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;
+  color:rgba(227,30,36,0.3);
+  line-height:1;
+}
+.resource-title{
+  font-size:.92rem;
+  font-weight:600;
+  color:var(--white);
+}
+.resource-desc{
+  font-size:.8rem;
+  color:var(--gray);
+  line-height:1.5;
+}
+.resource-checklist{
+  margin-top:6px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.resource-check-item{
+  font-size:.78rem;
+  color:var(--gray);
+  padding-left:18px;
+  position:relative;
+}
+.resource-check-item::before{
+  content:'//';
+  position:absolute;
+  left:0;
+  color:var(--red);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;
+  font-weight:600;
+}
+
+/* ===== ACHIEVEMENTS ===== */
+.achievements-list{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:20px;
+}
+.achievement-badge{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  padding:8px 14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  color:var(--gray);
+}
+.achievement-badge.earned{
+  border-color:var(--gold);
+  color:var(--gold);
+}
+
+/* ===== TWO COL LAYOUT ===== */
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+/* ===== NOTIFICATION ===== */
+.notification{
+  position:fixed;bottom:24px;right:24px;
+  background:var(--surface);
+  border:1px solid var(--green);
+  color:var(--green);
+  padding:12px 20px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;
+  z-index:9999;
+  transition:opacity 0.1s linear;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main-wrap{margin-left:0}
+  .content-area{padding:20px 16px}
+  .hamburger{display:flex;align-items:center;justify-content:center}
+  .topbar{padding:0 16px}
+  .topbar-coach-name{display:none}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .brand-layout{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .resource-grid{grid-template-columns:1fr}
+  .data-table th,.data-table td{padding:8px 10px;font-size:.78rem}
+  .referral-link-wrap{flex-direction:column}
+  .referral-link-wrap textarea{height:36px}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr}
+  .section-title{font-size:1.7rem}
+  .checkbox-group{flex-direction:column}
+}
+  .v5-preloader{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s,visibility .6s}
+  .v5-preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+  .v5-preloader-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:#fff}
+  .v5-preloader-logo span{color:#E31E24}
+  .v5-preloader-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
+  .v5-preloader-fill{height:100%;background:#E31E24;width:0;animation:preloaderFill 1.2s cubic-bezier(.4,0,.2,1) forwards}
+  @keyframes preloaderFill{0%{width:0}100%{width:100%}}
+</style>
+<link rel="stylesheet" href="css/wellcore-v5.css">
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-text">WELLCORE</span>
+    <span class="logo-sub">FITNESS</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item active" onclick="showSection('dashboard')" id="nav-dashboard">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span> Dashboard
+    </a>
+    <a class="nav-item" onclick="showSection('clientes')" id="nav-clientes">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> Mis Clientes
+    </a>
+    <a class="nav-item" onclick="showSection('tickets')" id="nav-tickets">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg></span> Tickets
+    </a>
+    <a class="nav-item" onclick="showSection('marca')" id="nav-marca">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="17" r="2"/><circle cx="6" cy="12" r="3"/><line x1="16" y1="8" x2="18" y2="15"/><line x1="10" y1="9" x2="7" y2="12"/></svg></span> Mi Marca
+    </a>
+    <a class="nav-item" onclick="showSection('perfil')" id="nav-perfil">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Mi Perfil
+    </a>
+    <a class="nav-item" onclick="showSection('referidos')" id="nav-referidos">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></span> Referidos
+    </a>
+    <a class="nav-item" onclick="showSection('recursos')" id="nav-recursos">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span> Recursos
+    </a>
+  </nav>
+
+  <div class="sidebar-user">
+    <span class="sidebar-user-name" id="sidebar-coach-name">Coach</span>
+    <span class="sidebar-user-role">COACH</span>
+  </div>
+</aside>
+
+<!-- MAIN WRAP -->
+<div class="main-wrap">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()">&#9776;</button>
+    <div class="breadcrumb">
+      WELLCORE / <span id="topbar-breadcrumb">Dashboard</span>
+    </div>
+    <div class="topbar-right">
+      <div class="online-indicator">
+        <div class="pulse-dot"></div>
+        Activo
+      </div>
+      <span class="topbar-coach-name" id="topbar-name">Coach</span>
+      <button class="btn-logout-top" onclick="doLogout()">
+        &rarr; Salir
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENT AREA -->
+  <div class="content-area">
+
+    <!-- ===== SECTION 1: DASHBOARD ===== -->
+    <section id="sec-dashboard" class="section active">
+      <h1 class="section-title">DASH<span>//</span>BOARD</h1>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Clientes Activos</div>
+          <div class="kpi-value" id="kpi-clients">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Tickets Abiertos</div>
+          <div class="kpi-value" id="kpi-tickets">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Revenue Mes</div>
+          <div class="kpi-value" id="kpi-revenue">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Mi Comision (60%)</div>
+          <div class="kpi-value" id="kpi-commission">--</div>
+        </div>
+      </div>
+
+      <!-- Recent Activity Feed -->
+      <div class="card">
+        <div class="card-title">// Actividad Reciente</div>
+        <div id="dash-activity">
+          <p class="empty-state">Cargando actividad...</p>
+        </div>
+      </div>
+
+      <!-- Achievements Preview -->
+      <div class="card">
+        <div class="card-title">// Logros</div>
+        <div class="achievements-list" id="dash-achievements">
+          <p class="empty-state" style="width:100%">Cargando logros...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: MIS CLIENTES ===== -->
+    <section id="sec-clientes" class="section">
+      <h1 class="section-title">MIS <span>//</span>CLIENTES</h1>
+
+      <div class="table-wrap">
+        <table class="data-table" id="clients-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Plan</th>
+              <th>Estado</th>
+              <th>Objetivo</th>
+              <th>Ultima Actividad</th>
+              <th>Sesiones 7d</th>
+            </tr>
+          </thead>
+          <tbody id="clients-tbody">
+          </tbody>
+        </table>
+      </div>
+      <div id="clients-empty" class="empty-state" style="display:none">No tienes clientes asignados aun.</div>
+    </section>
+
+    <!-- ===== SECTION 3: TICKETS ===== -->
+    <section id="sec-tickets" class="section">
+      <h1 class="section-title">TICKETS <span>//</span></h1>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div style="display:flex;gap:8px">
+          <button class="btn-outline ticket-filter active" data-filter="all" onclick="filterTickets('all',this)">Todos</button>
+          <button class="btn-outline ticket-filter" data-filter="open" onclick="filterTickets('open',this)">Abiertos</button>
+          <button class="btn-outline ticket-filter" data-filter="in_progress" onclick="filterTickets('in_progress',this)">En Progreso</button>
+          <button class="btn-outline ticket-filter" data-filter="closed" onclick="filterTickets('closed',this)">Cerrados</button>
+        </div>
+        <button class="btn-primary" onclick="toggleNewTicket()">+ Nuevo Ticket</button>
+      </div>
+
+      <!-- New Ticket Form (hidden by default) -->
+      <div id="new-ticket-form" class="card" style="display:none;margin-bottom:24px">
+        <div class="card-title">// Crear Ticket</div>
+        <form onsubmit="return submitTicket(event)">
+          <div class="form-group">
+            <label class="form-label">Nombre del Cliente</label>
+            <input type="text" class="form-input" id="tk-client" required placeholder="Nombre completo del cliente">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo de Solicitud</label>
+            <select class="form-select" id="tk-type" required>
+              <option value="">Seleccionar...</option>
+              <option value="rutina_nueva">Rutina Nueva</option>
+              <option value="cambio_rutina">Cambio de Rutina</option>
+              <option value="nutricion">Plan de Nutricion</option>
+              <option value="habitos">Guia de Habitos</option>
+              <option value="invitacion_cliente">Invitacion de Cliente</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Plan del Cliente</label>
+            <select class="form-select" id="tk-plan">
+              <option value="esencial">Esencial</option>
+              <option value="metodo">Metodo</option>
+              <option value="elite">Elite</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prioridad</label>
+            <select class="form-select" id="tk-priority">
+              <option value="normal">Normal</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Descripcion (min 20 caracteres)</label>
+            <textarea class="form-textarea" id="tk-desc" rows="4" required minlength="20" placeholder="Describe la solicitud en detalle..."></textarea>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button type="submit" class="btn-primary" id="btn-submit-ticket">Enviar Ticket</button>
+            <button type="button" class="btn-outline" onclick="toggleNewTicket()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- SLA Info -->
+      <div style="margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;gap:14px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);background:rgba(0,217,255,0.1);padding:4px 10px;letter-spacing:.08em">SLA 48H</span>
+        <span style="font-size:.82rem;color:var(--gray)">Tiempo maximo de respuesta para cada ticket</span>
+      </div>
+
+      <!-- Tickets Table -->
+      <div class="card" style="padding:0;overflow-x:auto">
+        <table class="data-table" id="tickets-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Tipo</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+              <th>Creado</th>
+              <th>Deadline</th>
+            </tr>
+          </thead>
+          <tbody id="tickets-tbody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="tickets-empty" style="display:none">No tienes tickets registrados. Crea uno con el boton de arriba.</div>
+
+      <!-- Ticket Detail Modal -->
+      <div id="ticket-detail-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;backdrop-filter:blur(2px)" onclick="closeTicketDetail(event)">
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:90%;max-width:600px;background:var(--surface);border:1px solid var(--border);padding:28px 32px;max-height:80vh;overflow-y:auto" onclick="event.stopPropagation()">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--accent)" id="detail-ticket-id"></span>
+            <button class="btn-outline" onclick="closeTicketDetail()" style="padding:4px 12px;font-size:.78rem">X</button>
+          </div>
+          <div id="detail-ticket-body"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: MI MARCA ===== -->
+    <section id="sec-marca" class="section">
+      <h1 class="section-title">MI <span>//</span>MARCA</h1>
+
+      <div class="brand-layout">
+        <!-- Left Column: Controls -->
+        <div>
+          <div class="card">
+            <div class="card-title">// Color Principal</div>
+            <div class="color-picker-wrap">
+              <input type="color" id="brand-color" value="#E31E24">
+              <span class="color-hex" id="brand-color-hex">#E31E24</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">// Logo</div>
+            <div class="upload-area" id="logo-upload-area" onclick="document.getElementById('logo-file').click()">
+              <p>Arrastra tu logo aqui o haz click para seleccionar</p>
+              <small>PNG o SVG, maximo 500KB</small>
+              <input type="file" id="logo-file" accept=".png,.svg,image/png,image/svg+xml" style="display:none">
+              <img id="logo-preview" class="logo-preview" alt="Logo preview">
+            </div>
+          </div>
+
+          <button class="btn-primary" id="btn-save-brand" onclick="saveBrand()">Guardar Marca</button>
+        </div>
+
+        <!-- Right Column: Preview -->
+        <div>
+          <div class="card">
+            <div class="card-title">// Vista Previa</div>
+            <div class="brand-preview" id="brand-preview-box">
+              <div class="brand-preview-topbar" id="preview-topbar" style="background:var(--red)"></div>
+              <div class="brand-preview-card">
+                <div class="brand-preview-kpi">1,250</div>
+                <div class="brand-preview-label">Clientes Activos</div>
+              </div>
+              <div class="brand-preview-btn" id="preview-btn" style="background:var(--red)">VER MAS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: MI PERFIL ===== -->
+    <section id="sec-perfil" class="section">
+      <h1 class="section-title">MI <span>//</span>PERFIL</h1>
+
+      <div class="card">
+        <form id="profile-form" onsubmit="return saveProfile(event)">
+          <div class="form-group">
+            <label class="form-label" for="prof-bio">Bio</label>
+            <textarea class="form-textarea" id="prof-bio" rows="4" placeholder="Describe tu experiencia y enfoque como coach..."></textarea>
+          </div>
+
+          <div class="two-col">
+            <div class="form-group">
+              <label class="form-label" for="prof-city">Ciudad</label>
+              <input type="text" class="form-input" id="prof-city" placeholder="Bogota, Colombia">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prof-experience">Experiencia</label>
+              <select class="form-select" id="prof-experience">
+                <option value="">Seleccionar...</option>
+                <option value="1-3">1-3 anos</option>
+                <option value="3-5">3-5 anos</option>
+                <option value="5-10">5-10 anos</option>
+                <option value="10+">10+ anos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Especialidades</label>
+            <div class="checkbox-group" id="specialties-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="specialty" value="hipertrofia"> Hipertrofia
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="specialty" value="perdida_grasa"> Perdida de Grasa
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="specialty" value="fuerza"> Fuerza
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="specialty" value="funcional"> Funcional
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="specialty" value="rehabilitacion"> Rehabilitacion
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="specialty" value="nutricion_deportiva"> Nutricion Deportiva
+              </label>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="form-group">
+              <label class="form-label" for="prof-whatsapp">WhatsApp</label>
+              <input type="text" class="form-input" id="prof-whatsapp" placeholder="+57 300 1234567">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prof-instagram">Instagram</label>
+              <input type="text" class="form-input" id="prof-instagram" placeholder="@coach_name">
+            </div>
+          </div>
+
+          <div class="toggle-row">
+            <label class="toggle-switch">
+              <input type="checkbox" id="prof-public">
+              <span class="toggle-slider"></span>
+            </label>
+            <span style="font-size:.85rem;color:var(--gray)">Mostrar mi perfil publicamente</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:14px;margin-top:8px">
+            <button type="submit" class="btn-primary">Guardar Perfil</button>
+            <a href="#" class="btn-outline" id="public-profile-link" target="_blank" style="text-decoration:none">Ver mi perfil publico</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Achievements -->
+      <div class="card" style="margin-top:24px">
+        <div class="card-title">// Mis Logros</div>
+        <div class="achievements-list" id="profile-achievements">
+          <p class="empty-state" style="width:100%">Cargando logros...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: REFERIDOS ===== -->
+    <section id="sec-referidos" class="section">
+      <h1 class="section-title">REFERI<span>//</span>DOS</h1>
+
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card">
+          <div class="kpi-label">Clicks</div>
+          <div class="kpi-value" id="ref-clicks">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Conversiones</div>
+          <div class="kpi-value" id="ref-conversions">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Comision %</div>
+          <div class="kpi-value" id="ref-commission">--</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">// Tu Link de Referido</div>
+        <div class="referral-link-wrap">
+          <textarea readonly id="referral-link">Cargando...</textarea>
+          <button onclick="copyReferralLink()">Copiar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">// Ultimas Actividades</div>
+        <div class="table-wrap">
+          <table class="data-table" id="referrals-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="referrals-tbody">
+            </tbody>
+          </table>
+        </div>
+        <div id="referrals-empty" class="empty-state" style="display:none">Sin actividad de referidos aun.</div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: RECURSOS ===== -->
+    <section id="sec-recursos" class="section">
+      <h1 class="section-title">RECUR<span>//</span>SOS</h1>
+
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px;line-height:1.6">
+        Material exclusivo para coaches WellCore. Herramientas, guias y recursos para maximizar tu impacto con tus clientes.
+      </p>
+
+      <!-- Quick Links -->
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-title">// Links Rapidos</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">
+          <a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="btn-outline" style="text-decoration:none">Soporte WellCore</a>
+          <a href="mailto:info@wellcorefitness.com" class="btn-outline" style="text-decoration:none">Email Equipo</a>
+          <a href="https://instagram.com/wellcore.fitness" target="_blank" rel="noopener" class="btn-outline" style="text-decoration:none">Instagram WellCore</a>
+        </div>
+      </div>
+
+      <div class="resource-grid">
+        <!-- 1: Onboarding -->
+        <div class="resource-card">
+          <div class="resource-num">01</div>
+          <div class="resource-title">Protocolo de Onboarding</div>
+          <div class="resource-desc">Paso a paso para recibir nuevos clientes. Evaluacion inicial, definicion de objetivos, toma de medidas y asignacion del primer plan de entrenamiento.</div>
+          <div class="resource-checklist">
+            <div class="resource-check-item">Formulario de evaluacion inicial</div>
+            <div class="resource-check-item">Toma de fotos de progreso</div>
+            <div class="resource-check-item">Definicion de metas SMART</div>
+            <div class="resource-check-item">Asignacion de plan semana 1</div>
+          </div>
+        </div>
+
+        <!-- 2: Plantillas -->
+        <div class="resource-card">
+          <div class="resource-num">02</div>
+          <div class="resource-title">Plantillas de Entrenamiento</div>
+          <div class="resource-desc">Templates de periodizacion listos para personalizar. Incluye programas de hipertrofia, fuerza, funcional y perdida de grasa con progresion semanal.</div>
+          <div class="resource-checklist">
+            <div class="resource-check-item">Hipertrofia 12 semanas (PPL)</div>
+            <div class="resource-check-item">Fuerza 8 semanas (5/3/1)</div>
+            <div class="resource-check-item">Funcional 6 semanas</div>
+            <div class="resource-check-item">Perdida de grasa + HIIT</div>
+          </div>
+        </div>
+
+        <!-- 3: Nutricion -->
+        <div class="resource-card">
+          <div class="resource-num">03</div>
+          <div class="resource-title">Guias de Nutricion</div>
+          <div class="resource-desc">Calculadoras de macros, listas de alimentos por objetivo, y templates de planes nutricionales para diferentes perfiles de clientes.</div>
+          <div class="resource-checklist">
+            <div class="resource-check-item">Calculadora TDEE + macros</div>
+            <div class="resource-check-item">Lista de intercambios</div>
+            <div class="resource-check-item">Template plan 1800-3000 kcal</div>
+            <div class="resource-check-item">Guia de suplementacion basica</div>
+          </div>
+        </div>
+
+        <!-- 4: Branding -->
+        <div class="resource-card">
+          <div class="resource-num">04</div>
+          <div class="resource-title">Kit de Marca Personal</div>
+          <div class="resource-desc">Construye tu marca como coach. Incluye guia de posicionamiento, templates para redes sociales y material co-branded con WellCore.</div>
+          <div class="resource-checklist">
+            <div class="resource-check-item">Guia de branding personal</div>
+            <div class="resource-check-item">Templates Instagram Stories</div>
+            <div class="resource-check-item">Logo "Powered by WellCore"</div>
+            <div class="resource-check-item">Textos para bio y perfil</div>
+          </div>
+        </div>
+
+        <!-- 5: Comunicacion -->
+        <div class="resource-card">
+          <div class="resource-num">05</div>
+          <div class="resource-title">Protocolo de Comunicacion</div>
+          <div class="resource-desc">Mejores practicas para comunicarte con clientes. Frecuencia de check-ins, manejo de expectativas, y scripts para situaciones comunes.</div>
+          <div class="resource-checklist">
+            <div class="resource-check-item">Frecuencia de contacto por plan</div>
+            <div class="resource-check-item">Scripts de seguimiento semanal</div>
+            <div class="resource-check-item">Manejo de clientes desmotivados</div>
+            <div class="resource-check-item">Protocolo de escalamiento</div>
+          </div>
+        </div>
+
+        <!-- 6: Revenue -->
+        <div class="resource-card">
+          <div class="resource-num">06</div>
+          <div class="resource-title">Guia de Revenue y Referidos</div>
+          <div class="resource-desc">Como maximizar tus ingresos con el sistema de comisiones WellCore. Estrategias de referidos, cross-selling y retencion de clientes.</div>
+          <div class="resource-checklist">
+            <div class="resource-check-item">Modelo de comisiones (60/40)</div>
+            <div class="resource-check-item">Estrategias de referidos</div>
+            <div class="resource-check-item">Calendario de pagos (15 y 30)</div>
+            <div class="resource-check-item">Upselling de planes</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /content-area -->
+</div><!-- /main-wrap -->
+
+<script>
+// ===== API HELPER =====
+var BASE = '/api';
+function apiFetch(method, path, body) {
+  var token = localStorage.getItem('wc_token') || '';
+  var opts = { method: method, headers: { 'Authorization': 'Bearer ' + token } };
+  if (body && !(body instanceof FormData)) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(body);
+  } else if (body) {
+    opts.body = body;
+  }
+  return fetch(BASE + path, opts).then(function(r) {
+    if (r.status === 401) { localStorage.removeItem('wc_token'); window.location.href = 'login.html'; return null; }
+    return r.json();
+  });
+}
+
+// ===== GLOBAL STATE =====
+var coachData = {};
+var achievementsData = [];
+var sectionMap = {
+  dashboard: 'Dashboard',
+  clientes: 'Mis Clientes',
+  tickets: 'Tickets',
+  marca: 'Mi Marca',
+  perfil: 'Mi Perfil',
+  referidos: 'Referidos',
+  recursos: 'Recursos'
+};
+
+// ===== AUTH CHECK =====
+function init() {
+  var token = localStorage.getItem('wc_token');
+  if (!token) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  apiFetch('GET', '/auth/me').then(function(data) {
+    if (!data || !data.type) {
+      localStorage.removeItem('wc_token');
+      window.location.href = 'login.html';
+      return;
+    }
+    var admin = data.admin || {};
+    if (admin.role !== 'coach') {
+      window.location.href = 'login.html';
+      return;
+    }
+    coachData = admin;
+    coachData.type = data.type;
+    var coachName = admin.name || admin.username || 'Coach';
+    document.getElementById('topbar-name').textContent = coachName;
+    document.getElementById('sidebar-coach-name').textContent = coachName;
+
+    // Load coach profile for color theme and slug
+    apiFetch('GET', '/coach/profile.php').then(function(profData) {
+      if (profData && profData.ok && profData.profile) {
+        var p = profData.profile;
+        coachData.color_primary = p.color_primary;
+        coachData.slug = p.slug;
+        coachData.logo_url = p.logo_url;
+        if (p.color_primary) applyCoachColor(p.color_primary);
+        var slug = p.slug || admin.username || '';
+        document.getElementById('public-profile-link').href = 'coach-profile.php?coach=' + encodeURIComponent(slug);
+      }
+    });
+
+    // Load dashboard data
+    loadDashboard();
+  }).catch(function() {
+    localStorage.removeItem('wc_token');
+    window.location.href = 'login.html';
+  });
+}
+
+// ===== APPLY COACH COLOR THEME =====
+function applyCoachColor(color) {
+  if (!color || color.length < 4) return;
+  document.documentElement.style.setProperty('--red', color);
+  // Compute a darker variant
+  var r = parseInt(color.slice(1, 3), 16);
+  var g = parseInt(color.slice(3, 5), 16);
+  var b = parseInt(color.slice(5, 7), 16);
+  var darker = '#'
+    + Math.max(0, r - 30).toString(16).padStart(2, '0')
+    + Math.max(0, g - 30).toString(16).padStart(2, '0')
+    + Math.max(0, b - 30).toString(16).padStart(2, '0');
+  document.documentElement.style.setProperty('--red-dark', darker);
+}
+
+// ===== NAVIGATION =====
+function showSection(name) {
+  var sections = document.querySelectorAll('.section');
+  for (var i = 0; i < sections.length; i++) {
+    sections[i].classList.remove('active');
+  }
+  var target = document.getElementById('sec-' + name);
+  if (target) target.classList.add('active');
+
+  var navItems = document.querySelectorAll('.nav-item');
+  for (var j = 0; j < navItems.length; j++) {
+    navItems[j].classList.remove('active');
+  }
+  var navTarget = document.getElementById('nav-' + name);
+  if (navTarget) navTarget.classList.add('active');
+
+  document.getElementById('topbar-breadcrumb').textContent = sectionMap[name] || name;
+
+  // Lazy load sections
+  if (name === 'clientes') loadClients();
+  if (name === 'tickets') loadTickets();
+  if (name === 'referidos') loadReferrals();
+  if (name === 'perfil') loadProfile();
+  if (name === 'marca') loadBrandData();
+
+  closeSidebar();
+}
+
+// ===== SIDEBAR TOGGLE =====
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ===== FORMAT COP =====
+function formatCOP(num) {
+  var n = parseInt(num) || 0;
+  var formatted = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return '$' + formatted + ' COP';
+}
+
+// ===== DASHBOARD =====
+function loadDashboard() {
+  apiFetch('GET', '/coach/stats.php').then(function(data) {
+    if (!data || !data.ok) {
+      document.getElementById('kpi-clients').textContent = '0';
+      document.getElementById('kpi-tickets').textContent = '0';
+      document.getElementById('kpi-revenue').textContent = '$0 COP';
+      document.getElementById('kpi-commission').textContent = '$0 COP';
+      renderActivityFeed([]);
+      return;
+    }
+    var s = data.stats || data;
+    document.getElementById('kpi-clients').textContent = s.active_clients || 0;
+    document.getElementById('kpi-tickets').textContent = s.open_tickets || 0;
+    document.getElementById('kpi-revenue').textContent = formatCOP(s.revenue_month || 0);
+    document.getElementById('kpi-commission').textContent = formatCOP(s.coach_share || 0);
+
+    renderActivityFeed(s.recent_activity || []);
+  }).catch(function() {
+    document.getElementById('kpi-clients').textContent = '0';
+    document.getElementById('kpi-tickets').textContent = '0';
+    document.getElementById('kpi-revenue').textContent = '$0 COP';
+    document.getElementById('kpi-commission').textContent = '$0 COP';
+    renderActivityFeed([]);
+  });
+
+  // Load achievements
+  loadAchievements();
+}
+
+function renderActivityFeed(activities) {
+  var activityWrap = document.getElementById('dash-activity');
+  activityWrap.textContent = '';
+
+  if (!activities.length) {
+    var emptyP = document.createElement('p');
+    emptyP.className = 'empty-state';
+    emptyP.textContent = 'Sin actividad reciente.';
+    activityWrap.appendChild(emptyP);
+    return;
+  }
+
+  activities.forEach(function(item) {
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)';
+
+    var icon = document.createElement('div');
+    icon.style.cssText = 'width:32px;height:32px;background:rgba(227,30,36,0.1);border:1px solid rgba(227,30,36,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:"JetBrains Mono",monospace;font-size:.72rem;font-weight:700;color:var(--red)';
+    icon.textContent = '//';
+
+    var info = document.createElement('div');
+    info.style.cssText = 'flex:1';
+
+    var desc = document.createElement('div');
+    desc.style.cssText = 'font-size:.85rem;color:var(--white)';
+    desc.textContent = item.description || item.text || '';
+
+    var time = document.createElement('div');
+    time.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--gray);margin-top:2px';
+    time.textContent = item.time || item.date || '';
+
+    info.appendChild(desc);
+    info.appendChild(time);
+    row.appendChild(icon);
+    row.appendChild(info);
+    activityWrap.appendChild(row);
+  });
+}
+
+function loadAchievements() {
+  apiFetch('GET', '/coach/achievements.php').then(function(data) {
+    if (!data || !data.ok) {
+      renderAchievements([], 'dash-achievements');
+      renderAchievements([], 'profile-achievements');
+      return;
+    }
+    achievementsData = data.achievements || [];
+    renderAchievements(achievementsData, 'dash-achievements');
+    renderAchievements(achievementsData, 'profile-achievements');
+  }).catch(function() {
+    renderAchievements([], 'dash-achievements');
+    renderAchievements([], 'profile-achievements');
+  });
+}
+
+function renderAchievements(list, containerId) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  container.textContent = '';
+
+  if (!list.length) {
+    var emptyP = document.createElement('p');
+    emptyP.className = 'empty-state';
+    emptyP.style.width = '100%';
+    emptyP.textContent = 'Aun no has desbloqueado logros. Sigue trabajando con tus clientes.';
+    container.appendChild(emptyP);
+    return;
+  }
+
+  list.forEach(function(ach) {
+    var badge = document.createElement('div');
+    badge.className = 'achievement-badge' + (ach.earned ? ' earned' : '');
+
+    var symbol = document.createElement('span');
+    symbol.style.fontWeight = '700';
+    symbol.textContent = ach.earned ? '* ' : '- ';
+
+    var label = document.createElement('span');
+    label.textContent = ach.name || ach.title || 'Logro';
+
+    badge.appendChild(symbol);
+    badge.appendChild(label);
+    container.appendChild(badge);
+  });
+}
+
+// ===== CLIENTS =====
+var clientsLoaded = false;
+function loadClients() {
+  if (clientsLoaded) return;
+  var tbody = document.getElementById('clients-tbody');
+  tbody.textContent = '';
+
+  apiFetch('GET', '/coach/clients.php').then(function(data) {
+    if (!data || !data.ok || !data.clients || !data.clients.length) {
+      document.getElementById('clients-table').style.display = 'none';
+      document.getElementById('clients-empty').style.display = 'block';
+      clientsLoaded = true;
+      return;
+    }
+    document.getElementById('clients-table').style.display = '';
+    document.getElementById('clients-empty').style.display = 'none';
+
+    data.clients.forEach(function(c) {
+      var tr = document.createElement('tr');
+
+      var tdName = document.createElement('td');
+      tdName.style.fontWeight = '600';
+      tdName.textContent = c.name || c.nombre || '--';
+      tr.appendChild(tdName);
+
+      var tdPlan = document.createElement('td');
+      var planBadge = document.createElement('span');
+      var plan = (c.plan || 'esencial').toLowerCase();
+      planBadge.className = 'badge badge-' + plan;
+      planBadge.textContent = plan.toUpperCase();
+      tdPlan.appendChild(planBadge);
+      tr.appendChild(tdPlan);
+
+      var tdEstado = document.createElement('td');
+      var estadoBadge = document.createElement('span');
+      var estado = (c.status || c.estado || 'activo').toLowerCase();
+      estadoBadge.className = 'badge badge-' + estado;
+      estadoBadge.textContent = estado.toUpperCase();
+      tdEstado.appendChild(estadoBadge);
+      tr.appendChild(tdEstado);
+
+      var tdObj = document.createElement('td');
+      tdObj.style.cssText = 'font-size:.82rem;color:var(--gray)';
+      tdObj.textContent = c.goal || c.objetivo || '--';
+      tr.appendChild(tdObj);
+
+      var tdAct = document.createElement('td');
+      tdAct.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--gray)';
+      tdAct.textContent = c.last_activity || c.ultima_actividad || '--';
+      tr.appendChild(tdAct);
+
+      var tdSes = document.createElement('td');
+      tdSes.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.85rem;text-align:center';
+      tdSes.textContent = c.sessions_7d !== undefined ? c.sessions_7d : '--';
+      tr.appendChild(tdSes);
+
+      tbody.appendChild(tr);
+    });
+    clientsLoaded = true;
+  }).catch(function() {
+    document.getElementById('clients-table').style.display = 'none';
+    document.getElementById('clients-empty').style.display = 'block';
+    clientsLoaded = true;
+  });
+}
+
+// ===== MI MARCA =====
+var brandLoaded = false;
+function loadBrandData() {
+  if (brandLoaded) return;
+  apiFetch('GET', '/coach/profile.php').then(function(data) {
+    if (!data || !data.ok) { brandLoaded = true; return; }
+    var profile = data.profile || data;
+    if (profile.color_primary) {
+      document.getElementById('brand-color').value = profile.color_primary;
+      document.getElementById('brand-color-hex').textContent = profile.color_primary;
+      updateBrandPreview(profile.color_primary);
+    }
+    if (profile.logo_url) {
+      var preview = document.getElementById('logo-preview');
+      preview.src = profile.logo_url;
+      preview.style.display = 'block';
+    }
+    brandLoaded = true;
+  }).catch(function() { brandLoaded = true; });
+}
+
+// Color picker live preview
+document.getElementById('brand-color').addEventListener('input', function() {
+  var color = this.value;
+  document.getElementById('brand-color-hex').textContent = color;
+  updateBrandPreview(color);
+});
+
+function updateBrandPreview(color) {
+  document.getElementById('preview-topbar').style.background = color;
+  document.getElementById('preview-btn').style.background = color;
+}
+
+// Logo file input
+document.getElementById('logo-file').addEventListener('change', function() {
+  var file = this.files[0];
+  if (!file) return;
+  if (file.size > 500 * 1024) {
+    alert('El archivo excede 500KB. Selecciona uno mas liviano.');
+    this.value = '';
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var preview = document.getElementById('logo-preview');
+    preview.src = e.target.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+function saveBrand() {
+  var color = document.getElementById('brand-color').value;
+  var logoFile = document.getElementById('logo-file').files[0];
+
+  // Save color
+  apiFetch('PUT', '/coach/profile.php', { color_primary: color }).then(function(data) {
+    if (data && data.ok) {
+      applyCoachColor(color);
+      showNotification('Color guardado correctamente.');
+    } else {
+      showNotification('Error al guardar el color.');
+    }
+  }).catch(function() {
+    showNotification('Error de conexion.');
+  });
+
+  // Save logo if selected
+  if (logoFile) {
+    var fd = new FormData();
+    fd.append('logo', logoFile);
+    apiFetch('POST', '/coach/logo.php', fd).then(function(data) {
+      if (data && data.ok) {
+        showNotification('Logo actualizado correctamente.');
+      } else {
+        showNotification('Error al subir el logo.');
+      }
+    }).catch(function() {
+      showNotification('Error de conexion al subir logo.');
+    });
+  }
+}
+
+// ===== MI PERFIL =====
+var profileLoaded = false;
+function loadProfile() {
+  if (profileLoaded) return;
+  apiFetch('GET', '/coach/profile.php').then(function(data) {
+    if (!data || !data.ok) { profileLoaded = true; return; }
+    var p = data.profile || data;
+
+    document.getElementById('prof-bio').value = p.bio || '';
+    document.getElementById('prof-city').value = p.city || p.ciudad || '';
+    document.getElementById('prof-experience').value = p.experience || '';
+    document.getElementById('prof-whatsapp').value = p.whatsapp || '';
+    document.getElementById('prof-instagram').value = p.instagram || '';
+    document.getElementById('prof-public').checked = !!p.public_visible;
+
+    // Set specializations
+    var specs = p.specializations || [];
+    if (typeof specs === 'string') {
+      try { specs = JSON.parse(specs); } catch(e) { specs = specs.split(','); }
+    }
+    var checkboxes = document.querySelectorAll('#specialties-group input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = specs.indexOf(checkboxes[i].value) > -1;
+    }
+
+    // Set public profile link
+    var slug = p.slug || coachData.username || '';
+    document.getElementById('public-profile-link').href = 'coach-profile.php?coach=' + encodeURIComponent(slug);
+
+    profileLoaded = true;
+  }).catch(function() { profileLoaded = true; });
+}
+
+function saveProfile(e) {
+  e.preventDefault();
+
+  var specialties = [];
+  var checkboxes = document.querySelectorAll('#specialties-group input[type="checkbox"]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) specialties.push(checkboxes[i].value);
+  }
+
+  var payload = {
+    bio: document.getElementById('prof-bio').value,
+    city: document.getElementById('prof-city').value,
+    experience: document.getElementById('prof-experience').value,
+    specializations: specialties,
+    whatsapp: document.getElementById('prof-whatsapp').value,
+    instagram: document.getElementById('prof-instagram').value,
+    public_visible: document.getElementById('prof-public').checked ? 1 : 0
+  };
+
+  apiFetch('PUT', '/coach/profile.php', payload).then(function(data) {
+    if (data && data.ok) {
+      showNotification('Perfil actualizado correctamente.');
+      profileLoaded = false;
+    } else {
+      showNotification('Error al guardar el perfil.');
+    }
+  }).catch(function() {
+    showNotification('Error de conexion al guardar.');
+  });
+
+  return false;
+}
+
+// ===== REFERIDOS =====
+var referralsLoaded = false;
+function loadReferrals() {
+  if (referralsLoaded) return;
+
+  apiFetch('GET', '/coach/referrals.php').then(function(data) {
+    if (!data || !data.ok) {
+      document.getElementById('ref-clicks').textContent = '0';
+      document.getElementById('ref-conversions').textContent = '0';
+      document.getElementById('ref-commission').textContent = '0%';
+      document.getElementById('referral-link').value = window.location.origin + '/inscripcion.html?ref=coach';
+      document.getElementById('referrals-table').style.display = 'none';
+      document.getElementById('referrals-empty').style.display = 'block';
+      referralsLoaded = true;
+      return;
+    }
+    document.getElementById('ref-clicks').textContent = data.clicks || 0;
+    document.getElementById('ref-conversions').textContent = data.conversions || 0;
+    document.getElementById('ref-commission').textContent = (data.commission || 0) + '%';
+    document.getElementById('referral-link').value = data.link || (window.location.origin + '/?ref=' + (data.code || 'coach'));
+
+    // Activity table
+    var tbody = document.getElementById('referrals-tbody');
+    tbody.textContent = '';
+    var activities = data.recent || [];
+
+    if (!activities.length) {
+      document.getElementById('referrals-table').style.display = 'none';
+      document.getElementById('referrals-empty').style.display = 'block';
+    } else {
+      document.getElementById('referrals-table').style.display = '';
+      document.getElementById('referrals-empty').style.display = 'none';
+
+      activities.forEach(function(act) {
+        var tr = document.createElement('tr');
+
+        var tdDate = document.createElement('td');
+        tdDate.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.78rem;color:var(--gray)';
+        tdDate.textContent = act.created_at ? act.created_at.split(' ')[0] : '--';
+        tr.appendChild(tdDate);
+
+        var tdStatus = document.createElement('td');
+        var statusBadge = document.createElement('span');
+        var status = act.converted == 1 ? 'conversion' : 'click';
+        statusBadge.className = 'badge badge-' + status;
+        statusBadge.textContent = status.toUpperCase();
+        tdStatus.appendChild(statusBadge);
+        tr.appendChild(tdStatus);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    referralsLoaded = true;
+  }).catch(function() {
+    document.getElementById('ref-clicks').textContent = '0';
+    document.getElementById('ref-conversions').textContent = '0';
+    document.getElementById('ref-commission').textContent = '0%';
+    document.getElementById('referral-link').value = window.location.origin + '/inscripcion.html?ref=coach';
+    document.getElementById('referrals-table').style.display = 'none';
+    document.getElementById('referrals-empty').style.display = 'block';
+    referralsLoaded = true;
+  });
+}
+
+function copyReferralLink() {
+  var textarea = document.getElementById('referral-link');
+  textarea.select();
+  textarea.setSelectionRange(0, 99999);
+  try {
+    navigator.clipboard.writeText(textarea.value).then(function() {
+      showNotification('Link copiado al portapapeles.');
+    }).catch(function() {
+      document.execCommand('copy');
+      showNotification('Link copiado al portapapeles.');
+    });
+  } catch(e) {
+    document.execCommand('copy');
+    showNotification('Link copiado al portapapeles.');
+  }
+}
+
+// ===== NOTIFICATION =====
+function showNotification(msg) {
+  var existing = document.getElementById('coach-notification');
+  if (existing) existing.remove();
+
+  var note = document.createElement('div');
+  note.id = 'coach-notification';
+  note.className = 'notification';
+  note.textContent = msg;
+  document.body.appendChild(note);
+
+  setTimeout(function() {
+    note.style.opacity = '0';
+    setTimeout(function() { note.remove(); }, 200);
+  }, 3000);
+}
+
+// ===== LOGOUT =====
+function doLogout() {
+  var keys = Object.keys(localStorage).filter(function(k) { return k.startsWith('wc_'); });
+  keys.forEach(function(k) { localStorage.removeItem(k); });
+  window.location.href = 'login.html';
+}
+
+// ===== DRAG AND DROP LOGO =====
+(function() {
+  var area = document.getElementById('logo-upload-area');
+  var fileInput = document.getElementById('logo-file');
+
+  area.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    area.style.borderColor = 'var(--red)';
+  });
+  area.addEventListener('dragleave', function() {
+    area.style.borderColor = 'var(--border)';
+  });
+  area.addEventListener('drop', function(e) {
+    e.preventDefault();
+    area.style.borderColor = 'var(--border)';
+    var files = e.dataTransfer.files;
+    if (files.length > 0) {
+      var file = files[0];
+      if (file.size > 500 * 1024) {
+        alert('El archivo excede 500KB.');
+        return;
+      }
+      if (!file.type.match(/^image\/(png|svg\+xml|webp|jpeg)$/)) {
+        alert('Solo PNG, SVG, WebP o JPEG.');
+        return;
+      }
+      var dt = new DataTransfer();
+      dt.items.add(file);
+      fileInput.files = dt.files;
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        var preview = document.getElementById('logo-preview');
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+})();
+
+// ===== TICKETS =====
+var allTickets = [];
+var ticketsLoaded = false;
+var currentTicketFilter = 'all';
+
+function loadTickets() {
+  if (ticketsLoaded) return;
+  var coachId = coachData.id || coachData.user_id || '1';
+  apiFetch('GET', '/tickets/list?coach_id=' + coachId).then(function(data) {
+    if (!data || !data.ok) {
+      allTickets = [];
+      renderTickets([]);
+      ticketsLoaded = true;
+      return;
+    }
+    allTickets = data.data || [];
+    renderTickets(allTickets);
+    ticketsLoaded = true;
+  }).catch(function() {
+    allTickets = [];
+    renderTickets([]);
+    ticketsLoaded = true;
+  });
+}
+
+function renderTickets(tickets) {
+  var tbody = document.getElementById('tickets-tbody');
+  tbody.textContent = '';
+
+  if (!tickets.length) {
+    document.getElementById('tickets-table').style.display = 'none';
+    document.getElementById('tickets-empty').style.display = 'block';
+    return;
+  }
+  document.getElementById('tickets-table').style.display = '';
+  document.getElementById('tickets-empty').style.display = 'none';
+
+  tickets.forEach(function(t) {
+    var tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
+    tr.onclick = function() { showTicketDetail(t); };
+
+    // ID
+    var tdId = document.createElement('td');
+    tdId.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--accent)';
+    tdId.textContent = t.id || '--';
+    tr.appendChild(tdId);
+
+    // Cliente
+    var tdClient = document.createElement('td');
+    tdClient.textContent = t.client_name || '--';
+    tdClient.style.fontWeight = '500';
+    tr.appendChild(tdClient);
+
+    // Tipo
+    var tdType = document.createElement('td');
+    var typeMap = { rutina_nueva:'Rutina Nueva', cambio_rutina:'Cambio Rutina', nutricion:'Nutricion', habitos:'Habitos', invitacion_cliente:'Invitacion', otro:'Otro' };
+    tdType.textContent = typeMap[t.ticket_type] || t.ticket_type || '--';
+    tdType.style.fontSize = '.82rem';
+    tr.appendChild(tdType);
+
+    // Prioridad
+    var tdPri = document.createElement('td');
+    var priBadge = document.createElement('span');
+    priBadge.className = 'badge-status badge-' + (t.priority || 'normal');
+    priBadge.textContent = (t.priority || 'normal').toUpperCase();
+    tdPri.appendChild(priBadge);
+    tr.appendChild(tdPri);
+
+    // Estado
+    var tdStatus = document.createElement('td');
+    var statusBadge = document.createElement('span');
+    statusBadge.className = 'badge-status badge-' + (t.status || 'open');
+    var statusMap = { open:'Abierto', in_progress:'En Progreso', closed:'Cerrado' };
+    statusBadge.textContent = statusMap[t.status] || t.status || 'Abierto';
+    tdStatus.appendChild(statusBadge);
+    tr.appendChild(tdStatus);
+
+    // Creado
+    var tdCreated = document.createElement('td');
+    tdCreated.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--gray)';
+    tdCreated.textContent = t.created_at ? t.created_at.split('T')[0] : '--';
+    tr.appendChild(tdCreated);
+
+    // Deadline SLA
+    var tdDeadline = document.createElement('td');
+    tdDeadline.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.72rem';
+    if (t.deadline && t.status !== 'closed') {
+      var now = new Date();
+      var dl = new Date(t.deadline);
+      var hoursLeft = Math.round((dl - now) / 3600000);
+      if (hoursLeft < 0) {
+        tdDeadline.className = 'sla-expired';
+        tdDeadline.textContent = 'VENCIDO';
+      } else if (hoursLeft < 12) {
+        tdDeadline.className = 'sla-warn';
+        tdDeadline.textContent = hoursLeft + 'h restantes';
+      } else {
+        tdDeadline.className = 'sla-ok';
+        tdDeadline.textContent = hoursLeft + 'h restantes';
+      }
+    } else if (t.status === 'closed') {
+      tdDeadline.style.color = 'var(--green)';
+      tdDeadline.textContent = 'Completado';
+    } else {
+      tdDeadline.style.color = 'var(--gray)';
+      tdDeadline.textContent = '--';
+    }
+    tr.appendChild(tdDeadline);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function filterTickets(filter, btn) {
+  currentTicketFilter = filter;
+  var buttons = document.querySelectorAll('.ticket-filter');
+  for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+  if (btn) btn.classList.add('active');
+
+  if (filter === 'all') {
+    renderTickets(allTickets);
+  } else {
+    var filtered = allTickets.filter(function(t) { return t.status === filter; });
+    renderTickets(filtered);
+  }
+}
+
+function toggleNewTicket() {
+  var form = document.getElementById('new-ticket-form');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function submitTicket(e) {
+  e.preventDefault();
+  var clientName = document.getElementById('tk-client').value.trim();
+  var ticketType = document.getElementById('tk-type').value;
+  var clientPlan = document.getElementById('tk-plan').value;
+  var priority = document.getElementById('tk-priority').value;
+  var description = document.getElementById('tk-desc').value.trim();
+
+  if (description.length < 20) {
+    showNotification('La descripcion debe tener al menos 20 caracteres.');
+    return false;
+  }
+
+  var coachId = String(coachData.id || coachData.user_id || '1');
+  var payload = {
+    coach_id: coachId,
+    coach_name: coachData.name || 'Coach',
+    client_name: clientName,
+    client_plan: clientPlan,
+    ticket_type: ticketType,
+    priority: priority,
+    description: description
+  };
+
+  document.getElementById('btn-submit-ticket').disabled = true;
+  document.getElementById('btn-submit-ticket').textContent = 'Enviando...';
+
+  apiFetch('POST', '/tickets/create', payload).then(function(data) {
+    document.getElementById('btn-submit-ticket').disabled = false;
+    document.getElementById('btn-submit-ticket').textContent = 'Enviar Ticket';
+    if (data && data.ok) {
+      showNotification('Ticket creado: ' + (data.ticket_id || 'OK') + '. Respuesta en 48h.');
+      document.getElementById('new-ticket-form').style.display = 'none';
+      document.getElementById('tk-client').value = '';
+      document.getElementById('tk-type').value = '';
+      document.getElementById('tk-desc').value = '';
+      ticketsLoaded = false;
+      loadTickets();
+    } else {
+      showNotification('Error: ' + (data && data.error ? data.error : 'No se pudo crear el ticket'));
+    }
+  }).catch(function() {
+    document.getElementById('btn-submit-ticket').disabled = false;
+    document.getElementById('btn-submit-ticket').textContent = 'Enviar Ticket';
+    showNotification('Error de conexion al crear ticket.');
+  });
+
+  return false;
+}
+
+function showTicketDetail(ticket) {
+  document.getElementById('detail-ticket-id').textContent = ticket.id || '--';
+  var body = document.getElementById('detail-ticket-body');
+  body.textContent = '';
+
+  var fields = [
+    { label: 'Cliente', value: ticket.client_name },
+    { label: 'Tipo', value: ticket.ticket_type },
+    { label: 'Plan', value: (ticket.client_plan || '--').toUpperCase() },
+    { label: 'Prioridad', value: (ticket.priority || 'normal').toUpperCase() },
+    { label: 'Estado', value: ticket.status },
+    { label: 'Creado', value: ticket.created_at },
+    { label: 'Deadline', value: ticket.deadline },
+  ];
+
+  fields.forEach(function(f) {
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)';
+    var lbl = document.createElement('span');
+    lbl.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:.06em';
+    lbl.textContent = f.label;
+    var val = document.createElement('span');
+    val.style.cssText = 'font-size:.85rem;color:var(--white)';
+    val.textContent = f.value || '--';
+    row.appendChild(lbl);
+    row.appendChild(val);
+    body.appendChild(row);
+  });
+
+  // Description
+  var descTitle = document.createElement('div');
+  descTitle.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-top:18px;margin-bottom:8px';
+  descTitle.textContent = 'Descripcion';
+  body.appendChild(descTitle);
+
+  var descText = document.createElement('div');
+  descText.style.cssText = 'background:var(--surface-2);border:1px solid var(--border);padding:14px;font-size:.85rem;color:var(--white);line-height:1.6';
+  descText.textContent = ticket.description || 'Sin descripcion.';
+  body.appendChild(descText);
+
+  // Response (if exists)
+  if (ticket.response) {
+    var respTitle = document.createElement('div');
+    respTitle.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-top:18px;margin-bottom:8px';
+    respTitle.textContent = 'Respuesta WellCore';
+    body.appendChild(respTitle);
+
+    var respText = document.createElement('div');
+    respText.style.cssText = 'background:var(--surface-2);border:1px solid rgba(0,217,255,0.2);border-left:3px solid var(--accent);padding:14px;font-size:.85rem;color:var(--white);line-height:1.6';
+    respText.textContent = ticket.response;
+    body.appendChild(respText);
+  }
+
+  document.getElementById('ticket-detail-overlay').style.display = 'block';
+}
+
+function closeTicketDetail(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('ticket-detail-overlay').style.display = 'none';
+}
+
+// ===== RUN =====
+init();
+</script>
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+<script src="js/v5-effects.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trabaja con el Método WellCore — Coaches</title>
+<meta name="description" content="Aplica como coach certificado WellCore. Gana el 60% de tus ingresos con infraestructura completa, soporte técnico y metodología de élite.">
+<meta property="og:title" content="Trabaja con el Método WellCore — Coaches">
+<meta property="og:description" content="Aplica como coach certificado WellCore. Gana el 60% de tus ingresos con infraestructura completa, soporte técnico y metodología de élite.">
+<meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+<meta property="og:url" content="https://wellcorefitness.com/coaches.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://wellcorefitness.com/coaches.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/wellcore-v5.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+<style>
+/* ============================================================
+   WELLCORE FITNESS — COACHES RECRUITMENT PAGE
+   Design System v3 + v5 Enhancements
+   ============================================================ */
+
+:root {
+  --bg: #0a0a0a;
+  --surface: #111113;
+  --surface-2: #1a1a1d;
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+  --red: #E31E24;
+  --red-dark: #B8181D;
+  --red-dim: rgba(227,30,36,0.08);
+  --red-glow: rgba(227,30,36,0.25);
+  --gray: rgba(255,255,255,0.45);
+  --gray-light: rgba(255,255,255,0.65);
+  --accent: #00D9FF;
+  --accent-dim: rgba(0,217,255,0.08);
+  --green: #22C55E;
+  --gold: #F5C842;
+  --gold-dim: rgba(245,200,66,0.08);
+  --white: #ffffff;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+  --radius: 0;
+  --radius-lg: 0;
+  --transition: 0.1s linear;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+.nav-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.nav-logo { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.08em; color: var(--white); text-decoration: none; flex-shrink: 0; }
+.nav-logo span { color: var(--red); }
+.nav-links { display: flex; align-items: center; gap: 4px; list-style: none; flex: 1; justify-content: center; }
+.nav-links a { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; color: var(--gray); text-decoration: none; padding: 6px 10px; border-radius: 0; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+.nav-links a.active { color: var(--white); }
+.nav-cta { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--white); text-decoration: none; background: var(--red); padding: 8px 16px; border-radius: 0; transition: opacity var(--transition); flex-shrink: 0; }
+.nav-cta:hover { opacity: 0.85; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--white); animation: pulse-dot 2s infinite; flex-shrink: 0; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+.nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 0; transition: all 0.1s linear; }
+.nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(10,10,10,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 20px 24px; z-index: 999; flex-direction: column; gap: 4px; }
+.nav-mobile.open { display: flex; }
+.nav-mobile a { font-family: var(--font-mono); font-size: 14px; color: var(--gray); text-decoration: none; padding: 10px 12px; border-radius: 0; transition: all var(--transition); }
+.nav-mobile a:hover, .nav-mobile a.active { color: var(--white); background: rgba(255,255,255,0.05); }
+.nav-mobile .nav-cta-mobile { margin-top: 12px; background: var(--red); color: var(--white); text-align: center; border-radius: 0; }
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 120px 24px 80px;
+}
+.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(227,30,36,0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(227,30,36,0.06) 0%, transparent 50%), linear-gradient(180deg, #0a0a0a 0%, #0d0d0f 100%); z-index: 0; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%); }
+.hero-content { position: relative; z-index: 1; text-align: center; max-width: 860px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: var(--red); border: 1px solid rgba(227,30,36,0.35); background: var(--red-dim); padding: 6px 16px; border-radius: 0; margin-bottom: 28px; }
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse-dot 1.5s infinite; }
+.hero-title { font-family: var(--font-display); font-size: clamp(56px, 9vw, 112px); letter-spacing: 0.02em; line-height: 0.92; color: var(--white); margin-bottom: 24px; }
+.hero-title .accent { color: var(--red); }
+.hero-subtitle { font-size: clamp(16px, 2vw, 20px); color: var(--gray-light); max-width: 580px; margin: 0 auto 40px; line-height: 1.65; font-weight: 400; }
+.hero-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 20px; letter-spacing: 0.06em; color: var(--white); background: var(--red); padding: 16px 36px; border-radius: 0; text-decoration: none; border: 4px solid var(--red); cursor: pointer; transition: all 0.1s linear; position: relative; overflow: hidden; }
+.btn-primary::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.1); opacity: 0; transition: opacity 0.1s linear; }
+.btn-primary:hover { background: var(--red-dark); border-color: var(--red-dark); }
+.btn-primary:hover::after { opacity: 1; }
+.btn-outline { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--gray-light); border: 1px solid var(--border-hover); padding: 14px 28px; border-radius: 0; text-decoration: none; transition: all 0.1s linear; background: transparent; cursor: pointer; }
+.btn-outline:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+.hero-stats { display: flex; align-items: center; justify-content: center; gap: 48px; margin-top: 64px; flex-wrap: wrap; }
+.hero-stat { text-align: center; }
+.hero-stat-value { font-family: var(--font-display); font-size: 48px; letter-spacing: 0.02em; color: var(--white); line-height: 1; }
+.hero-stat-value .red { color: var(--red); }
+.hero-stat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--gray); margin-top: 4px; text-transform: uppercase; }
+.hero-divider { width: 1px; height: 48px; background: var(--border-hover); }
+
+/* ============================================================
+   SECTION LAYOUT
+   ============================================================ */
+section { padding: 96px 24px; }
+.container { max-width: 1280px; margin: 0 auto; }
+.section-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: var(--red); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--red); }
+.section-title { font-family: var(--font-display); font-size: clamp(42px, 5vw, 64px); letter-spacing: 0.02em; line-height: 0.95; margin-bottom: 16px; }
+.section-subtitle { font-size: 16px; color: var(--gray); max-width: 560px; line-height: 1.65; }
+
+/* ============================================================
+   WHY WELLCORE — BENEFITS GRID
+   ============================================================ */
+.why-section { background: var(--bg); border-top: 1px solid var(--border); }
+.why-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
+.why-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.revenue-badge { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.revenue-number { font-family: var(--font-display); font-size: 96px; line-height: 0.9; color: var(--red); letter-spacing: 0.02em; }
+.revenue-label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; color: var(--gray); text-align: right; }
+.benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.benefit-card { background: var(--surface); padding: 36px 32px; position: relative; transition: background var(--transition); cursor: default; }
+.benefit-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); opacity: 0; transition: opacity 0.1s linear; }
+.benefit-card:hover { background: var(--surface-2); }
+.benefit-card:hover::after { opacity: 1; }
+.benefit-icon { width: 44px; height: 44px; border-radius: 0; background: var(--red-dim); border: 1px solid rgba(227,30,36,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 18px; color: var(--red); transition: all 0.1s linear; }
+.benefit-card:hover .benefit-icon { background: rgba(227,30,36,0.15); }
+.benefit-title { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.04em; margin-bottom: 10px; color: var(--white); }
+.benefit-desc { font-size: 14px; color: var(--gray); line-height: 1.65; }
+
+/* ============================================================
+   PLAN TIERS
+   ============================================================ */
+.plans-section { background: linear-gradient(180deg, var(--bg) 0%, #0c0c0e 100%); border-top: 1px solid var(--border); }
+.plans-header { text-align: center; margin-bottom: 64px; }
+.plans-header .section-label { justify-content: center; }
+.plans-header .section-label::before { display: none; }
+.plans-header .section-subtitle { margin: 0 auto; text-align: center; }
+.plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+.plan-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px 32px; position: relative; transition: border-color 0.1s linear; display: flex; flex-direction: column; gap: 0; }
+.plan-card:hover { border-color: var(--red); }
+.plan-card.featured { border-color: var(--red); background: linear-gradient(180deg, rgba(227,30,36,0.05) 0%, var(--surface) 40%); }
+.plan-card.featured:hover { border-color: #fff; }
+.plan-card.elite { border-color: rgba(245,200,66,0.3); }
+.plan-card.elite:hover { border-color: rgba(245,200,66,0.5); }
+.plan-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; padding: 4px 12px; border-radius: 0; margin-bottom: 24px; width: fit-content; }
+.plan-badge.asociado { color: var(--red); border: 1px solid rgba(227,30,36,0.4); background: var(--red-dim); }
+.plan-badge.profesional { color: var(--white); background: var(--red); border: 1px solid var(--red); }
+.plan-badge.elite-badge { color: var(--gold); border: 1px solid rgba(245,200,66,0.4); background: var(--gold-dim); }
+.popular-tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: var(--white); background: var(--red); padding: 4px 16px; border-radius: 0; white-space: nowrap; }
+.plan-name { font-family: var(--font-display); font-size: 32px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 8px; }
+.plan-revenue { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
+.plan-revenue-pct { font-family: var(--font-display); font-size: 52px; letter-spacing: 0.02em; color: var(--red); line-height: 1; }
+.plan-card.elite .plan-revenue-pct { color: var(--gold); }
+.plan-revenue-label { font-family: var(--font-mono); font-size: 12px; color: var(--gray); letter-spacing: 0.08em; }
+.plan-revenue-note { font-family: var(--font-mono); font-size: 11px; color: var(--gray); letter-spacing: 0.06em; margin-bottom: 28px; }
+.plan-divider { height: 1px; background: var(--border); margin-bottom: 28px; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; flex: 1; }
+.plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray-light); line-height: 1.5; }
+.plan-features li .check { color: var(--accent); flex-shrink: 0; margin-top: 2px; font-size: 14px; }
+.plan-card.elite .plan-features li .check { color: var(--gold); }
+.plan-cta { display: block; text-align: center; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; padding: 14px 24px; border-radius: 0; text-decoration: none; cursor: pointer; border: 4px solid transparent; transition: all 0.1s linear; width: 100%; }
+.plan-cta.outline { color: var(--gray-light); border: 1px solid var(--border-hover); background: transparent; }
+.plan-cta.outline:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+.plan-cta.solid { color: var(--white); background: var(--red); border: 1px solid var(--red); }
+.plan-cta.solid:hover { background: var(--red-dark); border-color: var(--red-dark); }
+.plan-cta.gold { color: #0a0a0a; background: var(--gold); border: 1px solid var(--gold); }
+.plan-cta.gold:hover { opacity: 0.85; }
+
+/* ============================================================
+   VIDEO PRODUCTION SECTION
+   ============================================================ */
+.video-section { background: var(--bg); border-top: 1px solid var(--border); }
+.video-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: var(--radius-lg); overflow: hidden; display: grid; grid-template-columns: 1fr 400px; min-height: 420px; }
+.video-card-body { padding: 60px 56px; display: flex; flex-direction: column; justify-content: center; gap: 0; }
+.video-extra-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: var(--gold); border: 1px solid rgba(245,200,66,0.35); background: var(--gold-dim); padding: 4px 12px; border-radius: 0; margin-bottom: 20px; width: fit-content; }
+.video-title { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); letter-spacing: 0.02em; line-height: 0.95; color: var(--white); margin-bottom: 8px; }
+.video-subtitle { font-family: var(--font-mono); font-size: 14px; color: var(--red); letter-spacing: 0.08em; margin-bottom: 20px; }
+.video-body { font-size: 15px; color: var(--gray-light); line-height: 1.7; margin-bottom: 28px; max-width: 520px; }
+.video-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+.video-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray-light); line-height: 1.5; }
+.video-bullets li::before { content: '•'; color: var(--red); font-size: 18px; line-height: 1.2; flex-shrink: 0; }
+.video-cta { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--white); background: transparent; border: 1px solid var(--border-hover); padding: 12px 24px; border-radius: 0; text-decoration: none; width: fit-content; transition: all 0.1s linear; }
+.video-cta:hover { color: var(--white); border-color: var(--red); background: var(--red-dim); }
+.video-card-visual { background: linear-gradient(135deg, #111113 0%, #0d0d0f 100%); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; border-left: 1px solid var(--border); }
+.video-card-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(227,30,36,0.08) 0%, transparent 70%); }
+.video-visual-icon { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.video-play-circle { width: 100px; height: 100px; border-radius: 50%; border: 2px solid rgba(227,30,36,0.4); display: flex; align-items: center; justify-content: center; position: relative; }
+.video-play-circle::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid rgba(227,30,36,0.15); }
+.video-visual-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--gray); text-align: center; }
+.video-specs { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.video-spec-item { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.3); }
+.video-spec-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(227,30,36,0.5); flex-shrink: 0; }
+
+/* ============================================================
+   GUIA DE GRABACION
+   ============================================================ */
+.guide-section { background: var(--surface); border-top: 1px solid var(--border); }
+.guide-header { text-align: center; margin-bottom: 64px; }
+.guide-header .section-label { justify-content: center; }
+.guide-header .section-label::before { display: none; }
+.guide-header .section-subtitle { margin: 0 auto; text-align: center; }
+.guide-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.guide-item { background: var(--bg); padding: 32px 24px; display: flex; flex-direction: column; gap: 12px; transition: background 0.1s linear; }
+.guide-item:hover { background: #0e0e10; }
+.guide-number { font-family: var(--font-display); font-size: 48px; letter-spacing: 0.02em; color: rgba(227,30,36,0.25); line-height: 1; }
+.guide-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; color: var(--red); text-transform: uppercase; }
+.guide-rule { font-size: 14px; color: var(--gray-light); line-height: 1.6; }
+
+/* ============================================================
+   APPLICATION FORM
+   ============================================================ */
+.form-section { background: var(--bg); border-top: 1px solid var(--border); }
+.form-layout { display: grid; grid-template-columns: 1fr 420px; gap: 80px; align-items: start; }
+.form-sidebar { position: sticky; top: 88px; }
+.form-sidebar-title { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); letter-spacing: 0.02em; line-height: 0.95; margin-bottom: 20px; }
+.form-sidebar-desc { font-size: 15px; color: var(--gray); line-height: 1.7; margin-bottom: 40px; }
+.form-info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+.form-info-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+.form-info-value { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.04em; color: var(--white); line-height: 1; margin-bottom: 4px; }
+.form-info-note { font-size: 14px; color: var(--gray); line-height: 1.5; }
+.process-steps { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+.process-step { display: flex; gap: 16px; position: relative; padding-bottom: 24px; }
+.process-step:last-child { padding-bottom: 0; }
+.process-step-line { display: flex; flex-direction: column; align-items: center; gap: 0; flex-shrink: 0; }
+.process-step-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(227,30,36,0.4); background: var(--red-dim); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--red); flex-shrink: 0; }
+.process-step-connector { width: 1px; flex: 1; background: var(--border); min-height: 20px; }
+.process-step:last-child .process-step-connector { display: none; }
+.process-step-content { padding-top: 4px; }
+.process-step-name { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--white); margin-bottom: 4px; }
+.process-step-desc { font-size: 14px; color: var(--gray); line-height: 1.5; }
+.form-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px 40px; }
+.form-group { margin-bottom: 24px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-label { display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--gray-light); margin-bottom: 8px; text-transform: uppercase; }
+.form-label .required { color: var(--red); margin-left: 3px; }
+.form-input, .form-select, .form-textarea { width: 100%; background: var(--bg); border: 1px solid var(--border-hover); border-radius: 0; padding: 12px 16px; font-family: var(--font-body); font-size: 14px; color: var(--white); transition: border-color 0.1s linear; outline: none; appearance: none; -webkit-appearance: none; }
+.form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.2); }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: rgba(227,30,36,0.5); box-shadow: 0 0 0 3px rgba(227,30,36,0.08); }
+.form-input.error, .form-select.error, .form-textarea.error { border-color: rgba(227,30,36,0.6); box-shadow: 0 0 0 3px rgba(227,30,36,0.12); }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer; }
+.form-select option { background: #1a1a1d; color: var(--white); }
+.form-textarea { resize: vertical; min-height: 120px; font-family: var(--font-body); line-height: 1.6; }
+.form-error-msg { font-family: var(--font-mono); font-size: 11px; color: var(--red); margin-top: 6px; display: none; }
+.form-error-msg.visible { display: block; }
+.form-char-count { font-family: var(--font-mono); font-size: 11px; color: var(--gray); margin-top: 6px; text-align: right; }
+.form-char-count.ok { color: var(--accent); }
+.form-char-count.warn { color: var(--red); }
+.checkboxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+.checkbox-item input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
+.checkbox-custom { width: 18px; height: 18px; border: 1px solid var(--border-hover); border-radius: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.1s linear; }
+.checkbox-item input[type="checkbox"]:checked + .checkbox-custom { background: var(--red); border-color: var(--red); }
+.checkbox-item input[type="checkbox"]:checked + .checkbox-custom::after { content: ''; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); display: block; }
+.checkbox-label { font-size: 14px; color: var(--gray-light); line-height: 1.4; }
+.radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+.radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.radio-item input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+.radio-custom { width: 18px; height: 18px; border: 1px solid var(--border-hover); border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.1s linear; }
+.radio-item input[type="radio"]:checked + .radio-custom { border-color: var(--red); background: var(--red-dim); }
+.radio-item input[type="radio"]:checked + .radio-custom::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--red); display: block; }
+.radio-label { font-size: 14px; color: var(--gray-light); }
+.contract-checkbox-wrap { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 0; cursor: pointer; }
+.contract-checkbox-wrap:has(input:checked) { border-color: rgba(0,217,255,0.3); background: rgba(0,217,255,0.04); }
+.contract-text { font-size: 14px; color: var(--gray-light); line-height: 1.5; }
+.contract-link { color: var(--red); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; background: none; border: none; padding: 0; font: inherit; font-size: 14px; }
+.contract-link:hover { opacity: 0.8; }
+.form-submit-btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; font-family: var(--font-display); font-size: 24px; letter-spacing: 0.06em; color: var(--white); background: var(--red); border: none; border-radius: 0; padding: 20px 32px; cursor: pointer; transition: all 0.1s linear; position: relative; overflow: hidden; margin-top: 32px; }
+.form-submit-btn:hover:not(:disabled) { background: var(--red-dark); }
+.form-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.submit-spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+.form-submit-btn.loading .submit-spinner { display: block; }
+.form-submit-btn.loading .submit-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.form-success { display: none; text-align: center; padding: 64px 32px; }
+.form-success.visible { display: block; }
+.success-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--accent-dim); border: 1px solid rgba(0,217,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--accent); margin: 0 auto 24px; }
+.success-title { font-family: var(--font-display); font-size: 36px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 12px; }
+.success-msg { font-size: 15px; color: var(--gray); line-height: 1.6; }
+.form-error-banner { display: none; background: rgba(227,30,36,0.08); border: 1px solid rgba(227,30,36,0.3); border-radius: 0; padding: 12px 16px; font-size: 14px; color: var(--red); margin-top: 16px; text-align: center; }
+.form-error-banner.visible { display: block; }
+
+/* ============================================================
+   CONTRACT MODAL
+   ============================================================ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; display: none; align-items: flex-start; justify-content: center; padding: 24px; overflow-y: auto; backdrop-filter: blur(6px); }
+.modal-overlay.open { display: flex; }
+.modal-box { background: var(--surface); border: 1px solid var(--border-hover); border-radius: var(--radius-lg); width: 100%; max-width: 760px; margin: auto; overflow: hidden; }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 32px; border-bottom: 1px solid var(--border); }
+.modal-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 0.04em; color: var(--white); }
+.modal-version { font-family: var(--font-mono); font-size: 11px; color: var(--gray); letter-spacing: 0.08em; }
+.modal-close { width: 36px; height: 36px; border-radius: 0; border: 1px solid var(--border-hover); background: transparent; color: var(--gray); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.1s linear; flex-shrink: 0; }
+.modal-close:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.05); }
+.modal-body { padding: 32px; max-height: 65vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
+.modal-body::-webkit-scrollbar { width: 4px; }
+.modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+.contract-content { font-family: var(--font-mono); font-size: 12px; line-height: 1.8; color: var(--gray-light); }
+.contract-header-block { text-align: center; padding-bottom: 24px; margin-bottom: 28px; border-bottom: 1px solid var(--border); }
+.contract-main-title { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.06em; color: var(--white); margin-bottom: 6px; }
+.contract-version { font-family: var(--font-mono); font-size: 11px; color: var(--gray); letter-spacing: 0.1em; }
+.contract-clause { margin-bottom: 24px; }
+.contract-clause-title { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
+.contract-clause p { font-size: 12px; line-height: 1.8; color: var(--gray-light); margin-bottom: 8px; }
+.contract-clause ul { list-style: none; margin: 8px 0; padding-left: 16px; }
+.contract-clause ul li { font-size: 12px; color: var(--gray-light); line-height: 1.7; position: relative; }
+.contract-clause ul li::before { content: '•'; color: var(--red); position: absolute; left: -14px; }
+.modal-footer { padding: 20px 32px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.modal-footer-note { font-family: var(--font-mono); font-size: 11px; color: var(--gray); letter-spacing: 0.06em; }
+.modal-close-btn { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--white); background: var(--surface-2); border: 1px solid var(--border-hover); padding: 10px 24px; border-radius: 0; cursor: pointer; transition: all 0.1s linear; }
+.modal-close-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: center; }
+.footer-logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.08em; color: var(--white); margin-bottom: 12px; }
+.footer-logo span { color: var(--red); }
+.footer-tagline { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 24px; }
+.footer-links { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.footer-links a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--gray); text-decoration: none; transition: color 0.1s linear; }
+.footer-links a:hover { color: var(--white); }
+.footer-copy { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.2); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .why-header { grid-template-columns: 1fr; gap: 24px; }
+  .why-header-right { align-items: flex-start; }
+  .revenue-number { font-size: 72px; }
+  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  .plans-grid { grid-template-columns: 1fr 1fr; }
+  .video-card { grid-template-columns: 1fr; }
+  .video-card-visual { min-height: 200px; }
+  .guide-grid { grid-template-columns: repeat(4, 1fr); }
+  .form-layout { grid-template-columns: 1fr; gap: 48px; }
+  .form-sidebar { position: static; }
+}
+@media (max-width: 768px) {
+  section { padding: 64px 20px; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .plans-grid { grid-template-columns: 1fr; }
+  .guide-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-row { grid-template-columns: 1fr; }
+  .checkboxes-grid { grid-template-columns: 1fr; }
+  .radio-group { flex-direction: column; gap: 8px; }
+  .hero-stats { gap: 24px; }
+  .hero-divider { display: none; }
+  .form-container { padding: 32px 24px; }
+  .video-card-body { padding: 40px 32px; }
+  .modal-body { max-height: 55vh; }
+  .modal-footer { flex-direction: column; align-items: stretch; text-align: center; }
+}
+@media (max-width: 576px) {
+  body { font-size: 17px; line-height: 1.75; }
+}
+@media (max-width: 480px) {
+  .guide-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 52px; }
+}
+</style>
+</head>
+<body>
+
+<!-- v5 Preloader -->
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">WELL<span>CORE</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="metodo.html">Método</a></li>
+      <li><a href="planes.html">Planes</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="coaches.html" class="active">Coaches</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="nav-mobile" id="navMobile" role="navigation" aria-label="Menú móvil">
+  <a href="index.html">Inicio</a>
+  <a href="metodo.html">Método</a>
+  <a href="planes.html">Planes</a>
+  <a href="proceso.html">Proceso</a>
+  <a href="nosotros.html">Nosotros</a>
+  <a href="coaches.html" class="active">Coaches</a>
+  <a href="blog/index.html">Blog</a>
+  <a href="faq.html">FAQ</a>
+  <a href="login.html" class="nav-mobile-link" style="color:#fff;background:var(--red);padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;display:block;">MI CUENTA</a>
+</div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" aria-label="Hero — Reclutamiento de Coaches" data-v5-reveal>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-aos="fade-down">
+      <span class="hero-badge-dot"></span>
+      PLAZAS LIMITADAS — APLICA HOY
+    </div>
+    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="80">
+      TRABAJA CON<br>EL MÉTODO<br><span class="accent">WELLCORE</span>
+    </h1>
+    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="160">
+      Aplica como coach certificado y haz crecer tu negocio con nuestra plataforma. Infraestructura completa, metodología probada, 60% de tus ingresos.
+    </p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
+      <a href="#aplicar" class="btn-primary btn-red btn-v5 btn-v5-primary"><div class="btn-bg"></div><span class="btn-text">ENVIAR MI APLICACIÓN &rarr;</span></a>
+      <a href="#beneficios" class="btn-outline btn-v5 btn-v5-dark"><div class="btn-bg"></div><span class="btn-text"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> VER BENEFICIOS</span></a>
+    </div>
+    <div class="hero-stats" data-aos="fade-up" data-aos-delay="320">
+      <div class="hero-stat">
+        <div class="hero-stat-value"><span class="red">60</span>%</div>
+        <div class="hero-stat-label">DE TUS INGRESOS</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">3</div>
+        <div class="hero-stat-label">PLANES DISPONIBLES</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">5<span class="red">-</span>7</div>
+        <div class="hero-stat-label">DÍAS DE RESPUESTA</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">24<span class="red">/</span>7</div>
+        <div class="hero-stat-label">SOPORTE TÉCNICO</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY WELLCORE
+     ============================================================ -->
+<section class="why-section" id="beneficios" aria-label="Por qué WellCore" data-v5-reveal>
+  <div class="container">
+    <div class="why-header">
+      <div>
+        <div class="section-label" data-aos="fade-right">POR QUÉ WELLCORE</div>
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">TODO LO QUE<br>NECESITAS PARA<br>ESCALAR</h2>
+        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="120">Nos encargamos de la infraestructura para que tú te concentres en lo que sabes hacer: transformar vidas.</p>
+      </div>
+      <div class="why-header-right" data-aos="fade-left">
+        <div class="revenue-badge">
+          <div class="revenue-number">60%</div>
+          <div class="revenue-label">DE CADA SUSCRIPCIÓN<br>QUE GENERES</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefits-grid">
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="60">
+        <div class="benefit-icon">&#10003;</div>
+        <div class="benefit-title">60% DE TUS INGRESOS</div>
+        <p class="benefit-desc">Ganas el 60% de cada suscripción que generes a través de WellCore. Sin techo. Sin límite de clientes. Mientras más creces, más ganas — la plataforma escala contigo.</p>
+      </div>
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="120">
+        <div class="benefit-icon">&#10003;</div>
+        <div class="benefit-title">INFRAESTRUCTURA COMPLETA</div>
+        <p class="benefit-desc">Portal de clientes, sistema de pagos seguro, seguimiento de progreso, check-ins automáticos y gestión de suscripciones. Todo listo desde el día uno, sin costos adicionales.</p>
+      </div>
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="180">
+        <div class="benefit-icon">&#10003;</div>
+        <div class="benefit-title">PROGRAMAS DISEÑADOS PARA TI</div>
+        <p class="benefit-desc">Nuestro equipo especializado co-crea los planes de entrenamiento y nutrición personalizados para cada uno de tus clientes, alineados con tu metodología y estilo como coach.</p>
+      </div>
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="benefit-icon">&#10003;</div>
+        <div class="benefit-title">SOPORTE TÉCNICO Y OPERATIVO</div>
+        <p class="benefit-desc">Acompañamiento real en cada paso: onboarding inicial, gestión de plataforma, resolución de problemas técnicos y soporte operativo continuo según tu plan.</p>
+      </div>
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="benefit-icon">&#10003;</div>
+        <div class="benefit-title">MARCA PERSONAL</div>
+        <p class="benefit-desc">Tu imagen, tu estilo, tu identidad. WellCore te ayuda a construir y posicionar tu marca personal como coach de élite, diferenciándote en un mercado cada vez más competitivo.</p>
+      </div>
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="360">
+        <div class="benefit-icon">&#10003;</div>
+        <div class="benefit-title">COMUNIDAD DE ALTO NIVEL</div>
+        <p class="benefit-desc">Accede a una red exclusiva de coaches certificados WellCore, recursos educativos de élite, actualizaciones de metodología y mentoría continua de coaches senior.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PLAN TIERS
+     ============================================================ -->
+<section class="plans-section" id="planes" aria-label="Modelo de Trabajo Coach" data-v5-reveal>
+  <div class="container">
+    <div class="plans-header" data-aos="fade-up">
+      <div class="section-label">MODELO DE TRABAJO</div>
+      <h2 class="section-title">ASÍ TRABAJA<br>WELLCORE</h2>
+      <p class="section-subtitle">Un modelo. Claro y justo. El 60% de cada suscripción es tuyo — desde el primer cliente hasta el último.</p>
+    </div>
+
+    <div style="display:flex;justify-content:center;" data-aos="fade-up" data-aos-delay="100">
+      <div class="plan-card featured" style="max-width:560px;width:100%;" data-v5-reveal>
+        <div class="plan-badge profesional">&#9733; MODELO ÚNICO WELLCORE</div>
+        <div class="plan-revenue" style="margin-bottom:4px;">
+          <span class="plan-revenue-pct">60%</span>
+          <span class="plan-revenue-label">/ suscripción generada</span>
+        </div>
+        <div class="plan-revenue-note">DE CADA CLIENTE QUE TRAIGAS — SIN TECHO, SIN LÍMITE</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Clientes ilimitados desde el día 1</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Portal completo con seguimiento avanzado de clientes</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Planes de entrenamiento y nutrición ilimitados</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Check-in semanal integrado con cada cliente</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Analytics de rendimiento y progreso de clientes</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Soporte WellCore por WhatsApp — respuesta en 48h</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Onboarding completo con kit de bienvenida</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Acceso a la red y metodología WellCore</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Sistema de pagos integrado — cobros cada 15 días</li>
+          <li><span class="check"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></span>Posibilidad de aparecer en campañas de marca</li>
+        </ul>
+        <div style="background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);padding:14px 20px;margin:20px 0;font-size:12px;color:rgba(255,255,255,0.6);font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;">
+          WellCore retiene el 40% restante para infraestructura, procesamiento de pagos, soporte operativo y administración de la plataforma.
+        </div>
+        <a href="#aplicar" class="plan-cta solid btn-red btn-v5 btn-v5-primary"><div class="btn-bg"></div><span class="btn-text">APLICAR AHORA</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VIDEO PRODUCTION
+     ============================================================ -->
+<section class="video-section" id="video" aria-label="Producción de Video" data-v5-reveal>
+  <div class="container">
+    <div class="video-card" data-aos="fade-up">
+      <div class="video-card-body">
+        <div class="video-extra-badge">
+          <span style="font-size:9px;color:var(--gold);">&#10003;</span>
+          SERVICIO EXTRA — A COORDINAR CON EL EQUIPO
+        </div>
+        <h2 class="video-title">PRODUCCIÓN<br>DE VIDEO<br>PROFESIONAL</h2>
+        <div class="video-subtitle">TU IMAGEN EN CADA ENTRENAMIENTO</div>
+        <p class="video-body">
+          Como coach WellCore, tus clientes verán TUS videos en sus planes de entrenamiento. Ofrecemos servicios de producción audiovisual para grabar tus sesiones con calidad profesional: edición, color grading, música y branding incluidos. Tu cara, tu marca, tu método — con producción de élite.
+        </p>
+        <ul class="video-bullets">
+          <li>Video de ejercicio con tu imagen y marca personal</li>
+          <li>Edición profesional con color grading y musicalización</li>
+          <li>Integración directa en el portal de clientes WellCore</li>
+          <li>Precio según paquete (cotización personalizada con el equipo)</li>
+        </ul>
+        <a href="https://wa.me/573124904720?text=Hola%2C%20quiero%20consultar%20sobre%20producción%20de%20video%20para%20coaches%20WellCore" target="_blank" rel="noopener noreferrer" class="video-cta btn-v5 btn-v5-dark"><div class="btn-bg"></div><span class="btn-text">CONSULTAR PRODUCCIÓN <span style="color:#25d366;font-weight:700;">WA</span></span></a>
+      </div>
+      <div class="video-card-visual" aria-hidden="true">
+        <div class="video-visual-icon">
+          <div class="video-play-circle">
+            <span style="font-size:36px;color:var(--red);">&#9654;</span>
+          </div>
+          <div class="video-visual-label">PRODUCCIÓN PROFESIONAL</div>
+          <div class="video-specs">
+            <div class="video-spec-item">4K / 1080p</div>
+            <div class="video-spec-item">Color Grading</div>
+            <div class="video-spec-item">Branding Incluido</div>
+            <div class="video-spec-item">Edición Profesional</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GUIA DE GRABACION
+     ============================================================ -->
+<section class="guide-section" id="guia" aria-label="Guía de Grabación" data-v5-reveal>
+  <div class="container">
+    <div class="guide-header" data-aos="fade-up">
+      <div class="section-label">ESTÁNDARES DE CALIDAD</div>
+      <h2 class="section-title">REQUISITOS PARA<br>GRABAR TUS VIDEOS</h2>
+      <p class="section-subtitle">Todos los videos deben cumplir estos estándares antes de ser aprobados por el equipo WellCore.</p>
+    </div>
+
+    <div class="guide-grid">
+      <div class="guide-item" data-aos="fade-up" data-aos-delay="40">
+        <div class="guide-number">01</div>
+        <div class="guide-tag">TÉCNICO</div>
+        <p class="guide-rule">Resolución mínima 1080p, formato MP4 o MOV, máximo 400MB por video. Framerate recomendado 30fps o 60fps.</p>
+      </div>
+      <div class="guide-item" data-aos="fade-up" data-aos-delay="80">
+        <div class="guide-number">02</div>
+        <div class="guide-tag">ILUMINACIÓN</div>
+        <p class="guide-rule">Luz natural o artificial directa hacia tu frente. Absolutamente sin contraluz. La figura debe verse con claridad total.</p>
+      </div>
+      <div class="guide-item" data-aos="fade-up" data-aos-delay="120">
+        <div class="guide-number">03</div>
+        <div class="guide-tag">ENCUADRE</div>
+        <p class="guide-rule">Cuerpo completo visible en todo momento durante el movimiento. Fondo neutro o limpio, sin desorden visible.</p>
+      </div>
+      <div class="guide-item" data-aos="fade-up" data-aos-delay="160">
+        <div class="guide-number">04</div>
+        <div class="guide-tag">AUDIO</div>
+        <p class="guide-rule">Silencio ambiental durante la demostración. Sin música de fondo. El sonido del movimiento debe ser capturable.</p>
+      </div>
+      <div class="guide-item" data-aos="fade-up" data-aos-delay="200">
+        <div class="guide-number">05</div>
+        <div class="guide-tag">CONTENIDO</div>
+        <p class="guide-rule">Demostración completa del ejercicio: posición de arranque, ejecución correcta del movimiento y posición de finalización.</p>
+      </div>
+      <div class="guide-item" data-aos="fade-up" data-aos-delay="240">
+        <div class="guide-number">06</div>
+        <div class="guide-tag">VESTIMENTA</div>
+        <p class="guide-rule">Ropa deportiva limpia y en buen estado. Sin logos visibles de marcas competidoras al método WellCore.</p>
+      </div>
+      <div class="guide-item" data-aos="fade-up" data-aos-delay="280">
+        <div class="guide-number">07</div>
+        <div class="guide-tag">APROBACIÓN</div>
+        <p class="guide-rule">Todos los videos son revisados por el equipo WellCore antes de publicarse. Tiempo de revisión: 3 a 5 días hábiles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     APPLICATION FORM
+     ============================================================ -->
+<section class="form-section" id="aplicar" aria-label="Formulario de Aplicación" data-v5-reveal>
+  <div class="container">
+    <div class="form-layout">
+
+      <!-- Sidebar -->
+      <div class="form-sidebar" data-aos="fade-right">
+        <div class="section-label">FORMULARIO DE APLICACIÓN</div>
+        <h2 class="form-sidebar-title">APLICA COMO<br>COACH<br><span style="color:var(--red)">WELLCORE</span></h2>
+        <p class="form-sidebar-desc">Completa el formulario con tu información. Nuestro equipo revisará tu aplicación en 5 a 7 días hábiles y te contactará directamente para el siguiente paso.</p>
+
+        <div class="form-info-card">
+          <div class="form-info-label">COMISIÓN GARANTIZADA</div>
+          <div class="form-info-value">60%</div>
+          <div class="form-info-note">De cada suscripción que generes, sin excepciones y sin techo de ingresos.</div>
+        </div>
+
+        <div class="form-info-card">
+          <div class="form-info-label">TIEMPO DE RESPUESTA</div>
+          <div class="form-info-value">5–7 días</div>
+          <div class="form-info-note">Hábiles para revisar tu aplicación y contactarte con una respuesta.</div>
+        </div>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-step-line">
+              <div class="process-step-dot">1</div>
+              <div class="process-step-connector"></div>
+            </div>
+            <div class="process-step-content">
+              <div class="process-step-name">ENVÍAS TU APLICACIÓN</div>
+              <div class="process-step-desc">Completa el formulario con tu perfil, experiencia y plan de interés.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-line">
+              <div class="process-step-dot">2</div>
+              <div class="process-step-connector"></div>
+            </div>
+            <div class="process-step-content">
+              <div class="process-step-name">REVISIÓN DEL EQUIPO</div>
+              <div class="process-step-desc">El equipo WellCore evalúa tu perfil en 5–7 días hábiles.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-line">
+              <div class="process-step-dot">3</div>
+              <div class="process-step-connector"></div>
+            </div>
+            <div class="process-step-content">
+              <div class="process-step-name">ENTREVISTA (SI APLICA)</div>
+              <div class="process-step-desc">Para perfiles Elite o Profesional puede haber una llamada de validación.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-line">
+              <div class="process-step-dot">4</div>
+              <div class="process-step-connector"></div>
+            </div>
+            <div class="process-step-content">
+              <div class="process-step-name">APROBACIÓN Y ONBOARDING</div>
+              <div class="process-step-desc">Si eres aprobado, iniciamos el proceso de onboarding y configuración de tu portal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="form-container" data-aos="fade-left">
+        <!-- Success state -->
+        <div class="form-success" id="formSuccess" aria-live="polite">
+          <div class="success-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+          <div class="success-title">APLICACIÓN RECIBIDA</div>
+          <p class="success-msg">Tu aplicación fue enviada correctamente. El equipo WellCore la revisará y te contactará por WhatsApp o email en un plazo de 5 a 7 días hábiles.</p>
+        </div>
+
+        <!-- Form fields -->
+        <form id="coachForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-nombre">Nombre completo <span class="required">*</span></label>
+              <input class="form-input" type="text" id="f-nombre" name="nombre" placeholder="Tu nombre completo" autocomplete="name" required>
+              <div class="form-error-msg" id="err-nombre">Por favor ingresa tu nombre completo.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-email">Email <span class="required">*</span></label>
+              <input class="form-input" type="email" id="f-email" name="email" placeholder="tu@email.com" autocomplete="email" required>
+              <div class="form-error-msg" id="err-email">Ingresa un email válido.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-whatsapp">WhatsApp (con indicativo) <span class="required">*</span></label>
+              <input class="form-input" type="tel" id="f-whatsapp" name="whatsapp" placeholder="+57 300 000 0000" autocomplete="tel" required>
+              <div class="form-error-msg" id="err-whatsapp">Ingresa tu número de WhatsApp con indicativo de país.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-ciudad">Ciudad y país <span class="required">*</span></label>
+              <input class="form-input" type="text" id="f-ciudad" name="ciudad" placeholder="Bogotá, Colombia" required>
+              <div class="form-error-msg" id="err-ciudad">Indica tu ciudad y país.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-experiencia">Años de experiencia <span class="required">*</span></label>
+              <select class="form-select" id="f-experiencia" name="experiencia" required>
+                <option value="">Seleccionar...</option>
+                <option value="1-2">1 – 2 años</option>
+                <option value="3-5">3 – 5 años</option>
+                <option value="5-10">5 – 10 años</option>
+                <option value="+10">Más de 10 años</option>
+              </select>
+              <div class="form-error-msg" id="err-experiencia">Selecciona tu nivel de experiencia.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-clientes">Clientes actuales <span class="required">*</span></label>
+              <select class="form-select" id="f-clientes" name="clientes" required>
+                <option value="">Seleccionar...</option>
+                <option value="ninguno">No tengo clientes actualmente</option>
+                <option value="1-5">1 – 5 clientes</option>
+                <option value="6-15">6 – 15 clientes</option>
+                <option value="+15">Más de 15 clientes</option>
+              </select>
+              <div class="form-error-msg" id="err-clientes">Indica cuántos clientes tienes actualmente.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Especialización <span class="required">*</span></label>
+            <div class="checkboxes-grid" id="especialidades-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="especializacion" value="fuerza-hipertrofia">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">Fuerza / Hipertrofia</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="especializacion" value="perdida-grasa">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">Pérdida de grasa</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="especializacion" value="atletismo">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">Atletismo</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="especializacion" value="rehabilitacion">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">Rehabilitación</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="especializacion" value="nutricion-deportiva">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">Nutrición deportiva</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="especializacion" value="crossfit-funcional">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">Crossfit / Funcional</span>
+              </label>
+            </div>
+            <div class="form-error-msg" id="err-especializacion">Selecciona al menos una especialización.</div>
+          </div>
+
+          <input type="hidden" name="plan" value="modelo-unico-60-40">
+
+          <div class="form-group">
+            <label class="form-label" for="f-sobre-ti">Cuéntanos sobre ti <span class="required">*</span></label>
+            <textarea class="form-textarea" id="f-sobre-ti" name="sobreTi" rows="5" placeholder="¿Qué te hace diferente como coach? Cuéntanos tu historia, tu enfoque y por qué quieres trabajar con WellCore..." required minlength="100"></textarea>
+            <div class="form-char-count" id="char-count">0 / 100 caracteres mínimo</div>
+            <div class="form-error-msg" id="err-sobreTi">Escribe al menos 100 caracteres sobre ti.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-referido">¿Cómo nos conociste? <span class="required">*</span></label>
+            <select class="form-select" id="f-referido" name="referido" required>
+              <option value="">Seleccionar...</option>
+              <option value="instagram">Instagram</option>
+              <option value="google">Google</option>
+              <option value="referido">Referido de alguien</option>
+              <option value="evento">Evento / Conferencia</option>
+              <option value="otro">Otro</option>
+            </select>
+            <div class="form-error-msg" id="err-referido">Indica cómo nos conociste.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="contract-checkbox-wrap" id="contract-label">
+              <input type="checkbox" id="f-contrato" name="contrato" required>
+              <span class="checkbox-custom" id="contract-checkbox-custom"></span>
+              <span class="contract-text">
+                He leído y acepto el
+                <button type="button" class="contract-link" id="openContractBtn">Contrato de Colaboración WellCore</button>
+                en su totalidad y entiendo las condiciones de esta colaboración.
+              </span>
+            </label>
+            <div class="form-error-msg" id="err-contrato">Debes aceptar el contrato para continuar.</div>
+          </div>
+
+          <button type="submit" class="form-submit-btn" id="submitBtn">
+            <span class="submit-spinner"></span>
+            <span class="submit-text">ENVIAR MI APLICACIÓN</span>
+          </button>
+
+          <div class="form-error-banner" id="formErrorBanner">
+            Ocurrió un error al enviar tu aplicación. Por favor intenta de nuevo o contáctanos por WhatsApp.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTRACT MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="contractModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle">CONTRATO DE COLABORACIÓN</div>
+        <div class="modal-version">VERSIÓN 1.0 — FEBRERO 2026</div>
+      </div>
+      <button class="modal-close" id="closeModalBtn" aria-label="Cerrar contrato">
+        &#10005;
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="contract-content">
+        <div class="contract-header-block">
+          <div class="contract-main-title">CONTRATO DE COLABORACIÓN<br>COACH WELLCORE FITNESS</div>
+          <div class="contract-version">VERSIÓN 1.0 — 2026</div>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">ENTRE LAS PARTES:</div>
+          <p>— WELLCORE FITNESS (en adelante "LA PLATAFORMA")</p>
+          <p>— El Coach Aplicante (en adelante "EL COACH")</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 1 — OBJETO DEL CONTRATO</div>
+          <p>Este contrato regula la relación de colaboración entre LA PLATAFORMA y EL COACH para la prestación de servicios de coaching de fitness y entrenamiento personal a través de la plataforma digital WellCore Fitness.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 2 — DISTRIBUCIÓN DE INGRESOS</div>
+          <p>2.1. EL COACH recibirá el sesenta por ciento (60%) del valor de cada suscripción de cliente que genere a través de la plataforma WellCore.</p>
+          <p>2.2. LA PLATAFORMA retendrá el cuarenta por ciento (40%) restante como contraprestación por los servicios de plataforma, infraestructura tecnológica, procesamiento de pagos, soporte operativo y administración.</p>
+          <p>2.3. Los pagos a EL COACH se realizarán cada quince (15) días calendario, contados desde el cierre de cada período quincenal de facturación (pagos los días 15 y 30/31 de cada mes).</p>
+          <p>2.4. EL COACH recibirá un reporte detallado de transacciones junto con cada pago.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 3 — SERVICIOS INCLUIDOS POR LA PLATAFORMA</div>
+          <p>LA PLATAFORMA proveerá sin costo adicional:</p>
+          <ul>
+            <li>Acceso al portal de clientes digital</li>
+            <li>Procesamiento de pagos y gestión de suscripciones</li>
+            <li>Co-creación de planes de entrenamiento personalizados</li>
+            <li>Co-creación de planes de nutrición (según plan contratado)</li>
+            <li>Sistema de check-in y seguimiento de progreso</li>
+            <li>Onboarding y capacitación inicial</li>
+            <li>Soporte técnico y operativo según nivel de plan</li>
+          </ul>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 4 — SERVICIOS NO INCLUIDOS / ADICIONALES</div>
+          <p>Los siguientes servicios NO están incluidos en el presente contrato y requieren acuerdo económico por separado con el equipo WellCore:</p>
+          <ul>
+            <li>Producción audiovisual y grabación de videos de entrenamiento</li>
+            <li>Diseño gráfico y material de marketing digital</li>
+            <li>Fotografía profesional</li>
+            <li>Gestión de redes sociales</li>
+          </ul>
+          <p>Estos servicios opcionales serán cotizados y coordinados directamente con el equipo WellCore.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 5 — OBLIGACIONES DE EL COACH</div>
+          <p>5.1. Mantener una conducta profesional y ética en todo momento con los clientes.</p>
+          <p>5.2. Proveer servicios de coaching con la calidad y metodología establecida por WellCore.</p>
+          <p>5.3. Cumplir con los requisitos de grabación de videos según los estándares aprobados.</p>
+          <p>5.4. Someter todos los videos y materiales para aprobación previa antes de publicación.</p>
+          <p>5.5. No utilizar información confidencial de clientes para fines ajenos al presente contrato.</p>
+          <p>5.6. Mantener actualizados sus conocimientos en las disciplinas que practica.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 6 — PROCESO DE APROBACIÓN</div>
+          <p>6.1. Toda aplicación será revisada por el equipo WellCore en un plazo de 5 a 7 días hábiles.</p>
+          <p>6.2. WellCore se reserva el derecho de aprobar o rechazar aplicaciones sin obligación de justificación.</p>
+          <p>6.3. Los videos y materiales de entrenamiento serán revisados en un plazo de 3 a 5 días hábiles.</p>
+          <p>6.4. WellCore podrá solicitar ajustes antes de la aprobación final de cualquier material.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 7 — EXCLUSIVIDAD PARCIAL</div>
+          <p>7.1. EL COACH podrá trabajar con otras plataformas siempre y cuando no represente conflicto directo de interés con WellCore.</p>
+          <p>7.2. EL COACH no podrá replicar el método WellCore en plataformas competidoras.</p>
+          <p>7.3. La información, metodología y recursos propietarios de WellCore son confidenciales.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 8 — VIGENCIA Y TERMINACIÓN</div>
+          <p>8.1. Este contrato entra en vigencia desde la aprobación de la solicitud por parte de WellCore.</p>
+          <p>8.2. Cualquiera de las partes puede terminar el contrato con 30 días de aviso previo por escrito.</p>
+          <p>8.3. WellCore podrá terminar el contrato de forma inmediata ante incumplimiento grave de las cláusulas.</p>
+          <p>8.4. Al término del contrato, EL COACH recibirá todos los pagos pendientes dentro de los 30 días siguientes.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 9 — PROPIEDAD INTELECTUAL</div>
+          <p>9.1. Los métodos, programas y materiales desarrollados colaborativamente serán propiedad compartida.</p>
+          <p>9.2. La marca WellCore, su identidad visual y metodología son propiedad exclusiva de WellCore Fitness.</p>
+          <p>9.3. EL COACH retiene los derechos sobre su imagen personal y marca personal.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="contract-clause-title">CLÁUSULA 10 — LEY APLICABLE</div>
+          <p>El presente contrato se rige por las leyes de la República de Colombia. Las partes acuerdan someterse a la jurisdicción de los tribunales competentes.</p>
+          <p>Al marcar la casilla de aceptación en el formulario de aplicación, EL COACH declara haber leído, entendido y aceptado la totalidad de las cláusulas de este contrato.</p>
+        </div>
+
+        <div class="contract-clause" style="border-top:1px solid rgba(255,255,255,0.06);padding-top:20px;margin-top:8px;">
+          <p style="color:rgba(255,255,255,0.25);font-size:11px;">Fecha de versión: Febrero 2026 — WellCore Fitness</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <span class="modal-footer-note">Lee el contrato completo antes de aceptar.</span>
+      <button class="modal-close-btn" id="closeModalBtnFooter">CERRAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-logo">WELL<span>CORE</span></div>
+  <div class="footer-tagline">MÉTODO DE ÉLITE — RESULTADOS REALES</div>
+  <div class="footer-links">
+    <a href="index.html">Inicio</a>
+    <a href="metodo.html">Método</a>
+    <a href="planes.html">Planes</a>
+    <a href="proceso.html">Proceso</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="coaches.html">Coaches</a>
+    <a href="faq.html">FAQ</a>
+    <a href="legal/terminos.html">Términos</a>
+    <a href="legal/privacidad.html">Privacidad</a>
+  </div>
+  <div class="footer-copy">© 2026 WellCore Fitness. Todos los derechos reservados.</div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ----------------------------------------------------------
+     NAVBAR MOBILE
+  ---------------------------------------------------------- */
+  var hamburger = document.getElementById('navHamburger');
+  var mobileNav = document.getElementById('navMobile');
+
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', function() {
+      var isOpen = mobileNav.classList.contains('open');
+      if (isOpen) {
+        mobileNav.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      } else {
+        mobileNav.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        mobileNav.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     SMOOTH SCROLL for plan CTAs
+  ---------------------------------------------------------- */
+  document.querySelectorAll('a[href="#aplicar"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById('aplicar');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  document.querySelectorAll('a[href="#beneficios"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById('beneficios');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ----------------------------------------------------------
+     CONTRACT MODAL
+  ---------------------------------------------------------- */
+  var modal = document.getElementById('contractModal');
+  var openBtn = document.getElementById('openContractBtn');
+  var closeBtn = document.getElementById('closeModalBtn');
+  var closeBtnFooter = document.getElementById('closeModalBtnFooter');
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (openBtn) openBtn.focus();
+  }
+
+  if (openBtn) {
+    openBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openModal();
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (closeBtnFooter) closeBtnFooter.addEventListener('click', closeModal);
+
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  }
+
+  /* ----------------------------------------------------------
+     TEXTAREA CHAR COUNT
+  ---------------------------------------------------------- */
+  var textarea = document.getElementById('f-sobre-ti');
+  var charCount = document.getElementById('char-count');
+
+  if (textarea && charCount) {
+    textarea.addEventListener('input', function() {
+      var len = textarea.value.length;
+      charCount.textContent = len + ' / 100 caracteres mínimo';
+      if (len >= 100) {
+        charCount.className = 'form-char-count ok';
+      } else if (len > 60) {
+        charCount.className = 'form-char-count';
+      } else {
+        charCount.className = 'form-char-count warn';
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     FORM VALIDATION HELPERS
+  ---------------------------------------------------------- */
+  function showError(fieldId, errId) {
+    var field = document.getElementById(fieldId);
+    var err = document.getElementById(errId);
+    if (field) field.classList.add('error');
+    if (err) err.classList.add('visible');
+  }
+
+  function clearError(fieldId, errId) {
+    var field = document.getElementById(fieldId);
+    var err = document.getElementById(errId);
+    if (field) field.classList.remove('error');
+    if (err) err.classList.remove('visible');
+  }
+
+  function isValidEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  }
+
+  var fields = [
+    { id: 'f-nombre', err: 'err-nombre', check: function(v) { return v.trim().length >= 2; } },
+    { id: 'f-email', err: 'err-email', check: function(v) { return isValidEmail(v.trim()); } },
+    { id: 'f-whatsapp', err: 'err-whatsapp', check: function(v) { return v.trim().length >= 7; } },
+    { id: 'f-ciudad', err: 'err-ciudad', check: function(v) { return v.trim().length >= 3; } },
+    { id: 'f-experiencia', err: 'err-experiencia', check: function(v) { return v !== ''; } },
+    { id: 'f-clientes', err: 'err-clientes', check: function(v) { return v !== ''; } },
+    { id: 'f-referido', err: 'err-referido', check: function(v) { return v !== ''; } },
+    { id: 'f-sobre-ti', err: 'err-sobreTi', check: function(v) { return v.trim().length >= 100; } }
+  ];
+
+  fields.forEach(function(f) {
+    var el = document.getElementById(f.id);
+    if (!el) return;
+    el.addEventListener('blur', function() {
+      if (f.check(el.value)) {
+        clearError(f.id, f.err);
+      } else {
+        showError(f.id, f.err);
+      }
+    });
+    el.addEventListener('input', function() {
+      if (f.check(el.value)) clearError(f.id, f.err);
+    });
+  });
+
+  /* ----------------------------------------------------------
+     FORM SUBMIT
+  ---------------------------------------------------------- */
+  var form = document.getElementById('coachForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var formSuccess = document.getElementById('formSuccess');
+  var formErrorBanner = document.getElementById('formErrorBanner');
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var valid = true;
+      formErrorBanner.classList.remove('visible');
+
+      fields.forEach(function(f) {
+        var el = document.getElementById(f.id);
+        if (!el) return;
+        if (!f.check(el.value)) {
+          showError(f.id, f.err);
+          valid = false;
+        } else {
+          clearError(f.id, f.err);
+        }
+      });
+
+      var checked = document.querySelectorAll('input[name="especializacion"]:checked');
+      var errEsp = document.getElementById('err-especializacion');
+      if (checked.length === 0) {
+        if (errEsp) errEsp.classList.add('visible');
+        valid = false;
+      } else {
+        if (errEsp) errEsp.classList.remove('visible');
+      }
+
+      var contrato = document.getElementById('f-contrato');
+      var errContrato = document.getElementById('err-contrato');
+      if (!contrato || !contrato.checked) {
+        if (errContrato) errContrato.classList.add('visible');
+        valid = false;
+      } else {
+        if (errContrato) errContrato.classList.remove('visible');
+      }
+
+      if (!valid) {
+        var firstError = form.querySelector('.form-input.error, .form-select.error, .form-textarea.error');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      var especialidades = [];
+      checked.forEach(function(cb) { especialidades.push(cb.value); });
+
+      var payload = {
+        name: document.getElementById('f-nombre').value.trim(),
+        email: document.getElementById('f-email').value.trim(),
+        whatsapp: document.getElementById('f-whatsapp').value.trim(),
+        city: document.getElementById('f-ciudad').value.trim(),
+        experience: document.getElementById('f-experiencia').value,
+        current_clients: document.getElementById('f-clientes').value,
+        specializations: especialidades,
+        plan: 'modelo-unico-60-40',
+        bio: document.getElementById('f-sobre-ti').value.trim(),
+        referral: document.getElementById('f-referido').value,
+        contract_accepted: true
+      };
+
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      var bodyStr = JSON.stringify(payload);
+
+      /* Backend: fire-and-forget, no bloquea el flujo */
+      fetch('/api/coaches/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: bodyStr
+      }).catch(function() {});
+
+      /* Formspree: principal, controla éxito/error */
+      fetch('https://formspree.io/f/xdaldlby', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: bodyStr
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Error ' + res.status);
+        return res.json();
+      })
+      .then(function() {
+        form.style.display = 'none';
+        formSuccess.classList.add('visible');
+        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function(err) {
+        console.error('Submit error:', err);
+        formErrorBanner.classList.add('visible');
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        formErrorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     INTERSECTION OBSERVER — subtle entrance animations
+  ---------------------------------------------------------- */
+  if ('IntersectionObserver' in window) {
+    var style = document.createElement('style');
+    style.textContent = [
+      '.anim-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }',
+      '.anim-fade.in { opacity: 1; transform: translateY(0); }'
+    ].join('');
+    document.head.appendChild(style);
+
+    var animTargets = document.querySelectorAll(
+      '.benefit-card, .plan-card, .guide-item, .form-info-card, .process-step, .video-card'
+    );
+
+    animTargets.forEach(function(el) { el.classList.add('anim-fade'); });
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    animTargets.forEach(function(el) { observer.observe(el); });
+  }
+
+})();
+</script>
+
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">&#128222;</a>
+<script src="js/v5-effects.js" defer></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({duration:700,once:true});</script>
+</body>
+</html>

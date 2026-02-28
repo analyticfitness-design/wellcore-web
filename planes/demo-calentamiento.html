@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia de Calentamiento — WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS — WellCore Fitness Training Template
+    ========================================================= */
+    :root {
+      --bg-primary:      #000000;
+      --bg-card:         #111114;
+      --bg-card-alt:     #0D0D10;
+      --bg-row-alt:      #141417;
+      --red:             #E31E24;
+      --red-dark:        #B01519;
+      --red-glow:        rgba(227,30,36,0.15);
+      --red-dim:         rgba(227,30,36,0.08);
+      --text-primary:    #FFFFFF;
+      --text-body:       #D4D4D8;
+      --text-muted:      #71717A;
+      --text-subtle:     #52525B;
+      --border-subtle:   rgba(255,255,255,0.06);
+      --border-medium:   rgba(255,255,255,0.10);
+      --border-strong:   rgba(255,255,255,0.18);
+      --font-display:    'Bebas Neue', sans-serif;
+      --font-sans:       'Inter', sans-serif;
+      --font-heading:    'Montserrat', sans-serif;
+      --font-mono:       'JetBrains Mono', monospace;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       PRINT BUTTON (screen only)
+    ========================================================= */
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border: 4px solid var(--red);
+      border-radius: 0;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.1s linear;
+    }
+    .print-btn:hover {
+      background: #ff2a31;
+    }
+    .print-btn:active {
+    }
+
+    /* =========================================================
+       PAGE WRAPPER
+    ========================================================= */
+    .page-wrapper {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20px 0 60px;
+    }
+
+    /* =========================================================
+       PAGE UNIT — A4 DIMENSIONS
+    ========================================================= */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg-primary);
+      margin: 0 auto 24px;
+      padding: 14mm 14mm 14mm 14mm;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* =========================================================
+       COVER PAGE
+    ========================================================= */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* --- Cover: header band --- */
+    .cover-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-medium);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .cover-logo-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .logo-wordmark {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .logo-wordmark span {
+      color: var(--red);
+    }
+
+    .cover-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag {
+      text-align: right;
+    }
+
+    .cover-doc-tag .doc-type {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag .doc-id {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+
+    /* --- Cover: hero title area --- */
+    .cover-hero {
+      text-align: center;
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .cover-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover-hero-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover-hero-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .cover-hero-sub {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* --- Cover: client info grid --- */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .client-cell {
+      background: var(--bg-card);
+      padding: 14px 18px;
+    }
+
+    .client-cell-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .client-cell-value {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+
+    .client-cell-value.accent {
+      color: var(--red);
+    }
+
+    /* --- Cover: metrics row --- */
+    .metrics-section {
+      margin-bottom: 24px;
+    }
+
+    .metrics-label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metrics-label-row .section-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .metrics-label-row::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 12px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      opacity: 0.6;
+    }
+
+    .metric-card-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .metric-card-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .metric-card-value span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* --- Cover: footer --- */
+    .cover-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cover-footer-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cover-footer-item .f-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .cover-footer-item .f-value {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-body);
+    }
+
+    /* =========================================================
+       SECONDARY PAGE HEADER (compact logo for inner pages)
+    ========================================================= */
+    .page-header-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .phc-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .phc-logo span {
+      color: var(--red);
+    }
+
+    .phc-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       SECTION DIVIDERS
+    ========================================================= */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 16px;
+    }
+
+    .section-divider-bar {
+      width: 4px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+
+    .section-divider-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-divider-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.15em;
+      margin-top: 2px;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* =========================================================
+       SECTION HEADER (with bar)
+    ========================================================= */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 16px;
+    }
+
+    .section-header-bar {
+      width: 4px;
+      height: 32px;
+      background: var(--red);
+      border-radius: 0;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+
+    .section-header-text {
+      flex: 1;
+    }
+
+    .section-header-title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .section-header-subtitle {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    /* =========================================================
+       EXERCISE TABLE
+    ========================================================= */
+    .exercise-table-wrap {
+      margin-bottom: 20px;
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .exercise-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .exercise-table thead tr {
+      background: var(--red);
+    }
+
+    .exercise-table thead th {
+      padding: 9px 10px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: left;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .exercise-table thead th:first-child {
+      width: 36px;
+      text-align: center;
+    }
+
+    .exercise-table thead th.center {
+      text-align: center;
+    }
+
+    .exercise-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.1s linear;
+    }
+
+    .exercise-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .exercise-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .exercise-table tbody td {
+      padding: 9px 10px;
+      color: var(--text-body);
+      border: none;
+      vertical-align: top;
+    }
+
+    .exercise-table tbody td:first-child {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .exercise-table tbody td.center {
+      text-align: center;
+    }
+
+    .exercise-name {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .td-mono {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .rpe-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.2);
+      padding: 1px 6px;
+      border-radius: 0;
+    }
+
+    .notes-text {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       INFO CARDS GRID
+    ========================================================= */
+    .info-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--red);
+      opacity: 0.7;
+    }
+
+    .info-card-icon {
+      color: var(--red);
+      font-size: 16px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .info-card-title {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-card-body {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .info-card-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       INLINE STATS ROW
+    ========================================================= */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .stat-pill-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .stat-pill-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-pill-val.red {
+      color: var(--red);
+    }
+
+    /* =========================================================
+       WARMUP / CALLOUT BLOCK
+    ========================================================= */
+    .warmup-block {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .warmup-icon {
+      color: var(--red);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .warmup-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .warmup-text {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       COACH NOTES BOX
+    ========================================================= */
+    .notes-box {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+
+    .notes-box-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .notes-box-icon {
+      color: var(--red);
+      font-size: 14px;
+    }
+
+    .notes-box-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .notes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .notes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .notes-list li::before {
+      content: '//';
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* =========================================================
+       DAY PAGE HEADER
+    ========================================================= */
+    .day-page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .day-page-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .day-page-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .day-page-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .day-page-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .day-page-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .day-badge {
+      background: var(--red);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 0;
+    }
+
+    .day-meta {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.1em;
+    }
+
+    /* =========================================================
+       CHECKLIST
+    ========================================================= */
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--text-body);
+      line-height: 1.5;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      position: relative;
+    }
+
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--red);
+      opacity: 0.5;
+    }
+
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border-strong);
+      border-radius: 0;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+    }
+
+    .check-label {
+      flex: 1;
+    }
+
+    .check-label strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .check-time {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+
+    /* =========================================================
+       SUB-SECTION TITLE (for training day sub-headers)
+    ========================================================= */
+    .sub-section-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* =========================================================
+       PAGE FOOTER (small pages watermark)
+    ========================================================= */
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 14mm;
+      right: 14mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 6px;
+    }
+
+    .page-footer-brand {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .page-footer-brand span {
+      color: var(--red);
+    }
+
+    .page-footer-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--text-subtle);
+    }
+
+    /* =========================================================
+       PRINT STYLES
+    ========================================================= */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: #fff;
+        color: #000;
+      }
+
+      .print-btn {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        padding: 0;
+      }
+
+      .page {
+        margin: 0;
+        padding: 14mm;
+        page-break-after: always;
+        background: #fff;
+        border: none;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+
+      /* Invert colors for print */
+      :root {
+        --bg-primary:      #ffffff;
+        --bg-card:         #f5f5f7;
+        --bg-card-alt:     #eeeeef;
+        --bg-row-alt:      #f0f0f3;
+        --red:             #cc1a1f;
+        --red-dark:        #99131a;
+        --red-glow:        transparent;
+        --red-dim:         rgba(204,26,31,0.08);
+        --text-primary:    #0a0a0a;
+        --text-body:       #2a2a2d;
+        --text-muted:      #5a5a60;
+        --text-subtle:     #8a8a90;
+        --border-subtle:   rgba(0,0,0,0.10);
+        --border-medium:   rgba(0,0,0,0.16);
+        --border-strong:   rgba(0,0,0,0.22);
+      }
+
+      .exercise-table tbody tr {
+        break-inside: avoid;
+      }
+
+      .exercise-table-wrap {
+        break-inside: avoid;
+      }
+
+      .exercise-table thead tr,
+      .day-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .info-card::before,
+      .warmup-block,
+      .checklist li::before,
+      .metric-card::before {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PRINT BUTTON (hidden in print) -->
+  <button class="print-btn" onclick="window.print()">
+    <span style="color:#00D9FF;font-weight:700;">//</span> Imprimir / PDF
+  </button>
+
+  <div class="page-wrapper">
+
+    <!-- =====================================================
+         PAGE 1 — COVER
+    ===================================================== -->
+    <div class="page cover" id="page-cover">
+
+      <!-- HEADER BAND -->
+      <div class="cover-header">
+        <div class="cover-logo-group">
+          <div class="logo-wordmark">WELL<span>CORE</span> FITNESS</div>
+          <div class="cover-subtitle">Entrenamiento de Alto Rendimiento</div>
+        </div>
+        <div class="cover-doc-tag">
+          <div class="doc-type">Guia Oficial</div>
+          <div class="doc-id" id="doc-id">WCF-WRM-2026</div>
+        </div>
+      </div>
+
+      <!-- HERO TITLE -->
+      <div class="cover-hero">
+        <div class="cover-hero-label">// protocolo de preparacion pre-sesion //</div>
+        <div class="cover-hero-title">GUIA DE<br>CALENTAMIENTO</div>
+        <div class="cover-hero-sub">Protocolo de Activacion Neuromuscular</div>
+      </div>
+
+      <!-- CLIENT INFO GRID -->
+      <div class="client-grid">
+        <div class="client-cell">
+          <div class="client-cell-label">Cliente</div>
+          <div class="client-cell-value" data-field="nombre">Cargando...</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Plan Activo</div>
+          <div class="client-cell-value accent" data-field="plan">---</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Disponibilidad</div>
+          <div class="client-cell-value">TODOS LOS PLANES</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Tipo de Documento</div>
+          <div class="client-cell-value">GUIA COMPLEMENTARIA</div>
+        </div>
+      </div>
+
+      <!-- PROTOCOL METRICS -->
+      <div class="metrics-section">
+        <div class="metrics-label-row">
+          <span class="section-tag">// parametros del protocolo</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-card-label">Duracion Total</div>
+            <div class="metric-card-value">10-15<span>min</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Fases</div>
+            <div class="metric-card-value">4<span>fases</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Reduccion Lesion</div>
+            <div class="metric-card-value">30-50<span>%</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Frecuencia</div>
+            <div class="metric-card-value">CADA<span>sesion</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: POR QUE CALENTAR -->
+      <div class="section-header">
+        <div class="section-header-bar"></div>
+        <div class="section-header-text">
+          <div class="section-header-title">Por Que Calentar</div>
+          <div class="section-header-subtitle">Evidencia cientifica del calentamiento</div>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Beneficios Fisiologicos del Calentamiento</span>
+        </div>
+        <ul class="notes-list">
+          <li>Aumento del flujo sanguineo a musculos activos, incrementando la entrega de oxigeno y nutrientes a las fibras musculares.</li>
+          <li>Incremento de temperatura muscular (1-2 grados C), lo cual mejora la contractilidad y la velocidad de conduccion nerviosa.</li>
+          <li>Activacion del sistema nervioso central: mejora el reclutamiento de unidades motoras y la coordinacion intermuscular.</li>
+          <li>Reduccion de riesgo de lesion. Estudios muestran una disminucion del 30-50% en lesiones musculotendinosas con protocolos de calentamiento estructurado.</li>
+          <li>Mejora del rango de movimiento articular disponible para la sesion, permitiendo posiciones tecnicas optimas bajo carga.</li>
+          <li>Tiempo estimado del protocolo completo: <strong>8-12 minutos</strong>. Un calentamiento efectivo NO debe exceder 15 minutos para evitar fatiga previa.</li>
+        </ul>
+      </div>
+
+      <!-- COVER FOOTER -->
+      <div class="cover-footer">
+        <div class="cover-footer-item">
+          <span class="f-label">Fecha de Emision</span>
+          <span class="f-value" id="issue-date">---</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:center">
+          <span class="f-label">Coach</span>
+          <span class="f-value">WellCore Fitness</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:right">
+          <span class="f-label">Contacto</span>
+          <span class="f-value">info@wellcorefitness.com</span>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Guia Oficial</div>
+        <div class="page-footer-num">01 / 05</div>
+      </div>
+    </div><!-- /page cover -->
+
+
+    <!-- =====================================================
+         PAGE 2 — FASE 1 (CARDIO) + FASE 2 (MOVILIDAD)
+    ===================================================== -->
+    <div class="page" id="page-fase-1-2">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Guia de Calentamiento &rarr; Fases 1 y 2</div>
+      </div>
+
+      <!-- FASE 1 -->
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// fase 01 de 04 — inicio de sesion</div>
+          <div class="day-page-title">FASE 1</div>
+          <div class="day-page-subtitle">Activacion Cardiovascular</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">3-5 MIN</div>
+          <div class="day-meta">FC 50-60% max</div>
+        </div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Objetivo de esta fase</div>
+          <div class="warmup-text">Elevar la frecuencia cardiaca al 50-60% del maximo (formula: 220 - edad). Incrementar la temperatura corporal central 1-2 grados. Preparar el sistema cardiovascular para el esfuerzo posterior.</div>
+        </div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N.</th>
+              <th>Opcion</th>
+              <th class="center">Duracion</th>
+              <th class="center">Intensidad</th>
+              <th>Notas Tecnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A</td>
+              <td><span class="exercise-name">Caminata Inclinada en Cinta</span></td>
+              <td class="td-mono center">3-5 min</td>
+              <td class="center"><span class="rpe-badge">3/10</span></td>
+              <td><span class="notes-text">Inclinacion 6-8%, velocidad moderada (5-6 km/h). Sin agarrarse a las barras laterales. Paso natural y activo.</span></td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td><span class="exercise-name">Bicicleta Estatica</span></td>
+              <td class="td-mono center">3-5 min</td>
+              <td class="center"><span class="rpe-badge">3/10</span></td>
+              <td><span class="notes-text">Resistencia baja-media. Cadencia 60-70 RPM. Mantener postura erguida, sin apoyar peso en el manillar.</span></td>
+            </tr>
+            <tr>
+              <td>C</td>
+              <td><span class="exercise-name">Remo Ergometro</span></td>
+              <td class="td-mono center">3-5 min</td>
+              <td class="center"><span class="rpe-badge">3/10</span></td>
+              <td><span class="notes-text">Ritmo suave, 18-22 SPM. Enfasis en la tecnica de tiraje: piernas primero, luego tronco, luego brazos. Resistencia 3-4.</span></td>
+            </tr>
+            <tr>
+              <td>D</td>
+              <td><span class="exercise-name">Jumping Jacks o Marcha en Sitio</span></td>
+              <td class="td-mono center">3-5 min</td>
+              <td class="center"><span class="rpe-badge">3/10</span></td>
+              <td><span class="notes-text">Opcion sin equipo. Alternar 30s jumping jacks con 30s marcha rodillas altas. Mantener ritmo constante sin agotarse.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FASE 2 -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Fase 2 — Movilidad Articular</div>
+          <div class="section-divider-sub">// 3-4 minutos — recorrer todas las articulaciones</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Objetivo de esta fase</div>
+          <div class="warmup-text">Lubricar las articulaciones con liquido sinovial. Aumentar el rango de movimiento activo. Preparar las estructuras conectivas (tendones, ligamentos, fascia) para cargas mecanicas.</div>
+        </div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N.</th>
+              <th>Zona Corporal</th>
+              <th>Ejercicio</th>
+              <th class="center">Reps</th>
+              <th>Notas Tecnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td><span class="exercise-name">Cuello</span></td>
+              <td>Rotaciones controladas</td>
+              <td class="td-mono center">8 c/lado</td>
+              <td><span class="notes-text">Movimiento lento y deliberado. Evitar extensiones bruscas. Recorrer todo el rango de forma circular.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td><span class="exercise-name">Hombros</span></td>
+              <td>Circulos + dislocaciones con banda</td>
+              <td class="td-mono center">10 reps</td>
+              <td><span class="notes-text">Circulos hacia adelante y atras. Dislocaciones: agarre amplio, pasar banda por encima de la cabeza sin flexionar codos.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td><span class="exercise-name">Columna Toracica</span></td>
+              <td>Rotaciones sentado + cat-cow</td>
+              <td class="td-mono center">8 reps</td>
+              <td><span class="notes-text">Rotaciones: manos detras de la nuca, rotar hacia cada lado. Cat-cow: alternar flexion y extension controlada de columna.</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td><span class="exercise-name">Caderas</span></td>
+              <td>Circulos de cadera + 90/90</td>
+              <td class="td-mono center">8 c/lado</td>
+              <td><span class="notes-text">Circulos amplios en ambas direcciones. 90/90: rotacion interna y externa desde posicion sentada. Mantener torso erguido.</span></td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td><span class="exercise-name">Rodillas</span></td>
+              <td>Flexion-extension ligera</td>
+              <td class="td-mono center">10 reps</td>
+              <td><span class="notes-text">Manos sobre rodillas, realizar circulos suaves. Flexion parcial controlada, sin carga. Lubricacion articular pura.</span></td>
+            </tr>
+            <tr>
+              <td>06</td>
+              <td><span class="exercise-name">Tobillos</span></td>
+              <td>Rotaciones + dorsiflexion en pared</td>
+              <td class="td-mono center">10 reps</td>
+              <td><span class="notes-text">Rotaciones en ambas direcciones. Dorsiflexion: pie a 10cm de pared, llevar rodilla hacia adelante sin levantar talon.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Guia Oficial</div>
+        <div class="page-footer-num">02 / 05</div>
+      </div>
+    </div><!-- /page fase-1-2 -->
+
+
+    <!-- =====================================================
+         PAGE 3 — FASE 3: ACTIVACION MUSCULAR ESPECIFICA
+    ===================================================== -->
+    <div class="page" id="page-fase-3">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Guia de Calentamiento &rarr; Fase 3</div>
+      </div>
+
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// fase 03 de 04 — activacion especifica</div>
+          <div class="day-page-title">FASE 3</div>
+          <div class="day-page-subtitle">Activacion Muscular Especifica</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">3-4 MIN</div>
+          <div class="day-meta">segun dia de entrenamiento</div>
+        </div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Objetivo de esta fase</div>
+          <div class="warmup-text">Activar los grupos musculares principales de la sesion. Mejorar la conexion neuromuscular (mente-musculo) antes de la carga pesada. Selecciona la seccion correspondiente al dia de entrenamiento.</div>
+        </div>
+      </div>
+
+      <!-- TREN SUPERIOR PUSH -->
+      <div class="sub-section-title">Dia de Tren Superior (Push)</div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N.</th>
+              <th>Ejercicio</th>
+              <th class="center">Series</th>
+              <th class="center">Reps</th>
+              <th>Notas Tecnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td><span class="exercise-name">Band Pull-Aparts</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">15</td>
+              <td><span class="notes-text">Brazos extendidos al frente, separar banda hasta que toque el pecho. Escaupulas retraidas en maxima apertura. Banda ligera.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td><span class="exercise-name">Rotacion Externa con Banda</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">12</td>
+              <td><span class="notes-text">Codo a 90 grados pegado al cuerpo. Rotar hacia afuera contra resistencia de banda. Control total, sin compensar con el torso.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td><span class="exercise-name">Push-Ups Ligeros o Contra Pared</span></td>
+              <td class="td-mono center">1</td>
+              <td class="td-mono center">10</td>
+              <td><span class="notes-text">NO buscar fatiga. Solo activacion del patron de empuje. Descenso controlado 2s, empuje explosivo. Escapulas protruidas al final.</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td><span class="exercise-name">Retraccion Escapular</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">12</td>
+              <td><span class="notes-text">De pie, brazos al frente. Apretar escapulas sin flexionar codos. Mantener 2s en maxima retraccion. Prepara estabilidad para press.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TREN SUPERIOR PULL -->
+      <div class="sub-section-title">Dia de Tren Superior (Pull)</div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N.</th>
+              <th>Ejercicio</th>
+              <th class="center">Series</th>
+              <th class="center">Reps</th>
+              <th>Notas Tecnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td><span class="exercise-name">Band Pull-Aparts</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">15</td>
+              <td><span class="notes-text">Identieo protocolo que dia push. Activa deltoides posterior y romboides. Banda ligera, enfasis en contraccion.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td><span class="exercise-name">Face Pulls con Banda</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">12</td>
+              <td><span class="notes-text">Tirar hacia la cara, abrir codos hacia afuera. Rotacion externa al final del movimiento. Activa manguito rotador y trapecio medio.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td><span class="exercise-name">Scapular Pull-Ups</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">8</td>
+              <td><span class="notes-text">Colgado en barra, brazos extendidos. Deprimir escapulas sin flexionar codos. Solo movimiento escapular. Prepara el patron de traccion vertical.</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td><span class="exercise-name">Dead Hangs</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">15-20s</td>
+              <td><span class="notes-text">Colgarse pasivamente de la barra. Descompresion espinal. Activacion de agarre y dorsal. Respirar de forma controlada durante la suspension.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TREN INFERIOR -->
+      <div class="sub-section-title">Dia de Tren Inferior</div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N.</th>
+              <th>Ejercicio</th>
+              <th class="center">Series</th>
+              <th class="center">Reps</th>
+              <th>Notas Tecnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td><span class="exercise-name">Glute Bridges</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">15</td>
+              <td><span class="notes-text">Pies a anchura de caderas. Empujar caderas hacia arriba, apretar gluteos 2s en el tope. Sin hiperextender lumbar. Activacion maxima de gluteo mayor.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td><span class="exercise-name">Clamshells con Banda</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">12 c/lado</td>
+              <td><span class="notes-text">Banda mini encima de rodillas. Tumbado lateral, abrir rodilla superior sin mover pelvis. Activacion de gluteo medio y estabilizadores de cadera.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td><span class="exercise-name">Sentadilla Goblet Sin Peso</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">10</td>
+              <td><span class="notes-text">Manos juntas frente al pecho. Descenso controlado, rodillas tracking pies. Profundidad completa. Patron motor de sentadilla sin carga.</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td><span class="exercise-name">Monster Walks con Banda</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">10 c/lado</td>
+              <td><span class="notes-text">Banda mini en tobillos. Posicion de semi-sentadilla. Pasos laterales manteniendo tension constante. Activa gluteo medio y tensor de fascia lata.</span></td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td><span class="exercise-name">Sentadilla Cossack Sin Peso</span></td>
+              <td class="td-mono center">2</td>
+              <td class="td-mono center">8</td>
+              <td><span class="notes-text">Desplazamiento lateral amplio, flexionar una pierna mientras la otra se extiende. Movilidad de aductores y cadera. Talon de la pierna de apoyo siempre en suelo.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Guia Oficial</div>
+        <div class="page-footer-num">03 / 05</div>
+      </div>
+    </div><!-- /page fase-3 -->
+
+
+    <!-- =====================================================
+         PAGE 4 — FASE 4 (SERIES APROX) + ENFRIAMIENTO
+    ===================================================== -->
+    <div class="page" id="page-fase-4">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Guia de Calentamiento &rarr; Fases 4 + Enfriamiento</div>
+      </div>
+
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// fase 04 de 04 — preparacion para carga</div>
+          <div class="day-page-title">FASE 4</div>
+          <div class="day-page-subtitle">Series de Aproximacion</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">3-5 MIN</div>
+          <div class="day-meta">primer ejercicio compuesto</div>
+        </div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Objetivo de esta fase</div>
+          <div class="warmup-text">Preparar el sistema neuromuscular para las cargas de trabajo del primer ejercicio compuesto de la sesion. Las series de aproximacion permiten recalibrar el patron motor bajo carga progresiva y evaluar la capacidad del dia.</div>
+        </div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N.</th>
+              <th>Serie</th>
+              <th class="center">% Peso Trabajo</th>
+              <th class="center">Reps</th>
+              <th class="center">Descanso</th>
+              <th>Notas Tecnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td><span class="exercise-name">Serie de Aproximacion 1</span></td>
+              <td class="td-mono center">50%</td>
+              <td class="td-mono center">8-10</td>
+              <td class="td-mono center">60s</td>
+              <td><span class="notes-text">Carga ligera. Enfasis en tecnica perfecta y rango completo de movimiento. Evaluar movilidad y sensacion articular del dia.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td><span class="exercise-name">Serie de Aproximacion 2</span></td>
+              <td class="td-mono center">70%</td>
+              <td class="td-mono center">5</td>
+              <td class="td-mono center">60-90s</td>
+              <td><span class="notes-text">Carga moderada. Velocidad de ejecucion similar a las series de trabajo. Verificar estabilidad y posiciones clave del movimiento.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td><span class="exercise-name">Serie de Aproximacion 3</span></td>
+              <td class="td-mono center">85%</td>
+              <td class="td-mono center">2-3</td>
+              <td class="td-mono center">90s</td>
+              <td><span class="notes-text">Carga sub-maxima. Pocas repeticiones para potenciar el sistema nervioso sin generar fatiga. Ultima calibracion antes de las series efectivas.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="notes-box" style="margin-bottom:24px">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Reglas de las Series de Aproximacion</span>
+        </div>
+        <ul class="notes-list">
+          <li>NUNCA saltar las series de aproximacion en ejercicios compuestos pesados (sentadilla, peso muerto, press de banca, press militar).</li>
+          <li>Los porcentajes son relativos al peso de trabajo planificado para las series efectivas, no al 1RM.</li>
+          <li>Si la serie al 85% se siente excesivamente pesada (RPE 9+), considera reducir el peso de trabajo 5-10% ese dia.</li>
+          <li>En ejercicios de aislamiento (curl, extension, elevaciones laterales) NO se requieren series de aproximacion formales. Basta con 1 serie ligera de tanteo.</li>
+        </ul>
+      </div>
+
+      <!-- PROTOCOLO DE ENFRIAMIENTO -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Protocolo de Enfriamiento</div>
+          <div class="section-divider-sub">// post-sesion — vuelta a la calma</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Cardio Ligero</div>
+          <div class="info-card-body">
+            <strong>5 minutos</strong> de cardio a baja intensidad.<br>
+            Mismas opciones que Fase 1 (cinta, bici, remo).<br>
+            Intensidad <strong>menor</strong> que en el calentamiento.<br>
+            Objetivo: bajar FC gradualmente por debajo de 100 BPM.<br>
+            <em>Permite la redistribucion del flujo sanguineo desde los musculos activos.</em>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Estiramientos Estaticos</div>
+          <div class="info-card-body">
+            Mantener cada posicion <strong>30-60 segundos</strong> por grupo muscular.<br>
+            Solo los musculos trabajados en la sesion.<br>
+            Intensidad de estiramiento: <strong>ligera a moderada</strong>.<br>
+            NO estirar de forma agresiva despues de alta intensidad.<br>
+            <em>El estiramiento agresivo post-carga pesada puede agravar micro-danos musculares.</em>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Foam Rolling</div>
+          <div class="info-card-body">
+            <strong>60 segundos</strong> por zona muscular trabajada.<br>
+            Presion <strong>moderada</strong>, nunca dolorosa.<br>
+            Zonas prioritarias: cuadriceps, dorsales, gluteos, IT band.<br>
+            Velocidad lenta: 1-2 cm por segundo.<br>
+            <em>Reduce la percepcion de dolor muscular (DOMS) en 24-48h post-sesion.</em>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Respiracion Diafragmatica</div>
+          <div class="info-card-body">
+            <strong>10 respiraciones profundas</strong> para finalizar.<br>
+            Inhalar 4s por nariz, retener 2s, exhalar 6s por boca.<br>
+            Activa el sistema nervioso <strong>parasimpatico</strong>.<br>
+            Posicion: tumbado boca arriba, manos en abdomen.<br>
+            <em>Facilita la transicion de estado catabolico a anabolico (recuperacion).</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Guia Oficial</div>
+        <div class="page-footer-num">04 / 05</div>
+      </div>
+    </div><!-- /page fase-4 -->
+
+
+    <!-- =====================================================
+         PAGE 5 — CHECKLIST RAPIDO + NOTAS DEL COACH
+    ===================================================== -->
+    <div class="page" id="page-checklist">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Guia de Calentamiento &rarr; Resumen</div>
+      </div>
+
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// referencia rapida — imprime esta pagina</div>
+          <div class="day-page-title">CHECKLIST RAPIDO</div>
+          <div class="day-page-subtitle">Protocolo Completo Pre-Sesion</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">RESUMEN</div>
+          <div class="day-meta">10-15 min total</div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <ul class="checklist">
+        <li>
+          <div class="check-box"></div>
+          <div class="check-label"><strong>Fase 1:</strong> Activacion cardiovascular — cinta inclinada, bici, remo o jumping jacks. FC al 50-60% del maximo.</div>
+          <div class="check-time">3-5 MIN</div>
+        </li>
+        <li>
+          <div class="check-box"></div>
+          <div class="check-label"><strong>Fase 2:</strong> Movilidad articular — cuello, hombros, columna toracica, caderas, rodillas, tobillos. Todas las articulaciones.</div>
+          <div class="check-time">3-4 MIN</div>
+        </li>
+        <li>
+          <div class="check-box"></div>
+          <div class="check-label"><strong>Fase 3:</strong> Activacion muscular especifica — segun el dia de entrenamiento (Push / Pull / Tren Inferior). Banda elastica recomendada.</div>
+          <div class="check-time">3-4 MIN</div>
+        </li>
+        <li>
+          <div class="check-box"></div>
+          <div class="check-label"><strong>Fase 4:</strong> Series de aproximacion — 50%, 70%, 85% del peso de trabajo en el primer ejercicio compuesto de la sesion.</div>
+          <div class="check-time">3-5 MIN</div>
+        </li>
+      </ul>
+
+      <!-- STATS SUMMARY -->
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Tiempo Total</span>
+          <span class="stat-pill-val red">10-15</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">MINUTOS</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Fases</span>
+          <span class="stat-pill-val">4</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">SECUENCIALES</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Equipo Minimo</span>
+          <span class="stat-pill-val" style="font-size:11px">BANDA</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">ELASTICA</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Frecuencia</span>
+          <span class="stat-pill-val" style="font-size:11px">CADA</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">SESION</span>
+        </div>
+      </div>
+
+      <!-- COACH NOTES -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Notas del Coach</div>
+          <div class="section-divider-sub">// directrices de aplicacion del protocolo</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Protocolo RAMP — WellCore Fitness</span>
+        </div>
+        <ul class="notes-list">
+          <li>El calentamiento NO es opcional. Es una inversion de 10-15 minutos que previene semanas de recuperacion por lesion. El rendimiento en la primera serie de trabajo mejora un 8-12% con calentamiento estructurado.</li>
+          <li>La Fase 1 (cardio) puede sustituirse por cualquier actividad que eleve la frecuencia cardiaca de forma progresiva. Caminar rapido al gimnasio durante 10 minutos cuenta como Fase 1.</li>
+          <li>La Fase 2 (movilidad) se enfoca en las articulaciones que MAS usaras en la sesion. En dias de tren inferior, prioriza caderas, rodillas y tobillos. En dias de tren superior, prioriza hombros y columna toracica.</li>
+          <li>La Fase 3 (activacion) usa cargas MUY ligeras o peso corporal. Si sientes fatiga muscular durante la activacion, estas usando demasiada resistencia. Reduce la carga de la banda o elimina peso.</li>
+          <li>NUNCA omitas la Fase 4 (series de aproximacion) en sentadilla, peso muerto, press de banca o press militar. Ir directamente al peso de trabajo en estos movimientos multiplica el riesgo de lesion exponencialmente.</li>
+          <li>El enfriamiento es igual de importante. La respiracion diafragmatica al final activa la respuesta parasimpatica (descanso y digestion), acelerando el inicio de la recuperacion muscular.</li>
+          <li>Si entrenas temprano en la manana o despues de largos periodos sentado, extiende la Fase 2 (movilidad) a 5-6 minutos. El cuerpo necesita mas tiempo para alcanzar rangos de movimiento optimos.</li>
+          <li>Para consultas sobre este protocolo o ajustes individuales: <strong>info@wellcorefitness.com</strong></li>
+        </ul>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Guia Oficial</div>
+        <div class="page-footer-num">05 / 05</div>
+      </div>
+    </div><!-- /page checklist -->
+
+  </div><!-- /page-wrapper -->
+
+
+  <!-- =====================================================
+       JAVASCRIPT — localStorage INTEGRATION
+  ===================================================== -->
+  <script>
+    /* --------------------------------------------------
+       UTILITY: Read data from localStorage
+    -------------------------------------------------- */
+    function getProfile() {
+      try {
+        return JSON.parse(localStorage.getItem('wc_profile') || '{}');
+      } catch(e) { return {}; }
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Format date in Spanish
+    -------------------------------------------------- */
+    function formatDateES(date) {
+      var months = ['enero','febrero','marzo','abril','mayo','junio',
+                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      return date.getDate() + ' de ' + months[date.getMonth()] + ' de ' + date.getFullYear();
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Get ISO week number
+    -------------------------------------------------- */
+    function getWeekNumber(date) {
+      var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      var dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    /* --------------------------------------------------
+       RENDER: Client info fields + date + doc ID
+    -------------------------------------------------- */
+    function renderClientInfo(profile) {
+      // Client name
+      document.querySelectorAll('[data-field="nombre"]').forEach(function(el) {
+        el.textContent = profile.nombre
+          || localStorage.getItem('wc_client_name')
+          || 'Cliente Demo';
+      });
+
+      // Plan
+      document.querySelectorAll('[data-field="plan"]').forEach(function(el) {
+        var plan = (localStorage.getItem('wc_client_plan') || profile.plan || 'esencial').toUpperCase();
+        el.textContent = 'PLAN ' + plan;
+      });
+
+      // Issue date
+      var issueDateEl = document.getElementById('issue-date');
+      if (issueDateEl) issueDateEl.textContent = formatDateES(new Date());
+
+      // Doc ID
+      var docIdEl = document.getElementById('doc-id');
+      if (docIdEl) {
+        var now = new Date();
+        var week = getWeekNumber(now);
+        docIdEl.textContent = 'WCF-WRM-' + now.getFullYear() + '-W' + String(week).padStart(2,'0');
+      }
+    }
+
+    /* --------------------------------------------------
+       MAIN: DOMContentLoaded
+    -------------------------------------------------- */
+    document.addEventListener('DOMContentLoaded', function() {
+      var profile = getProfile();
+      renderClientInfo(profile);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#080808"/><stop offset="100%" stop-color="#111118"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="48"/></filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="950" cy="280" r="320" fill="#E31E24" opacity="0.07" filter="url(#blur)"/>
+  <circle cx="200" cy="550" r="180" fill="#00D9FF" opacity="0.03" filter="url(#blur)"/>
+  <line x1="0" y1="135" x2="1200" y2="135" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="270" x2="1200" y2="270" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="405" x2="1200" y2="405" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="540" x2="1200" y2="540" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="675" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="800" y1="0" x2="800" y2="675" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <rect x="700" y="200" width="400" height="280" rx="0" fill="rgba(227,30,36,0.04)" stroke="rgba(227,30,36,0.12)" stroke-width="1"/>
+  <rect x="730" y="230" width="340" height="1" fill="rgba(227,30,36,0.3)"/>
+  <rect x="730" y="460" width="340" height="1" fill="rgba(227,30,36,0.3)"/>
+  <text x="900" y="355" text-anchor="middle" font-family="Arial Black,Arial" font-size="80" font-weight="900" fill="rgba(227,30,36,0.08)" letter-spacing="-2">01</text>
+  <text x="64" y="230" font-family="Arial Black,Arial" font-size="11" font-weight="900" fill="#E31E24" letter-spacing="4" opacity="0.9">WELLCORE BLOG</text>
+  <text x="60" y="295" font-family="Arial Black,Arial" font-size="68" font-weight="900" fill="white" opacity="0.92">SUPLEMEN</text>
+  <text x="60" y="363" font-family="Arial Black,Arial" font-size="68" font-weight="900" fill="white" opacity="0.92">TOS</text>
+  <line x1="60" y1="383" x2="280" y2="383" stroke="#E31E24" stroke-width="3"/>
+  <text x="60" y="418" font-family="Arial" font-size="13" fill="rgba(255,255,255,0.45)" letter-spacing="1">Lo que dice la evidencia</text>
+  <rect x="0" y="659" width="1200" height="3" fill="#E31E24" opacity="0.7"/>
+</svg>

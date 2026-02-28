@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motor IA — WellCore Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:      #0a0a0a; --surface: #111113; --card: #18181b;
+      --border:  rgba(255,255,255,0.06);
+      --red:     #E31E24; --red-dim: rgba(227,30,36,0.12);
+      --accent:  #00D9FF; --green: #22C55E; --yellow: #F59E0B;
+      --white:   #ffffff; --gray: rgba(255,255,255,0.45);
+      --font-head:'Bebas Neue',sans-serif;
+      --font-mono:'JetBrains Mono',monospace;
+      --font-body:'Inter',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:14px;line-height:1.6;display:flex;min-height:100vh;}
+    a{text-decoration:none;color:inherit;}
+
+    #sidebar{width:240px;min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform 0.3s;}
+    #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;}
+    #sidebar-overlay.open{display:block;}
+    .topbar-hamburger{display:none;background:none;border:1px solid var(--border);color:var(--white);font-size:20px;padding:6px 10px;cursor:pointer;line-height:1;}
+    .topbar-hamburger:hover{border-color:var(--red);color:var(--red);}
+    .sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid var(--border);}
+    .logo-text{font-family:var(--font-head);font-size:22px;letter-spacing:1px;color:var(--white);line-height:1;}
+    .logo-text span{color:var(--red);}
+    .logo-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-top:4px;}
+    .sidebar-nav{flex:1;padding:16px 0;overflow-y:auto;}
+    .nav-section{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);padding:16px 20px 8px;}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);cursor:pointer;transition:color 0.1s linear,background 0.1s linear;border-left:2px solid transparent;}
+    .nav-item:hover{color:var(--white);background:rgba(255,255,255,0.04);}
+    .nav-item.active{color:var(--white);border-left-color:var(--red);background:rgba(227,30,36,0.08);}
+    .nav-icon{width:16px;font-size:14px;flex-shrink:0;}
+    .nav-badge{margin-left:auto;background:var(--red);color:var(--white);font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 6px;min-width:20px;text-align:center;}
+    .sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);}
+    .sidebar-footer a{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.25);text-transform:uppercase;display:block;padding:4px 0;transition:color 0.1s linear;}
+    .sidebar-footer a:hover{color:rgba(255,255,255,0.6);}
+    #aiStatusDot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+    #main{margin-left:240px;flex:1;min-height:100vh;}
+    #topbar{height:60px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 32px;gap:16px;position:sticky;top:0;z-index:50;}
+    .topbar-title{font-family:var(--font-head);font-size:20px;letter-spacing:1px;flex:1;}
+    .topbar-admin{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;}
+    #content{padding:32px;}
+
+    .section{display:none;}
+    .section.active{display:block;}
+
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px;}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);padding:20px 24px;}
+    .stat-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;}
+    .stat-value{font-family:var(--font-head);font-size:36px;letter-spacing:1px;color:var(--white);line-height:1;}
+    .stat-sub{font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.3);margin-top:4px;}
+
+    .card{background:var(--surface);border:1px solid var(--border);margin-bottom:24px;}
+    .card-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+    .card-title{font-family:var(--font-head);font-size:18px;letter-spacing:1px;flex:1;}
+    .card-body{padding:24px;}
+
+    .wc-table{width:100%;border-collapse:collapse;}
+    .wc-table thead tr{background:var(--red);}
+    .wc-table thead th{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--white);padding:10px 16px;text-align:left;border-bottom:2px solid #0a0a0a;font-weight:700;}
+    .wc-table tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s linear;}
+    .wc-table tbody tr:nth-child(even){background:rgba(255,255,255,0.02);}
+    .wc-table tbody tr:hover{background:rgba(255,255,255,0.04);}
+    .wc-table tbody td{padding:12px 16px;font-size:13px;color:rgba(255,255,255,0.8);vertical-align:middle;}
+    .td-mono{font-family:var(--font-mono);font-size:11px;}
+    .td-accent{font-family:var(--font-mono);font-size:10px;color:var(--accent);}
+
+    .badge{display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;font-weight:700;text-transform:uppercase;padding:3px 8px;}
+    .badge-green{background:rgba(34,197,94,0.15);color:#22C55E;}
+    .badge-red{background:var(--red-dim);color:var(--red);}
+    .badge-yellow{background:rgba(245,158,11,0.15);color:#F59E0B;}
+    .badge-blue{background:rgba(0,217,255,0.12);color:var(--accent);}
+    .badge-gray{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);}
+
+    .btn{font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border:none;cursor:pointer;transition:background 0.1s linear,opacity 0.1s linear;}
+    .btn:disabled{opacity:0.4;cursor:not-allowed;}
+    .btn-red{background:var(--red);color:var(--white);}
+    .btn-red:hover:not(:disabled){background:#c0181d;}
+    .btn-accent{background:rgba(0,217,255,0.15);color:var(--accent);border:1px solid rgba(0,217,255,0.3);}
+    .btn-accent:hover:not(:disabled){background:rgba(0,217,255,0.25);}
+    .btn-green{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3);}
+    .btn-green:hover:not(:disabled){background:rgba(34,197,94,0.25);}
+    .btn-ghost{background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.12);}
+    .btn-ghost:hover:not(:disabled){color:var(--white);border-color:rgba(255,255,255,0.3);}
+    .btn-sm{padding:6px 12px;font-size:9px;}
+
+    .wc-input,.wc-select,.wc-textarea{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:13px;padding:10px 14px;outline:none;transition:border-color 0.1s linear;appearance:none;}
+    .wc-input:focus,.wc-select:focus,.wc-textarea:focus{border-color:var(--red);}
+    .wc-input::placeholder{color:rgba(255,255,255,0.2);}
+    .wc-textarea{resize:vertical;min-height:100px;font-size:12px;}
+    .wc-select option{background:#18181b;}
+    .form-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:8px;}
+
+    .semaforo{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px;flex-shrink:0;}
+    .sem-verde{background:#22C55E;}
+    .sem-amarillo{background:#F59E0B;}
+    .sem-rojo{background:#E31E24;}
+
+    .draft-box{background:var(--card);border:1px solid rgba(255,255,255,0.08);padding:20px;font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.7);line-height:1.7;white-space:pre-wrap;max-height:300px;overflow-y:auto;}
+
+    #toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);padding:12px 20px;font-family:var(--font-mono);font-size:12px;color:var(--white);z-index:9999;transform:translateY(80px);opacity:0;transition:transform 0.2s,opacity 0.2s;max-width:320px;}
+    #toast.show{transform:translateY(0);opacity:1;}
+    #toast.error{border-left-color:var(--red);}
+
+    .spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,0.1);border-top-color:var(--red);border-radius:50%;animation:spin 0.6s linear infinite;display:inline-block;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    .prompt-tab{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;cursor:pointer;color:rgba(255,255,255,0.4);border-bottom:2px solid transparent;transition:color 0.1s linear;}
+    .prompt-tab:hover{color:var(--white);}
+    .prompt-tab.active{color:var(--white);border-bottom-color:var(--red);}
+    .prompt-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+
+    .empty-row td{text-align:center;padding:32px;color:var(--gray);}
+
+    @media(max-width:900px){
+      #sidebar{transform:translateX(-100%);}
+      #sidebar.mobile-open{transform:translateX(0);}
+      #sidebar-overlay.open{display:block;}
+      #main{margin-left:0;}
+      .topbar-hamburger{display:block;}
+      #topbar{padding:0 16px;}
+      #content{padding:20px 16px;}
+    }
+    @media(max-width:480px){
+      .stats-grid{grid-template-columns:1fr;}
+      #content{padding:16px 12px;}
+    }
+  /* v5 preloader */
+  .v5-preloader{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s,visibility .6s}
+  .v5-preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+  .v5-preloader-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:#fff}
+  .v5-preloader-logo span{color:#E31E24}
+  .v5-preloader-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
+  .v5-preloader-fill{height:100%;background:#E31E24;width:0;animation:preloaderFill 1.2s cubic-bezier(.4,0,.2,1) forwards}
+  @keyframes preloaderFill{0%{width:0}100%{width:100%}}
+  </style>
+<link rel="stylesheet" href="css/wellcore-v5.css">
+</head>
+<body>
+
+<div id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-text">WELL<span>CORE</span></div>
+    <div class="logo-sub">// Motor IA</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section">// Panel IA</div>
+    <div class="nav-item active" onclick="showSection(this,'sec-dashboard')"><span class="nav-icon">◈</span> Dashboard IA</div>
+    <div class="nav-item" onclick="showSection(this,'sec-tickets')"><span class="nav-icon">◆</span> Cola de Tickets <span class="nav-badge" id="badgeTickets">0</span></div>
+    <div class="nav-item" onclick="showSection(this,'sec-generator')"><span class="nav-icon">◇</span> Generador</div>
+    <div class="nav-item" onclick="showSection(this,'sec-progress')"><span class="nav-icon">▲</span> Progreso</div>
+    <div class="nav-item" onclick="showSection(this,'sec-history')"><span class="nav-icon">▷</span> Historial</div>
+    <div class="nav-item" onclick="showSection(this,'sec-prompts')"><span class="nav-icon">&#9678;</span> Prompts</div>
+    <div class="nav-item" onclick="showSection(this,'sec-chatbot')"><span class="nav-icon">&#9733;</span> Chatbot IA</div>
+    <div class="nav-item" onclick="showSection(this,'sec-webhooks')"><span class="nav-icon">&#9672;</span> Webhooks</div>
+    <div class="nav-item" onclick="showSection(this,'sec-nutricion')"><span class="nav-icon">&#9650;</span> Nutricion IA</div>
+    <div class="nav-section" style="margin-top:8px;">// Admin</div>
+    <div class="nav-item" onclick="location.href='admin.html'"><span class="nav-icon">←</span> Panel Admin</div>
+    <div class="nav-item" onclick="location.href='admin-clientes.html'"><span class="nav-icon">◈</span> Clientes</div>
+  </div>
+  <div class="sidebar-footer">
+    <div style="margin-bottom:8px;display:flex;align-items:center;">
+      <span id="aiStatusDot"></span>
+      <span id="aiStatusText" style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;">Verificando...</span>
+    </div>
+    <a href="#" onclick="logout()">Cerrar Sesión</a>
+  </div>
+</nav>
+
+<div id="main">
+  <div id="topbar">
+    <button class="topbar-hamburger" onclick="toggleMobileSidebar()">&#9776;</button>
+    <div class="topbar-title" id="topbarTitle">DASHBOARD IA</div>
+    <div class="topbar-admin" id="topbarAdmin">Cargando...</div>
+  </div>
+  <div id="content">
+
+    <!-- DASHBOARD -->
+    <div class="section active" id="sec-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">// Generaciones Totales</div><div class="stat-value" id="statTotal">—</div><div class="stat-sub">Programas generados por IA</div></div>
+        <div class="stat-card" style="border-left-color:var(--accent)"><div class="stat-label">// En Cola</div><div class="stat-value" id="statQueued">—</div><div class="stat-sub">Pendientes de generar</div></div>
+        <div class="stat-card" style="border-left-color:var(--yellow)"><div class="stat-label">// Pendiente Revisión</div><div class="stat-value" id="statPending">—</div><div class="stat-sub">Esperando aprobación coach</div></div>
+        <div class="stat-card" style="border-left-color:var(--green)"><div class="stat-label">// Aprobados</div><div class="stat-value" id="statApproved">—</div><div class="stat-sub">Entregados a clientes</div></div>
+        <div class="stat-card"><div class="stat-label">// Costo Mes</div><div class="stat-value" id="statCost">—</div><div class="stat-sub" id="statCostSub">En tokens Claude</div></div>
+        <div class="stat-card" style="border-left-color:var(--red)"><div class="stat-label">// Tickets con Draft</div><div class="stat-value" id="statTickets">—</div><div class="stat-sub">Listos para aprobar</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ÚLTIMAS GENERACIONES</div>
+          <button class="btn btn-red btn-sm" onclick="loadDashboard()">Actualizar</button>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="wc-table">
+            <thead><tr><th>ID</th><th>Cliente</th><th>Tipo</th><th>Modelo</th><th>Tokens</th><th>Costo</th><th>Estado</th><th>Fecha</th></tr></thead>
+            <tbody id="dashRecentTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TICKETS -->
+    <div class="section" id="sec-tickets">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">COLA DE TICKETS — BORRADORES IA</div>
+          <button class="btn btn-red btn-sm" onclick="loadTickets()">Actualizar</button>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="wc-table">
+            <thead><tr><th>Ticket ID</th><th>Cliente</th><th>Tipo</th><th>Prioridad</th><th>Estado IA</th><th>Acciones</th></tr></thead>
+            <tbody id="ticketsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" id="draftViewer" style="display:none;">
+        <div class="card-header">
+          <div class="card-title">BORRADOR IA — <span id="draftTicketId" style="color:var(--accent)"></span></div>
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('draftViewer').style.display='none'">Cerrar</button>
+        </div>
+        <div class="card-body">
+          <div class="draft-box" id="draftContent"></div>
+          <div style="display:flex;gap:12px;margin-top:16px;">
+            <button class="btn btn-green" id="btnApproveDraft" onclick="approveDraft()">✓ Aprobar Borrador</button>
+            <button class="btn btn-ghost" onclick="document.getElementById('draftViewer').style.display='none'">Editar manualmente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERADOR -->
+    <div class="section" id="sec-generator">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div class="card">
+          <div class="card-header"><div class="card-title">GENERAR PARA CLIENTE</div></div>
+          <div class="card-body">
+            <div style="margin-bottom:16px;">
+              <label class="form-label">Cliente</label>
+              <select class="wc-select" id="genClientSelect"><option value="">Seleccionar cliente...</option></select>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label class="form-label">Tipo de generación</label>
+              <div style="display:flex;gap:16px;flex-wrap:wrap;" id="genTypeGroup">
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" value="entrenamiento" checked style="accent-color:var(--red)"> Entrenamiento</label>
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" value="nutricion" style="accent-color:var(--red)"> Nutrición</label>
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" value="habitos" style="accent-color:var(--red)"> Hábitos</label>
+              </div>
+            </div>
+            <button class="btn btn-red" id="btnGenerate" onclick="generateForClient()" style="width:100%;">Generar con IA →</button>
+            <div id="genStatus" style="margin-top:16px;display:none;align-items:center;gap:10px;">
+              <div class="spinner"></div>
+              <span id="genStatusText" style="font-family:var(--font-mono);font-size:11px;color:var(--accent);">Generando...</span>
+            </div>
+            <div id="genResult" style="margin-top:16px;"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">GENERADOR MASIVO</div><span class="badge badge-yellow">Admin</span></div>
+          <div class="card-body">
+            <p style="font-size:12px;color:var(--gray);margin-bottom:16px;">Encola generaciones para múltiples clientes. El cron job las procesa en segundo plano.</p>
+            <div style="margin-bottom:16px;">
+              <label class="form-label">Filtrar por plan</label>
+              <select class="wc-select" id="bulkPlan">
+                <option value="">Todos los planes</option>
+                <option value="esencial">Esencial</option>
+                <option value="metodo">Método</option>
+                <option value="elite">Elite</option>
+              </select>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label class="form-label">Tipo a generar</label>
+              <select class="wc-select" id="bulkType">
+                <option value="entrenamiento">Entrenamiento</option>
+                <option value="nutricion">Nutrición</option>
+                <option value="habitos">Hábitos</option>
+              </select>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;">
+                <input type="checkbox" id="bulkOnlyNew" style="accent-color:var(--red);" checked> Solo clientes sin plan de este tipo
+              </label>
+            </div>
+            <button class="btn btn-accent" onclick="bulkEnqueue()" style="width:100%;">Encolar Generaciones →</button>
+            <div id="bulkResult" style="margin-top:12px;font-family:var(--font-mono);font-size:11px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESO -->
+    <div class="section" id="sec-progress">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ANÁLISIS DE PROGRESO — SEMÁFORO</div>
+          <button class="btn btn-red btn-sm" onclick="loadProgress()">Actualizar</button>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="wc-table">
+            <thead><tr><th>Estado</th><th>Cliente</th><th>Plan</th><th>Último Análisis</th><th>Tendencia</th><th>Adherencia</th><th>Acciones</th></tr></thead>
+            <tbody id="progressTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORIAL -->
+    <div class="section" id="sec-history">
+      <div style="display:flex;gap:12px;margin-bottom:24px;align-items:center;flex-wrap:wrap;">
+        <select class="wc-select" style="width:160px;" id="historyFilterType" onchange="loadHistory()">
+          <option value="">Todos los tipos</option>
+          <option value="entrenamiento">Entrenamiento</option>
+          <option value="nutricion">Nutrición</option>
+          <option value="habitos">Hábitos</option>
+          <option value="analisis">Análisis</option>
+          <option value="ticket_response">Ticket</option>
+        </select>
+        <select class="wc-select" style="width:160px;" id="historyFilterStatus" onchange="loadHistory()">
+          <option value="">Todos los estados</option>
+          <option value="completed">Completado</option>
+          <option value="approved">Aprobado</option>
+          <option value="failed">Fallido</option>
+        </select>
+        <div id="historyCostSummary" style="font-family:var(--font-mono);font-size:11px;color:var(--gray);margin-left:auto;"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">HISTORIAL DE GENERACIONES</div></div>
+        <div class="card-body" style="padding:0;">
+          <table class="wc-table">
+            <thead><tr><th>ID</th><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Modelo</th><th>Tokens</th><th>Costo USD</th><th>Estado</th><th>Ver</th></tr></thead>
+            <tbody id="historyTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMPTS -->
+    <div class="section" id="sec-prompts">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">EDITOR DE PROMPTS</div>
+          <span class="badge badge-yellow">Los cambios afectan futuras generaciones</span>
+        </div>
+        <div class="card-body">
+          <div class="prompt-tabs" id="promptTabs">
+            <div class="prompt-tab active" onclick="loadPrompt(this,'entrenamiento')">Entrenamiento</div>
+            <div class="prompt-tab" onclick="loadPrompt(this,'nutricion')">Nutrición</div>
+            <div class="prompt-tab" onclick="loadPrompt(this,'habitos')">Hábitos</div>
+            <div class="prompt-tab" onclick="loadPrompt(this,'ticket_response')">Ticket</div>
+            <div class="prompt-tab" onclick="loadPrompt(this,'analisis')">Análisis</div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label class="form-label">System Prompt</label>
+            <textarea class="wc-textarea" id="promptSystemInput" rows="10" placeholder="System prompt para este tipo de generación..."></textarea>
+          </div>
+          <div>
+            <label class="form-label">User Prompt Template (opcional — variables dinámicas del código)</label>
+            <textarea class="wc-textarea" id="promptUserInput" rows="5" placeholder="Template opcional. Si está vacío se usa el prompt dinámico del código."></textarea>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:16px;">
+            <button class="btn btn-red" onclick="savePrompt()">Guardar Prompt →</button>
+            <button class="btn btn-ghost" onclick="resetPrompt()">Restaurar Default</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHATBOT IA -->
+    <div class="section" id="sec-chatbot">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value" id="chatTotal">0</div>
+          <div class="kpi-label">Mensajes totales</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="chatToday">0</div>
+          <div class="kpi-label">Hoy</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="chatSessions">0</div>
+          <div class="kpi-label">Sesiones unicas</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="chatAvgTokens">0</div>
+          <div class="kpi-label">Tokens promedio</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+          <div class="card-title">CONVERSACIONES RECIENTES</div>
+          <div style="display:flex;gap:8px;">
+            <select class="wc-select" id="chatFilterDays" onchange="loadChatbot()" style="width:auto;">
+              <option value="7">Ultimos 7 dias</option>
+              <option value="30" selected>Ultimos 30 dias</option>
+              <option value="90">Ultimos 90 dias</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table class="wc-table">
+              <thead><tr><th>ID</th><th>Fecha</th><th>Session</th><th>Pregunta</th><th>Tokens</th><th>Modelo</th></tr></thead>
+              <tbody id="chatTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+          <div class="card-title">PREGUNTAS FRECUENTES (TOP 10)</div>
+        </div>
+        <div class="card-body" id="chatTopQuestions">
+          <p style="color:var(--gray);font-family:var(--font-mono);font-size:11px;">Cargando...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEBHOOKS -->
+    <div class="section" id="sec-webhooks">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value" id="whTotal">0</div>
+          <div class="kpi-label">Total webhooks</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="whSuccess">0</div>
+          <div class="kpi-label">Exitosos</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="whFailed">0</div>
+          <div class="kpi-label">Fallidos</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="whTypes">0</div>
+          <div class="kpi-label">Tipos distintos</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+          <div class="card-title">LOG DE WEBHOOKS</div>
+          <div style="display:flex;gap:8px;">
+            <select class="wc-select" id="whFilterType" onchange="loadWebhooks()" style="width:auto;">
+              <option value="">Todos</option>
+              <option value="onboarding">Onboarding</option>
+              <option value="checkin">Check-in</option>
+              <option value="payment">Payment</option>
+            </select>
+            <select class="wc-select" id="whFilterLimit" onchange="loadWebhooks()" style="width:auto;">
+              <option value="25">25</option>
+              <option value="50" selected>50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table class="wc-table">
+              <thead><tr><th>ID</th><th>Fecha</th><th>Tipo</th><th>Status</th><th>Payload</th></tr></thead>
+              <tbody id="whTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+          <div class="card-title">ESTADISTICAS POR TIPO</div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table class="wc-table">
+              <thead><tr><th>Tipo</th><th>Total</th><th>Exitosos</th><th>Tasa exito</th><th>Ultima llamada</th></tr></thead>
+              <tbody id="whStatsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUTRICION IA -->
+    <div class="section" id="sec-nutricion">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value" id="nutTotal">0</div>
+          <div class="kpi-label">Analisis totales</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="nutToday">0</div>
+          <div class="kpi-label">Hoy</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="nutClients">0</div>
+          <div class="kpi-label">Clientes unicos</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="nutAvgCal">0</div>
+          <div class="kpi-label">Kcal promedio/comida</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+          <div class="card-title">ANALISIS RECIENTES</div>
+          <div style="display:flex;gap:8px;">
+            <select class="wc-select" id="nutFilterDays" onchange="loadNutricion()" style="width:auto;">
+              <option value="7">Ultimos 7 dias</option>
+              <option value="30" selected>Ultimos 30 dias</option>
+              <option value="90">Ultimos 90 dias</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table class="wc-table">
+              <thead><tr><th>ID</th><th>Fecha</th><th>Cliente</th><th>Comida</th><th>Kcal</th><th>Proteina</th><th>Carbos</th><th>Grasa</th></tr></thead>
+              <tbody id="nutTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── Mobile Sidebar ───────────────────────────────────────────
+function toggleMobileSidebar() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ── Estado global ─────────────────────────────────────────────
+var token     = localStorage.getItem('wc_token') || localStorage.getItem('wc_admin_token') || '';
+var adminUser = localStorage.getItem('wc_admin_user') || 'Admin';
+var currentPromptType  = 'entrenamiento';
+var currentDraftTicket = null;
+var clientsList = [];
+
+// ── Init ─────────────────────────────────────────────────────
+(function() {
+  if (!token) { location.href = 'login.html'; return; }
+  document.getElementById('topbarAdmin').textContent = adminUser.toUpperCase();
+  checkAiStatus();
+  loadDashboard();
+  loadClients();
+  setTableEmpty('dashRecentTbody', 8, 'Cargando...');
+  setTableEmpty('ticketsTbody', 6, 'Cargando...');
+  setTableEmpty('historyTbody', 9, 'Cargando...');
+  setTableEmpty('progressTbody', 7, 'Cargando...');
+})();
+
+// ── API helper ────────────────────────────────────────────────
+function apiFetch(path, opts) {
+  var o = Object.assign({ headers: {} }, opts || {});
+  o.headers['Authorization'] = 'Bearer ' + token;
+  if (!o.headers['Content-Type']) o.headers['Content-Type'] = 'application/json';
+  return fetch('/api' + path, o);
+}
+
+// ── Navegación ────────────────────────────────────────────────
+function showSection(el, id) {
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  el.classList.add('active');
+  var sec = document.getElementById(id);
+  if (sec) sec.classList.add('active');
+  closeMobileSidebar();
+  var titles = {
+    'sec-dashboard':'DASHBOARD IA','sec-tickets':'COLA DE TICKETS',
+    'sec-generator':'GENERADOR DE PROGRAMAS','sec-progress':'ANÁLISIS DE PROGRESO',
+    'sec-history':'HISTORIAL DE GENERACIONES','sec-prompts':'EDITOR DE PROMPTS',
+    'sec-chatbot':'CHATBOT IA','sec-webhooks':'WEBHOOKS','sec-nutricion':'NUTRICION IA'
+  };
+  document.getElementById('topbarTitle').textContent = titles[id] || 'MOTOR IA';
+  if (id === 'sec-history') loadHistory();
+  if (id === 'sec-progress') loadProgress();
+  if (id === 'sec-prompts') { var t = document.querySelector('.prompt-tab.active'); loadPrompt(t, 'entrenamiento'); }
+  if (id === 'sec-tickets') loadTickets();
+  if (id === 'sec-chatbot') loadChatbot();
+  if (id === 'sec-webhooks') loadWebhooks();
+  if (id === 'sec-nutricion') loadNutricion();
+}
+
+// ── Utilidades DOM ─────────────────────────────────────────────
+function el(tag, cls, text) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function badge(text, cls) {
+  return el('span', 'badge ' + cls, text);
+}
+
+function btn(text, cls, clickFn) {
+  var b = el('button', 'btn ' + cls, text);
+  b.addEventListener('click', clickFn);
+  return b;
+}
+
+function td(content, extraCls) {
+  var cell = document.createElement('td');
+  if (extraCls) cell.className = extraCls;
+  if (typeof content === 'string' || typeof content === 'number') {
+    cell.textContent = content;
+  } else if (content) {
+    cell.appendChild(content);
+  }
+  return cell;
+}
+
+function setTableEmpty(tbodyId, cols, msg) {
+  var tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  var tr = document.createElement('tr');
+  tr.className = 'empty-row';
+  var tc = document.createElement('td');
+  tc.colSpan = cols;
+  tc.textContent = msg;
+  tr.appendChild(tc);
+  tbody.appendChild(tr);
+}
+
+function statusBadge(status) {
+  var map = {
+    completed:'badge-green', approved:'badge-green',
+    pending:'badge-yellow', queued:'badge-yellow', pending_review:'badge-yellow',
+    failed:'badge-red', rejected:'badge-red'
+  };
+  return badge(status || '—', map[status] || 'badge-gray');
+}
+
+function formatDate(dt) {
+  if (!dt) return '—';
+  var d = new Date(dt);
+  return d.toLocaleDateString('es-CO', { month:'short', day:'numeric' }) + ' '
+       + d.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
+}
+
+function calcCost(inp, out) {
+  return ((inp / 1e6 * 15) + (out / 1e6 * 75)).toFixed(4);
+}
+
+var toastTimer;
+function showToast(msg, isErr) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = isErr ? 'show error' : 'show';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.className = ''; }, 3500);
+}
+
+// ── Status IA ─────────────────────────────────────────────────
+function checkAiStatus() {
+  apiFetch('/ai/generate', { method:'POST', body: JSON.stringify({ client_id:0 }) })
+    .then(function(r) {
+      var dot  = document.getElementById('aiStatusDot');
+      var text = document.getElementById('aiStatusText');
+      if (r.status === 422) { dot.style.background = '#22C55E'; text.textContent = 'IA Activa'; }
+      else if (r.status === 500) { dot.style.background = '#F59E0B'; text.textContent = 'API Key faltante'; }
+      else { dot.style.background = '#22C55E'; text.textContent = 'IA Activa'; }
+    })
+    .catch(function() {
+      document.getElementById('aiStatusDot').style.background = '#E31E24';
+      document.getElementById('aiStatusText').textContent = 'Sin conexión';
+    });
+}
+
+// ── Dashboard ─────────────────────────────────────────────────
+function loadDashboard() {
+  apiFetch('/admin/ai-stats')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var s = d.stats || {};
+      document.getElementById('statTotal').textContent    = s.total    || '0';
+      document.getElementById('statQueued').textContent   = s.queued   || '0';
+      document.getElementById('statPending').textContent  = s.pending  || '0';
+      document.getElementById('statApproved').textContent = s.approved || '0';
+      document.getElementById('statTickets').textContent  = s.tickets_with_draft || '0';
+      var cost = parseFloat(s.cost_usd_month || 0);
+      document.getElementById('statCost').textContent = '$' + cost.toFixed(3);
+      document.getElementById('statCostSub').textContent = ((s.tokens_month || 0)).toLocaleString() + ' tokens este mes';
+      if (d.recent && d.recent.length) renderRecentTable(d.recent);
+      else setTableEmpty('dashRecentTbody', 8, 'Sin generaciones aún. Usa el Generador.');
+    })
+    .catch(function() {
+      setTableEmpty('dashRecentTbody', 8, 'Error cargando datos.');
+    });
+}
+
+function renderRecentTable(rows) {
+  var tbody = document.getElementById('dashRecentTbody');
+  tbody.innerHTML = '';
+  rows.forEach(function(r) {
+    var inp  = parseInt(r.prompt_tokens || 0);
+    var out  = parseInt(r.completion_tokens || 0);
+    var tr   = document.createElement('tr');
+    tr.appendChild(td(el('span', 'td-accent', '#' + r.id)));
+    tr.appendChild(td(r.client_name || 'N/A'));
+    tr.appendChild(td(badge(r.type, 'badge-blue')));
+    tr.appendChild(td(el('span', 'td-mono', r.model || 'opus')));
+    tr.appendChild(td(el('span', 'td-mono', (inp+out).toLocaleString())));
+    tr.appendChild(td(el('span', 'td-mono', '$' + calcCost(inp, out))));
+    tr.appendChild(td(statusBadge(r.status)));
+    tr.appendChild(td(el('span', 'td-accent', formatDate(r.created_at))));
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Tickets ───────────────────────────────────────────────────
+function loadTickets() {
+  apiFetch('/admin/tickets')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var tickets = d.tickets || d || [];
+      var tbody   = document.getElementById('ticketsTbody');
+      tbody.innerHTML = '';
+      var pending = tickets.filter(function(t) { return t.ai_status === 'ready' || t.ai_status === 'pending'; });
+      document.getElementById('badgeTickets').textContent = pending.length;
+
+      if (!tickets.length) { setTableEmpty('ticketsTbody', 6, 'Sin tickets abiertos.'); return; }
+
+      tickets.slice(0, 50).forEach(function(t) {
+        var aiStatus = t.ai_status || 'none';
+        var aiBadge  = aiStatus === 'ready'    ? badge('Borrador listo', 'badge-green')
+                     : aiStatus === 'pending'  ? badge('Generando...', 'badge-yellow')
+                     : aiStatus === 'approved' ? badge('Aprobado', 'badge-gray')
+                     :                           badge('Sin IA', 'badge-gray');
+
+        var actionsDiv = document.createElement('div');
+        actionsDiv.style.display = 'flex';
+        actionsDiv.style.gap = '4px';
+
+        if (aiStatus === 'ready') {
+          var ticketId = t.id;
+          actionsDiv.appendChild(btn('Ver Borrador', 'btn-accent btn-sm', function() { viewDraft(ticketId); }));
+        }
+        if (aiStatus === 'none' || aiStatus === 'pending') {
+          var tId = t.id;
+          actionsDiv.appendChild(btn('Generar IA', 'btn-ghost btn-sm', function() { triggerTicketAi(tId); }));
+        }
+
+        var tr = document.createElement('tr');
+        tr.appendChild(td(el('span', 'td-accent', t.id)));
+        tr.appendChild(td(t.client_name || 'N/A'));
+        tr.appendChild(td(badge(t.ticket_type || '—', 'badge-blue')));
+        tr.appendChild(td(t.priority === 'alta' ? badge('Alta', 'badge-red') : badge('Normal', 'badge-gray')));
+        tr.appendChild(td(aiBadge));
+        tr.appendChild(td(actionsDiv));
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(function() { setTableEmpty('ticketsTbody', 6, 'Error cargando tickets.'); });
+}
+
+function viewDraft(ticketId) {
+  apiFetch('/admin/tickets/' + ticketId)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var ticket = d.ticket || d;
+      if (!ticket.ai_draft) { showToast('Este ticket no tiene borrador IA aún.', true); return; }
+      currentDraftTicket = ticketId;
+      document.getElementById('draftTicketId').textContent = ticketId;
+      document.getElementById('draftContent').textContent  = ticket.ai_draft;
+      var viewer = document.getElementById('draftViewer');
+      viewer.style.display = 'block';
+      viewer.scrollIntoView({ behavior:'smooth' });
+    })
+    .catch(function() { showToast('Error cargando borrador.', true); });
+}
+
+function approveDraft() {
+  if (!currentDraftTicket) return;
+  var b = document.getElementById('btnApproveDraft');
+  b.disabled = true;
+  b.textContent = 'Aprobando...';
+  apiFetch('/tickets/update', { method:'POST', body: JSON.stringify({ ticket_id: currentDraftTicket, action: 'approve_ai_draft' }) })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      showToast('Borrador aprobado.');
+      document.getElementById('draftViewer').style.display = 'none';
+      loadTickets();
+    })
+    .catch(function() { showToast('Error al aprobar. Actualiza el ticket manualmente.', true); })
+    .finally(function() { b.disabled = false; b.textContent = '✓ Aprobar Borrador'; });
+}
+
+function triggerTicketAi(ticketId) {
+  showToast('Generando borrador IA para ticket ' + ticketId + '...');
+  apiFetch('/ai/ticket-response', { method:'POST', body: JSON.stringify({ ticket_id: ticketId }) })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.ok) { showToast('Borrador IA generado.'); loadTickets(); }
+      else showToast(d.error || 'Error generando IA', true);
+    })
+    .catch(function() { showToast('Error al generar IA.', true); });
+}
+
+// ── Generador ─────────────────────────────────────────────────
+function loadClients() {
+  apiFetch('/admin/clients')
+    .then(function(r) { return r.json(); })
+    .then(function(clients) {
+      clientsList = clients || [];
+      var select = document.getElementById('genClientSelect');
+      clientsList.forEach(function(c) {
+        var opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.name + ' — ' + c.plan.toUpperCase();
+        select.appendChild(opt);
+      });
+    })
+    .catch(function() {});
+}
+
+function generateForClient() {
+  var clientId = document.getElementById('genClientSelect').value;
+  if (!clientId) { showToast('Selecciona un cliente primero.', true); return; }
+  var types = [];
+  document.querySelectorAll('#genTypeGroup input[type=checkbox]:checked').forEach(function(cb) { types.push(cb.value); });
+  if (!types.length) { showToast('Selecciona al menos un tipo.', true); return; }
+
+  var genBtn = document.getElementById('btnGenerate');
+  var statusDiv = document.getElementById('genStatus');
+  var resultDiv = document.getElementById('genResult');
+
+  genBtn.disabled = true;
+  statusDiv.style.display = 'flex';
+  resultDiv.innerHTML = '';
+
+  var endpointMap = { entrenamiento:'generate', nutricion:'nutrition', habitos:'habits' };
+  var promises = types.map(function(type) {
+    document.getElementById('genStatusText').textContent = 'Generando ' + type + '...';
+    return apiFetch('/ai/' + endpointMap[type], {
+      method: 'POST',
+      body: JSON.stringify({ client_id: parseInt(clientId), triggered_by:'admin' })
+    }).then(function(r) { return r.json(); });
+  });
+
+  Promise.allSettled(promises).then(function(results) {
+    statusDiv.style.display = 'none';
+    genBtn.disabled = false;
+    resultDiv.innerHTML = '';
+    results.forEach(function(r, i) {
+      var row = document.createElement('div');
+      row.style.cssText = 'padding:8px;border-left:3px solid;margin-bottom:8px;';
+      if (r.status === 'fulfilled' && r.value.ok) {
+        row.style.borderColor = '#22C55E';
+        var b = badge(types[i].toUpperCase(), 'badge-green');
+        var info = el('span', 'td-mono');
+        info.style.marginLeft = '8px';
+        info.textContent = 'Gen #' + (r.value.generation_id || '?') + (r.value.tokens ? ' — ' + r.value.tokens.total + ' tokens' : '');
+        row.appendChild(b); row.appendChild(info);
+      } else {
+        row.style.borderColor = '#E31E24';
+        var b2 = badge(types[i].toUpperCase(), 'badge-red');
+        var err = el('span', null, ' ' + ((r.value && r.value.error) || 'Error'));
+        err.style.fontSize = '12px';
+        err.style.color = 'var(--gray)';
+        row.appendChild(b2); row.appendChild(err);
+      }
+      resultDiv.appendChild(row);
+    });
+    showToast('Generación completada.');
+    loadDashboard();
+  });
+}
+
+function bulkEnqueue() {
+  var plan    = document.getElementById('bulkPlan').value;
+  var type    = document.getElementById('bulkType').value;
+  var resultDiv = document.getElementById('bulkResult');
+  resultDiv.textContent = 'Encolando...';
+  resultDiv.style.color = 'var(--accent)';
+
+  var clients = clientsList.filter(function(c) { return !plan || c.plan === plan; });
+  var endpointMap = { entrenamiento:'generate', nutricion:'nutrition', habitos:'habits' };
+  var count = 0;
+
+  var doNext = function(idx) {
+    if (idx >= clients.length) {
+      resultDiv.textContent = count + ' generaciones iniciadas.';
+      resultDiv.style.color = 'var(--green)';
+      showToast(count + ' generaciones encoladas para ' + type + '.');
+      return;
+    }
+    apiFetch('/ai/' + endpointMap[type], {
+      method: 'POST',
+      body: JSON.stringify({ client_id: clients[idx].id, triggered_by: 'bulk' })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) { if (d.ok) count++; })
+    .catch(function() {})
+    .finally(function() {
+      resultDiv.textContent = 'Encolando... ' + (idx + 1) + '/' + clients.length;
+      setTimeout(function() { doNext(idx + 1); }, 500); // 500ms entre llamadas
+    });
+  };
+
+  if (!clients.length) {
+    resultDiv.textContent = 'Sin clientes con el filtro seleccionado.';
+    resultDiv.style.color = 'var(--yellow)';
+    return;
+  }
+  doNext(0);
+}
+
+// ── Progreso ──────────────────────────────────────────────────
+function loadProgress() {
+  apiFetch('/admin/clients')
+    .then(function(r) { return r.json(); })
+    .then(function(clients) {
+      var tbody = document.getElementById('progressTbody');
+      tbody.innerHTML = '';
+      if (!clients.length) { setTableEmpty('progressTbody', 7, 'Sin clientes activos.'); return; }
+      clients.forEach(function(c) {
+        var tr = document.createElement('tr');
+        var semEl = el('span', 'semaforo sem-amarillo');
+        var tdSem = document.createElement('td');
+        tdSem.appendChild(semEl);
+        var analyzeBtn = btn('Analizar', 'btn-accent btn-sm', function() { analyzeClient(c.id, semEl, tr); });
+        tr.appendChild(tdSem);
+        tr.appendChild(td(c.name));
+        tr.appendChild(td(badge(c.plan || '—', 'badge-blue')));
+        tr.appendChild(td('Sin análisis', 'td-accent'));
+        tr.appendChild(td('—'));
+        tr.appendChild(td('—'));
+        tr.appendChild(td(analyzeBtn));
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(function() { setTableEmpty('progressTbody', 7, 'Error cargando clientes.'); });
+}
+
+function analyzeClient(clientId, semEl, tr) {
+  showToast('Analizando progreso del cliente #' + clientId + '...');
+  apiFetch('/ai/analyze-progress?client_id=' + clientId)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var sem = d.semaforo || 'amarillo';
+      if (semEl) {
+        semEl.className = 'semaforo sem-' + sem;
+      }
+      var msg = 'Semáforo: ' + sem.toUpperCase();
+      if (d.analisis && d.analisis.resumen_ejecutivo) msg += ' — ' + d.analisis.resumen_ejecutivo.substring(0, 60);
+      showToast(msg);
+    })
+    .catch(function() { showToast('Error al analizar. Verifica la API key.', true); });
+}
+
+// ── Historial ─────────────────────────────────────────────────
+function loadHistory() {
+  var typeFilter   = document.getElementById('historyFilterType').value;
+  var statusFilter = document.getElementById('historyFilterStatus').value;
+  var qs = '?limit=100' + (typeFilter ? '&type=' + typeFilter : '') + (statusFilter ? '&status=' + statusFilter : '');
+
+  setTableEmpty('historyTbody', 9, 'Cargando...');
+
+  apiFetch('/admin/ai-history' + qs)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var rows  = d.generations || d || [];
+      var tbody = document.getElementById('historyTbody');
+      tbody.innerHTML = '';
+
+      if (!rows.length) { setTableEmpty('historyTbody', 9, 'Sin generaciones con los filtros seleccionados.'); return; }
+
+      var totalCost = 0;
+      rows.forEach(function(r) {
+        var inp  = parseInt(r.prompt_tokens || 0);
+        var out  = parseInt(r.completion_tokens || 0);
+        var cost = calcCost(inp, out);
+        totalCost += parseFloat(cost);
+        var genId = r.id;
+        var tr = document.createElement('tr');
+        tr.appendChild(td(el('span', 'td-accent', '#' + r.id)));
+        tr.appendChild(td(el('span', 'td-mono', formatDate(r.created_at))));
+        tr.appendChild(td(r.client_name || String(r.client_id || 'N/A')));
+        tr.appendChild(td(badge(r.type, 'badge-blue')));
+        tr.appendChild(td(el('span', 'td-mono', r.model || 'opus')));
+        tr.appendChild(td(el('span', 'td-mono', (inp+out).toLocaleString())));
+        tr.appendChild(td(el('span', 'td-accent', '$' + cost)));
+        tr.appendChild(td(statusBadge(r.status)));
+        tr.appendChild(td(btn('Ver', 'btn-ghost btn-sm', function() { viewGeneration(genId); })));
+        tbody.appendChild(tr);
+      });
+      document.getElementById('historyCostSummary').textContent =
+        rows.length + ' generaciones — Total: $' + totalCost.toFixed(4) + ' USD';
+    })
+    .catch(function() { setTableEmpty('historyTbody', 9, 'No se pudo cargar el historial.'); });
+}
+
+function viewGeneration(id) {
+  apiFetch('/admin/ai-generation/' + id)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var gen = d.generation || d;
+      var content = '';
+      try {
+        content = gen.parsed_json ? JSON.stringify(JSON.parse(gen.parsed_json), null, 2) : gen.raw_response || 'Sin contenido';
+      } catch(e) { content = gen.raw_response || 'Sin contenido'; }
+
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9000;display:flex;align-items:center;justify-content:center;padding:24px;';
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+
+      var modal = document.createElement('div');
+      modal.style.cssText = 'background:#111113;border:1px solid rgba(255,255,255,0.1);max-width:860px;width:100%;max-height:85vh;overflow:auto;display:flex;flex-direction:column;';
+
+      var hdr = document.createElement('div');
+      hdr.style.cssText = 'padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;';
+      var title = document.createElement('span');
+      title.style.cssText = 'font-family:var(--font-head);font-size:18px;';
+      title.textContent = 'GENERACIÓN #' + id + (gen.type ? ' — ' + gen.type.toUpperCase() : '');
+      var closeBtn = document.createElement('button');
+      closeBtn.style.cssText = 'background:none;border:none;color:#fff;cursor:pointer;font-size:18px;';
+      closeBtn.textContent = '✕';
+      closeBtn.addEventListener('click', function() { overlay.remove(); });
+      hdr.appendChild(title);
+      hdr.appendChild(closeBtn);
+
+      // Barra de acciones si es tipo plan (entrenamiento/nutricion/habitos)
+      var planTypes = ['entrenamiento', 'nutricion', 'habitos'];
+      if (gen.client_id && gen.type && planTypes.indexOf(gen.type) !== -1) {
+        var actBar = document.createElement('div');
+        actBar.style.cssText = 'padding:12px 20px;background:#0d0d10;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;gap:10px;align-items:center;flex-shrink:0;';
+
+        var metaSpan = document.createElement('span');
+        metaSpan.style.cssText = 'font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.4);flex:1;';
+        metaSpan.textContent = 'Cliente: ' + (gen.client_name || '#' + gen.client_id) + ' | Tipo: ' + gen.type + ' | Status: ' + gen.status;
+        actBar.appendChild(metaSpan);
+
+        // Botón Aprobar + Publicar
+        var approveBtn = document.createElement('button');
+        approveBtn.className = 'btn btn-green';
+        approveBtn.style.cssText = 'font-size:12px;padding:7px 16px;';
+        approveBtn.textContent = 'Aprobar y Publicar Plan';
+        approveBtn.addEventListener('click', function() {
+          approveBtn.disabled = true;
+          approveBtn.textContent = 'Publicando...';
+          // 1. Marcar generación como approved
+          apiFetch('/admin/ai-generation/' + id, { method:'PUT', body: JSON.stringify({ status:'approved' }) })
+            .then(function() {
+              // 2. Renderizar plan → genera HTML y activa (active=1)
+              return apiFetch('/ai/render-plan', { method:'POST', body: JSON.stringify({ client_id: gen.client_id, plan_type: gen.type }) });
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(rr) {
+              showToast('Plan publicado: ' + (rr.url || rr.filename || 'OK'));
+              overlay.remove();
+              loadHistory();
+            })
+            .catch(function(err) {
+              approveBtn.disabled = false;
+              approveBtn.textContent = 'Aprobar y Publicar Plan';
+              showToast('Error al publicar: ' + (err.message || err), true);
+            });
+        });
+        actBar.appendChild(approveBtn);
+        modal.appendChild(actBar);
+      }
+
+      var pre = document.createElement('pre');
+      pre.style.cssText = 'padding:20px;font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7);white-space:pre-wrap;word-break:break-all;flex:1;';
+      pre.textContent = content;
+
+      modal.appendChild(hdr);
+      modal.appendChild(pre);
+      overlay.appendChild(modal);
+      document.body.appendChild(overlay);
+    })
+    .catch(function() { showToast('Error cargando generación.', true); });
+}
+
+// ── Prompts ───────────────────────────────────────────────────
+function loadPrompt(el, type) {
+  document.querySelectorAll('.prompt-tab').forEach(function(t) { t.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  currentPromptType = type;
+  document.getElementById('promptSystemInput').value = 'Cargando...';
+  document.getElementById('promptUserInput').value   = '';
+
+  apiFetch('/admin/ai-prompt/' + type)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var p = d.prompt || {};
+      document.getElementById('promptSystemInput').value = p.system_prompt           || '';
+      document.getElementById('promptUserInput').value   = p.user_prompt_template    || '';
+    })
+    .catch(function() {
+      document.getElementById('promptSystemInput').value = '// Error al cargar. Ejecuta setup-tables.php primero.';
+    });
+}
+
+function savePrompt() {
+  var sys = document.getElementById('promptSystemInput').value.trim();
+  var usr = document.getElementById('promptUserInput').value.trim();
+  if (!sys) { showToast('El system prompt no puede estar vacío.', true); return; }
+  apiFetch('/admin/ai-prompt/' + currentPromptType, {
+    method: 'PUT',
+    body: JSON.stringify({ system_prompt: sys, user_prompt_template: usr })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d.ok || d.message) showToast('Prompt guardado para ' + currentPromptType + '.');
+    else showToast(d.error || 'Error guardando.', true);
+  })
+  .catch(function() { showToast('Error de conexión.', true); });
+}
+
+function resetPrompt() {
+  if (!confirm('¿Restaurar el prompt de ' + currentPromptType + ' al valor por defecto?')) return;
+  apiFetch('/admin/ai-prompt/' + currentPromptType, { method:'DELETE' })
+    .then(function() { loadPrompt(null, currentPromptType); showToast('Prompt restaurado al default.'); })
+    .catch(function() { showToast('Error restaurando.', true); });
+}
+
+// ── Chatbot IA ──────────────────────────────────────────────
+function loadChatbot() {
+  var days = parseInt(document.getElementById('chatFilterDays').value) || 30;
+  setTableEmpty('chatTbody', 6, 'Cargando...');
+
+  apiFetch('/admin/chat-stats?days=' + days)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var stats = d.stats || {};
+      document.getElementById('chatTotal').textContent    = stats.total || '0';
+      document.getElementById('chatToday').textContent    = stats.today || '0';
+      document.getElementById('chatSessions').textContent = stats.sessions || '0';
+      document.getElementById('chatAvgTokens').textContent = stats.avg_tokens || '0';
+
+      var msgs = d.messages || [];
+      var tbody = document.getElementById('chatTbody');
+      tbody.textContent = '';
+      if (!msgs.length) { setTableEmpty('chatTbody', 6, 'Sin mensajes en este periodo.'); return; }
+
+      msgs.slice(0, 50).forEach(function(m) {
+        var tr = document.createElement('tr');
+        tr.appendChild(td(el('span', 'td-accent', '#' + m.id)));
+        tr.appendChild(td(el('span', 'td-mono', formatDate(m.created_at))));
+        tr.appendChild(td(el('span', 'td-mono', (m.session_id || '—').substring(0, 8))));
+        var qCell = document.createElement('td');
+        qCell.textContent = (m.content || '').substring(0, 80);
+        qCell.style.maxWidth = '300px';
+        qCell.style.overflow = 'hidden';
+        qCell.style.textOverflow = 'ellipsis';
+        qCell.style.whiteSpace = 'nowrap';
+        tr.appendChild(qCell);
+        tr.appendChild(td(el('span', 'td-mono', String(m.tokens_used || '—'))));
+        tr.appendChild(td(badge(m.model || 'local', 'badge-blue')));
+        tbody.appendChild(tr);
+      });
+
+      // Top questions
+      var topDiv = document.getElementById('chatTopQuestions');
+      topDiv.textContent = '';
+      var topQ = d.top_questions || [];
+      if (!topQ.length) {
+        topDiv.textContent = 'Sin datos suficientes para ranking.';
+        topDiv.style.color = 'var(--gray)';
+        return;
+      }
+      topQ.forEach(function(q, i) {
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);';
+        var num = el('span', 'td-accent');
+        num.textContent = '#' + (i + 1);
+        num.style.fontFamily = 'var(--font-mono)';
+        num.style.width = '28px';
+        var text = el('span', null, q.question || q.user_message || '—');
+        text.style.flex = '1';
+        text.style.fontSize = '12px';
+        var count = badge(String(q.count || 1), 'badge-gray');
+        row.appendChild(num);
+        row.appendChild(text);
+        row.appendChild(count);
+        topDiv.appendChild(row);
+      });
+    })
+    .catch(function() {
+      setTableEmpty('chatTbody', 6, 'Error cargando datos del chatbot.');
+    });
+}
+
+// ── Webhooks ─────────────────────────────────────────────────
+function loadWebhooks() {
+  var type  = document.getElementById('whFilterType').value;
+  var limit = document.getElementById('whFilterLimit').value;
+  var qs = '?limit=' + limit + (type ? '&type=' + type : '');
+
+  setTableEmpty('whTbody', 5, 'Cargando...');
+  setTableEmpty('whStatsTbody', 5, 'Cargando...');
+
+  apiFetch('/admin/webhook-logs' + qs)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var logs  = d.logs || [];
+      var stats = d.stats || [];
+
+      // KPI
+      var totalAll = 0, successAll = 0;
+      stats.forEach(function(s) { totalAll += parseInt(s.total || 0); successAll += parseInt(s.success_count || 0); });
+      document.getElementById('whTotal').textContent   = totalAll;
+      document.getElementById('whSuccess').textContent = successAll;
+      document.getElementById('whFailed').textContent  = totalAll - successAll;
+      document.getElementById('whTypes').textContent   = stats.length;
+
+      // Logs table
+      var tbody = document.getElementById('whTbody');
+      tbody.textContent = '';
+      if (!logs.length) { setTableEmpty('whTbody', 5, 'Sin webhooks registrados.'); return; }
+
+      logs.forEach(function(l) {
+        var tr = document.createElement('tr');
+        tr.appendChild(td(el('span', 'td-accent', '#' + l.id)));
+        tr.appendChild(td(el('span', 'td-mono', formatDate(l.created_at))));
+        tr.appendChild(td(badge(l.webhook_type || '—', 'badge-blue')));
+        tr.appendChild(td(statusBadge(l.status)));
+        var payloadBtn = btn('Ver', 'btn-ghost btn-sm', function() {
+          var payload = l.payload;
+          var text = typeof payload === 'object' ? JSON.stringify(payload, null, 2) : String(payload || '{}');
+          var overlay = document.createElement('div');
+          overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9000;display:flex;align-items:center;justify-content:center;padding:24px;';
+          overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+          var modal = document.createElement('div');
+          modal.style.cssText = 'background:#111113;border:1px solid rgba(255,255,255,0.1);max-width:700px;width:100%;max-height:80vh;overflow:auto;';
+          var hdr = document.createElement('div');
+          hdr.style.cssText = 'padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;';
+          var title = el('span', 'td-accent', 'WEBHOOK #' + l.id + ' — ' + (l.webhook_type || ''));
+          title.style.fontFamily = 'var(--font-head)';
+          title.style.fontSize = '16px';
+          var closeB = document.createElement('button');
+          closeB.style.cssText = 'background:none;border:none;color:#fff;cursor:pointer;font-size:16px;';
+          closeB.textContent = 'X';
+          closeB.addEventListener('click', function() { overlay.remove(); });
+          hdr.appendChild(title);
+          hdr.appendChild(closeB);
+          var pre = document.createElement('pre');
+          pre.style.cssText = 'padding:16px;font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7);white-space:pre-wrap;word-break:break-all;';
+          pre.textContent = text;
+          modal.appendChild(hdr);
+          modal.appendChild(pre);
+          overlay.appendChild(modal);
+          document.body.appendChild(overlay);
+        });
+        tr.appendChild(td(payloadBtn));
+        tbody.appendChild(tr);
+      });
+
+      // Stats table
+      var sTbody = document.getElementById('whStatsTbody');
+      sTbody.textContent = '';
+      if (!stats.length) { setTableEmpty('whStatsTbody', 5, 'Sin estadisticas.'); return; }
+      stats.forEach(function(s) {
+        var total   = parseInt(s.total || 0);
+        var success = parseInt(s.success_count || 0);
+        var rate    = total > 0 ? Math.round((success / total) * 100) : 0;
+        var rateBadge = rate >= 90 ? badge(rate + '%', 'badge-green')
+                      : rate >= 50 ? badge(rate + '%', 'badge-yellow')
+                      :              badge(rate + '%', 'badge-red');
+        var tr = document.createElement('tr');
+        tr.appendChild(td(badge(s.webhook_type, 'badge-blue')));
+        tr.appendChild(td(el('span', 'td-mono', String(total))));
+        tr.appendChild(td(el('span', 'td-mono', String(success))));
+        tr.appendChild(td(rateBadge));
+        tr.appendChild(td(el('span', 'td-mono', formatDate(s.last_call))));
+        sTbody.appendChild(tr);
+      });
+    })
+    .catch(function() {
+      setTableEmpty('whTbody', 5, 'Error cargando webhooks.');
+      setTableEmpty('whStatsTbody', 5, 'Error.');
+    });
+}
+
+// ── Nutricion IA ─────────────────────────────────────────────
+function loadNutricion() {
+  var days = parseInt(document.getElementById('nutFilterDays').value) || 30;
+  setTableEmpty('nutTbody', 8, 'Cargando...');
+
+  apiFetch('/admin/nutrition-stats?days=' + days)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var stats = d.stats || {};
+      document.getElementById('nutTotal').textContent   = stats.total || '0';
+      document.getElementById('nutToday').textContent   = stats.today || '0';
+      document.getElementById('nutClients').textContent = stats.unique_clients || '0';
+      document.getElementById('nutAvgCal').textContent  = stats.avg_calories ? Math.round(stats.avg_calories) : '0';
+
+      var logs = d.logs || [];
+      var tbody = document.getElementById('nutTbody');
+      tbody.textContent = '';
+      if (!logs.length) { setTableEmpty('nutTbody', 8, 'Sin analisis de nutricion en este periodo.'); return; }
+
+      logs.slice(0, 50).forEach(function(n) {
+        var analysis = n.ai_raw || {};
+        if (typeof analysis === 'string') { try { analysis = JSON.parse(analysis); } catch(e) { analysis = {}; } }
+        var macros = analysis.macros || {};
+        var tr = document.createElement('tr');
+        tr.appendChild(td(el('span', 'td-accent', '#' + n.id)));
+        tr.appendChild(td(el('span', 'td-mono', formatDate(n.created_at))));
+        tr.appendChild(td(n.client_name || String(n.client_id || '—')));
+        tr.appendChild(td(badge(n.meal_type || '—', 'badge-blue')));
+        tr.appendChild(td(el('span', 'td-mono', String(macros.calories || n.calories || '—'))));
+        tr.appendChild(td(el('span', 'td-mono', String(macros.protein || n.protein || '—') + 'g')));
+        tr.appendChild(td(el('span', 'td-mono', String(macros.carbs || n.carbs || '—') + 'g')));
+        tr.appendChild(td(el('span', 'td-mono', String(macros.fat || n.fat || '—') + 'g')));
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(function() {
+      setTableEmpty('nutTbody', 8, 'Error cargando datos de nutricion.');
+    });
+}
+
+function logout() {
+  ['wc_token','wc_admin_token','wc_admin_auth','wc_admin_user'].forEach(function(k) { localStorage.removeItem(k); });
+  location.href = 'login.html';
+}
+</script>
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+<script src="js/v5-effects.js" defer></script>
+</body>
+</html>

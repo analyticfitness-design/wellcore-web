@@ -1,0 +1,2353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Progreso — WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS — WellCore Fitness Training Template
+    ========================================================= */
+    :root {
+      --bg-primary:      #000000;
+      --bg-card:         #111114;
+      --bg-card-alt:     #0D0D10;
+      --bg-row-alt:      #141417;
+      --red:             #E31E24;
+      --red-dark:        #B01519;
+      --red-glow:        rgba(227,30,36,0.15);
+      --red-dim:         rgba(227,30,36,0.08);
+      --text-primary:    #FFFFFF;
+      --text-body:       #D4D4D8;
+      --text-muted:      #71717A;
+      --text-subtle:     #52525B;
+      --border-subtle:   rgba(255,255,255,0.06);
+      --border-medium:   rgba(255,255,255,0.10);
+      --border-strong:   rgba(255,255,255,0.18);
+      --font-display:    'Bebas Neue', sans-serif;
+      --font-sans:       'Inter', sans-serif;
+      --font-heading:    'Montserrat', sans-serif;
+      --font-mono:       'JetBrains Mono', monospace;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       PRINT BUTTON (screen only)
+    ========================================================= */
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border: 4px solid var(--red);
+      border-radius: 0;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.1s linear;
+    }
+    .print-btn:hover {
+      background: #ff2a31;
+    }
+
+    /* =========================================================
+       PAGE WRAPPER
+    ========================================================= */
+    .page-wrapper {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20px 0 60px;
+    }
+
+    /* =========================================================
+       PAGE UNIT — A4 DIMENSIONS
+    ========================================================= */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg-primary);
+      margin: 0 auto 24px;
+      padding: 14mm 14mm 14mm 14mm;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* =========================================================
+       COVER PAGE
+    ========================================================= */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cover-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-medium);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .cover-logo-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .logo-wordmark {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .logo-wordmark span {
+      color: var(--red);
+    }
+
+    .cover-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag {
+      text-align: right;
+    }
+
+    .cover-doc-tag .doc-type {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag .doc-id {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+
+    /* --- Cover: hero title area --- */
+    .cover-hero {
+      text-align: center;
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .cover-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover-hero-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover-hero-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .cover-hero-sub {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* --- Cover: client info grid --- */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .client-cell {
+      background: var(--bg-card);
+      padding: 14px 18px;
+    }
+
+    .client-cell-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .client-cell-value {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+
+    .client-cell-value.accent {
+      color: var(--red);
+    }
+
+    /* --- Cover: metrics row --- */
+    .metrics-section {
+      margin-bottom: 24px;
+    }
+
+    .metrics-label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metrics-label-row .section-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .metrics-label-row::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 12px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      opacity: 0.6;
+    }
+
+    .metric-card-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .metric-card-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .metric-card-value span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* --- Cover: footer --- */
+    .cover-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cover-footer-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cover-footer-item .f-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .cover-footer-item .f-value {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-body);
+    }
+
+    /* =========================================================
+       SECTION HEADERS & DIVIDERS
+    ========================================================= */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 16px;
+    }
+
+    .section-header-bar {
+      width: 4px;
+      height: 32px;
+      background: var(--red);
+      border-radius: 0;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+
+    .section-header-text {
+      flex: 1;
+    }
+
+    .section-header-title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .section-header-subtitle {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 16px;
+    }
+
+    .section-divider-bar {
+      width: 4px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+
+    .section-divider-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-divider-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.15em;
+      margin-top: 2px;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* =========================================================
+       SECONDARY PAGE HEADER (compact logo for inner pages)
+    ========================================================= */
+    .page-header-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .phc-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .phc-logo span {
+      color: var(--red);
+    }
+
+    .phc-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       PAGE FOOTER
+    ========================================================= */
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 14mm;
+      right: 14mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 6px;
+    }
+
+    .page-footer-brand {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .page-footer-brand span {
+      color: var(--red);
+    }
+
+    .page-footer-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--text-subtle);
+    }
+
+    /* =========================================================
+       DATA TABLES — Tracking tables
+    ========================================================= */
+    .tracking-table-wrap {
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .tracking-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .tracking-table thead tr {
+      background: var(--red);
+    }
+
+    .tracking-table thead th {
+      padding: 9px 10px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: left;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .tracking-table thead th.center {
+      text-align: center;
+    }
+
+    .tracking-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.1s linear;
+    }
+
+    .tracking-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .tracking-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .tracking-table tbody td {
+      padding: 9px 10px;
+      color: var(--text-body);
+      border: none;
+      vertical-align: top;
+    }
+
+    .tracking-table tbody td.center {
+      text-align: center;
+    }
+
+    .tracking-table tbody td:first-child {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .tracking-table tbody td.fillable {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-subtle);
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    /* Reference table variant (no fillable cells) */
+    .ref-table-wrap {
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .ref-table thead tr {
+      background: var(--bg-card-alt);
+      border-bottom: 2px solid var(--red);
+    }
+
+    .ref-table thead th {
+      padding: 10px 14px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    .ref-table thead th.center {
+      text-align: center;
+    }
+
+    .ref-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .ref-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .ref-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .ref-table tbody td {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-body);
+    }
+
+    .ref-table tbody td.center {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       INFO CARDS
+    ========================================================= */
+    .info-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--red);
+      opacity: 0.7;
+    }
+
+    .info-card-icon {
+      color: var(--red);
+      font-size: 16px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .info-card-title {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-card-body {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .info-card-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Full-width info card variant */
+    .info-card-full {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .info-card-full::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--red);
+      opacity: 0.7;
+    }
+
+    /* =========================================================
+       WARMUP / CALLOUT BLOCK (reused from training)
+    ========================================================= */
+    .callout-block {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .callout-icon {
+      color: var(--red);
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .callout-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .callout-text {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .callout-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       NOTES LIST (coach notes)
+    ========================================================= */
+    .notes-box {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+
+    .notes-box-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .notes-box-icon {
+      color: var(--red);
+      font-size: 14px;
+    }
+
+    .notes-box-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .notes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .notes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .notes-list li::before {
+      content: '//';
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* =========================================================
+       PHOTO GRID
+    ========================================================= */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .photo-week-row {
+      margin-bottom: 16px;
+    }
+
+    .photo-week-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .photo-placeholder {
+      background: var(--bg-card);
+      border: 1px dashed var(--border-medium);
+      border-radius: 0;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .photo-placeholder-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .photo-placeholder-icon {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      color: var(--text-subtle);
+      opacity: 0.4;
+    }
+
+    /* =========================================================
+       TEXT AREA PLACEHOLDERS (for print fill-in)
+    ========================================================= */
+    .text-area-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      min-height: 64px;
+    }
+
+    .text-area-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .text-area-lines {
+      border-bottom: 1px solid var(--border-subtle);
+      height: 22px;
+    }
+
+    /* =========================================================
+       BIENESTAR COMPACT TABLE
+    ========================================================= */
+    .bienestar-table-wrap {
+      border-radius: 0;
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .bienestar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10px;
+      min-width: 600px;
+    }
+
+    .bienestar-table thead tr {
+      background: var(--red);
+    }
+
+    .bienestar-table thead th {
+      padding: 8px 6px;
+      font-family: var(--font-heading);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: center;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .bienestar-table thead th:first-child {
+      text-align: left;
+      padding-left: 10px;
+      min-width: 140px;
+    }
+
+    .bienestar-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .bienestar-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .bienestar-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .bienestar-table tbody td {
+      padding: 8px 6px;
+      color: var(--text-subtle);
+      border: none;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    .bienestar-table tbody td:first-child {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    /* =========================================================
+       PRINCIPLE CALLOUT (Section 1 content blocks)
+    ========================================================= */
+    .principle-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .principle-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .principle-text {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .principle-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       RPE/DATA BADGE (reused)
+    ========================================================= */
+    .data-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.2);
+      padding: 1px 6px;
+      border-radius: 0;
+    }
+
+    /* =========================================================
+       STAT PILLS
+    ========================================================= */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .stat-pill-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .stat-pill-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-pill-val.red {
+      color: var(--red);
+    }
+
+    /* =========================================================
+       QUOTE BLOCK
+    ========================================================= */
+    .quote-block {
+      text-align: center;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .quote-text em {
+      color: var(--red);
+      font-style: normal;
+    }
+
+    .quote-attr {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       PRINT STYLES
+    ========================================================= */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: #fff;
+        color: #000;
+      }
+
+      .print-btn {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        padding: 0;
+      }
+
+      .page {
+        margin: 0;
+        padding: 14mm;
+        page-break-after: always;
+        background: #fff;
+        border: none;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+
+      :root {
+        --bg-primary:      #ffffff;
+        --bg-card:         #f5f5f7;
+        --bg-card-alt:     #eeeeef;
+        --bg-row-alt:      #f0f0f3;
+        --red:             #cc1a1f;
+        --red-dark:        #99131a;
+        --red-glow:        transparent;
+        --red-dim:         rgba(204,26,31,0.08);
+        --text-primary:    #0a0a0a;
+        --text-body:       #2a2a2d;
+        --text-muted:      #5a5a60;
+        --text-subtle:     #8a8a90;
+        --border-subtle:   rgba(0,0,0,0.10);
+        --border-medium:   rgba(0,0,0,0.16);
+        --border-strong:   rgba(0,0,0,0.22);
+      }
+
+      .tracking-table tbody tr,
+      .ref-table tbody tr,
+      .bienestar-table tbody tr {
+        break-inside: avoid;
+      }
+
+      .tracking-table-wrap,
+      .ref-table-wrap,
+      .bienestar-table-wrap {
+        break-inside: avoid;
+      }
+
+      .tracking-table thead tr,
+      .bienestar-table thead tr {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .photo-placeholder {
+        border-style: solid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PRINT BUTTON (hidden in print) -->
+  <button class="print-btn" onclick="window.print()">
+    <span style="color:#00D9FF;font-weight:700;">//</span> Imprimir / PDF
+  </button>
+
+  <div class="page-wrapper">
+
+    <!-- =====================================================
+         PAGE 1 — COVER
+    ===================================================== -->
+    <div class="page cover" id="page-cover">
+
+      <!-- HEADER BAND -->
+      <div class="cover-header">
+        <div class="cover-logo-group">
+          <div class="logo-wordmark">WELL<span>CORE</span> FITNESS</div>
+          <div class="cover-subtitle">Sistema de Medicion y Seguimiento</div>
+        </div>
+        <div class="cover-doc-tag">
+          <div class="doc-type">Documento Oficial</div>
+          <div class="doc-id" id="doc-id">WCF-PRG-2026</div>
+        </div>
+      </div>
+
+      <!-- HERO TITLE -->
+      <div class="cover-hero">
+        <div class="cover-hero-label">// seguimiento personalizado de resultados //</div>
+        <div class="cover-hero-title">REGISTRO DE<br>PROGRESO</div>
+        <div class="cover-hero-sub">Sistema de Medicion y Seguimiento — 12 Semanas</div>
+      </div>
+
+      <!-- CLIENT INFO GRID -->
+      <div class="client-grid">
+        <div class="client-cell">
+          <div class="client-cell-label">Cliente</div>
+          <div class="client-cell-value" data-field="nombre">Cargando...</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Plan Activo</div>
+          <div class="client-cell-value accent" data-field="plan">---</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Objetivo Principal</div>
+          <div class="client-cell-value" data-field="objetivo">---</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Semanas Activo</div>
+          <div class="client-cell-value" id="weeks-active">---</div>
+        </div>
+      </div>
+
+      <!-- CURRENT METRICS -->
+      <div class="metrics-section">
+        <div class="metrics-label-row">
+          <span class="section-tag">// metricas iniciales</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-card-label">Peso</div>
+            <div class="metric-card-value" data-field="peso">---<span>kg</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Altura</div>
+            <div class="metric-card-value" data-field="altura">---<span>cm</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">% Grasa</div>
+            <div class="metric-card-value" data-field="grasa">---<span>%</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">% Musculo</div>
+            <div class="metric-card-value" data-field="musculo">---<span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUOTE -->
+      <div class="quote-block">
+        <div class="quote-text">"LO QUE NO SE <em>MIDE</em>,<br>NO SE PUEDE <em>MEJORAR</em>"</div>
+        <div class="quote-attr">// Principio Fundamental de Progreso //</div>
+      </div>
+
+      <!-- COVER FOOTER -->
+      <div class="cover-footer">
+        <div class="cover-footer-item">
+          <span class="f-label">Fecha de Emision</span>
+          <span class="f-value" id="issue-date">---</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:center">
+          <span class="f-label">Coach</span>
+          <span class="f-value">WellCore Fitness</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:right">
+          <span class="f-label">Contacto</span>
+          <span class="f-value">info@wellcorefitness.com</span>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">01 / 08</div>
+      </div>
+    </div><!-- /page cover -->
+
+
+    <!-- =====================================================
+         PAGE 2 — POR QUE MEDIR EL PROGRESO
+    ===================================================== -->
+    <div class="page" id="page-por-que">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Registro de Progreso &rarr; Fundamentos</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Por Que Medir el Progreso</div>
+          <div class="section-divider-sub">// La base de cualquier transformacion real</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-title">Principio Fundamental</div>
+        <div class="principle-text">
+          <strong>"Lo que no se mide, no se puede mejorar."</strong> Este no es un cliche motivacional: es un principio de ingenieria aplicado al rendimiento humano. Sin datos objetivos, es imposible saber si tu programa esta funcionando, si necesitas ajustes, o si has alcanzado una meseta de adaptacion. El registro sistematico es la diferencia entre entrenar con proposito y simplemente hacer ejercicio.
+        </div>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-title">La Bascula NO Es Suficiente</div>
+        <div class="principle-text">
+          El peso corporal fluctua entre <strong>1-3 kg diarios</strong> dependiendo de: retencion de agua, contenido intestinal, hora del dia, ingesta de sodio, ciclo menstrual (mujeres), nivel de hidratacion y estres. Un numero aislado en la bascula puede ser profundamente enganoso. Si solo mides peso, puedes estar perdiendo grasa y ganando musculo sin que la bascula cambie, lo que generaria una falsa sensacion de estancamiento.
+        </div>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-title">La Vision Completa</div>
+        <div class="principle-text">
+          El sistema WellCore usa <strong>tres pilares de medicion</strong> para una evaluacion objetiva:<br><br>
+          <strong>1. Medidas corporales</strong> --- Perimetros de zonas clave cada 2-4 semanas.<br>
+          <strong>2. Fotos de progreso</strong> --- 3 angulos estandarizados con condiciones controladas.<br>
+          <strong>3. Rendimiento en el gym</strong> --- Personal records, volumen total, RPE promedio.<br><br>
+          Estos tres indicadores combinados revelan la verdad sobre tu progreso, incluso cuando uno de ellos por separado no muestra cambios significativos.
+        </div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Frecuencia de Medicion</div>
+          <div class="info-card-body">
+            <strong>Medidas corporales:</strong> cada 2-4 semanas.<br>
+            <strong>Fotos de progreso:</strong> cada 4 semanas minimo.<br>
+            <strong>Peso corporal:</strong> si se mide, diario en ayunas (promedio semanal).<br>
+            <strong>Fuerza / PRs:</strong> registro continuo cada sesion.<br>
+            <em>NO medir medidas corporales a diario --- genera ansiedad sin valor real.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Protocolo de Pesaje</div>
+          <div class="info-card-body">
+            <strong>SIEMPRE en ayunas</strong>, despues de ir al bano.<br>
+            <strong>Misma ropa</strong> (o sin ropa) cada vez.<br>
+            <strong>Misma bascula</strong> --- cada una calibra diferente.<br>
+            <strong>Misma hora</strong> del dia (+/- 30 minutos).<br>
+            <em>El promedio de 7 dias es mas confiable que un solo dato.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-block">
+        <span class="callout-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="callout-label">Nota Importante</div>
+          <div class="callout-text">Este documento esta disenado para imprimirse y completarse a mano, o para usarse como referencia digital. Todos los campos marcados con <strong>"___"</strong> son espacios para llenar con tus datos reales. Sube tus fotos y registros al portal WellCore para que tu coach pueda hacer seguimiento remoto.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">02 / 08</div>
+      </div>
+    </div><!-- /page por-que -->
+
+
+    <!-- =====================================================
+         PAGE 3 — MEDIDAS CORPORALES
+    ===================================================== -->
+    <div class="page" id="page-medidas">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Registro de Progreso &rarr; Medidas Corporales</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Medidas Corporales</div>
+          <div class="section-divider-sub">// Perimetros en centimetros — cada 2-4 semanas</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="tracking-table-wrap">
+        <table class="tracking-table">
+          <thead>
+            <tr>
+              <th>Zona</th>
+              <th class="center">Semana 1</th>
+              <th class="center">Semana 4</th>
+              <th class="center">Semana 8</th>
+              <th class="center">Semana 12</th>
+              <th class="center">Diferencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pecho (linea de pezones)</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+            </tr>
+            <tr>
+              <td>Cintura (ombligo)</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+            </tr>
+            <tr>
+              <td>Cadera (parte mas ancha)</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+            </tr>
+            <tr>
+              <td>Brazo (biceps flexionado)</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+            </tr>
+            <tr>
+              <td>Muslo (15cm arriba de rodilla)</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+            </tr>
+            <tr>
+              <td>Pantorrilla (parte mas ancha)</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+              <td class="fillable">___ cm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Instrucciones de Medicion</div>
+          <div class="section-divider-sub">// Protocolo estandarizado para datos confiables</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Protocolo de Medicion Corporal</span>
+        </div>
+        <ul class="notes-list">
+          <li>Usar cinta metrica flexible (de costura), NO de metal. Colocar firme contra la piel sin comprimir el tejido.</li>
+          <li>Medir <strong>SIN ropa</strong> o con ropa interior minima. La ropa anade 1-3 cm de variacion entre mediciones.</li>
+          <li>Siempre medir el <strong>mismo lado del cuerpo</strong>. Convencion WellCore: lado derecho para brazo y muslo.</li>
+          <li>Medir a la <strong>misma hora del dia</strong>. Ideal: por la manana antes de comer, despues de ir al bano.</li>
+          <li><strong>NO medir despues de entrenar</strong>. Los musculos se inflaman temporalmente (pump) y las medidas seran 1-2 cm mayores de lo real.</li>
+          <li>Tomar cada medida <strong>2 veces</strong> y usar el promedio. Si difieren mas de 0.5 cm, medir una tercera vez.</li>
+        </ul>
+      </div>
+
+      <div class="callout-block">
+        <span class="callout-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="callout-label">Referencia Rapida de Puntos de Medicion</div>
+          <div class="callout-text">
+            <strong>Pecho:</strong> Cinta a la altura de los pezones, horizontal, brazos relajados a los lados.<br>
+            <strong>Cintura:</strong> A la altura del ombligo, de pie, relajado (no meter barriga).<br>
+            <strong>Cadera:</strong> En la parte mas ancha de los gluteos, pies juntos.<br>
+            <strong>Brazo:</strong> Biceps flexionado al maximo, en el punto mas grueso.<br>
+            <strong>Muslo:</strong> 15 cm por encima del borde superior de la rotula, pierna relajada.<br>
+            <strong>Pantorrilla:</strong> En el punto mas ancho, de pie con peso distribuido en ambos pies.
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">03 / 08</div>
+      </div>
+    </div><!-- /page medidas -->
+
+
+    <!-- =====================================================
+         PAGE 4 — COMPOSICION CORPORAL
+    ===================================================== -->
+    <div class="page" id="page-composicion">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Registro de Progreso &rarr; Composicion Corporal</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Composicion Corporal</div>
+          <div class="section-divider-sub">// Seguimiento de peso, grasa y masa muscular</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="tracking-table-wrap">
+        <table class="tracking-table">
+          <thead>
+            <tr>
+              <th>Metrica</th>
+              <th class="center">Semana 1</th>
+              <th class="center">Semana 4</th>
+              <th class="center">Semana 8</th>
+              <th class="center">Semana 12</th>
+              <th class="center">Diferencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Peso corporal (kg)</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+            </tr>
+            <tr>
+              <td>% Grasa corporal</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+            </tr>
+            <tr>
+              <td>Masa muscular (kg)</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+            </tr>
+            <tr>
+              <td>IMC</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+              <td class="fillable">___</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Rangos de Referencia — % Grasa Corporal</div>
+          <div class="section-divider-sub">// Clasificacion por genero segun ACSM</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th class="center">Hombres</th>
+              <th class="center">Mujeres</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600; color:var(--text-primary);">Grasa esencial</td>
+              <td class="center">2 - 5%</td>
+              <td class="center">10 - 13%</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600; color:var(--text-primary);">Atletico</td>
+              <td class="center">6 - 13%</td>
+              <td class="center">14 - 20%</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600; color:var(--text-primary);">Fitness</td>
+              <td class="center">14 - 17%</td>
+              <td class="center">21 - 24%</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600; color:var(--text-primary);">Aceptable</td>
+              <td class="center">18 - 24%</td>
+              <td class="center">25 - 31%</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600; color:var(--text-primary);">Obesidad</td>
+              <td class="center">&gt;25%</td>
+              <td class="center">&gt;32%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-block">
+        <span class="callout-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="callout-label">Nota sobre el IMC</div>
+          <div class="callout-text">El Indice de Masa Corporal (IMC = peso / altura^2) es una herramienta poblacional, <strong>no individual</strong>. Un atleta con alta masa muscular puede tener un IMC de "sobrepeso" con 12% de grasa. Usamos el IMC como referencia complementaria, nunca como indicador unico. El porcentaje de grasa corporal es significativamente mas util para evaluar composicion real.</div>
+        </div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Metodos de Medicion de Grasa</div>
+          <div class="info-card-body">
+            <strong>Bascula bioimpedancia:</strong> Comodo, variabilidad +/- 3-5%.<br>
+            <strong>Plicometro (calipers):</strong> Mas preciso si lo hace un profesional.<br>
+            <strong>DEXA scan:</strong> Gold standard, alto costo, cada 3-6 meses.<br>
+            <em>Lo importante es usar siempre el MISMO metodo para comparar.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Expectativas Realistas</div>
+          <div class="info-card-body">
+            <strong>Perdida de grasa:</strong> 0.5 - 1% de peso corporal por semana.<br>
+            <strong>Ganancia muscular:</strong> 0.25 - 0.5 kg/mes (principiantes).<br>
+            <strong>Recomposicion:</strong> Cambios lentos pero simultaneos.<br>
+            <em>Paciencia + consistencia = resultados permanentes.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">04 / 08</div>
+      </div>
+    </div><!-- /page composicion -->
+
+
+    <!-- =====================================================
+         PAGE 5 — REGISTRO DE FUERZA (PRs)
+    ===================================================== -->
+    <div class="page" id="page-fuerza">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Registro de Progreso &rarr; Fuerza</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Registro de Fuerza (PRs)</div>
+          <div class="section-divider-sub">// Personal records — ejercicios principales</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="tracking-table-wrap">
+        <table class="tracking-table">
+          <thead>
+            <tr>
+              <th>Ejercicio</th>
+              <th class="center">PR Actual</th>
+              <th class="center">Fecha</th>
+              <th class="center">PR Anterior</th>
+              <th class="center">Progreso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sentadilla</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td>Press de Banca</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td>Peso Muerto</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td>Press Militar</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td>Dominadas</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td>Hip Thrust</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td>Remo con Barra</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-block">
+        <span class="callout-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="callout-label">Que es un PR (Personal Record)</div>
+          <div class="callout-text">Un PR es el peso maximo que has levantado para un numero determinado de repeticiones con <strong>tecnica correcta</strong>. No cuenta si la tecnica se rompe. Registra tanto el peso como las repeticiones: un PR de 80kg x 5 reps es diferente a 90kg x 1 rep. Ambos son valiosos pero miden cosas distintas.</div>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Ejercicios Secundarios (Opcional)</div>
+          <div class="section-divider-sub">// Registra PRs adicionales segun tu programa</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="tracking-table-wrap">
+        <table class="tracking-table">
+          <thead>
+            <tr>
+              <th>Ejercicio</th>
+              <th class="center">PR Actual</th>
+              <th class="center">Fecha</th>
+              <th class="center">PR Anterior</th>
+              <th class="center">Progreso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text-muted);">________________</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-muted);">________________</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-muted);">________________</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-muted);">________________</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-muted);">________________</td>
+              <td class="fillable">___kg x ___reps</td>
+              <td class="fillable">___/___/___</td>
+              <td class="fillable">___kg</td>
+              <td class="fillable">+___kg</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Criterios de Progresion de Carga</span>
+        </div>
+        <ul class="notes-list">
+          <li>Aumenta peso cuando completes TODAS las series y reps programadas con el RPE indicado o menos.</li>
+          <li>Incremento recomendado: <strong>2.5 kg</strong> en tren superior, <strong>5 kg</strong> en tren inferior.</li>
+          <li>Si fallas repeticiones 2 sesiones consecutivas, reduce 10% y reconstruye.</li>
+          <li>La progresion no siempre es lineal. Mesetas de 2-3 semanas son normales --- no cambies el programa por impaciencia.</li>
+        </ul>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">05 / 08</div>
+      </div>
+    </div><!-- /page fuerza -->
+
+
+    <!-- =====================================================
+         PAGE 6 — FOTOS DE PROGRESO
+    ===================================================== -->
+    <div class="page" id="page-fotos">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Registro de Progreso &rarr; Fotos de Progreso</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Fotos de Progreso</div>
+          <div class="section-divider-sub">// 3 angulos obligatorios — cada 4 semanas</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Protocolo de Fotos Estandarizado</span>
+        </div>
+        <ul class="notes-list">
+          <li><strong>Frecuencia:</strong> cada 4 semanas (minimo). Mas frecuente no muestra diferencia visual significativa.</li>
+          <li><strong>3 angulos obligatorios:</strong> Frente, Lateral (perfil derecho), Espalda.</li>
+          <li><strong>Misma iluminacion</strong> siempre. Evitar luz directa lateral que exagera sombras. Ideal: luz frontal difusa.</li>
+          <li><strong>Misma hora del dia</strong> --- por la manana en ayunas produce los resultados mas consistentes.</li>
+          <li><strong>Misma ropa:</strong> ropa interior o traje de bano. Siempre la misma prenda.</li>
+          <li><strong>Posicion relajada</strong> (NO flexionado) para mantener consistencia entre sesiones de fotos.</li>
+          <li>Subir al portal WellCore en la seccion <strong>"Fotos de Progreso"</strong> para revision del coach.</li>
+        </ul>
+      </div>
+
+      <!-- PHOTO GRID: 4 weeks x 3 angles -->
+      <div class="photo-week-row">
+        <div class="photo-week-label">// Semana 1 --- Fecha: ___/___/___</div>
+        <div class="photo-grid">
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Frente</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Lateral</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Espalda</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-week-row">
+        <div class="photo-week-label">// Semana 4 --- Fecha: ___/___/___</div>
+        <div class="photo-grid">
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Frente</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Lateral</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Espalda</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-week-row">
+        <div class="photo-week-label">// Semana 8 --- Fecha: ___/___/___</div>
+        <div class="photo-grid">
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Frente</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Lateral</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Espalda</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-week-row">
+        <div class="photo-week-label">// Semana 12 --- Fecha: ___/___/___</div>
+        <div class="photo-grid">
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Frente</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Lateral</div>
+          </div>
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">[ ]</div>
+            <div class="photo-placeholder-label">Espalda</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">06 / 08</div>
+      </div>
+    </div><!-- /page fotos -->
+
+
+    <!-- =====================================================
+         PAGE 7 — INDICADORES DE BIENESTAR
+    ===================================================== -->
+    <div class="page" id="page-bienestar">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Registro de Progreso &rarr; Bienestar</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Indicadores de Bienestar</div>
+          <div class="section-divider-sub">// Seguimiento semanal subjetivo — escala 1-10</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="callout-block">
+        <span class="callout-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="callout-label">Como llenar esta tabla</div>
+          <div class="callout-text">Califica cada indicador del <strong>1 al 10</strong> al final de cada semana (1 = peor posible, 10 = optimo). Para adherencia, usa porcentaje (ej: 80% = completaste 4 de 5 sesiones). Estos datos subjetivos son criticos para que tu coach ajuste el programa si detecta fatiga acumulada, falta de sueno o estres elevado.</div>
+        </div>
+      </div>
+
+      <div class="bienestar-table-wrap">
+        <table class="bienestar-table">
+          <thead>
+            <tr>
+              <th>Indicador</th>
+              <th class="center">Sem 1</th>
+              <th class="center">Sem 2</th>
+              <th class="center">Sem 3</th>
+              <th class="center">Sem 4</th>
+              <th class="center">Sem 5</th>
+              <th class="center">Sem 6</th>
+              <th class="center">Sem 7</th>
+              <th class="center">Sem 8</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Energia (1-10)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+            <tr>
+              <td>Calidad sueno (1-10)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+            <tr>
+              <td>Estres (1-10)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+            <tr>
+              <td>Motivacion (1-10)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+            <tr>
+              <td>Dolor / Molestia (1-10)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+            <tr>
+              <td>Hambre (1-10)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+            <tr>
+              <td>Adherencia entreno (%)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+            <tr>
+              <td>Adherencia nutricion (%)</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+              <td>___</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Guia de Interpretacion</div>
+          <div class="section-divider-sub">// Senales de alerta y ajustes recomendados</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Senales Positivas</div>
+          <div class="info-card-body">
+            <strong>Energia 7+</strong> de forma consistente.<br>
+            <strong>Sueno 7+</strong> la mayoria de noches.<br>
+            <strong>Motivacion estable o subiendo.</strong><br>
+            <strong>Adherencia 80%+</strong> en ambos pilares.<br>
+            <em>Resultado: mantener el plan actual, el programa funciona.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Senales de Alerta</div>
+          <div class="info-card-body">
+            <strong>Energia &lt;5</strong> por 2+ semanas consecutivas.<br>
+            <strong>Sueno &lt;5</strong> — afecta recuperacion directamente.<br>
+            <strong>Dolor/molestia 7+</strong> — posible sobreentrenamiento.<br>
+            <strong>Adherencia &lt;60%</strong> — replantear viabilidad del plan.<br>
+            <em>Resultado: contactar al coach para ajuste inmediato.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-block">
+        <span class="callout-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="callout-label">Sobre el indicador "Estres"</div>
+          <div class="callout-text">El estres es un factor externo al entrenamiento pero impacta directamente la recuperacion, el cortisol y la capacidad de adaptacion muscular. Un estres de <strong>8+ durante 2+ semanas</strong> es razon suficiente para reducir volumen de entrenamiento un 20-30% o programar un deload anticipado. La honestidad en este indicador protege tu progreso a largo plazo.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">07 / 08</div>
+      </div>
+    </div><!-- /page bienestar -->
+
+
+    <!-- =====================================================
+         PAGE 8 — RESUMEN + NOTAS DEL COACH
+    ===================================================== -->
+    <div class="page" id="page-resumen">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Registro de Progreso &rarr; Resumen &amp; Notas</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Resumen de Progreso</div>
+          <div class="section-divider-sub">// Vision general del ciclo de entrenamiento</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="text-area-block">
+        <div class="text-area-label">// Objetivos Iniciales</div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+      </div>
+
+      <div class="text-area-block">
+        <div class="text-area-label">// Revision Mensual</div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+      </div>
+
+      <div class="text-area-block">
+        <div class="text-area-label">// Ajustes Necesarios</div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+      </div>
+
+      <div class="text-area-block">
+        <div class="text-area-label">// Proximo Objetivo</div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+        <div class="text-area-lines"></div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Notas del Coach</div>
+          <div class="section-divider-sub">// Observaciones, ajustes y recomendaciones</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="notes-box" style="min-height:160px;">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Espacio Reservado para el Coach</span>
+        </div>
+        <div style="border-bottom:1px solid var(--border-subtle); height:22px; margin-bottom:4px;"></div>
+        <div style="border-bottom:1px solid var(--border-subtle); height:22px; margin-bottom:4px;"></div>
+        <div style="border-bottom:1px solid var(--border-subtle); height:22px; margin-bottom:4px;"></div>
+        <div style="border-bottom:1px solid var(--border-subtle); height:22px; margin-bottom:4px;"></div>
+        <div style="border-bottom:1px solid var(--border-subtle); height:22px; margin-bottom:4px;"></div>
+        <div style="border-bottom:1px solid var(--border-subtle); height:22px;"></div>
+      </div>
+
+      <div class="callout-block">
+        <span class="callout-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="callout-label">Protocolo de Check-In</div>
+          <div class="callout-text">Envia este registro completado junto con tus fotos de progreso a <strong>info@wellcorefitness.com</strong> o subelo directamente al portal WellCore en la seccion "Progreso". Tu coach revisara los datos y te enviara retroalimentacion en un plazo maximo de <strong>48 horas</strong>. Para consultas urgentes, utiliza el canal de WhatsApp: <strong>+57 312 4904720</strong>.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS --- Registro de Progreso</div>
+        <div class="page-footer-num">08 / 08</div>
+      </div>
+    </div><!-- /page resumen -->
+
+  </div><!-- /page-wrapper -->
+
+
+  <!-- =====================================================
+       JAVASCRIPT — localStorage INTEGRATION
+  ===================================================== -->
+  <script>
+    /* --------------------------------------------------
+       UTILITY: Read data from localStorage
+    -------------------------------------------------- */
+    function getProfile() {
+      try {
+        return JSON.parse(localStorage.getItem('wc_profile') || '{}');
+      } catch(e) { return {}; }
+    }
+
+    function getMetrics() {
+      try {
+        var m = JSON.parse(localStorage.getItem('wc_metrics') || '[]');
+        return (Array.isArray(m) && m.length > 0) ? m[m.length - 1] : null;
+      } catch(e) { return null; }
+    }
+
+    function getWeekNumber(date) {
+      var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      var dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    function calcWeeksActive(profile) {
+      if (!profile.fechaInicio) return '---';
+      try {
+        var start = new Date(profile.fechaInicio);
+        var now = new Date();
+        var diff = Math.floor((now - start) / (1000 * 60 * 60 * 24 * 7));
+        return diff > 0 ? diff + ' sem.' : '< 1 sem.';
+      } catch(e) { return '---'; }
+    }
+
+    function formatDateES(date) {
+      var months = ['enero','febrero','marzo','abril','mayo','junio',
+                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      return date.getDate() + ' de ' + months[date.getMonth()] + ' de ' + date.getFullYear();
+    }
+
+    /* --------------------------------------------------
+       RENDER: Client info fields
+    -------------------------------------------------- */
+    function renderClientInfo(profile, metrics) {
+      document.querySelectorAll('[data-field]').forEach(function(el) {
+        var field = el.dataset.field;
+
+        if (field === 'nombre') {
+          el.textContent = profile.nombre
+            || localStorage.getItem('wc_client_name')
+            || 'Cliente Demo';
+        }
+
+        if (field === 'plan') {
+          var plan = (localStorage.getItem('wc_client_plan') || profile.plan || 'esencial').toUpperCase();
+          el.textContent = 'PLAN ' + plan;
+        }
+
+        if (field === 'objetivo') {
+          el.textContent = profile.objetivo || 'Composicion Corporal';
+        }
+
+        if (field === 'peso') {
+          if (metrics && metrics.peso) {
+            el.textContent = metrics.peso;
+            var span = document.createElement('span');
+            span.textContent = 'kg';
+            el.textContent = '';
+            el.appendChild(document.createTextNode(metrics.peso));
+            el.appendChild(span);
+          } else {
+            el.textContent = '';
+            el.appendChild(document.createTextNode('---'));
+            var span = document.createElement('span');
+            span.textContent = 'kg';
+            el.appendChild(span);
+          }
+        }
+
+        if (field === 'altura') {
+          var val = profile.altura || (metrics && metrics.altura) || null;
+          el.textContent = '';
+          el.appendChild(document.createTextNode(val || '---'));
+          var span = document.createElement('span');
+          span.textContent = 'cm';
+          el.appendChild(span);
+        }
+
+        if (field === 'grasa') {
+          var val = (metrics && metrics.grasa) || null;
+          el.textContent = '';
+          el.appendChild(document.createTextNode(val || '---'));
+          var span = document.createElement('span');
+          span.textContent = '%';
+          el.appendChild(span);
+        }
+
+        if (field === 'musculo') {
+          var val = (metrics && metrics.musculo) || null;
+          el.textContent = '';
+          el.appendChild(document.createTextNode(val || '---'));
+          var span = document.createElement('span');
+          span.textContent = '%';
+          el.appendChild(span);
+        }
+      });
+
+      var weeksEl = document.getElementById('weeks-active');
+      if (weeksEl) weeksEl.textContent = calcWeeksActive(profile);
+
+      var issueDateEl = document.getElementById('issue-date');
+      if (issueDateEl) issueDateEl.textContent = formatDateES(new Date());
+
+      var docIdEl = document.getElementById('doc-id');
+      if (docIdEl) {
+        var now = new Date();
+        var week = getWeekNumber(now);
+        docIdEl.textContent = 'WCF-PRG-' + now.getFullYear() + '-W' + String(week).padStart(2,'0');
+      }
+    }
+
+    /* --------------------------------------------------
+       MAIN: DOMContentLoaded
+    -------------------------------------------------- */
+    document.addEventListener('DOMContentLoaded', function() {
+      var profile = getProfile();
+      var metrics = getMetrics();
+      renderClientInfo(profile, metrics);
+    });
+  </script>
+
+</body>
+</html>

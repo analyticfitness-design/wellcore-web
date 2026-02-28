@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscripcion — WellCore Fitness</title>
+  <meta name="description" content="Comienza tu transformacion con WellCore Fitness. Coaching 1:1 personalizado basado en ciencia." />
+  <meta property="og:title" content="Inscripcion — WellCore Fitness">
+  <meta property="og:description" content="Comienza tu transformacion con WellCore Fitness. Coaching 1:1 personalizado basado en ciencia.">
+  <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+  <meta property="og:url" content="https://wellcorefitness.com/inscripcion.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wellcorefitness.com/inscripcion.html">
+  <!-- Bootstrap 5.3 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <!-- Font Awesome 6 -->
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/wellcore-v5.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+    /* ============================================================
+       WELLCORE FITNESS v3 — INSCRIPCION
+       Design System: PROTOCOL
+    ============================================================ */
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --card:      #18181b;
+      --border:    rgba(255,255,255,0.06);
+      --red:       #E31E24;
+      --red-dim:   rgba(227,30,36,0.12);
+      --white:     #ffffff;
+      --gray:      rgba(255,255,255,0.45);
+      --gray-dim:  rgba(255,255,255,0.18);
+      --red-dark:  #B8181D;
+      --accent:    #00D9FF;
+      --green:     #22C55E;
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      background: rgba(10,10,10,0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.1s linear;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.1s linear, gap 0.1s linear;
+    }
+    .nav-cta:hover { color: var(--white); gap: 10px; }
+
+    /* Hamburger button */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 0;
+      width: 40px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    /* Mobile dropdown menu */
+    #navMobileMenu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      z-index: 999;
+      padding: 20px 20px 24px;
+    }
+    #navMobileMenu.open { display: block; }
+    #navMobileMenu ul { list-style: none; padding: 0; margin: 0 0 16px; }
+    #navMobileMenu ul li { border-bottom: 1px solid var(--border); }
+    #navMobileMenu ul li a {
+      display: block;
+      padding: 13px 0;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.1s linear;
+    }
+    #navMobileMenu ul li a:hover { color: var(--white); }
+    #navMobileMenu .nav-mobile-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px;
+      border-radius: 0;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-inner { padding: 0 20px; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      #navbar { height: 60px; }
+      #navMobileMenu { top: 60px; }
+      .nav-logo-img { height: 30px !important; }
+    }
+
+    /* ============================================================
+       FORM STYLES
+    ============================================================ */
+    .form-label-wc {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .form-input-wc {
+      width: 100%;
+      background: #111113;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 16px;
+      padding: 12px 16px;
+      border-radius: 0;
+      outline: none;
+      transition: border-color 0.1s linear;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-input-wc:focus {
+      border-color: var(--red);
+    }
+    .form-input-wc::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+    .form-input-wc option {
+      background: #18181b;
+      color: #fff;
+    }
+    textarea.form-input-wc {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .form-input-wc.error {
+      border-color: var(--red);
+    }
+
+    /* ============================================================
+       PLAN CARDS
+    ============================================================ */
+    .plan-card {
+      cursor: pointer;
+      transition: border-color 0.1s linear;
+    }
+    .plan-card:hover {
+      border-color: var(--red) !important;
+    }
+    .plan-card.selected {
+      border-color: var(--red) !important;
+    }
+
+    /* ============================================================
+       STEP INDICATOR
+    ============================================================ */
+    .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      transition: background 0.1s linear, transform 0.1s linear;
+      flex-shrink: 0;
+    }
+    .step-dot.active {
+      background: var(--red);
+      transform: scale(1.4);
+    }
+    .step-dot.completed {
+      background: rgba(227,30,36,0.4);
+    }
+
+    /* ============================================================
+       FORM STEPS
+    ============================================================ */
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       NAVIGATION BUTTONS
+    ============================================================ */
+    #prevBtn, #nextBtn {
+      transition: opacity 0.1s linear, background 0.1s linear;
+    }
+    #prevBtn:hover {
+      border-color: rgba(255,255,255,0.3) !important;
+      color: var(--white) !important;
+    }
+    #nextBtn:hover:not(:disabled) {
+      background: #c0181d !important;
+    }
+    #nextBtn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    #submitBtn:hover {
+      background: #c0181d !important;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .footer-links a {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      transition: color 0.1s linear;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 576px) {
+      .plan-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* MOBILE OPTIMIZATION */
+    @media (max-width: 768px) {
+      #navbar { height: 60px; }
+      .nav-inner { padding: 0 16px; }
+      main { padding-top: 60px; }
+
+      /* Page header */
+      main > div:first-child { padding: 48px 16px 32px; }
+      main > div:first-child h1 { font-size: clamp(40px, 12vw, 60px) !important; }
+      main > div:first-child p { font-size: 10px !important; }
+
+      /* Form container */
+      main > div:nth-child(2) { padding: 36px 16px 80px; }
+
+      /* Plan cards */
+      .plan-card[data-plan] { padding: 24px 16px; }
+      .plan-card[data-plan] > div:nth-child(2) { font-size: 20px; }
+      .plan-card[data-plan] > div:nth-child(3) { font-size: 40px; }
+
+      /* Step headings */
+      .form-step h2 { font-size: 28px !important; }
+      .form-step p { font-size: 12px !important; }
+
+      /* Navigation buttons */
+      #prevBtn, #nextBtn, #submitBtn {
+        padding: 14px 20px;
+        font-size: 11px;
+        min-height: 48px;
+      }
+      #nextBtn { width: 100%; }
+
+      /* Form inputs - touch-friendly */
+      .form-input-wc { padding: 14px 16px; font-size: 16px !important; }
+      /* Font-size 16px prevents iOS zoom on focus */
+
+      /* Plan cards grid */
+      div[style*="grid-template-columns:repeat(auto-fit"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+
+      /* T&C box */
+      div[style*="background:#111113"] { padding: 20px 16px; }
+    }
+
+    @media (hover: none) {
+      .form-input-wc:focus { border-color: #E31E24; font-size: 16px; }
+      .btn-plan { min-height: 44px; }
+    }
+
+    /* ============================================================
+       RESPONSIVE FIXES ADICIONALES
+    ============================================================ */
+
+    /* --- Nav links hover effect (V2) --- */
+    .nav-links a {
+      transition: color 0.1s linear;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 100%;
+      height: 1px;
+      background: #E31E24;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      transition: transform 0.1s linear;
+    }
+    .nav-links a:hover {
+      color: #fff;
+    }
+    .nav-links a:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* Submit button full-width en mobile */
+    @media (max-width: 768px) {
+      #submitBtn {
+        width: 100% !important;
+        display: block !important;
+        text-align: center;
+      }
+
+      /* Navigation buttons: stack en mobile pequeno */
+      div[style*="justify-content:space-between"][style*="margin-top:40px"] {
+        flex-direction: column;
+        gap: 10px;
+      }
+      #prevBtn { width: 100%; order: 2; }
+      #nextBtn { margin-left: 0 !important; order: 1; }
+
+      /* Footer */
+      footer { padding: 32px 16px; }
+      .footer-links { gap: 20px; }
+    }
+
+    /* --- 480px extra --- */
+    @media (max-width: 480px) {
+      body { font-size: 17px; }
+      .form-control { font-size: 16px; }
+      .form-step h2 { font-size: 24px !important; }
+      .plan-card[data-plan] { padding: 20px 14px; }
+    }
+
+</style>
+</head>
+<body>
+
+  <!-- V5 PRELOADER -->
+  <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="/">
+        <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:40px;" />
+      </a>
+
+      <!-- Links -->
+      <ul class="nav-links">
+        <li><a href="/#trust">Metodo</a></li>
+        <li><a href="/#about">Nosotros</a></li>
+        <li><a href="/#planes">Planes</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+
+      <!-- Back CTA (desktop) -->
+      <a href="/" class="nav-cta">
+        &larr; Volver
+      </a>
+
+      <!-- Hamburger (mobile) -->
+      <button class="nav-hamburger" id="navToggle" aria-label="Abrir men&uacute;">
+        &#9776;
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="navMobileMenu" role="navigation" aria-label="Men&uacute; m&oacute;vil">
+    <ul>
+      <li><a href="/#trust">M&eacute;todo</a></li>
+      <li><a href="/#about">Nosotros</a></li>
+      <li><a href="/#planes">Planes</a></li>
+      <li><a href="/blog/">Blog</a></li>
+    </ul>
+    <a href="/" class="nav-mobile-cta">&larr; Volver al Inicio</a>
+  </div>
+
+  <!-- ============================================================
+       MAIN
+  ============================================================ -->
+  <main style="background:#0a0a0a; min-height:100vh; padding-top:72px;">
+
+    <!-- Page Header -->
+    <div style="padding:80px 24px 48px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06);">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E31E24;display:block;margin-bottom:16px;">// COMIENZA TU TRANSFORMACION</span>
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);color:#fff;letter-spacing:2px;line-height:0.95;margin-bottom:16px;">INSCRIPCION</h1>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;max-width:600px;margin:0 auto;">Una vez que completes el formulario, tu coach se pondra en contacto contigo directamente por WhatsApp para coordinar el inicio.</p>
+    </div>
+
+    <!-- Form Container -->
+    <div data-v5-reveal style="max-width:860px;margin:0 auto;padding:60px 24px 100px;">
+
+      <!-- Invite Beta Banner (hidden by default, shown by JS) -->
+      <div id="inviteBanner" style="display:none;padding:16px 20px;border:1px solid rgba(0,217,255,0.3);background:rgba(0,217,255,0.06);margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#00D9FF;">// INVITACION BETA</span>
+          <span id="invitePlanBadge" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(227,30,36,.12);color:#E31E24;padding:3px 10px;text-transform:uppercase"></span>
+        </div>
+        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:8px 0 0;">Has sido invitado al programa beta. Tu plan ya esta seleccionado y puedes crear tu cuenta directamente.</p>
+      </div>
+
+      <!-- Step Indicator -->
+      <div id="stepIndicator" style="display:flex;justify-content:center;gap:8px;margin-bottom:48px;">
+        <!-- Generated by JS -->
+      </div>
+
+      <!-- Progress Bar -->
+      <div style="background:rgba(255,255,255,0.06);height:2px;border-radius:1px;margin-bottom:48px;">
+        <div id="progressBar" style="height:100%;background:#E31E24;border-radius:1px;transition:width 0.3s ease;width:12.5%;"></div>
+      </div>
+
+      <!-- ============================================================
+           FORM
+      ============================================================ -->
+      <form id="wellcoreForm" action="/api/inscripcion/apply" method="POST">
+        <input type="hidden" id="planSeleccionado" name="plan" value="" />
+
+        <!-- ======================================================
+             STEP 0: Plan Selection
+        ====================================================== -->
+        <div class="form-step active" data-step="0" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">SELECCIONA TU PLAN</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">Elige el nivel de acompanamiento que mejor se adapta a tus objetivos.</p>
+
+          <div class="plan-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+
+            <!-- ESENCIAL -->
+            <div class="plan-card" data-plan="esencial" style="border:4px solid var(--border);border-radius:0;background:#18181b;padding:32px 24px;position:relative;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;margin-bottom:4px;">ESENCIAL</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;">$399.000</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">COP / mes</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-bottom:14px;">&#126; $109 USD (internacional)</div>
+              <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:12px;color:rgba(255,255,255,0.6);">
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Plan de entrenamiento personalizado</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Plan nutricional adaptado</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Evaluacion inicial completa</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Check-in semanal por chat</li>
+                <li style="padding:6px 0;">&#9670; Soporte por WhatsApp (L-V)</li>
+              </ul>
+              <button type="button" class="btn-plan" style="width:100%;border:4px solid rgba(255,255,255,0.2);background:transparent;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px;border-radius:0;cursor:pointer;transition:background 0.1s linear,border-color 0.1s linear;">Seleccionar</button>
+            </div>
+
+            <!-- METODO (featured) -->
+            <div class="plan-card" data-plan="metodo" style="border:4px solid #E31E24;border-radius:0;background:#E31E24;padding:32px 24px;position:relative;">
+              <div style="display:inline-block;background:#0a0a0a;color:#fff;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:0;margin-bottom:12px;">MAS POPULAR</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;margin-bottom:4px;">METODO</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;">$504.000</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:6px;">COP / mes</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:14px;">&#126; $138 USD (internacional)</div>
+              <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:12px;color:rgba(255,255,255,0.85);">
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.15);">&#9670; Todo lo del plan Esencial</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.15);">&#9670; Ajustes semanales de plan</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.15);">&#9670; Videollamada mensual 30 min</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.15);">&#9670; Analisis de progreso con fotos</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.15);">&#9670; Guia de recetas y comidas</li>
+                <li style="padding:6px 0;">&#9670; Soporte 7 dias / respuesta rapida</li>
+              </ul>
+              <button type="button" class="btn-plan" style="width:100%;border:4px solid rgba(0,0,0,0.3);background:#0a0a0a;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px;border-radius:0;cursor:pointer;transition:background 0.1s linear;">Seleccionar</button>
+            </div>
+
+            <!-- ELITE -->
+            <div class="plan-card" data-plan="elite" style="border:4px solid var(--border);border-radius:0;background:#18181b;padding:32px 24px;position:relative;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;margin-bottom:4px;">ELITE</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;">$630.000</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">COP / mes</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-bottom:14px;">&#126; $173 USD (internacional)</div>
+              <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:12px;color:rgba(255,255,255,0.6);">
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Todo lo del plan Metodo</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Videollamadas quincenales</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Periodizacion avanzada 12 sem.</li>
+                <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">&#9670; Analisis de sangre y biomarcadores</li>
+                <li style="padding:6px 0;">&#9670; Acceso prioritario directo</li>
+              </ul>
+              <button type="button" class="btn-plan" style="width:100%;border:4px solid rgba(255,255,255,0.2);background:transparent;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px;border-radius:0;cursor:pointer;transition:background 0.1s linear,border-color 0.1s linear;">Seleccionar</button>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-align:center;margin-top:10px;">&#9670; SOLO 5 CUPOS</p>
+            </div>
+
+          </div>
+
+          <!-- Selected Plan Indicator -->
+          <div id="selectedPlanInfo" style="display:none;margin-top:24px;padding:16px;border:4px solid #E31E24;border-radius:0;background:rgba(227,30,36,0.08);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E31E24;letter-spacing:2px;text-transform:uppercase;">Plan seleccionado: <strong id="selectedPlanName"></strong></span>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 1: Informacion Basica
+        ====================================================== -->
+        <div class="form-step" data-step="1" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">INFORMACION BASICA</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">Cuentanos sobre ti para personalizar tu programa desde el primer dia.</p>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label-wc form-label-v5">Nombre completo *</label>
+              <input type="text" name="nombre" class="form-input-wc form-input-v5" required placeholder="Tu nombre" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-wc form-label-v5">Email *</label>
+              <input type="email" name="email" class="form-input-wc form-input-v5" required placeholder="tu@email.com" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-wc form-label-v5">WhatsApp *</label>
+              <input type="tel" name="whatsapp" class="form-input-wc form-input-v5" required placeholder="+1 234 567 8900" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-wc form-label-v5">Edad *</label>
+              <input type="number" name="edad" class="form-input-wc form-input-v5" required placeholder="25" min="16" max="75" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label-wc form-label-v5">Peso actual (kg) *</label>
+              <input type="number" name="peso" class="form-input-wc form-input-v5" required placeholder="70" step="0.1" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label-wc form-label-v5">Talla (cm) *</label>
+              <input type="number" name="talla" class="form-input-wc form-input-v5" required placeholder="170" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label-wc form-label-v5">Genero *</label>
+              <select name="genero" class="form-input-wc form-input-v5" required>
+                <option value="">Seleccionar</option>
+                <option>Masculino</option>
+                <option>Femenino</option>
+                <option>Prefiero no especificar</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Objetivo principal *</label>
+              <select name="objetivo" class="form-input-wc form-input-v5" required>
+                <option value="">Seleccionar</option>
+                <option>Perder grasa corporal</option>
+                <option>Ganar masa muscular</option>
+                <option>Recomposicion corporal</option>
+                <option>Mejorar rendimiento atletico</option>
+                <option>Mejorar salud general</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Pais/Ciudad de residencia</label>
+              <input type="text" name="ubicacion" class="form-input-wc form-input-v5" placeholder="Colombia, Bogota" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 2: Experiencia de Entrenamiento
+        ====================================================== -->
+        <div class="form-step" data-step="2" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">EXPERIENCIA DE ENTRENAMIENTO</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">Sin juicio. Necesitamos saber tu punto de partida real.</p>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Cuanto tiempo llevas entrenando? *</label>
+              <select name="experiencia" class="form-input-wc form-input-v5" required>
+                <option value="">Seleccionar</option>
+                <option>Soy principiante (menos de 6 meses)</option>
+                <option>Intermedio (6 meses - 2 anos)</option>
+                <option>Avanzado (mas de 2 anos)</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Cuantos dias por semana puedes entrenar? *</label>
+              <select name="dias_entrenamiento" class="form-input-wc form-input-v5" required>
+                <option value="">Seleccionar</option>
+                <option>2 dias</option>
+                <option>3 dias</option>
+                <option>4 dias</option>
+                <option>5 dias</option>
+                <option>6+ dias</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Que equipamiento tienes disponible? *</label>
+              <select name="equipamiento" class="form-input-wc form-input-v5" required>
+                <option value="">Seleccionar</option>
+                <option>Gimnasio completo</option>
+                <option>Home gym con pesas</option>
+                <option>Solo peso corporal</option>
+                <option>Mancuernas + bandas</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Has tenido coach o programa personalizado antes?</label>
+              <select name="coach_previo" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>No, nunca</option>
+                <option>Si, tuve buenos resultados</option>
+                <option>Si, pero sin buenos resultados</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Describe tu rutina actual (si tienes)</label>
+              <textarea name="rutina_actual" class="form-input-wc form-input-v5" rows="3" placeholder="Ej: Chest-Back lunes, pierna miercoles, hombros viernes..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 3: Preferencias de Entrenamiento
+        ====================================================== -->
+        <div class="form-step" data-step="3" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">PREFERENCIAS DE ENTRENAMIENTO</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">Esto nos ayuda a disenar un programa que realmente disfrutes y puedas mantener.</p>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Tipo de entrenamiento preferido</label>
+              <select name="tipo_entrenamiento" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>Pesas / Musculacion</option>
+                <option>Funcional</option>
+                <option>Cardio + pesas</option>
+                <option>Calistenia</option>
+                <option>Sin preferencia (lo decides tu)</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Duracion disponible por sesion</label>
+              <select name="duracion_sesion" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>45 minutos</option>
+                <option>60 minutos</option>
+                <option>75-90 minutos</option>
+                <option>Mas de 90 minutos</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Tienes preferencias o limitaciones de horario?</label>
+              <input type="text" name="horario" class="form-input-wc form-input-v5" placeholder="Ej: Solo puedo entrenar por las mananas" />
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Hay algun tipo de ejercicio que no puedas o no quieras hacer?</label>
+              <textarea name="ejercicios_evitar" class="form-input-wc form-input-v5" rows="2" placeholder="Ej: No puedo correr por rodilla..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 4: Lesiones y Limitaciones
+        ====================================================== -->
+        <div class="form-step" data-step="4" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">LESIONES Y LIMITACIONES</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">La honestidad aqui es fundamental. Ninguna respuesta te descalifica — todo se adapta.</p>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Tienes alguna lesion actual o reciente? *</label>
+              <select id="tienelesion" name="tiene_lesion" class="form-input-wc form-input-v5" required>
+                <option value="">Seleccionar</option>
+                <option value="no">No, estoy bien</option>
+                <option value="si">Si, tengo una lesion</option>
+                <option value="cronica">Tengo condicion cronica</option>
+              </select>
+            </div>
+            <div class="col-12 lesion-detail" style="display:none;">
+              <label class="form-label-wc form-label-v5">Describe la lesion o condicion</label>
+              <textarea name="lesion_detalle" class="form-input-wc form-input-v5" rows="3" placeholder="Zona afectada, diagnostico si lo tienes, cuanto tiempo llevas con ella..."></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Tienes alguna condicion medica relevante para el entrenamiento?</label>
+              <textarea name="condicion_medica" class="form-input-wc form-input-v5" rows="2" placeholder="Diabetes, hipertension, condicion cardiaca... Si no tienes, dejalo vacio."></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Tomas algun medicamento que pueda afectar tu entrenamiento o composicion corporal?</label>
+              <input type="text" name="medicamentos" class="form-input-wc form-input-v5" placeholder="Ej: Metformina, Beta-bloqueadores... o ninguno" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 5: Informacion Nutricional
+        ====================================================== -->
+        <div class="form-step" data-step="5" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">INFORMACION NUTRICIONAL</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">Tu historia con la alimentacion nos ayuda a crear un plan realista y sostenible.</p>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Sigues alguna dieta actualmente?</label>
+              <select name="dieta_actual" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>No, como de todo</option>
+                <option>Dieta flexible / IIFYM</option>
+                <option>Vegana</option>
+                <option>Vegetariana</option>
+                <option>Sin gluten</option>
+                <option>Keto / Low carb</option>
+                <option>Otra</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Tienes alergias o intolerancias alimentarias?</label>
+              <input type="text" name="alergias" class="form-input-wc form-input-v5" placeholder="Ej: Intolerancia a la lactosa, alergia a mariscos..." />
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Cuantas comidas haces al dia aproximadamente?</label>
+              <select name="num_comidas" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>1-2 comidas</option>
+                <option>3 comidas</option>
+                <option>4-5 comidas</option>
+                <option>Varia mucho</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Tienes experiencia contando calorias o macros?</label>
+              <select name="exp_macros" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>Nunca lo he hecho</option>
+                <option>Lo intente pero lo deje</option>
+                <option>Si, tengo experiencia</option>
+                <option>Lo hago actualmente</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Alimentos que definitivamente NO comeras</label>
+              <textarea name="alimentos_no" class="form-input-wc form-input-v5" rows="2" placeholder="Ej: No como cerdo, no me gustan los mariscos..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 6: Horarios y Habitos
+        ====================================================== -->
+        <div class="form-step" data-step="6" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">HORARIOS Y HABITOS</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">Tu contexto de vida determina como disenamos tu programa.</p>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Cual es tu horario de trabajo/estudio?</label>
+              <input type="text" name="horario_trabajo" class="form-input-wc form-input-v5" placeholder="Ej: Trabajo 9am-6pm de lunes a viernes" />
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Con que frecuencia comes fuera de casa?</label>
+              <select name="come_fuera" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>Casi nunca, cocino en casa</option>
+                <option>Algunas veces a la semana</option>
+                <option>La mayoria de comidas son fuera</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Nivel de estres actual</label>
+              <select name="estres" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>Bajo — vida tranquila</option>
+                <option>Moderado — trabajo normal</option>
+                <option>Alto — muy ocupado/estresado</option>
+                <option>Muy alto — me afecta el sueno</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Horas de sueno promedio por noche</label>
+              <select name="sueno" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>Menos de 5 horas</option>
+                <option>5-6 horas</option>
+                <option>7-8 horas</option>
+                <option>Mas de 8 horas</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 7: Ultimos Detalles
+        ====================================================== -->
+        <div class="form-step" data-step="7" data-v5-reveal>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;letter-spacing:1px;margin-bottom:8px;">ULTIMOS DETALLES</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;">Ya casi terminamos. Esta informacion completa tu perfil inicial.</p>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Como conociste WellCore Fitness?</label>
+              <select name="como_conocio" class="form-input-wc form-input-v5">
+                <option value="">Seleccionar</option>
+                <option>Instagram</option>
+                <option>Recomendacion de amigo</option>
+                <option>Google</option>
+                <option>TikTok</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-wc form-label-v5">Hay algo mas que debamos saber para personalizar mejor tu programa?</label>
+              <textarea name="notas_adicionales" class="form-input-wc form-input-v5" rows="4" placeholder="Cualquier contexto adicional que consideres importante..."></textarea>
+            </div>
+
+            <!-- Invite-only: Password fields (hidden by default) -->
+            <div id="invitePasswordSection" class="col-12" style="display:none;">
+              <div style="background:#111113;border:1px solid rgba(0,217,255,0.15);padding:24px;margin-bottom:16px;">
+                <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#00D9FF;margin-bottom:16px;">// Credenciales de Acceso</h3>
+                <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;">Crea tu contrasena para acceder al portal de clientes.</p>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label-wc form-label-v5">Contrasena *</label>
+                    <input type="password" id="invitePassword" name="invite_password" class="form-input-wc form-input-v5" placeholder="Minimo 6 caracteres" minlength="6" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label-wc form-label-v5">Confirmar contrasena *</label>
+                    <input type="password" id="invitePasswordConfirm" name="invite_password_confirm" class="form-input-wc form-input-v5" placeholder="Repetir contrasena" minlength="6" />
+                  </div>
+                </div>
+                <div id="passwordMatchError" style="display:none;color:#E31E24;font-size:12px;margin-top:8px;font-family:var(--font-mono)">Las contrasenas no coinciden</div>
+              </div>
+            </div>
+
+            <!-- Terminos y Condiciones -->
+            <div class="col-12">
+              <div style="background:#111113;border:1px solid rgba(255,255,255,0.06);border-radius:0;padding:24px;">
+                <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;">Terminos y Condiciones</h3>
+                <ul style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.8;padding-left:16px;">
+                  <li>El programa personalizado sera subido al portal en 5 a 48 horas segun la cola de coaches, tras completar el pago.</li>
+                  <li>No hay contratos de permanencia. Cancelacion sin penalizacion.</li>
+                  <li>Los reembolsos se evaluan antes de la entrega del plan.</li>
+                  <li>WellCore no vende suplementos ni productos de terceros.</li>
+                </ul>
+                <div style="margin-top:16px;">
+                  <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+                    <input type="checkbox" id="acceptTerms" name="terminos" value="acepto" required style="margin-top:3px;accent-color:#E31E24;width:16px;height:16px;" />
+                    <span style="font-size:12px;color:rgba(255,255,255,0.55);">Acepto los <a href="/legal/terminos.html" target="_blank" style="color:#E31E24;">terminos y condiciones</a> y la <a href="/legal/privacidad.html" target="_blank" style="color:#E31E24;">politica de privacidad</a>.</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div style="margin-top:32px;text-align:center;">
+            <button type="submit" id="submitBtn" class="btn-red btn-v5 btn-v5-primary" style="display:none;background:#E31E24;color:#fff;border:4px solid #E31E24;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:16px 48px;border-radius:0;cursor:pointer;transition:background 0.1s linear;">
+              <span class="btn-v5-text">Enviar Formulario</span><span class="btn-v5-arrow">&rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             NAVIGATION BUTTONS
+        ====================================================== -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.06);">
+          <button type="button" id="prevBtn" style="display:none;background:transparent;color:rgba(255,255,255,0.4);border:4px solid rgba(255,255,255,0.12);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;border-radius:0;cursor:pointer;">
+            &larr; Anterior
+          </button>
+          <button type="button" id="nextBtn" disabled style="background:#E31E24;color:#fff;border:4px solid #E31E24;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px 32px;border-radius:0;cursor:pointer;margin-left:auto;">
+            Siguiente &rarr;
+          </button>
+        </div>
+
+      </form>
+
+      <!-- ======================================================
+           SUCCESS MESSAGE
+      ====================================================== -->
+      <div id="successMessage" style="display:none;text-align:center;padding:80px 24px;">
+        <div style="width:64px;height:64px;background:rgba(227,30,36,0.12);border:1px solid #E31E24;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+          <span style="color:#00D9FF;font-weight:700;font-size:24px;">&#10003;</span>
+        </div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#fff;letter-spacing:2px;margin-bottom:16px;">FORMULARIO ENVIADO</h2>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:8px;">Revision en proceso</p>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);max-width:500px;margin:0 auto 32px;">Tu coach te contactara por WhatsApp/email en las proximas 24h. Una vez realizado el pago, tus credenciales llegan en menos de 6h y tu programa personalizado en 5 a 48 horas segun la cola.</p>
+        <a href="/" style="display:inline-flex;align-items:center;gap:8px;background:#E31E24;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 28px;border-radius:0;border:4px solid #E31E24;text-decoration:none;">
+          Volver al Inicio &rarr;
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer style="background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.06);padding:48px 32px;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div class="footer-links" style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:24px;">
+        <a href="/" style="font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);transition:color 0.1s linear;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Inicio</a>
+        <a href="/#planes" style="font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);transition:color 0.1s linear;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Planes</a>
+        <a href="/blog/" style="font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);transition:color 0.1s linear;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Blog</a>
+        <a href="/legal/terminos.html" style="font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);transition:color 0.1s linear;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Terminos</a>
+        <a href="/legal/privacidad.html" style="font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);transition:color 0.1s linear;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Privacidad</a>
+      </div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.15);text-align:center;text-transform:uppercase;">&copy; 2026 WellCore Fitness — Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/form-logic.js"></script>
+  <script>
+    // ============================================================
+    // INSCRIPCION PAGE — INLINE LOGIC
+    // Handles: step dots, conditional lesion field,
+    //          plan selection display, form submit UX
+    // ============================================================
+
+    // --- Build step indicator dots on load ---
+    (function buildDots() {
+      const container = document.getElementById('stepIndicator');
+      for (let i = 0; i < 8; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'step-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('data-step', i);
+        container.appendChild(dot);
+      }
+    })();
+
+    // --- Sync dots with form-logic.js step changes ---
+    // form-logic.js calls showStep(), we patch it to also update dots
+    const _origShowStep = window._showStepHook;
+    document.addEventListener('DOMContentLoaded', function() {
+      // Override step indicator update for dot style
+      const originalUpdate = HTMLElement.prototype.classList;
+
+      // Listen for active class changes on form-step elements
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const target = mutation.target;
+            if (target.classList.contains('form-step') && target.classList.contains('active')) {
+              const stepNum = parseInt(target.getAttribute('data-step'));
+              updateDots(stepNum);
+            }
+          }
+        });
+      });
+
+      document.querySelectorAll('.form-step').forEach(function(step) {
+        observer.observe(step, { attributes: true });
+      });
+
+      function updateDots(activeStepNum) {
+        document.querySelectorAll('.step-dot').forEach(function(dot) {
+          const dotStep = parseInt(dot.getAttribute('data-step'));
+          dot.classList.remove('active', 'completed');
+          if (dotStep === activeStepNum) {
+            dot.classList.add('active');
+          } else if (dotStep < activeStepNum) {
+            dot.classList.add('completed');
+          }
+        });
+
+        // Update progress bar
+        const total = 8;
+        const progress = ((activeStepNum + 1) / total) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+      }
+    });
+
+    // --- Conditional lesion detail field ---
+    document.getElementById('tienelesion').addEventListener('change', function() {
+      const details = document.querySelectorAll('.lesion-detail');
+      const show = (this.value === 'si' || this.value === 'cronica');
+      details.forEach(function(d) {
+        d.style.display = show ? 'block' : 'none';
+      });
+    });
+
+    // --- Show selected plan info ---
+    var planDisplayNames = {
+      esencial: 'ESENCIAL ($399.000 COP/mes)',
+      metodo:   'METODO ($504.000 COP/mes)',
+      elite:    'ELITE ($630.000 COP/mes)'
+    };
+    document.querySelectorAll('.plan-card').forEach(function(card) {
+      card.querySelector('.btn-plan').addEventListener('click', function() {
+        var plan = card.getAttribute('data-plan');
+        document.getElementById('selectedPlanName').textContent = planDisplayNames[plan] || plan;
+        document.getElementById('selectedPlanInfo').style.display = 'block';
+      });
+    });
+
+    // Form submit is handled by form-logic.js (Formspree ID: mjgeoelp)
+
+    // --- Hamburger menu toggle ---
+    (function() {
+      var toggle = document.getElementById('navToggle');
+      var menu   = document.getElementById('navMobileMenu');
+      if (toggle && menu) {
+        toggle.addEventListener('click', function() {
+          menu.classList.toggle('open');
+          if (menu.classList.contains('open')) {
+            toggle.textContent = '\u2715';
+          } else {
+            toggle.textContent = '\u2630';
+          }
+        });
+      }
+    })();
+  </script>
+
+  <script src="js/v5-effects.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({duration:700,once:true});</script>
+
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  📞
+</a>
+</body>
+</html>

@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planes y Precios &mdash; WellCore Fitness</title>
+  <meta name="description" content="Elige tu plan WellCore: Esencial $399.000, Metodo $504.000 o Elite $630.000 COP al mes. Coaching personalizado 1:1, nutricion, habitos y resultados garantizados." />
+  <meta property="og:title" content="Planes y Precios &mdash; WellCore Fitness">
+  <meta property="og:description" content="Elige tu plan WellCore: Esencial $399.000, Metodo $504.000 o Elite $630.000 COP al mes. Coaching personalizado 1:1, nutricion, habitos y resultados garantizados.">
+  <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+  <meta property="og:url" content="https://wellcorefitness.com/planes.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wellcorefitness.com/planes.html">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- v5 Design System -->
+  <link rel="stylesheet" href="css/wellcore-v5.css">
+
+  <style>
+    /* ============================================================
+       PLANES.HTML v5 — Page-specific styles
+       Base: wellcore-v5.css
+    ============================================================ */
+
+    body { padding-top: 72px; }
+
+    .section-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    @media (max-width: 768px) { .section-wrap { padding: 0 20px; } }
+    @media (max-width: 480px) { .section-wrap { padding: 0 16px; } }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero-planes {
+      position: relative;
+      padding: 120px 0 80px;
+      overflow: hidden;
+      background-image: linear-gradient(180deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.97) 100%), url('images/fotos/planes-01.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-planes::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(ellipse, rgba(227,30,36,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-planes-inner { text-align: center; position: relative; z-index: 1; }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: #E31E24; margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: ''; display: block;
+      width: 40px; height: 1px;
+      background: #E31E24; opacity: 0.4;
+    }
+    .hero-h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 10vw, 120px);
+      line-height: 0.92; letter-spacing: 2px; color: #fff; margin-bottom: 28px;
+    }
+    .hero-h1 span { color: #E31E24; }
+    .hero-sub {
+      font-size: 18px; font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      max-width: 560px; margin: 0 auto 56px; line-height: 1.7;
+    }
+
+    /* Trust Strip */
+    .trust-strip {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+      border: 1px solid rgba(255,255,255,0.06); background: #111113;
+      max-width: 780px; margin: 0 auto;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 16px 28px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      border-right: 1px solid rgba(255,255,255,0.06); white-space: nowrap;
+    }
+    .trust-item:last-child { border-right: none; }
+    @media (max-width: 680px) {
+      .trust-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); width: 50%; padding: 14px 20px; }
+      .trust-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.06); }
+      .trust-item:last-child { border-bottom: none; }
+    }
+    @media (max-width: 400px) { .trust-item { width: 100%; border-right: none; } }
+
+    /* ============================================================
+       BILLING TOGGLE
+    ============================================================ */
+    .billing-toggle-wrap { padding: 0 0 64px; text-align: center; }
+    .billing-toggle {
+      display: inline-flex; align-items: center; gap: 16px;
+      background: #111113; border: 1px solid rgba(255,255,255,0.06); padding: 6px 8px;
+    }
+    .billing-toggle-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); padding: 8px 20px;
+      cursor: pointer; transition: all 0.1s linear;
+    }
+    .billing-toggle-label.active { background: #E31E24; color: #fff; }
+    .billing-save-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(0,217,255,0.10); color: #00D9FF;
+      border: 1px solid rgba(0,217,255,0.2); padding: 3px 10px; margin-left: 4px;
+    }
+    .annual-reveal-note {
+      margin-top: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .annual-reveal-note strong { color: #00D9FF; }
+
+    /* ============================================================
+       PRICING SECTION
+    ============================================================ */
+    .plans-section { padding: 0 0 100px; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px; align-items: stretch;
+    }
+    @media (max-width: 960px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    }
+
+    /* Popular bar sits inside featured card above pc-plan */
+    .pc-popular-bar {
+      background: #E31E24;
+      text-align: center; padding: 9px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: #fff; font-weight: 600;
+      margin: -40px -32px 28px -32px;
+    }
+
+    /* Social proof row inside card */
+    .pc-social-proof {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px; padding: 10px 14px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .pc-social-proof span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .pc-social-proof strong { color: #fff; }
+
+    /* Features sub-label */
+    .pc-features-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); margin-bottom: 12px; margin-top: 4px;
+    }
+
+    /* Footer note below CTA */
+    .pc-footer-note {
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); text-align: center;
+    }
+
+    /* Annual savings note */
+    #annual-savings-note {
+      display: none; text-align: center; margin-top: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+    }
+
+    /* ============================================================
+       COMPARISON TABLE
+    ============================================================ */
+    .compare-section {
+      padding: 100px 0; background: #111113;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .compare-header { text-align: center; margin-bottom: 60px; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: #E31E24; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(44px, 6vw, 72px); line-height: 0.95;
+      letter-spacing: 1px; color: #fff; margin-bottom: 20px;
+    }
+    .section-sub {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.45); max-width: 520px; margin: 0 auto;
+    }
+    .compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .compare-table { width: 100%; min-width: 700px; border-collapse: collapse; }
+    .compare-table thead th {
+      padding: 20px 24px; text-align: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+      letter-spacing: 1px; color: #fff;
+      border-bottom: 2px solid rgba(255,255,255,0.10);
+      position: sticky; top: 72px; background: #111113; z-index: 5;
+    }
+    .compare-table thead th:first-child {
+      text-align: left; font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .compare-table thead th.col-featured {
+      color: #E31E24; background: rgba(227,30,36,0.04);
+      border-top: 2px solid #E31E24;
+      border-left: 2px solid #E31E24;
+      border-right: 2px solid #E31E24;
+    }
+    .compare-table thead th .th-badge {
+      display: block; font-family: 'JetBrains Mono', monospace;
+      font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+      color: #E31E24; margin-top: 4px; font-weight: 400;
+    }
+    .compare-table thead th .th-price {
+      display: block; font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: rgba(255,255,255,0.45);
+      margin-top: 4px; font-weight: 400; letter-spacing: 1px;
+    }
+    .compare-table tbody td {
+      padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px; color: rgba(255,255,255,0.75);
+      text-align: center; vertical-align: middle;
+    }
+    .compare-table tbody td:first-child {
+      text-align: left; color: rgba(255,255,255,0.6); font-size: 14px;
+    }
+    .compare-table tbody tr td.col-featured {
+      background: rgba(227,30,36,0.03);
+      border-left: 2px solid #E31E24; border-right: 2px solid #E31E24;
+    }
+    .compare-table tbody tr:last-child td.col-featured { border-bottom: 2px solid #E31E24; }
+    .compare-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+    .compare-table tbody tr:hover td.col-featured { background: rgba(227,30,36,0.05); }
+    .compare-table .cat-row td {
+      background: rgba(255,255,255,0.015);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); padding: 12px 24px;
+    }
+    .compare-table .cat-row td.col-featured { background: rgba(227,30,36,0.04); }
+    .c-yes { color: #00D9FF; font-size: 16px; }
+    .c-no  { color: rgba(255,255,255,0.18); font-size: 14px; }
+    .c-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.45);
+    }
+    .compare-ctas { display: grid; grid-template-columns: repeat(3, 1fr); min-width: 700px; }
+    .compare-cta-cell { padding: 24px; text-align: center; }
+    .compare-cta-cell.col-featured-wrap {
+      background: rgba(227,30,36,0.04);
+      border-left: 2px solid #E31E24; border-right: 2px solid #E31E24; border-bottom: 2px solid #E31E24;
+    }
+    .compare-cta-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 12px 24px; transition: all 0.1s linear;
+    }
+    .compare-cta-link.outline { color: #fff; border: 1px solid rgba(255,255,255,0.10); }
+    .compare-cta-link.outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.03); }
+    .compare-cta-link.red-btn { background: #E31E24; color: #fff; }
+    .compare-cta-link.red-btn:hover { background: #B8181D; }
+
+    /* ============================================================
+       ROI SECTION
+    ============================================================ */
+    .roi-section { padding: 100px 0; }
+    .roi-header { text-align: center; margin-bottom: 64px; }
+    .roi-intro {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.45); max-width: 600px; margin: 16px auto 0;
+    }
+    .roi-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 64px;
+    }
+    @media (max-width: 900px) { .roi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px)  { .roi-grid { grid-template-columns: 1fr; } }
+    .roi-card {
+      background: #111113; padding: 36px 28px;
+      border: 2px solid transparent; transition: all 0.1s linear;
+    }
+    .roi-card.wellcore { background: rgba(227,30,36,0.05); border: 2px solid #E31E24; }
+    .roi-card:not(.wellcore):hover { background: #1a1a1d; }
+    .roi-card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); margin-bottom: 16px;
+    }
+    .roi-card.wellcore .roi-card-label { color: #E31E24; }
+    .roi-card-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+      letter-spacing: 1px; color: #fff; margin-bottom: 6px;
+    }
+    .roi-card-price {
+      font-family: 'Bebas Neue', sans-serif; font-size: 48px;
+      line-height: 1; color: rgba(255,255,255,0.25); margin-bottom: 20px;
+    }
+    .roi-card.wellcore .roi-card-price { color: #E31E24; }
+    .roi-card-includes {
+      list-style: none; padding: 0; margin: 0 0 20px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .roi-card-includes li {
+      font-size: 12px; color: rgba(255,255,255,0.45);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .roi-card-includes li::before {
+      content: ''; width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(255,255,255,0.18); flex-shrink: 0;
+    }
+    .roi-card.wellcore .roi-card-includes li::before { background: #00D9FF; }
+    .roi-verdict {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 8px 14px; display: inline-block;
+    }
+    .roi-verdict.bad  { color: rgba(255,80,80,0.7);  background: rgba(255,80,80,0.06);  border: 1px solid rgba(255,80,80,0.15); }
+    .roi-verdict.ok   { color: rgba(255,200,80,0.8); background: rgba(255,200,80,0.06); border: 1px solid rgba(255,200,80,0.15); }
+    .roi-verdict.best { color: #00D9FF; background: rgba(0,217,255,0.10); border: 1px solid rgba(0,217,255,0.2); }
+    .roi-callout {
+      background: #111113; border: 1px solid rgba(255,255,255,0.10);
+      border-left: 4px solid #00D9FF;
+      padding: 32px 40px; display: flex;
+      align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
+    }
+    .roi-callout-text { font-size: 22px; font-weight: 300; color: #fff; max-width: 640px; line-height: 1.5; }
+    .roi-callout-text strong { color: #00D9FF; font-weight: 700; }
+    .roi-callout-stat { text-align: center; flex-shrink: 0; }
+    .roi-callout-stat-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 1; color: #00D9FF;
+    }
+    .roi-callout-stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-top: 4px;
+    }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    .testimonials-section {
+      padding: 100px 0; background: #111113;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .testimonials-header { text-align: center; margin-bottom: 64px; }
+    .testimonials-tabs {
+      display: flex; justify-content: center;
+      border: 1px solid rgba(255,255,255,0.06); margin-bottom: 48px;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .t-tab {
+      flex: 1; padding: 12px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); background: transparent;
+      border: none; border-right: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer; transition: all 0.1s linear;
+    }
+    .t-tab:last-child { border-right: none; }
+    .t-tab.active { background: #E31E24; color: #fff; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 960px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .testimonials-grid { grid-template-columns: 1fr; } }
+    .t-panel { display: none; }
+    .t-panel.active { display: grid; grid-template-columns: inherit; gap: inherit; }
+    .testimonial-card {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+      padding: 32px; display: flex; flex-direction: column; gap: 20px;
+      transition: border-color 0.1s linear;
+    }
+    .testimonial-card:hover { border-color: rgba(255,255,255,0.10); }
+    .t-stars { display: flex; gap: 4px; font-size: 12px; color: #f5a623; }
+    .t-quote {
+      font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.85);
+      line-height: 1.7; flex: 1; font-style: italic;
+    }
+    .t-result {
+      background: rgba(0,217,255,0.10); border: 1px solid rgba(0,217,255,0.15);
+      padding: 10px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .t-author { display: flex; align-items: center; gap: 14px; }
+    .t-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #1a1a1d; border: 1px solid rgba(255,255,255,0.10);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: #fff; flex-shrink: 0;
+    }
+    .t-name { font-size: 14px; font-weight: 600; color: #fff; }
+    .t-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-top: 2px;
+    }
+    .t-plan-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 3px 10px; border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.18); margin-top: 4px; display: inline-block;
+    }
+    .t-plan-badge.red {
+      border-color: rgba(227,30,36,0.3); color: #E31E24; background: rgba(227,30,36,0.10);
+    }
+
+    /* ============================================================
+       GUARANTEE
+    ============================================================ */
+    .guarantee-section { padding: 100px 0; }
+    .guarantee-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    @media (max-width: 860px) { .guarantee-inner { grid-template-columns: 1fr; gap: 48px; } }
+    .guarantee-visual {
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .guarantee-circle {
+      width: 280px; height: 280px; border: 2px solid #00D9FF; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; position: relative;
+    }
+    .guarantee-circle::before {
+      content: ''; position: absolute; inset: 12px;
+      border: 1px solid rgba(0,217,255,0.15); border-radius: 50%;
+    }
+    .guarantee-circle-text {
+      font-family: 'Bebas Neue', sans-serif; font-size: 32px;
+      letter-spacing: 1px; color: #fff; text-align: center; line-height: 1.1;
+    }
+    .guarantee-circle-sub {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+    }
+    .guarantee-content h2 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 52px;
+      line-height: 0.95; letter-spacing: 1px; color: #fff; margin-bottom: 20px;
+    }
+    .guarantee-content p {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.45); line-height: 1.75; margin-bottom: 16px;
+    }
+    .guarantee-content p strong { color: #fff; font-weight: 500; }
+    .guarantee-trust-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
+    .trust-badge {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 18px; background: #111113; border: 1px solid rgba(255,255,255,0.10);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); transition: border-color 0.1s linear;
+    }
+    .trust-badge:hover { border-color: rgba(255,255,255,0.2); }
+
+    /* ============================================================
+       FAQ
+    ============================================================ */
+    .faq-section {
+      padding: 100px 0; background: #111113;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .faq-header { text-align: center; margin-bottom: 64px; }
+    .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .faq-item:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+    .faq-question {
+      width: 100%; background: none; border: none; padding: 24px 0;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; cursor: pointer; text-align: left;
+    }
+    .faq-question-text { font-size: 16px; font-weight: 500; color: #fff; line-height: 1.5; }
+    .faq-icon {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(255,255,255,0.10);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 18px; color: rgba(255,255,255,0.45);
+      transition: all 0.1s linear;
+    }
+    .faq-item.open .faq-icon {
+      background: #E31E24; border-color: #E31E24; color: #fff; transform: rotate(45deg);
+    }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-answer-inner {
+      padding: 0 0 24px; font-size: 15px; font-weight: 300;
+      color: rgba(255,255,255,0.45); line-height: 1.75;
+    }
+    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-answer-inner a { color: #E31E24; text-decoration: underline; }
+    .faq-answer-inner strong { color: #fff; font-weight: 500; }
+
+    /* ============================================================
+       FINAL CTA
+    ============================================================ */
+    .final-cta-section {
+      padding: 120px 0; text-align: center; position: relative; overflow: hidden;
+    }
+    .final-cta-section::before {
+      content: ''; position: absolute; bottom: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(227,30,36,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .final-cta-eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-bottom: 24px;
+    }
+    .final-cta-h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 8vw, 96px); line-height: 0.95;
+      letter-spacing: 2px; color: #fff; margin-bottom: 16px;
+    }
+    .final-cta-h2 span { color: #E31E24; }
+    .final-cta-sub {
+      font-size: 17px; font-weight: 300;
+      color: rgba(255,255,255,0.45); max-width: 520px;
+      margin: 0 auto 48px; line-height: 1.7;
+    }
+    .final-cta-buttons {
+      display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+    }
+    .btn-primary-lg {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #E31E24; color: #fff;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; padding: 20px 40px;
+      border: 4px solid #E31E24; transition: all 0.1s linear;
+    }
+    .btn-primary-lg:hover { background: #B8181D; border-color: #B8181D; }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: transparent; color: #fff;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      letter-spacing: 2px; text-transform: uppercase; padding: 20px 40px;
+      border: 4px solid rgba(255,255,255,0.15); transition: all 0.1s linear;
+    }
+    .btn-wa:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.03); }
+    .final-cta-reassure {
+      margin-top: 32px;
+      display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap;
+    }
+    .final-cta-reassure span {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer { background: #050505; border-top: 1px solid rgba(255,255,255,0.04); padding: 80px 0 40px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+      padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+    @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-logo-text {
+      font-family: 'Bebas Neue', sans-serif; font-size: 36px;
+      letter-spacing: 2px; color: #fff; margin-bottom: 12px;
+    }
+    .footer-tagline {
+      font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.45);
+      line-height: 1.6; margin-bottom: 24px; max-width: 260px;
+    }
+    .footer-social { display: flex; gap: 12px; }
+    .footer-social a {
+      width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.10);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.45); font-size: 12px; font-weight: 700;
+      transition: all 0.1s linear;
+    }
+    .footer-social a:hover { border-color: #E31E24; color: #E31E24; }
+    .footer-col-title {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-size: 14px; color: rgba(255,255,255,0.45); transition: color 0.1s linear; }
+    .footer-links a:hover { color: #fff; }
+    .footer-bottom {
+      padding-top: 32px; display: flex;
+      align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.2);
+    }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.2);
+      transition: color 0.1s linear;
+    }
+    .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+    /* Scroll top */
+    #scrollTop {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 44px; height: 44px; background: #E31E24; color: #fff;
+      border: none; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; cursor: pointer; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s; z-index: 500;
+    }
+    #scrollTop.visible { opacity: 1; pointer-events: auto; }
+    #scrollTop:hover { background: #B8181D; }
+
+    /* Misc */
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .hero-planes { padding: 80px 0 60px; }
+      .hero-h1 { font-size: clamp(56px, 14vw, 80px); }
+      .hero-sub { font-size: 15px; margin-bottom: 40px; }
+      .compare-section { padding: 60px 0; }
+      .compare-ctas { min-width: unset; grid-template-columns: 1fr; }
+      .roi-section { padding: 60px 0; }
+      .roi-grid { grid-template-columns: repeat(2, 1fr); }
+      .roi-callout { flex-direction: column; text-align: center; padding: 24px 20px; }
+      .testimonials-section { padding: 60px 0; }
+      .testimonials-tabs { max-width: 100%; }
+      .t-tab { padding: 10px 12px; font-size: 8px; }
+      .guarantee-section { padding: 60px 0; }
+      .guarantee-inner { grid-template-columns: 1fr; gap: 40px; }
+      .faq-section { padding: 60px 0; }
+      .final-cta-section { padding: 80px 0; }
+      .final-cta-buttons { flex-direction: column; align-items: center; }
+      .btn-primary-lg, .btn-wa { width: 100%; justify-content: center; }
+      footer { padding: 60px 0 32px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: 12px; }
+    }
+    @media (max-width: 576px) {
+      body { font-size: 17px; line-height: 1.75; }
+      .hero-sub { font-size: 16px; }
+      .compare-table tbody td { font-size: 15px; padding: 14px 16px; }
+      .roi-card-val { font-size: 28px; }
+      .t-body { font-size: 15px; }
+      .t-name { font-size: 15px; }
+      .faq-q { font-size: 15px; min-height: 48px; }
+      .btn-primary-lg, .btn-wa { font-size: 13px; padding: 16px 20px; min-height: 48px; }
+    }
+    @media (max-width: 480px) {
+      .hero-planes { padding: 60px 0 48px; }
+      .hero-h1 { font-size: clamp(48px, 13vw, 64px); }
+      .roi-grid { grid-template-columns: 1fr; }
+      .guarantee-circle { width: 200px; height: 200px; }
+      .guarantee-circle-text { font-size: 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       PRELOADER v5
+  ============================================================ -->
+  <div id="v5-preloader" class="v5-preloader">
+    <div class="v5-preloader-logo">WELL<span>CORE</span></div>
+    <div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="v5-cursor" id="v5cursor">
+    <div class="v5-cursor-dot"></div>
+    <div class="v5-cursor-ring"></div>
+  </div>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar" class="solid" data-v5-reveal>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:40px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+        <span style="display:none;font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:#fff;">WELLCORE</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="metodo.html">Metodo</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="proceso.html">Proceso</a></li>
+        <li><a href="planes.html" class="active">Planes</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="blog/">Blog</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="coaches.html" style="color:rgba(227,30,36,0.7);position:relative;">Coaches<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
+      </ul>
+      <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:#E31E24;border:2px solid #E31E24;padding:6px 12px;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='#B8181D';this.style.borderColor='#B8181D'" onmouseout="this.style.background='#E31E24';this.style.borderColor='#E31E24'">MI CUENTA</a>
+      <a href="pagar.html" class="nav-cta">Empezar &rarr;</a>
+      <button class="nav-hamburger" id="navToggle">&#9776;</button>
+    </div>
+  </nav>
+  <div id="navMobileMenu">
+    <ul>
+      <li><a href="metodo.html" class="nav-mobile-link">Metodo</a></li>
+      <li><a href="nosotros.html" class="nav-mobile-link">Nosotros</a></li>
+      <li><a href="proceso.html" class="nav-mobile-link">Proceso</a></li>
+      <li><a href="planes.html" class="nav-mobile-link" style="color:#fff;">Planes</a></li>
+      <li><a href="tienda.html" class="nav-mobile-link">Tienda</a></li>
+      <li><a href="blog/" class="nav-mobile-link">Blog</a></li>
+      <li><a href="faq.html" class="nav-mobile-link">FAQ</a></li>
+      <li><a href="coaches.html" class="nav-mobile-link" style="color:#E31E24;">Coaches</a></li>
+      <li><a href="login.html" class="nav-mobile-link" style="color:#fff;background:#E31E24;padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;">MI CUENTA</a></li>
+    </ul>
+    <a href="pagar.html" class="nav-mobile-cta">Empezar &rarr;</a>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero-planes v5-grid-bg">
+    <div class="section-wrap">
+      <div class="hero-planes-inner">
+        <p class="hero-eyebrow" data-aos="fade-down" data-aos-duration="600">// ELIGE TU PLAN &mdash; EMPIEZA EN 48H</p>
+        <h1 class="hero-h1" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+          PLANES Y<br><span>PRECIOS.</span>
+        </h1>
+        <p class="hero-sub" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
+          Sin contratos de largo plazo. Sin suplementos obligatorios. Solo resultados reales respaldados por ciencia aplicada.
+        </p>
+        <div class="trust-strip" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+          <div class="trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Pago seguro Wompi</div>
+          <div class="trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Sin contrato</div>
+          <div class="trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Entrega en 48h</div>
+          <div class="trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Soporte real</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BILLING TOGGLE
+  ============================================================ -->
+  <div class="billing-toggle-wrap" data-aos="fade-up" data-aos-duration="500">
+    <div class="billing-toggle">
+      <span class="billing-toggle-label active" id="toggleMonthly" onclick="setBilling('monthly')" role="button" tabindex="0">Mensual</span>
+      <span class="billing-toggle-label" id="toggleAnnual" onclick="setBilling('annual')" role="button" tabindex="0">
+        Anual <span class="billing-save-badge">-17%</span>
+      </span>
+    </div>
+    <p class="annual-reveal-note" id="annualRevealNote" style="display:none;">
+      Plan Anual = 10 meses &mdash; <strong>2 meses GRATIS</strong>
+    </p>
+  </div>
+
+  <!-- ============================================================
+       PRICING CARDS v5
+  ============================================================ -->
+  <section class="plans-section">
+    <div class="section-wrap">
+      <div class="pricing-grid">
+
+        <!-- ESENCIAL -->
+        <div class="pricing-card" data-v5-reveal data-v5-delay="1" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+          <div class="pc-plan">PLAN ESENCIAL</div>
+          <div class="pc-name">ESENCIAL</div>
+          <div class="pc-desc">Entrena con proposito. Primer paso real hacia resultados medibles.</div>
+          <div class="pc-price">
+            <span class="pc-currency">$</span>
+            <span class="pc-amount" id="price-esencial">399.000</span>
+            <span class="pc-period">/mes</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-esencial">Facturado mensualmente</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
+          <hr class="pc-divider">
+          <p class="pc-features-label">Incluye</p>
+          <ul class="pc-features">
+            <li><span class="pc-check">&#10003;</span> Plan de entrenamiento personalizado</li>
+            <li><span class="pc-check">&#10003;</span> Portal de cliente con acceso 24/7</li>
+            <li><span class="pc-check">&#10003;</span> Seguimiento de metricas y progreso</li>
+            <li><span class="pc-check">&#10003;</span> Soporte por mensaje &mdash; respuesta 48h</li>
+            <li><span class="pc-check">&#10003;</span> Ajuste mensual de programa</li>
+            <li><span class="pc-check">&#10003;</span> Biblioteca de ejercicios con video</li>
+            <li class="pc-inactive"><span class="pc-x">&#10005;</span> Plan nutricional personalizado</li>
+            <li class="pc-inactive"><span class="pc-x">&#10005;</span> Guia de habitos y estilo de vida</li>
+            <li class="pc-inactive"><span class="pc-x">&#10005;</span> Check-in semanal con coach</li>
+          </ul>
+          <a href="pagar.html?plan=esencial" class="pc-cta"><span>Empezar con Esencial &rarr;</span></a>
+          <p class="pc-footer-note">// Cancela cuando quieras &mdash; sin penalidad</p>
+        </div>
+
+        <!-- METODO (FEATURED) -->
+        <div class="pricing-card pricing-card-featured" data-v5-reveal data-v5-delay="2" data-aos="fade-up" data-aos-duration="600" data-aos-delay="120">
+          <div class="pc-popular-bar">&#9733; El plan mas elegido por nuestros clientes</div>
+          <div class="pc-plan">PLAN METODO</div>
+          <div class="pc-name">METODO</div>
+          <div class="pc-desc">Entrenamiento + nutricion + habitos. El sistema completo para resultados reales.</div>
+          <div class="pc-price">
+            <span class="pc-currency" style="color:#E31E24;">$</span>
+            <span class="pc-amount" id="price-metodo">504.000</span>
+            <span class="pc-period">/mes</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-metodo">Facturado mensualmente</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
+          <hr class="pc-divider">
+          <div class="pc-social-proof">
+            <span style="color:#00D9FF;font-weight:700;">&#10003;</span>
+            <span>Elegido por el <strong>+60%</strong> de nuestros clientes activos</span>
+          </div>
+          <p class="pc-features-label">Todo lo de Esencial, mas:</p>
+          <ul class="pc-features">
+            <li><span class="pc-check">&#10003;</span> Plan nutricional 100% personalizado</li>
+            <li><span class="pc-check">&#10003;</span> Guia de habitos y estilo de vida</li>
+            <li><span class="pc-check">&#10003;</span> Macros y calorias ajustadas a tu meta</li>
+            <li><span class="pc-check">&#10003;</span> Recetas adaptadas a tus preferencias</li>
+            <li><span class="pc-check">&#10003;</span> Soporte por mensaje &mdash; respuesta 24h</li>
+            <li><span class="pc-check">&#10003;</span> Ajuste quincenal de programa</li>
+            <li><span class="pc-check">&#10003;</span> Reporte mensual de progreso</li>
+            <li class="pc-inactive"><span class="pc-x">&#10005;</span> Check-in semanal en vivo con coach</li>
+            <li class="pc-inactive"><span class="pc-x">&#10005;</span> Revision mensual por videollamada</li>
+          </ul>
+          <a href="pagar.html?plan=metodo" class="pc-cta"><span>Empezar con Metodo &rarr;</span></a>
+          <p class="pc-footer-note">// Cancela cuando quieras &mdash; sin penalidad</p>
+        </div>
+
+        <!-- ELITE -->
+        <div class="pricing-card" data-v5-reveal data-v5-delay="3" data-aos="fade-up" data-aos-duration="600" data-aos-delay="240">
+          <div class="pc-plan">PLAN ELITE</div>
+          <div class="pc-name">ELITE</div>
+          <div class="pc-desc">Atencion total. Resultados sin excusas. Para quienes exigen lo mejor.</div>
+          <div class="pc-price">
+            <span class="pc-currency">$</span>
+            <span class="pc-amount" id="price-elite">630.000</span>
+            <span class="pc-period">/mes</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-elite">Facturado mensualmente</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
+          <hr class="pc-divider">
+          <p class="pc-features-label">Todo lo de Metodo, mas:</p>
+          <ul class="pc-features">
+            <li><span class="pc-check">&#10003;</span> Check-in semanal en vivo con tu coach</li>
+            <li><span class="pc-check">&#10003;</span> Revision mensual por videollamada</li>
+            <li><span class="pc-check">&#10003;</span> Soporte prioritario &mdash; respuesta 8h</li>
+            <li><span class="pc-check">&#10003;</span> Ajuste semanal de programa y nutricion</li>
+            <li><span class="pc-check">&#10003;</span> Analisis avanzado de composicion corporal</li>
+            <li><span class="pc-check">&#10003;</span> Estrategia de suplementacion personalizada</li>
+            <li><span class="pc-check">&#10003;</span> Plan de viaje y contingencia</li>
+            <li><span class="pc-check">&#10003;</span> Linea directa WhatsApp con el coach</li>
+          </ul>
+          <a href="pagar.html?plan=elite" class="pc-cta"><span>Empezar con Elite &rarr;</span></a>
+          <p class="pc-footer-note">// Cancela cuando quieras &mdash; sin penalidad</p>
+        </div>
+
+      </div><!-- /pricing-grid -->
+
+      <!-- Annual savings note -->
+      <p id="annual-savings-note">
+        <span style="margin-right:8px;font-weight:700;">//</span>
+        Con el plan anual ahorras: Esencial $798.000 | Metodo $1.008.000 | Elite $1.260.000 COP
+      </p>
+
+    </div><!-- /section-wrap -->
+  </section>
+
+  <!-- ============================================================
+       COMPARISON TABLE
+  ============================================================ -->
+  <section class="compare-section">
+    <div class="section-wrap">
+      <div class="compare-header" data-aos="fade-up">
+        <p class="section-label">// Comparacion detallada</p>
+        <h2 class="section-title">TODO LO QUE<br>OBTIENES.</h2>
+        <p class="section-sub">Cada detalle importa. Aqui estan todas las diferencias entre planes.</p>
+      </div>
+
+      <div class="compare-table-wrap" data-aos="fade-up" data-aos-delay="100">
+        <table class="compare-table" role="table" aria-label="Comparacion de planes">
+          <thead>
+            <tr>
+              <th scope="col" style="width:40%;">Caracteristica</th>
+              <th scope="col" style="width:20%;">
+                ESENCIAL
+                <span class="th-price">$399.000 COP/mes</span>
+              </th>
+              <th scope="col" class="col-featured" style="width:20%;">
+                METODO
+                <span class="th-badge">Mas popular</span>
+                <span class="th-price">$504.000 COP/mes</span>
+              </th>
+              <th scope="col" style="width:20%;">
+                ELITE
+                <span class="th-price">$630.000 COP/mes</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cat-row"><td colspan="4">Entrenamiento</td></tr>
+            <tr>
+              <td>Plan de entrenamiento personalizado</td>
+              <td><span class="c-yes">&#10003;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Biblioteca de ejercicios con video</td>
+              <td><span class="c-yes">&#10003;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Frecuencia de ajuste del programa</td>
+              <td><span class="c-mono">Mensual</span></td>
+              <td class="col-featured"><span class="c-mono">Quincenal</span></td>
+              <td><span class="c-mono">Semanal</span></td>
+            </tr>
+            <tr>
+              <td>Plan de contingencia (lesion / viaje)</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-no">&mdash;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+
+            <tr class="cat-row"><td colspan="4">Nutricion</td></tr>
+            <tr>
+              <td>Plan nutricional personalizado</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Calculo de macros y calorias</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Recetas adaptadas a tus preferencias</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Estrategia de suplementacion personalizada</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-no">&mdash;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+
+            <tr class="cat-row"><td colspan="4">Habitos y estilo de vida</td></tr>
+            <tr>
+              <td>Guia de habitos y mindset</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Seguimiento de sueno y estres</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+
+            <tr class="cat-row"><td colspan="4">Seguimiento y soporte</td></tr>
+            <tr>
+              <td>Portal de cliente 24/7</td>
+              <td><span class="c-yes">&#10003;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Seguimiento de metricas y progreso</td>
+              <td><span class="c-yes">&#10003;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Reporte mensual de progreso</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-yes">&#10003;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Tiempo de respuesta soporte</td>
+              <td><span class="c-mono">48h</span></td>
+              <td class="col-featured"><span class="c-mono">24h</span></td>
+              <td><span class="c-mono" style="color:#00D9FF;">8h prioritario</span></td>
+            </tr>
+            <tr>
+              <td>Check-in semanal con coach (en vivo)</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-no">&mdash;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Revision mensual por videollamada</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-no">&mdash;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Linea directa WhatsApp con el coach</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-no">&mdash;</span></td>
+              <td><span class="c-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td style="border-bottom:none;"></td>
+              <td style="border-bottom:none;"></td>
+              <td class="col-featured" style="border-bottom:2px solid #E31E24;"></td>
+              <td style="border-bottom:none;"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="compare-ctas">
+          <div class="compare-cta-cell">
+            <a href="pagar.html?plan=esencial" class="compare-cta-link outline">Esencial &rarr;</a>
+          </div>
+          <div class="compare-cta-cell col-featured-wrap">
+            <a href="pagar.html?plan=metodo" class="compare-cta-link red-btn">Metodo &mdash; Mas popular &rarr;</a>
+          </div>
+          <div class="compare-cta-cell">
+            <a href="pagar.html?plan=elite" class="compare-cta-link outline">Elite &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ROI SECTION
+  ============================================================ -->
+  <section class="roi-section">
+    <div class="section-wrap">
+      <div class="roi-header" data-aos="fade-up">
+        <p class="section-label">// Contexto de valor</p>
+        <h2 class="section-title">&#191;CUANTO VALE<br>TU SALUD?</h2>
+        <p class="roi-intro">
+          Antes de decir "es caro", compara lo que realmente estas pagando cuando no usas WellCore &mdash; y los resultados que no estas obteniendo.
+        </p>
+      </div>
+
+      <div class="roi-grid" data-aos="fade-up" data-aos-delay="100">
+        <div class="roi-card wellcore">
+          <p class="roi-card-label">WellCore &mdash; Recomendado</p>
+          <h3 class="roi-card-name">METODO</h3>
+          <div class="roi-card-price">$504.000 COP</div>
+          <ul class="roi-card-includes">
+            <li>Entrenamiento personalizado</li>
+            <li>Nutricion + macros + recetas</li>
+            <li>Guia de habitos completa</li>
+            <li>Soporte 24h real</li>
+            <li>Seguimiento y progreso</li>
+            <li>Coach certificado</li>
+          </ul>
+          <span class="roi-verdict best"><span style="margin-right:6px;">&#9733;</span> Mejor relacion valor / precio</span>
+        </div>
+        <div class="roi-card">
+          <p class="roi-card-label">Alternativa tradicional</p>
+          <h3 class="roi-card-name">GYM + PT</h3>
+          <div class="roi-card-price">~$300</div>
+          <ul class="roi-card-includes">
+            <li>Membresia gym: ~$60/mes</li>
+            <li>PT presencial: 4 sesiones ~$200</li>
+            <li>Sin nutricion incluida</li>
+            <li>Sin seguimiento online</li>
+            <li>Solo mientras estes en el gym</li>
+          </ul>
+          <span class="roi-verdict bad"><span style="margin-right:6px;">&times;</span> 2.5x mas caro, menos resultados</span>
+        </div>
+        <div class="roi-card">
+          <p class="roi-card-label">Lo que usa la mayoria</p>
+          <h3 class="roi-card-name">APP GENERICA</h3>
+          <div class="roi-card-price">~$15</div>
+          <ul class="roi-card-includes">
+            <li>Programas predefinidos</li>
+            <li>Sin personalizacion real</li>
+            <li>Sin soporte humano</li>
+            <li>Sin ajuste por progreso</li>
+            <li>Sin ciencia aplicada</li>
+          </ul>
+          <span class="roi-verdict ok"><span style="margin-right:6px;">!</span> Barato &mdash; pero sin resultados</span>
+        </div>
+        <div class="roi-card">
+          <p class="roi-card-label">Otra opcion popular</p>
+          <h3 class="roi-card-name">COACH ONLINE GENERICO</h3>
+          <div class="roi-card-price">~$80</div>
+          <ul class="roi-card-includes">
+            <li>Plan generico descargable</li>
+            <li>Soporte variable / inconsistente</li>
+            <li>Sin nutricion o incluida parcialmente</li>
+            <li>Sin metodologia documentada</li>
+            <li>Resultados impredecibles</li>
+          </ul>
+          <span class="roi-verdict ok"><span style="margin-right:6px;">?</span> Mejor que nada, pero sin sistema</span>
+        </div>
+      </div>
+
+      <div class="roi-callout" data-aos="fade-up" data-aos-delay="150">
+        <p class="roi-callout-text">
+          Con WellCore <strong>ahorras hasta $180 USD al mes</strong> comparado con gym + PT, y obtienes algo que esas opciones no dan: un sistema completo de entrenamiento, nutricion y habitos bajo un mismo techo &mdash; con seguimiento real.
+        </p>
+        <div class="roi-callout-stat">
+          <div class="roi-callout-stat-num">$180</div>
+          <div class="roi-callout-stat-label">Ahorro mensual vs alternativas</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS
+  ============================================================ -->
+  <section class="testimonials-section">
+    <div class="section-wrap">
+      <div class="testimonials-header" data-aos="fade-up">
+        <p class="section-label">// Resultados reales</p>
+        <h2 class="section-title">LO QUE DICEN<br>NUESTROS CLIENTES.</h2>
+        <p class="section-sub">Personas reales. Resultados medibles. Sin filtros.</p>
+      </div>
+
+      <div class="testimonials-tabs" data-aos="fade-up" data-aos-delay="100">
+        <button class="t-tab active" onclick="switchTab('metodo', this)">Plan Metodo</button>
+        <button class="t-tab" onclick="switchTab('esencial', this)">Plan Esencial</button>
+        <button class="t-tab" onclick="switchTab('elite', this)">Plan Elite</button>
+      </div>
+
+      <!-- METODO -->
+      <div class="t-panel active testimonials-grid" id="tab-metodo" data-aos="fade-up" data-aos-delay="150">
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"En 3 meses perdi 9kg de grasa sin perder musculo. Lo que mas me sorprendio fue tener un plan de nutricion que realmente se adaptaba a mi vida &mdash; no era una dieta de revista, era MI dieta."</p>
+          <div class="t-result">&#8595; -9 kg grasa en 12 semanas</div>
+          <div class="t-author">
+            <div class="t-avatar">C</div>
+            <div>
+              <div class="t-name">Carlos M.</div>
+              <div class="t-meta">Bogota, Colombia</div>
+              <span class="t-plan-badge red">Plan Metodo</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"Llevo 6 meses con WellCore Metodo y ya no me imagino sin el. La guia de habitos fue lo que cambio todo &mdash; no solo veo el gym diferente, veo la vida diferente. Gane 5kg de musculo limpio."</p>
+          <div class="t-result">&#8593; +5 kg musculo en 24 semanas</div>
+          <div class="t-author">
+            <div class="t-avatar">A</div>
+            <div>
+              <div class="t-name">Andrea P.</div>
+              <div class="t-meta">Medellin, Colombia</div>
+              <span class="t-plan-badge red">Plan Metodo</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"Probe tres coaches antes de WellCore. La diferencia es que aqui tienes un sistema real &mdash; todo conectado: entrenamiento, comer bien y mentalidad. En 10 semanas me olvide del rebote que siempre tenia."</p>
+          <div class="t-result"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Sin rebote &mdash; 10 semanas de progreso constante</div>
+          <div class="t-author">
+            <div class="t-avatar">J</div>
+            <div>
+              <div class="t-name">Julian R.</div>
+              <div class="t-meta">Cali, Colombia</div>
+              <span class="t-plan-badge red">Plan Metodo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESENCIAL -->
+      <div class="t-panel testimonials-grid" id="tab-esencial">
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"Empece con Esencial porque queria probar sin compromiso grande. Fue la mejor decision &mdash; en 8 semanas ya tenia una base de fuerza que nunca habia logrado en 2 anos yendo al gym solo."</p>
+          <div class="t-result">&#8593; Fuerza x2 en sentadilla en 8 semanas</div>
+          <div class="t-author">
+            <div class="t-avatar">D</div>
+            <div>
+              <div class="t-name">Diego F.</div>
+              <div class="t-meta">Barranquilla, Colombia</div>
+              <span class="t-plan-badge">Plan Esencial</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"El plan Esencial es perfecto para quien empieza. El programa esta bien explicado, los ejercicios tienen videos y cuando tenia dudas me respondian rapido. Ya voy a pasarme al Metodo."</p>
+          <div class="t-result"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> -6 kg en 3 meses desde cero</div>
+          <div class="t-author">
+            <div class="t-avatar">L</div>
+            <div>
+              <div class="t-name">Laura G.</div>
+              <div class="t-meta">Bucaramanga, Colombia</div>
+              <span class="t-plan-badge">Plan Esencial</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"Llevo 4 meses en Esencial. Mi cuerpo cambio mas en estos 4 meses que en 4 anos siguiendo rutinas de YouTube. La diferencia es que aqui el plan es para MI &mdash; mis limitaciones, mi equipo, mi objetivo."</p>
+          <div class="t-result">&#8595; -7 kg composicion corporal mejorada</div>
+          <div class="t-author">
+            <div class="t-avatar">M</div>
+            <div>
+              <div class="t-name">Miguel A.</div>
+              <div class="t-meta">Pereira, Colombia</div>
+              <span class="t-plan-badge">Plan Esencial</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ELITE -->
+      <div class="t-panel testimonials-grid" id="tab-elite">
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"Con Elite tengo una atencion que nunca habia experimentado. Mi coach conoce cada detalle &mdash; como duermo, como como, como me siento. Los ajustes semanales hacen que siempre este progresando sin estancarme."</p>
+          <div class="t-result">&#8593; +8 kg musculo limpio en 5 meses</div>
+          <div class="t-author">
+            <div class="t-avatar">S</div>
+            <div>
+              <div class="t-name">Sebastian V.</div>
+              <div class="t-meta">Bogota, Colombia</div>
+              <span class="t-plan-badge red">Plan Elite</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"Soy muy exigente con lo que pago. El plan Elite lo justifica con creces &mdash; la videollamada mensual y el check-in semanal cambian todo. Siento que tengo un equipo detras de mi, no solo una app."</p>
+          <div class="t-result"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Competencia fitness en 6 meses de Elite</div>
+          <div class="t-author">
+            <div class="t-avatar">V</div>
+            <div>
+              <div class="t-name">Valentina C.</div>
+              <div class="t-meta">Medellin, Colombia</div>
+              <span class="t-plan-badge red">Plan Elite</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-quote">"Tenia una lesion en el hombro y ningun coach online sabia como manejarla. En WellCore Elite me hicieron un plan de contingencia completo &mdash; segui progresando mientras me recuperaba. Eso no tiene precio."</p>
+          <div class="t-result"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Progreso continuo durante recuperacion</div>
+          <div class="t-author">
+            <div class="t-avatar">R</div>
+            <div>
+              <div class="t-name">Roberto L.</div>
+              <div class="t-meta">Cali, Colombia</div>
+              <span class="t-plan-badge red">Plan Elite</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GUARANTEE
+  ============================================================ -->
+  <section class="guarantee-section">
+    <div class="section-wrap">
+      <div class="guarantee-inner">
+        <div class="guarantee-visual" data-aos="fade-right" data-aos-duration="700">
+          <div class="guarantee-circle">
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#00D9FF;line-height:1;">//</span>
+            <div class="guarantee-circle-text">30 DIAS</div>
+            <div class="guarantee-circle-sub">Seguimiento garantizado</div>
+          </div>
+        </div>
+        <div class="guarantee-content" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
+          <p class="section-label">// Nuestra promesa</p>
+          <h2>&#191;QUE PASA SI<br>NO FUNCIONA?</h2>
+          <p>
+            Nuestro compromiso es simple: <strong>si despues de 30 dias de seguir el programa al pie de la letra no ves progreso medible, revisamos el programa contigo.</strong> Punto.
+          </p>
+          <p>
+            No escondemos esa garantia en letras pequenas. La ofrecemos abiertamente porque tenemos confianza total en el sistema WellCore &mdash; basado en evidencia cientifica, no en modas.
+          </p>
+          <p style="font-size:13px;">
+            * Para aplicar la garantia: debe haberse completado minimo el 80% del programa durante 30 dias continuos y presentar registro de seguimiento en el portal.
+          </p>
+          <div class="guarantee-trust-row">
+            <div class="trust-badge"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Pago seguro Wompi</div>
+            <div class="trust-badge"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> SSL encriptado</div>
+            <div class="trust-badge"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Soporte WhatsApp</div>
+            <div class="trust-badge"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Sin contrato</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FAQ
+  ============================================================ -->
+  <section class="faq-section">
+    <div class="section-wrap">
+      <div class="faq-header" data-aos="fade-up">
+        <p class="section-label">// Preguntas frecuentes</p>
+        <h2 class="section-title">RESOLVEMOS<br>TUS DUDAS.</h2>
+        <p class="section-sub">Las preguntas que todos tienen antes de comprar &mdash; respondidas sin rodeos.</p>
+      </div>
+
+      <div class="faq-list" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="faq-question-text">&#191;Puedo cambiar de plan despues de comenzar?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Si, puedes hacer upgrade o downgrade de plan en cualquier momento. El cambio aplica desde el siguiente ciclo de facturacion. Si subes de Esencial a Metodo, por ejemplo, solo pagas la diferencia prorrateada. Contacta a tu coach o escribe al soporte para gestionarlo.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="faq-question-text">&#191;Como cancelo si decido no continuar?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Sin dramas. Puedes cancelar en cualquier momento desde tu portal de cliente o escribiendonos por WhatsApp. No hay penalidades, no hay formularios de 10 pasos. La cancelacion se hace efectiva al final del periodo pagado y conservas acceso hasta esa fecha.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="faq-question-text">&#191;Hay descuentos por pagos anuales?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Si. Al elegir facturacion anual obtienes <strong>2 meses gratis (17% de descuento)</strong>. Los precios anuales quedan asi: Esencial $3.990.000/ano (vs $4.788.000), Metodo $5.040.000/ano (vs $6.048.000), Elite $6.300.000/ano (vs $7.560.000) COP. Puedes activar la facturacion anual desde el toggle en la parte superior de esta pagina.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="faq-question-text">&#191;Aceptan otras divisas ademas del COP?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Los precios estan fijados en pesos colombianos (COP). Si pagas con tarjeta internacional, el valor se convierte automaticamente con un recargo del 15% por gastos de plataforma y cambio de moneda. Tambien aceptamos PSE, Nequi y Efecty a traves de Wompi (Bancolombia).</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="faq-question-text">&#191;Como recibo mi programa despues de pagar?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">En menos de 48 horas desde que completas el pago, recibes en tu correo un enlace para completar tu formulario de onboarding (datos, objetivos, restricciones, disponibilidad). Con esa informacion, tu coach personaliza el programa y lo sube a tu portal. El plazo maximo de entrega es 48 horas desde que completas el onboarding.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="faq-question-text">&#191;Puedo pausar el plan si viajo o tengo una situacion especial?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Si. Puedes solicitar una pausa de hasta <strong>30 dias por ano</strong>. La pausa congela tu facturacion y cuando regresas, tu plan se ajusta a las nuevas condiciones (viaje, lesion, cambio de equipo). Los clientes del plan Elite tienen incluido un plan de contingencia para estos casos sin necesidad de pausar formalmente.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="faq-question-text">&#191;El precio incluye todo o hay extras que pagar?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">El precio mensual cubre <strong>todo lo descrito en tu plan, sin sorpresas</strong>. No cobramos extra por actualizaciones del programa, por soporte dentro del tiempo de respuesta prometido, ni por acceso al portal. Los unicos gastos adicionales son opcionales: suplementos (nunca son obligatorios) y equipamiento de entrenamiento si no tienes acceso a un gimnasio.</div>
+          </div>
+        </div>
+
+      </div><!-- /faq-list -->
+
+      <div style="text-align:center;margin-top:48px;" data-aos="fade-up" data-aos-delay="200">
+        <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:20px;">&#191;Tienes otra pregunta que no esta aqui?</p>
+        <a href="https://wa.me/573124904720?text=Hola%2C%20tengo%20preguntas%20sobre%20los%20planes%20de%20WellCore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,0.10);padding:14px 28px;transition:all 0.1s linear;" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.10)'">
+          <span style="color:#25d366;font-size:16px;font-weight:700;">WA</span>
+          Preguntanos por WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FINAL CTA
+  ============================================================ -->
+  <section class="final-cta-section">
+    <div class="section-wrap">
+      <p class="final-cta-eyebrow" data-aos="fade-down">&#191;Todavia con dudas?</p>
+      <h2 class="final-cta-h2" data-aos="fade-up" data-aos-delay="100">
+        TU MEJOR VERSION<br>EMPIEZA <span>HOY.</span>
+      </h2>
+      <p class="final-cta-sub" data-aos="fade-up" data-aos-delay="200">
+        El momento perfecto no existe. Pero 48 horas desde ahora, podrias tener ya tu primer programa en manos.
+      </p>
+      <div class="final-cta-buttons" data-aos="fade-up" data-aos-delay="300">
+        <a href="pagar.html?plan=metodo" class="btn-primary-lg">Empezar ahora &rarr;</a>
+        <a href="https://wa.me/573124904720?text=Hola%2C%20quiero%20hablar%20con%20un%20coach%20antes%20de%20decidir" target="_blank" rel="noopener" class="btn-wa">
+          <span style="color:#25d366;font-weight:700;">WA</span>
+          Habla con el coach primero
+        </a>
+      </div>
+      <div class="final-cta-reassure" data-aos="fade-up" data-aos-delay="400">
+        <span><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Sin contrato</span>
+        <span><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Cancela cuando quieras</span>
+        <span><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Resultados en 12 semanas</span>
+        <span><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Pago seguro Wompi</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer data-v5-reveal>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo-text">WELLCORE</div>
+          <p class="footer-tagline">Coaching de entrenamiento y nutricion basado en ciencia. Resultados reales, sin atajos.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/wellcore.fitness/" target="_blank" rel="noopener">IG</a>
+            <a href="https://www.tiktok.com/@wellcore.fitness" target="_blank" rel="noopener">TK</a>
+            <a href="https://www.youtube.com/@Wellcorefitness" target="_blank" rel="noopener">YT</a>
+            <a href="https://wa.me/573124904720" target="_blank" rel="noopener">WA</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Navegacion</p>
+          <ul class="footer-links">
+            <li><a href="metodo.html">El Metodo</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="proceso.html">Proceso</a></li>
+            <li><a href="planes.html">Planes</a></li>
+            <li><a href="coaches.html">Coaches</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Recursos</p>
+          <ul class="footer-links">
+            <li><a href="blog/">Blog</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="tienda.html">Tienda</a></li>
+            <li><a href="proceso.html">Como funciona</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Legal</p>
+          <ul class="footer-links">
+            <li><a href="legal/terminos.html">Terminos de servicio</a></li>
+            <li><a href="legal/privacidad.html">Privacidad</a></li>
+            <li><a href="legal/cookies.html">Cookies</a></li>
+            <li><a href="pagar.html">Empezar</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 WellCore Fitness. Todos los derechos reservados.</span>
+        <div class="footer-legal">
+          <a href="legal/terminos.html">Terminos</a>
+          <a href="legal/privacidad.html">Privacidad</a>
+          <a href="legal/cookies.html">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button id="scrollTop" aria-label="Volver arriba" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+  <!-- WhatsApp float -->
+  <a href="https://wa.me/573124904720" target="_blank" rel="noopener" aria-label="WhatsApp"
+     style="position:fixed;bottom:88px;right:32px;width:44px;height:44px;background:#25d366;display:flex;align-items:center;justify-content:center;z-index:500;font-size:11px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace;letter-spacing:1px;transition:transform 0.1s linear;"
+     onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">WA</a>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/v5-effects.js" defer></script>
+  <script>
+    // AOS Init (v5 settings)
+    AOS.init({ duration: 700, once: true, offset: 30 });
+
+    // --------------------------------------------------------
+    // Navbar scroll state
+    // --------------------------------------------------------
+    (function() {
+      var navbar = document.getElementById('navbar');
+      if (!navbar) return;
+      window.addEventListener('scroll', function() {
+        navbar.classList.toggle('scrolled', window.scrollY > 10);
+      }, { passive: true });
+    })();
+
+    // --------------------------------------------------------
+    // Navbar mobile toggle
+    // --------------------------------------------------------
+    (function() {
+      var toggle = document.getElementById('navToggle');
+      var menu   = document.getElementById('navMobileMenu');
+      if (!toggle || !menu) return;
+      toggle.addEventListener('click', function() {
+        var isOpen = menu.classList.contains('open');
+        menu.classList.toggle('open', !isOpen);
+        toggle.textContent = isOpen ? '\u2630' : '\u2715';
+      });
+    })();
+
+    // --------------------------------------------------------
+    // Scroll-top button
+    // --------------------------------------------------------
+    (function() {
+      var btn = document.getElementById('scrollTop');
+      if (!btn) return;
+      window.addEventListener('scroll', function() {
+        btn.classList.toggle('visible', window.scrollY > 500);
+      }, { passive: true });
+    })();
+
+    // --------------------------------------------------------
+    // Billing toggle: monthly / annual
+    // --------------------------------------------------------
+    var PRICES = {
+      monthly: { esencial: '399.000', metodo: '504.000', elite: '630.000' },
+      annual:  { esencial: '332.500', metodo: '420.000', elite: '525.000' }
+    };
+
+    function setBilling(mode) {
+      document.getElementById('toggleMonthly').classList.toggle('active', mode === 'monthly');
+      document.getElementById('toggleAnnual').classList.toggle('active',  mode === 'annual');
+
+      var savings = { esencial: '$798.000', metodo: '$1.008.000', elite: '$1.260.000' };
+      ['esencial', 'metodo', 'elite'].forEach(function(plan) {
+        var priceEl = document.getElementById('price-' + plan);
+        var noteEl  = document.getElementById('note-' + plan);
+        if (priceEl) priceEl.textContent = PRICES[mode][plan];
+        if (noteEl) {
+          noteEl.textContent = mode === 'monthly'
+            ? 'Facturado mensualmente'
+            : 'Anual \u2014 ahorras ' + savings[plan] + ' COP';
+        }
+      });
+
+      var savingsNote = document.getElementById('annual-savings-note');
+      if (savingsNote) savingsNote.style.display = mode === 'annual' ? 'block' : 'none';
+
+      var annualNote = document.getElementById('annualRevealNote');
+      if (annualNote) annualNote.style.display = mode === 'annual' ? 'block' : 'none';
+    }
+
+    // --------------------------------------------------------
+    // Testimonial tab switcher
+    // --------------------------------------------------------
+    function switchTab(planId, clickedBtn) {
+      document.querySelectorAll('.t-panel').forEach(function(p) {
+        p.classList.remove('active'); p.style.display = 'none';
+      });
+      document.querySelectorAll('.t-tab').forEach(function(t) { t.classList.remove('active'); });
+      var panel = document.getElementById('tab-' + planId);
+      if (panel) { panel.classList.add('active'); panel.style.display = 'grid'; }
+      if (clickedBtn) clickedBtn.classList.add('active');
+    }
+
+    (function() {
+      document.querySelectorAll('.t-panel').forEach(function(p) { p.style.display = 'none'; });
+      var first = document.getElementById('tab-metodo');
+      if (first) { first.style.display = 'grid'; first.classList.add('active'); }
+    })();
+
+    // --------------------------------------------------------
+    // FAQ Accordion
+    // --------------------------------------------------------
+    function toggleFaq(btn) {
+      var item   = btn.closest('.faq-item');
+      var answer = item.querySelector('.faq-answer');
+      var isOpen = item.classList.contains('open');
+
+      document.querySelectorAll('.faq-item.open').forEach(function(o) {
+        o.classList.remove('open');
+        o.querySelector('.faq-answer').style.maxHeight = '0px';
+        o.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    // --------------------------------------------------------
+    // Smooth anchor scroll with navbar offset
+    // --------------------------------------------------------
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        var target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - 92, behavior: 'smooth' });
+      });
+    });
+
+    // --------------------------------------------------------
+    // URL param: scroll to plan card
+    // --------------------------------------------------------
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var plan   = params.get('plan');
+      if (!plan) return;
+      var idx = { esencial: 0, metodo: 1, elite: 2 }[plan.toLowerCase()];
+      if (idx === undefined) return;
+      var cards = document.querySelectorAll('.pricing-card');
+      if (cards[idx]) {
+        setTimeout(function() {
+          cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 600);
+      }
+    })();
+
+    // --------------------------------------------------------
+    // v5 Scroll reveal (data-v5-reveal)
+    // --------------------------------------------------------
+    (function() {
+      var els = document.querySelectorAll('[data-v5-reveal]');
+      if (!els.length || !window.IntersectionObserver) return;
+      els.forEach(function(el) { el.classList.add('v5-reveal'); });
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          var d = entry.target.dataset.v5Delay;
+          if (d) entry.target.classList.add('v5-reveal-delay-' + d);
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.08 });
+      els.forEach(function(el) { io.observe(el); });
+    })();
+
+    // --------------------------------------------------------
+    // Custom cursor (desktop only)
+    // --------------------------------------------------------
+    (function() {
+      if (window.matchMedia('(hover: none)').matches) return;
+      var cursor = document.getElementById('v5cursor');
+      if (!cursor) return;
+      document.addEventListener('mousemove', function(e) {
+        cursor.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)';
+        cursor.classList.add('visible');
+      }, { passive: true });
+    })();
+
+  </script>
+  <script src="js/chat-widget.js" defer></script>
+
+</body>
+</html>

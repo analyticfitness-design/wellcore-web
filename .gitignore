@@ -1,0 +1,23 @@
+# Environment & Secrets
+api/.env
+api/.env.local
+*.env
+
+# Uploads
+uploads/
+api/uploads/
+
+# System
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.bak
+
+# Dependencies
+node_modules/
+vendor/
+
+# IDE
+.vscode/
+.idea/

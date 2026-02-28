@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 &mdash; P&aacute;gina no encontrada | WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111113;
+      --red: #E31E24;
+      --white: #ffffff;
+      --gray: rgba(255,255,255,0.45);
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .logo {
+      margin-bottom: 2rem;
+    }
+    .logo img {
+      height: 38px;
+    }
+    .error-code {
+      font-family: var(--font-head);
+      font-size: clamp(6rem, 15vw, 10rem);
+      line-height: 1;
+      color: var(--red);
+      letter-spacing: 0.04em;
+    }
+    .error-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gray);
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .error-msg {
+      font-size: 1.125rem;
+      color: var(--white);
+      margin-bottom: 2rem;
+      max-width: 400px;
+      line-height: 1.6;
+    }
+    .back-link {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      background: var(--red);
+      padding: 0.75rem 2rem;
+      text-decoration: none;
+      border: none;
+      border-radius: 0;
+      transition: background 0.1s linear;
+    }
+    .back-link:hover {
+      background: #B8181D;
+    }
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--red);
+      margin: 1.5rem auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <a href="/"><img src="/images/logo/imagotipo-blanco.png" alt="WellCore Fitness" /></a>
+  </div>
+  <div class="error-code">404</div>
+  <div class="error-label">// not found</div>
+  <div class="divider"></div>
+  <p class="error-msg">P&aacute;gina no encontrada. La ruta solicitada no existe o fue movida.</p>
+  <a href="/" class="back-link">Volver al inicio</a>
+</body>
+</html>

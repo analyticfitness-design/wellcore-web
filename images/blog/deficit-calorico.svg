@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#080808"/><stop offset="100%" stop-color="#1a1010"/></linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#E31E24" stop-opacity="0.15"/><stop offset="100%" stop-color="#E31E24" stop-opacity="0"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="40"/></filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="900" cy="200" r="300" fill="#E31E24" opacity="0.06" filter="url(#blur)"/>
+  <circle cx="200" cy="500" r="200" fill="#E31E24" opacity="0.04" filter="url(#blur)"/>
+  <!-- Grid lines -->
+  <line x1="0" y1="135" x2="1200" y2="135" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="270" x2="1200" y2="270" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="405" x2="1200" y2="405" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="540" x2="1200" y2="540" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="240" y1="0" x2="240" y2="675" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="480" y1="0" x2="480" y2="675" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="720" y1="0" x2="720" y2="675" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="960" y1="0" x2="960" y2="675" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <!-- Balance scale concept -->
+  <line x1="600" y1="180" x2="600" y2="380" stroke="#E31E24" stroke-width="2" opacity="0.6"/>
+  <line x1="380" y1="280" x2="820" y2="280" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  <circle cx="600" cy="180" r="6" fill="#E31E24" opacity="0.8"/>
+  <rect x="330" y="280" width="100" height="70" rx="2" fill="rgba(227,30,36,0.12)" stroke="#E31E24" stroke-width="1" opacity="0.8"/>
+  <text x="380" y="322" text-anchor="middle" font-family="Arial" font-size="11" fill="#E31E24" opacity="0.9">−500 kcal</text>
+  <rect x="770" y="280" width="100" height="70" rx="2" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <text x="820" y="322" text-anchor="middle" font-family="Arial" font-size="11" fill="rgba(255,255,255,0.5)">GASTO</text>
+  <!-- Left panel -->
+  <rect x="0" y="0" width="400" height="675" fill="url(#glow)"/>
+  <text x="64" y="240" font-family="Arial Black,Arial" font-size="11" font-weight="900" fill="#E31E24" letter-spacing="4" opacity="0.9">NUTRICION</text>
+  <text x="60" y="300" font-family="Arial Black,Arial" font-size="58" font-weight="900" fill="white" opacity="0.92">DEFICIT</text>
+  <text x="60" y="355" font-family="Arial Black,Arial" font-size="58" font-weight="900" fill="white" opacity="0.92">CALORICO</text>
+  <line x1="60" y1="375" x2="240" y2="375" stroke="#E31E24" stroke-width="3"/>
+  <text x="60" y="410" font-family="Arial" font-size="13" fill="rgba(255,255,255,0.45)" letter-spacing="1">La ciencia de la perdida de grasa</text>
+  <!-- Bottom bar -->
+  <rect x="0" y="659" width="1200" height="3" fill="#E31E24" opacity="0.7"/>
+  <!-- Calorie numbers floating -->
+  <text x="750" y="160" font-family="Arial Black,Arial" font-size="72" font-weight="900" fill="rgba(227,30,36,0.07)" letter-spacing="-2">2500</text>
+  <text x="720" y="540" font-family="Arial Black,Arial" font-size="48" font-weight="900" fill="rgba(255,255,255,0.04)" letter-spacing="-1">KCAL</text>
+</svg>

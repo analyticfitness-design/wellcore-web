@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Comprobante de Pago — WellCore Fitness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/wellcore-v5.css">
+<style>
+:root {
+  --bg:#0a0a0a; --surface:#111113; --card:#18181b;
+  --border:rgba(255,255,255,0.06); --border-md:rgba(255,255,255,0.10);
+  --red:#E31E24; --red-dark:#B8181D; --red-dim:rgba(227,30,36,0.10);
+  --accent:#00D9FF; --green:#22C55E; --green-dim:rgba(34,197,94,0.12);
+  --white:#ffffff; --gray:rgba(255,255,255,0.45); --gray-dim:rgba(255,255,255,0.18);
+  --font-head:'Bebas Neue',sans-serif; --font-mono:'JetBrains Mono',monospace;
+  --font-body:'Inter',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:14px;line-height:1.65;min-height:100vh}
+a{text-decoration:none;color:inherit}
+@media print{
+  body{background:#fff;color:#000}
+  .invoice-doc{border:none;box-shadow:none;max-width:none;width:100%}
+  .invoice-print-btn,.v5-preloader{display:none!important}
+  .invoice-wrap{padding:0;background:white}
+  .invoice-header{background:#f5f5f5;border-bottom:1px solid #ddd}
+  .invoice-brand{color:#000}
+  .invoice-footer-block{background:#f5f5f5}
+  .inv-label{color:#E31E24}
+  .invoice-table th,.invoice-table td{color:#333;border-bottom:1px solid #ddd}
+  .inv-tval,.invoice-to-name,.inv-val{color:#000}
+  .badge-green{background:rgba(34,197,94,0.15);color:#15803d}
+  .inv-total-row:last-child .inv-tval{color:#E31E24}
+  .invoice-thanks{color:#666;border-top:1px solid #ddd}
+}
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="v5-preloader" class="v5-preloader">
+  <div class="v5-preloader-logo">WELL<span>CORE</span></div>
+  <div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div>
+</div>
+
+<!-- Invoice -->
+<div class="invoice-wrap">
+  <div class="invoice-doc">
+
+    <!-- Header -->
+    <div class="invoice-header">
+      <div>
+        <div class="invoice-brand">WELL<span>CORE</span> FITNESS</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--gray);margin-top:6px;">wellcorefitness.com · Colombia</div>
+      </div>
+      <div class="invoice-title-block">
+        <div class="inv-label">COMPROBANTE</div>
+        <div class="inv-meta" id="inv-meta">No: — · —</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="invoice-body">
+
+      <!-- Recipient + Invoice ID -->
+      <div class="invoice-to-row">
+        <div>
+          <div class="invoice-to-label">Facturado a</div>
+          <div class="invoice-to-name" id="inv-client-name">—</div>
+          <div class="invoice-to-detail" id="inv-client-detail">Colombia · wellcorefitness.com</div>
+          <div class="invoice-to-detail" id="inv-client-email" style="margin-top:4px;"></div>
+        </div>
+        <div>
+          <div class="invoice-id-block">
+            <div class="invoice-id-row">
+              <span class="inv-key">NO. COMPROBANTE</span>
+              <span class="inv-val" id="inv-num">—</span>
+            </div>
+            <div class="invoice-id-row">
+              <span class="inv-key">FECHA DE PAGO</span>
+              <span class="inv-val" id="inv-date">—</span>
+            </div>
+            <div class="invoice-id-row">
+              <span class="inv-key">PLAN</span>
+              <span class="inv-val" id="inv-plan-badge">—</span>
+            </div>
+            <div class="invoice-id-row">
+              <span class="inv-key">ESTADO</span>
+              <span class="inv-val"><span class="badge-v5 badge-green">PAGADO</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Items table -->
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th style="width:40px">No.</th>
+            <th>DESCRIPCI&Oacute;N DEL SERVICIO</th>
+            <th style="width:120px">PER&Iacute;ODO</th>
+            <th style="width:130px;text-align:right">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-num">01</td>
+            <td>
+              <div class="td-plan" id="inv-service-name">Plan WellCore —</div>
+              <div class="td-period">Coaching Online 1:1 · Entrenamiento + Nutrici&oacute;n Personalizada</div>
+            </td>
+            <td class="td-period" id="inv-period">—</td>
+            <td class="td-amount" id="inv-amount-row" style="text-align:right">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer with payment info + totals -->
+    <div class="invoice-footer-block">
+      <div>
+        <div class="inv-payment-label">M&eacute;todo de Pago</div>
+        <div class="inv-payment-method" id="inv-method">PayU Latam</div>
+        <div class="inv-payment-detail" style="margin-top:8px;">wellcorefitness.com</div>
+        <div class="inv-payment-detail" style="margin-top:12px;font-size:11px;color:var(--gray-dim);line-height:1.8;">
+          Al realizar el pago aceptas nuestros<br>
+          T&eacute;rminos y Condiciones de Servicio.<br>
+          Soporte: <span style="color:var(--accent);">info@wellcorefitness.com</span>
+        </div>
+        <div class="inv-payment-detail" style="margin-top:16px;">
+          <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--gray);">WHATSAPP</span><br>
+          +57 312 490 4720
+        </div>
+      </div>
+      <div class="inv-totals">
+        <div class="inv-total-row">
+          <span class="inv-tlabel">Subtotal</span>
+          <span class="inv-tval" id="inv-subtotal">—</span>
+        </div>
+        <div class="inv-total-row">
+          <span class="inv-tlabel">Descuento</span>
+          <span class="inv-tval" id="inv-discount">$0</span>
+        </div>
+        <div class="inv-total-row">
+          <span class="inv-tlabel">IVA (0%)</span>
+          <span class="inv-tval">$0</span>
+        </div>
+        <div class="inv-total-row" style="border-top:1px solid var(--border-md);margin-top:8px;padding-top:12px;">
+          <span class="inv-tlabel" style="font-weight:700;color:var(--white);">TOTAL PAGADO</span>
+          <span class="inv-tval" id="inv-final" style="color:var(--red);font-size:18px;font-family:var(--font-mono);font-weight:700;">—</span>
+        </div>
+        <div style="margin-top:12px;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray-dim);">COP · COLOMBIA</div>
+      </div>
+    </div>
+
+    <!-- Thanks -->
+    <div class="invoice-thanks">
+      Gracias por confiar en WellCore Fitness &mdash; Sin dogmas. Sin atajos. Sin suplementos innecesarios.
+    </div>
+
+  </div><!-- /.invoice-doc -->
+</div><!-- /.invoice-wrap -->
+
+<!-- Print button -->
+<button class="invoice-print-btn" id="invoicePrintBtn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="6 9 6 2 18 2 18 9"/>
+    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+    <rect x="6" y="14" width="12" height="8"/>
+  </svg>
+  IMPRIMIR / GUARDAR PDF
+</button>
+
+<script src="js/api.js"></script>
+<script src="js/v5-effects.js" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  function setTxt(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  function formatCOP(raw) {
+    if (!raw) return '—';
+    // Already formatted (e.g. "399.000") or raw number
+    var num = String(raw).replace(/\D/g, '');
+    if (!num) return raw;
+    return '$' + parseInt(num, 10).toLocaleString('es-CO') + ' COP';
+  }
+
+  function generateRef() {
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var r = 'WC-';
+    for (var i = 0; i < 8; i++) r += chars[Math.floor(Math.random() * chars.length)];
+    return r;
+  }
+
+  // Read URL params first, then localStorage fallback
+  var p = new URLSearchParams(window.location.search);
+
+  var stored = null;
+  try { stored = JSON.parse(localStorage.getItem('wc_last_payment') || 'null'); } catch (e) {}
+
+  var clientName = p.get('nombre')  || (stored && stored.nombre)  || localStorage.getItem('wc_client_name') || 'Cliente WellCore';
+  var plan       = p.get('plan')    || (stored && stored.plan)    || localStorage.getItem('wc_client_plan') || 'Esencial';
+  var monto      = p.get('monto')   || (stored && stored.monto)   || '399.000';
+  var ref        = p.get('ref')     || (stored && stored.ref)     || p.get('referenceCode') || generateRef();
+  var method     = p.get('metodo')  || (stored && stored.metodo)  || 'PayU Latam';
+  var email      = p.get('email')   || (stored && stored.email)   || localStorage.getItem('wc_client_email') || '';
+  var period     = p.get('periodo') || (stored && stored.periodo) || '';
+
+  if (!period) {
+    var now = new Date();
+    period = now.toLocaleDateString('es-CO', { month: 'long', year: 'numeric' });
+  }
+
+  var dateStr = p.get('fecha') || new Date().toLocaleDateString('es-CO', {
+    day: '2-digit', month: '2-digit', year: 'numeric'
+  });
+
+  var amountFormatted = formatCOP(monto);
+  var planCap = plan.charAt(0).toUpperCase() + plan.slice(1).toLowerCase();
+
+  setTxt('inv-client-name', clientName);
+  setTxt('inv-client-detail', 'Colombia · wellcorefitness.com');
+  if (email) setTxt('inv-client-email', email);
+  setTxt('inv-num', ref);
+  setTxt('inv-date', dateStr);
+  setTxt('inv-plan-badge', 'WellCore ' + planCap);
+  setTxt('inv-method', method);
+  setTxt('inv-period', period);
+  setTxt('inv-service-name', 'Plan WellCore ' + planCap);
+  setTxt('inv-amount-row', amountFormatted);
+  setTxt('inv-subtotal', amountFormatted);
+  setTxt('inv-final', amountFormatted);
+  setTxt('inv-meta', 'No: ' + ref + ' · ' + dateStr);
+
+})();
+</script>
+</body>
+</html>

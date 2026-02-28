@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WellCore — Admin Coaches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#E31E24;--red-dark:#B8181D;--bg:#0a0a0a;--surface:#111113;--surface-2:#1a1a1d;
+  --border:#252528;--gray:#A1A1AA;--accent:#00D9FF;--green:#22C55E;--white:#FFFFFF;--gold:#F5C842;
+  --sidebar-w:260px;--topbar-h:64px;
+  --font-heading:'Bebas Neue',sans-serif;--font-mono:'JetBrains Mono',monospace;--font-body:'Inter',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:14px;overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--surface);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--gray);}
+
+/* LOGIN */
+#login-overlay{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:0;padding:48px 40px;width:100%;max-width:420px;text-align:center;}
+.login-logo{font-family:var(--font-heading);font-size:32px;color:var(--red);letter-spacing:2px;margin-bottom:8px;}
+.login-sub{color:var(--gray);font-size:13px;margin-bottom:32px;}
+.login-box input{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:12px 16px;border-radius:0;font-family:var(--font-body);font-size:14px;margin-bottom:12px;outline:none;}
+.login-box input:focus{border-color:var(--red);}
+.btn-login{width:100%;background:var(--red);color:var(--white);border:none;padding:13px;border-radius:0;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;transition:opacity .1s linear;}
+.btn-login:hover{opacity:.85;}
+.login-error{color:#ff6b6b;font-size:13px;margin-top:12px;display:none;}
+
+/* LAYOUT */
+#app{display:flex;height:100vh;overflow:hidden;}
+.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;position:fixed;left:0;top:0;z-index:100;transition:transform .3s;}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.sidebar-logo-text{font-family:var(--font-heading);font-size:22px;color:var(--white);letter-spacing:1px;}
+.sidebar-logo-badge{background:var(--gold);color:#000;font-size:9px;font-weight:700;padding:2px 6px;border-radius:0;letter-spacing:1px;margin-left:auto;}
+.sidebar-nav{flex:1;padding:16px 0;overflow-y:auto;}
+.nav-section-label{font-size:10px;font-weight:600;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;padding:8px 20px 4px;margin-top:8px;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;color:var(--gray);font-size:14px;font-weight:500;transition:background .1s linear,color .1s linear;position:relative;border-left:3px solid transparent;user-select:none;}
+.nav-item:hover{background:var(--surface-2);color:var(--white);}
+.nav-item.active{background:rgba(245,200,66,.08);color:var(--white);border-left-color:var(--gold);}
+.nav-item i{width:18px;text-align:center;font-size:15px;}
+.nav-badge{margin-left:auto;background:var(--red);color:var(--white);font-size:11px;font-weight:700;min-width:20px;height:20px;border-radius:0;display:flex;align-items:center;justify-content:center;padding:0 6px;}
+.nav-badge-gold{margin-left:auto;background:var(--gold);color:#000;font-size:11px;font-weight:700;min-width:20px;height:20px;border-radius:0;display:flex;align-items:center;justify-content:center;padding:0 6px;}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);}
+.sidebar-user{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.sidebar-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+.sidebar-user-name{font-size:13px;font-weight:600;}
+.sidebar-user-role{font-size:11px;color:var(--gray);}
+.btn-logout{width:100%;background:transparent;border:1px solid var(--border);color:var(--gray);padding:9px;border-radius:0;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .1s linear;}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
+
+/* MAIN */
+.main-area{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+.topbar{height:var(--topbar-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:16px;flex-shrink:0;}
+.topbar-hamburger{display:none;background:none;border:none;color:var(--white);font-size:20px;cursor:pointer;padding:4px;}
+.topbar-breadcrumb{font-size:13px;color:var(--gray);}
+.topbar-breadcrumb span{color:var(--white);font-weight:600;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:16px;}
+.topbar-date{font-family:var(--font-mono);font-size:12px;color:var(--gray);}
+.topbar-role-badge{background:rgba(245,200,66,.15);color:var(--gold);font-size:11px;font-weight:700;padding:4px 10px;border-radius:0;letter-spacing:.5px;}
+.content{flex:1;overflow-y:auto;padding:28px;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* PAGE */
+.page-header{margin-bottom:24px;}
+.page-title{font-family:var(--font-heading);font-size:32px;letter-spacing:1px;}
+.page-subtitle{color:var(--gray);font-size:13px;margin-top:4px;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:0;padding:20px;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);border-radius:0 12px 0 0;}
+.kpi-card.green::before{background:var(--green);}
+.kpi-card.gold::before{background:var(--gold);}
+.kpi-card.blue::before{background:#60a5fa;}
+.kpi-label{font-size:11px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.kpi-value{font-family:var(--font-heading);font-size:36px;letter-spacing:1px;line-height:1;}
+.kpi-sub{font-size:12px;color:var(--gray);margin-top:6px;}
+.kpi-icon{position:absolute;top:18px;right:18px;color:var(--border);font-size:28px;}
+.kpi-badge{display:inline-block;background:rgba(227,30,36,.15);color:var(--red);font-size:11px;font-weight:700;padding:2px 8px;border-radius:0;margin-top:6px;}
+.kpi-badge.green{background:rgba(34,197,94,.15);color:var(--green);}
+.kpi-badge.gold{background:rgba(245,200,66,.15);color:var(--gold);}
+
+/* TABLE */
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:0;overflow:hidden;margin-bottom:24px;}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.table-header-title{font-size:14px;font-weight:600;}
+.table-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.table-wrapper{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{padding:11px 16px;text-align:left;font-size:11px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:1px;background:var(--surface-2);white-space:nowrap;border-bottom:1px solid var(--border);}
+tbody td{padding:13px 16px;font-size:13px;border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:rgba(255,255,255,.02);}
+
+/* STATUS */
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:0;font-size:11px;font-weight:600;}
+.status-active{background:rgba(34,197,94,.12);color:var(--green);}
+.status-pending{background:rgba(245,200,66,.12);color:var(--gold);}
+.status-suspended{background:rgba(227,30,36,.12);color:var(--red);}
+.status-closed{background:rgba(161,161,170,.12);color:var(--gray);}
+.status-open{background:rgba(96,165,250,.12);color:#60a5fa;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:0;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .1s linear;font-family:var(--font-body);white-space:nowrap;}
+.btn-primary{background:var(--red);color:var(--white);}
+.btn-primary:hover{opacity:.85;}
+.btn-secondary{background:var(--surface-2);color:var(--white);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--gray);}
+.btn-success{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.btn-success:hover{background:rgba(34,197,94,.25);}
+.btn-danger{background:rgba(227,30,36,.15);color:var(--red);border:1px solid rgba(227,30,36,.3);}
+.btn-danger:hover{background:rgba(227,30,36,.25);}
+.btn-gold{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid rgba(245,200,66,.3);}
+.btn-gold:hover{background:rgba(245,200,66,.25);}
+.btn-sm{padding:5px 10px;font-size:11px;}
+
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.tab-btn{padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;background:none;border:none;color:var(--gray);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .1s linear;font-family:var(--font-body);}
+.tab-btn.active{color:var(--white);border-bottom-color:var(--gold);}
+.tab-btn:hover:not(.active){color:var(--white);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* FILTER */
+.filter-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+.filter-select,.filter-input{background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:8px 12px;border-radius:0;font-size:13px;font-family:var(--font-body);outline:none;}
+.filter-select:focus,.filter-input:focus{border-color:var(--gold);}
+.filter-input{min-width:180px;}
+.filter-input::placeholder{color:var(--gray);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:0;width:100%;max-width:640px;max-height:85vh;overflow-y:auto;transform:scale(.96);transition:transform .2s;}
+.modal-overlay.open .modal{transform:scale(1);}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:1;}
+.modal-title{font-size:16px;font-weight:700;}
+.modal-close{background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer;padding:4px;transition:color .1s linear;}
+.modal-close:hover{color:var(--white);}
+.modal-body{padding:24px;}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:var(--surface);}
+
+/* CARD */
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:0;padding:20px;margin-bottom:16px;}
+.info-card h3{font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.info-row:last-child{border-bottom:none;}
+.info-label{color:var(--gray);font-size:12px;}
+.info-value{font-size:13px;font-weight:500;}
+
+/* PERFORMANCE BAR */
+.perf-bar-wrap{margin-bottom:12px;}
+.perf-bar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.perf-bar-name{font-size:13px;font-weight:500;}
+.perf-bar-val{font-size:12px;color:var(--gray);font-family:var(--font-mono);}
+.perf-bar-bg{height:8px;background:var(--surface-2);border-radius:0;overflow:hidden;}
+.perf-bar-fill{height:100%;background:var(--gold);border-radius:0;transition:width .6s;}
+
+/* SLA */
+.sla-urgent{color:#ff6b6b;font-weight:600;}
+.sla-warn{color:var(--gold);font-weight:600;}
+.sla-ok{color:var(--green);font-weight:600;}
+
+/* SIDEBAR OVERLAY */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99;}
+
+/* APPLICATION CARD */
+.app-card{padding:20px;border-bottom:1px solid var(--border);}
+.app-card:last-child{border-bottom:none;}
+
+/* FORM */
+.form-textarea{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:12px;border-radius:0;font-family:var(--font-body);font-size:13px;resize:vertical;min-height:100px;outline:none;}
+.form-textarea:focus{border-color:var(--gold);}
+
+/* TIMELINE */
+.timeline{list-style:none;position:relative;}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border);}
+.timeline-item{position:relative;padding:0 0 14px 28px;}
+.timeline-dot{position:absolute;left:0;top:3px;width:16px;height:16px;border-radius:50%;background:var(--surface-2);border:2px solid var(--border);}
+.timeline-dot.red{border-color:var(--red);background:rgba(227,30,36,.2);}
+.timeline-dot.green{border-color:var(--green);background:rgba(34,197,94,.2);}
+.timeline-dot.gold{border-color:var(--gold);background:rgba(245,200,66,.2);}
+.timeline-time{font-size:11px;color:var(--gray);font-family:var(--font-mono);}
+.timeline-text{font-size:13px;margin-top:2px;}
+
+/* PAYMENT SUMMARY */
+.pay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:24px;}
+.pay-card{background:var(--surface);border:1px solid var(--border);border-radius:0;padding:20px;text-align:center;}
+.pay-card-label{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.pay-card-value{font-family:var(--font-heading);font-size:26px;}
+.pay-card-sub{font-size:11px;color:var(--gray);margin-top:4px;}
+
+/* CHARTS SVG */
+.svg-chart{width:100%;}
+.bar-label{font-family:'JetBrains Mono',monospace;font-size:10px;fill:#A1A1AA;}
+.bar-value{font-family:'JetBrains Mono',monospace;font-size:10px;fill:#FFFFFF;}
+.axis-line{stroke:#252528;stroke-width:1;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.mobile-open{transform:translateX(0);}
+  .sidebar-overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s;}
+  .sidebar-overlay.open{opacity:1;pointer-events:all;}
+  .main-area{margin-left:0;}
+  .topbar-hamburger{display:block;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  .content{padding:16px;}
+}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr;}}
+.v5-preloader{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s,visibility .6s}
+.v5-preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+.v5-preloader-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:#fff}
+.v5-preloader-logo span{color:#E31E24}
+.v5-preloader-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
+.v5-preloader-fill{height:100%;background:#E31E24;width:0;animation:preloaderFill 1.2s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes preloaderFill{0%{width:0}100%{width:100%}}
+.sidebar-logo{border-left:3px solid #E31E24}
+.kpi-card{position:relative;overflow:hidden;transition:border-color .2s}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#E31E24;transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.kpi-card:hover::after{transform:scaleX(1)}
+.nav-item.active{border-left:2px solid #E31E24}
+tbody tr:hover td{background:rgba(255,255,255,0.03)}
+</style>
+<link rel="stylesheet" href="css/wellcore-v5.css">
+</head>
+<body>
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+
+<!-- Auth: redirect to login if no valid admin token -->
+<script src="js/api.js"></script>
+<script>
+(function() {
+    var token = localStorage.getItem('wc_token');
+    if (!token) { window.location.replace('login.html'); return; }
+    WC_API.auth.me().then(function(data) {
+        if (!data || data.type !== 'admin') { window.location.replace('login.html'); return; }
+        var role = data.admin ? data.admin.role : '';
+        if (role !== 'admin' && role !== 'coaches' && role !== 'coach_manager' && role !== 'jefe' && role !== 'superadmin') {
+            window.location.replace('login.html'); return;
+        }
+        var name = (data.admin && data.admin.name) || (data.admin && data.admin.username) || 'Admin';
+        var el = document.getElementById('sidebar-user-name'); if (el) el.textContent = name;
+        var av = document.getElementById('sidebar-avatar'); if (av) av.textContent = name.split(' ').map(function(w){return w[0]}).join('').toUpperCase().slice(0,2);
+        document.body.style.visibility = 'visible';
+        if (typeof initApp === 'function') initApp();
+    }).catch(function() { window.location.replace('login.html'); });
+})();
+</script>
+<style>body { visibility: hidden; }</style>
+
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div>
+        <div class="sidebar-logo-text">WELLCORE</div>
+        <div style="font-size:10px;color:var(--gray);margin-top:1px;font-family:var(--font-mono)">COACHES ADMIN</div>
+      </div>
+      <div class="sidebar-logo-badge">COACHES</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <div class="nav-item active" onclick="showSection('dashboard')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9670;</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showSection('aplicaciones')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9655;</span> Aplicaciones
+        <span class="nav-badge-gold" style="display:none">0</span>
+      </div>
+      <div class="nav-section-label">Gestión</div>
+      <div class="nav-item" onclick="showSection('coaches-activos')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9650;</span> Coaches Activos
+      </div>
+      <div class="nav-item" onclick="showSection('tickets')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9671;</span> Tickets
+        <span class="nav-badge" style="display:none">0</span>
+      </div>
+      <div class="nav-item" onclick="showSection('pagos')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9672;</span> Pagos
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar">AC</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebar-user-name">Admin Coaches</div>
+          <div class="sidebar-user-role">Gestor de Coaches</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">
+        &rarr; Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <div class="topbar">
+      <button class="topbar-hamburger" onclick="toggleMobileSidebar()">&#9776;</button>
+      <div class="topbar-breadcrumb">WellCore / <span id="topbar-section">Dashboard</span></div>
+      <div class="topbar-right">
+        <div class="topbar-role-badge"><span style="color:#00D9FF;font-weight:700">//</span> Coaches Admin</div>
+        <div class="topbar-date" id="topbar-date">—</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="section active" id="sec-dashboard">
+        <div class="page-header">
+          <div class="page-title">DASHBOARD COACHES</div>
+          <div class="page-subtitle">Panel de gestión de coaches WellCore</div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card green">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9650;</span>
+            <div class="kpi-label">Coaches Activos</div>
+            <div class="kpi-value" style="color:var(--green)">0</div>
+            <div class="kpi-sub">Sin coaches registrados</div>
+          </div>
+          <div class="kpi-card gold">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9655;</span>
+            <div class="kpi-label">Aplicaciones Pendientes</div>
+            <div class="kpi-value" style="color:var(--gold)">0</div>
+            <div class="kpi-sub">Sin aplicaciones pendientes</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9671;</span>
+            <div class="kpi-label">Suspendidos</div>
+            <div class="kpi-value">0</div>
+            <div class="kpi-sub">Sin suspensiones</div>
+          </div>
+          <div class="kpi-card blue">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9671;</span>
+            <div class="kpi-label">Tickets Abiertos</div>
+            <div class="kpi-value" style="color:#60a5fa">0</div>
+            <div class="kpi-sub">SLA 48h</div>
+          </div>
+          <div class="kpi-card gold">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9678;</span>
+            <div class="kpi-label">Proximo Pago</div>
+            <div class="kpi-value" style="font-size:22px;margin-top:4px">--</div>
+            <div class="kpi-sub">$0 a distribuir</div>
+          </div>
+          <div class="kpi-card green">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9650;</span>
+            <div class="kpi-label">Top Performer</div>
+            <div class="kpi-value" style="font-size:18px;margin-top:8px">--</div>
+            <div class="kpi-sub">Sin datos</div>
+          </div>
+        </div>
+
+        <!-- PERFORMANCE CHART -->
+        <div class="info-card">
+          <h3><span style="color:#00D9FF;font-weight:700">//</span> Performance de Coaches</h3>
+          <div id="perf-bars"></div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="info-card">
+          <h3><span style="color:#00D9FF;font-weight:700">//</span> Acciones Rápidas</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn btn-gold" onclick="showSection('aplicaciones')"><span style="color:#00D9FF;font-weight:700">&#9655;</span> Revisar Aplicaciones (0)</button>
+            <button class="btn btn-primary" onclick="showSection('tickets')"><span style="color:#00D9FF;font-weight:700">&#9671;</span> Ver Tickets Urgentes</button>
+            <button class="btn btn-success" onclick="showSection('pagos')"><span style="color:#00D9FF;font-weight:700">&#9672;</span> Procesar Pagos</button>
+            <a href="admin-jefe.html" class="btn btn-secondary">&rarr; Admin Jefe</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- APLICACIONES -->
+      <div class="section" id="sec-aplicaciones">
+        <div class="page-header">
+          <div class="page-title">APLICACIONES DE COACHES</div>
+          <div class="page-subtitle">Revisión de candidatos a coaches WellCore</div>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('aplicaciones','pendientes-tab')">Pendientes <span style="background:rgba(245,200,66,.15);color:var(--gold);padding:1px 7px;border-radius:0;font-size:11px;margin-left:4px">0</span></button>
+          <button class="tab-btn" onclick="switchTab('aplicaciones','aprobadas-tab')">Aprobadas <span style="background:rgba(34,197,94,.15);color:var(--green);padding:1px 7px;border-radius:0;font-size:11px;margin-left:4px">0</span></button>
+          <button class="tab-btn" onclick="switchTab('aplicaciones','rechazadas-tab')">Rechazadas <span style="background:rgba(161,161,170,.15);color:var(--gray);padding:1px 7px;border-radius:0;font-size:11px;margin-left:4px">0</span></button>
+        </div>
+        <div class="tab-content active" id="aplicaciones-tab-pendientes-tab">
+          <div class="table-card">
+            <div class="table-header">
+              <div class="table-header-title">Candidatos Pendientes</div>
+              <div class="table-actions"><span style="font-size:12px;color:var(--gray)">2 en revisión</span></div>
+            </div>
+            <div id="apps-pendientes-container"></div>
+          </div>
+        </div>
+        <div class="tab-content" id="aplicaciones-tab-aprobadas-tab">
+          <div class="table-card">
+            <div class="table-header"><div class="table-header-title">Aplicaciones Aprobadas — Coaches Activos</div></div>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Nombre</th><th>Plan</th><th>Aprobado</th><th>Clientes</th><th>Estado</th></tr></thead>
+                <tbody id="apps-aprobadas-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="aplicaciones-tab-rechazadas-tab">
+          <div class="table-card">
+            <div class="table-header"><div class="table-header-title">Aplicaciones Rechazadas</div></div>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Nombre</th><th>Email</th><th>Plan Solicitado</th><th>Fecha</th><th>Motivo</th></tr></thead>
+                <tbody id="rejected-apps-body">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COACHES ACTIVOS -->
+      <div class="section" id="sec-coaches-activos">
+        <div class="page-header">
+          <div class="page-title">COACHES ACTIVOS</div>
+          <div class="page-subtitle">Métricas de rendimiento y gestión de coaches</div>
+        </div>
+        <div class="filter-row">
+          <select class="filter-select" id="filter-coach-plan">
+            <option value="">Todos los planes</option>
+            <option value="PROFESIONAL">PROFESIONAL</option><option value="ELITE">ELITE</option><option value="ASOCIADO">ASOCIADO</option>
+          </select>
+          <input class="filter-input" placeholder="Buscar coach..." id="search-coach">
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Coaches Registrados</div>
+            <div class="table-actions">
+              <button class="btn btn-secondary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9655;</span> Exportar</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>ID</th><th>Nombre</th><th>Plan</th><th>Clientes</th><th>Ingresos/mes</th><th>60% Coach</th><th>Tickets activos</th><th>Estado</th><th>Acciones</th></tr>
+              </thead>
+              <tbody id="coaches-activos-tbody"></tbody>
+            </table>
+            <div id="coaches-pagination" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;font-size:13px;color:var(--gray);border-top:1px solid var(--border)">
+              <span id="coaches-pag-info"></span>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-secondary btn-sm" id="coaches-pag-prev" style="font-size:12px">Anterior</button>
+                <button class="btn btn-secondary btn-sm" id="coaches-pag-next" style="font-size:12px">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="coaches-revenue-summary" class="kpi-grid" style="margin-top:16px"></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:0;padding:16px 20px;font-size:12px;color:var(--gray)">
+          <span style="color:#00D9FF;font-weight:700;margin-right:6px">//</span>
+          <strong style="color:var(--white)">Modelo de comision:</strong> El coach percibe el <strong style="color:var(--green)">60%</strong> de las suscripciones de sus clientes. Pagos cada 15 dias el 1 y 15 de cada mes.
+          <br><span style="color:#00D9FF;font-weight:700;margin-right:6px">//</span>
+          <strong style="color:var(--white)">Precios promedio:</strong> Esencial $399K / Metodo $504K / Elite $630K COP/mes. Estimados de revenue basados en clientes declarados.
+        </div>
+      </div>
+
+      <!-- TICKETS -->
+      <div class="section" id="sec-tickets">
+        <div class="page-header">
+          <div class="page-title">TICKETS DE COACHES</div>
+          <div class="page-subtitle">Solicitudes de planes y contenido — SLA 48h</div>
+        </div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="kpi-card"><div class="kpi-label">Abiertos</div><div class="kpi-value" style="font-size:28px;color:#60a5fa">3</div></div>
+          <div class="kpi-card"><div class="kpi-label">Urgentes</div><div class="kpi-value" style="font-size:28px;color:var(--red)">1</div></div>
+          <div class="kpi-card green"><div class="kpi-label">Resueltos hoy</div><div class="kpi-value" style="font-size:28px;color:var(--green)">2</div></div>
+          <div class="kpi-card gold"><div class="kpi-label">Tiempo prom.</div><div class="kpi-value" style="font-size:28px;color:var(--gold)">18h</div></div>
+        </div>
+        <div class="filter-row">
+          <select class="filter-select">
+            <option>Todos los estados</option><option>Abierto</option><option>Cerrado</option>
+          </select>
+          <select class="filter-select">
+            <option>Todos los coaches</option>
+          </select>
+          <input class="filter-input" placeholder="Buscar ticket...">
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Todos los Tickets</div>
+            <div class="table-actions">
+              <button class="btn btn-primary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9671;</span> Crear Ticket</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>ID</th><th>Coach</th><th>Cliente</th><th>Plan</th><th>Tipo</th><th>Fecha</th><th>SLA</th><th>Estado</th><th>Acciones</th></tr>
+              </thead>
+              <tbody id="tickets-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGOS -->
+      <div class="section" id="sec-pagos">
+        <div class="page-header">
+          <div class="page-title">PAGOS COACHES</div>
+          <div class="page-subtitle">Ciclo quincenal — 60% clientes para coaches</div>
+        </div>
+        <div class="pay-grid">
+          <div class="pay-card">
+            <div class="pay-card-label">A pagar coaches</div>
+            <div class="pay-card-value" style="color:var(--gold)">$0</div>
+            <div class="pay-card-sub">Sin pagos pendientes</div>
+          </div>
+          <div class="pay-card">
+            <div class="pay-card-label">Retencion WellCore</div>
+            <div class="pay-card-value" style="color:var(--green)">$0</div>
+            <div class="pay-card-sub">40% esta quincena</div>
+          </div>
+          <div class="pay-card">
+            <div class="pay-card-label">Total bruto</div>
+            <div class="pay-card-value">$0</div>
+            <div class="pay-card-sub">Facturado</div>
+          </div>
+          <div class="pay-card">
+            <div class="pay-card-label">Proximo pago</div>
+            <div class="pay-card-value" style="color:var(--red)">--</div>
+            <div class="pay-card-sub">Sin fecha</div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Detalle por Coach — Feb 1–15 2026</div>
+            <div class="table-actions">
+              <button class="btn btn-secondary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9655;</span> Exportar CSV</button>
+              <button class="btn btn-gold btn-sm"><span style="color:#00D9FF;font-weight:700">&#9672;</span> Procesar Todo</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Coach</th><th>Plan</th><th>Clientes</th><th>Total Bruto</th><th>60% Coach</th><th>40% WellCore</th><th>Estado</th><th>Acciones</th></tr>
+              </thead>
+              <tbody id="pagos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div style="margin-top:16px;font-size:12px;color:var(--gray);text-align:center;">
+          Pagos procesados vía transferencia bancaria o PSE | <strong style="color:var(--white)">WhatsApp:</strong> +57 312 4904720 | <strong style="color:var(--white)">Email:</strong> info@wellcorefitness.com
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TICKET MODAL -->
+<div class="modal-overlay" id="modal-ticket">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-ticket-title">Ticket</div>
+      <button class="modal-close" onclick="closeModal('modal-ticket')">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-ticket-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-ticket')">Cerrar</button>
+      <button class="btn btn-success"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Marcar Resuelto</button>
+    </div>
+  </div>
+</div>
+
+<!-- COACH MODAL -->
+<div class="modal-overlay" id="modal-coach">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-coach-title">Perfil Coach</div>
+      <button class="modal-close" onclick="closeModal('modal-coach')">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-coach-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-coach')">Cerrar</button>
+      <button class="btn btn-danger btn-sm">Suspender</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// AUTH (API-based — login overlay removed, auth handled at page top)
+function doLogout() { WC_API.auth.logout(); }
+
+// NAV
+const sectionNames = { dashboard:'Dashboard', aplicaciones:'Aplicaciones', 'coaches-activos':'Coaches Activos', tickets:'Tickets', pagos:'Pagos' };
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('sec-' + name);
+  if (sec) sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+name+"'")) n.classList.add('active');
+  });
+  document.getElementById('topbar-section').textContent = sectionNames[name] || name;
+  closeMobileSidebar();
+}
+
+function switchTab(group, tab) {
+  const sec = document.getElementById('sec-' + group);
+  if (!sec) return;
+  sec.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  sec.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  const content = document.getElementById(group + '-tab-' + tab);
+  if (content) content.classList.add('active');
+  sec.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+tab+"'")) b.classList.add('active');
+  });
+}
+
+// MOBILE
+function toggleMobileSidebar() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// MODAL
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open')); });
+
+// DATA
+const coaches = [];
+
+const pendingApps = [];
+
+const approvedCoaches = [];
+
+const tickets = [];
+
+const pagosData = [];
+
+// RENDER
+function renderPerfBars() {
+  const container = document.getElementById('perf-bars');
+  if (!container) return;
+  const maxIngresos = 2700;
+  coaches.forEach(c => {
+    const val = parseInt(c.ingresos.replace(/[^0-9]/g,''));
+    const pct = Math.round((val/maxIngresos)*100);
+    const wrap = document.createElement('div');
+    wrap.className = 'perf-bar-wrap';
+    const header = document.createElement('div');
+    header.className = 'perf-bar-header';
+    const nameEl = document.createElement('div');
+    nameEl.className = 'perf-bar-name';
+    nameEl.textContent = c.nombre;
+    const valEl = document.createElement('div');
+    valEl.className = 'perf-bar-val';
+    valEl.textContent = c.ingresos + '/mes · ' + c.clientes + ' clientes';
+    header.appendChild(nameEl);
+    header.appendChild(valEl);
+    const bg = document.createElement('div');
+    bg.className = 'perf-bar-bg';
+    const fill = document.createElement('div');
+    fill.className = 'perf-bar-fill';
+    fill.style.width = pct + '%';
+    bg.appendChild(fill);
+    wrap.appendChild(header);
+    wrap.appendChild(bg);
+    container.appendChild(wrap);
+  });
+}
+
+function renderPendingApps(apps) {
+  apps = apps || pendingApps;
+  const container = document.getElementById('apps-pendientes-container');
+  if (!container) return;
+  container.textContent = '';
+  if (apps.length === 0) {
+    const empty = document.createElement('div');
+    empty.style.cssText = 'padding:40px;text-align:center;color:var(--gray)';
+    empty.textContent = 'No hay aplicaciones pendientes';
+    container.appendChild(empty);
+    return;
+  }
+  apps.forEach(app => {
+    const card = document.createElement('div');
+    card.className = 'app-card';
+
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap';
+
+    const nameBlock = document.createElement('div');
+    const nameEl = document.createElement('div');
+    nameEl.style.cssText = 'font-weight:700;font-size:15px';
+    nameEl.textContent = app.nombre;
+    const emailEl = document.createElement('div');
+    emailEl.style.cssText = 'font-size:12px;color:var(--gray);font-family:var(--font-mono);margin-top:2px';
+    emailEl.textContent = app.email;
+    const expEl = document.createElement('div');
+    expEl.style.cssText = 'font-size:12px;color:var(--gray);margin-top:4px';
+    expEl.textContent = 'Experiencia: ' + app.exp;
+    nameBlock.appendChild(nameEl);
+    nameBlock.appendChild(emailEl);
+    nameBlock.appendChild(expEl);
+
+    const metaBlock = document.createElement('div');
+    metaBlock.style.textAlign = 'right';
+    const planBadge = document.createElement('div');
+    planBadge.style.cssText = 'background:rgba(245,200,66,.15);color:var(--gold);padding:3px 10px;border-radius:0;font-size:11px;font-weight:700;display:inline-block';
+    planBadge.textContent = 'Plan: ' + app.plan;
+    const fechaEl = document.createElement('div');
+    fechaEl.style.cssText = 'font-size:11px;color:var(--gray);font-family:var(--font-mono);margin-top:4px';
+    fechaEl.textContent = app.fecha;
+    metaBlock.appendChild(planBadge);
+    metaBlock.appendChild(fechaEl);
+
+    header.appendChild(nameBlock);
+    header.appendChild(metaBlock);
+
+    const bioEl = document.createElement('div');
+    bioEl.style.cssText = 'font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:16px;padding:12px;background:var(--surface-2);border-radius:0;border-left:3px solid var(--gold)';
+    bioEl.textContent = app.bio;
+
+    const actions = document.createElement('div');
+    actions.style.cssText = 'display:flex;gap:10px;flex-wrap:wrap';
+
+    const btnAprobar = document.createElement('button');
+    btnAprobar.className = 'btn btn-success';
+    btnAprobar.textContent = '// Aprobar Coach';
+    btnAprobar.addEventListener('click', function() {
+      if (!confirm('Aprobar a ' + app.nombre + ' como coach ' + app.plan + '?')) return;
+      if (app.id && typeof app.id !== 'number') {
+        // Real API (string ID from DB)
+        fetch('/api/coaches/update-status.php', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('wc_token') },
+          body: JSON.stringify({ id: app.id, status: 'approved' })
+        }).then(function() {
+          card.style.opacity = '0.4';
+          card.style.pointerEvents = 'none';
+          var toast = document.createElement('div');
+          toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#22C55E;color:#000;padding:12px 20px;font-weight:700;z-index:9999;';
+          toast.textContent = 'Aprobado: ' + app.nombre;
+          document.body.appendChild(toast);
+          setTimeout(function() { document.body.removeChild(toast); }, 3000);
+        }).catch(function() {
+          alert('Aprobado localmente. Verificar conexion al servidor.');
+          card.style.opacity = '0.4'; card.style.pointerEvents = 'none';
+        });
+      } else {
+        card.style.opacity = '0.4';
+        card.style.pointerEvents = 'none';
+        alert('Aplicacion aprobada. Se enviara email de bienvenida a ' + app.email);
+      }
+    });
+
+    const btnRechazar = document.createElement('button');
+    btnRechazar.className = 'btn btn-danger';
+    btnRechazar.textContent = '\u2715 Rechazar';
+    btnRechazar.addEventListener('click', function() {
+      if (!confirm('Rechazar la aplicacion de ' + app.nombre + '?')) return;
+      if (app.id && typeof app.id !== 'number') {
+        fetch('/api/coaches/update-status.php', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('wc_token') },
+          body: JSON.stringify({ id: app.id, status: 'rejected' })
+        }).then(function() {
+          card.style.opacity = '0.4';
+          card.style.pointerEvents = 'none';
+        }).catch(function() {
+          card.style.opacity = '0.4'; card.style.pointerEvents = 'none';
+        });
+      } else {
+        card.style.opacity = '0.4';
+        card.style.pointerEvents = 'none';
+      }
+    });
+
+    const btnContrato = document.createElement('button');
+    btnContrato.className = 'btn btn-secondary';
+    btnContrato.textContent = '// Ver Contrato';
+
+    const btnWhatsapp = document.createElement('a');
+    btnWhatsapp.href = 'https://wa.me/573124904720?text=Hola%20' + encodeURIComponent(app.nombre) + '%2C%20somos%20WellCore%20Fitness.%20Revisamos%20tu%20aplicacion%20como%20coach.';
+    btnWhatsapp.target = '_blank';
+    btnWhatsapp.className = 'btn btn-secondary';
+    btnWhatsapp.textContent = 'WA WhatsApp';
+
+    actions.appendChild(btnAprobar);
+    actions.appendChild(btnRechazar);
+    actions.appendChild(btnContrato);
+    actions.appendChild(btnWhatsapp);
+
+    card.appendChild(header);
+    card.appendChild(bioEl);
+    card.appendChild(actions);
+    container.appendChild(card);
+  });
+}
+
+function renderApprovedCoaches() {
+  const tbody = document.getElementById('apps-aprobadas-tbody');
+  if (!tbody) return;
+  approvedCoaches.forEach(c => {
+    const tr = document.createElement('tr');
+    const planColors = { 'PROFESIONAL':'#E31E24', 'ELITE':'#F5C842', 'ASOCIADO':'#60a5fa' };
+    const pc = planColors[c.plan] || '#A1A1AA';
+
+    const cells = [
+      { text: c.nombre, style: 'font-weight:600' },
+      { tag: 'plan', plan: c.plan, color: pc },
+      { text: c.aprobado, style: 'font-family:var(--font-mono);font-size:12px' },
+      { text: c.clientes + ' clientes', style: '' },
+      { tag: 'estado', estado: c.estado }
+    ];
+
+    cells.forEach(cell => {
+      const td = document.createElement('td');
+      if (cell.tag === 'plan') {
+        const span = document.createElement('span');
+        span.style.cssText = 'background:rgba(255,255,255,.06);color:'+cell.color+';padding:2px 8px;border-radius:0;font-size:11px;font-weight:700';
+        span.textContent = cell.plan;
+        td.appendChild(span);
+      } else if (cell.tag === 'estado') {
+        const span = document.createElement('span');
+        span.className = 'status-badge status-active';
+        span.textContent = cell.estado;
+        td.appendChild(span);
+      } else {
+        if (cell.style) td.style.cssText = cell.style;
+        td.textContent = cell.text;
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function renderCoachesActivos() {
+  const tbody = document.getElementById('coaches-activos-tbody');
+  if (!tbody) return;
+  coaches.forEach(c => {
+    const tr = document.createElement('tr');
+    const planColors = { 'PROFESIONAL':'#E31E24', 'ELITE':'#F5C842', 'ASOCIADO':'#60a5fa' };
+    const pc = planColors[c.plan] || '#A1A1AA';
+
+    const tdId = document.createElement('td');
+    tdId.style.cssText = 'font-family:var(--font-mono);color:var(--gray);font-size:12px';
+    tdId.textContent = c.id;
+
+    const tdNombre = document.createElement('td');
+    tdNombre.style.fontWeight = '600';
+    tdNombre.textContent = c.nombre;
+
+    const tdPlan = document.createElement('td');
+    const planSpan = document.createElement('span');
+    planSpan.style.cssText = 'background:rgba(255,255,255,.06);color:'+pc+';padding:2px 8px;border-radius:0;font-size:11px;font-weight:700';
+    planSpan.textContent = c.plan;
+    tdPlan.appendChild(planSpan);
+
+    const tdCli = document.createElement('td');
+    tdCli.textContent = c.clientes;
+
+    const tdIng = document.createElement('td');
+    tdIng.style.cssText = 'font-family:var(--font-mono);color:var(--green);font-weight:600';
+    tdIng.textContent = c.ingresos;
+
+    const tdCoach60 = document.createElement('td');
+    tdCoach60.style.cssText = 'font-family:var(--font-mono);color:var(--gold);font-weight:600';
+    tdCoach60.textContent = c.coach_60;
+
+    const tdTkt = document.createElement('td');
+    const tktBadge = document.createElement('span');
+    tktBadge.style.cssText = c.tickets > 0 ? 'color:#60a5fa;font-weight:600' : 'color:var(--gray)';
+    tktBadge.textContent = c.tickets + ' abierto' + (c.tickets !== 1 ? 's' : '');
+    tdTkt.appendChild(tktBadge);
+
+    const tdEstado = document.createElement('td');
+    const estadoSpan = document.createElement('span');
+    estadoSpan.className = 'status-badge status-active';
+    estadoSpan.textContent = c.estado;
+    tdEstado.appendChild(estadoSpan);
+
+    const tdAcc = document.createElement('td');
+    tdAcc.style.cssText = 'display:flex;gap:6px';
+    const btnVer = document.createElement('button');
+    btnVer.className = 'btn btn-secondary btn-sm';
+    btnVer.textContent = 'Ver perfil';
+    btnVer.addEventListener('click', () => openCoachModal(c));
+    const btnWa = document.createElement('a');
+    btnWa.href = 'https://wa.me/573124904720';
+    btnWa.target = '_blank';
+    btnWa.className = 'btn btn-secondary btn-sm';
+    btnWa.textContent = 'WA';
+    tdAcc.appendChild(btnVer);
+    tdAcc.appendChild(btnWa);
+
+    [tdId,tdNombre,tdPlan,tdCli,tdIng,tdCoach60,tdTkt,tdEstado,tdAcc].forEach(td => tr.appendChild(td));
+    tbody.appendChild(tr);
+  });
+}
+
+function openCoachModal(c) {
+  document.getElementById('modal-coach-title').textContent = c.nombre;
+  const body = document.getElementById('modal-coach-body');
+  body.textContent = '';
+
+  const rows = [
+    ['ID', c.id],
+    ['Plan', c.plan],
+    ['Clientes activos', c.clientesLabel || String(c.clientes)],
+    ['Ingresos estimados/mes', c.ingresos + ' COP'],
+    ['60% Coach (quincenal)', c.coach_60 + ' COP'],
+    ['Tickets activos', c.tickets],
+    ['Estado', c.estado]
+  ];
+  if (c.email) rows.splice(2, 0, ['Email', c.email]);
+  if (c.city) rows.splice(2, 0, ['Ciudad', c.city]);
+  if (c.experience) rows.splice(2, 0, ['Experiencia', c.experience]);
+
+  rows.forEach(([label, val]) => {
+    const row = document.createElement('div');
+    row.className = 'info-row';
+    const lEl = document.createElement('span');
+    lEl.className = 'info-label';
+    lEl.textContent = label;
+    const vEl = document.createElement('span');
+    vEl.className = 'info-value';
+    vEl.textContent = val;
+    row.appendChild(lEl);
+    row.appendChild(vEl);
+    body.appendChild(row);
+  });
+
+  if (c.bio) {
+    const bioDiv = document.createElement('div');
+    bioDiv.style.marginTop = '16px';
+    const bl = document.createElement('div');
+    bl.style.cssText = 'font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px';
+    bl.textContent = 'Bio';
+    const bt = document.createElement('div');
+    bt.style.cssText = 'font-size:13px;line-height:1.6;color:var(--gray);padding:12px;background:var(--surface-2);border-radius:0';
+    bt.textContent = c.bio;
+    bioDiv.appendChild(bl);
+    bioDiv.appendChild(bt);
+    body.appendChild(bioDiv);
+  }
+
+  openModal('modal-coach');
+}
+
+function renderTickets() {
+  const tbody = document.getElementById('tickets-tbody');
+  if (!tbody) return;
+  tickets.forEach(t => {
+    const tr = document.createElement('tr');
+
+    const tdId = document.createElement('td');
+    tdId.style.cssText = 'font-family:var(--font-mono);font-weight:700';
+    tdId.textContent = t.id;
+
+    const tdCoach = document.createElement('td');
+    tdCoach.textContent = t.coach;
+
+    const tdCli = document.createElement('td');
+    tdCli.style.fontWeight = '600';
+    tdCli.textContent = t.cliente;
+
+    const tdPlan = document.createElement('td');
+    tdPlan.textContent = t.plan;
+
+    const tdTipo = document.createElement('td');
+    tdTipo.style.cssText = 'color:var(--gray);font-size:12px';
+    tdTipo.textContent = t.tipo;
+
+    const tdFecha = document.createElement('td');
+    tdFecha.style.cssText = 'font-family:var(--font-mono);font-size:12px';
+    tdFecha.textContent = t.fecha;
+
+    const tdSla = document.createElement('td');
+    const slaEl = document.createElement('span');
+    slaEl.className = t.sla_type === 'urgent' ? 'sla-urgent' : t.sla_type === 'warn' ? 'sla-warn' : 'sla-ok';
+    slaEl.textContent = t.sla_type === 'ok' ? '✓ ' + t.sla : '⚠ ' + t.sla;
+    tdSla.appendChild(slaEl);
+
+    const tdEstado = document.createElement('td');
+    const estadoSpan = document.createElement('span');
+    estadoSpan.className = t.estado === 'Abierto' ? 'status-badge status-open' : 'status-badge status-closed';
+    estadoSpan.textContent = t.estado;
+    tdEstado.appendChild(estadoSpan);
+
+    const tdAcc = document.createElement('td');
+    tdAcc.style.cssText = 'display:flex;gap:6px';
+    const btnVer = document.createElement('button');
+    btnVer.className = 'btn btn-secondary btn-sm';
+    btnVer.textContent = 'Ver';
+    btnVer.addEventListener('click', () => openTicketModal(t));
+    tdAcc.appendChild(btnVer);
+    if (t.estado === 'Abierto') {
+      const btnRes = document.createElement('button');
+      btnRes.className = 'btn btn-success btn-sm';
+      btnRes.textContent = 'Resolver';
+      tdAcc.appendChild(btnRes);
+    }
+
+    [tdId,tdCoach,tdCli,tdPlan,tdTipo,tdFecha,tdSla,tdEstado,tdAcc].forEach(td => tr.appendChild(td));
+    tbody.appendChild(tr);
+  });
+}
+
+function openTicketModal(t) {
+  document.getElementById('modal-ticket-title').textContent = 'Ticket ' + t.id;
+  const body = document.getElementById('modal-ticket-body');
+  body.textContent = '';
+  const rows = [['Coach',t.coach],['Cliente',t.cliente],['Plan',t.plan],['Tipo',t.tipo],['Fecha',t.fecha],['SLA',t.sla],['Estado',t.estado]];
+  rows.forEach(([label,val]) => {
+    const row = document.createElement('div');
+    row.className = 'info-row';
+    const lEl = document.createElement('span');
+    lEl.className = 'info-label';
+    lEl.textContent = label;
+    const vEl = document.createElement('span');
+    vEl.className = 'info-value';
+    vEl.textContent = val;
+    row.appendChild(lEl);
+    row.appendChild(vEl);
+    body.appendChild(row);
+  });
+  const notasLabel = document.createElement('div');
+  notasLabel.style.cssText = 'font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin:16px 0 6px';
+  notasLabel.textContent = 'Descripcion del coach';
+  const notasBox = document.createElement('div');
+  notasBox.style.cssText = 'background:var(--surface-2);border-radius:0;padding:12px;font-size:13px;line-height:1.6;color:var(--gray)';
+  notasBox.textContent = t.notas;
+  body.appendChild(notasLabel);
+  body.appendChild(notasBox);
+  if (t.estado === 'Abierto') {
+    const respLabel = document.createElement('div');
+    respLabel.style.cssText = 'font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin:16px 0 6px';
+    respLabel.textContent = 'Respuesta';
+    const ta = document.createElement('textarea');
+    ta.className = 'form-textarea';
+    ta.id = 'ticketResponseTA';
+    ta.placeholder = 'Escribir plan o respuesta para el coach...';
+    body.appendChild(respLabel);
+    body.appendChild(ta);
+
+    // AI draft button
+    const aiRow = document.createElement('div');
+    aiRow.style.cssText = 'display:flex;gap:8px;margin-top:10px;align-items:center;';
+    const aiBtn = document.createElement('button');
+    aiBtn.className = 'btn btn-primary btn-sm';
+    aiBtn.style.cssText = 'background:#E31E24;border-color:#E31E24;font-size:11px;';
+    aiBtn.textContent = 'Generar respuesta IA';
+    const aiStatus = document.createElement('span');
+    aiStatus.style.cssText = 'font-family:var(--font-mono,monospace);font-size:10px;color:var(--gray,#888);';
+    aiBtn.addEventListener('click', function() {
+      aiBtn.disabled = true;
+      aiBtn.textContent = 'Generando...';
+      aiStatus.textContent = 'Conectando con Router IA...';
+      const token = localStorage.getItem('wc_token') || localStorage.getItem('wc_admin_token') || '';
+      const context = 'Ticket ' + t.id + '. Coach: ' + t.coach + '. Cliente: ' + t.cliente
+        + '. Plan: ' + t.plan + '. Tipo: ' + t.tipo + '. Descripcion: ' + t.notas;
+      fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'Genera una respuesta profesional para este ticket de soporte WellCore: ' + context,
+          session_id: 'admin-ticket-' + t.id
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.reply) {
+          ta.value = d.reply;
+          aiStatus.textContent = 'Borrador generado — revisa antes de enviar';
+          aiStatus.style.color = '#22C55E';
+        } else {
+          aiStatus.textContent = d.error || 'Error generando borrador';
+          aiStatus.style.color = '#E31E24';
+        }
+      })
+      .catch(function() {
+        aiStatus.textContent = 'Error de conexion con la IA';
+        aiStatus.style.color = '#E31E24';
+      })
+      .finally(function() {
+        aiBtn.disabled = false;
+        aiBtn.textContent = 'Generar respuesta IA';
+      });
+    });
+    aiRow.appendChild(aiBtn);
+    aiRow.appendChild(aiStatus);
+    body.appendChild(aiRow);
+  }
+  openModal('modal-ticket');
+}
+
+function renderPagos() {
+  const tbody = document.getElementById('pagos-tbody');
+  if (!tbody) return;
+  pagosData.forEach(p => {
+    const tr = document.createElement('tr');
+    const planColors = { 'PROFESIONAL':'#E31E24', 'ELITE':'#F5C842', 'ASOCIADO':'#60a5fa' };
+    const pc = planColors[p.plan] || '#A1A1AA';
+
+    const tdCoach = document.createElement('td');
+    tdCoach.style.fontWeight = '600';
+    tdCoach.textContent = p.coach;
+
+    const tdPlan = document.createElement('td');
+    const planSpan = document.createElement('span');
+    planSpan.style.cssText = 'background:rgba(255,255,255,.06);color:'+pc+';padding:2px 8px;border-radius:0;font-size:11px;font-weight:700';
+    planSpan.textContent = p.plan;
+    tdPlan.appendChild(planSpan);
+
+    const tdCli = document.createElement('td');
+    tdCli.textContent = p.clientes;
+
+    const tdBruto = document.createElement('td');
+    tdBruto.style.cssText = 'font-family:var(--font-mono)';
+    tdBruto.textContent = p.bruto;
+
+    const tdCoach60 = document.createElement('td');
+    tdCoach60.style.cssText = 'font-family:var(--font-mono);color:var(--gold);font-weight:600';
+    tdCoach60.textContent = p.coach_60;
+
+    const tdWc40 = document.createElement('td');
+    tdWc40.style.cssText = 'font-family:var(--font-mono);color:var(--green);font-weight:600';
+    tdWc40.textContent = p.wc_40;
+
+    const tdEstado = document.createElement('td');
+    const estadoSpan = document.createElement('span');
+    estadoSpan.className = p.estado === 'Pendiente' ? 'status-badge status-pending' : 'status-badge status-active';
+    estadoSpan.textContent = p.estado;
+    tdEstado.appendChild(estadoSpan);
+
+    const tdAcc = document.createElement('td');
+    const btn = document.createElement('button');
+    btn.className = p.estado === 'Pendiente' ? 'btn btn-gold btn-sm' : 'btn btn-secondary btn-sm';
+    btn.textContent = p.estado === 'Pendiente' ? '// Pagar' : '// Recibo';
+    tdAcc.appendChild(btn);
+
+    [tdCoach,tdPlan,tdCli,tdBruto,tdCoach60,tdWc40,tdEstado,tdAcc].forEach(td => tr.appendChild(td));
+    tbody.appendChild(tr);
+  });
+}
+
+function updateDate() {
+  const now = new Date();
+  document.getElementById('topbar-date').textContent = now.toLocaleDateString('es-CO',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+}
+
+// ── API INTEGRATION ──
+function apiBearerFetch(path) {
+  var token = localStorage.getItem('wc_token');
+  var headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  return fetch('/api' + path, { headers: headers }).then(function(r) { return r.json(); });
+}
+
+function loadLiveData() {
+  // Pending applications
+  apiBearerFetch('/coaches/list.php?status=pending')
+    .then(function(res) {
+      if (res.ok && res.data && res.data.length > 0) {
+        var mapped = res.data.map(function(a) {
+          return {
+            id: a.id,
+            nombre: a.name || a.full_name || '',
+            email: a.email || '',
+            plan: (a.plan || a.coach_plan || '').toUpperCase(),
+            exp: a.experience || (a.experience_years ? a.experience_years + ' anos de experiencia' : ''),
+            bio: a.bio || '',
+            fecha: (a.created_at || '').substring(0, 10)
+          };
+        });
+        renderPendingApps(mapped);
+        // Update pending count badges
+        var badge = document.getElementById('pending-count');
+        if (badge) badge.textContent = mapped.length;
+        // Update KPI pending count on dashboard
+        var kpiPending = document.getElementById('kpi-pending-count');
+        if (kpiPending) kpiPending.textContent = res.total || mapped.length;
+      }
+    }).catch(function() {});
+
+  // Coaches activos (paginated)
+  loadCoachesPage(0);
+}
+
+// ── COACHES PAGINATION STATE ──
+var coachesPag = { offset: 0, limit: 25, total: 0 };
+
+function loadCoachesPage(offset) {
+  coachesPag.offset = offset;
+  var searchVal = '';
+  var searchEl = document.getElementById('search-coach');
+  if (searchEl) searchVal = searchEl.value.trim();
+
+  var planFilter = '';
+  var planEl = document.getElementById('filter-coach-plan');
+  if (planEl) planFilter = planEl.value.trim();
+
+  var qs = '?status=approved&limit=' + coachesPag.limit + '&offset=' + offset;
+  if (searchVal) qs += '&search=' + encodeURIComponent(searchVal);
+  // Note: plan filtering is done client-side since the API only supports status/search
+
+  apiBearerFetch('/coaches/list.php' + qs)
+    .then(function(res) {
+      if (res.ok && res.data) {
+        coachesPag.total = res.total || 0;
+        var mapped = res.data.map(function(a) {
+          // Parse current_clients string to numeric estimate
+          var clientCount = 0;
+          var cc = a.current_clients || '';
+          if (cc === 'No tengo') clientCount = 0;
+          else if (cc === '1-5 clientes' || cc === '1-5') clientCount = 3;
+          else if (cc === '6-15') clientCount = 10;
+          else if (cc === '+15') clientCount = 20;
+          else if (!isNaN(parseInt(cc))) clientCount = parseInt(cc);
+
+          // Revenue estimate: clients * avg plan price (COP ~$450.000/mes -> ~$123 USD)
+          // For display we use COP thousands: clients * 450
+          var avgPlanCOP = 450; // thousands COP
+          var revenueEst = clientCount * avgPlanCOP;
+          var coach60 = Math.round(revenueEst * 0.6);
+
+          return {
+            id: a.id || '--',
+            nombre: a.name || a.full_name || '',
+            plan: (a.plan || a.coach_plan || '').toUpperCase(),
+            clientes: clientCount,
+            clientesLabel: cc || '0',
+            ingresos: '$' + revenueEst.toLocaleString() + 'K',
+            coach_60: '$' + coach60.toLocaleString() + 'K',
+            tickets: a.open_tickets || 0,
+            estado: 'Activo',
+            bio: a.bio || '',
+            email: a.email || '',
+            city: a.city || '',
+            experience: a.experience || ''
+          };
+        });
+        renderCoachesActivosFromAPI(mapped);
+        renderRevenueSummary(mapped);
+        updateCoachesPagination();
+      }
+    }).catch(function() {});
+}
+
+function renderCoachesActivosFromAPI(data) {
+  var tbody = document.getElementById('coaches-activos-tbody');
+  if (!tbody) return;
+  tbody.textContent = '';
+
+  // Client-side plan filter
+  var planEl = document.getElementById('filter-coach-plan');
+  var planVal = planEl ? planEl.value.trim().toUpperCase() : '';
+  if (planVal) {
+    data = data.filter(function(c) { return c.plan === planVal; });
+  }
+
+  if (data.length === 0) {
+    var tr = document.createElement('tr');
+    var td = document.createElement('td');
+    td.setAttribute('colspan', '9');
+    td.style.cssText = 'text-align:center;color:var(--gray);padding:32px;font-size:13px';
+    td.textContent = 'No se encontraron coaches.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+  var planColors = { 'PROFESIONAL':'#E31E24', 'ELITE':'#F5C842', 'ASOCIADO':'#60a5fa' };
+  data.forEach(function(c) {
+    var tr = document.createElement('tr');
+    var pc = planColors[c.plan] || '#A1A1AA';
+
+    var tdId = document.createElement('td');
+    tdId.style.cssText = 'font-family:var(--font-mono);color:var(--gray);font-size:12px';
+    tdId.textContent = c.id;
+
+    var tdNombre = document.createElement('td');
+    tdNombre.style.fontWeight = '600';
+    tdNombre.textContent = c.nombre;
+
+    var tdPlan = document.createElement('td');
+    var planSpan = document.createElement('span');
+    planSpan.style.cssText = 'background:rgba(255,255,255,.06);color:'+pc+';padding:2px 8px;border-radius:0;font-size:11px;font-weight:700';
+    planSpan.textContent = c.plan;
+    tdPlan.appendChild(planSpan);
+
+    var tdCli = document.createElement('td');
+    tdCli.textContent = c.clientesLabel || String(c.clientes);
+    tdCli.title = 'Estimado: ~' + c.clientes + ' clientes';
+
+    var tdIng = document.createElement('td');
+    tdIng.style.cssText = 'font-family:var(--font-mono);color:var(--green);font-weight:600';
+    tdIng.textContent = c.ingresos;
+    tdIng.title = 'Estimado: ' + c.clientes + ' clientes x $450K COP promedio';
+
+    var tdCoach60 = document.createElement('td');
+    tdCoach60.style.cssText = 'font-family:var(--font-mono);color:var(--gold);font-weight:600';
+    tdCoach60.textContent = c.coach_60;
+
+    var tdTkt = document.createElement('td');
+    var tktSpan = document.createElement('span');
+    tktSpan.style.cssText = c.tickets > 0 ? 'color:#60a5fa;font-weight:600' : 'color:var(--gray)';
+    tktSpan.textContent = c.tickets + ' abierto' + (c.tickets !== 1 ? 's' : '');
+    tdTkt.appendChild(tktSpan);
+
+    var tdEstado = document.createElement('td');
+    var estadoSpan = document.createElement('span');
+    estadoSpan.className = 'status-badge status-active';
+    estadoSpan.textContent = c.estado;
+    tdEstado.appendChild(estadoSpan);
+
+    var tdAcc = document.createElement('td');
+    tdAcc.style.cssText = 'display:flex;gap:6px';
+    var btnVer = document.createElement('button');
+    btnVer.className = 'btn btn-secondary btn-sm';
+    btnVer.textContent = 'Ver perfil';
+    btnVer.addEventListener('click', (function(coach) { return function() { openCoachModal(coach); }; })(c));
+    tdAcc.appendChild(btnVer);
+
+    [tdId,tdNombre,tdPlan,tdCli,tdIng,tdCoach60,tdTkt,tdEstado,tdAcc].forEach(function(td) { tr.appendChild(td); });
+    tbody.appendChild(tr);
+  });
+}
+
+function renderRevenueSummary(data) {
+  var container = document.getElementById('coaches-revenue-summary');
+  if (!container) return;
+  container.textContent = '';
+
+  var totalClients = 0;
+  var totalRevenueK = 0;
+  var totalCoach60K = 0;
+  data.forEach(function(c) {
+    totalClients += c.clientes || 0;
+    var rev = parseInt(String(c.ingresos).replace(/[^0-9]/g, '')) || 0;
+    var c60 = parseInt(String(c.coach_60).replace(/[^0-9]/g, '')) || 0;
+    totalRevenueK += rev;
+    totalCoach60K += c60;
+  });
+  var totalWC40K = totalRevenueK - totalCoach60K;
+
+  var kpis = [
+    { label: 'Total Clientes', value: String(totalClients), sub: data.length + ' coaches activos', cls: 'green' },
+    { label: 'Revenue Estimado/mes', value: '$' + totalRevenueK.toLocaleString() + 'K', sub: 'COP miles', cls: 'gold' },
+    { label: '60% Coaches', value: '$' + totalCoach60K.toLocaleString() + 'K', sub: 'A distribuir quincenal', cls: '' },
+    { label: '40% WellCore', value: '$' + totalWC40K.toLocaleString() + 'K', sub: 'Retencion plataforma', cls: 'green' }
+  ];
+
+  kpis.forEach(function(k) {
+    var card = document.createElement('div');
+    card.className = 'kpi-card' + (k.cls ? ' ' + k.cls : '');
+    var lbl = document.createElement('div');
+    lbl.className = 'kpi-label';
+    lbl.textContent = k.label;
+    var val = document.createElement('div');
+    val.className = 'kpi-value';
+    val.style.fontSize = '28px';
+    val.textContent = k.value;
+    var sub = document.createElement('div');
+    sub.className = 'kpi-sub';
+    sub.textContent = k.sub;
+    card.appendChild(lbl);
+    card.appendChild(val);
+    card.appendChild(sub);
+    container.appendChild(card);
+  });
+}
+
+function updateCoachesPagination() {
+  var info = document.getElementById('coaches-pag-info');
+  var prev = document.getElementById('coaches-pag-prev');
+  var next = document.getElementById('coaches-pag-next');
+  if (!info || !prev || !next) return;
+
+  var from = coachesPag.total > 0 ? coachesPag.offset + 1 : 0;
+  var to = Math.min(coachesPag.offset + coachesPag.limit, coachesPag.total);
+  info.textContent = from + '-' + to + ' de ' + coachesPag.total;
+
+  prev.disabled = coachesPag.offset <= 0;
+  next.disabled = coachesPag.offset + coachesPag.limit >= coachesPag.total;
+
+  // Visual feedback for disabled state
+  prev.style.opacity = prev.disabled ? '0.4' : '1';
+  next.style.opacity = next.disabled ? '0.4' : '1';
+  prev.style.cursor = prev.disabled ? 'default' : 'pointer';
+  next.style.cursor = next.disabled ? 'default' : 'pointer';
+}
+
+// Pagination + search event listeners
+document.addEventListener('DOMContentLoaded', function() {
+  var prev = document.getElementById('coaches-pag-prev');
+  var next = document.getElementById('coaches-pag-next');
+  if (prev) prev.addEventListener('click', function() {
+    loadCoachesPage(Math.max(0, coachesPag.offset - coachesPag.limit));
+  });
+  if (next) next.addEventListener('click', function() {
+    loadCoachesPage(coachesPag.offset + coachesPag.limit);
+  });
+
+  // Debounced search (350ms)
+  var searchCoach = document.getElementById('search-coach');
+  var searchTimer = null;
+  if (searchCoach) searchCoach.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function() { loadCoachesPage(0); }, 350);
+  });
+
+  // Plan filter
+  var planFilter = document.getElementById('filter-coach-plan');
+  if (planFilter) planFilter.addEventListener('change', function() {
+    loadCoachesPage(0);
+  });
+});
+
+function initApp() {
+  updateDate();
+  renderPerfBars();
+  renderPendingApps();
+  renderApprovedCoaches();
+  renderCoachesActivos();
+  renderTickets();
+  renderPagos();
+  loadLiveData();
+}
+
+// Auth is handled by inline script at top of body
+</script>
+<script src="js/v5-effects.js" defer></script>
+</body>
+</html>

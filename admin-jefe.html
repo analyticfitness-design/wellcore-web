@@ -1,0 +1,2949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WellCore — Admin Jefe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31E24;
+  --red-dark: #B8181D;
+  --bg: #0a0a0a;
+  --surface: #111113;
+  --surface-2: #1a1a1d;
+  --border: #252528;
+  --gray: #A1A1AA;
+  --accent: #00D9FF;
+  --green: #22C55E;
+  --white: #FFFFFF;
+  --gold: #F5C842;
+  --sidebar-w: 260px;
+  --topbar-h: 64px;
+  --font-heading: 'Bebas Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--white); font-family: var(--font-body); font-size: 14px; overflow-x: hidden; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+
+/* LOGIN OVERLAY */
+#login-overlay {
+  position: fixed; inset: 0; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+.login-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; padding: 48px 40px; width: 100%; max-width: 420px;
+  text-align: center;
+}
+.login-logo { font-family: var(--font-heading); font-size: 32px; color: var(--red); letter-spacing: 2px; margin-bottom: 8px; }
+.login-sub { color: var(--gray); font-size: 13px; margin-bottom: 32px; }
+.login-box input {
+  width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--white); padding: 12px 16px; border-radius: 0;
+  font-family: var(--font-body); font-size: 14px; margin-bottom: 12px; outline: none;
+}
+.login-box input:focus { border-color: var(--red); }
+.btn-login {
+  width: 100%; background: var(--red); color: var(--white);
+  border: none; padding: 13px; border-radius: 0; font-size: 15px;
+  font-weight: 600; cursor: pointer; margin-top: 4px; transition: opacity .1s linear;
+}
+.btn-login:hover { opacity: .85; }
+.login-error { color: #ff6b6b; font-size: 13px; margin-top: 12px; display: none; }
+
+/* APP LAYOUT */
+#app { display: flex; height: 100vh; overflow: hidden; }
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w); min-width: var(--sidebar-w);
+  background: var(--surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; height: 100vh;
+  position: fixed; left: 0; top: 0; z-index: 100;
+  transition: transform .3s;
+}
+.sidebar-logo {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.sidebar-logo-text { font-family: var(--font-heading); font-size: 22px; color: var(--white); letter-spacing: 1px; }
+.sidebar-logo-badge {
+  background: var(--red); color: var(--white);
+  font-size: 9px; font-weight: 700; padding: 2px 6px;
+  border-radius: 0; letter-spacing: 1px; margin-left: auto;
+}
+.sidebar-nav { flex: 1; padding: 16px 0; overflow-y: auto; }
+.nav-section-label {
+  font-size: 10px; font-weight: 600; color: var(--gray);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 8px 20px 4px; margin-top: 8px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 20px; cursor: pointer; border-radius: 0;
+  color: var(--gray); font-size: 14px; font-weight: 500;
+  transition: background .1s linear, color .1s linear; position: relative;
+  border-left: 3px solid transparent; user-select: none;
+}
+.nav-item:hover { background: var(--surface-2); color: var(--white); }
+.nav-item.active { background: rgba(227,30,36,.1); color: var(--white); border-left-color: var(--red); }
+.nav-item i { width: 18px; text-align: center; font-size: 15px; }
+.nav-badge {
+  margin-left: auto; background: var(--red); color: var(--white);
+  font-size: 11px; font-weight: 700; min-width: 20px; height: 20px;
+  border-radius: 0; display: flex; align-items: center; justify-content: center;
+  padding: 0 6px;
+}
+.sidebar-footer {
+  padding: 16px 20px; border-top: 1px solid var(--border);
+}
+.sidebar-user {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.sidebar-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--red); display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; flex-shrink: 0;
+}
+.sidebar-user-name { font-size: 13px; font-weight: 600; }
+.sidebar-user-role { font-size: 11px; color: var(--gray); }
+.btn-logout {
+  width: 100%; background: transparent; border: 1px solid var(--border);
+  color: var(--gray); padding: 9px; border-radius: 0;
+  font-size: 13px; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; gap: 8px; transition: all .1s linear;
+}
+.btn-logout:hover { border-color: var(--red); color: var(--red); }
+
+/* MAIN AREA */
+.main-area {
+  margin-left: var(--sidebar-w); flex: 1; display: flex;
+  flex-direction: column; height: 100vh; overflow: hidden;
+}
+
+/* TOPBAR */
+.topbar {
+  height: var(--topbar-h); background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 28px;
+  gap: 16px; flex-shrink: 0; position: sticky; top: 0; z-index: 50;
+}
+.topbar-hamburger {
+  display: none; background: none; border: none; color: var(--white);
+  font-size: 20px; cursor: pointer; padding: 4px;
+}
+.topbar-breadcrumb { font-size: 13px; color: var(--gray); }
+.topbar-breadcrumb span { color: var(--white); font-weight: 600; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.topbar-date { font-family: var(--font-mono); font-size: 12px; color: var(--gray); }
+.topbar-notif {
+  position: relative; background: var(--surface-2); border: 1px solid var(--border);
+  width: 36px; height: 36px; border-radius: 0; display: flex;
+  align-items: center; justify-content: center; cursor: pointer; color: var(--gray);
+  transition: color .1s linear;
+}
+.topbar-notif:hover { color: var(--white); }
+.notif-dot {
+  position: absolute; top: 6px; right: 6px; width: 8px; height: 8px;
+  background: var(--red); border-radius: 50%; border: 2px solid var(--surface);
+}
+
+/* CONTENT */
+.content { flex: 1; overflow-y: auto; padding: 28px; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* PAGE HEADER */
+.page-header { margin-bottom: 24px; }
+.page-title { font-family: var(--font-heading); font-size: 32px; letter-spacing: 1px; }
+.page-subtitle { color: var(--gray); font-size: 13px; margin-top: 4px; }
+
+/* KPI GRID */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.kpi-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; padding: 20px; position: relative; overflow: hidden;
+}
+.kpi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--red); border-radius: 0 12px 0 0;
+}
+.kpi-card.green::before { background: var(--green); }
+.kpi-card.gold::before { background: var(--gold); }
+.kpi-card.blue::before { background: #60a5fa; }
+.kpi-label { font-size: 11px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.kpi-value { font-family: var(--font-heading); font-size: 36px; letter-spacing: 1px; line-height: 1; }
+.kpi-sub { font-size: 12px; color: var(--gray); margin-top: 6px; }
+.kpi-icon { position: absolute; top: 18px; right: 18px; color: var(--border); font-size: 28px; }
+.kpi-badge {
+  display: inline-block; background: rgba(227,30,36,.15);
+  color: var(--red); font-size: 11px; font-weight: 700;
+  padding: 2px 8px; border-radius: 0; margin-top: 6px;
+}
+.kpi-badge.green { background: rgba(34,197,94,.15); color: var(--green); }
+.kpi-badge.gold { background: rgba(245,200,66,.15); color: var(--gold); }
+
+/* CHARTS ROW */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.chart-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; padding: 20px;
+}
+.chart-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--white); }
+.chart-subtitle { font-size: 11px; color: var(--gray); margin-left: 8px; font-weight: 400; }
+
+/* SVG CHARTS */
+.svg-chart { width: 100%; }
+.bar-label { font-family: var(--font-mono); font-size: 10px; fill: var(--gray); }
+.bar-value { font-family: var(--font-mono); font-size: 10px; fill: var(--white); }
+.axis-line { stroke: var(--border); stroke-width: 1; }
+
+/* ACTIVITY FEED */
+.activity-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; padding: 20px; margin-bottom: 24px;
+}
+.activity-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.activity-title { font-size: 13px; font-weight: 600; }
+.activity-list { display: flex; flex-direction: column; gap: 0; }
+.activity-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red); margin-top: 5px; flex-shrink: 0;
+}
+.activity-dot.green { background: var(--green); }
+.activity-dot.gold { background: var(--gold); }
+.activity-dot.blue { background: #60a5fa; }
+.activity-text { font-size: 13px; line-height: 1.5; }
+.activity-time { font-size: 11px; color: var(--gray); margin-top: 2px; font-family: var(--font-mono); }
+
+/* TABLES */
+.table-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; overflow: hidden; margin-bottom: 24px;
+}
+.table-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+.table-header-title { font-size: 14px; font-weight: 600; }
+.table-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  padding: 11px 16px; text-align: left; font-size: 11px;
+  font-weight: 600; color: var(--gray); text-transform: uppercase;
+  letter-spacing: 1px; background: var(--surface-2); white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+tbody td {
+  padding: 13px 16px; font-size: 13px; border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: rgba(255,255,255,.02); }
+
+/* STATUS BADGES */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 0; font-size: 11px; font-weight: 600;
+}
+.status-active { background: rgba(34,197,94,.12); color: var(--green); }
+.status-pending { background: rgba(245,200,66,.12); color: var(--gold); }
+.status-suspended { background: rgba(227,30,36,.12); color: var(--red); }
+.status-closed { background: rgba(161,161,170,.12); color: var(--gray); }
+.status-open { background: rgba(96,165,250,.12); color: #60a5fa; }
+.status-urgent { background: rgba(227,30,36,.18); color: #ff6b6b; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 0; font-size: 12px;
+  font-weight: 600; cursor: pointer; border: none; transition: all .1s linear;
+  font-family: var(--font-body); white-space: nowrap;
+}
+.btn-primary { background: var(--red); color: var(--white); }
+.btn-primary:hover { opacity: .85; }
+.btn-secondary { background: var(--surface-2); color: var(--white); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--gray); }
+.btn-success { background: rgba(34,197,94,.15); color: var(--green); border: 1px solid rgba(34,197,94,.3); }
+.btn-success:hover { background: rgba(34,197,94,.25); }
+.btn-danger { background: rgba(227,30,36,.15); color: var(--red); border: 1px solid rgba(227,30,36,.3); }
+.btn-danger:hover { background: rgba(227,30,36,.25); }
+.btn-gold { background: rgba(245,200,66,.15); color: var(--gold); border: 1px solid rgba(245,200,66,.3); }
+.btn-gold:hover { background: rgba(245,200,66,.25); }
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+.btn-icon { padding: 7px; width: 32px; height: 32px; justify-content: center; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tab-btn {
+  padding: 10px 20px; font-size: 13px; font-weight: 500; cursor: pointer;
+  background: none; border: none; color: var(--gray); border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all .1s linear; font-family: var(--font-body);
+}
+.tab-btn.active { color: var(--white); border-bottom-color: var(--red); }
+.tab-btn:hover:not(.active) { color: var(--white); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* FILTERS */
+.filter-row {
+  display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;
+}
+.filter-select, .filter-input {
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--white); padding: 8px 12px; border-radius: 0;
+  font-size: 13px; font-family: var(--font-body); outline: none;
+}
+.filter-select:focus, .filter-input:focus { border-color: var(--red); }
+.filter-input { min-width: 200px; }
+.filter-input::placeholder { color: var(--gray); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; width: 100%; max-width: 640px;
+  max-height: 85vh; overflow-y: auto;
+  transform: scale(.96); transition: transform .2s;
+}
+.modal-overlay.open .modal { transform: scale(1); }
+.modal-header {
+  padding: 20px 24px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0;
+  background: var(--surface); z-index: 1;
+}
+.modal-title { font-size: 16px; font-weight: 700; }
+.modal-close {
+  background: none; border: none; color: var(--gray);
+  font-size: 20px; cursor: pointer; padding: 4px; transition: color .1s linear;
+}
+.modal-close:hover { color: var(--white); }
+.modal-body { padding: 24px; }
+.modal-footer {
+  padding: 16px 24px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; justify-content: flex-end;
+  position: sticky; bottom: 0; background: var(--surface);
+}
+
+/* INFO ROWS */
+.info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.info-row:last-child { border-bottom: none; }
+.info-label { color: var(--gray); font-size: 12px; }
+.info-value { font-size: 13px; font-weight: 500; }
+
+/* TIMELINE */
+.timeline { list-style: none; position: relative; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-item { position: relative; padding: 0 0 16px 28px; }
+.timeline-dot {
+  position: absolute; left: 0; top: 3px; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--surface-2); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center; font-size: 7px;
+}
+.timeline-dot.red { border-color: var(--red); background: rgba(227,30,36,.2); }
+.timeline-dot.green { border-color: var(--green); background: rgba(34,197,94,.2); }
+.timeline-time { font-size: 11px; color: var(--gray); font-family: var(--font-mono); }
+.timeline-text { font-size: 13px; margin-top: 2px; }
+
+/* TEXTAREA */
+.form-textarea {
+  width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--white); padding: 12px; border-radius: 0;
+  font-family: var(--font-body); font-size: 13px; resize: vertical;
+  min-height: 100px; outline: none;
+}
+.form-textarea:focus { border-color: var(--red); }
+
+/* SECTION DIVIDER */
+.section-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+/* SLA INDICATORS */
+.sla-urgent { color: #ff6b6b; font-weight: 600; }
+.sla-warn { color: var(--gold); font-weight: 600; }
+.sla-ok { color: var(--green); font-weight: 600; }
+
+/* PAYMENT CARDS */
+.payment-summary {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.pay-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; padding: 20px; text-align: center;
+}
+.pay-card-label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.pay-card-value { font-family: var(--font-heading); font-size: 28px; }
+.pay-card-sub { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+/* DONUT CHART */
+.donut-legend { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.donut-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.donut-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* GAUGE */
+.gauge-value { font-family: var(--font-heading); font-size: 32px; text-align: center; margin-top: 8px; }
+.gauge-label { font-size: 12px; color: var(--gray); text-align: center; }
+
+/* CONFIG */
+.config-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0; padding: 24px; margin-bottom: 16px;
+}
+.config-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.config-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.config-item:last-child { border-bottom: none; }
+.config-item-label { font-size: 13px; }
+.config-item-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
+.status-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 0; font-size: 11px; font-weight: 600;
+}
+.pill-green { background: rgba(34,197,94,.12); color: var(--green); }
+.pill-gray { background: rgba(161,161,170,.12); color: var(--gray); }
+.pill-red { background: rgba(227,30,36,.12); color: var(--red); }
+
+/* MOBILE OVERLAY */
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7);
+  z-index: 99;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.mobile-open { transform: translateX(0); }
+  .sidebar-overlay { display: block; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  .sidebar-overlay.open { opacity: 1; pointer-events: all; }
+  .main-area { margin-left: 0; }
+  .topbar-hamburger { display: block; }
+  .charts-row { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .content { padding: 16px; }
+}
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .modal { max-width: 100%; }
+}
+/* v5 enhancements */
+.v5-preloader{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s,visibility .6s}
+.v5-preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+.v5-preloader-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:#fff}
+.v5-preloader-logo span{color:#E31E24}
+.v5-preloader-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
+.v5-preloader-fill{height:100%;background:#E31E24;width:0;animation:preloaderFill 1.2s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes preloaderFill{0%{width:0}100%{width:100%}}
+/* Sidebar top-bar v5 accent */
+.sidebar-logo{border-left:3px solid #E31E24}
+/* Stat card top-bar on hover */
+.kpi-card{position:relative;overflow:hidden;transition:border-color .2s}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#E31E24;transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.kpi-card:hover::after{transform:scaleX(1)}
+/* Nav active indicator */
+.nav-item.active{border-left:2px solid #E31E24}
+/* Table row hover */
+tbody tr:hover td{background:rgba(255,255,255,0.03)}
+</style>
+<link rel="stylesheet" href="css/wellcore-v5.css">
+</head>
+<body>
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+
+<!-- Auth: redirect to login if no valid admin token -->
+<script src="js/api.js"></script>
+<script>
+(function() {
+    var token = localStorage.getItem('wc_token');
+    if (!token) { window.location.replace('login.html'); return; }
+    WC_API.auth.me().then(function(data) {
+        if (!data || data.type !== 'admin') { window.location.replace('login.html'); return; }
+        var role = data.admin ? data.admin.role : '';
+        if (role !== 'admin' && role !== 'jefe' && role !== 'superadmin') { window.location.replace('login.html'); return; }
+        var name = (data.admin && data.admin.name) || (data.admin && data.admin.username) || 'Admin';
+        var el = document.getElementById('sidebar-user-name'); if (el) el.textContent = name;
+        var av = document.getElementById('sidebar-avatar'); if (av) av.textContent = name.split(' ').map(function(w){return w[0]}).join('').toUpperCase().slice(0,2);
+        var rl = document.getElementById('sidebar-user-role'); if (rl) rl.textContent = role.charAt(0).toUpperCase() + role.slice(1);
+        document.body.style.visibility = 'visible';
+        if (typeof initApp === 'function') initApp();
+    }).catch(function() { window.location.replace('login.html'); });
+})();
+</script>
+<style>body { visibility: hidden; }</style>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div>
+        <div class="sidebar-logo-text">WELLCORE</div>
+        <div style="font-size:10px;color:var(--gray);margin-top:1px;font-family:var(--font-mono)">FITNESS ENTERPRISE</div>
+      </div>
+      <div class="sidebar-logo-badge">JEFE</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <div class="nav-item active" onclick="showSection('dashboard')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9670;</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showSection('coaches')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9650;</span> Coaches
+        <span class="nav-badge" style="display:none">0</span>
+      </div>
+      <div class="nav-item" onclick="showSection('clientes')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9673;</span> Clientes
+      </div>
+      <div class="nav-item" onclick="showSection('invitaciones')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9655;</span> Invitaciones
+        <span class="nav-badge" id="nav-badge-invitaciones" style="display:none">0</span>
+      </div>
+      <div class="nav-section-label">Operaciones</div>
+      <div class="nav-item" onclick="showSection('tickets')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9671;</span> Tickets
+        <span class="nav-badge" style="display:none">0</span>
+      </div>
+      <div class="nav-item" onclick="showSection('pagos')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9672;</span> Pagos
+      </div>
+      <div class="nav-section-label">Reportes</div>
+      <div class="nav-item" onclick="showSection('analytics')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9638;</span> Analytics
+      </div>
+      <div class="nav-item" onclick="showSection('apilogs')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9638;</span> API Logs
+      </div>
+      <div class="nav-item" onclick="showSection('configuracion')">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9678;</span> Configuración
+      </div>
+      <div class="nav-section-label">Herramientas</div>
+      <div class="nav-item" onclick="location.href='admin-ia.html'">
+        <span class="nav-icon" style="color:#E31E24;font-weight:700">&#9733;</span> Motor IA
+      </div>
+      <div class="nav-item" onclick="location.href='admin-clientes.html'">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9673;</span> Gestión Clientes
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar">CD</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebar-user-name">Coach Dann</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">Jefe</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">
+        &rarr; Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <div class="main-area">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="topbar-hamburger" onclick="toggleMobileSidebar()">
+        &#9776;
+      </button>
+      <div class="topbar-breadcrumb">WellCore / <span id="topbar-section">Dashboard</span></div>
+      <div class="topbar-right">
+        <div class="topbar-date" id="topbar-date">—</div>
+        <div class="topbar-notif" title="Notificaciones">
+          <span style="color:#00D9FF;font-weight:700">&#9671;</span>
+          <div class="notif-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ===== SECTION: DASHBOARD ===== -->
+      <div class="section active" id="sec-dashboard">
+        <div class="page-header">
+          <div class="page-title">DASHBOARD GENERAL</div>
+          <div class="page-subtitle">Vista ejecutiva — WellCore Fitness Enterprise</div>
+        </div>
+
+        <!-- KPI GRID -->
+        <div class="kpi-grid">
+          <div class="kpi-card green">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9650;</span>
+            <div class="kpi-label">Coaches Activos</div>
+            <div class="kpi-value" style="color:var(--green)">0</div>
+            <div class="kpi-sub">Sin coaches registrados</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9673;</span>
+            <div class="kpi-label">Clientes Activos</div>
+            <div class="kpi-value">0</div>
+            <div class="kpi-sub">Sin clientes registrados</div>
+          </div>
+          <div class="kpi-card gold">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9672;</span>
+            <div class="kpi-label">MRR</div>
+            <div class="kpi-value" style="color:var(--gold)">$0</div>
+            <div class="kpi-sub">USD / mes</div>
+          </div>
+          <div class="kpi-card gold">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9672;</span>
+            <div class="kpi-label">ARR</div>
+            <div class="kpi-value" style="color:var(--gold)">$0</div>
+            <div class="kpi-sub">Proyectado anual</div>
+          </div>
+          <div class="kpi-card blue">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9671;</span>
+            <div class="kpi-label">Tickets Abiertos</div>
+            <div class="kpi-value" style="color:#60a5fa">0</div>
+            <div class="kpi-sub">SLA 48h</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9655;</span>
+            <div class="kpi-label">Aplicaciones Coaches</div>
+            <div class="kpi-value">0</div>
+            <div class="kpi-sub">Pendientes de revision</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9678;</span>
+            <div class="kpi-label">Proximo Pago Coaches</div>
+            <div class="kpi-value" style="font-size:22px;margin-top:4px">--</div>
+            <div class="kpi-sub">Quincenal — 0 coaches</div>
+          </div>
+          <div class="kpi-card green">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9650;</span>
+            <div class="kpi-label">Retencion Clientes</div>
+            <div class="kpi-value" style="color:var(--green)">0%</div>
+            <div class="kpi-sub">Sin datos</div>
+          </div>
+        </div>
+
+        <!-- CHARTS -->
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-title">Revenue por Quincena <span class="chart-subtitle">últimas 6 quincenas</span></div>
+            <svg class="svg-chart" viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg">
+              <line x1="48" y1="20" x2="48" y2="150" class="axis-line"/>
+              <line x1="48" y1="150" x2="470" y2="150" class="axis-line"/>
+              <line x1="48" y1="20" x2="470" y2="20" stroke="#252528" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="48" y1="57" x2="470" y2="57" stroke="#252528" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="48" y1="94" x2="470" y2="94" stroke="#252528" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="48" y1="130" x2="470" y2="130" stroke="#252528" stroke-width="1" stroke-dasharray="4"/>
+              <text x="42" y="24" class="bar-label" text-anchor="end">$5k</text>
+              <text x="42" y="61" class="bar-label" text-anchor="end">$4k</text>
+              <text x="42" y="98" class="bar-label" text-anchor="end">$3k</text>
+              <text x="42" y="134" class="bar-label" text-anchor="end">$2k</text>
+              <text x="42" y="154" class="bar-label" text-anchor="end">$0</text>
+              <text x="259" y="90" text-anchor="middle" font-size="12" fill="#A1A1AA" font-family="Inter">Sin datos de revenue</text>
+            </svg>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Crecimiento de Clientes <span class="chart-subtitle">últimas 12 semanas</span></div>
+            <svg class="svg-chart" viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg">
+              <line x1="48" y1="20" x2="48" y2="150" class="axis-line"/>
+              <line x1="48" y1="150" x2="470" y2="150" class="axis-line"/>
+              <line x1="48" y1="20" x2="470" y2="20" stroke="#252528" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="48" y1="65" x2="470" y2="65" stroke="#252528" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="48" y1="107" x2="470" y2="107" stroke="#252528" stroke-width="1" stroke-dasharray="4"/>
+              <text x="42" y="24" class="bar-label" text-anchor="end">50</text>
+              <text x="42" y="69" class="bar-label" text-anchor="end">40</text>
+              <text x="42" y="111" class="bar-label" text-anchor="end">30</text>
+              <text x="42" y="154" class="bar-label" text-anchor="end">0</text>
+              <text x="259" y="90" text-anchor="middle" font-size="12" fill="#A1A1AA" font-family="Inter">Sin datos de clientes</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- SYSTEM HEALTH + API LOGS ROW -->
+        <div class="charts-row" style="margin-bottom:24px">
+          <!-- SYSTEM HEALTH -->
+          <div class="chart-card" id="health-panel">
+            <div class="chart-title"><span style="color:#00D9FF;font-weight:700;margin-right:6px">//</span>Estado del Sistema</div>
+            <div id="health-items" style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+              <div style="font-size:12px;color:var(--gray);font-family:var(--font-mono)">Cargando...</div>
+            </div>
+            <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between">
+              <span id="health-ts" style="font-size:10px;color:var(--gray);font-family:var(--font-mono)"></span>
+              <button class="btn btn-secondary btn-sm" id="health-refresh-btn" style="font-size:10px">Actualizar</button>
+            </div>
+          </div>
+          <!-- API LOGS SUMMARY -->
+          <div class="chart-card" id="api-logs-panel">
+            <div class="chart-title"><span style="color:#00D9FF;font-weight:700;margin-right:6px">//</span>API Activity <span class="chart-subtitle">ultimos 7 dias</span></div>
+            <div id="api-logs-kpis" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+              <div style="font-size:12px;color:var(--gray);font-family:var(--font-mono)">Cargando...</div>
+            </div>
+            <div style="margin-top:14px">
+              <div style="font-size:11px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Top Endpoints</div>
+              <div id="api-logs-top" style="display:flex;flex-direction:column;gap:0">
+                <div style="font-size:12px;color:var(--gray);font-family:var(--font-mono)">...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT ACTIVITY -->
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-title"><span style="color:#00D9FF;font-weight:700;margin-right:8px">//</span>Actividad Reciente</div>
+            <div style="font-size:11px;color:var(--gray);font-family:var(--font-mono)">Últimas 24h</div>
+          </div>
+          <div class="activity-list" id="activity-feed"></div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: COACHES ===== -->
+      <div class="section" id="sec-coaches">
+        <div class="page-header">
+          <div class="page-title">GESTIÓN DE COACHES</div>
+          <div class="page-subtitle">Administración completa de coaches WellCore</div>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('coaches','activos')">Activos <span id="count-coaches-activos" style="background:rgba(34,197,94,.15);color:var(--green);padding:1px 7px;border-radius:0;font-size:11px;margin-left:4px">0</span></button>
+          <button class="tab-btn" onclick="switchTab('coaches','pendientes')">Pendientes <span id="count-coaches-pendientes" style="background:rgba(245,200,66,.15);color:var(--gold);padding:1px 7px;border-radius:0;font-size:11px;margin-left:4px">0</span></button>
+          <button class="tab-btn" onclick="switchTab('coaches','suspendidos')">Suspendidos <span id="count-coaches-suspendidos" style="background:rgba(161,161,170,.15);color:var(--gray);padding:1px 7px;border-radius:0;font-size:11px;margin-left:4px">0</span></button>
+        </div>
+
+        <!-- ACTIVOS -->
+        <div class="tab-content active" id="coaches-tab-activos">
+          <div class="table-card">
+            <div class="table-header">
+              <div class="table-header-title">Coaches Activos</div>
+              <div class="table-actions">
+                <input class="filter-input" placeholder="Buscar coach..." style="min-width:160px">
+                <button class="btn btn-primary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9650;</span> Nuevo Coach</button>
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table id="coaches-table">
+                <thead>
+                  <tr>
+                    <th>ID</th><th>Nombre</th><th>Plan</th><th>Clientes</th>
+                    <th>Ingresos/Mes</th><th>Próx. Pago</th><th>Estado</th><th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="coaches-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:0;padding:16px 20px;font-size:12px;color:var(--gray)">
+            <span style="color:#00D9FF;font-weight:700;margin-right:6px">//</span>
+            <strong style="color:var(--white)">Modelo de comisión:</strong> El coach percibe el <strong style="color:var(--green)">60%</strong> de las suscripciones de sus clientes. WellCore retiene el <strong style="color:var(--red)">40%</strong> restante. Pagos cada 15 días.
+          </div>
+        </div>
+
+        <!-- PENDIENTES -->
+        <div class="tab-content" id="coaches-tab-pendientes">
+          <div class="table-card">
+            <div class="table-header">
+              <div class="table-header-title">Aplicaciones Pendientes</div>
+              <div class="table-actions">
+                <span style="font-size:12px;color:var(--gray)">2 en revisión</span>
+              </div>
+            </div>
+            <div id="pending-applications"></div>
+          </div>
+        </div>
+
+        <!-- SUSPENDIDOS -->
+        <div class="tab-content" id="coaches-tab-suspendidos">
+          <div class="table-card">
+            <div class="table-header">
+              <div class="table-header-title">Coaches Suspendidos</div>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr><th>ID</th><th>Nombre</th><th>Motivo</th><th>Fecha suspensión</th><th>Estado</th><th>Acciones</th></tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: CLIENTES ===== -->
+      <div class="section" id="sec-clientes">
+        <div class="page-header">
+          <div class="page-title">GESTIÓN DE CLIENTES</div>
+          <div class="page-subtitle">0 clientes activos — Vista completa</div>
+        </div>
+        <div class="filter-row">
+          <select class="filter-select" id="filter-plan">
+            <option value="">Todos los planes</option>
+            <option>ESENCIAL</option><option>MÉTODO</option><option>ÉLITE</option>
+          </select>
+          <select class="filter-select" id="filter-coach">
+            <option value="">Todos los coaches</option>
+          </select>
+          <select class="filter-select" id="filter-estado">
+            <option value="">Todos los estados</option>
+            <option>Activo</option><option>Inactivo</option><option>En pausa</option>
+          </select>
+          <input class="filter-input" placeholder="Buscar cliente..." id="search-cliente">
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Clientes Registrados</div>
+            <div class="table-actions">
+              <button class="btn btn-secondary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9655;</span> Exportar</button>
+              <button class="btn btn-primary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9673;</span> Nuevo Cliente</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th><th>Nombre</th><th>Plan</th><th>Coach</th>
+                  <th>Semanas</th><th>Último Check-in</th><th>Estado</th><th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="clientes-tbody"></tbody>
+            </table>
+            <div id="jefe-clientes-pagination" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;font-size:13px;color:var(--gray);border-top:1px solid var(--border)">
+              <span id="jefe-pag-info"></span>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-secondary btn-sm" id="jefe-pag-prev" style="font-size:12px">Anterior</button>
+                <button class="btn btn-secondary btn-sm" id="jefe-pag-next" style="font-size:12px">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: INVITACIONES ===== -->
+      <div class="section" id="sec-invitaciones">
+        <div class="page-header">
+          <div class="page-title">INVITACIONES BETA</div>
+          <div class="page-subtitle">Genera codigos de invitacion para beta testers</div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9655;</span>
+            <div class="kpi-label">Total Invitaciones</div>
+            <div class="kpi-value" id="inv-kpi-total" style="font-size:28px">0</div>
+          </div>
+          <div class="kpi-card green">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9671;</span>
+            <div class="kpi-label">Pendientes</div>
+            <div class="kpi-value" id="inv-kpi-pending" style="font-size:28px;color:var(--gold)">0</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9673;</span>
+            <div class="kpi-label">Usadas</div>
+            <div class="kpi-value" id="inv-kpi-used" style="font-size:28px;color:var(--green)">0</div>
+          </div>
+        </div>
+
+        <!-- Mode Toggle: Invitacion vs Patrocinio -->
+        <div style="display:flex;gap:0;margin-bottom:24px">
+          <button id="tab-invitacion" onclick="switchInvTab('invitacion')" style="flex:1;padding:12px 20px;background:var(--red);color:var(--white);border:1px solid var(--red);border-radius:0;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer">// INVITACION</button>
+          <button id="tab-patrocinio" onclick="switchInvTab('patrocinio')" style="flex:1;padding:12px 20px;background:var(--surface-2);color:var(--gray);border:1px solid var(--border);border-radius:0;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer">// PATROCINIO (SIN PAGO)</button>
+        </div>
+
+        <!-- Create Invitation Form -->
+        <div id="form-invitacion" class="table-card" style="margin-bottom:24px">
+          <div class="table-header">
+            <div class="table-header-title">Crear Nueva Invitacion</div>
+          </div>
+          <div style="padding:20px">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end">
+              <div>
+                <label style="font-size:10px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Plan *</label>
+                <select id="inv-plan" style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:10px 12px;border-radius:0;font-family:var(--font-body);font-size:13px;outline:none">
+                  <option value="esencial">Esencial</option>
+                  <option value="metodo" selected>Metodo</option>
+                  <option value="elite">Elite</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:10px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Email (opcional)</label>
+                <input id="inv-email" type="email" placeholder="beta@email.com" style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:10px 12px;border-radius:0;font-family:var(--font-body);font-size:13px;outline:none" />
+              </div>
+              <div>
+                <label style="font-size:10px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Nota (opcional)</label>
+                <input id="inv-note" type="text" placeholder="Tester XYZ" style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:10px 12px;border-radius:0;font-family:var(--font-body);font-size:13px;outline:none" />
+              </div>
+              <button id="inv-create-btn" class="btn btn-primary btn-sm" style="padding:10px 20px;white-space:nowrap">// Crear</button>
+            </div>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="inv-send-email" checked style="accent-color:var(--red);width:14px;height:14px;cursor:pointer" />
+              <label for="inv-send-email" style="font-size:11px;color:var(--gray);font-family:var(--font-mono);letter-spacing:.5px;cursor:pointer">ENVIAR EMAIL AL CREAR (si hay email)</label>
+            </div>
+            <div id="inv-create-result" style="margin-top:12px;display:none;padding:12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3)">
+              <div style="font-size:11px;color:var(--green);font-family:var(--font-mono);letter-spacing:1px;margin-bottom:6px">INVITACION CREADA</div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <input id="inv-create-link" type="text" readonly style="flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:8px 12px;border-radius:0;font-family:var(--font-mono);font-size:12px;outline:none" />
+                <button id="inv-copy-btn" class="btn btn-secondary btn-sm" style="white-space:nowrap">Copiar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patrocinio Form (hidden by default) -->
+        <div id="form-patrocinio" class="table-card" style="margin-bottom:24px;display:none">
+          <div class="table-header">
+            <div class="table-header-title">Crear Cuenta Patrocinada</div>
+            <div style="font-size:11px;color:var(--accent);font-family:var(--font-mono)">SIN PAGO</div>
+          </div>
+          <div style="padding:20px">
+            <div style="font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:16px;padding:10px 14px;background:rgba(0,217,255,.05);border-left:2px solid var(--accent)">
+              Crea una cuenta directamente sin proceso de inscripcion. Ideal para ventas por fuera de la plataforma (WhatsApp, en persona, etc.). El cliente recibira sus credenciales por email.
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+              <div>
+                <label style="font-size:10px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Nombre completo *</label>
+                <input id="spon-name" type="text" placeholder="Juan Perez" style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:10px 12px;border-radius:0;font-family:var(--font-body);font-size:13px;outline:none" />
+              </div>
+              <div>
+                <label style="font-size:10px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Email *</label>
+                <input id="spon-email" type="email" placeholder="cliente@email.com" style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:10px 12px;border-radius:0;font-family:var(--font-body);font-size:13px;outline:none" />
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end">
+              <div>
+                <label style="font-size:10px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Plan *</label>
+                <select id="spon-plan" style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:10px 12px;border-radius:0;font-family:var(--font-body);font-size:13px;outline:none">
+                  <option value="esencial">Esencial</option>
+                  <option value="metodo" selected>Metodo</option>
+                  <option value="elite">Elite</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:10px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Nota (opcional)</label>
+                <input id="spon-note" type="text" placeholder="Venta WhatsApp, etc." style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:10px 12px;border-radius:0;font-family:var(--font-body);font-size:13px;outline:none" />
+              </div>
+              <button id="spon-create-btn" class="btn btn-primary btn-sm" style="padding:10px 20px;white-space:nowrap">// Crear cuenta</button>
+            </div>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="spon-send-email" checked style="accent-color:var(--red);width:14px;height:14px;cursor:pointer" />
+              <label for="spon-send-email" style="font-size:11px;color:var(--gray);font-family:var(--font-mono);letter-spacing:.5px;cursor:pointer">ENVIAR CREDENCIALES POR EMAIL</label>
+            </div>
+            <!-- Result -->
+            <div id="spon-result" style="margin-top:12px;display:none;padding:16px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3)">
+              <div style="font-size:11px;color:var(--green);font-family:var(--font-mono);letter-spacing:1px;margin-bottom:10px">CUENTA CREADA</div>
+              <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:12px">
+                <span style="color:var(--gray);font-family:var(--font-mono)">Codigo:</span>
+                <span id="spon-res-code" style="color:var(--accent);font-family:var(--font-mono)">—</span>
+                <span style="color:var(--gray);font-family:var(--font-mono)">Email:</span>
+                <span id="spon-res-email" style="color:var(--white)">—</span>
+                <span style="color:var(--gray);font-family:var(--font-mono)">Pass temporal:</span>
+                <span id="spon-res-pass" style="color:var(--accent);font-family:var(--font-mono);font-size:14px;font-weight:700;letter-spacing:1px">—</span>
+                <span style="color:var(--gray);font-family:var(--font-mono)">Email enviado:</span>
+                <span id="spon-res-sent" style="color:var(--green)">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Invitations Table -->
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Invitaciones Generadas</div>
+            <div class="table-actions">
+              <select id="inv-filter-status" class="filter-select" style="background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:6px 10px;border-radius:0;font-size:12px">
+                <option value="">Todos</option>
+                <option value="pending">Pendientes</option>
+                <option value="used">Usadas</option>
+                <option value="expired">Expiradas</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Codigo</th><th>Plan</th><th>Email Hint</th><th>Estado</th><th>Creada</th><th>Usada por</th><th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="invitaciones-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: TICKETS ===== -->
+      <div class="section" id="sec-tickets">
+        <div class="page-header">
+          <div class="page-title">SISTEMA DE TICKETS</div>
+          <div class="page-subtitle">Workflow interno coaches → WellCore (SLA: 48h)</div>
+        </div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+          <div class="kpi-card">
+            <div class="kpi-label">Total Abiertos</div>
+            <div class="kpi-value" id="kpi-tickets-open" style="font-size:28px;color:#60a5fa">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Urgentes (&lt;12h)</div>
+            <div class="kpi-value" id="kpi-tickets-urgent" style="font-size:28px;color:var(--red)">0</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">Resueltos hoy</div>
+            <div class="kpi-value" id="kpi-tickets-resolved" style="font-size:28px;color:var(--green)">0</div>
+          </div>
+          <div class="kpi-card gold">
+            <div class="kpi-label">Tiempo prom.</div>
+            <div class="kpi-value" id="kpi-tickets-avg" style="font-size:28px;color:var(--gold)">--</div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Todos los Tickets</div>
+            <div class="table-actions">
+              <select class="filter-select" style="font-size:12px;padding:6px 10px">
+                <option>Todos</option><option>Abiertos</option><option>Cerrados</option>
+              </select>
+              <button class="btn btn-primary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9655;</span> Nuevo</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticket ID</th><th>Coach</th><th>Cliente</th><th>Plan</th>
+                  <th>Tipo</th><th>Fecha</th><th>SLA</th><th>Estado</th><th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tickets-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: PAGOS ===== -->
+      <div class="section" id="sec-pagos">
+        <div class="page-header">
+          <div class="page-title">GESTIÓN DE PAGOS</div>
+          <div class="page-subtitle">Ciclo quincenal — Próximo: 15 Feb 2026</div>
+        </div>
+        <div class="payment-summary">
+          <div class="pay-card">
+            <div class="pay-card-label">A pagar esta quincena</div>
+            <div class="pay-card-value" style="color:var(--red)">$0</div>
+            <div class="pay-card-sub">60% para coaches</div>
+          </div>
+          <div class="pay-card">
+            <div class="pay-card-label">Retencion WellCore</div>
+            <div class="pay-card-value" style="color:var(--green)">$0</div>
+            <div class="pay-card-sub">40% esta quincena</div>
+          </div>
+          <div class="pay-card">
+            <div class="pay-card-label">Total bruto quincena</div>
+            <div class="pay-card-value">$0</div>
+            <div class="pay-card-sub">Feb 1–15 2026</div>
+          </div>
+          <div class="pay-card">
+            <div class="pay-card-label">ARR Proyectado</div>
+            <div class="pay-card-value" style="color:var(--gold)">$0</div>
+            <div class="pay-card-sub">Anual estimado</div>
+          </div>
+        </div>
+
+        <div class="charts-row" style="margin-bottom:24px">
+          <div class="chart-card">
+            <div class="chart-title">Distribución Revenue</div>
+            <div style="display:flex;align-items:center;gap:24px">
+              <svg viewBox="0 0 120 120" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+                <!-- 40% WellCore = 144deg, 60% Coaches = 216deg -->
+                <circle cx="60" cy="60" r="45" fill="none" stroke="#E31E24" stroke-width="22"
+                  stroke-dasharray="169 113" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+                <circle cx="60" cy="60" r="45" fill="none" stroke="#22C55E" stroke-width="22"
+                  stroke-dasharray="113 169" stroke-dashoffset="-169" transform="rotate(-90 60 60)"/>
+                <circle cx="60" cy="60" r="34" fill="#111113"/>
+                <text x="60" y="57" text-anchor="middle" font-family="Bebas Neue" font-size="14" fill="white">PIE</text>
+                <text x="60" y="70" text-anchor="middle" font-size="9" fill="#A1A1AA" font-family="Inter">REVENUE</text>
+              </svg>
+              <div class="donut-legend">
+                <div class="donut-legend-item"><div class="donut-dot" style="background:var(--red)"></div><div><div style="font-weight:600">60% Coaches</div><div style="color:var(--gray);font-size:11px">$0 / mes</div></div></div>
+                <div class="donut-legend-item"><div class="donut-dot" style="background:var(--green)"></div><div><div style="font-weight:600">40% WellCore</div><div style="color:var(--gray);font-size:11px">$0 / mes</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Siguiente pago</div>
+            <div style="display:flex;align-items:center;justify-content:center;height:100px;flex-direction:column;gap:8px">
+              <div style="font-family:var(--font-heading);font-size:42px;color:var(--gold)">--</div>
+              <div style="font-size:13px;color:var(--gray)">Sin pagos programados</div>
+              <span class="kpi-badge gold">QUINCENAL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Detalle de Pagos — Feb 1–15 2026</div>
+            <div class="table-actions">
+              <button class="btn btn-secondary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9655;</span> Exportar CSV</button>
+              <button class="btn btn-primary btn-sm"><span style="color:#00D9FF;font-weight:700">&#9672;</span> Procesar Pagos</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Coach</th><th>Período</th><th>Clientes</th>
+                  <th>Total Bruto</th><th>60% Coach</th><th>40% WellCore</th>
+                  <th>Estado</th><th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="pagos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: ANALYTICS ===== -->
+      <div class="section" id="sec-analytics">
+        <div class="page-header">
+          <div class="page-title">ANALYTICS & REPORTES</div>
+          <div class="page-subtitle">Métricas de rendimiento WellCore Fitness</div>
+        </div>
+
+        <div class="filter-row" style="margin-bottom:20px">
+          <label style="font-size:11px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;display:flex;align-items:center;gap:8px">RANGO:
+            <select class="filter-select" id="analytics-range" style="font-size:12px;padding:6px 10px">
+              <option value="30" selected>Ultimos 30 dias</option>
+              <option value="60">Ultimos 60 dias</option>
+              <option value="90">Ultimos 90 dias</option>
+              <option value="180">Ultimos 6 meses</option>
+              <option value="365">Ultimo ano</option>
+              <option value="0">Todo</option>
+            </select>
+          </label>
+          <span id="analytics-range-label" style="font-size:11px;font-family:var(--font-mono);color:var(--gray)"></span>
+        </div>
+
+        <div class="charts-row" style="margin-bottom:20px">
+          <!-- REVENUE 12 PERÍODOS -->
+          <div class="chart-card">
+            <div class="chart-title">Revenue por Quincena — 12 períodos</div>
+            <svg class="svg-chart" viewBox="0 0 480 160" xmlns="http://www.w3.org/2000/svg">
+              <line x1="30" y1="10" x2="30" y2="130" class="axis-line"/>
+              <line x1="30" y1="130" x2="478" y2="130" class="axis-line"/>
+              <text x="24" y="14" class="bar-label" text-anchor="end" font-size="8">$5k</text>
+              <text x="24" y="50" class="bar-label" text-anchor="end" font-size="8">$4k</text>
+              <text x="24" y="90" class="bar-label" text-anchor="end" font-size="8">$3k</text>
+              <text x="24" y="130" class="bar-label" text-anchor="end" font-size="8">$0</text>
+              <!-- 12 bars for periods Mar-Nov 2025 to current -->
+              <rect x="34" y="107" width="28" height="23" fill="#E31E24" opacity="0.4" rx="2"/>
+              <rect x="66" y="100" width="28" height="30" fill="#E31E24" opacity="0.45" rx="2"/>
+              <rect x="98" y="94" width="28" height="36" fill="#E31E24" opacity="0.5" rx="2"/>
+              <rect x="130" y="87" width="28" height="43" fill="#E31E24" opacity="0.55" rx="2"/>
+              <rect x="162" y="82" width="28" height="48" fill="#E31E24" opacity="0.6" rx="2"/>
+              <rect x="194" y="76" width="28" height="54" fill="#E31E24" opacity="0.65" rx="2"/>
+              <rect x="226" y="70" width="28" height="60" fill="#E31E24" opacity="0.7" rx="2"/>
+              <rect x="258" y="65" width="28" height="65" fill="#E31E24" opacity="0.75" rx="2"/>
+              <rect x="290" y="58" width="28" height="72" fill="#E31E24" opacity="0.8" rx="2"/>
+              <rect x="322" y="53" width="28" height="77" fill="#E31E24" opacity="0.85" rx="2"/>
+              <rect x="354" y="47" width="28" height="83" fill="#E31E24" opacity="0.9" rx="2"/>
+              <rect x="386" y="10" width="28" height="120" fill="#E31E24" rx="2"/>
+              <text x="400" y="8" class="bar-value" text-anchor="middle" font-size="8" fill="#E31E24">$4.85k</text>
+            </svg>
+          </div>
+
+          <!-- DISTRIBUCIÓN POR PLAN -->
+          <div class="chart-card">
+            <div class="chart-title">Distribución por Plan</div>
+            <div style="display:flex;align-items:center;gap:20px">
+              <svg viewBox="0 0 140 140" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+                <!-- ESENCIAL 40% (144deg), MÉTODO 35% (126deg), ÉLITE 25% (90deg) -->
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#60a5fa" stroke-width="26"
+                  stroke-dasharray="131 196" stroke-dashoffset="0" transform="rotate(-90 70 70)"/>
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#F5C842" stroke-width="26"
+                  stroke-dasharray="114 213" stroke-dashoffset="-131" transform="rotate(-90 70 70)"/>
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#E31E24" stroke-width="26"
+                  stroke-dasharray="82 245" stroke-dashoffset="-245" transform="rotate(-90 70 70)"/>
+                <circle cx="70" cy="70" r="40" fill="#111113"/>
+                <text x="70" y="67" text-anchor="middle" font-family="Bebas Neue" font-size="12" fill="white">47</text>
+                <text x="70" y="79" text-anchor="middle" font-size="8" fill="#A1A1AA" font-family="Inter">clientes</text>
+              </svg>
+              <div class="donut-legend" style="gap:10px">
+                <div class="donut-legend-item"><div class="donut-dot" style="background:#60a5fa"></div><div><div style="font-weight:600;font-size:13px">ESENCIAL</div><div style="color:var(--gray);font-size:11px">19 clientes · 40%</div></div></div>
+                <div class="donut-legend-item"><div class="donut-dot" style="background:var(--gold)"></div><div><div style="font-weight:600;font-size:13px">MÉTODO</div><div style="color:var(--gray);font-size:11px">16 clientes · 35%</div></div></div>
+                <div class="donut-legend-item"><div class="donut-dot" style="background:var(--red)"></div><div><div style="font-weight:600;font-size:13px">ÉLITE</div><div style="color:var(--gray);font-size:11px">12 clientes · 25%</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-row">
+          <!-- PERFORMANCE POR COACH -->
+          <div class="chart-card">
+            <div class="chart-title">Performance por Coach</div>
+            <svg class="svg-chart" viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg">
+              <!-- Horizontal bars -->
+              <!-- Empty: no coaches registered -->
+              <text x="250" y="90" text-anchor="middle" font-size="12" fill="#A1A1AA" font-family="Inter">Sin datos de coaches</text>
+            </svg>
+          </div>
+
+          <!-- RETENCIÓN + TICKETS -->
+          <div class="chart-card">
+            <div class="chart-title">Tasa de Retención</div>
+            <svg viewBox="0 0 200 140" width="200" height="140" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto">
+              <!-- Gauge arc -->
+              <path d="M 30 100 A 70 70 0 0 1 170 100" fill="none" stroke="#252528" stroke-width="16" stroke-linecap="round"/>
+              <path d="M 30 100 A 70 70 0 0 1 170 100" fill="none" stroke="#22C55E" stroke-width="16" stroke-linecap="round"
+                stroke-dasharray="188" stroke-dashoffset="188"/>
+              <text x="100" y="88" text-anchor="middle" font-family="Bebas Neue" font-size="30" fill="white">0%</text>
+              <text x="100" y="105" text-anchor="middle" font-size="11" fill="#A1A1AA" font-family="Inter">Retención mensual</text>
+              <text x="30" y="118" text-anchor="middle" font-size="9" fill="#A1A1AA" font-family="Inter">0%</text>
+              <text x="170" y="118" text-anchor="middle" font-size="9" fill="#A1A1AA" font-family="Inter">100%</text>
+            </svg>
+            <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <span style="font-size:12px;color:var(--gray)">Tickets resueltos en tiempo</span>
+                <span style="font-size:13px;font-weight:600;color:var(--green)"><span style="color:#00D9FF;font-weight:700">&#10003;</span> 0%</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:12px;color:var(--gray)">Satisfaccion clientes</span>
+                <span style="font-size:13px;font-weight:600;color:var(--gold)"><span style="color:#00D9FF;font-weight:700">&#10003;</span> -- / 5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: API LOGS ===== -->
+      <div class="section" id="sec-apilogs">
+        <div class="page-header">
+          <div class="page-title">API LOGS</div>
+          <div class="page-subtitle">Registro de actividad de la API — WellCore Fitness</div>
+        </div>
+
+        <div class="filter-row" style="margin-bottom:20px">
+          <label style="font-size:11px;font-family:var(--font-mono);color:var(--gray);letter-spacing:1px;display:flex;align-items:center;gap:8px">RANGO:
+            <select class="filter-select" id="apilogs-days" style="font-size:12px;padding:6px 10px">
+              <option value="1">Ultimo dia</option>
+              <option value="7" selected>Ultimos 7 dias</option>
+              <option value="30">Ultimos 30 dias</option>
+              <option value="90">Ultimos 90 dias</option>
+            </select>
+          </label>
+          <input class="filter-input" id="apilogs-endpoint-filter" placeholder="Filtrar endpoint..." style="min-width:180px">
+          <button class="btn btn-primary btn-sm" id="apilogs-search-btn">Buscar</button>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-grid" id="apilogs-kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+          <div class="kpi-card">
+            <div class="kpi-label">Total Requests</div>
+            <div class="kpi-value" id="apilogs-kpi-total" style="font-size:28px">—</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">IPs Unicas</div>
+            <div class="kpi-value" id="apilogs-kpi-ips" style="font-size:28px;color:var(--accent)">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Errores 4xx/5xx</div>
+            <div class="kpi-value" id="apilogs-kpi-errors" style="font-size:28px;color:var(--red)">—</div>
+          </div>
+          <div class="kpi-card gold">
+            <div class="kpi-label">Avg Response</div>
+            <div class="kpi-value" id="apilogs-kpi-avg" style="font-size:28px;color:var(--gold)">—</div>
+          </div>
+        </div>
+
+        <!-- Top endpoints table -->
+        <div class="table-card" style="margin-bottom:24px">
+          <div class="table-header">
+            <div class="table-header-title">Top Endpoints</div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Endpoint</th><th>Hits</th><th>Avg (ms)</th></tr>
+              </thead>
+              <tbody id="apilogs-top-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent logs table -->
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Logs Recientes</div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Fecha</th><th>Metodo</th><th>Endpoint</th><th>Status</th><th>IP</th><th>User</th><th>Duracion</th></tr>
+              </thead>
+              <tbody id="apilogs-recent-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION: CONFIGURACIÓN ===== -->
+      <div class="section" id="sec-configuracion">
+        <div class="page-header">
+          <div class="page-title">CONFIGURACIÓN</div>
+          <div class="page-subtitle">Sistema WellCore Fitness Enterprise v3.0</div>
+        </div>
+
+        <div class="config-card">
+          <h3><span style="color:#00D9FF;font-weight:700">//</span> Credenciales de Administración</h3>
+          <div class="config-item">
+            <div><div class="config-item-label">Admin Jefe</div><div class="config-item-sub">admin_jefe@wellcore.com</div></div>
+            <span class="status-pill pill-green">&#9679; Activo</span>
+          </div>
+          <div class="config-item">
+            <div><div class="config-item-label">Admin Coaches</div><div class="config-item-sub">admin_coaches@wellcore.com</div></div>
+            <span class="status-pill pill-green">&#9679; Activo</span>
+          </div>
+          <div class="config-item">
+            <div><div class="config-item-label">Admin Clientes</div><div class="config-item-sub">admin_clientes@wellcore.com</div></div>
+            <span class="status-pill pill-green">&#9679; Activo</span>
+          </div>
+        </div>
+
+        <div class="config-card">
+          <h3><span style="color:#00D9FF;font-weight:700">//</span> Integraciones</h3>
+          <div class="config-item">
+            <div><div class="config-item-label">Wompi (Bancolombia)</div><div class="config-item-sub">Pasarela de pagos principal</div></div>
+            <span class="status-pill pill-green">Configurado</span>
+          </div>
+          <div class="config-item">
+            <div><div class="config-item-label">Formspree</div><div class="config-item-sub">Formularios de contacto</div></div>
+            <span class="status-pill pill-green">Activo</span>
+          </div>
+          <div class="config-item">
+            <div><div class="config-item-label">WhatsApp Business</div><div class="config-item-sub">+57 312 4904720</div></div>
+            <span class="status-pill pill-green">Activo</span>
+          </div>
+          <div class="config-item">
+            <div><div class="config-item-label">Email</div><div class="config-item-sub">info@wellcorefitness.com</div></div>
+            <span class="status-pill pill-green">Activo</span>
+          </div>
+        </div>
+
+        <div class="config-card">
+          <h3><span style="color:#00D9FF;font-weight:700">//</span> Paneles de Administración</h3>
+          <div class="config-item">
+            <div><div class="config-item-label">Admin Coaches</div><div class="config-item-sub">Gestión de coaches y aplicaciones</div></div>
+            <a href="admin-coaches.html" class="btn btn-secondary btn-sm">Abrir &rarr;</a>
+          </div>
+          <div class="config-item">
+            <div><div class="config-item-label">Admin Clientes</div><div class="config-item-sub">Gestión de clientes y progreso</div></div>
+            <a href="admin-clientes.html" class="btn btn-secondary btn-sm">Abrir &rarr;</a>
+          </div>
+          <div class="config-item">
+            <div><div class="config-item-label">Admin Principal</div><div class="config-item-sub">Panel general existente</div></div>
+            <a href="admin.html" class="btn btn-secondary btn-sm">Abrir &rarr;</a>
+          </div>
+        </div>
+
+        <div class="config-card">
+          <h3><span style="color:#00D9FF;font-weight:700">//</span> Información del Sistema</h3>
+          <div class="config-item">
+            <div class="config-item-label">Versión</div>
+            <div class="info-value" style="font-family:var(--font-mono);font-size:12px">WellCore v3.0.0</div>
+          </div>
+          <div class="config-item">
+            <div class="config-item-label">Último backup</div>
+            <div class="info-value" style="font-family:var(--font-mono);font-size:12px">18 Feb 2026 00:00</div>
+          </div>
+          <div class="config-item">
+            <div class="config-item-label">Entorno</div>
+            <div class="info-value"><span class="status-pill pill-green">Producción</span></div>
+          </div>
+          <div class="config-item">
+            <div class="config-item-label">Contacto soporte</div>
+            <div class="info-value" style="font-size:12px">info@wellcorefitness.com</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main-area -->
+</div><!-- /app -->
+
+<!-- TICKET DETAIL MODAL -->
+<div class="modal-overlay" id="modal-ticket">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-ticket-title">Ticket #0013</div>
+      <button class="modal-close" onclick="closeModal('modal-ticket')">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-ticket-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-ticket')">Cerrar</button>
+      <button class="btn btn-success"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Marcar como Resuelto</button>
+    </div>
+  </div>
+</div>
+
+<!-- COACH DETAIL MODAL -->
+<div class="modal-overlay" id="modal-coach">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-coach-title">Perfil Coach</div>
+      <button class="modal-close" onclick="closeModal('modal-coach')">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-coach-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-coach')">Cerrar</button>
+      <button class="btn btn-danger btn-sm">Suspender</button>
+      <button class="btn btn-gold btn-sm"><span style="color:#00D9FF;font-weight:700">&#9672;</span> Generar Pago</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== AUTH (API-based) =====================
+function doLogout() {
+  WC_API.auth.logout();
+}
+
+// ===================== NAVIGATION =====================
+const sectionNames = {
+  dashboard: 'Dashboard',
+  coaches: 'Coaches',
+  clientes: 'Clientes',
+  invitaciones: 'Invitaciones',
+  tickets: 'Tickets',
+  pagos: 'Pagos',
+  analytics: 'Analytics',
+  apilogs: 'API Logs',
+  configuracion: 'Configuración'
+};
+
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('sec-' + name);
+  if (sec) sec.classList.add('active');
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + name + "'")) {
+      n.classList.add('active');
+    }
+  });
+  document.getElementById('topbar-section').textContent = sectionNames[name] || name;
+  closeMobileSidebar();
+}
+
+function switchTab(group, tab) {
+  const tabs = document.querySelectorAll('#sec-' + group + ' .tab-btn');
+  const contents = document.querySelectorAll('#sec-' + group + ' .tab-content');
+  tabs.forEach(t => t.classList.remove('active'));
+  contents.forEach(c => c.classList.remove('active'));
+  const targetContent = document.getElementById(group + '-tab-' + tab);
+  if (targetContent) targetContent.classList.add('active');
+  const allTabBtns = document.querySelectorAll('#sec-' + group + ' .tab-btn');
+  allTabBtns.forEach(btn => {
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + tab + "'")) {
+      btn.classList.add('active');
+    }
+  });
+}
+
+// ===================== MOBILE SIDEBAR =====================
+function toggleMobileSidebar() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ===================== MODAL =====================
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// ===================== DATA =====================
+const coaches = [];
+
+const pendingApps = [];
+
+const clientes = [];
+
+const tickets = [];
+
+const pagosData = [];
+
+const activityItems = [];
+
+// ===================== RENDER =====================
+function renderCoaches() {
+  const tbody = document.getElementById('coaches-tbody');
+  if (!tbody) return;
+  coaches.forEach(c => {
+    const tr = document.createElement('tr');
+
+    const tdId = document.createElement('td');
+    tdId.style.cssText = 'font-family:var(--font-mono);color:var(--gray);font-size:12px';
+    tdId.textContent = c.id;
+
+    const tdNombre = document.createElement('td');
+    tdNombre.style.fontWeight = '600';
+    tdNombre.textContent = c.nombre;
+
+    const tdPlan = document.createElement('td');
+    const planSpan = document.createElement('span');
+    planSpan.className = 'status-badge';
+    planSpan.style.cssText = 'background:rgba(227,30,36,.1);color:var(--red);border-radius:0;padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:.5px';
+    planSpan.textContent = c.plan;
+    tdPlan.appendChild(planSpan);
+
+    const tdClientes = document.createElement('td');
+    tdClientes.textContent = c.clientes;
+
+    const tdIngresos = document.createElement('td');
+    tdIngresos.style.cssText = 'font-family:var(--font-mono);color:var(--green);font-weight:600';
+    tdIngresos.textContent = c.ingresos;
+
+    const tdPago = document.createElement('td');
+    tdPago.style.cssText = 'font-family:var(--font-mono);font-size:12px';
+    tdPago.textContent = c.proximo_pago;
+
+    const tdEstado = document.createElement('td');
+    const estadoSpan = document.createElement('span');
+    estadoSpan.className = c.estado === 'Activo' ? 'status-badge status-active' : c.estado === 'Aplicando' ? 'status-badge status-pending' : 'status-badge status-suspended';
+    estadoSpan.textContent = c.estado;
+    tdEstado.appendChild(estadoSpan);
+
+    const tdAcciones = document.createElement('td');
+    tdAcciones.style.display = 'flex';
+    tdAcciones.style.gap = '6px';
+
+    if (c.estado === 'Aplicando') {
+      const btnRevisar = document.createElement('button');
+      btnRevisar.className = 'btn btn-gold btn-sm';
+      btnRevisar.textContent = 'Revisar Aplicación';
+      btnRevisar.addEventListener('click', () => { showSection('coaches'); switchTab('coaches','pendientes'); });
+      tdAcciones.appendChild(btnRevisar);
+    } else {
+      const btnVer = document.createElement('button');
+      btnVer.className = 'btn btn-secondary btn-sm';
+      btnVer.textContent = 'Ver';
+      btnVer.addEventListener('click', () => openCoachModal(c));
+
+      const btnPagar = document.createElement('button');
+      btnPagar.className = 'btn btn-success btn-sm';
+      btnPagar.textContent = 'Pagar';
+      btnPagar.addEventListener('click', () => { showSection('pagos'); });
+
+      const btnSuspender = document.createElement('button');
+      btnSuspender.className = 'btn btn-danger btn-sm';
+      btnSuspender.textContent = 'Suspender';
+
+      tdAcciones.appendChild(btnVer);
+      tdAcciones.appendChild(btnPagar);
+      tdAcciones.appendChild(btnSuspender);
+    }
+
+    [tdId, tdNombre, tdPlan, tdClientes, tdIngresos, tdPago, tdEstado, tdAcciones].forEach(td => tr.appendChild(td));
+    tbody.appendChild(tr);
+  });
+}
+
+function openCoachModal(c) {
+  document.getElementById('modal-coach-title').textContent = 'Coach — ' + c.nombre;
+  const body = document.getElementById('modal-coach-body');
+  body.innerHTML = '';
+
+  const rows = [
+    ['ID', c.id],
+    ['Nombre completo', c.nombre],
+    ['Email', c.email],
+    ['Teléfono', c.phone],
+    ['Plan', c.plan],
+    ['Clientes activos', c.clientes],
+    ['Ingresos generados', c.ingresos + ' / mes'],
+    ['Estado', c.estado],
+    ['Próximo pago', c.proximo_pago]
+  ];
+
+  rows.forEach(([label, val]) => {
+    const row = document.createElement('div');
+    row.className = 'info-row';
+    const lEl = document.createElement('span');
+    lEl.className = 'info-label';
+    lEl.textContent = label;
+    const vEl = document.createElement('span');
+    vEl.className = 'info-value';
+    vEl.textContent = val;
+    row.appendChild(lEl);
+    row.appendChild(vEl);
+    body.appendChild(row);
+  });
+
+  if (c.bio) {
+    const bioDiv = document.createElement('div');
+    bioDiv.style.marginTop = '16px';
+    const bioLabel = document.createElement('div');
+    bioLabel.style.cssText = 'font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px';
+    bioLabel.textContent = 'Bio';
+    const bioText = document.createElement('div');
+    bioText.style.cssText = 'font-size:13px;line-height:1.6;color:var(--gray)';
+    bioText.textContent = c.bio;
+    bioDiv.appendChild(bioLabel);
+    bioDiv.appendChild(bioText);
+    body.appendChild(bioDiv);
+  }
+
+  openModal('modal-coach');
+}
+
+function renderPendingApps(apps) {
+  apps = apps || pendingApps;
+  const container = document.getElementById('pending-applications');
+  if (!container) return;
+  container.textContent = '';
+  apps.forEach(app => {
+    const card = document.createElement('div');
+    card.style.cssText = 'padding:20px;border-bottom:1px solid var(--border)';
+
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap';
+
+    const nameBlock = document.createElement('div');
+    const nameEl = document.createElement('div');
+    nameEl.style.cssText = 'font-weight:700;font-size:15px';
+    nameEl.textContent = app.nombre;
+    const emailEl = document.createElement('div');
+    emailEl.style.cssText = 'font-size:12px;color:var(--gray);font-family:var(--font-mono);margin-top:2px';
+    emailEl.textContent = app.email;
+    const expEl = document.createElement('div');
+    expEl.style.cssText = 'font-size:12px;color:var(--gray);margin-top:4px';
+    expEl.textContent = 'Experiencia: ' + app.exp;
+    nameBlock.appendChild(nameEl);
+    nameBlock.appendChild(emailEl);
+    nameBlock.appendChild(expEl);
+
+    const metaBlock = document.createElement('div');
+    metaBlock.style.textAlign = 'right';
+    const planBadge = document.createElement('div');
+    planBadge.style.cssText = 'background:rgba(227,30,36,.1);color:var(--red);padding:3px 10px;border-radius:0;font-size:11px;font-weight:700;display:inline-block';
+    planBadge.textContent = 'Plan: ' + app.plan;
+    const fechaEl = document.createElement('div');
+    fechaEl.style.cssText = 'font-size:11px;color:var(--gray);font-family:var(--font-mono);margin-top:4px';
+    fechaEl.textContent = app.fecha;
+    metaBlock.appendChild(planBadge);
+    metaBlock.appendChild(fechaEl);
+
+    header.appendChild(nameBlock);
+    header.appendChild(metaBlock);
+
+    const bioEl = document.createElement('div');
+    bioEl.style.cssText = 'font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:16px;padding:12px;background:var(--surface-2);border-radius:0';
+    bioEl.textContent = app.bio;
+
+    const actions = document.createElement('div');
+    actions.style.cssText = 'display:flex;gap:8px';
+    const btnAprobar = document.createElement('button');
+    btnAprobar.className = 'btn btn-success btn-sm';
+    btnAprobar.textContent = '// Aprobar';
+    const btnRechazar = document.createElement('button');
+    btnRechazar.className = 'btn btn-danger btn-sm';
+    btnRechazar.textContent = '\u2715 Rechazar';
+    const btnContrato = document.createElement('button');
+    btnContrato.className = 'btn btn-secondary btn-sm';
+    btnContrato.textContent = '// Ver Contrato';
+    actions.appendChild(btnAprobar);
+    actions.appendChild(btnRechazar);
+    actions.appendChild(btnContrato);
+
+    card.appendChild(header);
+    card.appendChild(bioEl);
+    card.appendChild(actions);
+    container.appendChild(card);
+  });
+}
+
+function renderClientes(data) {
+  data = data || clientes;
+  const tbody = document.getElementById('clientes-tbody');
+  if (!tbody) return;
+  tbody.textContent = '';
+  data.forEach(c => {
+    const tr = document.createElement('tr');
+    const planColors = { 'ÉLITE': '#E31E24', 'MÉTODO': '#F5C842', 'ESENCIAL': '#60a5fa' };
+
+    const cells = [
+      { text: c.id, style: 'font-family:var(--font-mono);color:var(--gray);font-size:12px' },
+      { text: c.nombre, style: 'font-weight:600' }
+    ];
+
+    cells.forEach(({ text, style }) => {
+      const td = document.createElement('td');
+      td.style.cssText = style;
+      td.textContent = text;
+      tr.appendChild(td);
+    });
+
+    // Plan
+    const tdPlan = document.createElement('td');
+    const planSpan = document.createElement('span');
+    const planColor = planColors[c.plan] || '#A1A1AA';
+    planSpan.style.cssText = 'background:rgba('+hexToRgb(planColor)+',.12);color:'+planColor+';padding:3px 8px;border-radius:0;font-size:11px;font-weight:700';
+    planSpan.textContent = c.plan;
+    tdPlan.appendChild(planSpan);
+    tr.appendChild(tdPlan);
+
+    // Coach
+    const tdCoach = document.createElement('td');
+    tdCoach.style.cssText = 'color:var(--gray);font-size:13px';
+    tdCoach.textContent = c.coach;
+    tr.appendChild(tdCoach);
+
+    // Semanas
+    const tdSem = document.createElement('td');
+    tdSem.textContent = c.semanas + ' sem';
+    tr.appendChild(tdSem);
+
+    // Check-in
+    const tdCheck = document.createElement('td');
+    tdCheck.style.cssText = 'font-family:var(--font-mono);font-size:12px';
+    tdCheck.textContent = c.checkin;
+    tr.appendChild(tdCheck);
+
+    // Estado
+    const tdEstado = document.createElement('td');
+    const estadoMap = { 'Activo': 'status-active', 'Inactivo': 'status-suspended', 'En pausa': 'status-pending' };
+    const estadoSpan = document.createElement('span');
+    estadoSpan.className = 'status-badge ' + (estadoMap[c.estado] || 'status-pending');
+    estadoSpan.textContent = c.estado;
+    tdEstado.appendChild(estadoSpan);
+    tr.appendChild(tdEstado);
+
+    // Acciones
+    const tdAcc = document.createElement('td');
+    tdAcc.style.cssText = 'display:flex;gap:6px';
+    const acts = [
+      { label: 'Ver perfil', cls: 'btn btn-secondary btn-sm' },
+      { label: 'Cambiar plan', cls: 'btn btn-gold btn-sm' },
+      { label: 'Asignar coach', cls: 'btn btn-secondary btn-sm' }
+    ];
+    acts.forEach(({ label, cls }) => {
+      const btn = document.createElement('button');
+      btn.className = cls;
+      btn.textContent = label;
+      tdAcc.appendChild(btn);
+    });
+    tr.appendChild(tdAcc);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? parseInt(result[1],16)+','+parseInt(result[2],16)+','+parseInt(result[3],16) : '255,255,255';
+}
+
+function renderTickets(data) {
+  data = data || tickets;
+  const tbody = document.getElementById('tickets-tbody');
+  if (!tbody) return;
+  tbody.textContent = '';
+  data.forEach(t => {
+    const tr = document.createElement('tr');
+
+    const tdId = document.createElement('td');
+    tdId.style.cssText = 'font-family:var(--font-mono);font-weight:700;color:var(--white)';
+    tdId.textContent = t.id;
+
+    const tdCoach = document.createElement('td');
+    tdCoach.textContent = t.coach;
+
+    const tdCliente = document.createElement('td');
+    tdCliente.style.fontWeight = '600';
+    tdCliente.textContent = t.cliente;
+
+    const tdPlan = document.createElement('td');
+    tdPlan.textContent = t.plan;
+
+    const tdTipo = document.createElement('td');
+    tdTipo.style.cssText = 'color:var(--gray);font-size:12px';
+    tdTipo.textContent = t.tipo;
+
+    const tdFecha = document.createElement('td');
+    tdFecha.style.cssText = 'font-family:var(--font-mono);font-size:12px';
+    tdFecha.textContent = t.fecha;
+
+    const tdSla = document.createElement('td');
+    const slaEl = document.createElement('span');
+    slaEl.className = t.sla_type === 'urgent' ? 'sla-urgent' : t.sla_type === 'warn' ? 'sla-warn' : 'sla-ok';
+    slaEl.textContent = t.sla_type === 'ok' ? '✓ ' + t.sla : '⚠ ' + t.sla;
+    tdSla.appendChild(slaEl);
+
+    const tdEstado = document.createElement('td');
+    const estadoSpan = document.createElement('span');
+    estadoSpan.className = t.estado === 'Abierto' ? 'status-badge status-open' : 'status-badge status-closed';
+    estadoSpan.textContent = t.estado;
+    tdEstado.appendChild(estadoSpan);
+
+    const tdAcc = document.createElement('td');
+    tdAcc.style.cssText = 'display:flex;gap:6px';
+    const btnVer = document.createElement('button');
+    btnVer.className = 'btn btn-secondary btn-sm';
+    btnVer.textContent = 'Ver';
+    btnVer.addEventListener('click', () => openTicketModal(t));
+    tdAcc.appendChild(btnVer);
+    if (t.estado === 'Abierto') {
+      const btnAsignar = document.createElement('button');
+      btnAsignar.className = 'btn btn-primary btn-sm';
+      btnAsignar.textContent = 'Asignar';
+      tdAcc.appendChild(btnAsignar);
+    }
+
+    [tdId, tdCoach, tdCliente, tdPlan, tdTipo, tdFecha, tdSla, tdEstado, tdAcc].forEach(td => tr.appendChild(td));
+    tbody.appendChild(tr);
+  });
+}
+
+function openTicketModal(t) {
+  document.getElementById('modal-ticket-title').textContent = 'Ticket ' + t.id;
+  const body = document.getElementById('modal-ticket-body');
+  body.innerHTML = '';
+
+  const infoSection = document.createElement('div');
+  const rows = [
+    ['Ticket ID', t.id],
+    ['Coach', t.coach],
+    ['Cliente', t.cliente],
+    ['Plan solicitado', t.plan],
+    ['Tipo de solicitud', t.tipo],
+    ['Fecha', t.fecha],
+    ['SLA', t.sla],
+    ['Asignado a', t.asignado],
+    ['Estado', t.estado]
+  ];
+  rows.forEach(([label, val]) => {
+    const row = document.createElement('div');
+    row.className = 'info-row';
+    const lEl = document.createElement('span');
+    lEl.className = 'info-label';
+    lEl.textContent = label;
+    const vEl = document.createElement('span');
+    vEl.className = 'info-value';
+    vEl.textContent = val;
+    row.appendChild(lEl);
+    row.appendChild(vEl);
+    infoSection.appendChild(row);
+  });
+  body.appendChild(infoSection);
+
+  const notasLabel = document.createElement('div');
+  notasLabel.style.cssText = 'font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin:16px 0 6px';
+  notasLabel.textContent = 'Descripción / Notas del coach';
+  const notasBox = document.createElement('div');
+  notasBox.style.cssText = 'background:var(--surface-2);border-radius:0;padding:12px;font-size:13px;line-height:1.6;color:var(--gray);margin-bottom:16px';
+  notasBox.textContent = t.notas;
+  body.appendChild(notasLabel);
+  body.appendChild(notasBox);
+
+  const tlLabel = document.createElement('div');
+  tlLabel.style.cssText = 'font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px';
+  tlLabel.textContent = 'Historial';
+  const tlList = document.createElement('ul');
+  tlList.className = 'timeline';
+  const tlItems = [
+    { time: t.fecha + ' — 09:30', text: 'Ticket creado por ' + t.coach, cls: 'red' },
+    { time: t.fecha + ' — 10:15', text: 'Ticket recibido por WellCore Support', cls: 'green' }
+  ];
+  if (t.estado === 'Cerrado') {
+    tlItems.push({ time: '16 Feb — 14:30', text: 'Ticket resuelto. Plan enviado al coach.', cls: 'green' });
+  }
+  tlItems.forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'timeline-item';
+    const dot = document.createElement('div');
+    dot.className = 'timeline-dot ' + item.cls;
+    const timeEl = document.createElement('div');
+    timeEl.className = 'timeline-time';
+    timeEl.textContent = item.time;
+    const textEl = document.createElement('div');
+    textEl.className = 'timeline-text';
+    textEl.textContent = item.text;
+    li.appendChild(dot);
+    li.appendChild(timeEl);
+    li.appendChild(textEl);
+    tlList.appendChild(li);
+  });
+  body.appendChild(tlLabel);
+  body.appendChild(tlList);
+
+  if (t.estado === 'Abierto') {
+    const respLabel = document.createElement('div');
+    respLabel.style.cssText = 'font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin:16px 0 6px';
+    respLabel.textContent = 'Respuesta';
+    const respArea = document.createElement('textarea');
+    respArea.className = 'form-textarea';
+    respArea.id = 'jefe-ticket-resp';
+    respArea.placeholder = 'Escribir respuesta o plan para el coach...';
+    body.appendChild(respLabel);
+    body.appendChild(respArea);
+
+    // AI draft button
+    var aiRow = document.createElement('div');
+    aiRow.style.cssText = 'display:flex;gap:8px;margin-top:10px;align-items:center;';
+    var aiBtn = document.createElement('button');
+    aiBtn.className = 'btn btn-primary btn-sm';
+    aiBtn.style.cssText = 'background:#E31E24;border-color:#E31E24;font-size:11px;';
+    aiBtn.textContent = 'Generar respuesta IA';
+    var aiStatus = document.createElement('span');
+    aiStatus.style.cssText = 'font-family:var(--font-mono);font-size:10px;color:var(--gray);';
+    aiBtn.addEventListener('click', function() {
+      aiBtn.disabled = true;
+      aiBtn.textContent = 'Generando...';
+      aiStatus.textContent = 'Conectando con Router IA...';
+      var tkn = localStorage.getItem('wc_token') || '';
+      var context = 'Ticket ' + t.id + '. Coach: ' + t.coach + '. Cliente: ' + t.cliente
+        + '. Plan: ' + t.plan + '. Tipo: ' + t.tipo + '. Descripcion: ' + t.notas;
+      fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + tkn, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'Genera una respuesta profesional para este ticket de soporte WellCore: ' + context,
+          session_id: 'jefe-ticket-' + t.id
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.reply) {
+          respArea.value = d.reply;
+          aiStatus.textContent = 'Borrador generado — revisa antes de enviar';
+          aiStatus.style.color = '#22C55E';
+        } else {
+          aiStatus.textContent = d.error || 'Error generando borrador';
+          aiStatus.style.color = '#E31E24';
+        }
+      })
+      .catch(function() {
+        aiStatus.textContent = 'Error de conexion con la IA';
+        aiStatus.style.color = '#E31E24';
+      })
+      .finally(function() {
+        aiBtn.disabled = false;
+        aiBtn.textContent = 'Generar respuesta IA';
+      });
+    });
+    aiRow.appendChild(aiBtn);
+    aiRow.appendChild(aiStatus);
+    body.appendChild(aiRow);
+  }
+
+  openModal('modal-ticket');
+}
+
+function renderPagos() {
+  const tbody = document.getElementById('pagos-tbody');
+  if (!tbody) return;
+  pagosData.forEach(p => {
+    const tr = document.createElement('tr');
+    const cells = [
+      { text: p.coach, style: 'font-weight:600' },
+      { text: p.periodo, style: 'font-family:var(--font-mono);font-size:12px' },
+      { text: p.clientes, style: '' },
+      { text: p.bruto, style: 'font-family:var(--font-mono)' },
+      { text: p.coach_pct, style: 'font-family:var(--font-mono);color:var(--green);font-weight:600' },
+      { text: p.wellcore_pct, style: 'font-family:var(--font-mono);color:var(--red);font-weight:600' }
+    ];
+    cells.forEach(({ text, style }) => {
+      const td = document.createElement('td');
+      if (style) td.style.cssText = style;
+      td.textContent = text;
+      tr.appendChild(td);
+    });
+    const tdEstado = document.createElement('td');
+    const estadoSpan = document.createElement('span');
+    estadoSpan.className = p.estado === 'Pendiente' ? 'status-badge status-pending' : 'status-badge status-active';
+    estadoSpan.textContent = p.estado;
+    tdEstado.appendChild(estadoSpan);
+    tr.appendChild(tdEstado);
+
+    const tdAcc = document.createElement('td');
+    if (p.estado === 'Pendiente') {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-success btn-sm';
+      btn.textContent = '// Pagar';
+      tdAcc.appendChild(btn);
+    } else {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-secondary btn-sm';
+      btn.textContent = '// Recibo';
+      tdAcc.appendChild(btn);
+    }
+    tr.appendChild(tdAcc);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderActivity() {
+  const feed = document.getElementById('activity-feed');
+  if (!feed) return;
+  activityItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'activity-item';
+    const dot = document.createElement('div');
+    dot.className = 'activity-dot ' + item.color;
+    const textDiv = document.createElement('div');
+    const textEl = document.createElement('div');
+    textEl.className = 'activity-text';
+    textEl.textContent = item.text;
+    const timeEl = document.createElement('div');
+    timeEl.className = 'activity-time';
+    timeEl.textContent = item.time;
+    textDiv.appendChild(textEl);
+    textDiv.appendChild(timeEl);
+    div.appendChild(dot);
+    div.appendChild(textDiv);
+    feed.appendChild(div);
+  });
+}
+
+function updateDate() {
+  const now = new Date();
+  const options = { weekday:'short', year:'numeric', month:'short', day:'numeric' };
+  document.getElementById('topbar-date').textContent = now.toLocaleDateString('es-CO', options);
+}
+
+// ===================== API HELPERS =====================
+function apiBearerFetch(path) {
+  var token = localStorage.getItem('wc_token');
+  var headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  return fetch('/api' + path, { headers: headers }).then(function(r) { return r.json(); });
+}
+
+function mapApiApp(a) {
+  return {
+    id: a.id,
+    nombre: a.full_name || a.nombre || '',
+    email: a.email || '',
+    plan: (a.coach_plan || '').toUpperCase(),
+    exp: a.experience_years ? a.experience_years + ' años de experiencia' : (a.experience_summary || ''),
+    bio: a.bio || '',
+    fecha: (a.created_at || '').substring(0, 10)
+  };
+}
+
+function mapApiClient(c) {
+  var planMap = { elite: 'ÉLITE', metodo: 'MÉTODO', esencial: 'ESENCIAL' };
+  var statusMap = { activo: 'Activo', inactivo: 'Inactivo', pendiente: 'En pausa' };
+  return {
+    id: c.client_code || String(c.id),
+    nombre: c.name || '',
+    plan: planMap[c.plan] || (c.plan || '').toUpperCase(),
+    coach: '—',
+    semanas: c.weeks_active || 0,
+    checkin: '—',
+    estado: statusMap[c.status] || 'Activo'
+  };
+}
+
+function mapApiTicket(t) {
+  var now = new Date();
+  var created = t.created_at ? new Date(t.created_at) : now;
+  var hoursAgo = Math.floor((now - created) / 3600000);
+  return {
+    id: '#' + String(t.id || '').padStart(4, '0'),
+    coach: t.coach_name || t.coach_id || '—',
+    cliente: t.client_name || t.client_id || '—',
+    plan: (t.plan_type || '').toUpperCase() || '—',
+    tipo: t.ticket_type || t.plan_type || 'Solicitud',
+    fecha: (t.created_at || '').substring(0, 10),
+    sla: hoursAgo < 24 ? hoursAgo + 'h' : Math.floor(hoursAgo/24) + 'd',
+    sla_type: t.status === 'open' ? (hoursAgo > 40 ? 'urgent' : 'warn') : 'ok',
+    estado: t.status === 'open' ? 'Abierto' : 'Cerrado',
+    notas: t.description || t.notes || '',
+    asignado: t.assigned_to || 'Sin asignar'
+  };
+}
+
+function loadLiveData() {
+  // Pending coach applications (Bearer auth)
+  apiBearerFetch('/coaches/list?status=pending')
+    .then(function(res) {
+      if (res.ok && res.data) renderPendingApps(res.data.map(mapApiApp));
+    }).catch(function() {});
+
+  // All coach applications (for KPI update)
+  apiBearerFetch('/coaches/list')
+    .then(function(res) {
+      if (res.ok && res.data) {
+        var active = res.data.filter(function(a) { return a.status === 'approved'; });
+        var pending = res.data.filter(function(a) { return a.status === 'pending'; });
+        var kpiCoaches = document.querySelector('#sec-dashboard .kpi-grid .kpi-card:nth-child(1) .kpi-value');
+        var kpiApps = document.querySelector('#sec-dashboard .kpi-grid .kpi-card:nth-child(6) .kpi-value');
+        if (kpiCoaches && active.length) kpiCoaches.textContent = active.length;
+        if (kpiApps && pending.length >= 0) kpiApps.textContent = pending.length;
+      }
+    }).catch(function() {});
+
+  // Clients (Bearer auth — paginated, default limit 25)
+  loadClientesJefe(0);
+
+  // Tickets (Bearer auth)
+  apiBearerFetch('/tickets/list')
+    .then(function(res) {
+      if (res.ok && res.data) {
+        renderTickets(res.data.map(mapApiTicket));
+        var open = res.data.filter(function(t) { return t.status === 'open'; });
+        var kpiTickets = document.querySelector('#sec-dashboard .kpi-grid .kpi-card:nth-child(5) .kpi-value');
+        if (kpiTickets) kpiTickets.textContent = open.length;
+      }
+    }).catch(function() {});
+}
+
+// ===================== CLIENTES PAGINATION (JEFE) =====================
+var jefePag = { offset: 0, limit: 25, total: 0 };
+
+function loadClientesJefe(offset) {
+  jefePag.offset = offset;
+  var searchVal = '';
+  var searchEl = document.getElementById('search-cliente');
+  if (searchEl) searchVal = searchEl.value.trim();
+
+  var qs = '?limit=' + jefePag.limit + '&offset=' + offset;
+  if (searchVal) qs += '&search=' + encodeURIComponent(searchVal);
+
+  apiBearerFetch('/admin/clients' + qs)
+    .then(function(data) {
+      var clientList = data.clients || data || [];
+      if (Array.isArray(clientList)) {
+        jefePag.total = data.total || clientList.length;
+        renderClientes(clientList.map(mapApiClient));
+        updateClientesPagJefe();
+        var kpiClientes = document.querySelector('#sec-dashboard .kpi-grid .kpi-card:nth-child(2) .kpi-value');
+        if (kpiClientes) kpiClientes.textContent = jefePag.total;
+      }
+    }).catch(function() {});
+}
+
+function updateClientesPagJefe() {
+  var info = document.getElementById('jefe-pag-info');
+  var prev = document.getElementById('jefe-pag-prev');
+  var next = document.getElementById('jefe-pag-next');
+  if (!info) return;
+
+  var from = jefePag.total > 0 ? jefePag.offset + 1 : 0;
+  var to = Math.min(jefePag.offset + jefePag.limit, jefePag.total);
+  info.textContent = from + '-' + to + ' de ' + jefePag.total;
+
+  prev.disabled = jefePag.offset <= 0;
+  next.disabled = jefePag.offset + jefePag.limit >= jefePag.total;
+}
+
+// ===================== ANALYTICS DATE FILTER =====================
+function getAnalyticsDays() {
+  var sel = document.getElementById('analytics-range');
+  return sel ? parseInt(sel.value, 10) : 30;
+}
+
+function updateAnalyticsLabel() {
+  var days = getAnalyticsDays();
+  var label = document.getElementById('analytics-range-label');
+  if (!label) return;
+  if (days === 0) {
+    label.textContent = 'Mostrando: todos los datos';
+  } else {
+    var from = new Date();
+    from.setDate(from.getDate() - days);
+    label.textContent = 'Desde: ' + from.toISOString().substring(0, 10);
+  }
+}
+
+function loadAnalyticsData() {
+  var days = getAnalyticsDays();
+  updateAnalyticsLabel();
+
+  // Load metrics filtered by date range
+  var qs = days > 0 ? '?days=' + days : '';
+
+  // Nutrition stats
+  apiBearerFetch('/admin/nutrition-stats' + qs)
+    .then(function(data) {
+      // Update nutrition chart if data available
+    }).catch(function() {});
+
+  // Chat stats
+  apiBearerFetch('/admin/chat-stats' + qs)
+    .then(function(data) {
+      // Update chat metrics if data available
+    }).catch(function() {});
+
+  // AI stats
+  apiBearerFetch('/admin/ai-stats' + qs)
+    .then(function(data) {
+      // Update AI generation metrics if data available
+    }).catch(function() {});
+}
+
+// ===================== TAB SWITCH: INVITACION / PATROCINIO =====================
+function switchInvTab(tab) {
+  var tabInv = document.getElementById('tab-invitacion');
+  var tabSpon = document.getElementById('tab-patrocinio');
+  var formInv = document.getElementById('form-invitacion');
+  var formSpon = document.getElementById('form-patrocinio');
+
+  if (tab === 'patrocinio') {
+    tabInv.style.background = 'var(--surface-2)';
+    tabInv.style.color = 'var(--gray)';
+    tabInv.style.borderColor = 'var(--border)';
+    tabSpon.style.background = 'var(--accent)';
+    tabSpon.style.color = 'var(--bg)';
+    tabSpon.style.borderColor = 'var(--accent)';
+    formInv.style.display = 'none';
+    formSpon.style.display = 'block';
+  } else {
+    tabInv.style.background = 'var(--red)';
+    tabInv.style.color = 'var(--white)';
+    tabInv.style.borderColor = 'var(--red)';
+    tabSpon.style.background = 'var(--surface-2)';
+    tabSpon.style.color = 'var(--gray)';
+    tabSpon.style.borderColor = 'var(--border)';
+    formInv.style.display = 'block';
+    formSpon.style.display = 'none';
+  }
+}
+
+// ===================== PATROCINIO =====================
+function setupPatrocinio() {
+  var btn = document.getElementById('spon-create-btn');
+  if (!btn) return;
+
+  btn.addEventListener('click', function() {
+    var name = document.getElementById('spon-name').value.trim();
+    var email = document.getElementById('spon-email').value.trim();
+    var plan = document.getElementById('spon-plan').value;
+    var note = document.getElementById('spon-note').value.trim();
+    var sendEmail = document.getElementById('spon-send-email').checked;
+    var token = localStorage.getItem('wc_token');
+
+    if (!name) { alert('Nombre es requerido'); return; }
+    if (!email) { alert('Email es requerido'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Creando...';
+
+    fetch('/api/admin/create-sponsored', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        plan: plan,
+        note: note,
+        send_email: sendEmail
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      btn.disabled = false;
+      btn.textContent = '// Crear cuenta';
+
+      if (data.ok) {
+        var result = document.getElementById('spon-result');
+        result.style.display = 'block';
+        document.getElementById('spon-res-code').textContent = data.client_code;
+        document.getElementById('spon-res-email').textContent = data.email;
+        document.getElementById('spon-res-pass').textContent = data.temp_pass;
+        document.getElementById('spon-res-sent').textContent = data.email_sent ? 'Si' : 'No';
+        document.getElementById('spon-res-sent').style.color = data.email_sent ? 'var(--green)' : 'var(--red)';
+
+        // Clear form
+        document.getElementById('spon-name').value = '';
+        document.getElementById('spon-email').value = '';
+        document.getElementById('spon-note').value = '';
+
+        // Reload invitations table (patrocinio creates an invitation entry too)
+        loadInvitaciones();
+      } else {
+        alert('Error: ' + (data.error || 'No se pudo crear la cuenta'));
+      }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = '// Crear cuenta';
+      alert('Error de red');
+    });
+  });
+}
+
+// ===================== INVITACIONES =====================
+var invitacionesData = [];
+
+function loadInvitaciones() {
+  var token = localStorage.getItem('wc_token');
+  var headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+
+  var statusFilter = '';
+  var filterEl = document.getElementById('inv-filter-status');
+  if (filterEl) statusFilter = filterEl.value;
+
+  var url = '/api/admin/invitations';
+  if (statusFilter) url += '?status=' + encodeURIComponent(statusFilter);
+
+  fetch(url, { headers: headers })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.invitations) {
+        invitacionesData = data.invitations;
+        renderInvitaciones(data.invitations);
+        // Update KPIs
+        var totalEl = document.getElementById('inv-kpi-total');
+        var pendingEl = document.getElementById('inv-kpi-pending');
+        var usedEl = document.getElementById('inv-kpi-used');
+        if (totalEl) totalEl.textContent = data.total || 0;
+        if (pendingEl) pendingEl.textContent = data.pending || 0;
+        if (usedEl) usedEl.textContent = data.used || 0;
+        // Update nav badge
+        var badge = document.getElementById('nav-badge-invitaciones');
+        if (badge && data.pending > 0) {
+          badge.textContent = data.pending;
+          badge.style.display = 'flex';
+        } else if (badge) {
+          badge.style.display = 'none';
+        }
+      }
+    })
+    .catch(function() {});
+}
+
+function renderInvitaciones(data) {
+  var tbody = document.getElementById('invitaciones-tbody');
+  if (!tbody) return;
+  tbody.textContent = '';
+
+  if (!data || data.length === 0) {
+    var tr = document.createElement('tr');
+    var td = document.createElement('td');
+    td.setAttribute('colspan', '7');
+    td.style.cssText = 'text-align:center;color:var(--gray);padding:32px;font-size:13px';
+    td.textContent = 'No hay invitaciones. Crea una arriba.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  data.forEach(function(inv) {
+    var tr = document.createElement('tr');
+
+    // Code (truncated)
+    var tdCode = document.createElement('td');
+    tdCode.style.cssText = 'font-family:var(--font-mono);font-size:11px;color:var(--accent)';
+    tdCode.textContent = inv.code ? inv.code.substring(0, 12) + '...' : '—';
+    tdCode.title = inv.code || '';
+    tr.appendChild(tdCode);
+
+    // Plan
+    var tdPlan = document.createElement('td');
+    var planSpan = document.createElement('span');
+    var planColors = { esencial: '#60a5fa', metodo: '#F5C842', elite: '#E31E24' };
+    var pColor = planColors[inv.plan] || '#A1A1AA';
+    planSpan.style.cssText = 'background:rgba(' + hexToRgb(pColor) + ',.12);color:' + pColor + ';padding:3px 8px;border-radius:0;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase';
+    planSpan.textContent = inv.plan || '—';
+    tdPlan.appendChild(planSpan);
+    tr.appendChild(tdPlan);
+
+    // Email hint
+    var tdEmail = document.createElement('td');
+    tdEmail.style.cssText = 'font-size:12px;color:var(--gray)';
+    tdEmail.textContent = inv.email_hint || '—';
+    tr.appendChild(tdEmail);
+
+    // Status
+    var tdStatus = document.createElement('td');
+    var statusSpan = document.createElement('span');
+    var statusMap = { pending: 'status-pending', used: 'status-active', expired: 'status-suspended' };
+    var statusLabels = { pending: 'Pendiente', used: 'Usada', expired: 'Expirada' };
+    statusSpan.className = 'status-badge ' + (statusMap[inv.status] || 'status-pending');
+    statusSpan.textContent = statusLabels[inv.status] || inv.status;
+    tdStatus.appendChild(statusSpan);
+    tr.appendChild(tdStatus);
+
+    // Created date
+    var tdCreated = document.createElement('td');
+    tdCreated.style.cssText = 'font-family:var(--font-mono);font-size:11px;color:var(--gray)';
+    tdCreated.textContent = inv.created_at ? inv.created_at.substring(0, 10) : '—';
+    tr.appendChild(tdCreated);
+
+    // Used by
+    var tdUsedBy = document.createElement('td');
+    tdUsedBy.style.cssText = 'font-size:12px';
+    tdUsedBy.textContent = inv.used_by_name || '—';
+    tr.appendChild(tdUsedBy);
+
+    // Actions
+    var tdAcc = document.createElement('td');
+    tdAcc.style.cssText = 'display:flex;gap:6px';
+
+    if (inv.status === 'pending') {
+      var btnCopy = document.createElement('button');
+      btnCopy.className = 'btn btn-secondary btn-sm';
+      btnCopy.textContent = 'Copiar link';
+      btnCopy.addEventListener('click', (function(code) {
+        return function() {
+          var link = 'https://wellcorefitness.com/inscripcion.html?invite=' + code;
+          navigator.clipboard.writeText(link).then(function() {
+            btnCopy.textContent = 'Copiado!';
+            setTimeout(function() { btnCopy.textContent = 'Copiar link'; }, 2000);
+          });
+        };
+      })(inv.code));
+      tdAcc.appendChild(btnCopy);
+
+      // Send email button (only if email_hint exists)
+      if (inv.email_hint) {
+        var btnSend = document.createElement('button');
+        btnSend.className = 'btn btn-primary btn-sm';
+        btnSend.textContent = 'Enviar';
+        btnSend.title = 'Enviar email de invitacion a ' + inv.email_hint;
+        btnSend.addEventListener('click', (function(invId, emailHint, btn) {
+          return function() {
+            if (!confirm('Enviar email de invitacion a ' + emailHint + '?')) return;
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            var token = localStorage.getItem('wc_token');
+            fetch('/api/admin/send-invitation', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              },
+              body: JSON.stringify({ invitation_id: invId })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+              btn.disabled = false;
+              if (data.ok) {
+                btn.textContent = 'Enviado';
+                btn.style.background = 'var(--green)';
+                setTimeout(function() {
+                  btn.textContent = 'Enviar';
+                  btn.style.background = '';
+                }, 3000);
+              } else {
+                btn.textContent = 'Error';
+                btn.style.background = 'var(--red)';
+                alert('Error: ' + (data.error || 'No se pudo enviar'));
+                setTimeout(function() {
+                  btn.textContent = 'Enviar';
+                  btn.style.background = '';
+                }, 3000);
+              }
+            })
+            .catch(function() {
+              btn.disabled = false;
+              btn.textContent = 'Enviar';
+              alert('Error de red al enviar email');
+            });
+          };
+        })(inv.id, inv.email_hint, btnSend));
+        tdAcc.appendChild(btnSend);
+      }
+
+      var btnCancel = document.createElement('button');
+      btnCancel.className = 'btn btn-danger btn-sm';
+      btnCancel.textContent = 'Cancelar';
+      btnCancel.addEventListener('click', (function(id) {
+        return function() {
+          if (!confirm('Cancelar esta invitacion?')) return;
+          var token = localStorage.getItem('wc_token');
+          fetch('/api/admin/invitations?id=' + id, {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + token }
+          }).then(function() { loadInvitaciones(); });
+        };
+      })(inv.id));
+      tdAcc.appendChild(btnCancel);
+    } else {
+      var span = document.createElement('span');
+      span.style.cssText = 'color:var(--gray);font-size:11px';
+      span.textContent = '—';
+      tdAcc.appendChild(span);
+    }
+
+    tr.appendChild(tdAcc);
+    tbody.appendChild(tr);
+  });
+}
+
+function setupInvitaciones() {
+  var createBtn = document.getElementById('inv-create-btn');
+  if (!createBtn) return;
+
+  createBtn.addEventListener('click', function() {
+    var plan = document.getElementById('inv-plan').value;
+    var email = document.getElementById('inv-email').value;
+    var note = document.getElementById('inv-note').value;
+    var token = localStorage.getItem('wc_token');
+
+    createBtn.disabled = true;
+    createBtn.textContent = 'Creando...';
+
+    fetch('/api/admin/invitations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        plan: plan,
+        email_hint: email,
+        note: note,
+        expires_days: 30
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      createBtn.disabled = false;
+      createBtn.textContent = '// Crear';
+
+      if (data.code) {
+        var link = 'https://wellcorefitness.com/inscripcion.html?invite=' + data.code;
+        var resultDiv = document.getElementById('inv-create-result');
+        var linkInput = document.getElementById('inv-create-link');
+        resultDiv.style.display = 'block';
+        linkInput.value = link;
+
+        // Auto-send email if checkbox is checked and email was provided
+        var sendCheckbox = document.getElementById('inv-send-email');
+        if (sendCheckbox && sendCheckbox.checked && email && data.id) {
+          fetch('/api/admin/send-invitation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ invitation_id: data.id })
+          })
+          .then(function(r) { return r.json(); })
+          .then(function(res) {
+            var statusEl = document.createElement('div');
+            statusEl.style.cssText = 'font-size:11px;margin-top:8px;font-family:var(--font-mono);letter-spacing:.5px';
+            if (res.ok) {
+              statusEl.style.color = 'var(--green)';
+              statusEl.textContent = 'EMAIL ENVIADO A ' + email.toUpperCase();
+            } else {
+              statusEl.style.color = 'var(--red)';
+              statusEl.textContent = 'ERROR ENVIANDO EMAIL: ' + (res.error || 'desconocido');
+            }
+            resultDiv.appendChild(statusEl);
+          })
+          .catch(function() {});
+        }
+
+        // Clear form
+        document.getElementById('inv-email').value = '';
+        document.getElementById('inv-note').value = '';
+
+        // Reload table
+        loadInvitaciones();
+      }
+    })
+    .catch(function() {
+      createBtn.disabled = false;
+      createBtn.textContent = '// Crear';
+    });
+  });
+
+  // Copy button
+  var copyBtn = document.getElementById('inv-copy-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function() {
+      var linkInput = document.getElementById('inv-create-link');
+      navigator.clipboard.writeText(linkInput.value).then(function() {
+        copyBtn.textContent = 'Copiado!';
+        setTimeout(function() { copyBtn.textContent = 'Copiar'; }, 2000);
+      });
+    });
+  }
+
+  // Status filter
+  var filterEl = document.getElementById('inv-filter-status');
+  if (filterEl) {
+    filterEl.addEventListener('change', function() {
+      loadInvitaciones();
+    });
+  }
+}
+
+// ===================== SYSTEM HEALTH =====================
+function loadSystemHealth() {
+  apiBearerFetch('/admin/health')
+    .then(function(data) {
+      if (!data.ok || !data.health) return;
+      var container = document.getElementById('health-items');
+      if (!container) return;
+      container.textContent = '';
+
+      var services = [
+        { key: 'mysql', label: 'MySQL' },
+        { key: 'dify', label: 'Dify IA' },
+        { key: 'ollama', label: 'Ollama' },
+        { key: 'n8n', label: 'n8n Workflows' }
+      ];
+
+      services.forEach(function(svc) {
+        var info = data.health[svc.key] || { status: 'error', label: 'Sin datos' };
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)';
+
+        var left = document.createElement('div');
+        left.style.cssText = 'display:flex;align-items:center;gap:10px';
+
+        var dot = document.createElement('span');
+        dot.style.cssText = 'width:10px;height:10px;border-radius:50%;flex-shrink:0;display:inline-block';
+        if (info.status === 'ok') {
+          dot.style.background = 'var(--green)';
+        } else if (info.status === 'warn' || info.status === 'off') {
+          dot.style.background = 'var(--gold)';
+        } else {
+          dot.style.background = 'var(--red)';
+        }
+
+        var nameEl = document.createElement('span');
+        nameEl.style.cssText = 'font-size:13px;font-weight:600';
+        nameEl.textContent = svc.label;
+
+        left.appendChild(dot);
+        left.appendChild(nameEl);
+
+        var statusEl = document.createElement('span');
+        statusEl.style.cssText = 'font-size:11px;font-family:var(--font-mono);color:var(--gray)';
+        statusEl.textContent = info.label;
+
+        row.appendChild(left);
+        row.appendChild(statusEl);
+        container.appendChild(row);
+      });
+
+      var tsEl = document.getElementById('health-ts');
+      if (tsEl) tsEl.textContent = 'Ultimo check: ' + (data.ts || '—');
+    })
+    .catch(function() {
+      var container = document.getElementById('health-items');
+      if (container) {
+        container.textContent = '';
+        var errEl = document.createElement('div');
+        errEl.style.cssText = 'font-size:12px;color:var(--red);font-family:var(--font-mono)';
+        errEl.textContent = 'Error conectando con el servidor';
+        container.appendChild(errEl);
+      }
+    });
+}
+
+// ===================== API LOGS =====================
+function loadApiLogs() {
+  apiBearerFetch('/admin/api-logs?days=7&limit=10')
+    .then(function(data) {
+      if (!data.ok) return;
+
+      // KPIs
+      var kpiContainer = document.getElementById('api-logs-kpis');
+      if (kpiContainer && data.stats) {
+        kpiContainer.textContent = '';
+        var kpis = [
+          { label: 'Total Requests', value: data.stats.total || 0, color: 'var(--white)' },
+          { label: 'IPs Unicas', value: data.stats.unique_ips || 0, color: 'var(--accent)' },
+          { label: 'Errores (4xx/5xx)', value: data.stats.errors || 0, color: parseInt(data.stats.errors) > 0 ? 'var(--red)' : 'var(--green)' },
+          { label: 'Avg Response', value: (data.stats.avg_ms || 0) + 'ms', color: 'var(--gold)' }
+        ];
+
+        kpis.forEach(function(k) {
+          var card = document.createElement('div');
+          card.style.cssText = 'background:var(--surface-2);border:1px solid var(--border);padding:10px 12px;border-radius:0';
+
+          var valEl = document.createElement('div');
+          valEl.style.cssText = 'font-family:var(--font-heading);font-size:22px;color:' + k.color;
+          valEl.textContent = k.value;
+
+          var labelEl = document.createElement('div');
+          labelEl.style.cssText = 'font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-top:2px';
+          labelEl.textContent = k.label;
+
+          card.appendChild(valEl);
+          card.appendChild(labelEl);
+          kpiContainer.appendChild(card);
+        });
+      }
+
+      // Top endpoints
+      var topContainer = document.getElementById('api-logs-top');
+      if (topContainer && data.top_endpoints) {
+        topContainer.textContent = '';
+        var topList = data.top_endpoints.slice(0, 5);
+
+        if (topList.length === 0) {
+          var empty = document.createElement('div');
+          empty.style.cssText = 'font-size:12px;color:var(--gray)';
+          empty.textContent = 'Sin datos';
+          topContainer.appendChild(empty);
+          return;
+        }
+
+        var maxHits = topList[0].hits || 1;
+
+        topList.forEach(function(ep) {
+          var row = document.createElement('div');
+          row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)';
+
+          // Endpoint name
+          var nameEl = document.createElement('span');
+          nameEl.style.cssText = 'font-size:11px;font-family:var(--font-mono);color:var(--white);min-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+          nameEl.textContent = ep.endpoint || '—';
+          nameEl.title = ep.endpoint || '';
+
+          // Bar
+          var barWrap = document.createElement('div');
+          barWrap.style.cssText = 'flex:1;height:12px;background:var(--surface-2);border-radius:0;overflow:hidden';
+          var bar = document.createElement('div');
+          var pct = Math.max(5, Math.round((ep.hits / maxHits) * 100));
+          bar.style.cssText = 'height:100%;background:var(--red);width:' + pct + '%';
+          barWrap.appendChild(bar);
+
+          // Hits count
+          var hitsEl = document.createElement('span');
+          hitsEl.style.cssText = 'font-size:10px;font-family:var(--font-mono);color:var(--gray);min-width:40px;text-align:right';
+          hitsEl.textContent = ep.hits;
+
+          // Avg ms
+          var msEl = document.createElement('span');
+          msEl.style.cssText = 'font-size:10px;font-family:var(--font-mono);color:var(--gold);min-width:40px;text-align:right';
+          msEl.textContent = (ep.avg_ms || 0) + 'ms';
+
+          row.appendChild(nameEl);
+          row.appendChild(barWrap);
+          row.appendChild(hitsEl);
+          row.appendChild(msEl);
+          topContainer.appendChild(row);
+        });
+      }
+    })
+    .catch(function() {
+      var kpiContainer = document.getElementById('api-logs-kpis');
+      if (kpiContainer) {
+        kpiContainer.textContent = '';
+        var errEl = document.createElement('div');
+        errEl.style.cssText = 'font-size:12px;color:var(--gray);font-family:var(--font-mono)';
+        errEl.textContent = 'Sin datos de API logs';
+        kpiContainer.appendChild(errEl);
+      }
+    });
+}
+
+// ===================== API LOGS (FULL PAGE) =====================
+function loadApiLogsPage() {
+  var days = parseInt(document.getElementById('apilogs-days').value, 10) || 7;
+  var epFilter = (document.getElementById('apilogs-endpoint-filter').value || '').trim();
+  var qs = '?days=' + days + '&limit=50';
+  if (epFilter) qs += '&endpoint=' + encodeURIComponent(epFilter);
+
+  apiBearerFetch('/admin/api-logs' + qs)
+    .then(function(data) {
+      if (!data.ok) return;
+
+      // KPIs
+      var s = data.stats || {};
+      var totalEl = document.getElementById('apilogs-kpi-total');
+      var ipsEl = document.getElementById('apilogs-kpi-ips');
+      var errEl = document.getElementById('apilogs-kpi-errors');
+      var avgEl = document.getElementById('apilogs-kpi-avg');
+      if (totalEl) totalEl.textContent = s.total || 0;
+      if (ipsEl) ipsEl.textContent = s.unique_ips || 0;
+      if (errEl) errEl.textContent = s.errors || 0;
+      if (avgEl) avgEl.textContent = (s.avg_ms || 0) + 'ms';
+
+      // Top endpoints
+      var topTbody = document.getElementById('apilogs-top-tbody');
+      if (topTbody && data.top_endpoints) {
+        topTbody.textContent = '';
+        data.top_endpoints.forEach(function(ep) {
+          var tr = document.createElement('tr');
+
+          var tdEp = document.createElement('td');
+          tdEp.style.cssText = 'font-family:var(--font-mono);font-size:12px';
+          tdEp.textContent = ep.endpoint || '—';
+
+          var tdHits = document.createElement('td');
+          tdHits.style.cssText = 'font-family:var(--font-mono);font-weight:600';
+          tdHits.textContent = ep.hits || 0;
+
+          var tdMs = document.createElement('td');
+          tdMs.style.cssText = 'font-family:var(--font-mono);color:var(--gold)';
+          tdMs.textContent = (ep.avg_ms || 0) + 'ms';
+
+          tr.appendChild(tdEp);
+          tr.appendChild(tdHits);
+          tr.appendChild(tdMs);
+          topTbody.appendChild(tr);
+        });
+      }
+
+      // Recent logs
+      var recentTbody = document.getElementById('apilogs-recent-tbody');
+      if (recentTbody && data.logs) {
+        recentTbody.textContent = '';
+        data.logs.forEach(function(log) {
+          var tr = document.createElement('tr');
+
+          var tdDate = document.createElement('td');
+          tdDate.style.cssText = 'font-family:var(--font-mono);font-size:11px;color:var(--gray)';
+          tdDate.textContent = log.created_at || '—';
+
+          var tdMethod = document.createElement('td');
+          tdMethod.style.cssText = 'font-weight:600;font-size:12px';
+          tdMethod.textContent = log.method || 'GET';
+
+          var tdEndpoint = document.createElement('td');
+          tdEndpoint.style.cssText = 'font-family:var(--font-mono);font-size:11px';
+          tdEndpoint.textContent = log.endpoint || '—';
+
+          var tdStatus = document.createElement('td');
+          var statusSpan = document.createElement('span');
+          var sc = parseInt(log.status_code) || 0;
+          statusSpan.className = 'status-badge ' + (sc >= 400 ? 'status-suspended' : sc >= 300 ? 'status-pending' : 'status-active');
+          statusSpan.textContent = sc;
+          tdStatus.appendChild(statusSpan);
+
+          var tdIp = document.createElement('td');
+          tdIp.style.cssText = 'font-family:var(--font-mono);font-size:11px;color:var(--gray)';
+          tdIp.textContent = log.ip || '—';
+
+          var tdUser = document.createElement('td');
+          tdUser.style.cssText = 'font-size:12px;color:var(--gray)';
+          tdUser.textContent = log.user_id ? (log.user_type || '') + ':' + log.user_id : '—';
+
+          var tdDur = document.createElement('td');
+          tdDur.style.cssText = 'font-family:var(--font-mono);font-size:11px;color:var(--gold)';
+          tdDur.textContent = (log.duration_ms || 0) + 'ms';
+
+          tr.appendChild(tdDate);
+          tr.appendChild(tdMethod);
+          tr.appendChild(tdEndpoint);
+          tr.appendChild(tdStatus);
+          tr.appendChild(tdIp);
+          tr.appendChild(tdUser);
+          tr.appendChild(tdDur);
+          recentTbody.appendChild(tr);
+        });
+      }
+    })
+    .catch(function() {});
+}
+
+// ===================== INIT =====================
+function initApp() {
+  updateDate();
+  renderActivity();
+  renderCoaches();
+  renderPendingApps();
+  renderClientes();
+  renderTickets();
+  renderPagos();
+  setupInvitaciones();
+  setupPatrocinio();
+  loadInvitaciones();
+  loadLiveData();
+
+  // Clientes pagination buttons
+  var prevBtn = document.getElementById('jefe-pag-prev');
+  var nextBtn = document.getElementById('jefe-pag-next');
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    loadClientesJefe(Math.max(0, jefePag.offset - jefePag.limit));
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    loadClientesJefe(jefePag.offset + jefePag.limit);
+  });
+
+  // Clientes search debounce (350ms)
+  var searchCli = document.getElementById('search-cliente');
+  var searchTimer = null;
+  if (searchCli) searchCli.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function() { loadClientesJefe(0); }, 350);
+  });
+
+  // Analytics date range filter
+  var analyticsRange = document.getElementById('analytics-range');
+  if (analyticsRange) {
+    analyticsRange.addEventListener('change', function() {
+      loadAnalyticsData();
+    });
+    updateAnalyticsLabel();
+    loadAnalyticsData();
+  }
+
+  // System health
+  loadSystemHealth();
+  var healthRefreshBtn = document.getElementById('health-refresh-btn');
+  if (healthRefreshBtn) {
+    healthRefreshBtn.addEventListener('click', function() {
+      healthRefreshBtn.disabled = true;
+      healthRefreshBtn.textContent = '...';
+      loadSystemHealth();
+      setTimeout(function() {
+        healthRefreshBtn.disabled = false;
+        healthRefreshBtn.textContent = 'Actualizar';
+      }, 2000);
+    });
+  }
+
+  // API Logs dashboard
+  loadApiLogs();
+
+  // API Logs full page
+  var apilogsSearchBtn = document.getElementById('apilogs-search-btn');
+  if (apilogsSearchBtn) {
+    apilogsSearchBtn.addEventListener('click', function() { loadApiLogsPage(); });
+  }
+  var apilogsDays = document.getElementById('apilogs-days');
+  if (apilogsDays) {
+    apilogsDays.addEventListener('change', function() { loadApiLogsPage(); });
+  }
+  loadApiLogsPage();
+}
+
+// Auth is handled by inline script at top of body
+</script>
+<script src="js/v5-effects.js" defer></script>
+</body>
+</html>

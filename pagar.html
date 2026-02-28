@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Únete a WellCore — Elige tu Plan</title>
+    <meta name="description" content="Selecciona tu plan WellCore Fitness y comienza tu transformacion hoy. Entrenamiento y nutricion personalizados.">
+    <meta property="og:title" content="Únete a WellCore — Elige tu Plan">
+    <meta property="og:description" content="Selecciona tu plan WellCore Fitness y comienza tu transformacion hoy. Entrenamiento y nutricion personalizados.">
+    <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+    <meta property="og:url" content="https://wellcorefitness.com/pagar.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://wellcorefitness.com/pagar.html">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================================
+           CSS RESET & VARIABLES
+           ========================================================= */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red:       #E31E24;
+            --red-dim:   rgba(227,30,36,0.10);
+            --red-glow:  rgba(227,30,36,0.25);
+            --bg:        #0a0a0a;
+            --surface:   #111113;
+            --surface-2: #1a1a1d;
+            --border:    #252528;
+            --gray:      #A1A1AA;
+            --dark:      #52525B;
+            --green:     #00D9FF;
+            --green-dim: rgba(0,217,255,0.08);
+            --white:     #FFFFFF;
+            --red-dark:  #B8181D;
+            --accent:    #00D9FF;
+        }
+
+        html { font-size: 16px; scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Noise texture */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 180px;
+            pointer-events: none; z-index: 9999; opacity: 0.4;
+        }
+
+        /* =========================================================
+           NAVBAR
+           ========================================================= */
+        #nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-wrap {
+            max-width: 1200px; margin: 0 auto; padding: 18px 32px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 0.06em;
+            color: var(--white);
+            text-decoration: none;
+            display: flex; align-items: baseline; gap: 2px;
+        }
+        .nav-logo span { color: var(--red); font-size: 14px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.2em; }
+
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+
+        .nav-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--dark); text-decoration: none; transition: color 0.1s linear;
+        }
+        .nav-link:hover { color: var(--gray); }
+
+        /* =========================================================
+           PROGRESS STEPS
+           ========================================================= */
+        #steps-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+        .steps-wrap {
+            max-width: 1200px; margin: 0 auto; padding: 0 32px;
+            display: flex; align-items: center;
+        }
+        .step-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 18px 0;
+            flex: 1;
+        }
+        .step-item:not(:last-child)::after {
+            content: '';
+            flex: 1; height: 1px;
+            background: var(--border);
+            margin: 0 16px;
+        }
+        .step-num {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace; font-size: 11px;
+            color: var(--dark);
+            transition: all 0.1s linear;
+            flex-shrink: 0;
+        }
+        .step-num.active { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+        .step-num.done   { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+        .step-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 9px;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--dark); transition: color 0.1s linear;
+        }
+        .step-item.active .step-label { color: var(--white); }
+        .step-item.done .step-label   { color: var(--green); }
+
+        /* =========================================================
+           LAYOUT
+           ========================================================= */
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+        /* HERO */
+        .page-hero {
+            padding: 64px 0 48px;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+            color: var(--red); margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: ''; width: 40px; height: 1px; background: rgba(227,30,36,0.4);
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(42px,6vw,72px);
+            line-height: 0.92;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+
+        .hero-sub {
+            font-size: 16px; color: var(--gray); line-height: 1.7;
+            max-width: 540px; margin: 0 auto;
+        }
+
+        /* STEP PANELS */
+        .step-panel { display: none; }
+        .step-panel.active { display: block; }
+
+        /* =========================================================
+           STEP 1 — PLAN SELECTION
+           ========================================================= */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .plan-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 32px 28px;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.1s linear;
+            overflow: hidden;
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--red);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.1s linear;
+        }
+
+        .plan-card:hover { border-color: var(--red); }
+        .plan-card:hover::before { transform: scaleX(1); }
+
+        .plan-card.selected {
+            border-color: var(--red);
+            background: var(--surface-2);
+        }
+        .plan-card.selected::before { transform: scaleX(1); }
+
+        .plan-badge {
+            display: inline-block;
+            background: var(--red);
+            color: var(--white);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
+            padding: 4px 10px;
+            margin-bottom: 20px;
+        }
+
+        .plan-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px; letter-spacing: 0.04em;
+            color: var(--white); margin-bottom: 4px;
+        }
+
+        .plan-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 40px; color: var(--red);
+            line-height: 1; margin-bottom: 4px;
+        }
+        .plan-price-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--dark); margin-bottom: 24px;
+        }
+
+        .plan-divider {
+            height: 1px; background: var(--border); margin-bottom: 20px;
+        }
+
+        .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .plan-features li {
+            display: flex; align-items: flex-start; gap: 10px;
+            font-size: 13px; color: var(--gray); line-height: 1.5;
+        }
+        .plan-features li span {
+            font-size: 11px; margin-top: 2px; flex-shrink: 0;
+        }
+
+        .plan-select-btn {
+            width: 100%; margin-top: 24px;
+            padding: 13px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px; letter-spacing: 0.1em;
+            color: var(--white);
+            background: transparent;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.1s linear;
+        }
+        .plan-card:hover .plan-select-btn,
+        .plan-card.selected .plan-select-btn {
+            background: var(--red);
+            border-color: var(--red);
+        }
+
+        /* =========================================================
+           STEP 2 — BUYER INFO
+           ========================================================= */
+        .form-section {
+            max-width: 640px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        .section-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .section-card-header {
+            display: flex; align-items: center; gap: 14px;
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
+        }
+        .sch-num {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--red-dim); border: 1px solid var(--red);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--red);
+        }
+        .sch-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .section-card-body { padding: 28px; }
+
+        .form-grid-2 {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .form-full { grid-column: 1 / -1; }
+        .form-group { display: flex; flex-direction: column; gap: 7px; }
+
+        .form-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--white);
+            padding: 13px 16px;
+            font-family: 'Inter', sans-serif; font-size: 14px;
+            outline: none;
+            transition: border-color 0.1s linear;
+            appearance: none;
+        }
+        .form-input::placeholder { color: var(--dark); }
+        .form-input:focus, .form-select:focus { border-color: var(--red); }
+
+        .select-wrap { position: relative; }
+        .select-wrap::after {
+            content: '\25BC';
+            font-size: 10px; color: var(--dark);
+            position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+            pointer-events: none;
+        }
+        .form-select { padding-right: 40px; }
+
+        /* PLAN SUMMARY in step 2 */
+        .plan-summary-box {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .psb-left { display: flex; flex-direction: column; gap: 3px; }
+        .psb-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--dark);
+        }
+        .psb-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px; letter-spacing: 0.06em; color: var(--white);
+        }
+        .psb-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px; color: var(--red);
+        }
+        .psb-change {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--dark); text-decoration: none; transition: color 0.1s linear;
+        }
+        .psb-change:hover { color: var(--red); }
+
+        /* Terms */
+        .form-check {
+            display: flex; align-items: flex-start; gap: 10px; margin-top: 16px;
+        }
+        .form-check input[type="checkbox"] {
+            width: 16px; height: 16px; flex-shrink: 0;
+            accent-color: var(--red); cursor: pointer; margin-top: 2px;
+        }
+        .form-check-label {
+            font-size: 12px; color: var(--dark); line-height: 1.6;
+        }
+        .form-check-label a { color: var(--red); text-decoration: none; }
+        .form-check-label a:hover { text-decoration: underline; }
+
+        /* NAV BUTTONS */
+        .step-nav {
+            display: flex; gap: 12px; justify-content: flex-end;
+            padding-bottom: 80px;
+        }
+        .btn-back {
+            padding: 14px 28px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px; letter-spacing: 0.1em;
+            color: var(--gray); background: transparent;
+            border: 1px solid var(--border);
+            cursor: pointer; transition: all 0.1s linear;
+        }
+        .btn-back:hover { border-color: var(--gray); color: var(--white); }
+
+        .btn-next {
+            padding: 14px 40px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px; letter-spacing: 0.1em;
+            color: var(--white); background: var(--red);
+            border: 4px solid var(--red); cursor: pointer; transition: background 0.1s linear;
+        }
+        .btn-next:hover { background: #c8191f; }
+        .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* =========================================================
+           STEP 3 — PAYMENT
+           ========================================================= */
+        .payment-section {
+            max-width: 640px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        .payment-summary-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .psc-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
+        }
+        .psc-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--white);
+        }
+        .psc-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--green);
+            border: 1px solid rgba(0,217,255,0.35);
+            padding: 4px 10px;
+        }
+        .psc-body { padding: 28px; }
+
+        .psc-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .psc-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .psc-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--dark);
+        }
+        .psc-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; letter-spacing: 0.1em;
+            color: var(--white);
+        }
+        .psc-value.total {
+            font-size: 22px;
+            color: var(--red);
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.06em;
+        }
+
+        /* Payment methods */
+        .pm-strip {
+            display: flex; gap: 8px; flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        .pm-badge {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.1em;
+            color: var(--dark);
+        }
+
+        /* Security note */
+        .security-strip {
+            display: flex; align-items: flex-start; gap: 10px;
+            background: var(--green-dim);
+            border: 1px solid rgba(0,217,255,0.2);
+            padding: 14px 18px;
+            margin-top: 16px;
+        }
+        .security-strip span.sec-icon { color: var(--green); font-size: 14px; margin-top: 2px; flex-shrink: 0; font-weight: 700; }
+        .security-strip p { font-size: 12px; color: var(--gray); line-height: 1.6; }
+        .security-strip strong { color: var(--white); }
+
+        /* Pay button */
+        .pay-btn {
+            width: 100%; margin-top: 24px;
+            padding: 18px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px; letter-spacing: 0.12em;
+            color: var(--white); background: var(--red);
+            border: 4px solid var(--red); cursor: pointer; transition: background 0.1s linear;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .pay-btn:hover:not(:disabled) {
+            background: #c8191f;
+        }
+        .pay-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .pay-btn .spin-ring {
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .wompi-note {
+            text-align: center; margin-top: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--dark);
+        }
+
+        /* Sandbox notice */
+        .sandbox-notice {
+            background: rgba(227,30,36,0.06);
+            border: 1px solid rgba(227,30,36,0.25);
+            padding: 12px 18px;
+            margin-bottom: 20px;
+        }
+        .sandbox-notice p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+            color: rgba(227,30,36,0.8); line-height: 1.7;
+        }
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+        #footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 24px 0;
+        }
+        .ft-wrap {
+            max-width: 1200px; margin: 0 auto; padding: 0 32px;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+        }
+        .ft-copy {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--dark);
+        }
+        .ft-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--dark); text-decoration: none; transition: color 0.1s linear;
+        }
+        .ft-link:hover { color: var(--red); }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        /* === HAMBURGER BUTTON === */
+        .nav-hamburger {
+            display: none;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        @media (max-width: 991px) {
+            .nav-right { display: none; }
+            .nav-hamburger { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .plans-grid { grid-template-columns: 1fr; }
+            .form-grid-2 { grid-template-columns: 1fr; }
+            .form-full { grid-column: auto; }
+            .nav-wrap { padding: 16px 20px; }
+            .wrap { padding: 0 20px; }
+            .steps-wrap { padding: 0 20px; }
+            .step-label { display: none; }
+        }
+  /* v5 preloader */
+  .v5-preloader{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s,visibility .6s}
+  .v5-preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+  .v5-preloader-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:#fff}
+  .v5-preloader-logo span{color:#E31E24}
+  .v5-preloader-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
+  .v5-preloader-fill{height:100%;background:#E31E24;width:0;animation:preloaderFill 1.2s cubic-bezier(.4,0,.2,1) forwards}
+  @keyframes preloaderFill{0%{width:0}100%{width:100%}}
+  [data-v5-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+  [data-v5-reveal].revealed{opacity:1;transform:translateY(0)}
+    </style>
+<link rel="stylesheet" href="css/wellcore-v5.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="nav">
+    <div class="nav-wrap">
+        <a href="index.html" class="nav-logo">WELLCORE <span>FITNESS</span></a>
+        <div class="nav-right">
+            <a href="index.html" class="nav-link">&larr; Volver</a>
+            <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+        </div>
+        <button class="nav-hamburger" id="navToggle" aria-label="Abrir men&uacute;">
+            &#9776;
+        </button>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<nav id="navMobileMenu">
+  <ul>
+    <li><a href="metodo.html" class="nav-mobile-link">M&eacute;todo</a></li>
+    <li><a href="nosotros.html" class="nav-mobile-link">Nosotros</a></li>
+    <li><a href="proceso.html" class="nav-mobile-link">Proceso</a></li>
+    <li><a href="planes.html" class="nav-mobile-link">Planes</a></li>
+    <li><a href="blog/index.html" class="nav-mobile-link">Blog</a></li>
+    <li><a href="coaches.html" class="nav-mobile-link" style="color:#E31E24;">&#9670; Trabaja con Nosotros</a></li>
+    <li><a href="login.html" class="nav-mobile-link" style="color:#fff;background:var(--red);padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;">MI CUENTA</a></li>
+  </ul>
+  <a href="inscripcion.html" class="nav-mobile-cta">Empezar &rarr;</a>
+</nav>
+
+<!-- STEPS BAR -->
+<div id="steps-bar">
+    <div class="steps-wrap">
+        <div class="step-item active" id="si1">
+            <div class="step-num active" id="sn1">1</div>
+            <div class="step-label">Elige tu plan</div>
+        </div>
+        <div class="step-item" id="si2">
+            <div class="step-num" id="sn2">2</div>
+            <div class="step-label">Tus datos</div>
+        </div>
+        <div class="step-item" id="si3">
+            <div class="step-num" id="sn3">3</div>
+            <div class="step-label">Pago seguro</div>
+        </div>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+    <div class="wrap">
+        <div class="hero-eyebrow">Unete a WellCore</div>
+        <h1 class="hero-title">ELIGE TU <span style="color:var(--red)">PLAN</span></h1>
+        <p class="hero-sub">Selecciona el plan que se adapta a tus objetivos. Todos incluyen acceso al portal del cliente con tu programacion personalizada.</p>
+    </div>
+</section>
+
+<!-- ===================== STEP 1: PLANES ===================== -->
+<div class="step-panel active" id="step1">
+    <div class="wrap">
+        <div class="plans-grid">
+
+            <!-- PLAN ESENCIAL -->
+            <div class="plan-card" data-plan="esencial" onclick="selectPlan('esencial', true)">
+                <div class="plan-name">ESENCIAL</div>
+                <div class="plan-price">$399.000</div>
+                <div class="plan-price-label">COP / mes</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.3);margin-top:4px;">&#126; $109 USD (internacional)</div>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Plan de entrenamiento personalizado</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Acceso al portal del cliente</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Biblioteca de ejercicios</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Soporte por email (48h)</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> 4 semanas de programacion</li>
+                </ul>
+                <button class="plan-select-btn">SELECCIONAR PLAN</button>
+            </div>
+
+            <!-- PLAN METODO -->
+            <div class="plan-card" data-plan="metodo" onclick="selectPlan('metodo', true)">
+                <div class="plan-badge">MAS POPULAR</div>
+                <div class="plan-name">METODO</div>
+                <div class="plan-price">$504.000</div>
+                <div class="plan-price-label">COP / mes</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.3);margin-top:4px;">&#126; $138 USD (internacional)</div>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Todo lo del plan Esencial</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Plan de nutricion personalizado</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Ajustes mensuales de programa</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Soporte prioritario (24h)</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Check-in mensual con el coach</li>
+                </ul>
+                <button class="plan-select-btn">SELECCIONAR PLAN</button>
+            </div>
+
+            <!-- PLAN ELITE -->
+            <div class="plan-card" data-plan="elite" onclick="selectPlan('elite', true)">
+                <div class="plan-name">ELITE</div>
+                <div class="plan-price">$630.000</div>
+                <div class="plan-price-label">COP / mes</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.3);margin-top:4px;">&#126; $173 USD (internacional)</div>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Todo lo del plan Metodo</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Plan de habitos y estilo de vida</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Check-in semanal con el coach</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Soporte prioritario (8h)</li>
+                    <li><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Revision de videos de tecnica</li>
+                </ul>
+                <button class="plan-select-btn">SELECCIONAR PLAN</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ===================== STEP 2: DATOS ===================== -->
+<div class="step-panel" id="step2">
+    <div class="wrap">
+        <div class="form-section">
+
+            <!-- Selected plan mini-summary -->
+            <div class="plan-summary-box">
+                <div class="psb-left">
+                    <div class="psb-label">Plan seleccionado</div>
+                    <div class="psb-name" id="psb-name">METODO</div>
+                </div>
+                <div class="psb-price" id="psb-price">$504.000 COP</div>
+                <a href="#" class="psb-change" onclick="goToStep(1);return false;">Cambiar plan</a>
+            </div>
+
+            <!-- Buyer info card -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="sch-num">2</div>
+                    <div class="sch-title">Tus datos personales</div>
+                </div>
+                <div class="section-card-body">
+                    <div class="form-grid-2">
+                        <div class="form-group form-full">
+                            <label class="form-label" for="buyerName">Nombre completo</label>
+                            <input class="form-input" type="text" id="buyerName"
+                                placeholder="Tu nombre completo" autocomplete="name"
+                                oninput="validateStep2()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="buyerEmail">Email</label>
+                            <input class="form-input" type="email" id="buyerEmail"
+                                placeholder="tu@email.com" autocomplete="email"
+                                oninput="validateStep2()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="buyerWhatsapp">WhatsApp</label>
+                            <input class="form-input" type="tel" id="buyerWhatsapp"
+                                placeholder="+1 000 000 0000" autocomplete="tel">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="buyerPais">Pais</label>
+                            <div class="select-wrap">
+                                <select class="form-input form-select" id="buyerPais">
+                                    <option value="">Selecciona tu pais</option>
+                                    <option value="MX">Mexico</option>
+                                    <option value="CO">Colombia</option>
+                                    <option value="AR">Argentina</option>
+                                    <option value="PE">Peru</option>
+                                    <option value="CL">Chile</option>
+                                    <option value="VE">Venezuela</option>
+                                    <option value="EC">Ecuador</option>
+                                    <option value="US">Estados Unidos</option>
+                                    <option value="ES">Espana</option>
+                                    <option value="OTHER">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-full">
+                            <label class="form-label" for="buyerObjetivo">Tu objetivo principal</label>
+                            <div class="select-wrap">
+                                <select class="form-input form-select" id="buyerObjetivo">
+                                    <option value="">Selecciona tu objetivo</option>
+                                    <option value="grasa">Perder grasa</option>
+                                    <option value="musculo">Ganar musculo</option>
+                                    <option value="rendimiento">Rendimiento atletico</option>
+                                    <option value="bienestar">Bienestar general</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="form-check">
+                        <input type="checkbox" id="termsCheck" onchange="validateStep2()">
+                        <label class="form-check-label" for="termsCheck">
+                            He leido y acepto los
+                            <a href="legal/terminos.html" target="_blank">Terminos y Condiciones</a>
+                            y la
+                            <a href="legal/privacidad.html" target="_blank">Politica de Privacidad</a>
+                            de WellCore Fitness.
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav buttons -->
+            <div class="step-nav">
+                <button class="btn-back" onclick="goToStep(1)">
+                    &larr; Atras
+                </button>
+                <button class="btn-next" id="btnStep2Next" onclick="goToStep(3)" disabled>
+                    Continuar al pago &rarr;
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ===================== STEP 3: PAGO ===================== -->
+<div class="step-panel" id="step3">
+    <div class="wrap">
+        <div class="payment-section">
+
+            <div class="sandbox-notice" id="sandboxNotice">
+                <p>
+                    <span style="color:#E31E24;font-weight:700;margin-right:6px">&#10003;</span>
+                    MODO SANDBOX ACTIVO. Configura las llaves de Wompi reales en api/.env antes de produccion.
+                </p>
+            </div>
+
+            <!-- Payment summary -->
+            <div class="payment-summary-card">
+                <div class="psc-header">
+                    <div class="psc-title">Resumen del pedido</div>
+                    <div class="psc-badge"><span style="color:#00D9FF;font-weight:700;margin-right:5px">&#10003;</span> Pago seguro</div>
+                </div>
+                <div class="psc-body">
+                    <div class="psc-row">
+                        <span class="psc-label">Plan</span>
+                        <span class="psc-value" id="pay-plan-name">METODO</span>
+                    </div>
+                    <div class="psc-row">
+                        <span class="psc-label">Cliente</span>
+                        <span class="psc-value" id="pay-buyer-name">—</span>
+                    </div>
+                    <div class="psc-row">
+                        <span class="psc-label">Email</span>
+                        <span class="psc-value" id="pay-buyer-email">—</span>
+                    </div>
+                    <div class="psc-row">
+                        <span class="psc-label">Divisa</span>
+                        <span class="psc-value">COP</span>
+                    </div>
+                    <div class="psc-row" style="padding-top:16px;margin-top:8px;border-top:1px solid var(--border)">
+                        <span class="psc-label" style="color:var(--white);font-size:10px">TOTAL</span>
+                        <span class="psc-value total" id="pay-total">$504.000 COP</span>
+                    </div>
+
+                    <div class="pm-strip">
+                        <div class="pm-badge">Visa</div>
+                        <div class="pm-badge">Mastercard</div>
+                        <div class="pm-badge">Amex</div>
+                        <div class="pm-badge">PSE</div>
+                        <div class="pm-badge">Efecty</div>
+                    </div>
+
+                    <div class="security-strip">
+                        <span class="sec-icon">&#10003;</span>
+                        <p>
+                            <strong>Pago 100% seguro con Wompi (Bancolombia).</strong>
+                            Tus datos estan protegidos con cifrado SSL de 256 bits. No almacenamos informacion de tarjetas.
+                        </p>
+                    </div>
+
+                    <button class="pay-btn" id="payBtn" onclick="submitPayment()">
+                        <span style="color:#00D9FF;font-weight:700;">&#10003;</span>
+                        PAGAR AHORA
+                    </button>
+
+                    <!-- Wompi widget se inyecta aqui tras crear la orden -->
+                    <div id="wompiContainer" style="margin-top:12px"></div>
+
+                    <div class="wompi-note">
+                        Procesado por Wompi &nbsp;|&nbsp; Plataforma de Bancolombia
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back button -->
+            <div class="step-nav">
+                <button class="btn-back" onclick="goToStep(2)">
+                    &larr; Atras
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Wompi: no requiere form oculto. El widget maneja el checkout. -->
+
+<!-- FOOTER -->
+<footer id="footer">
+    <div class="ft-wrap">
+        <div class="ft-copy">
+            &copy; 2026 WellCore Fitness &mdash; Todos los derechos reservados
+        </div>
+        <div style="display:flex;gap:20px">
+            <a href="legal/privacidad.html" class="ft-link">Privacidad</a>
+            <a href="legal/terminos.html" class="ft-link">Terminos</a>
+            <a href="login.html" class="ft-link">Mi Cuenta</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+    /* ================================================================
+       WOMPI CONFIG — Credenciales gestionadas en api/.env (backend)
+       Panel: https://comercios.wompi.co
+       ================================================================ */
+    // El sandboxNotice se oculta cuando el backend responde con sandbox:false
+    var _wompiSandbox = true; // se actualiza tras la respuesta del backend
+
+    /* ================================================================
+       PLANES
+       ================================================================ */
+    var PLANES = {
+        esencial: { name: 'ESENCIAL', price: 399000, priceCOP: '$399.000', priceUSD: '$109', features: [] },
+        metodo:   { name: 'METODO',   price: 504000, priceCOP: '$504.000', priceUSD: '$138', features: [] },
+        elite:    { name: 'ELITE',    price: 630000, priceCOP: '$630.000', priceUSD: '$173', features: [] }
+    };
+
+    /* ================================================================
+       APP STATE
+       ================================================================ */
+    var state = {
+        plan:    'metodo',
+        step:    1,
+        name:    '',
+        email:   '',
+        whatsapp:'',
+        pais:    '',
+        objetivo:''
+    };
+
+    /* Pre-select metodo by default */
+    selectPlan('metodo');
+
+    /* URL param pre-selection: pagar.html?plan=elite */
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        var p = params.get('plan');
+        if (p && PLANES[p]) { selectPlan(p); }
+    })();
+
+    /* ================================================================
+       SELECT PLAN
+       ================================================================ */
+    function selectPlan(planId, advance) {
+        state.plan = planId;
+        var cards  = document.querySelectorAll('.plan-card');
+        cards.forEach(function(c) {
+            var isSelected = c.dataset.plan === planId;
+            c.classList.toggle('selected', isSelected);
+            var btn = c.querySelector('.plan-select-btn');
+            if (isSelected) {
+                btn.textContent = advance ? 'CARGANDO...' : 'PLAN SELECCIONADO';
+                if (advance) { btn.style.opacity = '0.7'; }
+            } else {
+                btn.textContent = 'SELECCIONAR PLAN';
+                btn.style.opacity = '';
+            }
+        });
+        if (advance) {
+            setTimeout(function() { goToStep(2); }, 650);
+        }
+    }
+
+    /* ================================================================
+       STEP NAVIGATION
+       ================================================================ */
+    function goToStep(n) {
+        /* Validate before advancing */
+        if (n === 2 && !state.plan) {
+            alert('Por favor selecciona un plan para continuar.');
+            return;
+        }
+        if (n === 3) {
+            /* Collect and validate step 2 fields */
+            var name  = document.getElementById('buyerName').value.trim();
+            var email = document.getElementById('buyerEmail').value.trim();
+            var terms = document.getElementById('termsCheck').checked;
+            if (name.length < 3 || !validateEmail(email) || !terms) {
+                alert('Por favor completa todos los campos requeridos y acepta los terminos.');
+                return;
+            }
+            state.name    = name;
+            state.email   = email;
+            state.whatsapp= document.getElementById('buyerWhatsapp').value.trim();
+            state.pais    = document.getElementById('buyerPais').value;
+            state.objetivo= document.getElementById('buyerObjetivo').value;
+            updatePaymentSummary();
+        }
+
+        state.step = n;
+        updateUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateUI() {
+        var steps = [1,2,3];
+        steps.forEach(function(i) {
+            var panel = document.getElementById('step' + i);
+            var si    = document.getElementById('si' + i);
+            var sn    = document.getElementById('sn' + i);
+            panel.classList.toggle('active', i === state.step);
+            si.classList.toggle('active', i === state.step);
+            si.classList.toggle('done',   i < state.step);
+            sn.className = 'step-num' + (i === state.step ? ' active' : i < state.step ? ' done' : '');
+            if (i < state.step) { sn.textContent = '\u2713'; }
+            else                { sn.textContent = i; }
+        });
+
+        /* Update step 2 plan mini-summary */
+        if (state.plan) {
+            var pl = PLANES[state.plan];
+            document.getElementById('psb-name').textContent  = pl.name;
+            document.getElementById('psb-price').textContent = pl.priceCOP + ' COP';
+        }
+    }
+
+    function updatePaymentSummary() {
+        var pl = PLANES[state.plan];
+        document.getElementById('pay-plan-name').textContent  = pl.name;
+        document.getElementById('pay-buyer-name').textContent = state.name;
+        document.getElementById('pay-buyer-email').textContent= state.email;
+        document.getElementById('pay-total').textContent       = pl.priceCOP + ' COP';
+    }
+
+    /* ================================================================
+       STEP 2 VALIDATION
+       ================================================================ */
+    function validateEmail(e) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+    }
+
+    function validateStep2() {
+        var name  = document.getElementById('buyerName').value.trim();
+        var email = document.getElementById('buyerEmail').value.trim();
+        var terms = document.getElementById('termsCheck').checked;
+        var btn   = document.getElementById('btnStep2Next');
+        btn.disabled = !(name.length >= 3 && validateEmail(email) && terms);
+    }
+
+    /* ================================================================
+       SUBMIT TO WOMPI
+       Flujo: fetch a /api/wompi/create-order.php (backend genera
+       referencia, calcula integrity hash SHA256 y guarda orden)
+       → recibe public_key, reference, amount, hash
+       → carga el widget de Wompi dinamicamente
+       → el widget abre el checkout modal de Wompi
+       ================================================================ */
+    function submitPayment() {
+        var payBtn = document.getElementById('payBtn');
+        payBtn.disabled = true;
+
+        /* Spinner via DOM (sin innerHTML) */
+        while (payBtn.firstChild) { payBtn.removeChild(payBtn.firstChild); }
+        var spinEl = document.createElement('div');
+        spinEl.className = 'spin-ring';
+        payBtn.appendChild(spinEl);
+        payBtn.appendChild(document.createTextNode(' Preparando pago...'));
+
+        var payload = {
+            plan:        state.plan,
+            buyer_name:  state.name,
+            buyer_email: state.email,
+            buyer_phone: state.whatsapp || ''
+        };
+
+        /* Backend genera referencia + integrity hash (SHA256) y guarda orden pendiente */
+        fetch('/api/wompi/create-order.php', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function(res) {
+            if (!res.ok) { throw new Error('HTTP ' + res.status); }
+            return res.json();
+        })
+        .then(function(data) {
+            if (!data.ok) {
+                throw new Error(data.error || 'No se pudo crear la orden');
+            }
+
+            /* Ocultar sandbox notice si estamos en produccion */
+            if (!data.sandbox) {
+                var sn = document.getElementById('sandboxNotice');
+                if (sn) { sn.style.display = 'none'; }
+            }
+
+            /* Ocultar boton original y cargar widget de Wompi */
+            payBtn.style.display = 'none';
+            loadWompiWidget(data);
+        })
+        .catch(function(err) {
+            console.error('[WellCore] create-order error:', err);
+
+            /* Restaurar boton */
+            payBtn.disabled = false;
+            while (payBtn.firstChild) { payBtn.removeChild(payBtn.firstChild); }
+            var checkIcon = document.createElement('span');
+            checkIcon.style.cssText = 'color:#00D9FF;font-weight:700;';
+            checkIcon.textContent = '\u2713';
+            payBtn.appendChild(checkIcon);
+            payBtn.appendChild(document.createTextNode(' PAGAR AHORA'));
+
+            alert('Hubo un problema al iniciar el pago. Por favor intenta de nuevo o contacta a soporte.');
+        });
+    }
+
+    /* ================================================================
+       CARGAR WIDGET DE WOMPI DINAMICAMENTE
+       El widget renderiza un boton que abre el checkout modal de Wompi.
+       Una vez el usuario paga, Wompi redirige a redirect_url con los
+       parametros: id, status, reference, amount_in_cents, currency
+       ================================================================ */
+    function loadWompiWidget(orderData) {
+        var container = document.getElementById('wompiContainer');
+
+        /* Limpiar contenedor por si se llama de nuevo */
+        while (container.firstChild) { container.removeChild(container.firstChild); }
+
+        /* Instruccion visible mientras carga */
+        var hint = document.createElement('p');
+        hint.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:0.15em;color:#A1A1AA;margin-bottom:12px;text-align:center;';
+        hint.textContent = 'Haz clic en el boton de abajo para completar el pago';
+        container.appendChild(hint);
+
+        /* Script del widget con todos los atributos de datos */
+        var script = document.createElement('script');
+        script.src = orderData.widget_url;
+        script.setAttribute('data-render',             'button');
+        script.setAttribute('data-public-key',         orderData.public_key);
+        script.setAttribute('data-currency',           orderData.currency);
+        script.setAttribute('data-amount-in-cents',    String(orderData.amount_in_cents));
+        script.setAttribute('data-reference',          orderData.reference);
+        script.setAttribute('data-signature:integrity',orderData.integrity_hash);
+        script.setAttribute('data-redirect-url',       orderData.redirect_url);
+
+        container.appendChild(script);
+    }
+</script>
+<script src="js/chat-widget.js" defer></script>
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var menu = document.getElementById('navMobileMenu');
+  if (!toggle || !menu) return;
+  toggle.addEventListener('click', function() {
+    menu.classList.toggle('open');
+    toggle.textContent = menu.classList.contains('open') ? '\u2715' : '\u2630';
+  });
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      menu.classList.remove('open');
+      toggle.textContent = '\u2630';
+    });
+  });
+})();
+</script>
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">&#128222;</a>
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+<script src="js/v5-effects.js" defer></script>
+</body>
+</html>

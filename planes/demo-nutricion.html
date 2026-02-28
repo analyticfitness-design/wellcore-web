@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan de Nutricion | WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary-red: #E31E24;
+      --red-dark: #B01519;
+      --red-glow: rgba(227,30,36,0.15);
+      --black: #0A0A0A;
+      --bg: #111111;
+      --card-bg: #1A1A1A;
+      --card-bg-2: #202020;
+      --border-color: #2A2A2A;
+      --border-light: #333333;
+      --titanium-gray: #999999;
+      --text-primary: #F0F0F0;
+      --text-secondary: #AAAAAA;
+      --text-muted: #666666;
+      --success: #22C55E;
+      --warning: #F59E0B;
+      --info: #3B82F6;
+      --font-heading: "Montserrat", sans-serif;
+      --font-body: "Inter", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+      --accent: #00D9FF;
+      --page-width: 210mm;
+      --page-padding: 14mm;
+      --radius: 0;
+      --radius-lg: 0;
+    }
+
+    html { font-size: 14px; }
+
+    body {
+      background: var(--black);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ===== PRINT BUTTON ===== */
+    .print-btn-wrapper {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 9999;
+      display: flex;
+      gap: 10px;
+    }
+    .print-btn {
+      background: var(--primary-red);
+      color: #fff;
+      border: 4px solid var(--primary-red);
+      padding: 10px 20px;
+      border-radius: 0;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.1s linear;
+    }
+    .print-btn:hover { background: var(--red-dark); }
+
+    /* ===== PAGE LAYOUT ===== */
+    .page {
+      width: var(--page-width);
+      margin: 20px auto;
+      background: var(--bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      page-break-after: always;
+    }
+    .page-inner { padding: var(--page-padding); }
+
+    /* ===== COVER PAGE ===== */
+    .cover-page {
+      background: var(--black);
+      border: 1px solid var(--border-color);
+    }
+
+    .cover-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px var(--page-padding) 0;
+    }
+    .cover-logo {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--text-primary);
+    }
+    .cover-logo span { color: var(--primary-red); }
+    .cover-badge {
+      background: var(--primary-red);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 0;
+      letter-spacing: 1px;
+    }
+
+    .cover-hero {
+      padding: 36px var(--page-padding) 28px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .cover-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--primary-red);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .cover-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 32px;
+      line-height: 1.1;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .cover-title span { color: var(--primary-red); }
+    .cover-divider {
+      height: 3px;
+      background: var(--primary-red);
+      margin: 16px 0;
+      border-radius: 0;
+    }
+    .cover-subtitle {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--titanium-gray);
+      letter-spacing: 0.5px;
+    }
+
+    /* Client Info Grid */
+    .client-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px var(--page-padding);
+    }
+    .client-cell {
+      background: var(--card-bg);
+      padding: 14px 16px;
+    }
+    .client-cell-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--titanium-gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .client-cell-value {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .client-cell-value.mono {
+      font-family: var(--font-mono);
+      color: var(--primary-red);
+    }
+
+    /* Macro Targets */
+    .macro-targets {
+      margin: 0 var(--page-padding) 20px;
+    }
+    .macro-targets-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--titanium-gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .macro-targets-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .macro-target-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .macro-target-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--primary-red);
+    }
+    .macro-target-card.kcal::before { background: var(--primary-red); }
+    .macro-target-card.prot::before { background: #3B82F6; }
+    .macro-target-card.carb::before { background: #F59E0B; }
+    .macro-target-card.fat::before { background: #8B5CF6; }
+    .macro-target-num {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--text-primary);
+      display: block;
+    }
+    .macro-target-unit {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--titanium-gray);
+      margin-top: 2px;
+    }
+    .macro-target-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 9px;
+      color: var(--titanium-gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* Cover Footer */
+    .cover-footer {
+      padding: 14px var(--page-padding);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cover-footer-brand {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .cover-footer-brand span { color: var(--primary-red); }
+    .cover-footer-contact {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--titanium-gray);
+    }
+
+    /* ===== SECTION STYLES ===== */
+    .section { margin: 0 auto 0; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .section-accent {
+      width: 4px;
+      height: 28px;
+      background: var(--primary-red);
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--primary-red);
+      margin-left: auto;
+    }
+
+    /* ===== INFO CARDS ===== */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .info-card-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--titanium-gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .info-card-value {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--primary-red);
+    }
+    .info-card-desc {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    .macro-dist {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 14px;
+      grid-column: span 3;
+    }
+    .macro-dist-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--titanium-gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .macro-dist-bars { display: flex; gap: 6px; height: 10px; border-radius: 6px; overflow: hidden; }
+    .macro-dist-bar-p { background: #3B82F6; height: 100%; border-radius: 3px 0 0 3px; }
+    .macro-dist-bar-c { background: #F59E0B; height: 100%; }
+    .macro-dist-bar-f { background: #8B5CF6; height: 100%; border-radius: 0 3px 3px 0; }
+    .macro-dist-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .macro-dist-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+    .macro-dist-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .macro-dist-dot.p { background: #3B82F6; }
+    .macro-dist-dot.c { background: #F59E0B; }
+    .macro-dist-dot.f { background: #8B5CF6; }
+
+    /* ===== MEAL TABLES ===== */
+    .meal-block {
+      margin-bottom: 20px;
+    }
+    .meal-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 10px 14px;
+      border-bottom: none;
+    }
+    .meal-dot {
+      width: 10px; height: 10px;
+      background: var(--primary-red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .meal-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      flex: 1;
+    }
+    .meal-time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--primary-red);
+    }
+
+    .meal-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border-color);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      overflow: hidden;
+      font-size: 12px;
+    }
+    .meal-table thead tr {
+      background: var(--primary-red);
+    }
+    .meal-table thead th {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .meal-table thead th:not(:first-child) {
+      text-align: right;
+    }
+    .meal-table tbody tr {
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.1s linear;
+    }
+    .meal-table tbody tr:last-child { border-bottom: none; }
+    .meal-table tbody tr:hover { background: var(--card-bg-2); }
+    .meal-table td {
+      padding: 8px 10px;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 12px;
+    }
+    .meal-table td.food-name {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .meal-table td.num {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .meal-table tbody tr.total-row {
+      background: rgba(227,30,36,0.08);
+      border-top: 1px solid rgba(227,30,36,0.3);
+    }
+    .meal-table tbody tr.total-row td {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--primary-red);
+    }
+    .meal-table tbody tr.total-row td.food-name {
+      color: var(--primary-red);
+    }
+
+    /* ===== SUMMARY TABLE ===== */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    .summary-table thead tr {
+      background: var(--primary-red);
+    }
+    .summary-table thead th {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: center;
+    }
+    .summary-table thead th:first-child { text-align: left; }
+    .summary-table tbody tr {
+      border-bottom: 1px solid var(--border-color);
+    }
+    .summary-table tbody tr:last-child { border-bottom: none; }
+    .summary-table td {
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      text-align: center;
+    }
+    .summary-table td:first-child {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--titanium-gray);
+      text-align: left;
+    }
+    .summary-table tbody tr:nth-child(1) td:not(:first-child) {
+      color: var(--info);
+    }
+    .summary-table tbody tr:nth-child(2) td:not(:first-child) {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .summary-table tbody tr:nth-child(3) td:not(:first-child) {
+      font-weight: 700;
+    }
+    .diff-ok { color: var(--success) !important; }
+    .diff-warn { color: var(--warning) !important; }
+
+    /* ===== MACRO PROGRESS BARS ===== */
+    .macro-bars { margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .macro-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .macro-bar-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--titanium-gray);
+      letter-spacing: 1px;
+      width: 75px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+    .bar-track {
+      flex: 1;
+      height: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.1s linear;
+      max-width: 100%;
+    }
+    .bar-fill.prot { background: #3B82F6; }
+    .bar-fill.carb { background: #F59E0B; }
+    .bar-fill.fat  { background: #8B5CF6; }
+    .bar-fill.kcal { background: var(--primary-red); }
+    .macro-bar-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      width: 110px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ===== SUPPLEMENT CARDS ===== */
+    .suppl-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .suppl-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .suppl-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--primary-red);
+    }
+    .suppl-card-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .suppl-card-dose {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--primary-red);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .suppl-card-desc {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== TIPS CARDS ===== */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tip-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .tip-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .tip-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .tip-desc {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .tip-value {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--primary-red);
+    }
+
+    /* ===== ADHERENCE CALENDAR ===== */
+    .adherence-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .adh-day {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 10px 6px;
+      text-align: center;
+    }
+    .adh-day-name {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--titanium-gray);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .adh-check {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border-color);
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: all 0.1s linear;
+    }
+    .adh-check.done {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+    .adh-check.partial {
+      background: var(--warning);
+      border-color: var(--warning);
+      color: #fff;
+    }
+    .adh-check.today {
+      border-color: var(--primary-red);
+    }
+    .adh-pct {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--titanium-gray);
+    }
+
+    /* ===== PROTOCOL NOTE ===== */
+    .protocol-note {
+      background: rgba(227,30,36,0.07);
+      border: 1px solid rgba(227,30,36,0.25);
+      border-left: 4px solid var(--primary-red);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+    }
+    .protocol-note p {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .protocol-note strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ===== PAGE SEPARATOR ===== */
+    .page-sep {
+      height: 1px;
+      background: var(--border-color);
+      margin: 28px 0;
+    }
+
+    /* ===== FOOTER ===== */
+    .doc-footer {
+      padding: 14px var(--page-padding);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .doc-footer-left {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .doc-footer-right {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .doc-footer-brand {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--titanium-gray);
+      text-align: center;
+    }
+    .doc-footer-brand span { color: var(--primary-red); }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      body { background: #fff; color: #000; }
+      :root {
+        --bg: #fff;
+        --card-bg: #f8f8f8;
+        --card-bg-2: #f0f0f0;
+        --border-color: #ddd;
+        --text-primary: #111;
+        --text-secondary: #444;
+        --titanium-gray: #666;
+        --text-muted: #999;
+      }
+      .print-btn-wrapper { display: none !important; }
+      .page {
+        width: 210mm;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        page-break-after: always;
+      }
+      .meal-block { page-break-inside: avoid; }
+      .suppl-grid { page-break-inside: avoid; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 800px) {
+      :root { --page-width: 100%; --page-padding: 16px; }
+      .page { margin: 0; border-radius: 0; border-left: none; border-right: none; }
+      .macro-targets-grid { grid-template-columns: repeat(2,1fr); }
+      .client-grid { grid-template-columns: 1fr 1fr; }
+      .info-cards { grid-template-columns: 1fr 1fr; }
+      .macro-dist { grid-column: span 2; }
+      .suppl-grid { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr; }
+      .adherence-grid { grid-template-columns: repeat(4,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PRINT BUTTON -->
+  <div class="print-btn-wrapper">
+    <button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+  </div>
+
+  <!-- ===================== COVER PAGE ===================== -->
+  <div class="page cover-page">
+    <div class="cover-header">
+      <div class="cover-logo">WELLCORE<span>.</span>FITNESS</div>
+      <div class="cover-badge">DOCUMENTO OFICIAL</div>
+    </div>
+
+    <div class="cover-hero">
+      <div class="cover-label">// Programa de Alto Rendimiento</div>
+      <div class="cover-title">Plan de <span>Nutricion</span><br>Personalizado</div>
+      <div class="cover-divider"></div>
+      <div class="cover-subtitle">Documento generado por tu coach — datos sincronizados con tu perfil</div>
+    </div>
+
+    <!-- Client Grid -->
+    <div class="client-grid">
+      <div class="client-cell">
+        <div class="client-cell-label">Cliente</div>
+        <div class="client-cell-value" id="cv-nombre">— — —</div>
+      </div>
+      <div class="client-cell">
+        <div class="client-cell-label">Objetivo</div>
+        <div class="client-cell-value" id="cv-objetivo">— — —</div>
+      </div>
+      <div class="client-cell">
+        <div class="client-cell-label">Plan Activo</div>
+        <div class="client-cell-value" id="cv-plan">WellCore PRO</div>
+      </div>
+      <div class="client-cell">
+        <div class="client-cell-label">Peso Actual</div>
+        <div class="client-cell-value mono" id="cv-peso">— — kg</div>
+      </div>
+      <div class="client-cell">
+        <div class="client-cell-label">Altura</div>
+        <div class="client-cell-value mono" id="cv-altura">— — cm</div>
+      </div>
+      <div class="client-cell">
+        <div class="client-cell-label">Fecha</div>
+        <div class="client-cell-value mono" id="cv-fecha">— — —</div>
+      </div>
+    </div>
+
+    <!-- Macro Targets -->
+    <div class="macro-targets">
+      <div class="macro-targets-label">// Objetivos Caloricos Diarios</div>
+      <div class="macro-targets-grid">
+        <div class="macro-target-card kcal">
+          <span class="macro-target-num" id="cv-kcal">2,850</span>
+          <div class="macro-target-unit">kcal / dia</div>
+          <div class="macro-target-name">Calorias</div>
+        </div>
+        <div class="macro-target-card prot">
+          <span class="macro-target-num" id="cv-prot">195</span>
+          <div class="macro-target-unit">gramos</div>
+          <div class="macro-target-name">Proteina</div>
+        </div>
+        <div class="macro-target-card carb">
+          <span class="macro-target-num" id="cv-carb">340</span>
+          <div class="macro-target-unit">gramos</div>
+          <div class="macro-target-name">Carbohidratos</div>
+        </div>
+        <div class="macro-target-card fat">
+          <span class="macro-target-num" id="cv-fat">85</span>
+          <div class="macro-target-unit">gramos</div>
+          <div class="macro-target-name">Grasas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div class="cover-footer-brand"><span>WellCore</span> Fitness</div>
+      <div class="cover-footer-contact">info@wellcorefitness.com</div>
+    </div>
+  </div>
+
+  <!-- ===================== MAIN CONTENT PAGE ===================== -->
+  <div class="page">
+    <div class="page-inner">
+
+      <!-- SECTION 1: PERFIL NUTRICIONAL -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-accent"></div>
+          <div class="section-title">Perfil Nutricional</div>
+          <div class="section-num">01</div>
+        </div>
+
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="info-card-label">Peso de Referencia</div>
+            <div class="info-card-value" id="ic-peso">75 kg</div>
+            <div class="info-card-desc">Ultima medicion registrada</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Objetivo Calorico</div>
+            <div class="info-card-value" id="ic-kcal">2,850 kcal</div>
+            <div class="info-card-desc">Calculado segun peso y objetivo</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Proteina Objetivo</div>
+            <div class="info-card-value" id="ic-prot">195 g</div>
+            <div class="info-card-desc">2.2g por kg de peso corporal</div>
+          </div>
+
+          <div class="macro-dist" id="macro-dist-card">
+            <div class="macro-dist-label">// Distribucion de Macros</div>
+            <div class="macro-dist-bars">
+              <div class="macro-dist-bar-p" id="bar-pct-p" style="width:27%"></div>
+              <div class="macro-dist-bar-c" id="bar-pct-c" style="width:48%"></div>
+              <div class="macro-dist-bar-f" id="bar-pct-f" style="width:25%"></div>
+            </div>
+            <div class="macro-dist-legend">
+              <div class="macro-dist-legend-item">
+                <div class="macro-dist-dot p"></div>
+                <span>PROTEINA <span id="pct-p" style="color:#3B82F6;font-weight:700;">27%</span></span>
+              </div>
+              <div class="macro-dist-legend-item">
+                <div class="macro-dist-dot c"></div>
+                <span>CARBOS <span id="pct-c" style="color:#F59E0B;font-weight:700;">48%</span></span>
+              </div>
+              <div class="macro-dist-legend-item">
+                <div class="macro-dist-dot f"></div>
+                <span>GRASAS <span id="pct-f" style="color:#8B5CF6;font-weight:700;">27%</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="protocol-note">
+          <p><strong>Protocolo de periodizacion:</strong> En <strong>dias de entreno</strong> incrementa carbohidratos en 40-60g (prioriza pre y post sesion). En <strong>dias de descanso</strong> reduce carbos en el mismo rango y mantiene proteina constante. Las grasas permanecen estables para optimizar perfil hormonal y recuperacion articular.</p>
+        </div>
+      </div>
+
+      <div class="page-sep"></div>
+
+      <!-- SECTION 2: PLAN DIARIO -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-accent"></div>
+          <div class="section-title">Plan Diario — 5 Comidas</div>
+          <div class="section-num">02</div>
+        </div>
+
+        <!-- COMIDA 1 -->
+        <div class="meal-block">
+          <div class="meal-header">
+            <div class="meal-dot"></div>
+            <div class="meal-name">Comida 1 — Desayuno</div>
+            <div class="meal-time">07:00 AM</div>
+          </div>
+          <table class="meal-table">
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Cantidad</th>
+                <th>Proteina</th>
+                <th>Carbos</th>
+                <th>Grasas</th>
+                <th>kcal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="food-name">Avena integral</td>
+                <td class="num">80 g</td>
+                <td class="num">11 g</td>
+                <td class="num">54 g</td>
+                <td class="num">6 g</td>
+                <td class="num">310</td>
+              </tr>
+              <tr>
+                <td class="food-name">Proteina Whey WellCore</td>
+                <td class="num">30 g</td>
+                <td class="num">24 g</td>
+                <td class="num">2 g</td>
+                <td class="num">1 g</td>
+                <td class="num">115</td>
+              </tr>
+              <tr>
+                <td class="food-name">Platano mediano</td>
+                <td class="num">1 un.</td>
+                <td class="num">1 g</td>
+                <td class="num">27 g</td>
+                <td class="num">0 g</td>
+                <td class="num">105</td>
+              </tr>
+              <tr>
+                <td class="food-name">Almendras</td>
+                <td class="num">15 g</td>
+                <td class="num">3 g</td>
+                <td class="num">2 g</td>
+                <td class="num">9 g</td>
+                <td class="num">87</td>
+              </tr>
+              <tr class="total-row">
+                <td class="food-name">TOTAL COMIDA 1</td>
+                <td class="num">—</td>
+                <td class="num">39 g</td>
+                <td class="num">85 g</td>
+                <td class="num">16 g</td>
+                <td class="num">617</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- COMIDA 2 -->
+        <div class="meal-block">
+          <div class="meal-header">
+            <div class="meal-dot"></div>
+            <div class="meal-name">Comida 2 — Media Manana</div>
+            <div class="meal-time">10:00 AM</div>
+          </div>
+          <table class="meal-table">
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Cantidad</th>
+                <th>Proteina</th>
+                <th>Carbos</th>
+                <th>Grasas</th>
+                <th>kcal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="food-name">Yogur griego 0%</td>
+                <td class="num">200 g</td>
+                <td class="num">20 g</td>
+                <td class="num">8 g</td>
+                <td class="num">0 g</td>
+                <td class="num">116</td>
+              </tr>
+              <tr>
+                <td class="food-name">Arandanos frescos</td>
+                <td class="num">100 g</td>
+                <td class="num">1 g</td>
+                <td class="num">14 g</td>
+                <td class="num">0 g</td>
+                <td class="num">57</td>
+              </tr>
+              <tr>
+                <td class="food-name">Granola natural</td>
+                <td class="num">30 g</td>
+                <td class="num">3 g</td>
+                <td class="num">18 g</td>
+                <td class="num">4 g</td>
+                <td class="num">117</td>
+              </tr>
+              <tr class="total-row">
+                <td class="food-name">TOTAL COMIDA 2</td>
+                <td class="num">—</td>
+                <td class="num">24 g</td>
+                <td class="num">40 g</td>
+                <td class="num">4 g</td>
+                <td class="num">290</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- COMIDA 3 -->
+        <div class="meal-block">
+          <div class="meal-header">
+            <div class="meal-dot"></div>
+            <div class="meal-name">Comida 3 — Almuerzo Principal</div>
+            <div class="meal-time">01:00 PM</div>
+          </div>
+          <table class="meal-table">
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Cantidad</th>
+                <th>Proteina</th>
+                <th>Carbos</th>
+                <th>Grasas</th>
+                <th>kcal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="food-name">Pechuga de pollo</td>
+                <td class="num">200 g</td>
+                <td class="num">46 g</td>
+                <td class="num">0 g</td>
+                <td class="num">4 g</td>
+                <td class="num">220</td>
+              </tr>
+              <tr>
+                <td class="food-name">Arroz integral cocido</td>
+                <td class="num">150 g</td>
+                <td class="num">3 g</td>
+                <td class="num">33 g</td>
+                <td class="num">1 g</td>
+                <td class="num">165</td>
+              </tr>
+              <tr>
+                <td class="food-name">Brocoli al vapor</td>
+                <td class="num">200 g</td>
+                <td class="num">5 g</td>
+                <td class="num">12 g</td>
+                <td class="num">0 g</td>
+                <td class="num">68</td>
+              </tr>
+              <tr>
+                <td class="food-name">Aceite de oliva virgen extra</td>
+                <td class="num">10 ml</td>
+                <td class="num">0 g</td>
+                <td class="num">0 g</td>
+                <td class="num">10 g</td>
+                <td class="num">90</td>
+              </tr>
+              <tr class="total-row">
+                <td class="food-name">TOTAL COMIDA 3</td>
+                <td class="num">—</td>
+                <td class="num">54 g</td>
+                <td class="num">45 g</td>
+                <td class="num">15 g</td>
+                <td class="num">543</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- COMIDA 4 -->
+        <div class="meal-block">
+          <div class="meal-header">
+            <div class="meal-dot"></div>
+            <div class="meal-name">Comida 4 — Pre-Entreno</div>
+            <div class="meal-time">05:00 PM</div>
+          </div>
+          <table class="meal-table">
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Cantidad</th>
+                <th>Proteina</th>
+                <th>Carbos</th>
+                <th>Grasas</th>
+                <th>kcal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="food-name">Batata cocida</td>
+                <td class="num">150 g</td>
+                <td class="num">2 g</td>
+                <td class="num">35 g</td>
+                <td class="num">0 g</td>
+                <td class="num">148</td>
+              </tr>
+              <tr>
+                <td class="food-name">Atun en agua (escurrido)</td>
+                <td class="num">150 g</td>
+                <td class="num">33 g</td>
+                <td class="num">0 g</td>
+                <td class="num">2 g</td>
+                <td class="num">153</td>
+              </tr>
+              <tr>
+                <td class="food-name">Aguacate maduro</td>
+                <td class="num">50 g</td>
+                <td class="num">1 g</td>
+                <td class="num">3 g</td>
+                <td class="num">8 g</td>
+                <td class="num">80</td>
+              </tr>
+              <tr class="total-row">
+                <td class="food-name">TOTAL COMIDA 4</td>
+                <td class="num">—</td>
+                <td class="num">36 g</td>
+                <td class="num">38 g</td>
+                <td class="num">10 g</td>
+                <td class="num">381</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- COMIDA 5 -->
+        <div class="meal-block">
+          <div class="meal-header">
+            <div class="meal-dot"></div>
+            <div class="meal-name">Comida 5 — Cena</div>
+            <div class="meal-time">08:00 PM</div>
+          </div>
+          <table class="meal-table">
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Cantidad</th>
+                <th>Proteina</th>
+                <th>Carbos</th>
+                <th>Grasas</th>
+                <th>kcal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="food-name">Salmon al horno</td>
+                <td class="num">200 g</td>
+                <td class="num">40 g</td>
+                <td class="num">0 g</td>
+                <td class="num">20 g</td>
+                <td class="num">348</td>
+              </tr>
+              <tr>
+                <td class="food-name">Quinoa cocida</td>
+                <td class="num">100 g</td>
+                <td class="num">4 g</td>
+                <td class="num">19 g</td>
+                <td class="num">2 g</td>
+                <td class="num">110</td>
+              </tr>
+              <tr>
+                <td class="food-name">Espinacas salteadas</td>
+                <td class="num">150 g</td>
+                <td class="num">4 g</td>
+                <td class="num">5 g</td>
+                <td class="num">5 g</td>
+                <td class="num">78</td>
+              </tr>
+              <tr>
+                <td class="food-name">Huevo entero</td>
+                <td class="num">1 un.</td>
+                <td class="num">6 g</td>
+                <td class="num">0 g</td>
+                <td class="num">5 g</td>
+                <td class="num">70</td>
+              </tr>
+              <tr class="total-row">
+                <td class="food-name">TOTAL COMIDA 5</td>
+                <td class="num">—</td>
+                <td class="num">54 g</td>
+                <td class="num">24 g</td>
+                <td class="num">32 g</td>
+                <td class="num">606</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="page-sep"></div>
+
+      <!-- SECTION 3: RESUMEN DIARIO -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-accent"></div>
+          <div class="section-title">Resumen Diario — Totales</div>
+          <div class="section-num">03</div>
+        </div>
+
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Proteina</th>
+              <th>Carbohidratos</th>
+              <th>Grasas</th>
+              <th>Calorias</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>OBJETIVO</td>
+              <td id="sum-obj-p">195 g</td>
+              <td id="sum-obj-c">340 g</td>
+              <td id="sum-obj-f">85 g</td>
+              <td id="sum-obj-k">2,850</td>
+            </tr>
+            <tr>
+              <td>PLAN HOY</td>
+              <td>207 g</td>
+              <td>232 g</td>
+              <td>77 g</td>
+              <td>2,437</td>
+            </tr>
+            <tr>
+              <td>DIFERENCIA</td>
+              <td id="diff-p" class="diff-ok">+12 g</td>
+              <td id="diff-c" class="diff-warn">-108 g</td>
+              <td id="diff-f" class="diff-ok">-8 g</td>
+              <td id="diff-k" class="diff-warn">-413</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Macro Progress Bars -->
+        <div class="macro-bars">
+          <div class="macro-bar-row">
+            <div class="macro-bar-label">Proteina</div>
+            <div class="bar-track">
+              <div class="bar-fill prot" id="pb-prot" style="width:100%"></div>
+            </div>
+            <div class="macro-bar-value" id="pbv-prot">207 g / 195 g</div>
+          </div>
+          <div class="macro-bar-row">
+            <div class="macro-bar-label">Carbos</div>
+            <div class="bar-track">
+              <div class="bar-fill carb" id="pb-carb" style="width:68%"></div>
+            </div>
+            <div class="macro-bar-value" id="pbv-carb">232 g / 340 g</div>
+          </div>
+          <div class="macro-bar-row">
+            <div class="macro-bar-label">Grasas</div>
+            <div class="bar-track">
+              <div class="bar-fill fat" id="pb-fat" style="width:90%"></div>
+            </div>
+            <div class="macro-bar-value" id="pbv-fat">77 g / 85 g</div>
+          </div>
+          <div class="macro-bar-row">
+            <div class="macro-bar-label">Calorias</div>
+            <div class="bar-track">
+              <div class="bar-fill kcal" id="pb-kcal" style="width:85%"></div>
+            </div>
+            <div class="macro-bar-value" id="pbv-kcal">2,437 / 2,850</div>
+          </div>
+        </div>
+
+        <div class="protocol-note">
+          <p><strong>Nota del coach:</strong> El plan diario presenta un deficit en carbohidratos. Puedes agregar una segunda porcion de arroz integral (100g) en el almuerzo o incluir fruta adicional en la media manana para alcanzar el objetivo calorico total sin comprometer la calidad nutricional.</p>
+        </div>
+      </div>
+
+      <div class="page-sep"></div>
+
+      <!-- SECTION 4: SUPLEMENTACION -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-accent"></div>
+          <div class="section-title">Suplementacion Recomendada</div>
+          <div class="section-num">04</div>
+        </div>
+
+        <div class="suppl-grid">
+          <div class="suppl-card">
+            <div class="suppl-card-title">Proteina Whey WellCore</div>
+            <div class="suppl-card-dose">30 g — Post-entreno inmediato</div>
+            <div class="suppl-card-desc">Disolver en 300ml de agua fria o leche descremada. Ventana anabolica optima: primeros 30 min post sesion. 24g proteina por servicio con perfil completo de aminoacidos esenciales.</div>
+          </div>
+          <div class="suppl-card">
+            <div class="suppl-card-title">Creatina Monohidrato</div>
+            <div class="suppl-card-dose">5 g / dia — Cualquier comida</div>
+            <div class="suppl-card-desc">Fase de carga no necesaria con protocolo de mantenimiento continuo. Aumenta la capacidad de regeneracion de ATP, mejora fuerza en esfuerzos de alta intensidad y favorece la hipertrofia muscular.</div>
+          </div>
+          <div class="suppl-card">
+            <div class="suppl-card-title">Omega-3 (EPA + DHA)</div>
+            <div class="suppl-card-dose">2 capsulas (1g EPA+DHA) — Almuerzo</div>
+            <div class="suppl-card-desc">Tomar con comida que contenga grasa para mejorar absorcion. Efecto antiinflamatorio, salud articular y cardiovascular. Mejora la sensibilidad a la insulina y el perfil lipidico.</div>
+          </div>
+          <div class="suppl-card">
+            <div class="suppl-card-title">Multivitaminico Premium</div>
+            <div class="suppl-card-dose">1 capsula — Desayuno</div>
+            <div class="suppl-card-desc">Cubre posibles gaps de micronutrientes en dietas de alto rendimiento. Especialmente relevante para vitamina D3, zinc y magnesio. Tomar con el desayuno para maximizar absorcion de vitaminas liposolubles.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-sep"></div>
+
+      <!-- SECTION 5: GUIA PRACTICA -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-accent"></div>
+          <div class="section-title">Guia Practica</div>
+          <div class="section-num">05</div>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card">
+            <div class="tip-icon">&#128167;</div>
+            <div>
+              <div class="tip-title">Hidratacion</div>
+              <div class="tip-desc">Formula: <span class="tip-value" id="tip-agua">35ml x peso</span> al dia. Minimo garantizado 2.5L. Incrementa 500ml por hora de entrenamiento intenso. Agua con electrolitos post sesion si superas 60 min.</div>
+            </div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">&#127919;</div>
+            <div>
+              <div class="tip-title">Timing de Carbohidratos</div>
+              <div class="tip-desc">Prioriza carbohidratos complejos en comidas <span class="tip-value">Pre y Post entreno</span>. Reduce en cena si no entrenas ese dia. Fibra minima 25-30g/dia para salud digestiva.</div>
+            </div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">&#128260;</div>
+            <div>
+              <div class="tip-title">Ajustes del Plan</div>
+              <div class="tip-desc">Revision <span class="tip-value">mensual</span> con tu coach basada en progreso real: peso, medidas y rendimiento. No realizar cambios unilaterales. El plan evoluciona segun tus resultados.</div>
+            </div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">&#128202;</div>
+            <div>
+              <div class="tip-title">Pesaje de Alimentos</div>
+              <div class="tip-desc">Pesa alimentos <span class="tip-value">crudos</span> durante los primeros 30 dias para calibrar tu percepcion de porciones. Despues podras estimar con precision. Usa bascula de cocina digital.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-sep"></div>
+
+      <!-- SECTION 6: CALENDARIO ADHERENCIA -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-accent"></div>
+          <div class="section-title">Adherencia Semanal</div>
+          <div class="section-num">06</div>
+        </div>
+
+        <div class="adherence-grid" id="adh-grid">
+          <!-- Rendered by JS -->
+        </div>
+
+        <div class="protocol-note">
+          <p><strong>Meta de adherencia:</strong> 85% o superior (6 de 7 dias) garantiza resultados optimos. Por debajo del 70% se recomienda sesion de revision con tu coach para identificar y resolver barreras de cumplimiento.</p>
+        </div>
+      </div>
+
+    </div><!-- /page-inner -->
+
+    <div class="doc-footer">
+      <div class="doc-footer-left">WellCore Fitness &mdash; Documento Confidencial</div>
+      <div class="doc-footer-brand"><span>WellCore</span>.FITNESS</div>
+      <div class="doc-footer-right" id="footer-fecha">Generado: — — —</div>
+    </div>
+  </div><!-- /page -->
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // ===== localStorage HELPERS =====
+    function getProfile() {
+      try { return JSON.parse(localStorage.getItem("wc_profile") || "{}"); }
+      catch(e) { return {}; }
+    }
+
+    function getMetrics() {
+      try {
+        var m = JSON.parse(localStorage.getItem("wc_metrics") || "[]");
+        return m[m.length - 1] || null;
+      } catch(e) { return null; }
+    }
+
+    function getNutritionWeek() {
+      var now = new Date();
+      var year = now.getFullYear();
+      var startOfYear = new Date(year, 0, 1);
+      var weekNum = Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+      var key = "wc_nutrition_" + year + "_W" + String(weekNum).padStart(2, "0");
+      try { return JSON.parse(localStorage.getItem(key) || "{}"); }
+      catch(e) { return {}; }
+    }
+
+    // ===== MACRO CALCULATION =====
+    function getMacros(profile, metrics) {
+      if (profile.macros) return profile.macros;
+      var peso = (metrics && metrics.peso) ? metrics.peso : (profile.peso || 75);
+      var objetivo = (profile.objetivo || "composicion").toLowerCase();
+
+      var kcal;
+      if (objetivo.includes("grasa") || objetivo.includes("deficit") || objetivo.includes("bajar")) {
+        kcal = Math.round(peso * 30);
+      } else if (objetivo.includes("masa") || objetivo.includes("volumen") || objetivo.includes("ganancia")) {
+        kcal = Math.round(peso * 38);
+      } else {
+        kcal = Math.round(peso * 34);
+      }
+
+      var proteina = Math.round(peso * 2.2);
+      var grasas = Math.round(kcal * 0.28 / 9);
+      var carbos = Math.round((kcal - proteina * 4 - grasas * 9) / 4);
+
+      return { kcal: kcal, proteina: proteina, carbos: carbos, grasas: grasas };
+    }
+
+    // ===== FORMAT HELPERS =====
+    function fmt(n) {
+      return n ? n.toLocaleString("es-CO") : "0";
+    }
+    function cap(s) {
+      if (!s) return "—";
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+    function fmtDate(d) {
+      var months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+      return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+    }
+
+    // ===== TEXT HELPER =====
+    function setText(id, val) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+
+    // ===== DIFF CLASS =====
+    function setDiff(id, val, invertGood) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var good = invertGood ? (val <= 0) : (val >= 0);
+      var sign = val >= 0 ? "+" : "";
+      el.textContent = sign + val + (id.includes("k") ? "" : " g");
+      el.className = good ? "diff-ok" : "diff-warn";
+    }
+
+    // ===== RENDER ADHERENCE CALENDAR =====
+    function renderAdherence(nutritionWeek) {
+      var days = ["Lun","Mar","Mie","Jue","Vie","Sab","Dom"];
+      var today = new Date();
+      var todayDow = (today.getDay() + 6) % 7; // 0=Mon, 6=Sun
+
+      var grid = document.getElementById("adh-grid");
+      if (!grid) return;
+      grid.textContent = "";
+
+      days.forEach(function(day, i) {
+        var status = nutritionWeek["day" + i] || "";
+
+        var dayEl = document.createElement("div");
+        dayEl.className = "adh-day";
+
+        var nameEl = document.createElement("div");
+        nameEl.className = "adh-day-name";
+        nameEl.textContent = day;
+        dayEl.appendChild(nameEl);
+
+        var checkEl = document.createElement("div");
+        var checkClass = "adh-check";
+        if (i === todayDow) checkClass += " today";
+        if (status === "done") { checkClass += " done"; checkEl.textContent = "\u2713"; }
+        else if (status === "partial") { checkClass += " partial"; checkEl.textContent = "~"; }
+        checkEl.className = checkClass;
+        dayEl.appendChild(checkEl);
+
+        var pctEl = document.createElement("div");
+        pctEl.className = "adh-pct";
+        pctEl.textContent = status === "done" ? "100%" : (status === "partial" ? "~70%" : "\u2014");
+        dayEl.appendChild(pctEl);
+
+        grid.appendChild(dayEl);
+      });
+    }
+
+    // ===== MAIN RENDER =====
+    document.addEventListener("DOMContentLoaded", function() {
+      var profile = getProfile();
+      var metrics = getMetrics();
+      var macros = getMacros(profile, metrics);
+      var nutritionWeek = getNutritionWeek();
+      var now = new Date();
+
+      // ---- PLAN VALUES (fixed from this document) ----
+      var planProt = 207, planCarb = 232, planFat = 77, planKcal = 2437;
+
+      // ---- Cover page ----
+      var nombre = profile.nombre || profile.name || "Cliente WellCore";
+      var objetivo = profile.objetivo || profile.goal || "Composicion Corporal";
+      var peso = (metrics && metrics.peso) ? metrics.peso : (profile.peso || "—");
+      var altura = (metrics && metrics.altura) ? metrics.altura : (profile.altura || "—");
+      var planNombre = profile.planNombre || profile.plan || "WellCore PRO";
+
+      setText("cv-nombre", nombre);
+      setText("cv-objetivo", cap(objetivo));
+      setText("cv-plan", planNombre);
+      setText("cv-peso", peso !== "—" ? peso + " kg" : "—");
+      setText("cv-altura", altura !== "—" ? altura + " cm" : "—");
+      setText("cv-fecha", fmtDate(now));
+
+      // Macro targets on cover
+      setText("cv-kcal", fmt(macros.kcal));
+      setText("cv-prot", macros.proteina);
+      setText("cv-carb", macros.carbos);
+      setText("cv-fat", macros.grasas);
+
+      // ---- Section 1: Perfil ----
+      var pesoRef = (metrics && metrics.peso) ? metrics.peso : (profile.peso || 75);
+      setText("ic-peso", pesoRef + " kg");
+      setText("ic-kcal", fmt(macros.kcal) + " kcal");
+      setText("ic-prot", macros.proteina + " g");
+
+      // Macro distribution %
+      var totalKcalCheck = macros.proteina * 4 + macros.carbos * 4 + macros.grasas * 9;
+      if (totalKcalCheck > 0) {
+        var pctP = Math.round(macros.proteina * 4 / totalKcalCheck * 100);
+        var pctF = Math.round(macros.grasas * 9 / totalKcalCheck * 100);
+        var pctC = 100 - pctP - pctF;
+
+        var barP = document.getElementById("bar-pct-p");
+        var barC = document.getElementById("bar-pct-c");
+        var barF = document.getElementById("bar-pct-f");
+        if (barP) barP.style.width = pctP + "%";
+        if (barC) barC.style.width = pctC + "%";
+        if (barF) barF.style.width = pctF + "%";
+
+        setText("pct-p", pctP + "%");
+        setText("pct-c", pctC + "%");
+        setText("pct-f", pctF + "%");
+      }
+
+      // ---- Section 3: Summary ----
+      setText("sum-obj-p", macros.proteina + " g");
+      setText("sum-obj-c", macros.carbos + " g");
+      setText("sum-obj-f", macros.grasas + " g");
+      setText("sum-obj-k", fmt(macros.kcal));
+
+      var diffP = planProt - macros.proteina;
+      var diffC = planCarb - macros.carbos;
+      var diffF = planFat - macros.grasas;
+      var diffK = planKcal - macros.kcal;
+
+      setDiff("diff-p", diffP, false);
+      setDiff("diff-c", diffC, true);   // deficit in carbs is bad
+      setDiff("diff-f", diffF, true);
+      setDiff("diff-k", diffK, true);
+
+      // Progress bars
+      function setBar(barId, valId, current, target, cls) {
+        var pct = target > 0 ? Math.min(Math.round(current / target * 100), 100) : 0;
+        var bar = document.getElementById(barId);
+        if (bar) bar.style.width = pct + "%";
+        var val = document.getElementById(valId);
+        if (val) val.textContent = fmt(current) + " g / " + fmt(target) + " g";
+      }
+      setBar("pb-prot", "pbv-prot", planProt, macros.proteina, "prot");
+      setBar("pb-carb", "pbv-carb", planCarb, macros.carbos, "carb");
+      setBar("pb-fat",  "pbv-fat",  planFat,  macros.grasas, "fat");
+
+      // kcal bar
+      var pctKcal = macros.kcal > 0 ? Math.min(Math.round(planKcal / macros.kcal * 100), 100) : 0;
+      var barKcal = document.getElementById("pb-kcal");
+      if (barKcal) barKcal.style.width = pctKcal + "%";
+      var valKcal = document.getElementById("pbv-kcal");
+      if (valKcal) valKcal.textContent = fmt(planKcal) + " / " + fmt(macros.kcal);
+
+      // ---- Tip: Hidratacion ----
+      var aguaL = pesoRef !== "—" ? (Math.round(pesoRef * 35 / 100) / 10).toFixed(1) + " L / dia" : "2.5 L / dia";
+      setText("tip-agua", aguaL);
+
+      // ---- Footer ----
+      setText("footer-fecha", "Generado: " + fmtDate(now));
+
+      // ---- Adherence calendar ----
+      renderAdherence(nutritionWeek);
+    });
+  </script>
+</body>
+</html>

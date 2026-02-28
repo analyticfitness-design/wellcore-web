@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protocolo de Habitos — WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS — WellCore Fitness Habits Template
+    ========================================================= */
+    :root {
+      --bg-primary:      #000000;
+      --bg-card:         #111114;
+      --bg-card-alt:     #0D0D10;
+      --bg-row-alt:      #141417;
+      --red:             #E31E24;
+      --red-dark:        #B01519;
+      --red-glow:        rgba(227,30,36,0.15);
+      --red-dim:         rgba(227,30,36,0.08);
+      --text-primary:    #FFFFFF;
+      --text-body:       #D4D4D8;
+      --text-muted:      #71717A;
+      --text-subtle:     #52525B;
+      --border-subtle:   rgba(255,255,255,0.06);
+      --border-medium:   rgba(255,255,255,0.10);
+      --border-strong:   rgba(255,255,255,0.18);
+      --font-display:    'Bebas Neue', sans-serif;
+      --font-sans:       'Inter', sans-serif;
+      --font-heading:    'Montserrat', sans-serif;
+      --font-mono:       'JetBrains Mono', monospace;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       PRINT BUTTON (screen only)
+    ========================================================= */
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border: 4px solid var(--red);
+      border-radius: 0;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.1s linear;
+    }
+    .print-btn:hover {
+      background: #ff2a31;
+    }
+
+    /* =========================================================
+       PAGE WRAPPER
+    ========================================================= */
+    .page-wrapper {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20px 0 60px;
+    }
+
+    /* =========================================================
+       PAGE UNIT — A4 DIMENSIONS
+    ========================================================= */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg-primary);
+      margin: 0 auto 24px;
+      padding: 14mm 14mm 14mm 14mm;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* =========================================================
+       COVER PAGE
+    ========================================================= */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cover-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-medium);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .cover-logo-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .logo-wordmark {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .logo-wordmark span {
+      color: var(--red);
+    }
+
+    .cover-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag {
+      text-align: right;
+    }
+
+    .cover-doc-tag .doc-type {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag .doc-id {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+
+    /* --- Cover: hero title area --- */
+    .cover-hero {
+      text-align: center;
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .cover-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover-hero-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover-hero-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .cover-hero-sub {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* --- Cover: client info grid --- */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .client-cell {
+      background: var(--bg-card);
+      padding: 14px 18px;
+    }
+
+    .client-cell-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .client-cell-value {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+
+    .client-cell-value.accent {
+      color: var(--red);
+    }
+
+    /* --- Cover: metrics row --- */
+    .metrics-section {
+      margin-bottom: 24px;
+    }
+
+    .metrics-label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metrics-label-row .section-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .metrics-label-row::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 12px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      opacity: 0.6;
+    }
+
+    .metric-card-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .metric-card-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .metric-card-value span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* --- Cover: footer --- */
+    .cover-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cover-footer-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cover-footer-item .f-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .cover-footer-item .f-value {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-body);
+    }
+
+    /* =========================================================
+       SECONDARY PAGE HEADER (compact logo for inner pages)
+    ========================================================= */
+    .page-header-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .phc-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .phc-logo span {
+      color: var(--red);
+    }
+
+    .phc-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       SECTION DIVIDERS
+    ========================================================= */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 16px;
+    }
+
+    .section-divider-bar {
+      width: 4px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+
+    .section-divider-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-divider-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.15em;
+      margin-top: 2px;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* =========================================================
+       SECTION HEADER
+    ========================================================= */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 16px;
+    }
+
+    .section-header-bar {
+      width: 4px;
+      height: 32px;
+      background: var(--red);
+      border-radius: 0;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+
+    .section-header-text {
+      flex: 1;
+    }
+
+    .section-header-title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .section-header-subtitle {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .section-header-action {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+    }
+
+    /* =========================================================
+       DAY/SECTION PAGE HEADER
+    ========================================================= */
+    .day-page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .day-page-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .day-page-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .day-page-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .day-page-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .day-page-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .day-badge {
+      background: var(--red);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 0;
+    }
+
+    .day-meta {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.1em;
+    }
+
+    /* =========================================================
+       INFO CARDS (Left Accent)
+    ========================================================= */
+    .info-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .info-cards-grid.single-col {
+      grid-template-columns: 1fr;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--red);
+      opacity: 0.7;
+    }
+
+    .info-card-icon {
+      color: var(--red);
+      font-size: 16px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .info-card-title {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-card-body {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .info-card-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .info-card-body em {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* =========================================================
+       PROTOCOL BLOCK (like warmup-block)
+    ========================================================= */
+    .protocol-block {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+
+    .protocol-block-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .protocol-block-icon {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: #00D9FF;
+      flex-shrink: 0;
+    }
+
+    .protocol-block-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .protocol-block-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--red);
+      margin-left: auto;
+    }
+
+    .protocol-block-body {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.6;
+      padding-left: 24px;
+    }
+
+    .protocol-block-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       PROTOCOL LIST
+    ========================================================= */
+    .protocol-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-left: 24px;
+    }
+
+    .protocol-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .protocol-list li::before {
+      content: '//';
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* =========================================================
+       STATS ROW
+    ========================================================= */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .stat-pill-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .stat-pill-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-pill-val.red {
+      color: var(--red);
+    }
+
+    /* =========================================================
+       TECHNIQUE CARD (breathing, etc.)
+    ========================================================= */
+    .technique-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .technique-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      opacity: 0.6;
+    }
+
+    .technique-card-title {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .technique-steps {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .technique-step {
+      flex: 1;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .technique-step-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .technique-step-unit {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .technique-step-label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      color: var(--text-body);
+      font-weight: 500;
+    }
+
+    /* =========================================================
+       HYDRATION FORMULA
+    ========================================================= */
+    .formula-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .formula-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .formula-text {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.05em;
+    }
+
+    .formula-text .hl {
+      color: var(--red);
+    }
+
+    .formula-note {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* =========================================================
+       CHECKLIST TABLE
+    ========================================================= */
+    .checklist-table-wrap {
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .checklist-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .checklist-table thead tr {
+      background: var(--red);
+    }
+
+    .checklist-table thead th {
+      padding: 9px 10px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: center;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .checklist-table thead th:first-child {
+      text-align: left;
+      min-width: 180px;
+    }
+
+    .checklist-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.1s linear;
+    }
+
+    .checklist-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .checklist-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .checklist-table tbody td {
+      padding: 9px 10px;
+      color: var(--text-body);
+      border: none;
+      vertical-align: middle;
+    }
+
+    .checklist-table tbody td:first-child {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: left;
+    }
+
+    .checklist-table tbody td.check-cell {
+      text-align: center;
+      padding: 6px 8px;
+    }
+
+    .check-box {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border-strong);
+      border-radius: 0;
+      background: transparent;
+      vertical-align: middle;
+    }
+
+    /* =========================================================
+       COACH NOTES
+    ========================================================= */
+    .notes-box {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+
+    .notes-box-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .notes-box-icon {
+      color: var(--red);
+      font-size: 14px;
+    }
+
+    .notes-box-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .notes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .notes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .notes-list li::before {
+      content: '//';
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Empty lines for handwriting */
+    .notes-lines {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .notes-line {
+      border-bottom: 1px solid var(--border-subtle);
+      height: 1px;
+    }
+
+    /* =========================================================
+       PAGE FOOTER
+    ========================================================= */
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 14mm;
+      right: 14mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 6px;
+    }
+
+    .page-footer-brand {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .page-footer-brand span {
+      color: var(--red);
+    }
+
+    .page-footer-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--text-subtle);
+    }
+
+    /* =========================================================
+       URINE COLOR INDICATOR
+    ========================================================= */
+    .urine-scale {
+      display: flex;
+      gap: 4px;
+      align-items: flex-end;
+      margin-top: 8px;
+      padding: 10px 0;
+    }
+
+    .urine-block {
+      flex: 1;
+      height: 24px;
+      border-radius: 0;
+      position: relative;
+    }
+
+    .urine-block-label {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      letter-spacing: 0.1em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* =========================================================
+       PRINT STYLES
+    ========================================================= */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: #fff;
+        color: #000;
+      }
+
+      .print-btn {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        padding: 0;
+      }
+
+      .page {
+        margin: 0;
+        padding: 14mm;
+        page-break-after: always;
+        background: #fff;
+        border: none;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+
+      :root {
+        --bg-primary:      #ffffff;
+        --bg-card:         #f5f5f7;
+        --bg-card-alt:     #eeeeef;
+        --bg-row-alt:      #f0f0f3;
+        --red:             #cc1a1f;
+        --red-dark:        #99131a;
+        --red-glow:        transparent;
+        --red-dim:         rgba(204,26,31,0.08);
+        --text-primary:    #0a0a0a;
+        --text-body:       #2a2a2d;
+        --text-muted:      #5a5a60;
+        --text-subtle:     #8a8a90;
+        --border-subtle:   rgba(0,0,0,0.10);
+        --border-medium:   rgba(0,0,0,0.16);
+        --border-strong:   rgba(0,0,0,0.22);
+      }
+
+      .checklist-table thead tr,
+      .day-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .checklist-table-wrap,
+      .info-card,
+      .protocol-block,
+      .technique-card,
+      .notes-box {
+        break-inside: avoid;
+      }
+
+      .technique-step,
+      .metric-card,
+      .stat-pill {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .check-box {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PRINT BUTTON (hidden in print) -->
+  <button class="print-btn" onclick="window.print()">
+    <span style="color:#00D9FF;font-weight:700;">//</span> Imprimir / PDF
+  </button>
+
+  <div class="page-wrapper">
+
+    <!-- =====================================================
+         PAGE 1 — COVER
+    ===================================================== -->
+    <div class="page cover" id="page-cover">
+
+      <!-- HEADER BAND -->
+      <div class="cover-header">
+        <div class="cover-logo-group">
+          <div class="logo-wordmark">WELL<span>CORE</span> FITNESS</div>
+          <div class="cover-subtitle">Entrenamiento Basado en Evidencia</div>
+        </div>
+        <div class="cover-doc-tag">
+          <div class="doc-type">Protocolo Oficial</div>
+          <div class="doc-id" id="doc-id">WCF-HAB-2026</div>
+        </div>
+      </div>
+
+      <!-- HERO TITLE -->
+      <div class="cover-hero">
+        <div class="cover-hero-label">// documento de optimizacion integral //</div>
+        <div class="cover-hero-title">PROTOCOLO DE<br>HABITOS</div>
+        <div class="cover-hero-sub">Sistema de Optimizacion Integral — Plan Elite</div>
+      </div>
+
+      <!-- CLIENT INFO GRID -->
+      <div class="client-grid">
+        <div class="client-cell">
+          <div class="client-cell-label">Cliente</div>
+          <div class="client-cell-value" data-field="nombre">CLIENTE DEMO</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Plan Activo</div>
+          <div class="client-cell-value accent" data-field="plan">PLAN ELITE</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Objetivo Principal</div>
+          <div class="client-cell-value">Optimizacion Integral</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Documento</div>
+          <div class="client-cell-value">Protocolo de Habitos</div>
+        </div>
+      </div>
+
+      <!-- PROTOCOL METRICS -->
+      <div class="metrics-section">
+        <div class="metrics-label-row">
+          <span class="section-tag">// indicadores clave del protocolo</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-card-label">Secciones</div>
+            <div class="metric-card-value">7</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Habitos Diarios</div>
+            <div class="metric-card-value">7</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Sueno Objetivo</div>
+            <div class="metric-card-value">7-9<span>h</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Pasos Diarios</div>
+            <div class="metric-card-value">10K</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OVERVIEW SECTION -->
+      <div class="section-header">
+        <div class="section-header-bar"></div>
+        <div class="section-header-text">
+          <div class="section-header-title">Resumen del Protocolo</div>
+          <div class="section-header-subtitle">// la base que sostiene todo el programa</div>
+        </div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Por que Habitos</div>
+          <div class="info-card-body">
+            El entrenamiento y la nutricion representan <strong>3-5% de tu dia</strong>. Lo que haces el otro 95% determina tus resultados. Este protocolo cubre los pilares cientificos que maximizan la adaptacion muscular, la recuperacion y la composicion corporal.
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Como Usar Este Documento</div>
+          <div class="info-card-body">
+            Implementa <strong>1-2 habitos por semana</strong>, no todos de golpe. La adherencia supera a la perfeccion. Usa el checklist diario (pagina final) para hacer seguimiento. Reporta adherencia en tus check-ins con el coach.
+          </div>
+        </div>
+      </div>
+
+      <!-- COVER FOOTER -->
+      <div class="cover-footer">
+        <div class="cover-footer-item">
+          <span class="f-label">Fecha de Emision</span>
+          <span class="f-value" id="issue-date">20 de febrero de 2026</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:center">
+          <span class="f-label">Coach</span>
+          <span class="f-value">WellCore Fitness</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:right">
+          <span class="f-label">Contacto</span>
+          <span class="f-value">info@wellcorefitness.com</span>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Habitos</div>
+        <div class="page-footer-num">01 / 05</div>
+      </div>
+    </div><!-- /page cover -->
+
+
+    <!-- =====================================================
+         PAGE 2 — SUENO + GESTION DEL ESTRES
+    ===================================================== -->
+    <div class="page" id="page-sueno-estres">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Habitos &rarr; Sueno &amp; Estres</div>
+      </div>
+
+      <!-- SECTION 1: PROTOCOLO DE SUENO -->
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// seccion 01 de 06 — pilar fundamental</div>
+          <div class="day-page-title">PROTOCOLO DE SUENO</div>
+          <div class="day-page-subtitle">Recuperacion y Adaptacion Muscular</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">ELITE</div>
+          <div class="day-meta">7-9 horas obligatorio</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Objetivo</span>
+          <span class="stat-pill-val red">7-9</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">HORAS</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Temperatura</span>
+          <span class="stat-pill-val">18-20</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">GRADOS C</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Sin Pantallas</span>
+          <span class="stat-pill-val">60</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">MIN ANTES</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Ultimo Cafe</span>
+          <span class="stat-pill-val" style="font-size:13px">14:00</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">MAXIMO</span>
+        </div>
+      </div>
+
+      <div class="protocol-block">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon">//</span>
+          <span class="protocol-block-title">Horario Fijo</span>
+          <span class="protocol-block-value">+/- 30 min</span>
+        </div>
+        <ul class="protocol-list">
+          <li>Establece una hora fija para acostarte y levantarte, incluyendo fines de semana. La variabilidad maxima aceptable es de 30 minutos en ambas direcciones.</li>
+          <li>El ritmo circadiano se consolida con consistencia. Romperlo los fines de semana genera "jet lag social" que reduce el rendimiento de la semana siguiente.</li>
+        </ul>
+      </div>
+
+      <div class="protocol-block">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon">//</span>
+          <span class="protocol-block-title">Ambiente Optimizado</span>
+          <span class="protocol-block-value">18-20 C</span>
+        </div>
+        <ul class="protocol-list">
+          <li><strong>Temperatura:</strong> La habitacion debe estar entre 18-20 grados Celsius. La caida de temperatura corporal es la senal fisiologica principal para iniciar el sueno.</li>
+          <li><strong>Oscuridad progresiva:</strong> Reduce la iluminacion 60 minutos antes de dormir. Esto activa la produccion natural de melatonina endogena sin necesidad de suplementos.</li>
+          <li><strong>Sin pantallas:</strong> Elimina toda exposicion a pantallas (telefono, TV, computador) 60 minutos antes. La luz azul suprime la melatonina hasta un 50%.</li>
+        </ul>
+      </div>
+
+      <div class="protocol-block">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon">//</span>
+          <span class="protocol-block-title">Cafeina</span>
+          <span class="protocol-block-value">CORTE 14:00</span>
+        </div>
+        <ul class="protocol-list">
+          <li>Ultimo cafe o bebida con cafeina antes de las 14:00. La vida media de la cafeina es de 5-7 horas, por lo que a las 22:00 aun tendrias un 25% en sangre si tomas cafe a las 16:00.</li>
+        </ul>
+      </div>
+
+      <div class="protocol-block" style="border-left-color: var(--text-subtle);">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon" style="color:var(--text-subtle);">//</span>
+          <span class="protocol-block-title">Tracking de Calidad</span>
+          <span class="protocol-block-value">ESCALA 1-10</span>
+        </div>
+        <ul class="protocol-list">
+          <li>Cada manana, registra la calidad subjetiva de sueno en una escala del 1 al 10. Si el promedio semanal baja de 6, notifica al coach para ajustar volumen de entrenamiento.</li>
+        </ul>
+      </div>
+
+      <!-- SEPARATOR -->
+      <div style="height:16px"></div>
+
+      <!-- SECTION 2: GESTION DEL ESTRES -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Gestion del Estres</div>
+          <div class="section-divider-sub">// seccion 02 — control de cortisol</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <!-- Breathing Technique 4-7-8 -->
+      <div class="technique-card">
+        <div class="technique-card-title">Tecnica de Respiracion 4-7-8</div>
+        <div class="technique-steps">
+          <div class="technique-step">
+            <div class="technique-step-num">4</div>
+            <div class="technique-step-unit">SEGUNDOS</div>
+            <div class="technique-step-label">Inhalar por nariz</div>
+          </div>
+          <div class="technique-step">
+            <div class="technique-step-num">7</div>
+            <div class="technique-step-unit">SEGUNDOS</div>
+            <div class="technique-step-label">Sostener aire</div>
+          </div>
+          <div class="technique-step">
+            <div class="technique-step-num">8</div>
+            <div class="technique-step-unit">SEGUNDOS</div>
+            <div class="technique-step-label">Exhalar por boca</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Mindfulness</div>
+          <div class="info-card-body">
+            <strong>10 minutos diarios</strong> como minimo.<br>
+            Puede ser meditacion guiada, respiracion consciente, o simplemente sentarse en silencio sin estimulos.<br>
+            <em>Reduce cortisol cronico hasta un 23% segun meta-analisis (Pascoe et al., 2017).</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Caminata Post-Comida</div>
+          <div class="info-card-body">
+            <strong>10-15 minutos</strong> despues de comidas principales.<br>
+            Mejora la digestion, regula glucemia post-prandial y reduce picos de cortisol.<br>
+            <em>Ideal despues del almuerzo para romper sedentarismo laboral.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Redes Sociales</div>
+          <div class="info-card-body">
+            <strong>Maximo 30 minutos por dia.</strong><br>
+            Usa temporizadores nativos del telefono.<br>
+            Elimina notificaciones push de apps no esenciales.<br>
+            <em>El scrolling pasivo eleva cortisol y reduce calidad de sueno.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Journaling</div>
+          <div class="info-card-body">
+            <strong>3-5 minutos</strong> antes de dormir.<br>
+            Escribe 3 cosas que hiciste bien hoy y 1 punto de mejora para manana.<br>
+            <em>Descarga cognitiva que facilita la transicion al sueno.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Habitos</div>
+        <div class="page-footer-num">02 / 05</div>
+      </div>
+    </div><!-- /page sueno-estres -->
+
+
+    <!-- =====================================================
+         PAGE 3 — HIDRATACION + NUTRICION TIMING
+    ===================================================== -->
+    <div class="page" id="page-hidratacion-nutricion">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Habitos &rarr; Hidratacion &amp; Nutricion</div>
+      </div>
+
+      <!-- SECTION 3: HIDRATACION -->
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// seccion 03 de 06 — hidratacion</div>
+          <div class="day-page-title">HIDRATACION</div>
+          <div class="day-page-subtitle">Rendimiento y Funcion Metabolica</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">CRITICO</div>
+          <div class="day-meta">35ml x kg + entreno</div>
+        </div>
+      </div>
+
+      <!-- Formula -->
+      <div class="formula-block">
+        <div class="formula-label">// formula de hidratacion diaria</div>
+        <div class="formula-text"><span class="hl">35ml</span> x kg peso corporal + <span class="hl">500ml</span> x hora de entrenamiento</div>
+        <div class="formula-note">Ejemplo: 80kg = 2.800ml base + 500ml si entrenas 1h = 3.300ml total</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Al Despertar</span>
+          <span class="stat-pill-val red">500</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">ML</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Sodio</span>
+          <span class="stat-pill-val" style="font-size:13px">Na+</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">ELECTROLITO</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Potasio</span>
+          <span class="stat-pill-val" style="font-size:13px">K+</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">ELECTROLITO</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Magnesio</span>
+          <span class="stat-pill-val" style="font-size:13px">Mg2+</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">ELECTROLITO</span>
+        </div>
+      </div>
+
+      <div class="protocol-block">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon">//</span>
+          <span class="protocol-block-title">Protocolo de Hidratacion</span>
+        </div>
+        <ul class="protocol-list">
+          <li><strong>Primer vaso al despertar:</strong> 500ml de agua a temperatura ambiente. Rehidrata despues de 7-9 horas sin ingesta de liquidos.</li>
+          <li><strong>Distribucion uniforme:</strong> No tomar grandes cantidades de golpe. Distribuir la ingesta en intervalos regulares durante todo el dia (cada 30-45 minutos un trago).</li>
+          <li><strong>Electrolitos:</strong> Incluir sodio, potasio y magnesio especialmente en dias de entrenamiento intenso o clima calido. Una pizca de sal en el agua pre-entreno es suficiente.</li>
+          <li><strong>Evitar exceso pre-sueno:</strong> Reducir ingesta 60-90 minutos antes de dormir para evitar interrupciones nocturnas.</li>
+        </ul>
+      </div>
+
+      <div class="protocol-block" style="border-left-color: var(--text-subtle);">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon" style="color:var(--text-subtle);">//</span>
+          <span class="protocol-block-title">Indicador Visual</span>
+          <span class="protocol-block-value">COLOR DE ORINA</span>
+        </div>
+        <ul class="protocol-list">
+          <li><strong>Amarillo palido / pajizo:</strong> Hidratacion correcta. Mantener.</li>
+          <li><strong>Transparente:</strong> Posible sobre-hidratacion. Reducir ligeramente.</li>
+          <li><strong>Amarillo oscuro / ambar:</strong> Deshidratacion. Aumentar ingesta inmediatamente.</li>
+        </ul>
+      </div>
+
+      <!-- SEPARATOR -->
+      <div style="height:16px"></div>
+
+      <!-- SECTION 4: NUTRICION TIMING -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Nutricion Timing</div>
+          <div class="section-divider-sub">// seccion 04 — ventanas anabolicas y distribucion proteica</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Comidas</span>
+          <span class="stat-pill-val red">4-5</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">POR DIA</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Proteina/Comida</span>
+          <span class="stat-pill-val">0.4-0.5</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">G/KG</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Pre-Entreno</span>
+          <span class="stat-pill-val" style="font-size:13px">60-90</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">MIN ANTES</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Post-Entreno</span>
+          <span class="stat-pill-val" style="font-size:13px">0-2</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">HORAS</span>
+        </div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Pre-Entrenamiento</div>
+          <div class="info-card-body">
+            <strong>60-90 minutos antes</strong> de la sesion.<br>
+            Carbohidratos complejos + proteina magra.<br>
+            Ejemplo: arroz + pollo, avena + whey, pasta + atun.<br>
+            <em>Garantiza glucogeno muscular para sesiones de alta intensidad.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Post-Entrenamiento</div>
+          <div class="info-card-body">
+            <strong>Dentro de las 2 horas</strong> post-sesion.<br>
+            Proteina de rapida absorcion + carbohidratos de alto IG.<br>
+            Ejemplo: whey + fruta, pollo + arroz blanco.<br>
+            <em>Maximiza la sintesis proteica muscular (MPS) post-ejercicio.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Distribucion Proteica</div>
+          <div class="info-card-body">
+            Distribuir proteina en <strong>4-5 comidas</strong> espaciadas cada 3-4 horas.<br>
+            Cada comida: <strong>0.4-0.5g/kg</strong> de peso corporal en proteina.<br>
+            <em>Ejemplo (80kg): 32-40g de proteina por comida.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Antes de Dormir</div>
+          <div class="info-card-body">
+            <strong>Caseina o proteina de lenta absorcion</strong> 30-60 min antes de dormir.<br>
+            Opciones: queso cottage, yogur griego, caseina en polvo.<br>
+            <em>Sostiene MPS durante las 7-9 horas de ayuno nocturno.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Habitos</div>
+        <div class="page-footer-num">03 / 05</div>
+      </div>
+    </div><!-- /page hidratacion-nutricion -->
+
+
+    <!-- =====================================================
+         PAGE 4 — NEAT + HABITOS DE ENTRENAMIENTO
+    ===================================================== -->
+    <div class="page" id="page-neat-entreno">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Habitos &rarr; Movimiento &amp; Entrenamiento</div>
+      </div>
+
+      <!-- SECTION 5: NEAT -->
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// seccion 05 de 06 — movimiento diario</div>
+          <div class="day-page-title">NEAT</div>
+          <div class="day-page-subtitle">Termogenesis por Actividad No Planificada</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">DIARIO</div>
+          <div class="day-meta">8,000-10,000 pasos</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Pasos Diarios</span>
+          <span class="stat-pill-val red">8-10K</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">OBJETIVO</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Cada 60 min</span>
+          <span class="stat-pill-val">5</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">MIN CAMINAR</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Caminata AM</span>
+          <span class="stat-pill-val">15</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">MIN SOL</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Tracking</span>
+          <span class="stat-pill-val" style="font-size:12px">DIARIO</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">OBLIGATORIO</span>
+        </div>
+      </div>
+
+      <div class="protocol-block">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon">//</span>
+          <span class="protocol-block-title">Pasos Diarios</span>
+          <span class="protocol-block-value">8,000-10,000</span>
+        </div>
+        <ul class="protocol-list">
+          <li><strong>Objetivo minimo:</strong> 8,000 pasos. Ideal: 10,000. El NEAT puede representar entre 200-800 kcal diarias, un factor determinante en la composicion corporal a largo plazo.</li>
+          <li><strong>Regla de los 60 minutos:</strong> Por cada 60 minutos sentado, levantate y camina 5 minutos. Ademas de sumar pasos, combate la resistencia a la insulina asociada al sedentarismo prolongado.</li>
+          <li><strong>Escaleras siempre:</strong> Prefiere escaleras sobre ascensores. Es el hack de NEAT mas subestimado — se acumulan cientos de calorias semanales sin esfuerzo percibido.</li>
+        </ul>
+      </div>
+
+      <div class="protocol-block">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon">//</span>
+          <span class="protocol-block-title">Caminata Matutina</span>
+          <span class="protocol-block-value">15 MIN</span>
+        </div>
+        <ul class="protocol-list">
+          <li><strong>Exposicion solar directa</strong> durante los primeros 15 minutos de la manana. No se necesita sol fuerte — incluso dias nublados aportan suficiente luz.</li>
+          <li>Sincroniza el ritmo circadiano, mejora el estado de animo (serotonina) y establece la cascada hormonal correcta para el dia. Andrew Huberman lo denomina "el habito mas impactante disponible".</li>
+          <li><strong>Tracking obligatorio:</strong> Registra tus pasos diarios. Usa reloj, telefono o app. Lo que no se mide no se gestiona.</li>
+        </ul>
+      </div>
+
+      <!-- SEPARATOR -->
+      <div style="height:16px"></div>
+
+      <!-- SECTION 6: HABITOS DE ENTRENAMIENTO -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Habitos de Entrenamiento</div>
+          <div class="section-divider-sub">// seccion 06 — protocolos dentro y fuera del gym</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Calentamiento</div>
+          <div class="info-card-body">
+            <strong>Obligatorio. Nunca saltar.</strong><br>
+            Protocolo RAMP: Raise (elevar temperatura), Activate (activar musculatura objetivo), Mobilize (movilidad articular), Potentiate (series de aproximacion).<br>
+            <em>Reduce riesgo de lesion y mejora rendimiento en la primera serie en un 8-12%.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Enfriamiento</div>
+          <div class="info-card-body">
+            <strong>5-10 minutos</strong> al finalizar cada sesion.<br>
+            Estiramiento estatico de los musculos trabajados (30s por grupo).<br>
+            Respiracion diafragmatica para activar sistema parasimpatico.<br>
+            <em>Acelera la recuperacion y reduce DOMS percibido.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Descanso Activo</div>
+          <div class="info-card-body">
+            <strong>1-2 dias por semana</strong> de recuperacion activa.<br>
+            Movilidad articular: 15-20 min (caderas, hombros, columna toracica).<br>
+            Foam roller: 10 min en grupos musculares entrenados la semana.<br>
+            <em>Promueve flujo sanguineo sin generar estres mecanico adicional.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Deload y Tracking</div>
+          <div class="info-card-body">
+            <strong>Deload cada 4-6 semanas:</strong> Reduce volumen 40-50%, misma seleccion de ejercicios.<br>
+            <strong>Tracking por sesion:</strong> Registra RPE percibido, peso usado y adherencia al programa.<br>
+            <em>La supercompensacion requiere periodos planificados de descarga.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Habitos</div>
+        <div class="page-footer-num">04 / 05</div>
+      </div>
+    </div><!-- /page neat-entreno -->
+
+
+    <!-- =====================================================
+         PAGE 5 — CHECKLIST DIARIO + NOTAS DEL COACH
+    ===================================================== -->
+    <div class="page" id="page-checklist">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Habitos &rarr; Checklist &amp; Notas</div>
+      </div>
+
+      <!-- SECTION 7: CHECKLIST DIARIO -->
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// seccion 07 — tracker semanal</div>
+          <div class="day-page-title">CHECKLIST DIARIO</div>
+          <div class="day-page-subtitle">Seguimiento Semanal de Adherencia</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">TRACKING</div>
+          <div class="day-meta">7 habitos x 7 dias</div>
+        </div>
+      </div>
+
+      <div class="protocol-block" style="margin-bottom:16px;">
+        <div class="protocol-block-header">
+          <span class="protocol-block-icon">//</span>
+          <span class="protocol-block-title">Instrucciones</span>
+        </div>
+        <ul class="protocol-list">
+          <li>Marca cada casilla al final del dia si cumpliste con el habito. El objetivo minimo es 80% de adherencia semanal (40/49 casillas).</li>
+          <li>Imprime esta pagina cada semana o lleva el registro digital. Envia foto del checklist en tu check-in semanal con el coach.</li>
+        </ul>
+      </div>
+
+      <!-- CHECKLIST TABLE: WEEK 1 -->
+      <div class="section-divider" style="margin-top:8px">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Semana ___</div>
+          <div class="section-divider-sub">// Fecha: ___ / ___ / 2026</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="checklist-table-wrap">
+        <table class="checklist-table">
+          <thead>
+            <tr>
+              <th>Habito</th>
+              <th>L</th>
+              <th>M</th>
+              <th>X</th>
+              <th>J</th>
+              <th>V</th>
+              <th>S</th>
+              <th>D</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sueno 7-9 horas</td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+            </tr>
+            <tr>
+              <td>Hidratacion completa</td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+            </tr>
+            <tr>
+              <td>Pasos 8,000+</td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+            </tr>
+            <tr>
+              <td>Entrenamiento completado</td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+            </tr>
+            <tr>
+              <td>Nutricion on-plan</td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+            </tr>
+            <tr>
+              <td>Mindfulness 10 min</td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+            </tr>
+            <tr>
+              <td>Sin pantallas antes de dormir</td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+              <td class="check-cell"><span class="check-box"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ADHERENCE METRICS -->
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Total Semanal</div>
+          <div class="info-card-body">
+            Casillas marcadas: <strong>___ / 49</strong><br>
+            Porcentaje de adherencia: <strong>___ %</strong><br>
+            <em>Objetivo minimo: 80% (40/49)</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Calidad de Sueno</div>
+          <div class="info-card-body">
+            Promedio semanal (1-10): <strong>___</strong><br>
+            Mejor noche: <strong>___</strong> | Peor noche: <strong>___</strong><br>
+            <em>Alerta si promedio es menor a 6/10</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEPARATOR -->
+      <div style="height:12px"></div>
+
+      <!-- SECTION 8: NOTAS DEL COACH -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Notas del Coach</div>
+          <div class="section-divider-sub">// directrices y observaciones personalizadas</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Protocolo de Implementacion</span>
+        </div>
+        <ul class="notes-list">
+          <li>No intentes implementar los 7 habitos de golpe. Semana 1: elige los 2 mas debiles. Semana 2: agrega 1 mas. Progresion gradual = adherencia sostenida.</li>
+          <li>El sueno es el pilar numero uno. Si solo puedes mejorar un habito, que sea dormir 7-9 horas. Todo lo demas se construye sobre una base de recuperacion adecuada.</li>
+          <li>La hidratacion tiene efecto inmediato en el rendimiento. Una deshidratacion del 2% reduce la fuerza muscular hasta un 10% y la capacidad cognitiva un 25%.</li>
+          <li>Los pasos diarios son la variable de gasto energetico mas modificable. Son mas impactantes que 30 minutos de cardio para la composicion corporal a largo plazo.</li>
+          <li>Reporta tu adherencia semanal en cada check-in. Envia foto del checklist completado junto con tus fotos de seguimiento (frontal, perfil, espalda).</li>
+          <li>Para dudas o ajustes de protocolo: <strong>info@wellcorefitness.com</strong></li>
+        </ul>
+      </div>
+
+      <!-- HANDWRITING NOTES AREA -->
+      <div class="notes-box" style="border-style:dashed;">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Notas Personales</span>
+        </div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Habitos</div>
+        <div class="page-footer-num">05 / 05</div>
+      </div>
+    </div><!-- /page checklist -->
+
+  </div><!-- /page-wrapper -->
+
+
+  <!-- =====================================================
+       JAVASCRIPT — localStorage INTEGRATION
+  ===================================================== -->
+  <script>
+    /* --------------------------------------------------
+       UTILITY: Read data from localStorage
+    -------------------------------------------------- */
+    function getProfile() {
+      try {
+        return JSON.parse(localStorage.getItem('wc_profile') || '{}');
+      } catch(e) { return {}; }
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Format date in Spanish
+    -------------------------------------------------- */
+    function formatDateES(date) {
+      var months = ['enero','febrero','marzo','abril','mayo','junio',
+                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      return date.getDate() + ' de ' + months[date.getMonth()] + ' de ' + date.getFullYear();
+    }
+
+    function getWeekNumber(date) {
+      var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      var dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    /* --------------------------------------------------
+       RENDER: Client info fields
+    -------------------------------------------------- */
+    function renderClientInfo(profile) {
+      var nombreEl = document.querySelector('[data-field="nombre"]');
+      if (nombreEl) {
+        var name = profile.nombre
+          || localStorage.getItem('wc_client_name')
+          || 'CLIENTE DEMO';
+        nombreEl.textContent = name;
+      }
+
+      var planEl = document.querySelector('[data-field="plan"]');
+      if (planEl) {
+        var plan = (localStorage.getItem('wc_client_plan') || profile.plan || 'elite').toUpperCase();
+        planEl.textContent = 'PLAN ' + plan;
+      }
+
+      var issueDateEl = document.getElementById('issue-date');
+      if (issueDateEl) {
+        issueDateEl.textContent = formatDateES(new Date());
+      }
+
+      var docIdEl = document.getElementById('doc-id');
+      if (docIdEl) {
+        var now = new Date();
+        var week = getWeekNumber(now);
+        docIdEl.textContent = 'WCF-HAB-' + now.getFullYear() + '-W' + String(week).padStart(2,'0');
+      }
+    }
+
+    /* --------------------------------------------------
+       MAIN: DOMContentLoaded
+    -------------------------------------------------- */
+    document.addEventListener('DOMContentLoaded', function() {
+      var profile = getProfile();
+      renderClientInfo(profile);
+    });
+  </script>
+
+</body>
+</html>

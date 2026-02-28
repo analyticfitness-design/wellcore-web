@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Metodo WellCore — Protocolo de Entrenamiento Basado en Evidencia</title>
+  <meta name="description" content="El Metodo WellCore: protocolo cientifico de entrenamiento personalizado. Descubre por que 87% de nuestros clientes logran resultados donde otros han fallado." />
+  <meta property="og:title" content="El Metodo WellCore — Protocolo de Entrenamiento Basado en Evidencia">
+  <meta property="og:description" content="El Metodo WellCore: protocolo cientifico de entrenamiento personalizado. Descubre por que 87% de nuestros clientes logran resultados donde otros han fallado.">
+  <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+  <meta property="og:url" content="https://wellcorefitness.com/metodo.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wellcorefitness.com/metodo.html">
+  <link rel="stylesheet" href="css/wellcore-v5.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+
+    /* ============================================================
+       EL METODO WELLCORE — LAB REPORT / PROTOCOLO CIENTIFICO
+       WellCore Fitness v3
+    ============================================================ */
+
+    :root {
+      --red:       #E31E24;
+      --red-dark:  #B8181D;
+      --red-dim:   rgba(227,30,36,0.10);
+      --red-glow:  rgba(227,30,36,0.25);
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --surface-2: #1a1a1d;
+      --border:    rgba(255,255,255,0.06);
+      --border-2:  rgba(255,255,255,0.10);
+      --gray:      rgba(255,255,255,0.45);
+      --gray-dim:  rgba(255,255,255,0.18);
+      --accent:    #00D9FF;
+      --green:     #22C55E;
+      --white:     #FFFFFF;
+      --font-head: 'Bebas Neue', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    /* --- Reset --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 72px; display: flex; align-items: center;
+      background: rgba(10,10,10,0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      width: 100%; max-width: 1280px; margin: 0 auto;
+      padding: 0 32px; display: flex;
+      align-items: center; justify-content: space-between; gap: 32px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 500; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      transition: color 0.1s linear; text-decoration: none;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta {
+      font-family: var(--font-mono); font-size: 11px;
+      font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: #E31E24;
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      white-space: nowrap;
+    }
+    .nav-hamburger {
+      display: none; background: none; border: none;
+      color: #fff; font-size: 18px; cursor: pointer;
+    }
+    #navMobileMenu {
+      display: none; position: fixed; top: 72px; left: 0; right: 0;
+      background: rgba(10,10,10,0.98); padding: 24px 32px; z-index: 999;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    #navMobileMenu ul {
+      list-style: none; padding: 0; margin: 0 0 20px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .nav-mobile-link {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); text-decoration: none;
+    }
+    .nav-mobile-cta {
+      display: inline-block; background: #E31E24; color: #fff;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; padding: 12px 24px; text-decoration: none;
+    }
+    @media (max-width: 991px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+    @keyframes pulse-dot {
+      0%,100%{ transform:scale(1); opacity:1; }
+      50%{ transform:scale(1.5); opacity:0.5; }
+    }
+
+    /* ============================================================
+       HAMBURGER ICON STATE — CSS only, no innerHTML needed
+    ============================================================ */
+    .nav-hamburger .icon-bars  { display: block; }
+    .nav-hamburger .icon-close { display: none;  }
+    .nav-hamburger.is-open .icon-bars  { display: none;  }
+    .nav-hamburger.is-open .icon-close { display: block; }
+
+    /* ============================================================
+       FAQ TOGGLE ICON — CSS only
+    ============================================================ */
+    .faq-toggle-icon .icon-plus  { display: block; }
+    .faq-toggle-icon .icon-close { display: none;  }
+    .faq-question.active .faq-toggle-icon .icon-plus  { display: none;  }
+    .faq-question.active .faq-toggle-icon .icon-close { display: block; }
+
+    /* ============================================================
+       SECTION UTILITY
+    ============================================================ */
+    .section-rule {
+      width: 100%; height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+    .container-wc {
+      max-width: 1200px; margin: 0 auto; padding: 0 32px;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-bottom: 48px;
+    }
+    .section-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+    }
+    .section-tag .tag-num { color: var(--red); }
+
+    .h2-big {
+      font-family: var(--font-head);
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--white);
+    }
+
+    .body-lg {
+      font-size: 17px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.65);
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      background-image: linear-gradient(90deg, rgba(10,10,10,0.92) 50%, rgba(10,10,10,0.5) 100%), url('images/fotos/metodo-01.jpg');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -120px;
+      right: -120px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(227,30,36,0.12) 0%, transparent 70%);
+      z-index: 0;
+    }
+    .hero-inner { position: relative; z-index: 1; width: 100%; }
+    .hero-content { max-width: 900px; }
+
+    .hero-code-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-code-tag::before { content: '//'; opacity: 0.5; }
+
+    .h1-massive {
+      font-family: var(--font-head);
+      font-size: clamp(80px, 12vw, 140px);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      color: var(--white);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin-top: 24px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .hero-divider {
+      width: 80px; height: 2px; background: var(--red); margin: 36px 0;
+    }
+    .hero-lead {
+      font-size: 18px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      max-width: 620px;
+      font-weight: 300;
+    }
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 52px;
+    }
+    .stat-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 20px; border-radius: 0;
+      font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 0.08em; color: rgba(255,255,255,0.7);
+      transition: border-color 0.1s linear;
+    }
+    .stat-pill:hover { border-color: rgba(227,30,36,0.4); }
+    .stat-pill-val { color: var(--accent); font-weight: 500; font-size: 15px; }
+    .stat-pill-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+
+    .hero-scroll-indicator {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 1;
+    }
+    .hero-scroll-indicator span {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.2em; color: rgba(255,255,255,0.2); text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+      animation: scroll-line 2s ease-in-out infinite;
+    }
+    @keyframes scroll-line {
+      0%,100%{ opacity:0.2; transform:scaleY(1); }
+      50%{ opacity:0.6; transform:scaleY(0.7); }
+    }
+
+    /* ============================================================
+       PROTOCOL STRIP MARQUEE
+    ============================================================ */
+    .protocol-strip {
+      background: var(--surface-2);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 0;
+      overflow: hidden;
+    }
+    .protocol-strip-inner {
+      display: flex; gap: 48px; align-items: center;
+      animation: marquee 30s linear infinite;
+      white-space: nowrap;
+    }
+    .protocol-badge {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .protocol-badge-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--red); }
+    @keyframes marquee {
+      0%{ transform: translateX(0); }
+      100%{ transform: translateX(-50%); }
+    }
+
+    /* ============================================================
+       SECTION 1 — POR QUE FALLAN
+    ============================================================ */
+    #fallan { background: var(--bg); padding: 120px 0; }
+
+    .fallan-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    .stat-giant {
+      font-family: var(--font-head);
+      font-size: clamp(80px, 10vw, 120px);
+      line-height: 1; color: var(--red); display: block; margin-bottom: 4px;
+    }
+    .stat-giant-label {
+      font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.3);
+      text-transform: uppercase; margin-bottom: 40px;
+    }
+    .secondary-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .secondary-stat-cell { background: var(--bg); padding: 24px; text-align: center; }
+    .secondary-stat-cell .val { font-family: var(--font-head); font-size: 42px; color: var(--white); display: block; }
+    .secondary-stat-cell .lbl {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.3);
+      text-transform: uppercase; margin-top: 4px;
+    }
+    .failure-list { list-style: none; margin-top: 40px; }
+    .failure-item {
+      display: flex; gap: 20px; padding: 28px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .failure-item:last-child { border-bottom: none; }
+    .failure-num {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.1em; color: var(--red); flex-shrink: 0; padding-top: 3px;
+    }
+    .failure-title { font-family: var(--font-body); font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; letter-spacing: 0.02em; }
+    .failure-desc { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+    .failure-solution {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase;
+    }
+    .failure-solution::before { content: '+'; font-size: 14px; }
+    .source-tag {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.15); margin-top: 16px;
+    }
+
+    /* ============================================================
+       SECTION 2 — LOS 5 PILARES
+    ============================================================ */
+    #pilares {
+      background: var(--surface); padding: 120px 0; position: relative;
+    }
+    #pilares::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 80px 80px; z-index: 0;
+    }
+    #pilares .container-wc { position: relative; z-index: 1; }
+
+    .pilares-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 64px;
+    }
+    .pilares-header-note {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.25);
+      text-align: right; max-width: 220px; line-height: 1.6;
+    }
+    .pilares-row-1 {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: rgba(255,255,255,0.06); margin-bottom: 1px;
+    }
+    .pilares-row-2 {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px; background: rgba(255,255,255,0.06);
+    }
+    .pilar-card {
+      background: var(--surface); padding: 36px 32px;
+      position: relative; overflow: hidden; transition: background 0.1s linear;
+    }
+    .pilar-card:hover { background: var(--surface-2); }
+    .pilar-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--red); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .pilar-card:hover::after { transform: scaleX(1); }
+    .pilar-number {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.15em; color: rgba(255,255,255,0.2); margin-bottom: 20px;
+    }
+    .pilar-icon {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(227,30,36,0.3); border-radius: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--red); font-size: 14px; margin-bottom: 20px;
+    }
+    .pilar-name {
+      font-family: var(--font-head); font-size: 26px;
+      letter-spacing: 0.06em; color: var(--white); margin-bottom: 12px;
+    }
+    .pilar-desc { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.45); margin-bottom: 24px; }
+    .pilar-efficacy-label {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.12em; color: rgba(255,255,255,0.25); text-transform: uppercase;
+      margin-bottom: 8px; display: flex; justify-content: space-between;
+    }
+    .pilar-efficacy-label span { color: var(--accent); font-size: 12px; }
+    .efficacy-bar-track {
+      width: 100%; height: 3px; background: rgba(255,255,255,0.06);
+      border-radius: 2px; overflow: hidden;
+    }
+    .efficacy-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--red), var(--accent));
+      border-radius: 2px; width: 0%;
+      transition: width 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .pilar-footnote {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.08em; color: rgba(255,255,255,0.15); margin-top: 12px;
+    }
+
+    /* ============================================================
+       SECTION 3 — COMPARATIVA
+    ============================================================ */
+    #comparativa { background: var(--bg); padding: 120px 0; }
+
+    .comparison-table-wrap { overflow-x: auto; margin-top: 60px; }
+    .comparison-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+    .comparison-table thead tr { border-bottom: 2px solid rgba(255,255,255,0.08); }
+    .comparison-table th {
+      padding: 16px 24px; text-align: left;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); font-weight: 500;
+    }
+    .comparison-table th.col-wellcore {
+      color: var(--white); background: rgba(227,30,36,0.06);
+      border-top: 2px solid var(--red);
+      border-left: 1px solid rgba(227,30,36,0.2);
+      border-right: 1px solid rgba(227,30,36,0.2);
+    }
+    .comparison-table td {
+      padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 14px; color: rgba(255,255,255,0.5); vertical-align: middle;
+    }
+    .comparison-table td.col-feature {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.06em; color: rgba(255,255,255,0.45);
+    }
+    .comparison-table td.col-wellcore {
+      background: rgba(227,30,36,0.04);
+      border-left: 1px solid rgba(227,30,36,0.12);
+      border-right: 1px solid rgba(227,30,36,0.12);
+    }
+    .comparison-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+    .comparison-table tbody tr:hover td.col-wellcore { background: rgba(227,30,36,0.07); }
+    .check-yes { color: var(--accent); font-size: 14px; font-weight: 700; }
+    .check-no { color: rgba(255,255,255,0.2); font-size: 14px; }
+    .check-partial { color: rgba(255,200,50,0.7); font-size: 14px; }
+    .table-header-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: #fff;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 0; margin-left: 8px; vertical-align: middle;
+    }
+    .comparativa-note {
+      margin-top: 24px; font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.2);
+    }
+
+    /* ============================================================
+       SECTION 4 — EVIDENCIA
+    ============================================================ */
+    #evidencia {
+      background: var(--surface); padding: 120px 0; position: relative; overflow: hidden;
+    }
+    #evidencia::before {
+      content: ''; position: absolute; top: -200px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(227,30,36,0.07) 0%, transparent 70%);
+      z-index: 0;
+    }
+    #evidencia .container-wc { position: relative; z-index: 1; }
+
+    .evidence-header {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: end; margin-bottom: 72px;
+    }
+    .evidence-header-right { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.5); }
+
+    .cases-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.06);
+    }
+    .case-card {
+      background: var(--surface); padding: 40px 36px; transition: background 0.1s linear;
+    }
+    .case-card:hover { background: var(--surface-2); }
+    .case-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(227,30,36,0.12); border: 1px solid rgba(227,30,36,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: 24px; color: var(--red);
+      margin-bottom: 20px; flex-shrink: 0;
+    }
+    .case-header-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .case-name { font-family: var(--font-head); font-size: 22px; color: var(--white); letter-spacing: 0.04em; }
+    .case-plan-tag {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red);
+      border: 1px solid rgba(227,30,36,0.3); padding: 3px 8px; border-radius: 0;
+    }
+    .case-metrics {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.06); margin-bottom: 24px;
+    }
+    .case-metric-cell { background: rgba(0,0,0,0.3); padding: 14px 16px; text-align: center; }
+    .case-metric-val {
+      font-family: var(--font-head); font-size: 28px;
+      color: var(--accent); display: block; line-height: 1;
+    }
+    .case-metric-lbl {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.25);
+      text-transform: uppercase; margin-top: 4px;
+    }
+    .case-quote {
+      font-family: var(--font-body); font-style: italic;
+      font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.5);
+      border-left: 2px solid rgba(227,30,36,0.3); padding-left: 16px;
+    }
+    .case-timeline {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.2);
+      text-transform: uppercase; margin-top: 16px;
+    }
+
+    /* ============================================================
+       SECTION 5 — FAQ
+    ============================================================ */
+    #faq-metodo { background: var(--bg); padding: 120px 0; }
+
+    .faq-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+    .faq-sidebar-title { font-family: var(--font-head); font-size: 48px; line-height: 0.95; color: var(--white); }
+    .faq-sidebar-desc { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.4); margin-top: 20px; }
+    .faq-sidebar-cta-note {
+      margin-top: 36px; padding: 20px;
+      border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);
+    }
+    .faq-sidebar-cta-note p {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.3);
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .faq-sidebar-cta-note a {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.08em; color: var(--red); text-decoration: none;
+      display: flex; align-items: center; gap: 8px; transition: gap 0.1s linear;
+    }
+    .faq-sidebar-cta-note a:hover { gap: 14px; }
+
+    .faq-list { list-style: none; }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .faq-item:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+    .faq-question {
+      width: 100%; background: none; border: none; color: var(--white);
+      text-align: left; padding: 24px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; gap: 20px; transition: color 0.1s linear;
+    }
+    .faq-question:hover { color: rgba(255,255,255,0.8); }
+    .faq-q-text { font-family: var(--font-body); font-size: 15px; font-weight: 600; line-height: 1.4; }
+    .faq-q-num { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--red); flex-shrink: 0; }
+    .faq-q-left { display: flex; align-items: center; gap: 16px; }
+    .faq-toggle-icon {
+      width: 28px; height: 28px;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.4); font-size: 12px; flex-shrink: 0;
+      transition: all 0.1s linear;
+    }
+    .faq-question.active .faq-toggle-icon {
+      background: var(--red); border-color: var(--red);
+      color: #fff; transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), padding 0.3s;
+    }
+    .faq-answer.open { max-height: 600px; }
+    .faq-answer-inner { padding-bottom: 28px; padding-left: 42px; }
+    .faq-answer-inner p { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.5); }
+    .faq-answer-inner strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    /* ============================================================
+       CTA FINAL
+    ============================================================ */
+    #cta-final {
+      background: var(--bg); padding: 160px 0; position: relative; overflow: hidden;
+    }
+    #cta-final::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px; z-index: 0;
+    }
+    #cta-final::after {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(227,30,36,0.10) 0%, transparent 70%);
+      z-index: 0;
+    }
+    .cta-inner { position: relative; z-index: 1; text-align: center; max-width: 760px; margin: 0 auto; }
+    .cta-eyebrow {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 24px;
+    }
+    .cta-title {
+      font-family: var(--font-head); font-size: clamp(56px, 9vw, 100px);
+      line-height: 0.9; color: var(--white); margin-bottom: 32px;
+    }
+    .cta-title span { color: var(--red); }
+    .cta-desc {
+      font-size: 17px; color: rgba(255,255,255,0.45);
+      line-height: 1.75; margin-bottom: 52px; font-weight: 300;
+    }
+    .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-primary-red {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--red); color: #fff;
+      font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 16px 32px; text-decoration: none; border-radius: 0;
+      transition: all 0.1s linear; font-weight: 600; border: 4px solid var(--red);
+    }
+    .btn-primary-red:hover {
+      background: var(--red-dark); border-color: var(--red-dark);
+    }
+    .btn-secondary-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: rgba(255,255,255,0.7);
+      font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 16px 32px; text-decoration: none; border-radius: 0;
+      border: 4px solid rgba(255,255,255,0.12); transition: all 0.1s linear; font-weight: 500;
+    }
+    .btn-secondary-outline:hover {
+      border-color: rgba(255,255,255,0.3); color: #fff;
+    }
+    .cta-trust-row { display: flex; justify-content: center; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
+    .cta-trust-item {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.2); text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cta-trust-item i { color: var(--accent); font-size: 10px; }
+
+    /* ============================================================
+       SCROLL PROGRESS BAR
+    ============================================================ */
+    #scroll-progress {
+      position: fixed; top: 72px; left: 0; height: 2px;
+      width: 0%; background: var(--red); z-index: 999; transition: width 0.1s linear;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      background: var(--surface); border-top: 1px solid rgba(255,255,255,0.06); padding: 64px 0 40px;
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 280px 1fr; gap: 60px; margin-bottom: 48px;
+    }
+    .footer-brand-name { font-family: var(--font-head); font-size: 26px; letter-spacing: 0.08em; color: var(--white); margin-bottom: 12px; }
+    .footer-brand-sub { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,0.2); text-transform: uppercase; margin-bottom: 20px; }
+    .footer-tagline { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.3); }
+    .footer-nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .footer-nav-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+    .footer-nav-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-nav-links a { font-size: 14px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.1s linear; }
+    .footer-nav-links a:hover { color: var(--white); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06); padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .footer-copy { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.2); }
+    .footer-legal-links { display: flex; gap: 24px; }
+    .footer-legal-links a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.1s linear; }
+    .footer-legal-links a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 991px) {
+      .fallan-layout { grid-template-columns: 1fr; gap: 60px; }
+      .pilares-row-1, .pilares-row-2 { grid-template-columns: 1fr 1fr; }
+      .evidence-header { grid-template-columns: 1fr; gap: 32px; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .faq-layout { grid-template-columns: 1fr; gap: 48px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer-nav-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .container-wc { padding: 0 20px; }
+      .nav-inner { padding: 0 20px; }
+      .pilares-row-1, .pilares-row-2 { grid-template-columns: 1fr; }
+      .secondary-stats { grid-template-columns: 1fr 1fr; }
+      .footer-nav-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; align-items: flex-start; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .pilares-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ============================================================
+       RESPONSIVE MOBILE — CORRECCIONES ADICIONALES
+    ============================================================ */
+
+    /* --- Hover effect navbar desktop --- */
+    .nav-links a {
+      transition: color 0.1s linear;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 100%;
+      height: 1px;
+      background: #E31E24;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      transition: transform 0.1s linear;
+    }
+    .nav-links a:hover {
+      color: #fff;
+    }
+    .nav-links a:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    @media (max-width: 768px) {
+      /* Hero padding reducido */
+      #hero { min-height: 80vh; }
+      .h1-massive { font-size: clamp(56px, 14vw, 80px); }
+      .hero-lead { font-size: 16px; }
+      .hero-subtitle { font-size: 14px; }
+
+      /* Secciones con padding excesivo */
+      #fallan, #pilares, #comparativa, #evidencia, #faq-metodo {
+        padding: 80px 0;
+      }
+      #cta-final { padding: 100px 0; }
+
+      /* Footer inner */
+      .footer-inner { grid-template-columns: 1fr; gap: 40px; }
+
+      /* Cases grid: 1 columna */
+      .cases-grid { grid-template-columns: 1fr; }
+
+      /* Case metrics en mobile */
+      .case-metrics { grid-template-columns: repeat(3, 1fr); }
+
+      /* Stat pills full-width en mobile */
+      .stat-pill { width: 100%; }
+
+      /* CTA buttons full width */
+      .btn-primary-red, .btn-secondary-outline {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* FAQ layout ya es 1 col desde 991px */
+    }
+
+    @media (max-width: 576px) {
+      body { font-size: 17px; line-height: 1.75; }
+    }
+
+    @media (max-width: 480px) {
+      .container-wc { padding: 0 16px; }
+      .nav-inner { padding: 0 16px; }
+
+      /* Hero */
+      .h1-massive { font-size: clamp(48px, 13vw, 64px); }
+      #hero > .container-wc { padding-top: 80px !important; padding-bottom: 80px !important; }
+
+      /* Pilares */
+      .pilar-card { padding: 24px 20px; }
+
+      /* Secondary stats */
+      .secondary-stats { grid-template-columns: 1fr 1fr; }
+      .secondary-stat-cell .val { font-size: 32px; }
+
+      /* Stat giant */
+      .stat-giant { font-size: clamp(60px, 18vw, 90px); }
+
+      /* FAQ */
+      .faq-answer-inner { padding-left: 0; }
+
+      /* Sections padding */
+      #fallan, #pilares, #comparativa, #evidencia, #faq-metodo {
+        padding: 60px 0;
+      }
+      #cta-final { padding: 80px 0; }
+
+      /* Footer nav */
+      .footer-nav-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+
+  <div id="scroll-progress"></div>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:40px;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+        <span style="display:none;font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:#fff;">WELLCORE</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="metodo.html" style="color:var(--white)">Metodo</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="proceso.html">Proceso</a></li>
+        <li><a href="planes.html">Planes</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="blog/">Blog</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="coaches.html" style="color:rgba(227,30,36,0.7);position:relative;">Coaches<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
+      </ul>
+      <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+      <a href="pagar.html" class="nav-cta">Empezar &rarr;</a>
+      <button class="nav-hamburger" id="navToggle" aria-label="Abrir menu">
+        <span class="icon-bars">&#9776;</span>
+        <span class="icon-close">&#10005;</span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="navMobileMenu">
+    <ul>
+      <li><a href="metodo.html" class="nav-mobile-link" style="color:#fff;">Metodo</a></li>
+      <li><a href="nosotros.html" class="nav-mobile-link">Nosotros</a></li>
+      <li><a href="proceso.html" class="nav-mobile-link">Proceso</a></li>
+      <li><a href="planes.html" class="nav-mobile-link">Planes</a></li>
+      <li><a href="tienda.html" class="nav-mobile-link">Tienda</a></li>
+      <li><a href="blog/" class="nav-mobile-link">Blog</a></li>
+      <li><a href="faq.html" class="nav-mobile-link">FAQ</a></li>
+      <li><a href="coaches.html" class="nav-mobile-link" style="color:#E31E24;">Coaches</a></li>
+      <li><a href="login.html" class="nav-mobile-link" style="color:#fff;background:var(--red);padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;">MI CUENTA</a></li>
+    </ul>
+    <a href="pagar.html" class="nav-mobile-cta">Empezar &rarr;</a>
+  </div>
+
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero" class="v5-grid-bg" style="position:relative;" data-v5-reveal>
+    <div class="container-wc hero-inner" style="padding-top:120px;padding-bottom:120px;">
+      <div class="hero-content">
+
+        <div class="hero-code-tag" data-aos="fade-up" data-aos-duration="600">
+          PROTOCOLO DE ENTRENAMIENTO BASADO EN EVIDENCIA
+        </div>
+
+        <h1 class="h1-massive" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80">
+          EL<br>METODO.
+        </h1>
+
+        <p class="hero-subtitle" data-aos="fade-up" data-aos-duration="600" data-aos-delay="160">
+          No seguimos modas. Seguimos la ciencia.
+        </p>
+
+        <div class="hero-divider" data-aos="fade-right" data-aos-duration="600" data-aos-delay="240"></div>
+
+        <p class="hero-lead" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+          WellCore no es una app de rutinas ni un plan de 30 dias. Es un protocolo cientifico, personalizado al 100%, con seguimiento real de coach. Cada variable de tu entrenamiento existe por una razon demostrada.
+        </p>
+
+        <div class="hero-stats" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+          <div class="stat-pill" data-aos="fade-up" data-aos-delay="0">
+            <div class="stat-pill-dot"></div>
+            <span class="stat-pill-val">87%</span>
+            <span>adherencia promedio</span>
+          </div>
+          <div class="stat-pill" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-pill-dot"></div>
+            <span class="stat-pill-val">12 sem</span>
+            <span>promedio hasta resultados visibles</span>
+          </div>
+          <div class="stat-pill" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-pill-dot"></div>
+            <span class="stat-pill-val">1:1</span>
+            <span>atencion real, sin bots</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <span>Desplazar</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+
+  <!-- PROTOCOL STRIP -->
+  <div class="protocol-strip">
+    <div style="overflow:hidden;">
+      <div class="protocol-strip-inner">
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Sobrecarga Progresiva</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Periodizacion Inteligente</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Nutricion de Precision</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Recuperacion Optimizada</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Adherencia Conductual</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Diagnostico Funcional</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Coaching 1 a 1</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Ajuste Continuo</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Sobrecarga Progresiva</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Periodizacion Inteligente</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Nutricion de Precision</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Recuperacion Optimizada</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Adherencia Conductual</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Diagnostico Funcional</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Coaching 1 a 1</div>
+        <div class="protocol-badge"><div class="protocol-badge-dot"></div> Ajuste Continuo</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 1 — POR QUE FALLAN
+  ============================================================ -->
+  <section id="fallan" data-v5-reveal>
+    <div class="section-rule"></div>
+    <div class="container-wc" style="padding-top:120px;padding-bottom:120px;">
+
+      <div class="section-tag" data-aos="fade-up">
+        <span class="tag-num">01</span>
+        El Problema
+      </div>
+
+      <div class="fallan-layout">
+
+        <div>
+          <div class="eyebrow" data-aos="fade-up">// Diagnostico inicial</div>
+          <h2 class="h2-big" data-aos="fade-up" data-aos-delay="60">
+            POR QUE<br>FALLAN<br>LA<br>MAYORIA.
+          </h2>
+          <p class="body-lg" style="margin-top:28px;" data-aos="fade-up" data-aos-delay="120">
+            El 80% de las personas que comienzan un programa de ejercicio lo abandonan antes de los 3 meses. No es falta de voluntad. Es falta de estructura cientifica.
+          </p>
+
+          <ul class="failure-list" data-aos="fade-up" data-aos-delay="180">
+
+            <li class="failure-item" data-aos="fade-up" data-aos-delay="0">
+              <div class="failure-num">01 —</div>
+              <div>
+                <div class="failure-title">Sin diagnostico real, solo solucion generica</div>
+                <div class="failure-desc">
+                  La mayoria de los programas asumen que todos los cuerpos responden igual. Ignoran historial, biotipo, capacidades funcionales y objetivos individuales. El resultado: un plan que no fue disenado para ti nunca puede llevarte a donde quieres llegar.
+                </div>
+                <div class="failure-solution">WellCore: diagnostico funcional completo en la semana 1</div>
+              </div>
+            </li>
+
+            <li class="failure-item" data-aos="fade-up" data-aos-delay="100">
+              <div class="failure-num">02 —</div>
+              <div>
+                <div class="failure-title">Sin seguimiento, sin ajustes en tiempo real</div>
+                <div class="failure-desc">
+                  Un plan de 12 semanas creado en el dia 1 ya esta desactualizado en la semana 4. El cuerpo adapta. Las variables cambian. Sin un sistema de retroalimentacion activa, el programa se vuelve obsoleto antes de que veas resultados.
+                </div>
+                <div class="failure-solution">WellCore: revision semanal y ajuste de variables cada ciclo</div>
+              </div>
+            </li>
+
+            <li class="failure-item" data-aos="fade-up" data-aos-delay="200">
+              <div class="failure-num">03 —</div>
+              <div>
+                <div class="failure-title">Sin educacion, sin autonomia a largo plazo</div>
+                <div class="failure-desc">
+                  Los programas que no educan crean dependencia. Cuando el plan termina, el cliente no sabe que hacer. WellCore construye comprension: por que entrenas lo que entrenas, por que comes lo que comes, como tu cuerpo responde.
+                </div>
+                <div class="failure-solution">WellCore: educacion continua integrada al protocolo</div>
+              </div>
+            </li>
+
+          </ul>
+
+          <div class="source-tag" data-aos="fade-up" data-aos-delay="200">
+            Fuente: NSCA Journal of Strength and Conditioning Research, 2024 — American College of Sports Medicine, 2023
+          </div>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="100">
+
+          <span class="stat-giant">8/10</span>
+          <div class="stat-giant-label">programas fracasan antes de los 90 dias</div>
+
+          <div class="secondary-stats">
+            <div class="secondary-stat-cell" data-aos="fade-up" data-aos-delay="0">
+              <span class="val" style="color:var(--red)">67%</span>
+              <span class="lbl">Abandono semanas 1-4</span>
+            </div>
+            <div class="secondary-stat-cell" data-aos="fade-up" data-aos-delay="100">
+              <span class="val" style="color:var(--red)">54%</span>
+              <span class="lbl">Sin objetivo claro</span>
+            </div>
+            <div class="secondary-stat-cell" data-aos="fade-up" data-aos-delay="0">
+              <span class="val" style="color:var(--accent)">87%</span>
+              <span class="lbl">Adherencia WellCore</span>
+            </div>
+            <div class="secondary-stat-cell" data-aos="fade-up" data-aos-delay="100">
+              <span class="val" style="color:var(--accent)">3.2x</span>
+              <span class="lbl">Mas resultados con coaching</span>
+            </div>
+          </div>
+
+          <div style="margin-top:40px;padding:28px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);">
+            <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:16px;">// Dato de referencia</div>
+            <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.45);">
+              Segun un meta-analisis de 23 estudios publicados en el <em>Journal of Sport Psychology</em> (2023), los programas con supervision individualizada tienen una tasa de completacion <strong style="color:rgba(255,255,255,0.8);">3.2 veces mayor</strong> que los programas autodidactas.
+            </p>
+          </div>
+
+          <div style="margin-top:24px;padding:28px;border:1px solid rgba(0,217,255,0.15);background:rgba(0,217,255,0.04);">
+            <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;">// Diferencia WellCore</div>
+            <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.45);">
+              De los clientes activos de WellCore en los ultimos 18 meses, el <strong style="color:var(--accent);">87%</strong> completaron su protocolo completo y el <strong style="color:var(--accent);">71%</strong> renovaron para un segundo ciclo. La diferencia: diagnostico real, coaching real, ajuste continuo.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 2 — LOS 5 PILARES
+  ============================================================ -->
+  <section id="pilares" data-v5-reveal>
+    <div class="container-wc" style="padding-top:120px;padding-bottom:120px;">
+
+      <div class="section-tag" data-aos="fade-up">
+        <span class="tag-num">02</span>
+        La Estructura
+      </div>
+
+      <div class="pilares-header" data-aos="fade-up" data-aos-delay="60">
+        <div>
+          <div class="eyebrow">// Arquitectura del Protocolo</div>
+          <h2 class="h2-big">LOS 5<br>PILARES.</h2>
+        </div>
+        <div class="pilares-header-note">
+          Cada pilar esta respaldado por literatura cientifica peer-reviewed. No son conceptos de marketing. Son los fundamentos del cambio fisiologico real.
+        </div>
+      </div>
+
+      <div class="pilares-row-1" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="pilar-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="pilar-number">PILAR // 01</div>
+          <div class="pilar-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+          <div class="pilar-name">PROGRESION POR SOBRECARGA</div>
+          <p class="pilar-desc">
+            El unico estimulo que fuerza al musculo a adaptarse es la sobrecarga progresiva. No el dolor, no el sudor. Cada sesion de WellCore tiene variables de carga, volumen y densidad calculadas para mantener el estimulo sin sobrepasar la capacidad de recuperacion. Aplicamos modelos de progresion lineal, ondulada y por bloques segun el nivel y fase del atleta.
+          </p>
+          <div class="pilar-efficacy-label">
+            <span>Efectividad documentada</span>
+            <span>94%</span>
+          </div>
+          <div class="efficacy-bar-track">
+            <div class="efficacy-bar-fill" data-width="94"></div>
+          </div>
+          <div class="pilar-footnote">Fuente: Schoenfeld et al., Journal of Strength and Conditioning Research, 2022</div>
+        </div>
+
+        <div class="pilar-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="pilar-number">PILAR // 02</div>
+          <div class="pilar-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+          <div class="pilar-name">PERIODIZACION INTELIGENTE</div>
+          <p class="pilar-desc">
+            Un programa sin periodizacion es un programa estancado. Dividimos el entrenamiento en macrociclos, mesociclos y microciclos con objetivos especificos: acumulacion de volumen, intensificacion, descarga y pico de rendimiento. Esto previene el sobreentrenamiento, maximiza las adaptaciones y mantiene la motivacion alta durante todo el proceso.
+          </p>
+          <div class="pilar-efficacy-label">
+            <span>Efectividad documentada</span>
+            <span>91%</span>
+          </div>
+          <div class="efficacy-bar-track">
+            <div class="efficacy-bar-fill" data-width="91"></div>
+          </div>
+          <div class="pilar-footnote">Fuente: Issurin V.B., Sports Medicine, 2010 — replicado 2023</div>
+        </div>
+
+      </div>
+
+      <div class="pilares-row-2" style="margin-top:1px;" data-aos="fade-up" data-aos-delay="160">
+
+        <div class="pilar-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="pilar-number">PILAR // 03</div>
+          <div class="pilar-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+          <div class="pilar-name">NUTRICION DE PRECISION</div>
+          <p class="pilar-desc">
+            No damos dietas. Calculamos requerimientos energeticos reales basados en TDEE individualizado, distribucion de macronutrientes segun objetivo y fase, y timming nutricional estrategico. Tu plan nutricional se ajusta junto con tu entrenamiento en cada revision.
+          </p>
+          <div class="pilar-efficacy-label">
+            <span>Efectividad documentada</span>
+            <span>88%</span>
+          </div>
+          <div class="efficacy-bar-track">
+            <div class="efficacy-bar-fill" data-width="88"></div>
+          </div>
+          <div class="pilar-footnote">Fuente: ISSN Position Stand, 2023</div>
+        </div>
+
+        <div class="pilar-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="pilar-number">PILAR // 04</div>
+          <div class="pilar-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+          <div class="pilar-name">RECUPERACION OPTIMIZADA</div>
+          <p class="pilar-desc">
+            El crecimiento ocurre fuera del gym. Protocolo de sueno, gestion del estres, trabajo de movilidad y tecnicas de recuperacion activa son variables del plan, no sugerencias opcionales. Monitoreamos percepcion de fatiga para ajustar la carga en tiempo real.
+          </p>
+          <div class="pilar-efficacy-label">
+            <span>Efectividad documentada</span>
+            <span>85%</span>
+          </div>
+          <div class="efficacy-bar-track">
+            <div class="efficacy-bar-fill" data-width="85"></div>
+          </div>
+          <div class="pilar-footnote">Fuente: Meeusen et al., Medicine and Science in Sports, 2022</div>
+        </div>
+
+        <div class="pilar-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="pilar-number">PILAR // 05</div>
+          <div class="pilar-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+          <div class="pilar-name">ADHERENCIA CONDUCTUAL</div>
+          <p class="pilar-desc">
+            La mejor programacion del mundo es inutil si no se ejecuta. WellCore incorpora principios de psicologia del comportamiento: establecimiento de metas SMART, sistemas de habito, manejo de barreras anticipadas y check-ins de accountability. La adherencia no es un accidente, es un protocolo.
+          </p>
+          <div class="pilar-efficacy-label">
+            <span>Efectividad documentada</span>
+            <span>79%</span>
+          </div>
+          <div class="efficacy-bar-track">
+            <div class="efficacy-bar-fill" data-width="79"></div>
+          </div>
+          <div class="pilar-footnote">Fuente: Michie et al., Implementation Science, 2023</div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:32px;padding:20px 28px;border:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.3);display:flex;align-items:center;gap:16px;" data-aos="fade-up" data-aos-delay="200">
+        <span style="color:#00D9FF;font-weight:700;font-size:16px;flex-shrink:0;">//</span>
+        <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.09em;color:rgba(255,255,255,0.25);line-height:1.6;">
+          Los porcentajes de efectividad representan tasas de resultado positivo documentadas en protocolos de coaching que incluyen cada pilar de forma aislada, segun revision de literatura 2022-2024. WellCore aplica todos los pilares de forma integrada, potenciando el efecto combinado.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 3 — COMPARATIVA
+  ============================================================ -->
+  <section id="comparativa" data-v5-reveal>
+    <div class="section-rule"></div>
+    <div class="container-wc" style="padding-top:120px;padding-bottom:120px;">
+
+      <div class="section-tag" data-aos="fade-up">
+        <span class="tag-num">03</span>
+        La Diferencia
+      </div>
+
+      <div class="eyebrow" data-aos="fade-up">// Analisis comparativo</div>
+      <h2 class="h2-big" data-aos="fade-up" data-aos-delay="60">
+        WELLCORE<br>VS EL RESTO.
+      </h2>
+      <p class="body-lg" style="max-width:580px;margin-top:20px;" data-aos="fade-up" data-aos-delay="100">
+        No todas las opciones de entrenamiento son iguales. La siguiente tabla es una evaluacion objetiva de lo que ofrece cada formato en los factores que realmente determinan si un programa funciona.
+      </p>
+
+      <div class="comparison-table-wrap" data-aos="fade-up" data-aos-delay="140">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th style="width:34%;">Caracteristica</th>
+              <th style="width:18%;text-align:center;">App Generica</th>
+              <th style="width:18%;text-align:center;">PT de Gym</th>
+              <th style="width:18%;text-align:center;" class="col-wellcore">
+                WellCore
+                <span class="table-header-badge">Recomendado</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-feature">Diagnostico funcional inicial</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Plan 100% personalizado</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Periodizacion cientifica</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Nutricion integrada al plan</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Revision y ajuste semanal</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Acceso al coach sin costo extra</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Protocolo de recuperacion</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Adaptable sin equipo y en viajes</td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Educacion y autonomia progresiva</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Soporte para lesiones o condiciones</td>
+              <td style="text-align:center;"><span class="check-no">&mdash;</span></td>
+              <td style="text-align:center;"><span class="check-partial">~</span></td>
+              <td style="text-align:center;" class="col-wellcore"><span class="check-yes">&#10003;</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="comparativa-note" data-aos="fade-up" data-aos-delay="60">
+        <span style="color:#00D9FF;margin-right:6px;font-weight:700;">&#10003;</span> Incluido sistematicamente
+        &nbsp;&nbsp;
+        <span style="color:rgba(255,200,50,0.7);margin-right:6px;font-weight:700;">~</span> Depende del profesional
+        &nbsp;&nbsp;
+        <span style="color:rgba(255,255,255,0.2);margin-right:6px;font-weight:700;">&mdash;</span> No incluido
+        &nbsp;&nbsp;—&nbsp;&nbsp;
+        Evaluacion interna WellCore, 2025.
+      </div>
+
+    </div>
+    <div class="section-rule"></div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 4 — LA EVIDENCIA HABLA
+  ============================================================ -->
+  <section id="evidencia" data-v5-reveal>
+    <div class="container-wc" style="padding-top:120px;padding-bottom:120px;">
+
+      <div class="section-tag" data-aos="fade-up">
+        <span class="tag-num">04</span>
+        Los Resultados
+      </div>
+
+      <div class="evidence-header">
+        <div>
+          <div class="eyebrow" data-aos="fade-up">// Casos documentados</div>
+          <h2 class="h2-big" data-aos="fade-up" data-aos-delay="60">
+            LA<br>EVIDENCIA<br>HABLA.
+          </h2>
+        </div>
+        <div class="evidence-header-right" data-aos="fade-up" data-aos-delay="100">
+          Estos no son transformaciones milagrosas de 21 dias. Son resultados reales de personas reales que siguieron el protocolo completo. Nombres usados con permiso. Datos auditados internamente.
+          <div style="margin-top:24px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.2);text-transform:uppercase;">
+            Periodo analizado: 2023 — 2025 &nbsp;|&nbsp; N = 47 clientes
+          </div>
+        </div>
+      </div>
+
+      <div style="width:100%;margin-bottom:48px;border-radius:0;overflow:hidden;max-height:340px;" data-aos="fade-up" data-aos-delay="110">
+        <img src="images/fotos/metodo-02.jpg" alt="Entrenamiento WellCore — Metodo cientifico" style="width:100%;height:340px;object-fit:cover;object-position:center;display:block;opacity:0.85;" />
+      </div>
+
+      <div class="cases-grid" data-aos="fade-up" data-aos-delay="120">
+
+        <div class="case-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="case-header-row">
+            <div class="case-avatar">C</div>
+            <div>
+              <div class="case-name">CARLOS M.</div>
+              <div class="case-plan-tag">Plan Performance</div>
+            </div>
+          </div>
+          <div class="case-metrics">
+            <div class="case-metric-cell">
+              <span class="case-metric-val">16</span>
+              <span class="case-metric-lbl">Semanas</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">-11kg</span>
+              <span class="case-metric-lbl">Masa grasa</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">+8kg</span>
+              <span class="case-metric-lbl">Masa muscular</span>
+            </div>
+          </div>
+          <blockquote class="case-quote">
+            "Lleve 4 anos intentando ganar masa muscular perdiendo grasa al mismo tiempo y nunca lo habia logrado. El diagnostico inicial de WellCore cambio completamente el enfoque que yo tenia. Por primera vez entendia el porque de cada decision del plan."
+          </blockquote>
+          <div class="case-timeline">
+            Inicio: Jun 2024 &nbsp;|&nbsp; Plan: 16 semanas &nbsp;|&nbsp; Grasa corporal: 28% a 19%
+          </div>
+        </div>
+
+        <div class="case-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="case-header-row">
+            <div class="case-avatar" style="background:rgba(0,217,255,0.08);border-color:rgba(0,217,255,0.2);color:var(--accent);">S</div>
+            <div>
+              <div class="case-name">SOFIA R.</div>
+              <div class="case-plan-tag">Plan Definicion</div>
+            </div>
+          </div>
+          <div class="case-metrics">
+            <div class="case-metric-cell">
+              <span class="case-metric-val">12</span>
+              <span class="case-metric-lbl">Semanas</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">-7.5kg</span>
+              <span class="case-metric-lbl">Peso total</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">-6.4%</span>
+              <span class="case-metric-lbl">Grasa corporal</span>
+            </div>
+          </div>
+          <blockquote class="case-quote">
+            "Despues de dos embarazos no encontraba un programa que se adaptara a mis limitaciones de tiempo ni a mi cuerpo postparto. WellCore diseno todo desde cero para mi situacion especifica. El seguimiento semanal fue clave para no perder el hilo."
+          </blockquote>
+          <div class="case-timeline">
+            Inicio: Ene 2025 &nbsp;|&nbsp; Plan: 12 semanas &nbsp;|&nbsp; Entreno: 4 dias/semana en casa
+          </div>
+        </div>
+
+        <div class="case-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="case-header-row">
+            <div class="case-avatar">M</div>
+            <div>
+              <div class="case-name">MIGUEL A.</div>
+              <div class="case-plan-tag">Plan Fuerza</div>
+            </div>
+          </div>
+          <div class="case-metrics">
+            <div class="case-metric-cell">
+              <span class="case-metric-val">24</span>
+              <span class="case-metric-lbl">Semanas</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">+42kg</span>
+              <span class="case-metric-lbl">En sentadilla</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">+35kg</span>
+              <span class="case-metric-lbl">En peso muerto</span>
+            </div>
+          </div>
+          <blockquote class="case-quote">
+            "Tenia una lesion de rodilla que me habia frenado por dos anos. Ningun PT habia sabido manejar la situacion sin empeorarla. El equipo de WellCore entendio la lesion, adapto cada ejercicio y me llevo a mis mejores marcas de fuerza."
+          </blockquote>
+          <div class="case-timeline">
+            Inicio: Mar 2024 &nbsp;|&nbsp; Plan: 24 semanas &nbsp;|&nbsp; Lesion previa: condromalacia rotuliana
+          </div>
+        </div>
+
+        <div class="case-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="case-header-row">
+            <div class="case-avatar" style="background:rgba(0,217,255,0.08);border-color:rgba(0,217,255,0.2);color:var(--accent);">A</div>
+            <div>
+              <div class="case-name">ANA L.</div>
+              <div class="case-plan-tag">Plan Integral</div>
+            </div>
+          </div>
+          <div class="case-metrics">
+            <div class="case-metric-cell">
+              <span class="case-metric-val">20</span>
+              <span class="case-metric-lbl">Semanas</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">-9.2kg</span>
+              <span class="case-metric-lbl">Masa grasa</span>
+            </div>
+            <div class="case-metric-cell">
+              <span class="case-metric-val">-12cm</span>
+              <span class="case-metric-lbl">Perimetro cintura</span>
+            </div>
+          </div>
+          <blockquote class="case-quote">
+            "Soy vegana y tenia dudas de que un programa de este nivel pudiera funcionar sin proteina animal. WellCore no solo funciono, sino que me enseno a optimizar la nutricion vegana para musculacion de forma que ningun otro coach habia podido explicarme."
+          </blockquote>
+          <div class="case-timeline">
+            Inicio: Sep 2024 &nbsp;|&nbsp; Plan: 20 semanas &nbsp;|&nbsp; Dieta: 100% plant-based
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:32px;display:flex;align-items:flex-start;gap:16px;padding:24px;border:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.2);" data-aos="fade-up" data-aos-delay="60">
+        <span style="color:#00D9FF;font-weight:700;margin-top:2px;flex-shrink:0;">//</span>
+        <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:rgba(255,255,255,0.2);line-height:1.7;">
+          Los resultados varian segun individuo, adherencia al protocolo, genetica y condiciones de partida. Los casos presentados corresponden a clientes reales con seguimiento completo. No representan resultados tipicos garantizados. WellCore no promete resultados especificos sin antes completar el diagnostico inicial.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 5 — FAQ DEL METODO
+  ============================================================ -->
+  <section id="faq-metodo" data-v5-reveal>
+    <div class="section-rule"></div>
+    <div class="container-wc" style="padding-top:120px;padding-bottom:120px;">
+
+      <div class="section-tag" data-aos="fade-up">
+        <span class="tag-num">05</span>
+        Preguntas Frecuentes
+      </div>
+
+      <div class="faq-layout">
+
+        <div data-aos="fade-up" data-aos-delay="60">
+          <div class="eyebrow">// Sobre el metodo</div>
+          <h2 class="faq-sidebar-title">PREGUNTAS<br>SOBRE EL<br>METODO.</h2>
+          <p class="faq-sidebar-desc">
+            Estas son las dudas mas frecuentes de quienes estan evaluando si WellCore es para ellos. Si tu pregunta no esta aqui, puedes hablar directamente con un coach.
+          </p>
+          <div class="faq-sidebar-cta-note">
+            <p>// Consulta directa</p>
+            <a href="https://wa.me/573124904720">
+              Hablar con un coach ahora
+              &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="100">
+          <ul class="faq-list" id="faqList">
+
+            <li class="faq-item">
+              <button class="faq-question">
+                <div class="faq-q-left">
+                  <span class="faq-q-num">01</span>
+                  <span class="faq-q-text">Cuanto tiempo hasta ver resultados con el Metodo WellCore?</span>
+                </div>
+                <div class="faq-toggle-icon">
+                  <span class="icon-plus">+</span>
+                  <span class="icon-close">+</span>
+                </div>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p>
+                    La respuesta honesta: depende del punto de partida, los objetivos y la adherencia. Dicho eso, la mayoria de los clientes reportan cambios <strong>funcionales y de energia en las primeras 3-4 semanas</strong>. Cambios corporales visibles suelen aparecer entre las <strong>semanas 6 y 10</strong>. Los datos internos muestran que el promedio de tiempo hasta un resultado observable medible es de <strong>12 semanas</strong> con adherencia alta.
+                    <br><br>
+                    Lo que garantizamos no es un resultado especifico en una fecha especifica, sino un protocolo correcto, un ajuste continuo y un coach que no te dejara varado. Si el plan no funciona, lo cambiamos.
+                  </p>
+                </div>
+              </div>
+            </li>
+
+            <li class="faq-item">
+              <button class="faq-question">
+                <div class="faq-q-left">
+                  <span class="faq-q-num">02</span>
+                  <span class="faq-q-text">Necesito equipamiento especial para seguir el Metodo?</span>
+                </div>
+                <div class="faq-toggle-icon">
+                  <span class="icon-plus">+</span>
+                  <span class="icon-close">+</span>
+                </div>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p>
+                    No. WellCore disena el protocolo segun el equipamiento disponible. Tenemos clientes que entrenan en <strong>gym completo, en casa con mancuernas basicas, con solo peso corporal</strong>, y con bandas elasticas. La periodizacion y la sobrecarga progresiva funcionan en todos los contextos; simplemente se expresan de forma diferente.
+                    <br><br>
+                    Durante el diagnostico inicial declaras que equipo tienes disponible y el plan se disena en funcion de eso. Si tu situacion cambia, el coach adapta el plan en la siguiente revision.
+                  </p>
+                </div>
+              </div>
+            </li>
+
+            <li class="faq-item">
+              <button class="faq-question">
+                <div class="faq-q-left">
+                  <span class="faq-q-num">03</span>
+                  <span class="faq-q-text">Que pasa si viajo o tengo semanas complicadas?</span>
+                </div>
+                <div class="faq-toggle-icon">
+                  <span class="icon-plus">+</span>
+                  <span class="icon-close">+</span>
+                </div>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p>
+                    Esto es exactamente donde el Metodo WellCore brilla frente a una app o un plan estatico. La vida real no es lineal. Un viaje de negocios, una semana de trabajo intenso, un evento familiar: todas estas situaciones se gestionan en tiempo real con tu coach.
+                    <br><br>
+                    Cuando avisas con antelacion, el coach te prepara una <strong>version adaptada del plan</strong> para ese periodo. Puede ser un protocolo de hotel, un plan minimo de 20 minutos, o incluso una semana de descarga programada.
+                  </p>
+                </div>
+              </div>
+            </li>
+
+            <li class="faq-item">
+              <button class="faq-question">
+                <div class="faq-q-left">
+                  <span class="faq-q-num">04</span>
+                  <span class="faq-q-text">El Metodo WellCore funciona para personas veganas o vegetarianas?</span>
+                </div>
+                <div class="faq-toggle-icon">
+                  <span class="icon-plus">+</span>
+                  <span class="icon-close">+</span>
+                </div>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p>
+                    Si. El protocolo de nutricion de WellCore es completamente adaptable a cualquier patron alimentario, incluyendo <strong>vegano estricto, vegetariano, pescetariano o cualquier restriccion religiosa o etica</strong>.
+                    <br><br>
+                    El enfoque nutricional se basa en targets de macronutrientes y micronutrientes clave, no en alimentos especificos. Para dietas plant-based, el plan incluye estrategias de complementacion proteica, gestion del hierro no-hemo, vitamina B12, omega-3 y calcio.
+                  </p>
+                </div>
+              </div>
+            </li>
+
+            <li class="faq-item">
+              <button class="faq-question">
+                <div class="faq-q-left">
+                  <span class="faq-q-num">05</span>
+                  <span class="faq-q-text">Puedo seguir el Metodo si tengo lesiones o condiciones medicas?</span>
+                </div>
+                <div class="faq-toggle-icon">
+                  <span class="icon-plus">+</span>
+                  <span class="icon-close">+</span>
+                </div>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p>
+                    En la mayoria de los casos, si. El diagnostico inicial incluye un cuestionario de historial de lesiones y condiciones de salud. Con esa informacion, el coach disena el protocolo respetando las restricciones reales y en muchos casos <strong>usando el entrenamiento como herramienta rehabilitadora</strong>.
+                    <br><br>
+                    Lesiones que hemos gestionado con exito incluyen: condromalacia rotuliana, hernias discales lumbares estables, sindrome de impingement de hombro, tendinitis y lumbalgia cronica. <strong>Para condiciones medicas activas o recientes, siempre recomendamos aval medico previo al inicio del protocolo.</strong>
+                  </p>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <div class="section-rule"></div>
+  </section>
+
+
+  <!-- ============================================================
+       CTA FINAL
+  ============================================================ -->
+  <section id="cta-final" data-v5-reveal>
+    <div class="container-wc">
+      <div class="cta-inner">
+
+        <div class="cta-eyebrow" data-aos="fade-up">// Siguiente paso</div>
+
+        <h2 class="cta-title" data-aos="fade-up" data-aos-delay="60">
+          LISTO PARA<br><span>VERIFICARLO</span><br>TU MISMO?
+        </h2>
+
+        <p class="cta-desc" data-aos="fade-up" data-aos-delay="120">
+          El diagnostico inicial es gratuito. En 20 minutos entiendes exactamente que protocolo necesitas, por que, y cuanto tiempo tomaras en ver resultados reales. Sin compromiso de compra.
+        </p>
+
+        <div class="cta-buttons" data-aos="fade-up" data-aos-delay="180">
+          <a href="planes.html" class="btn-primary-red btn-v5 btn-v5-primary">
+            <div class="btn-bg"></div><span class="btn-text">Ver Planes &rarr;</span>
+          </a>
+          <a href="https://wa.me/573124904720" class="btn-secondary-outline">
+            WA WhatsApp al Coach
+          </a>
+        </div>
+
+        <div class="cta-trust-row" data-aos="fade-up" data-aos-delay="240">
+          <div class="cta-trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Sin contratos largos</div>
+          <div class="cta-trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Diagnostico gratuito</div>
+          <div class="cta-trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Coach real, no bot</div>
+          <div class="cta-trust-item"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> Resultados o ajustamos</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer id="footer">
+    <div class="container-wc">
+
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand-name">WELLCORE FITNESS</div>
+          <div class="footer-brand-sub">// Protocolo de entrenamiento</div>
+          <p class="footer-tagline">
+            No seguimos modas. Seguimos la ciencia. Coaching 1:1 basado en evidencia para personas que quieren resultados reales y duraderos.
+          </p>
+        </div>
+        <div class="footer-nav-grid">
+          <div>
+            <div class="footer-nav-title">El Metodo</div>
+            <ul class="footer-nav-links">
+              <li><a href="metodo.html">Por que funciona</a></li>
+              <li><a href="metodo.html#pilares">Los 5 Pilares</a></li>
+              <li><a href="metodo.html#comparativa">WellCore vs el resto</a></li>
+              <li><a href="metodo.html#evidencia">Resultados</a></li>
+              <li><a href="metodo.html#faq-metodo">FAQ del Metodo</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-nav-title">Programas</div>
+            <ul class="footer-nav-links">
+              <li><a href="planes.html">Ver todos los planes</a></li>
+              <li><a href="proceso.html">El proceso</a></li>
+              <li><a href="coaches.html">Nuestros coaches</a></li>
+              <li><a href="tienda.html">Tienda</a></li>
+              <li><a href="pagar.html">Empezar ahora</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-nav-title">Recursos</div>
+            <ul class="footer-nav-links">
+              <li><a href="nosotros.html">Nosotros</a></li>
+              <li><a href="blog/">Blog cientifico</a></li>
+              <li><a href="faq.html">FAQ general</a></li>
+              <li><a href="login.html">Mi Cuenta</a></li>
+              <li><a href="https://wa.me/573124904720">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          &copy; 2026 WellCore Fitness. Todos los derechos reservados.
+        </div>
+        <div class="footer-legal-links">
+          <a href="legal/privacidad.html">Privacidad</a>
+          <a href="legal/terminos.html">Terminos</a>
+          <a href="legal/cookies.html">Cookies</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // AOS
+    AOS.init({ duration: 700, easing: 'cubic-bezier(0.25, 1, 0.5, 1)', once: true, offset: 60 });
+
+    // Scroll progress bar
+    var progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', function () {
+      var st = window.scrollY || document.documentElement.scrollTop;
+      var dh = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (dh > 0 ? (st / dh) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Navbar mobile toggle — uses CSS class, no DOM mutation needed
+    var navToggle = document.getElementById('navToggle');
+    var navMobileMenu = document.getElementById('navMobileMenu');
+    var menuOpen = false;
+
+    navToggle.addEventListener('click', function () {
+      menuOpen = !menuOpen;
+      navToggle.classList.toggle('is-open', menuOpen);
+      navMobileMenu.style.display = menuOpen ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', function (e) {
+      if (menuOpen && !navMobileMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        menuOpen = false;
+        navToggle.classList.remove('is-open');
+        navMobileMenu.style.display = 'none';
+      }
+    });
+
+    // Navbar scroll opacity
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function () {
+      navbar.style.background = window.scrollY > 40
+        ? 'rgba(10,10,10,0.98)'
+        : 'rgba(10,10,10,0.95)';
+    }, { passive: true });
+
+    // FAQ accordion — uses CSS class .active, no DOM content mutation
+    var faqButtons = document.querySelectorAll('.faq-question');
+    faqButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var isActive = btn.classList.contains('active');
+        faqButtons.forEach(function (b) {
+          b.classList.remove('active');
+          b.closest('.faq-item').querySelector('.faq-answer').classList.remove('open');
+        });
+        if (!isActive) {
+          btn.classList.add('active');
+          btn.closest('.faq-item').querySelector('.faq-answer').classList.add('open');
+        }
+      });
+    });
+
+    // Efficacy bars — IntersectionObserver, no DOM mutation
+    if ('IntersectionObserver' in window) {
+      var barObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var w = el.getAttribute('data-width');
+            setTimeout(function () { el.style.width = w + '%'; }, 300);
+            barObserver.unobserve(el);
+          }
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.efficacy-bar-fill').forEach(function (el) {
+        barObserver.observe(el);
+      });
+    } else {
+      document.querySelectorAll('.efficacy-bar-fill').forEach(function (el) {
+        el.style.width = el.getAttribute('data-width') + '%';
+      });
+    }
+
+    // Smooth scroll para anclas internas
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - 90, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  📞
+</a>
+<script src="js/chat-widget.js" defer></script>
+<script src="js/v5-effects.js" defer></script><script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script><script>AOS.init({duration:700,once:true,offset:30});</script>
+</body>
+</html>

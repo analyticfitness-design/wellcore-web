@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#080808"/><stop offset="100%" stop-color="#0a100a"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="45"/></filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="800" cy="250" r="280" fill="#E31E24" opacity="0.07" filter="url(#blur)"/>
+  <!-- Grid -->
+  <line x1="0" y1="135" x2="1200" y2="135" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="270" x2="1200" y2="270" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="405" x2="1200" y2="405" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="540" x2="1200" y2="540" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <!-- Weight wave line -->
+  <polyline points="650,500 720,380 790,440 860,300 930,360 1000,200 1070,270 1140,160" fill="none" stroke="#E31E24" stroke-width="2.5" opacity="0.6" stroke-dasharray="8,4"/>
+  <polyline points="650,500 720,380 790,440 860,300 930,450 1000,380 1070,480 1140,400" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" opacity="0.5"/>
+  <!-- Dots on correct line -->
+  <circle cx="720" cy="380" r="4" fill="#E31E24" opacity="0.8"/>
+  <circle cx="860" cy="300" r="4" fill="#E31E24" opacity="0.8"/>
+  <circle cx="1000" cy="200" r="4" fill="#E31E24" opacity="0.8"/>
+  <circle cx="1140" cy="160" r="4" fill="#E31E24" opacity="0.8"/>
+  <!-- Dots on rebound line -->
+  <circle cx="930" cy="450" r="3" fill="rgba(255,255,255,0.3)" opacity="0.6"/>
+  <circle cx="1070" cy="480" r="3" fill="rgba(255,255,255,0.3)" opacity="0.6"/>
+  <!-- Label -->
+  <text x="1060" y="185" font-family="Arial" font-size="10" fill="#E31E24" opacity="0.8">OBJETIVO</text>
+  <text x="1060" y="435" font-family="Arial" font-size="10" fill="rgba(255,255,255,0.3)">REBOTE</text>
+  <!-- Left content -->
+  <text x="64" y="240" font-family="Arial Black,Arial" font-size="11" font-weight="900" fill="#E31E24" letter-spacing="4" opacity="0.9">NUTRICION</text>
+  <text x="60" y="300" font-family="Arial Black,Arial" font-size="68" font-weight="900" fill="white" opacity="0.92">EFECTO</text>
+  <text x="60" y="368" font-family="Arial Black,Arial" font-size="68" font-weight="900" fill="white" opacity="0.92">REBOTE</text>
+  <line x1="60" y1="388" x2="240" y2="388" stroke="#E31E24" stroke-width="3"/>
+  <text x="60" y="422" font-family="Arial" font-size="13" fill="rgba(255,255,255,0.45)" letter-spacing="1">Por que recuperas el peso perdido</text>
+  <rect x="0" y="659" width="1200" height="3" fill="#E31E24" opacity="0.7"/>
+</svg>

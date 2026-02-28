@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosotros — WellCore Fitness — Sin Dogmas, Sin Atajos, Solo Ciencia</title>
+  <meta name="description" content="La historia detras de WellCore Fitness. Quienes somos, que nos mueve y por que decidimos construir la alternativa honesta al fitness generico." />
+  <meta property="og:title" content="Nosotros — WellCore Fitness — Sin Dogmas, Sin Atajos, Solo Ciencia">
+  <meta property="og:description" content="La historia detras de WellCore Fitness. Quienes somos, que nos mueve y por que decidimos construir la alternativa honesta al fitness generico.">
+  <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
+  <meta property="og:url" content="https://wellcorefitness.com/nosotros.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wellcorefitness.com/nosotros.html">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/wellcore-v5.css">
+
+  <style>
+    /* ============================================================
+       NOSOTROS.HTML — MANIFESTO / BRAND STORY
+       WellCore Fitness v3 — Design System
+    ============================================================ */
+
+    /* --- CSS Variables --- */
+    :root {
+      --red:       #E31E24;
+      --red-dark:  #B8181D;
+      --red-dim:   rgba(227,30,36,0.12);
+      --red-glow:  rgba(227,30,36,0.25);
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --surface-2: #1a1a1d;
+      --border:    rgba(255,255,255,0.06);
+      --border-md: rgba(255,255,255,0.10);
+      --accent:    #00D9FF;
+      --accent-dim: rgba(0,217,255,0.12);
+      --green:     #22C55E;
+      --white:     #ffffff;
+      --gray:      rgba(255,255,255,0.45);
+      --gray-dim:  rgba(255,255,255,0.18);
+      --gray-deep: rgba(255,255,255,0.08);
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    /* --- Reset & Base --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: var(--red); color: #fff; }
+
+    /* --- Grain Texture Overlay --- */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      background: rgba(10,10,10,0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.1s linear;
+      text-decoration: none;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 100%;
+      height: 1px;
+      background: #E31E24;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      transition: transform 0.1s linear;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { transform: translateX(-50%) scaleX(1); }
+    .nav-links a.active { color: #fff; }
+    .nav-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #E31E24;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #navMobileMenu {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: rgba(10,10,10,0.98);
+      padding: 24px 32px;
+      z-index: 999;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    #navMobileMenu ul { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-direction: column; gap: 16px; }
+    .nav-mobile-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+    }
+    .nav-mobile-cta {
+      display: inline-block;
+      background: #E31E24;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      text-decoration: none;
+    }
+    @media (max-width: 991px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+    @keyframes pulse-dot {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* ============================================================
+       SECTION STRUCTURE
+    ============================================================ */
+    .section-wrap { position: relative; z-index: 1; }
+    .section-marker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .section-marker--gray { color: var(--gray); }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    #hero-nosotros {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 0 80px;
+      position: relative;
+      overflow: hidden;
+      background-image: linear-gradient(180deg, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.95) 100%), url('images/fotos/nosotros-01.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #hero-nosotros::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse 80% 60% at 15% 50%, rgba(227,30,36,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    #hero-nosotros::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--border);
+    }
+    .hero-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 48px;
+    }
+    .hero-breadcrumb a { color: var(--gray); transition: color 0.1s linear; }
+    .hero-breadcrumb a:hover { color: #fff; }
+    .hero-breadcrumb span { margin: 0 10px; color: var(--red); }
+    .hero-statement {
+      font-family: var(--font-head);
+      font-size: clamp(72px, 12vw, 160px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      color: var(--white);
+      text-transform: uppercase;
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+    .hero-statement .accent-red { color: var(--red); }
+    .hero-statement .accent-line {
+      display: block;
+      font-size: clamp(52px, 8vw, 110px);
+      color: var(--white);
+      opacity: 0.85;
+    }
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.6;
+      color: var(--gray);
+      max-width: 560px;
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+    .hero-sub strong { color: var(--white); font-weight: 600; }
+    .hero-scroll-hint {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .hero-scroll-hint::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--red);
+    }
+    .hero-bg-text {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-head);
+      font-size: clamp(120px, 18vw, 260px);
+      color: rgba(255,255,255,0.015);
+      letter-spacing: 8px;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       SECTION 1 — EL ORIGEN
+    ============================================================ */
+    #sec-origen { padding: 120px 0; background: var(--bg); position: relative; z-index: 1; }
+    .origen-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: start; }
+    .origen-copy h2 {
+      font-family: var(--font-head);
+      font-size: clamp(52px, 6vw, 96px);
+      line-height: 0.95;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+    .origen-copy h2 em { color: var(--red); font-style: normal; }
+    .origen-copy p { font-family: var(--font-body); font-size: 16px; line-height: 1.8; color: var(--gray); margin-bottom: 20px; }
+    .origen-copy p strong { color: var(--white); font-weight: 600; }
+    .blockquote-brand { border-left: 3px solid var(--red); padding: 24px 28px; margin: 40px 0; background: var(--surface); }
+    .blockquote-brand p { font-family: var(--font-body); font-size: 20px; line-height: 1.5; font-style: italic; color: var(--white); font-weight: 500; margin: 0 0 12px; }
+    .blockquote-brand cite { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); }
+    .timeline { position: relative; padding-left: 0; }
+    .timeline::before { content: ''; position: absolute; left: 18px; top: 10px; bottom: 10px; width: 1px; background: var(--border); }
+    .timeline-item { display: flex; gap: 24px; margin-bottom: 40px; position: relative; }
+    .timeline-dot { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+    .timeline-dot.active { background: var(--red-dim); border-color: var(--red); }
+    .timeline-dot.active::after { content: ''; position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+    .timeline-dot:not(.active)::after { content: ''; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--gray-dim); }
+    .timeline-content { padding-top: 6px; }
+    .timeline-year { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 4px; }
+    .timeline-title { font-family: var(--font-head); font-size: 22px; letter-spacing: 1px; color: var(--white); text-transform: uppercase; margin-bottom: 6px; }
+    .timeline-desc { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: var(--gray); }
+
+    /* ============================================================
+       SECTION 2 — MISION / VISION / PROMESA
+    ============================================================ */
+    #sec-mision { padding: 120px 0; background: var(--surface-2); position: relative; z-index: 1; }
+    #sec-mision::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--border); }
+    #sec-mision::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--border); }
+    .mision-header { text-align: center; margin-bottom: 72px; }
+    .mision-header h2 { font-family: var(--font-head); font-size: clamp(52px, 6vw, 96px); line-height: 0.95; text-transform: uppercase; color: var(--white); letter-spacing: 1px; }
+    .mision-header h2 em { color: var(--red); font-style: normal; }
+    .mision-header p { font-family: var(--font-body); font-size: 16px; color: var(--gray); max-width: 540px; margin: 20px auto 0; line-height: 1.7; }
+    .mvp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .mvp-card { background: var(--surface); padding: 48px 36px; position: relative; overflow: hidden; transition: background 0.1s linear; }
+    .mvp-card:hover { background: #141416; }
+    .mvp-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--border); }
+    .mvp-card.primary::before { background: var(--red); }
+    .mvp-card .mvp-icon { width: 48px; height: 48px; border-radius: 0; background: var(--red-dim); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; font-size: 18px; color: var(--red); }
+    .mvp-card .mvp-icon.green { background: var(--accent-dim); color: var(--accent); }
+    .mvp-card .mvp-icon.gray { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+    .mvp-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+    .mvp-label.green { color: var(--accent); }
+    .mvp-label.gray { color: var(--gray); }
+    .mvp-card h3 { font-family: var(--font-head); font-size: 36px; letter-spacing: 1px; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 16px; }
+    .mvp-card p { font-family: var(--font-body); font-size: 15px; line-height: 1.75; color: var(--gray); }
+    .mvp-card p strong { color: var(--white); font-weight: 600; }
+
+    /* ============================================================
+       SECTION 3 — NUMBERS / STATS
+    ============================================================ */
+    #sec-stats { padding: 120px 0; background: var(--bg); position: relative; z-index: 1; overflow: hidden; }
+    #sec-stats .stats-bg-word { position: absolute; right: -60px; bottom: -20px; font-family: var(--font-head); font-size: 280px; color: rgba(255,255,255,0.012); letter-spacing: 8px; line-height: 1; pointer-events: none; user-select: none; }
+    .stats-header { margin-bottom: 80px; }
+    .stats-header h2 { font-family: var(--font-head); font-size: clamp(52px, 6vw, 96px); line-height: 0.95; text-transform: uppercase; color: var(--white); letter-spacing: 1px; max-width: 600px; }
+    .stats-header h2 em { color: var(--red); font-style: normal; }
+    .stats-header p { font-family: var(--font-body); font-size: 16px; color: var(--gray); margin-top: 20px; max-width: 500px; line-height: 1.7; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
+    .stat-card { background: var(--bg); padding: 52px 36px; position: relative; overflow: hidden; }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--border); transition: background 0.1s linear; }
+    .stat-card:hover::before { background: var(--red); }
+    .stat-number { font-family: var(--font-head); font-size: clamp(60px, 7vw, 96px); line-height: 1; letter-spacing: 1px; color: var(--red); display: block; margin-bottom: 4px; transition: color 0.1s linear; }
+    .stat-card:nth-child(2) .stat-number, .stat-card:nth-child(4) .stat-number { color: var(--accent); }
+    .stat-card:hover .stat-number { filter: brightness(1.15); }
+    .stat-suffix { font-family: var(--font-head); font-size: clamp(40px, 5vw, 64px); color: inherit; }
+    .stat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--white); margin-bottom: 10px; margin-top: 12px; }
+    .stat-sub { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: var(--gray); }
+
+    /* ============================================================
+       SECTION 4 — EL EQUIPO
+    ============================================================ */
+    #sec-team { padding: 120px 0; background: var(--surface); position: relative; z-index: 1; }
+    #sec-team::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--border); }
+    .team-header { margin-bottom: 72px; }
+    .team-header h2 { font-family: var(--font-head); font-size: clamp(52px, 6vw, 96px); line-height: 0.95; text-transform: uppercase; color: var(--white); letter-spacing: 1px; }
+    .team-header h2 em { color: var(--red); font-style: normal; }
+    .team-header p { font-family: var(--font-body); font-size: 16px; color: var(--gray); max-width: 540px; margin-top: 20px; line-height: 1.7; }
+    .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .coach-card { background: var(--surface-2); border: 1px solid var(--border); padding: 48px; position: relative; overflow: hidden; transition: border-color 0.1s linear; }
+    .coach-card:hover { border-color: var(--red); }
+    .coach-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+    .coach-card:hover::before { transform: scaleX(1); }
+    .coach-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+    .coach-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-size: 28px; letter-spacing: 1px; color: var(--white); flex-shrink: 0; border: 2px solid rgba(227,30,36,0.3); }
+    .coach-avatar.green { background: #00D9FF; border-color: rgba(0,217,255,0.3); }
+    .coach-meta { flex: 1; }
+    .coach-role { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+    .coach-role.green { color: var(--accent); }
+    .coach-name { font-family: var(--font-head); font-size: 32px; letter-spacing: 1px; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 6px; }
+    .coach-title { font-family: var(--font-body); font-size: 14px; color: var(--gray); }
+    .coach-bio { font-family: var(--font-body); font-size: 15px; line-height: 1.8; color: var(--gray); margin-bottom: 28px; }
+    .coach-bio strong { color: var(--white); font-weight: 600; }
+    .coach-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .coach-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--white); background: var(--surface); border: 1px solid var(--border); padding: 5px 10px; }
+    .coach-certs { padding-top: 24px; border-top: 1px solid var(--border); }
+    .coach-certs-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; }
+    .coach-cert-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .coach-cert { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: var(--red); background: var(--red-dim); padding: 4px 10px; border-radius: 0; }
+    .coach-cert.green { color: var(--accent); background: var(--accent-dim); }
+    .coach-stat-row { display: flex; gap: 32px; margin-bottom: 24px; }
+    .coach-stat-item { text-align: left; }
+    .coach-stat-num { font-family: var(--font-head); font-size: 36px; color: var(--red); line-height: 1; margin-bottom: 2px; }
+    .coach-stat-num.green { color: var(--accent); }
+    .coach-stat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+
+    /* ============================================================
+       SECTION 5 — LO QUE NOS DIFERENCIA
+    ============================================================ */
+    #sec-diferencia { padding: 120px 0; background: var(--bg); position: relative; z-index: 1; }
+    .dif-header { margin-bottom: 72px; }
+    .dif-header h2 { font-family: var(--font-head); font-size: clamp(52px, 6vw, 96px); line-height: 0.95; text-transform: uppercase; color: var(--white); letter-spacing: 1px; }
+    .dif-header h2 em { color: var(--red); font-style: normal; }
+    .dif-header p { font-family: var(--font-body); font-size: 16px; color: var(--gray); max-width: 540px; margin-top: 20px; line-height: 1.7; }
+    .dif-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .dif-card { padding: 32px 28px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: border-color 0.1s linear; }
+    .dif-card.no { background: var(--surface); border-left: 3px solid rgba(255,255,255,0.12); }
+    .dif-card.yes { background: var(--surface); border-left: 3px solid var(--red); }
+    .dif-card.yes:hover { border-color: rgba(227,30,36,0.4); }
+    .dif-card.no:hover { border-color: rgba(255,255,255,0.15); }
+    .dif-badge { font-family: var(--font-mono); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; padding: 4px 10px; display: inline-block; margin-bottom: 16px; }
+    .dif-card.no .dif-badge { color: var(--gray); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    .dif-card.yes .dif-badge { color: var(--red); background: var(--red-dim); border: 1px solid rgba(227,30,36,0.2); }
+    .dif-card h4 { font-family: var(--font-head); font-size: 22px; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 10px; line-height: 1.1; }
+    .dif-card.no h4 { opacity: 0.5; }
+    .dif-card p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--gray); }
+    .dif-card.no p { opacity: 0.7; }
+    .dif-card .dif-icon { position: absolute; top: 24px; right: 24px; font-size: 18px; }
+    .dif-card.no .dif-icon { color: rgba(255,255,255,0.1); }
+    .dif-card.yes .dif-icon { color: var(--red); }
+    .manifesto-strip { margin: 72px 0 0; padding: 48px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
+    .manifesto-inner { display: flex; gap: 64px; align-items: center; flex-wrap: wrap; }
+    .manifesto-line { font-family: var(--font-head); font-size: clamp(28px, 4vw, 52px); letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.07); white-space: nowrap; flex-shrink: 0; transition: color 0.1s linear; }
+    .manifesto-line.highlight { color: var(--white); }
+    .manifesto-line .red { color: var(--red); }
+
+    /* ============================================================
+       SECTION — FILOSOFIA QUOTE
+    ============================================================ */
+    #sec-filosofia { padding: 100px 0; background: var(--surface-2); position: relative; z-index: 1; }
+    #sec-filosofia::before, #sec-filosofia::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: var(--border); }
+    #sec-filosofia::before { top: 0; }
+    #sec-filosofia::after { bottom: 0; }
+    .filosofia-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .filosofia-quote { font-family: var(--font-head); font-size: clamp(36px, 5vw, 72px); line-height: 1.1; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 32px; }
+    .filosofia-quote span { color: var(--red); }
+    .filosofia-sub { font-family: var(--font-body); font-size: 17px; line-height: 1.75; color: var(--gray); max-width: 640px; margin: 0 auto 40px; }
+    .filosofia-sub strong { color: var(--white); font-weight: 600; }
+    .filosofia-source { font-family: var(--font-mono); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--red); }
+
+    /* ============================================================
+       CTA FINAL
+    ============================================================ */
+    #sec-cta { padding: 140px 0; background: var(--bg); position: relative; z-index: 1; overflow: hidden; }
+    #sec-cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--border); }
+    .cta-bg-word { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--font-head); font-size: clamp(100px, 16vw, 200px); color: rgba(255,255,255,0.012); letter-spacing: 12px; white-space: nowrap; pointer-events: none; user-select: none; }
+    .cta-inner { position: relative; z-index: 2; text-align: center; }
+    .cta-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--red); margin-bottom: 32px; }
+    .cta-title { font-family: var(--font-head); font-size: clamp(52px, 8vw, 120px); line-height: 0.92; text-transform: uppercase; color: var(--white); letter-spacing: 2px; margin-bottom: 28px; }
+    .cta-sub { font-family: var(--font-body); font-size: 17px; line-height: 1.7; color: var(--gray); max-width: 460px; margin: 0 auto 52px; }
+    .cta-sub strong { color: var(--white); }
+    .cta-buttons { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-primary-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: var(--white); font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 18px 40px; text-decoration: none; transition: all 0.1s linear; border: 4px solid var(--red); border-radius: 0; cursor: pointer; }
+    .btn-primary-cta:hover { background: var(--red-dark); border-color: var(--red-dark); color: #fff; }
+    .btn-outline-cta { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--white); font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; padding: 17px 38px; text-decoration: none; border: 4px solid rgba(255,255,255,0.15); border-radius: 0; transition: all 0.1s linear; }
+    .btn-outline-cta:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer { background: var(--surface); border-top: 1px solid var(--border); padding: 64px 0 32px; position: relative; z-index: 1; }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-logo { font-family: var(--font-head); font-size: 32px; letter-spacing: 3px; color: var(--white); margin-bottom: 16px; }
+    .footer-tagline { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--gray); max-width: 260px; margin-bottom: 24px; }
+    .footer-social { display: flex; gap: 12px; }
+    .footer-social a { width: 36px; height: 36px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 14px; transition: border-color 0.1s linear, color 0.1s linear; }
+    .footer-social a:hover { border-color: var(--red); color: var(--red); }
+    .footer-col-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--white); margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-family: var(--font-body); font-size: 14px; color: var(--gray); transition: color 0.1s linear; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { padding-top: 28px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+    .footer-badge { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--red); }
+
+    /* ============================================================
+       UTILITY CLASSES
+    ============================================================ */
+    .container-wc { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    /* ============================================================
+       SCROLL PROGRESS BAR
+    ============================================================ */
+    #scroll-progress { position: fixed; top: 72px; left: 0; height: 2px; background: var(--red); z-index: 999; width: 0%; transition: width 0.1s linear; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1100px) {
+      .origen-grid { grid-template-columns: 1fr; gap: 60px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .container-wc { padding: 0 20px; }
+      .mvp-grid { grid-template-columns: 1fr; gap: 2px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: 1fr; }
+      .dif-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .coach-header { flex-direction: column; align-items: flex-start; }
+      .coach-stat-row { flex-wrap: wrap; gap: 20px; }
+      #hero-nosotros { padding: 80px 0 60px; }
+      .hero-statement { font-size: clamp(52px, 13vw, 80px); }
+      .hero-bg-text { display: none; }
+      #sec-origen { padding: 80px 0; }
+      #sec-mision { padding: 80px 0; }
+      #sec-stats  { padding: 80px 0; }
+      #sec-team   { padding: 80px 0; }
+      #sec-diferencia { padding: 80px 0; }
+      #sec-filosofia  { padding: 72px 0; }
+      #sec-cta    { padding: 100px 0; }
+      #footer { padding: 48px 0 24px; }
+      .manifesto-inner { gap: 32px; }
+      .manifesto-line { font-size: clamp(22px, 5vw, 36px); white-space: normal; }
+      .blockquote-brand p { font-size: 16px; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .btn-primary-cta, .btn-outline-cta { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 576px) {
+      body { font-size: 17px; line-height: 1.75; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-card { padding: 36px 24px; }
+      .mvp-card { padding: 36px 24px; }
+      .coach-card { padding: 28px; }
+      .hero-statement { font-size: clamp(60px, 14vw, 100px); }
+    }
+    @media (max-width: 480px) {
+      .container-wc { padding: 0 16px; }
+      #hero-nosotros { padding: 60px 0 48px; }
+      .hero-statement { font-size: clamp(44px, 13vw, 64px); }
+      .hero-breadcrumb { margin-bottom: 28px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-number { font-size: clamp(52px, 14vw, 80px); }
+      .mvp-grid { grid-template-columns: 1fr; }
+      .mvp-card { padding: 28px 20px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .coach-card { padding: 24px; }
+      .coach-stat-row { gap: 16px; flex-wrap: wrap; }
+      .dif-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+      .origen-grid { grid-template-columns: 1fr; gap: 48px; }
+      #sec-origen, #sec-mision, #sec-stats, #sec-team, #sec-diferencia { padding: 60px 0; }
+      #sec-cta { padding: 80px 0; }
+    }
+  </style>
+</head>
+<body>
+<!-- v5 Preloader -->
+<div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-progress"></div>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:40px;" onerror="this.style.display='none';this.parentNode.childNodes[1].style.display='block'" />
+      <span style="display:none;font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:#fff;">WELLCORE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="metodo.html">Metodo</a></li>
+      <li><a href="nosotros.html" class="active">Nosotros</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="planes.html">Planes</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="blog/">Blog</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="coaches.html" style="color:rgba(227,30,36,0.7);position:relative;">Coaches<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
+    </ul>
+    <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+    <a href="pagar.html" class="nav-cta">Empezar &rarr;</a>
+    <button class="nav-hamburger" id="navToggle" aria-label="Abrir menu">&#9776;</button>
+  </div>
+</nav>
+<div id="navMobileMenu">
+  <ul>
+    <li><a href="metodo.html" class="nav-mobile-link">Metodo</a></li>
+    <li><a href="nosotros.html" class="nav-mobile-link" style="color:#fff;">Nosotros</a></li>
+    <li><a href="proceso.html" class="nav-mobile-link">Proceso</a></li>
+    <li><a href="planes.html" class="nav-mobile-link">Planes</a></li>
+    <li><a href="tienda.html" class="nav-mobile-link">Tienda</a></li>
+    <li><a href="blog/" class="nav-mobile-link">Blog</a></li>
+    <li><a href="faq.html" class="nav-mobile-link">FAQ</a></li>
+    <li><a href="coaches.html" class="nav-mobile-link" style="color:#E31E24;">Coaches</a></li>
+    <li><a href="login.html" class="nav-mobile-link" style="color:#fff;background:var(--red);padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;">MI CUENTA</a></li>
+  </ul>
+  <a href="pagar.html" class="nav-mobile-cta">Empezar &rarr;</a>
+</div>
+
+<!-- ============================================================
+     HERO — QUIENES SOMOS
+============================================================ -->
+<section id="hero-nosotros" class="section-wrap" data-v5-reveal>
+  <div class="container-wc">
+
+    <p class="hero-breadcrumb" data-aos="fade-right" data-aos-duration="600">
+      <a href="index.html">Inicio</a>
+      <span>/</span>
+      Nosotros
+    </p>
+
+    <span class="section-marker" data-aos="fade-right" data-aos-duration="600" data-aos-delay="50">[00] &mdash; Identidad</span>
+
+    <h1 class="hero-statement" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+      <span class="accent-red">Sin</span> Dogmas.
+      <span class="accent-line">Sin Atajos.</span>
+      Solo
+      <span class="accent-red">Ciencia.</span>
+    </h1>
+
+    <p class="hero-sub" data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
+      WellCore nacio del hartazgo con una industria que vende promesas en lugar de resultados.
+      <strong>Decidimos construir la alternativa honesta.</strong> Un sistema donde cada decision
+      tiene nombre, apellido y respaldo en investigacion.
+    </p>
+
+    <p class="hero-scroll-hint" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+      Sigue leyendo nuestra historia
+    </p>
+
+  </div>
+  <div class="hero-bg-text" aria-hidden="true">WELLCORE</div>
+</section>
+
+<!-- ============================================================
+     SECCION 1 — EL ORIGEN
+============================================================ -->
+<section id="sec-origen" class="section-wrap" data-v5-reveal>
+  <div class="container-wc">
+    <div class="origen-grid">
+
+      <!-- LEFT: copy -->
+      <div class="origen-copy">
+        <span class="section-marker" data-aos="fade-right" data-aos-duration="600">[01] &mdash; El Origen</span>
+        <h2 data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+          De la <em>frustracion</em><br>a un sistema.
+        </h2>
+
+        <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+          En 2020, despues de ver a <strong>cientos de personas fracasar con planes genericos</strong>,
+          tomamos una decision incomoda: el problema no era la motivacion del cliente.
+          Era el programa. Era la falta de personalizacion. Era la industria.
+        </p>
+
+        <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="140">
+          Los planes masivos, las apps de ejercicios con algoritmos ciegos y los influencers
+          vendiendo transformaciones de 30 dias habian <strong>normalizado el fracaso</strong>.
+          Cada persona que abandonaba un programa cargaba con la culpa sola.
+          Nosotros nos negamos a que eso siguiera pasando.
+        </p>
+
+        <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="170">
+          WellCore nacio como una respuesta directa. No como un negocio de escala masiva,
+          sino como un <strong>compromiso con la eficacia individual</strong>. Cada protocolo
+          que disenamos empieza con una pregunta simple: que necesita esta persona especifica,
+          con su historial, su biologia y sus objetivos concretos?
+        </p>
+
+        <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+          Lo que vino despues fue el resultado de miles de horas de trabajo con clientes reales,
+          de revisar la literatura cientifica, de cometer errores y de perfeccionar un metodo
+          que <strong>no se vende facil porque no esta disenado para vender facil.</strong>
+          Esta disenado para funcionar.
+        </p>
+
+        <div class="blockquote-brand" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
+          <p>"Si el programa no fue diseñado para ti,<br>está diseñado para fallar."</p>
+          <cite>&mdash; Principio fundacional WellCore</cite>
+        </div>
+
+        <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="280">
+          Hoy WellCore opera con un estandar simple: <strong>ningun cliente recibe el mismo
+          protocolo que otro</strong>. Porque ningun cliente tiene el mismo cuerpo,
+          la misma historia ni el mismo punto de partida.
+        </p>
+      </div>
+
+      <!-- RIGHT: timeline -->
+      <div class="origen-timeline" data-aos="fade-left" data-aos-duration="700" data-aos-delay="150">
+        <div style="margin-bottom:32px;border-radius:0;overflow:hidden;">
+          <img src="images/fotos/nosotros-02.jpg" alt="Equipo WellCore Fitness" style="width:100%;height:240px;object-fit:cover;object-position:center;display:block;opacity:0.9;" />
+        </div>
+        <div class="timeline">
+
+          <div class="timeline-item" data-aos="fade-up" data-aos-delay="80">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2020</div>
+              <div class="timeline-title">La Fundacion</div>
+              <p class="timeline-desc">
+                WellCore nace de la insatisfaccion con el status quo del coaching online.
+                Primer protocolo de evaluacion individualizada desarrollado desde cero,
+                basado en evidencia y sin plantillas genericas.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up" data-aos-delay="140">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2021</div>
+              <div class="timeline-title">Primeros 50 Clientes</div>
+              <p class="timeline-desc">
+                Alcanzamos 50 clientes atendidos con seguimiento semanal real.
+                Tasa de adherencia del 80%+ en todos los programas. Primera validacion
+                del modelo: la personalizacion profunda funciona donde lo generico falla.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2023</div>
+              <div class="timeline-title">El Protocolo Perfeccionado</div>
+              <p class="timeline-desc">
+                Iteraciones continuas consolidan el sistema WellCore. Se integra la
+                periodizacion nutricional precisa junto con el entrenamiento. El tiempo
+                promedio a resultados medibles baja a 12 semanas.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up" data-aos-delay="260">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2025</div>
+              <div class="timeline-title">100+ Transformaciones</div>
+              <p class="timeline-desc">
+                Superamos 100 transformaciones documentadas. Sin suplementos innecesarios
+                vendidos. Sin promesas vacias. Solo el metodo que lleva cinco anos
+                perfeccionandose en la realidad de clientes reales.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCION 2 — MISION / VISION / PROMESA
+============================================================ -->
+<section id="sec-mision" class="section-wrap" data-v5-reveal>
+  <div class="container-wc">
+
+    <div class="mision-header" data-aos="fade-up" data-aos-duration="700">
+      <span class="section-marker" style="text-align:center;display:block;">[02] &mdash; Por que existimos</span>
+      <h2>Mision, <em>Vision</em><br>y Promesa</h2>
+      <p>Tres conceptos que definen cada decision que tomamos, cada protocolo que disenamos, cada respuesta que damos.</p>
+    </div>
+
+    <div class="mvp-grid">
+
+      <!-- MISION -->
+      <div class="mvp-card primary" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80">
+        <div class="mvp-icon">
+          <span style="color:#00D9FF;font-weight:700;">//</span>
+        </div>
+        <div class="mvp-label">Mision</div>
+        <h3>Democratizar<br>el Coaching de Elite</h3>
+        <p>
+          Que la <strong>calidad de tu coaching no dependa del tamano de tu presupuesto</strong>.
+          El mismo nivel de ciencia aplicada, de analisis biomecanico y de acompanamiento
+          nutricional que historicamente ha sido privilegio de atletas profesionales,
+          ahora accesible para cualquier persona con la seriedad de comprometerse.
+        </p>
+      </div>
+
+      <!-- VISION -->
+      <div class="mvp-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160">
+        <div class="mvp-icon green">
+          <span style="color:#00D9FF;font-weight:700;">//</span>
+        </div>
+        <div class="mvp-label green">Vision</div>
+        <h3>Estandar de<br>Integridad</h3>
+        <p>
+          Ser el <strong>referente de integridad cientifica en el fitness online latinoamericano</strong>.
+          Que cuando alguien piense en un programa que realmente funciona,
+          que no exagera, que no vende humo, que explica el por que de cada
+          decision, piense en WellCore.
+        </p>
+      </div>
+
+      <!-- PROMESA -->
+      <div class="mvp-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
+        <div class="mvp-icon gray">
+          <span style="color:#00D9FF;font-weight:700;">//</span>
+        </div>
+        <div class="mvp-label gray">Promesa</div>
+        <h3>Cada Decision<br>Tiene Respaldo</h3>
+        <p>
+          <strong>Si no tiene evidencia cientifica solida, no va en tu programa.</strong>
+          Cada ejercicio, cada distribucion de macronutrientes, cada variacion de
+          frecuencia tiene una razon documentada. Nunca trabajaras con nosotros
+          sin entender exactamente por que hacemos lo que hacemos.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCION 3 — STATS / NUMEROS
+============================================================ -->
+<section id="sec-stats" class="section-wrap" data-v5-reveal>
+  <div class="container-wc">
+
+    <div class="stats-bg-word" aria-hidden="true">DATA</div>
+
+    <div class="stats-header">
+      <span class="section-marker" data-aos="fade-right" data-aos-duration="600">[03] &mdash; Lo que tenemos para demostrar</span>
+      <h2 data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+        Numeros que<br><em>Hablan</em> Solos.
+      </h2>
+      <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+        No pedimos que confies en nuestra palabra. Pedimos que mires los resultados de quienes
+        ya tomaron la decision de trabajar con un metodo real.
+      </p>
+    </div>
+
+    <div class="stats-grid" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
+
+      <div class="stat-card">
+        <span class="stat-number" id="stat-clientes">
+          <span class="stat-val">0</span><span class="stat-suffix">+</span>
+        </span>
+        <div class="stat-label">Clientes Transformados</div>
+        <p class="stat-sub">Personas reales, con programas reales, resultados documentados y seguimiento continuo.</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number" id="stat-adherencia">
+          <span class="stat-val">0</span><span class="stat-suffix">%</span>
+        </span>
+        <div class="stat-label">Tasa de Adherencia</div>
+        <p class="stat-sub">Porcentaje de clientes que completan el programa completo. La industria promedio es 35%.</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number" id="stat-semanas">
+          <span class="stat-val">0</span><span class="stat-suffix"></span>
+        </span>
+        <div class="stat-label">Semanas Promedio a Resultados</div>
+        <p class="stat-sub">Tiempo medio en que clientes reportan cambios medibles y sostenibles en composicion corporal.</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number" id="stat-suplementos">
+          <span class="stat-val">0</span><span class="stat-suffix"></span>
+        </span>
+        <div class="stat-label">Suplementos Innecesarios Vendidos</div>
+        <p class="stat-sub">Cero. Nunca hemos recomendado un suplemento que no tuviera evidencia robusta para el caso concreto del cliente.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCION FILOSOFIA — QUOTE CENTRAL
+============================================================ -->
+<section id="sec-filosofia" class="section-wrap" data-v5-reveal>
+  <div class="container-wc">
+    <div class="filosofia-inner" data-aos="fade-up" data-aos-duration="800">
+      <span class="section-marker" style="display:block;text-align:center;">[04] &mdash; Lo que creemos</span>
+      <p class="filosofia-quote">
+        "El fitness no es una<br><span>industria de resultados.</span><br>WellCore si."
+      </p>
+      <p class="filosofia-sub">
+        La mayor parte de la industria gana dinero cuando los clientes <strong>no consiguen resultados</strong>
+        y vuelven a comprar el siguiente programa. Nosotros ganamos cuando <strong>los clientes
+        lo logran y nos recomiendan</strong>. Son modelos de negocio completamente opuestos.
+        El nuestro nos obliga a ser buenos en lo que hacemos.
+      </p>
+      <span class="filosofia-source">&mdash; Filosofia Operativa WellCore Fitness</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCION 4 — EL EQUIPO
+============================================================ -->
+<section id="sec-team" class="section-wrap" data-v5-reveal>
+  <div class="container-wc">
+
+    <div class="team-header">
+      <span class="section-marker" data-aos="fade-right" data-aos-duration="600">[05] &mdash; Las personas detras del metodo</span>
+      <h2 data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+        El <em>Equipo</em><br>WellCore.
+      </h2>
+      <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+        No hay algoritmos aqui. Hay personas con credenciales reales, anos de practica clinica
+        y un compromiso obsesivo con la evidencia y los resultados de cada cliente.
+      </p>
+    </div>
+
+    <div class="team-grid">
+
+      <!-- Coach Principal -->
+      <div class="coach-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80" data-v5-reveal>
+        <div class="coach-header">
+          <div class="coach-avatar">CM</div>
+          <div class="coach-meta">
+            <div class="coach-role">Coach Principal &mdash; Entrenamiento</div>
+            <div class="coach-name">Carlos Mendez</div>
+            <div class="coach-title">Kinesiologo | CSCS | PN1 Certified</div>
+          </div>
+        </div>
+
+        <div class="coach-stat-row">
+          <div class="coach-stat-item">
+            <div class="coach-stat-num">5+</div>
+            <div class="coach-stat-label">Anos coaching online</div>
+          </div>
+          <div class="coach-stat-item">
+            <div class="coach-stat-num">200+</div>
+            <div class="coach-stat-label">Clientes atendidos</div>
+          </div>
+          <div class="coach-stat-item">
+            <div class="coach-stat-num">3</div>
+            <div class="coach-stat-label">Certificaciones activas</div>
+          </div>
+        </div>
+
+        <p class="coach-bio">
+          Carlos formo WellCore despues de cinco anos trabajando como kinesiologo clinico
+          y darse cuenta de que <strong>la brecha entre la ciencia del ejercicio y lo que
+          se aplica en el fitness comercial era absurda</strong>. Especializado en hipertrofia,
+          perdida de grasa funcional y preparacion de atletas de fuerza, su enfoque integra
+          evaluacion biomecanica real con periodizacion basada en la literatura cientifica mas reciente.
+          No trabaja con mas clientes de los que puede atender con calidad maxima.
+        </p>
+
+        <div class="coach-tags">
+          <span class="coach-tag">Hipertrofia</span>
+          <span class="coach-tag">Perdida de Grasa</span>
+          <span class="coach-tag">Fuerza</span>
+          <span class="coach-tag">Biomecanica</span>
+          <span class="coach-tag">Periodizacion</span>
+        </div>
+
+        <div class="coach-certs">
+          <div class="coach-certs-label">Certificaciones verificadas</div>
+          <div class="coach-cert-list">
+            <span class="coach-cert">CSCS &mdash; NSCA</span>
+            <span class="coach-cert">PN1 &mdash; Precision Nutrition</span>
+            <span class="coach-cert">Kinesiologo Certificado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coach Nutricion -->
+      <div class="coach-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160" data-v5-reveal>
+        <div class="coach-header">
+          <div class="coach-avatar green">AR</div>
+          <div class="coach-meta">
+            <div class="coach-role green">Coach &mdash; Nutricion Deportiva</div>
+            <div class="coach-name">Ana Rodriguez</div>
+            <div class="coach-title">Nutricionista Deportiva | PN2 Certified</div>
+          </div>
+        </div>
+
+        <div class="coach-stat-row">
+          <div class="coach-stat-item">
+            <div class="coach-stat-num green">4+</div>
+            <div class="coach-stat-label">Anos en nutricion deportiva</div>
+          </div>
+          <div class="coach-stat-item">
+            <div class="coach-stat-num green">150+</div>
+            <div class="coach-stat-label">Protocolos diseñados</div>
+          </div>
+          <div class="coach-stat-item">
+            <div class="coach-stat-num green">2</div>
+            <div class="coach-stat-label">Certificaciones PN</div>
+          </div>
+        </div>
+
+        <p class="coach-bio">
+          Ana llego al coaching nutricional convencida de que <strong>la mayoria de los
+          planes de alimentacion fallan porque ignoran la psicologia del comportamiento
+          alimentario</strong>. Especializada en nutricion de precision y composicion corporal,
+          su metodologia combina la bioquimica con la adherencia real: un protocolo que
+          no puedes seguir no sirve de nada, por mas correcto que sea en papel. Trabaja
+          en integracion total con los programas de entrenamiento de cada cliente.
+        </p>
+
+        <div class="coach-tags">
+          <span class="coach-tag">Nutricion de Precision</span>
+          <span class="coach-tag">Composicion Corporal</span>
+          <span class="coach-tag">Conducta Alimentaria</span>
+          <span class="coach-tag">Periodizacion Nutricional</span>
+        </div>
+
+        <div class="coach-certs">
+          <div class="coach-certs-label">Certificaciones verificadas</div>
+          <div class="coach-cert-list">
+            <span class="coach-cert green">PN1 &mdash; Precision Nutrition</span>
+            <span class="coach-cert green">PN2 &mdash; Precision Nutrition</span>
+            <span class="coach-cert green">Nutricionista Deportiva</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCION 5 — LO QUE NOS DIFERENCIA
+============================================================ -->
+<section id="sec-diferencia" class="section-wrap" data-v5-reveal>
+  <div class="container-wc">
+
+    <div class="dif-header">
+      <span class="section-marker" data-aos="fade-right" data-aos-duration="600">[06] &mdash; Por que no somos lo mismo</span>
+      <h2 data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+        Lo que <em>No</em> Somos.<br>Lo que <em>Si</em> Somos.
+      </h2>
+      <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+        La honestidad obliga a comparar. Aqui esta la diferencia entre WellCore y lo que el
+        mercado ofrece habitualmente como "coaching personalizado".
+      </p>
+    </div>
+
+    <div class="dif-grid" data-aos="fade-up" data-aos-duration="700" data-aos-delay="130">
+
+      <!-- NO 1 -->
+      <div class="dif-card no" data-v5-reveal>
+        <span class="dif-icon">&#10005;</span>
+        <div class="dif-badge">No somos</div>
+        <h4>Una App con Planes Genericos</h4>
+        <p>Las apps generan programas para "tipo de cuerpo" o "nivel". No hay dos personas iguales en fisiologia, historial de entrenamiento ni respuesta al estres. Un algoritmo no puede ver eso.</p>
+      </div>
+
+      <!-- SI 1 -->
+      <div class="dif-card yes" data-v5-reveal>
+        <span class="dif-icon">&#10003;</span>
+        <div class="dif-badge">Somos</div>
+        <h4>Atencion 1:1 Real y Personalizada</h4>
+        <p>Cada cliente tiene un coach asignado, acceso directo, revisiones periodicas y un programa construido exclusivamente para su caso. Sin plantillas. Sin escalabilidad que sacrifique calidad.</p>
+      </div>
+
+      <!-- NO 2 -->
+      <div class="dif-card no" data-v5-reveal>
+        <span class="dif-icon">&#10005;</span>
+        <div class="dif-badge">No somos</div>
+        <h4>Vendedores de Suplementos</h4>
+        <p>El negocio de los suplementos vive de la creencia de que sin ellos el progreso es imposible. Nunca hemos recomendado un suplemento que no tuviera evidencia robusta para el caso concreto.</p>
+      </div>
+
+      <!-- SI 2 -->
+      <div class="dif-card yes" data-v5-reveal>
+        <span class="dif-icon">&#10003;</span>
+        <div class="dif-badge">Somos</div>
+        <h4>Nutricion Real, Basada en Alimentos</h4>
+        <p>Los resultados los construye la comida real, el entrenamiento progresivo y el descanso. Los suplementos son el 2% de la ecuacion. Nunca cobramos por lo que no aporta valor real.</p>
+      </div>
+
+      <!-- NO 3 -->
+      <div class="dif-card no" data-v5-reveal>
+        <span class="dif-icon">&#10005;</span>
+        <div class="dif-badge">No somos</div>
+        <h4>Transformaciones en 30 Dias</h4>
+        <p>Las promesas de 30 dias venden clicks y generan frustracion. Los cambios de composicion corporal sostenibles toman semanas, requieren adherencia y respetan la fisiologia del cuerpo humano.</p>
+      </div>
+
+      <!-- SI 3 -->
+      <div class="dif-card yes" data-v5-reveal>
+        <span class="dif-icon">&#10003;</span>
+        <div class="dif-badge">Somos</div>
+        <h4>Resultados Sostenibles a Largo Plazo</h4>
+        <p>Disenamos para que en 12 semanas tengas resultados medibles, y en 12 meses tengas un cuerpo completamente diferente. Sin efecto rebote porque ensenamos el sistema, no el truco.</p>
+      </div>
+
+      <!-- NO 4 -->
+      <div class="dif-card no" data-v5-reveal>
+        <span class="dif-icon">&#10005;</span>
+        <div class="dif-badge">No somos</div>
+        <h4>Coaches de Instagram</h4>
+        <p>Tener un cuerpo estetico no garantiza capacidad para entrenar a otros. La diferencia entre verse bien y saber construir programas cientificamente validados es enorme y frecuentemente ignorada.</p>
+      </div>
+
+      <!-- SI 4 -->
+      <div class="dif-card yes" data-v5-reveal>
+        <span class="dif-icon">&#10003;</span>
+        <div class="dif-badge">Somos</div>
+        <h4>Profesionales con Credenciales Verificables</h4>
+        <p>Kinesiologos, nutricionistas y coaches certificados por organizaciones reconocidas internacionalmente como NSCA y Precision Nutrition. Credenciales que exigen examen, no solo dinero.</p>
+      </div>
+
+      <!-- NO 5 -->
+      <div class="dif-card no" data-v5-reveal>
+        <span class="dif-icon">&#10005;</span>
+        <div class="dif-badge">No somos</div>
+        <h4>Coaching de Alto Volumen</h4>
+        <p>Algunos servicios de coaching manejan 500 o 1000 clientes simultaneos. Eso hace matematicamente imposible el seguimiento real. Un numero grande de clientes siempre compite con la calidad.</p>
+      </div>
+
+      <!-- SI 5 -->
+      <div class="dif-card yes" data-v5-reveal>
+        <span class="dif-icon">&#10003;</span>
+        <div class="dif-badge">Somos</div>
+        <h4>Cupos Limitados por Principio</h4>
+        <p>Trabajamos con el numero de clientes que podemos atender con excelencia. Cuando se llena, se llena. Preferimos crecer lento y mantener los estandares que escalar y perder lo que nos define.</p>
+      </div>
+
+      <!-- NO 6 -->
+      <div class="dif-card no" data-v5-reveal>
+        <span class="dif-icon">&#10005;</span>
+        <div class="dif-badge">No somos</div>
+        <h4>Motivacion sin Metodo</h4>
+        <p>La motivacion fluctua. Los sistemas permanecen. Un programa que solo funciona cuando estas motivado no es un programa, es una ilusion de progreso que colapsa ante la primera adversidad real.</p>
+      </div>
+
+      <!-- SI 6 -->
+      <div class="dif-card yes" data-v5-reveal>
+        <span class="dif-icon">&#10003;</span>
+        <div class="dif-badge">Somos</div>
+        <h4>Sistemas que Funcionan sin Motivacion Perfecta</h4>
+        <p>Disenamos programas para la vida real: semanas con poco tiempo, viajes, estres laboral, malos dias. Un buen sistema contempla las variables humanas y sigue produciendo resultados de todos modos.</p>
+      </div>
+
+    </div>
+
+    <!-- Manifesto strip -->
+    <div class="manifesto-strip" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+      <div class="manifesto-inner">
+        <span class="manifesto-line">Sin Atajos</span>
+        <span class="manifesto-line highlight">&mdash; <span class="red">WellCore</span> &mdash;</span>
+        <span class="manifesto-line">Sin Dogmas</span>
+        <span class="manifesto-line highlight">Solo <span class="red">Ciencia</span></span>
+        <span class="manifesto-line">Sin Promesas Vacias</span>
+        <span class="manifesto-line highlight">Solo <span class="red">Metodo</span></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA FINAL
+============================================================ -->
+<section id="sec-cta" class="section-wrap" data-v5-reveal>
+  <div class="cta-bg-word" aria-hidden="true">EMPIEZA</div>
+  <div class="container-wc">
+    <div class="cta-inner" data-aos="fade-up" data-aos-duration="800">
+      <p class="cta-eyebrow">[07] &mdash; El siguiente paso es tuyo</p>
+      <h2 class="cta-title">
+        Listo para<br>Trabajar con<br><span style="color:var(--red);">Nosotros?</span>
+      </h2>
+      <p class="cta-sub">
+        Los cupos son limitados por principio. Si estas leyendo esto, aun hay espacio.
+        <strong>Pero no siempre lo habra.</strong>
+      </p>
+      <div class="cta-buttons">
+        <a href="planes.html" class="btn-primary-cta btn-red btn-v5 btn-v5-primary"><div class="btn-bg"></div><span class="btn-text">Ver Planes &rarr;</span></a>
+        <a href="https://wa.me/573124904720?text=Hola%2C%20me%20interesa%20conocer%20mas%20sobre%20WellCore" target="_blank" rel="noopener noreferrer" class="btn-outline-cta btn-v5 btn-v5-dark"><div class="btn-bg"></div><span class="btn-text">WA WhatsApp al Coach</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="footer">
+  <div class="container-wc">
+    <div class="footer-grid">
+
+      <!-- Brand col -->
+      <div class="footer-brand">
+        <div class="footer-logo">WELLCORE</div>
+        <p class="footer-tagline">
+          Coaching de entrenamiento y nutricion basado en evidencia.
+          Sin atajos, sin dogmas. Solo ciencia aplicada a tu caso concreto.
+        </p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/wellcore.fitness/" target="_blank" rel="noopener">IG</a>
+          <a href="https://www.tiktok.com/@wellcore.fitness" target="_blank" rel="noopener">TK</a>
+          <a href="https://www.youtube.com/@Wellcorefitness" target="_blank" rel="noopener">YT</a>
+          <a href="https://wa.me/573124904720" target="_blank" rel="noopener">WA</a>
+        </div>
+      </div>
+
+      <!-- Nav col -->
+      <div>
+        <div class="footer-col-title">Navegacion</div>
+        <ul class="footer-links">
+          <li><a href="metodo.html">El Metodo</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="proceso.html">El Proceso</a></li>
+          <li><a href="planes.html">Planes</a></li>
+          <li><a href="coaches.html">Coaches</a></li>
+          <li><a href="blog/">Blog</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources col -->
+      <div>
+        <div class="footer-col-title">Recursos</div>
+        <ul class="footer-links">
+          <li><a href="faq.html">Preguntas Frecuentes</a></li>
+          <li><a href="tienda.html">Tienda</a></li>
+          <li><a href="login.html">Mi Cuenta</a></li>
+          <li><a href="pagar.html">Empezar Ahora</a></li>
+          <li><a href="postulate.html">Postulate</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal col -->
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="legal/terminos.html">Terminos de Uso</a></li>
+          <li><a href="legal/privacidad.html">Politica de Privacidad</a></li>
+          <li><a href="legal/cookies.html">Cookies</a></li>
+          <li><a href="legal/descargo.html">Descargo de Responsabilidad</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 WellCore Fitness. Todos los derechos reservados.</p>
+      <p class="footer-badge">Sin Dogmas. Sin Atajos. Solo Ciencia.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ---- Navbar hamburger ---- */
+  var toggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('navMobileMenu');
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function () {
+      var isOpen = mobileMenu.style.display === 'block';
+      mobileMenu.style.display = isOpen ? 'none' : 'block';
+      toggle.textContent = isOpen ? '\u2630' : '\u2715';
+    });
+  }
+
+  /* ---- Scroll progress bar ---- */
+  var progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', function () {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    if (progressBar) {
+      progressBar.style.width = pct + '%';
+    }
+  }, { passive: true });
+
+  /* ---- Animated counter ---- */
+  var counters = [
+    { id: 'stat-clientes',    target: 100, duration: 1800 },
+    { id: 'stat-adherencia',  target: 87,  duration: 1600 },
+    { id: 'stat-semanas',     target: 12,  duration: 1200 },
+    { id: 'stat-suplementos', target: 0,   duration: 800  }
+  ];
+
+  var statsAnimated = false;
+
+  function animateCounter(valEl, target, duration) {
+    if (!valEl) return;
+    var startTime = null;
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      valEl.textContent = String(Math.floor(eased * target));
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        valEl.textContent = String(target);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function runCounters() {
+    if (statsAnimated) return;
+    statsAnimated = true;
+    counters.forEach(function (c) {
+      var wrapper = document.getElementById(c.id);
+      if (!wrapper) return;
+      var valEl = wrapper.querySelector('.stat-val');
+      animateCounter(valEl, c.target, c.duration);
+    });
+  }
+
+  var statsSection = document.getElementById('sec-stats');
+  if (statsSection && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          runCounters();
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    obs.observe(statsSection);
+  } else {
+    counters.forEach(function (c) {
+      var wrapper = document.getElementById(c.id);
+      if (!wrapper) return;
+      var valEl = wrapper.querySelector('.stat-val');
+      if (valEl) valEl.textContent = String(c.target);
+    });
+  }
+
+  /* ---- Navbar scroll effect ---- */
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function () {
+    if (!navbar) return;
+    if (window.pageYOffset > 80) {
+      navbar.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+    } else {
+      navbar.style.borderBottomColor = 'rgba(255,255,255,0.06)';
+    }
+  }, { passive: true });
+
+})();
+</script>
+
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">&#128222;</a>
+<script src="js/chat-widget.js" defer></script>
+<script src="js/v5-effects.js" defer></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({duration:700,once:true});</script>
+</body>
+</html>

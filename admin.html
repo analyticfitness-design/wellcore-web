@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel Admin &mdash; WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:       #E31E24;
+      --red-dark:  #B8181D;
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --surface-2: #1a1a1d;
+      --border:    #252528;
+      --gray:      #A1A1AA;
+      --accent:    #00D9FF;
+      --green:     #22C55E;
+      --white:     #FFFFFF;
+      --gold:      #F5C842;
+      --sidebar-w: 260px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
+
+    /* ─── LAYOUT ─── */
+    .app { display: flex; height: 100vh; overflow: hidden; }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      transition: transform 0.3s;
+    }
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 99;
+    }
+    .topbar-hamburger {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-size: 20px;
+      padding: 6px 10px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .topbar-hamburger:hover { border-color: var(--red); color: var(--red); }
+
+    .sidebar-logo {
+      padding: 28px 24px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-logo .brand {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .sidebar-logo .brand span {
+      color: var(--red);
+    }
+
+    .sidebar-logo .sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .sidebar-logo .admin-chip {
+      display: inline-block;
+      background: rgba(227,30,36,0.15);
+      border: 1px solid rgba(227,30,36,0.3);
+      color: var(--red);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 0;
+      margin-top: 8px;
+    }
+
+    .sidebar-nav {
+      padding: 16px 0;
+      flex: 1;
+    }
+
+    .nav-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--gray);
+      text-transform: uppercase;
+      padding: 8px 24px 4px;
+      opacity: 0.5;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 24px;
+      cursor: pointer;
+      transition: background 0.15s;
+      color: var(--gray);
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      user-select: none;
+    }
+
+    .nav-item:hover { background: var(--surface-2); color: var(--white); }
+
+    .nav-item.active {
+      background: rgba(227,30,36,0.08);
+      color: var(--white);
+      border-left: 2px solid var(--red);
+    }
+
+    .nav-item .nav-icon {
+      width: 18px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .nav-item .badge {
+      margin-left: auto;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 0;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-footer .version {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+      opacity: 0.4;
+    }
+
+    /* ─── MAIN ─── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin-left: var(--sidebar-w);
+    }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      height: 60px;
+      min-height: 60px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 16px;
+    }
+
+    .topbar-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+
+    .topbar-spacer { flex: 1; }
+
+    .topbar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 8px 14px;
+    }
+
+    .topbar-user .avatar {
+      width: 28px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 13px;
+      color: var(--white);
+    }
+
+    .topbar-user .user-info { line-height: 1.2; }
+    .topbar-user .user-name { font-size: 13px; font-weight: 600; color: var(--white); }
+    .topbar-user .user-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--red);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 8px 14px;
+      border-radius: 0;
+      cursor: pointer;
+      transition: 0.1s linear;
+    }
+
+    .btn-logout:hover { border-color: var(--red); color: var(--red); }
+
+    /* ─── CONTENT ─── */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 28px;
+    }
+
+    /* ─── SECTIONS ─── */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ─── PAGE HEADER ─── */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 36px;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .page-header .page-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    /* ─── KPI GRID ─── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.1s linear;
+    }
+
+    .kpi-card:hover { border-color: var(--red); }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--red);
+      opacity: 0;
+      transition: opacity 0.1s linear;
+    }
+
+    .kpi-card:hover::before { opacity: 1; }
+
+    .kpi-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 42px;
+      letter-spacing: 1px;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .kpi-value.red { color: var(--red); }
+    .kpi-value.green { color: var(--green); }
+
+    .kpi-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+      color: var(--border);
+    }
+
+    .kpi-footer {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--gray);
+    }
+
+    .kpi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(227,30,36,0.12);
+      border: 1px solid rgba(227,30,36,0.25);
+      color: var(--red);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 0;
+    }
+
+    /* ─── GRID 2 COLS ─── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .card-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+    }
+
+    /* ─── TABLES ─── */
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 13px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(37,37,40,0.5);
+      color: var(--white);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ─── BADGES ─── */
+    .badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 0;
+    }
+
+    .badge-green {
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      color: var(--green);
+    }
+
+    .badge-red {
+      background: rgba(227,30,36,0.12);
+      border: 1px solid rgba(227,30,36,0.25);
+      color: var(--red);
+    }
+
+    .badge-gray {
+      background: rgba(161,161,170,0.1);
+      border: 1px solid rgba(161,161,170,0.2);
+      color: var(--gray);
+    }
+
+    .badge-gold {
+      background: rgba(245,200,66,0.12);
+      border: 1px solid rgba(245,200,66,0.3);
+      color: var(--gold);
+    }
+
+    .badge-yellow {
+      background: rgba(245,200,66,0.1);
+      border: 1px solid rgba(245,200,66,0.25);
+      color: var(--gold);
+    }
+
+    /* ─── PLAN BADGES ─── */
+    .plan-esencial { background: rgba(161,161,170,0.1); border: 1px solid rgba(161,161,170,0.2); color: var(--gray); }
+    .plan-metodo   { background: rgba(227,30,36,0.12);  border: 1px solid rgba(227,30,36,0.3);  color: var(--red); }
+    .plan-elite    { background: rgba(245,200,66,0.12); border: 1px solid rgba(245,200,66,0.35); color: var(--gold); }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 7px 14px;
+      border-radius: 0;
+      cursor: pointer;
+      border: none;
+      text-transform: uppercase;
+      transition: 0.1s linear;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .btn-primary:hover { background: #c81920; }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gray);
+    }
+
+    .btn-ghost:hover { border-color: var(--red); color: var(--red); }
+
+    .btn-sm {
+      font-size: 10px;
+      padding: 5px 10px;
+    }
+
+    /* ─── CHECKIN ITEMS ─── */
+    .checkin-list { padding: 4px 0; }
+
+    .checkin-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .checkin-item:last-child { border-bottom: none; }
+    .checkin-item:hover { background: rgba(255,255,255,0.015); }
+
+    .checkin-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .checkin-avatar {
+      width: 36px;
+      height: 36px;
+      background: rgba(227,30,36,0.15);
+      border: 1px solid rgba(227,30,36,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 15px;
+      color: var(--red);
+      flex-shrink: 0;
+    }
+
+    .checkin-meta { flex: 1; }
+    .checkin-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .checkin-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+    }
+
+    .checkin-stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+    }
+
+    .stat-pill i { font-size: 9px; }
+
+    .stat-pill strong { color: var(--white); }
+
+    .checkin-comment {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 10px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .checkin-reply-box {
+      display: flex;
+      gap: 8px;
+    }
+
+    .checkin-reply-box textarea {
+      flex: 1;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 10px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--white);
+      resize: none;
+      min-height: 70px;
+      transition: border-color 0.15s;
+    }
+
+    .checkin-reply-box textarea:focus {
+      outline: none;
+      border-color: rgba(227,30,36,0.5);
+    }
+
+    .checkin-reply-box textarea::placeholder { color: var(--gray); }
+
+    .reply-sent {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(34,197,94,0.06);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 0;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--green);
+      line-height: 1.5;
+    }
+
+    .reply-sent i { margin-top: 2px; flex-shrink: 0; }
+
+    /* ─── SECTION TITLE ─── */
+    .section-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 32px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    /* ─── PAGOS SUMMARY ─── */
+    .pagos-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 20px;
+    }
+
+    .summary-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .summary-value {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 36px;
+      letter-spacing: 1px;
+      color: var(--green);
+    }
+
+    .summary-sub {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+
+    /* ─── CONFIG CARDS ─── */
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .config-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 24px;
+    }
+
+    .config-card-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(227,30,36,0.1);
+      border: 1px solid rgba(227,30,36,0.2);
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+
+    .config-card h3 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .config-card p {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .config-code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+
+    .config-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--red);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .config-link:hover { text-decoration: underline; }
+
+    .creds-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    .creds-table td {
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .creds-table td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+      letter-spacing: 1px;
+      width: 40%;
+    }
+
+    .creds-table td:last-child { color: var(--white); }
+
+    .creds-table tr:last-child td { border-bottom: none; }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gray);
+    }
+
+    .empty-state i {
+      font-size: 32px;
+      margin-bottom: 12px;
+      opacity: 0.3;
+      display: block;
+    }
+
+    .empty-state p { font-size: 13px; }
+
+    /* ─── BIENESTAR SCORE ─── */
+    .score-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .score-dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .score-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .score-dot.filled { background: var(--green); }
+    .score-dot.mid    { background: var(--gold); }
+    .score-dot.low    { background: var(--red); }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      border-radius: 0;
+      padding: 14px 20px;
+      font-size: 13px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.1s linear;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ─── ACTIVITY LIST ─── */
+    .activity-list { padding: 4px 0; }
+
+    .activity-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(37,37,40,0.5);
+    }
+
+    .activity-row:last-child { border-bottom: none; }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    .activity-dot.pending { background: var(--gold); }
+
+    .activity-info { flex: 1; }
+    .activity-client { font-size: 13px; font-weight: 500; }
+    .activity-detail {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+
+    .activity-amount {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .activity-amount.green { color: var(--green); }
+    .activity-amount.yellow { color: var(--gold); }
+
+    /* ─── CHECKIN PENDING TAG ─── */
+    .pending-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--white);
+      transition: background 0.15s;
+    }
+
+    .pending-tag:last-child { border-bottom: none; }
+    .pending-tag:hover { background: rgba(255,255,255,0.02); }
+
+    .pending-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .pending-info { flex: 1; }
+    .pending-name { font-size: 13px; font-weight: 500; }
+    .pending-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .main { margin-left: 0; }
+      .topbar-hamburger { display: block; }
+      .content { padding: 20px 16px; }
+      .topbar { padding: 0 16px; }
+      .topbar-user .user-info { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .config-grid { grid-template-columns: 1fr; }
+      .pagos-summary { grid-template-columns: 1fr; }
+      .page-header h1 { font-size: 28px; }
+      .content { padding: 16px 12px; }
+    }
+  </style>
+</head>
+<body>
+<script src="js/api.js"></script>
+<style>body { visibility: hidden; }</style>
+
+<div class="app">
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+  <!-- ═══════════════════════════════════════
+       SIDEBAR
+  ═══════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand">WELL<span>CORE</span> FITNESS</div>
+      <div class="sub">Sistema de Gestion</div>
+      <div class="admin-chip"><span style="color:#00D9FF;font-size:7px;margin-right:3px;font-weight:700">//</span>ADMIN ACCESS</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-label">Menu Principal</div>
+
+      <div class="nav-item active" data-section="dashboard">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9670;</span>
+        Dashboard
+      </div>
+
+      <div class="nav-item" data-section="clientes">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9673;</span>
+        Clientes
+        <span class="badge" style="background:rgba(161,161,170,0.15);color:var(--gray);border:1px solid var(--border);">0</span>
+      </div>
+
+      <div class="nav-item" data-section="checkins">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#10003;</span>
+        Check-ins
+        <span class="badge" style="display:none">0</span>
+      </div>
+
+      <div class="nav-item" data-section="pagos">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9672;</span>
+        Pagos
+      </div>
+
+      <div class="nav-item" data-section="configuracion">
+        <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9678;</span>
+        Configuracion
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="version">WellCore Admin v1.0.0</div>
+      <div class="version" id="apiStatus" style="margin-top:2px;">Conectando...</div>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════
+       MAIN
+  ═══════════════════════════════════════ -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="topbar-hamburger" onclick="toggleMobileSidebar()">&#9776;</button>
+      <div class="topbar-title">PANEL ADMIN</div>
+      <div class="topbar-spacer"></div>
+      <div class="topbar-user">
+        <div class="avatar" id="adminAvatar">C</div>
+        <div class="user-info">
+          <div class="user-name" id="adminName">coach</div>
+          <div class="user-role">Administrador</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()">
+        &rarr; Salir
+      </button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ─────────────────────────────
+           1. DASHBOARD
+      ───────────────────────────── -->
+      <div class="section active" id="section-dashboard">
+
+        <div class="section-title">DASHBOARD</div>
+        <div class="section-sub">VISION GENERAL DEL NEGOCIO &mdash; <span id="todayDate"></span></div>
+
+        <!-- KPI GRID -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9673;</span>
+            <div class="kpi-label">Clientes Activos</div>
+            <div class="kpi-value">0</div>
+            <div class="kpi-footer">sin clientes registrados</div>
+          </div>
+
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9672;</span>
+            <div class="kpi-label">MRR</div>
+            <div class="kpi-value green">$0</div>
+            <div class="kpi-footer">ingreso mensual recurrente</div>
+          </div>
+
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9671;</span>
+            <div class="kpi-label">Check-ins Pendientes</div>
+            <div class="kpi-value red">0</div>
+            <div class="kpi-footer">sin check-ins pendientes</div>
+          </div>
+
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9655;</span>
+            <div class="kpi-label">Formularios Nuevos</div>
+            <div class="kpi-value" style="color:var(--gold);">0</div>
+            <div class="kpi-footer">leads sin contactar</div>
+          </div>
+        </div>
+
+        <!-- GRID 2 COLS -->
+        <div class="grid-2">
+          <!-- Ultimos ingresos -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Ultimos Ingresos</span>
+              <span class="card-count">0 transacciones</span>
+            </div>
+            <div class="activity-list" id="recentTransactions"></div>
+          </div>
+
+          <!-- Check-ins pendientes -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Check-ins Sin Responder</span>
+              <span class="kpi-badge"><span style="font-size:5px;color:var(--red)">&#9679;</span> 0 pendientes</span>
+            </div>
+            <div id="pendingCheckins"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ─────────────────────────────
+           2. CLIENTES
+      ───────────────────────────── -->
+      <div class="section" id="section-clientes">
+
+        <div class="section-title">CLIENTES</div>
+        <div class="section-sub">GESTION DE CLIENTES ACTIVOS</div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Directorio de Clientes</span>
+            <span class="card-count">3 registros</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Email</th>
+                  <th>Plan</th>
+                  <th>Semanas</th>
+                  <th>Estado</th>
+                  <th>Ultimo Check-in</th>
+                  <th>MRR</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="clientesTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ─────────────────────────────
+           3. CHECK-INS
+      ───────────────────────────── -->
+      <div class="section" id="section-checkins">
+
+        <div class="section-title">CHECK-INS</div>
+        <div class="section-sub">REPORTES SEMANALES DE CLIENTES</div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Todos los Check-ins</span>
+            <span class="card-count" id="checkinCount"></span>
+          </div>
+          <div class="checkin-list" id="checkinsList"></div>
+        </div>
+
+      </div>
+
+      <!-- ─────────────────────────────
+           4. PAGOS
+      ───────────────────────────── -->
+      <div class="section" id="section-pagos">
+
+        <div class="section-title">PAGOS</div>
+        <div class="section-sub">HISTORIAL DE TRANSACCIONES</div>
+
+        <!-- Summary (populated from API) -->
+        <div class="pagos-summary">
+          <div class="summary-card">
+            <div class="summary-label">MRR Actual</div>
+            <div class="summary-value" id="pagos-mrr">$0</div>
+            <div class="summary-sub" id="pagos-mrr-sub">0 clientes activos</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">ARR Proyectado</div>
+            <div class="summary-value" id="pagos-arr">$0</div>
+            <div class="summary-sub">anual estimado</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">Total Cobrado</div>
+            <div class="summary-value" id="pagos-total" style="color:var(--white);">$0</div>
+            <div class="summary-sub" id="pagos-total-sub">0 pagos confirmados</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Historial de Transacciones</span>
+            <span class="card-count">5 registros</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Cliente</th>
+                  <th>Plan</th>
+                  <th>Monto</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="pagosTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ─────────────────────────────
+           5. CONFIGURACION
+      ───────────────────────────── -->
+      <div class="section" id="section-configuracion">
+
+        <div class="section-title">CONFIGURACION</div>
+        <div class="section-sub">AJUSTES DEL SISTEMA WELLCORE</div>
+
+        <div class="config-grid">
+
+          <!-- Agregar Clientes -->
+          <div class="config-card">
+            <div class="config-card-icon"><span style="color:#00D9FF;font-weight:700">&#9673;</span></div>
+            <h3>Agregar Clientes</h3>
+            <p>Los clientes se gestionan via la base de datos MySQL. Usa el panel <strong>Admin Clientes</strong> para crear, editar o invitar clientes. Tambien puedes usar el sistema de <strong>Patrocinio</strong> desde Admin Jefe.</p>
+            <div class="config-code">POST /api/admin/create-sponsored<br>POST /api/admin/send-invitation</div>
+            <p style="font-size:12px;color:var(--gray);">Los clientes tambien se crean automaticamente al completar inscripcion o pago via Wompi.</p>
+          </div>
+
+          <!-- Formspree -->
+          <div class="config-card">
+            <div class="config-card-icon" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.2);">
+              <span style="color:var(--accent);font-weight:700">@</span>
+            </div>
+            <h3>Formspree</h3>
+            <p>Formulario de contacto configurado via Formspree. Reemplaza el ID en el action del formulario principal.</p>
+            <div class="config-code">action="https://formspree.io/f/<span style="color:var(--gold);">TU_FORM_ID</span>"</div>
+            <a href="https://formspree.io" target="_blank" class="config-link">
+              <span style="font-size:9px">&rarr;</span>
+              formspree.io &rarr;
+            </a>
+          </div>
+
+          <!-- Wompi -->
+          <div class="config-card">
+            <div class="config-card-icon" style="background:rgba(245,200,66,0.1);border-color:rgba(245,200,66,0.2);">
+              <span style="color:var(--gold);font-weight:700">&#9672;</span>
+            </div>
+            <h3>Wompi (Bancolombia)</h3>
+            <p>Pasarela de pagos. Acepta tarjetas, PSE, Nequi, Efecty. Configura las llaves en api/.env.</p>
+            <div class="config-code">WOMPI_PUBLIC_KEY=pub_...<br>WOMPI_PRIVATE_KEY=prv_...<br>WOMPI_INTEGRITY_SECRET=prod_integrity_...</div>
+            <a href="https://comercios.wompi.co" target="_blank" class="config-link">
+              <span style="font-size:9px">&rarr;</span>
+              comercios.wompi.co &rarr;
+            </a>
+          </div>
+
+          <!-- Accesos -->
+          <div class="config-card">
+            <div class="config-card-icon" style="background:rgba(227,30,36,0.1);border-color:rgba(227,30,36,0.2);">
+              <span style="color:var(--red);font-weight:700">&#9678;</span>
+            </div>
+            <h3>Accesos del Sistema</h3>
+            <p>Credenciales actuales de acceso. Cambia estas claves editando directamente el archivo <strong>login.html</strong>.</p>
+            <table class="creds-table">
+              <tr>
+                <td>Admin</td>
+                <td><span id="adminUserDisplay">coach</span></td>
+              </tr>
+              <tr>
+                <td>Password Admin</td>
+                <td><span style="letter-spacing:3px;color:var(--gray);">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span></td>
+              </tr>
+              <tr>
+                <td>Clientes</td>
+                <td>3 registros activos</td>
+              </tr>
+              <tr>
+                <td>Entorno</td>
+                <td><span class="badge badge-yellow">DEMO &mdash; Sin backend</span></td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- END SECTIONS -->
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span style="color:#00D9FF;font-weight:700">&#10003;</span>
+  <span id="toastMsg">Respuesta enviada correctamente</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+  /* ─── MOBILE SIDEBAR ─── */
+  function toggleMobileSidebar() {
+    document.getElementById('sidebar').classList.toggle('mobile-open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
+  }
+  function closeMobileSidebar() {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+  }
+
+  /* ─── AUTH CHECK (token + role verification via API) ─── */
+  (function() {
+    var token = localStorage.getItem('wc_token');
+    if (!token) { window.location.replace('login.html'); return; }
+    WC_API.auth.me().then(function(data) {
+      if (!data || data.type !== 'admin') { window.location.replace('login.html'); return; }
+      var role = data.admin ? data.admin.role : '';
+      if (role !== 'admin' && role !== 'jefe' && role !== 'superadmin') { window.location.replace('login.html'); return; }
+      var name = (data.admin && data.admin.name) ? data.admin.name : (data.admin && data.admin.username) || 'Admin';
+      document.getElementById('adminName').textContent = name;
+      document.getElementById('adminAvatar').textContent = name.charAt(0).toUpperCase();
+      document.getElementById('adminUserDisplay').textContent = name;
+      document.body.style.visibility = 'visible';
+      if (typeof initApp === 'function') initApp();
+    }).catch(function() { localStorage.removeItem('wc_token'); window.location.replace('login.html'); });
+  })();
+
+  /* ─── DATE ─── */
+  const todayRaw = new Date();
+  const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  document.getElementById('todayDate').textContent =
+    todayRaw.getDate() + ' DE ' + months[todayRaw.getMonth()].toUpperCase() + ' ' + todayRaw.getFullYear();
+
+  /* ─── MOCK DATA (fallback when API unavailable) ─── */
+  const DEMO_CLIENTS = [];
+
+  /* Local copy for replies (survives section switches) — unified field names */
+  let DEMO_CHECKINS = [];
+
+  /* Live data from API (null = not loaded yet) */
+  var LIVE_CLIENTS  = null;
+  var LIVE_CHECKINS = null;
+
+  const DEMO_TRANSACTIONS = [];
+
+  /* ─── NAV ─── */
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      item.classList.add('active');
+      const sec = item.dataset.section;
+      document.getElementById('section-' + sec).classList.add('active');
+      closeMobileSidebar();
+    });
+  });
+
+  /* ─── LOGOUT (server-side token invalidation + local cleanup) ─── */
+  function logout() {
+    WC_API.auth.logout().finally(function() {
+      window.location.href = 'login.html';
+    });
+  }
+
+  /* ─── TOAST ─── */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  /* ─── HELPERS ─── */
+  function fmtDate(d) {
+    if (!d) return 'Sin check-in';
+    const p = d.split('-');
+    return p[2] + '/' + p[1] + '/' + p[0];
+  }
+
+  function initials(name) {
+    return name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+  }
+
+  function planBadge(plan) {
+    const cls = { esencial: 'plan-esencial badge', metodo: 'plan-metodo badge', elite: 'plan-elite badge' };
+    const labels = { esencial: 'ESENCIAL', metodo: 'METODO', elite: 'ELITE' };
+    return `<span class="${cls[plan] || 'badge badge-gray'}">${labels[plan] || plan.toUpperCase()}</span>`;
+  }
+
+  function scoreDots(score) {
+    let html = '<div class="score-dots">';
+    for (let i = 1; i <= 10; i++) {
+      const cls = i <= score
+        ? (score >= 7 ? 'filled' : score >= 5 ? 'mid' : 'low')
+        : '';
+      html += `<div class="score-dot ${cls}"></div>`;
+    }
+    html += '</div>';
+    return html;
+  }
+
+  /* ─── RENDER: DASHBOARD - RECENT TRANSACTIONS ─── */
+  function renderRecentTransactions() {
+    const last3 = DEMO_TRANSACTIONS.slice(-3).reverse();
+    const el = document.getElementById('recentTransactions');
+    el.innerHTML = last3.map(t => {
+      const isPending = t.status === 'pendiente';
+      return `
+        <div class="activity-row">
+          <div class="activity-dot ${isPending ? 'pending' : ''}"></div>
+          <div class="activity-info">
+            <div class="activity-client">${t.client}</div>
+            <div class="activity-detail">${t.plan} &mdash; ${fmtDate(t.date)}</div>
+          </div>
+          <div class="activity-amount ${isPending ? 'yellow' : 'green'}">$${t.amount}</div>
+          <span class="badge ${isPending ? 'badge-yellow' : 'badge-green'}">${t.status}</span>
+        </div>`;
+    }).join('');
+  }
+
+  /* ─── RENDER: DASHBOARD - PENDING CHECKINS ─── */
+  function renderPendingCheckins(checkins) {
+    checkins = checkins || LIVE_CHECKINS || DEMO_CHECKINS;
+    const pending = checkins.filter(function(c) { return !(c.coach_reply || '').trim(); });
+    const el = document.getElementById('pendingCheckins');
+    el.textContent = '';
+    if (!pending.length) {
+      var emp = document.createElement('div'); emp.className = 'empty-state';
+      var ic = document.createElement('span'); ic.textContent = '//'; ic.style.cssText = 'color:#00D9FF;font-weight:700;font-size:32px;display:block;opacity:.3';
+      var p = document.createElement('p'); p.textContent = 'Sin check-ins pendientes. Al dia.';
+      emp.appendChild(ic); emp.appendChild(p); el.appendChild(emp);
+      return;
+    }
+    pending.forEach(function(c) {
+      var name = c.client_name || '';
+      var dateStr = fmtDate(c.checkin_date || c.date || '');
+      var tag = document.createElement('div'); tag.className = 'pending-tag';
+      var dot = document.createElement('div'); dot.className = 'pending-dot';
+      var info = document.createElement('div'); info.className = 'pending-info';
+      var nameEl = document.createElement('div'); nameEl.className = 'pending-name'; nameEl.textContent = name;
+      var dateEl = document.createElement('div'); dateEl.className = 'pending-date';
+      dateEl.textContent = dateStr + ' — Bienestar ' + (c.bienestar || 0) + '/10';
+      info.appendChild(nameEl); info.appendChild(dateEl);
+      var btn = document.createElement('button'); btn.className = 'btn btn-sm btn-primary';
+      btn.textContent = '\u2192 Responder';
+      btn.addEventListener('click', goToCheckins);
+      tag.appendChild(dot); tag.appendChild(info); tag.appendChild(btn);
+      el.appendChild(tag);
+    });
+  }
+
+  function goToCheckins() {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelector('[data-section="checkins"]').classList.add('active');
+    document.getElementById('section-checkins').classList.add('active');
+  }
+
+  /* ─── RENDER: CLIENTES TABLE ─── */
+  function renderClientes(clients) {
+    clients = clients || LIVE_CLIENTS || DEMO_CLIENTS;
+    const tbody = document.getElementById('clientesTable');
+    tbody.textContent = '';
+    clients.forEach(function(c) {
+      var weeks = c.weeks_active !== undefined ? c.weeks_active : (c.weeks || 0);
+      var lastCI = c.lastCheckin || c.last_checkin_date || null;
+      var hasPending = (c.pending_checkins || 0) > 0;
+      var tr = document.createElement('tr');
+
+      // Name cell
+      var tdName = document.createElement('td');
+      var nameWrap = document.createElement('div'); nameWrap.style.cssText = 'display:flex;align-items:center;gap:10px;';
+      var avatar = document.createElement('div'); avatar.style.cssText = 'width:34px;height:34px;background:rgba(227,30,36,0.1);border:1px solid rgba(227,30,36,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:\'Bebas Neue\',cursive;font-size:13px;color:var(--red);flex-shrink:0;';
+      avatar.textContent = initials(c.name);
+      var nameSpan = document.createElement('span'); nameSpan.style.fontWeight = '500'; nameSpan.textContent = c.name;
+      nameWrap.appendChild(avatar); nameWrap.appendChild(nameSpan); tdName.appendChild(nameWrap);
+
+      // Email
+      var tdEmail = document.createElement('td'); tdEmail.style.cssText = 'color:var(--gray);font-family:\'JetBrains Mono\',monospace;font-size:11px;'; tdEmail.textContent = c.email;
+
+      // Plan badge
+      var tdPlan = document.createElement('td');
+      tdPlan.insertAdjacentHTML('beforeend', planBadge(c.plan));
+
+      // Weeks
+      var tdWeeks = document.createElement('td');
+      var weeksSpan = document.createElement('span'); weeksSpan.style.cssText = 'font-family:\'JetBrains Mono\',monospace;font-size:12px;'; weeksSpan.textContent = weeks + ' sem';
+      tdWeeks.appendChild(weeksSpan);
+
+      // Status
+      var tdStatus = document.createElement('td');
+      tdStatus.insertAdjacentHTML('beforeend', '<span class="badge badge-green">' + (c.status || 'activo') + '</span>');
+
+      // Last check-in + pending indicator
+      var tdCI = document.createElement('td'); tdCI.style.cssText = 'font-family:\'JetBrains Mono\',monospace;font-size:11px;color:var(--gray);';
+      var ciText = fmtDate(lastCI);
+      if (hasPending) ciText += ' \u25CF';
+      tdCI.textContent = ciText;
+      if (hasPending) tdCI.style.color = '#E31E24';
+
+      // MRR
+      var MRR_MAP = { elite: 150, metodo: 120, esencial: 95 };
+      var tdMrr = document.createElement('td'); tdMrr.style.cssText = 'font-family:\'JetBrains Mono\',monospace;font-size:12px;color:var(--green);';
+      tdMrr.textContent = '$' + (MRR_MAP[c.plan] || c.mrr || 0);
+
+      // Action
+      var tdBtn = document.createElement('td');
+      var btn = document.createElement('button'); btn.className = 'btn btn-sm btn-primary'; btn.textContent = '\u2192 Ver Portal';
+      var codeRef = c.client_code || c.id;
+      btn.addEventListener('click', function() { viewClientPortal(codeRef); });
+      tdBtn.appendChild(btn);
+
+      [tdName, tdEmail, tdPlan, tdWeeks, tdStatus, tdCI, tdMrr, tdBtn].forEach(function(td) { tr.appendChild(td); });
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* ─── VIEW CLIENT PORTAL ─── */
+  function viewClientPortal(clientId) {
+    var allClients = (LIVE_CLIENTS && LIVE_CLIENTS.length) ? LIVE_CLIENTS : DEMO_CLIENTS;
+    var client = allClients.find(function(c) {
+      return c.client_code === clientId || String(c.id) === String(clientId);
+    });
+    if (!client) return;
+    // Set UI display data for client portal preview (admin already has wc_token)
+    localStorage.setItem('wc_client_name', client.name || '');
+    localStorage.setItem('wc_client_email', client.email || '');
+    localStorage.setItem('wc_client_plan', (client.plan || '').toLowerCase());
+    localStorage.setItem('wc_client_id', String(client.client_code || client.id));
+    window.open('cliente.html', '_blank');
+  }
+
+  /* ─── RENDER: CHECK-INS ─── */
+  function renderCheckins(checkins) {
+    checkins = checkins || LIVE_CHECKINS || DEMO_CHECKINS;
+    LIVE_CHECKINS = checkins;
+    var el = document.getElementById('checkinsList');
+    var countEl = document.getElementById('checkinCount');
+    if (countEl) countEl.textContent = checkins.length + ' reportes';
+    el.textContent = '';
+
+    if (!checkins.length) {
+      var emp = document.createElement('div'); emp.className = 'empty-state';
+      var ic = document.createElement('span'); ic.textContent = '//'; ic.style.cssText = 'color:#00D9FF;font-weight:700;font-size:32px;display:block;opacity:.3';
+      var pe = document.createElement('p'); pe.textContent = 'Sin check-ins disponibles.';
+      emp.appendChild(ic); emp.appendChild(pe); el.appendChild(emp);
+      return;
+    }
+
+    checkins.forEach(function(c) {
+      var ref = String(c.id);
+      var clientName = c.client_name || '';
+      var dateStr = fmtDate(c.checkin_date || c.date || '');
+      var bienestar = c.bienestar || 0;
+      var dias = c.dias_entrenados || 0;
+      var nutricion = c.nutricion || '—';
+      var comentario = c.comentario || '';
+      var coachReply = (c.coach_reply || '').trim();
+      var hasReply = coachReply.length > 0;
+      var nutColor = nutricion === 'Si' ? 'var(--green)' : nutricion === 'Parcial' ? 'var(--gold)' : 'var(--red)';
+
+      // Container
+      var item = document.createElement('div'); item.className = 'checkin-item'; item.id = 'checkin-' + ref;
+
+      // Top row
+      var top = document.createElement('div'); top.className = 'checkin-top';
+      var avEl = document.createElement('div'); avEl.className = 'checkin-avatar'; avEl.textContent = initials(clientName);
+      var meta = document.createElement('div'); meta.className = 'checkin-meta';
+      var nameEl = document.createElement('div'); nameEl.className = 'checkin-name'; nameEl.textContent = clientName;
+      var dateEl = document.createElement('div'); dateEl.className = 'checkin-date';
+      var slashS = document.createElement('span'); slashS.style.cssText = 'color:#00D9FF;font-size:9px;margin-right:4px;font-weight:700'; slashS.textContent = '//';
+      dateEl.appendChild(slashS); dateEl.appendChild(document.createTextNode(dateStr));
+      meta.appendChild(nameEl); meta.appendChild(dateEl);
+      var badge = document.createElement('span');
+      if (hasReply) { badge.className = 'badge badge-green'; badge.textContent = '// Respondido'; }
+      else { badge.className = 'kpi-badge'; badge.textContent = '\u25CF Pendiente'; }
+      top.appendChild(avEl); top.appendChild(meta); top.appendChild(badge);
+
+      // Stats
+      var stats = document.createElement('div'); stats.className = 'checkin-stats';
+      function makePill(text) {
+        var pill = document.createElement('div'); pill.className = 'stat-pill';
+        var sl = document.createElement('span'); sl.style.cssText = 'color:#00D9FF;font-weight:700;font-size:9px'; sl.textContent = '//';
+        var sp = document.createElement('span'); sp.textContent = text;
+        pill.appendChild(sl); pill.appendChild(sp); return pill;
+      }
+      stats.appendChild(makePill('Bienestar: ' + bienestar + '/10'));
+      stats.appendChild(makePill('Entrenos: ' + dias + ' dias'));
+      var nutPill = makePill('Nutricion: ');
+      var nutStrong = document.createElement('strong'); nutStrong.style.color = nutColor; nutStrong.textContent = nutricion;
+      nutPill.appendChild(nutStrong);
+      stats.appendChild(nutPill);
+
+      // Comment
+      var commentDiv = document.createElement('div'); commentDiv.className = 'checkin-comment';
+      var slC = document.createElement('span'); slC.style.cssText = 'font-size:10px;margin-right:6px;opacity:0.4;color:#00D9FF;font-weight:700'; slC.textContent = '//';
+      commentDiv.appendChild(slC); commentDiv.appendChild(document.createTextNode(comentario));
+
+      item.appendChild(top); item.appendChild(stats); item.appendChild(commentDiv);
+
+      // Reply section
+      if (hasReply) {
+        var replySent = document.createElement('div'); replySent.className = 'reply-sent';
+        var slR = document.createElement('span'); slR.style.cssText = 'color:#00D9FF;font-weight:700'; slR.textContent = '//';
+        var replyWrap = document.createElement('div');
+        var replyLabel = document.createElement('strong'); replyLabel.style.cssText = 'display:block;margin-bottom:4px;font-size:11px;letter-spacing:1px;font-family:\'JetBrains Mono\',monospace;'; replyLabel.textContent = 'TU RESPUESTA:';
+        replyWrap.appendChild(replyLabel); replyWrap.appendChild(document.createTextNode(coachReply));
+        replySent.appendChild(slR); replySent.appendChild(replyWrap);
+        item.appendChild(replySent);
+      } else {
+        var replyBox = document.createElement('div'); replyBox.className = 'checkin-reply-box';
+        var ta = document.createElement('textarea'); ta.id = 'reply-' + ref; ta.rows = 3; ta.placeholder = 'Escribe tu respuesta para ' + clientName + '...';
+        var sendBtn = document.createElement('button'); sendBtn.className = 'btn btn-primary'; sendBtn.style.alignSelf = 'flex-end'; sendBtn.textContent = '\u2192 Enviar';
+        (function(r) { sendBtn.addEventListener('click', function() { sendReply(r); }); })(ref);
+        replyBox.appendChild(ta); replyBox.appendChild(sendBtn);
+        item.appendChild(replyBox);
+      }
+
+      el.appendChild(item);
+    });
+  }
+
+  /* ─── SEND REPLY ─── */
+  function sendReply(ref) {
+    var textarea = document.getElementById('reply-' + ref);
+    var val = textarea ? textarea.value.trim() : '';
+    if (!val) {
+      if (textarea) { textarea.style.borderColor = 'var(--red)'; setTimeout(function() { textarea.style.borderColor = ''; }, 1500); }
+      return;
+    }
+    var ci = (LIVE_CHECKINS || []).find(function(c) { return String(c.id) === String(ref); });
+    if (!ci) return;
+    var clientName = ci.client_name || '';
+
+    // API mode (numeric id)
+    if (typeof ci.id === 'number') {
+      apiFetch('/admin/checkins?id=' + ci.id, { method: 'PUT', body: JSON.stringify({ reply: val }) })
+        .then(function(r) { return r.json(); })
+        .then(function() {
+          ci.coach_reply = val;
+          renderCheckins(LIVE_CHECKINS);
+          renderPendingCheckins(LIVE_CHECKINS);
+          showToast('Respuesta enviada a ' + clientName);
+        })
+        .catch(function() {
+          ci.coach_reply = val;
+          renderCheckins(LIVE_CHECKINS);
+          renderPendingCheckins(LIVE_CHECKINS);
+          showToast('Respuesta guardada (offline)');
+        });
+    } else {
+      // DEMO mode (string id like 'demo-0')
+      ci.coach_reply = val;
+      renderCheckins(LIVE_CHECKINS);
+      renderPendingCheckins(LIVE_CHECKINS);
+      showToast('Respuesta enviada a ' + clientName);
+    }
+  }
+
+  /* ─── RENDER: PAGOS ─── */
+  function renderPagos() {
+    const tbody = document.getElementById('pagosTable');
+    tbody.innerHTML = DEMO_TRANSACTIONS.map(t => {
+      const isPending = t.status === 'pendiente';
+      return `
+        <tr>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);">${t.id}</td>
+          <td style="font-weight:500;">${t.client}</td>
+          <td>${planBadge(t.plan.toLowerCase())}</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:${isPending ? 'var(--gold)' : 'var(--green)'};">$${t.amount}</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);">${fmtDate(t.date)}</td>
+          <td><span class="badge ${isPending ? 'badge-yellow' : 'badge-green'}">${t.status}</span></td>
+        </tr>`;
+    }).join('');
+  }
+
+  /* ─── LOAD FROM API ─── */
+  function setApiStatus(online) {
+    var el = document.getElementById('apiStatus');
+    if (!el) return;
+    el.textContent = online ? 'API conectada' : 'Modo demo (offline)';
+    el.style.color  = online ? 'var(--green)' : 'var(--gold)';
+  }
+
+  function loadAdminData() {
+    // Clients
+    apiFetch('/admin/clients')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        LIVE_CLIENTS = data.clients || [];
+        renderClientes(LIVE_CLIENTS);
+        setApiStatus(true);
+      })
+      .catch(function() { renderClientes(DEMO_CLIENTS); setApiStatus(false); });
+
+    // Checkins (all recent + pending)
+    apiFetch('/admin/checkins')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        LIVE_CHECKINS = data.checkins || [];
+        renderCheckins(LIVE_CHECKINS);
+        renderPendingCheckins(LIVE_CHECKINS);
+      })
+      .catch(function() {
+        renderCheckins(DEMO_CHECKINS);
+        renderPendingCheckins(DEMO_CHECKINS);
+      });
+  }
+
+  /* ─── INIT (called after auth verification) ─── */
+  function initApp() {
+    renderRecentTransactions();
+    renderPagos();
+    loadAdminData();
+  }
+</script>
+
+</body>
+</html>

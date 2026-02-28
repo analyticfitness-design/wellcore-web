@@ -1,0 +1,93 @@
+[
+    {
+        "id": "02f06ca7-1e4e-40f4-b8bc-d74ce149c966",
+        "client_id": "cli-001",
+        "exercise": "Sentadilla",
+        "weight_kg": 100,
+        "sets": 4,
+        "reps": 8,
+        "rpe": null,
+        "week": 8,
+        "year": 2026,
+        "notes": "",
+        "created_at": "2026-02-18T18:14:16.767Z"
+    },
+    {
+        "id": "w-d5517e0f",
+        "client_id": "1",
+        "exercise": "Sentadilla",
+        "weight_kg": 90,
+        "sets": 4,
+        "reps": 8,
+        "rpe": 8.5,
+        "notes": "Test desde CLI",
+        "week": 9,
+        "year": 2026,
+        "date": "2026-02-23T22:45:14Z"
+    },
+    {
+        "id": "w-ee0cc98a",
+        "client_id": "1",
+        "exercise": "Sentadilla",
+        "weight_kg": 92.5,
+        "sets": 4,
+        "reps": 6,
+        "rpe": 9,
+        "notes": "Test MySQL directo",
+        "week": 9,
+        "year": 2026,
+        "date": "2026-02-23 22:45:41"
+    },
+    {
+        "id": "w-43fc8762",
+        "client_id": "1",
+        "exercise": "Peso Muerto",
+        "weight_kg": 100,
+        "sets": 3,
+        "reps": 5,
+        "rpe": 8,
+        "notes": "",
+        "week": 9,
+        "year": 2026,
+        "date": "2026-02-23 22:45:52"
+    },
+    {
+        "id": "w-0c282688",
+        "client_id": "1",
+        "exercise": "Sentadilla",
+        "weight_kg": 70,
+        "sets": 3,
+        "reps": 12,
+        "rpe": 1,
+        "notes": "",
+        "week": 9,
+        "year": 2026,
+        "date": "2026-02-24 03:51:09"
+    },
+    {
+        "id": "w-fc197f4e",
+        "client_id": "1",
+        "exercise": "Sentadilla",
+        "weight_kg": 70,
+        "sets": 3,
+        "reps": 12,
+        "rpe": 1,
+        "notes": "",
+        "week": 9,
+        "year": 2026,
+        "date": "2026-02-24 03:51:17"
+    },
+    {
+        "id": "w-379e14be",
+        "client_id": "1",
+        "exercise": "Sentadilla",
+        "weight_kg": 70,
+        "sets": 3,
+        "reps": 12,
+        "rpe": 9,
+        "notes": "",
+        "week": 9,
+        "year": 2026,
+        "date": "2026-02-24 03:51:33"
+    }
+]

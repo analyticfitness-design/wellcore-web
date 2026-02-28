@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mantenimiento | WellCore Fitness</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111113;
+      --red: #E31E24;
+      --white: #ffffff;
+      --gray: rgba(255,255,255,0.45);
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .logo {
+      margin-bottom: 2.5rem;
+    }
+    .logo img {
+      height: 38px;
+    }
+    .status-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      background: var(--red);
+      color: var(--white);
+      padding: 4px 10px;
+      margin-bottom: 1.5rem;
+    }
+    .title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+    }
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--red);
+      margin: 1rem auto 1.5rem;
+    }
+    .msg {
+      font-size: 1rem;
+      color: var(--gray);
+      max-width: 420px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .contact-link {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      background: var(--red);
+      padding: 0.75rem 2rem;
+      text-decoration: none;
+      border-radius: 0;
+      transition: background 0.1s linear;
+    }
+    .contact-link:hover {
+      background: #B8181D;
+    }
+    .footer-info {
+      margin-top: 3rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="/images/logo/imagotipo-blanco.png" alt="WellCore Fitness" />
+  </div>
+  <div class="status-badge">Mantenimiento</div>
+  <h1 class="title">Estamos mejorando para ti</h1>
+  <div class="divider"></div>
+  <p class="msg">Nuestro sitio se encuentra en mantenimiento programado. Volvemos pronto con una mejor experiencia.</p>
+  <a href="https://wa.me/573124904720" class="contact-link" target="_blank" rel="noopener">Escr&iacute;benos por WhatsApp</a>
+  <div class="footer-info">info@wellcorefitness.com</div>
+</body>
+</html>

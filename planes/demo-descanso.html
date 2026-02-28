@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protocolo de Descanso — WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS — WellCore Fitness Training Template
+    ========================================================= */
+    :root {
+      --bg-primary:      #000000;
+      --bg-card:         #111114;
+      --bg-card-alt:     #0D0D10;
+      --bg-row-alt:      #141417;
+      --red:             #E31E24;
+      --red-dark:        #B01519;
+      --red-glow:        rgba(227,30,36,0.15);
+      --red-dim:         rgba(227,30,36,0.08);
+      --text-primary:    #FFFFFF;
+      --text-body:       #D4D4D8;
+      --text-muted:      #71717A;
+      --text-subtle:     #52525B;
+      --border-subtle:   rgba(255,255,255,0.06);
+      --border-medium:   rgba(255,255,255,0.10);
+      --border-strong:   rgba(255,255,255,0.18);
+      --font-display:    'Bebas Neue', sans-serif;
+      --font-sans:       'Inter', sans-serif;
+      --font-heading:    'Montserrat', sans-serif;
+      --font-mono:       'JetBrains Mono', monospace;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       PRINT BUTTON (screen only)
+    ========================================================= */
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border: 4px solid var(--red);
+      border-radius: 0;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.1s linear;
+    }
+    .print-btn:hover {
+      background: #ff2a31;
+    }
+
+    /* =========================================================
+       PAGE WRAPPER
+    ========================================================= */
+    .page-wrapper {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20px 0 60px;
+    }
+
+    /* =========================================================
+       PAGE UNIT — A4 DIMENSIONS
+    ========================================================= */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg-primary);
+      margin: 0 auto 24px;
+      padding: 14mm 14mm 14mm 14mm;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* =========================================================
+       COVER PAGE
+    ========================================================= */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cover-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-medium);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .cover-logo-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .logo-wordmark {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .logo-wordmark span {
+      color: var(--red);
+    }
+
+    .cover-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag {
+      text-align: right;
+    }
+
+    .cover-doc-tag .doc-type {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag .doc-id {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+
+    .cover-hero {
+      text-align: center;
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .cover-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover-hero-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover-hero-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .cover-hero-sub {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* --- Cover: client info grid --- */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .client-cell {
+      background: var(--bg-card);
+      padding: 14px 18px;
+    }
+
+    .client-cell-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .client-cell-value {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+
+    .client-cell-value.accent {
+      color: var(--red);
+    }
+
+    /* --- Cover: metrics row --- */
+    .metrics-section {
+      margin-bottom: 24px;
+    }
+
+    .metrics-label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metrics-label-row .section-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .metrics-label-row::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 12px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      opacity: 0.6;
+    }
+
+    .metric-card-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .metric-card-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .metric-card-value span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* --- Cover: footer --- */
+    .cover-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cover-footer-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cover-footer-item .f-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .cover-footer-item .f-value {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-body);
+    }
+
+    /* =========================================================
+       SECTION HEADERS & DIVIDERS
+    ========================================================= */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 16px;
+    }
+
+    .section-header-bar {
+      width: 4px;
+      height: 32px;
+      background: var(--red);
+      border-radius: 0;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+
+    .section-header-text {
+      flex: 1;
+    }
+
+    .section-header-title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .section-header-subtitle {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .section-header-action {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 16px;
+    }
+
+    .section-divider-bar {
+      width: 4px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+
+    .section-divider-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-divider-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.15em;
+      margin-top: 2px;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* =========================================================
+       SECONDARY PAGE HEADER
+    ========================================================= */
+    .page-header-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .phc-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .phc-logo span {
+      color: var(--red);
+    }
+
+    .phc-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       PAGE FOOTER
+    ========================================================= */
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 14mm;
+      right: 14mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 6px;
+    }
+
+    .page-footer-brand {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .page-footer-brand span {
+      color: var(--red);
+    }
+
+    .page-footer-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--text-subtle);
+    }
+
+    /* =========================================================
+       EXERCISE / DATA TABLES
+    ========================================================= */
+    .exercise-table-wrap {
+      margin-bottom: 20px;
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .exercise-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .exercise-table thead tr {
+      background: var(--red);
+    }
+
+    .exercise-table thead th {
+      padding: 9px 10px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: left;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .exercise-table thead th.center {
+      text-align: center;
+    }
+
+    .exercise-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.1s linear;
+    }
+
+    .exercise-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .exercise-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .exercise-table tbody td {
+      padding: 9px 10px;
+      color: var(--text-body);
+      border: none;
+      vertical-align: top;
+    }
+
+    .exercise-table tbody td.center {
+      text-align: center;
+    }
+
+    .td-mono {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* =========================================================
+       MESO / SECONDARY TABLES
+    ========================================================= */
+    .meso-table-wrap {
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .meso-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .meso-table thead tr {
+      background: var(--bg-card-alt);
+      border-bottom: 2px solid var(--red);
+    }
+
+    .meso-table thead th {
+      padding: 10px 14px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    .meso-table thead th.center {
+      text-align: center;
+    }
+
+    .meso-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .meso-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .meso-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .meso-table tbody td {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-body);
+    }
+
+    .meso-table tbody td.center {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       INFO CARDS GRID
+    ========================================================= */
+    .info-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--red);
+      opacity: 0.7;
+    }
+
+    .info-card-icon {
+      color: var(--red);
+      font-size: 16px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .info-card-title {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-card-body {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .info-card-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Single column card variant */
+    .info-cards-grid.single-col {
+      grid-template-columns: 1fr;
+    }
+
+    /* =========================================================
+       COACH NOTES BOX
+    ========================================================= */
+    .notes-box {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+
+    .notes-box-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .notes-box-icon {
+      color: var(--red);
+      font-size: 14px;
+    }
+
+    .notes-box-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .notes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .notes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .notes-list li::before {
+      content: '//';
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* =========================================================
+       WARMUP / CALLOUT BLOCK
+    ========================================================= */
+    .warmup-block {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .warmup-icon {
+      color: var(--red);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .warmup-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .warmup-text {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       INLINE STATS ROW
+    ========================================================= */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .stat-pill-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .stat-pill-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-pill-val.red {
+      color: var(--red);
+    }
+
+    /* =========================================================
+       RPE / EVIDENCE BADGES
+    ========================================================= */
+    .rpe-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.2);
+      padding: 1px 6px;
+      border-radius: 0;
+    }
+
+    .evidence-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 0;
+    }
+
+    .evidence-badge.high {
+      color: #22c55e;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+    }
+
+    .evidence-badge.medium {
+      color: #eab308;
+      background: rgba(234,179,8,0.08);
+      border: 1px solid rgba(234,179,8,0.2);
+    }
+
+    .evidence-badge.low {
+      color: #71717A;
+      background: rgba(113,113,122,0.08);
+      border: 1px solid rgba(113,113,122,0.2);
+    }
+
+    /* =========================================================
+       TRACKING TABLE (writable cells)
+    ========================================================= */
+    .tracking-table-wrap {
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .tracking-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tracking-table thead tr {
+      background: var(--red);
+    }
+
+    .tracking-table thead th {
+      padding: 9px 10px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: center;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .tracking-table thead th:first-child {
+      text-align: left;
+    }
+
+    .tracking-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .tracking-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .tracking-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .tracking-table tbody td {
+      padding: 9px 10px;
+      font-size: 11px;
+      color: var(--text-body);
+      border: none;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .tracking-table tbody td:first-child {
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.05em;
+    }
+
+    .tracking-table tbody td.write-cell {
+      border: 1px dashed var(--border-medium);
+      min-width: 48px;
+      height: 32px;
+    }
+
+    /* =========================================================
+       PRINT STYLES
+    ========================================================= */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: #fff;
+        color: #000;
+      }
+
+      .print-btn {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        padding: 0;
+      }
+
+      .page {
+        margin: 0;
+        padding: 14mm;
+        page-break-after: always;
+        background: #fff;
+        border: none;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+
+      :root {
+        --bg-primary:      #ffffff;
+        --bg-card:         #f5f5f7;
+        --bg-card-alt:     #eeeeef;
+        --bg-row-alt:      #f0f0f3;
+        --red:             #cc1a1f;
+        --red-dark:        #99131a;
+        --red-glow:        transparent;
+        --red-dim:         rgba(204,26,31,0.08);
+        --text-primary:    #0a0a0a;
+        --text-body:       #2a2a2d;
+        --text-muted:      #5a5a60;
+        --text-subtle:     #8a8a90;
+        --border-subtle:   rgba(0,0,0,0.10);
+        --border-medium:   rgba(0,0,0,0.16);
+        --border-strong:   rgba(0,0,0,0.22);
+      }
+
+      .exercise-table tbody tr,
+      .meso-table tbody tr,
+      .tracking-table tbody tr {
+        break-inside: avoid;
+      }
+
+      .exercise-table-wrap,
+      .meso-table-wrap,
+      .tracking-table-wrap {
+        break-inside: avoid;
+      }
+
+      .exercise-table thead tr,
+      .tracking-table thead tr {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .evidence-badge,
+      .rpe-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PRINT BUTTON (hidden in print) -->
+  <button class="print-btn" onclick="window.print()">
+    <span style="color:#00D9FF;font-weight:700;">//</span> Imprimir / PDF
+  </button>
+
+  <div class="page-wrapper">
+
+    <!-- =====================================================
+         PAGE 1 — COVER
+    ===================================================== -->
+    <div class="page cover" id="page-cover">
+
+      <!-- HEADER BAND -->
+      <div class="cover-header">
+        <div class="cover-logo-group">
+          <div class="logo-wordmark">WELL<span>CORE</span> FITNESS</div>
+          <div class="cover-subtitle">Recuperacion y Rendimiento Optimo</div>
+        </div>
+        <div class="cover-doc-tag">
+          <div class="doc-type">Protocolo Oficial</div>
+          <div class="doc-id" id="doc-id">WCF-REST-2026</div>
+        </div>
+      </div>
+
+      <!-- HERO TITLE -->
+      <div class="cover-hero">
+        <div class="cover-hero-label">// sistema de recuperacion y regeneracion //</div>
+        <div class="cover-hero-title">PROTOCOLO DE<br>DESCANSO</div>
+        <div class="cover-hero-sub">Sistema de Recuperacion y Regeneracion — Todas las Etapas</div>
+      </div>
+
+      <!-- CLIENT INFO GRID -->
+      <div class="client-grid">
+        <div class="client-cell">
+          <div class="client-cell-label">Cliente</div>
+          <div class="client-cell-value" data-field="nombre">CLIENTE DEMO</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Plan Activo</div>
+          <div class="client-cell-value accent" data-field="plan">TODOS LOS PLANES</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Tipo de Documento</div>
+          <div class="client-cell-value">Protocolo de Descanso</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Disponibilidad</div>
+          <div class="client-cell-value accent">ESENCIAL / METODO / ELITE</div>
+        </div>
+      </div>
+
+      <!-- PROTOCOL METRICS -->
+      <div class="metrics-section">
+        <div class="metrics-label-row">
+          <span class="section-tag">// pilares de recuperacion</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-card-label">Sueno</div>
+            <div class="metric-card-value">7-9<span>h</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Descanso Muscular</div>
+            <div class="metric-card-value">48-96<span>h</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Deload</div>
+            <div class="metric-card-value">4-6<span>sem</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Herramientas</div>
+            <div class="metric-card-value">8<span>total</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE OF CONTENTS -->
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Contenido del Protocolo</span>
+        </div>
+        <ul class="notes-list">
+          <li>Seccion 1 — La Ciencia del Descanso: supercompensacion y ventana de recuperacion</li>
+          <li>Seccion 2 — Protocolo de Sueno para Rendimiento: hormona de crecimiento y ritmo circadiano</li>
+          <li>Seccion 3 — Descanso Entre Sesiones: tiempos optimos por grupo muscular</li>
+          <li>Seccion 4 — Dia de Descanso Activo: protocolos de recuperacion activa sin fatiga</li>
+          <li>Seccion 5 — Descanso Entre Series: tiempos segun objetivo de entrenamiento</li>
+          <li>Seccion 6 — Semana de Deload: protocolo de descarga periodizada</li>
+          <li>Seccion 7 — Herramientas de Recuperacion: evidencia y aplicacion practica</li>
+          <li>Seccion 8 — Tracking Semanal: registro de indicadores de recuperacion</li>
+        </ul>
+      </div>
+
+      <!-- COVER FOOTER -->
+      <div class="cover-footer">
+        <div class="cover-footer-item">
+          <span class="f-label">Fecha de Emision</span>
+          <span class="f-value" id="issue-date">--</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:center">
+          <span class="f-label">Coach</span>
+          <span class="f-value">WellCore Fitness</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:right">
+          <span class="f-label">Contacto</span>
+          <span class="f-value">info@wellcorefitness.com</span>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">01 / 08</div>
+      </div>
+    </div><!-- /page cover -->
+
+
+    <!-- =====================================================
+         PAGE 2 — SECCION 1: LA CIENCIA DEL DESCANSO
+    ===================================================== -->
+    <div class="page" id="page-ciencia">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Descanso &rarr; Seccion 01</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">La Ciencia del Descanso</div>
+          <div class="section-divider-sub">// por que el descanso determina tus resultados</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Principio Fundamental</div>
+          <div class="warmup-text">El musculo NO crece durante el entrenamiento. El entrenamiento genera el estimulo; el crecimiento, la adaptacion y la mejora del rendimiento ocurren exclusivamente durante el descanso y la recuperacion.</div>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Supercompensacion — El Mecanismo Clave</span>
+        </div>
+        <ul class="notes-list">
+          <li>El entrenamiento genera microroturas en las fibras musculares y depleta las reservas de glucogeno. Este es el estimulo necesario para la adaptacion.</li>
+          <li>Durante las 48-72 horas posteriores, el cuerpo repara el dano muscular y reconstruye el tejido mas fuerte y mas grande que antes. Este proceso se llama supercompensacion.</li>
+          <li>Si entrenas el mismo grupo muscular antes de completar la supercompensacion, interrumpes el proceso de crecimiento y acumulas fatiga sin beneficio.</li>
+          <li>La ventana de recuperacion optima es de 48-72 horas para grupos musculares grandes (piernas, espalda, pecho) y 24-48 horas para grupos pequenos (biceps, triceps, core).</li>
+        </ul>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Riesgos de la Recuperacion Insuficiente</span>
+        </div>
+        <ul class="notes-list">
+          <li><strong>Reduccion de rendimiento:</strong> el sobreentrenamiento reduce la fuerza maxima hasta un 20% y la capacidad de hipertrofia hasta un 15%, segun estudios de Kreider et al. (2010).</li>
+          <li><strong>Cortisol elevado:</strong> la falta de descanso eleva cronicamente el cortisol, hormona catabolica que degrada tejido muscular y promueve almacenamiento de grasa visceral.</li>
+          <li><strong>Fatiga cronica:</strong> cansancio persistente que no desaparece con una noche de sueno. Sensacion de agotamiento antes de comenzar la sesion.</li>
+          <li><strong>Estancamiento:</strong> semanas sin progresion en peso, repeticiones o composicion corporal a pesar de entrenar con consistencia.</li>
+          <li><strong>Irritabilidad y trastornos del sueno:</strong> el sistema nervioso central sobreestimulado genera ansiedad, insomnio y cambios de humor.</li>
+          <li><strong>Mayor riesgo de lesiones:</strong> el tejido conectivo (tendones, ligamentos) se recupera mas lento que el musculo. Sin descanso adecuado, estos tejidos acumulan microdano.</li>
+        </ul>
+      </div>
+
+      <div class="warmup-block" style="border-left-color: var(--text-subtle); opacity: 0.8;">
+        <span class="warmup-icon" style="color:var(--text-subtle);font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Conclusion Clave</div>
+          <div class="warmup-text">Entrenar mas no es entrenar mejor. La progresion ocurre cuando el balance entre estimulo (entrenamiento) y recuperacion (descanso) esta optimizado. Respetar los tiempos de descanso es tan importante como respetar los pesos y las series.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">02 / 08</div>
+      </div>
+    </div><!-- /page ciencia -->
+
+
+    <!-- =====================================================
+         PAGE 3 — SECCION 2: PROTOCOLO DE SUENO
+    ===================================================== -->
+    <div class="page" id="page-sueno">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Descanso &rarr; Seccion 02</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Protocolo de Sueno para Rendimiento</div>
+          <div class="section-divider-sub">// la herramienta de recuperacion mas poderosa</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <!-- Stats row for sleep -->
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Horas Minimas</span>
+          <span class="stat-pill-val red">7</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">HORAS</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Horas Optimas</span>
+          <span class="stat-pill-val">8-9</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">HORAS</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Temperatura</span>
+          <span class="stat-pill-val">18-20</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">GRADOS C</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Magnesio</span>
+          <span class="stat-pill-val" style="font-size:13px">200-400</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">MG/DIA</span>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Impacto del Sueno en el Rendimiento</span>
+        </div>
+        <ul class="notes-list">
+          <li><strong>Menos de 6 horas de sueno:</strong> la investigacion demuestra una reduccion del 30% en fuerza maxima y hasta un 40% en la produccion de testosterona (Leproult &amp; Van Cauter, 2011).</li>
+          <li><strong>Hormona del crecimiento (GH):</strong> el pico de secrecion de GH ocurre durante las fases 3 y 4 del sueno NREM (sueno profundo). Sin estas fases, la sintesis proteica muscular se reduce drasticamente.</li>
+          <li><strong>Sintesis proteica muscular:</strong> dormir menos de 7 horas reduce la tasa de sintesis proteica en un 18%, comprometiendo directamente las ganancias musculares.</li>
+        </ul>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Ritmo Circadiano</div>
+          <div class="info-card-body">
+            Acostarse y levantarse a la <strong>misma hora +/- 30 minutos</strong>, incluso los fines de semana.<br>
+            Exposicion a luz solar en los primeros <strong>30 minutos</strong> del dia.<br>
+            Evitar pantallas con luz azul <strong>60 minutos</strong> antes de dormir.<br>
+            Consistencia &gt; cantidad: mejor 7h estables que 6h + 9h alternando.<br>
+            <em>El cuerpo optimiza la recuperacion cuando predice los ciclos de sueno.</em>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Ambiente Optimo</div>
+          <div class="info-card-body">
+            Temperatura de la habitacion: <strong>18-20 grados C</strong>.<br>
+            <strong>Oscuridad total</strong> — blackout curtains o antifaz.<br>
+            <strong>Sin ruido</strong> — tapones o maquina de ruido blanco.<br>
+            Cama exclusiva para dormir. No trabajar en ella.<br>
+            <em>El ambiente modifica directamente la calidad del sueno profundo.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Suplementacion — Evidencia Nivel B</div>
+          <div class="warmup-text"><strong>Magnesio glicinato:</strong> 200-400mg antes de dormir. Mejora la calidad del sueno profundo y reduce el cortisol nocturno. Forma glicinato porque tiene mejor absorcion y menor efecto laxante que el oxido de magnesio. Consultar con medico si tomas medicamentos.</div>
+        </div>
+      </div>
+
+      <div class="warmup-block" style="border-left-color: var(--text-subtle); opacity: 0.8;">
+        <span class="warmup-icon" style="color:var(--text-subtle);font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Tracking del Sueno</div>
+          <div class="warmup-text">Registra diariamente: horas dormidas + calidad subjetiva (1-10). Un promedio inferior a 6/10 durante 2 semanas consecutivas indica que necesitas ajustar tu higiene del sueno. Consulta la seccion de Tracking Semanal al final de este documento.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">03 / 08</div>
+      </div>
+    </div><!-- /page sueno -->
+
+
+    <!-- =====================================================
+         PAGE 4 — SECCION 3 + 4: DESCANSO ENTRE SESIONES + DESCANSO ACTIVO
+    ===================================================== -->
+    <div class="page" id="page-entre-sesiones">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Descanso &rarr; Secciones 03-04</div>
+      </div>
+
+      <!-- SECTION 3: REST BETWEEN SESSIONS -->
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Descanso Entre Sesiones</div>
+          <div class="section-divider-sub">// tiempos de recuperacion por grupo muscular</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th style="width:auto;text-align:left">Grupo Muscular</th>
+              <th class="center">Descanso Minimo</th>
+              <th class="center">Descanso Optimo</th>
+              <th>Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Pecho</td>
+              <td class="td-mono center">48h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">72h</td>
+              <td><span class="notes-text">Incluye deltoides anterior como sinergista. Considerar volumen de press.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Espalda</td>
+              <td class="td-mono center">48h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">72h</td>
+              <td><span class="notes-text">Gran masa muscular. Biceps involucrado como sinergista en traccion.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Hombros</td>
+              <td class="td-mono center">48h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">72h</td>
+              <td><span class="notes-text">El deltoides anterior se fatiga con press de pecho. Programar con cuidado.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Cuadriceps</td>
+              <td class="td-mono center">72h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">96h</td>
+              <td><span class="notes-text">Grupo muscular mas grande. Genera mayor dano mecanico. Mayor tiempo SNC.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Isquiotibiales</td>
+              <td class="td-mono center">48h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">72h</td>
+              <td><span class="notes-text">Propensos a lesion si se entrenan con fatiga residual. Priorizar recuperacion.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Gluteos</td>
+              <td class="td-mono center">48h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">72h</td>
+              <td><span class="notes-text">Involucrados en sentadilla y peso muerto. Considerar volumen indirecto.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Biceps</td>
+              <td class="td-mono center">24h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">48h</td>
+              <td><span class="notes-text">Grupo pequeno. Recibe trabajo indirecto de traccion. Recuperacion rapida.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Triceps</td>
+              <td class="td-mono center">24h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">48h</td>
+              <td><span class="notes-text">Recibe trabajo indirecto de press. Coordinar con dia de pecho/hombros.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Core</td>
+              <td class="td-mono center">24h</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700">48h</td>
+              <td><span class="notes-text">Alta capacidad de recuperacion. Trabaja como estabilizador en compuestos.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SECTION 4: ACTIVE REST -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Dia de Descanso Activo</div>
+          <div class="section-divider-sub">// recuperacion acelerada sin generar fatiga adicional</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Caminata Zona 2</div>
+          <div class="info-card-body">
+            <strong>30-45 minutos</strong> a ritmo moderado.<br>
+            Zona 2: puedes respirar por la nariz sin dificultad.<br>
+            Intensidad que permite mantener una conversacion.<br>
+            <em>Aumenta flujo sanguineo a musculos sin crear fatiga mecanica.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Yoga / Movilidad</div>
+          <div class="info-card-body">
+            <strong>20-30 minutos</strong> de movilidad articular.<br>
+            Enfoque en caderas, columna toracica, hombros, tobillos.<br>
+            Movimientos lentos y controlados, sin forzar rango.<br>
+            <em>Mejora la calidad del movimiento para la proxima sesion.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Foam Rolling</div>
+          <div class="info-card-body">
+            <strong>10-15 minutos</strong>, full body.<br>
+            Enfasis en grupos entrenados el dia anterior.<br>
+            Presion moderada — no debe ser doloroso.<br>
+            <em>Reduce adherencias fasciales y mejora circulacion local.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Estiramientos Estaticos</div>
+          <div class="info-card-body">
+            <strong>15-20 minutos</strong> post-caminata o al final del dia.<br>
+            Mantener cada posicion <strong>30-60 segundos</strong>.<br>
+            Respiracion profunda durante el estiramiento.<br>
+            <em>Solo en dias de descanso — nunca pre-entrenamiento de fuerza.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="warmup-block" style="border-left-color:var(--red)">
+        <span class="warmup-icon" style="color:var(--red);font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Regla Critica</div>
+          <div class="warmup-text">NUNCA entrenes con fuerza en un dia de descanso activo. Si sientes la necesidad de levantar peso, es una senal de que estas descansando correctamente — no una senal de que debas entrenar. La natacion suave es una excelente opcion si esta disponible.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">04 / 08</div>
+      </div>
+    </div><!-- /page entre-sesiones -->
+
+
+    <!-- =====================================================
+         PAGE 5 — SECCION 5: DESCANSO ENTRE SERIES
+    ===================================================== -->
+    <div class="page" id="page-entre-series">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Descanso &rarr; Seccion 05</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Descanso Entre Series</div>
+          <div class="section-divider-sub">// durante el entrenamiento — tiempos segun objetivo</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Principio</div>
+          <div class="warmup-text">El tiempo de descanso entre series determina el tipo de adaptacion que obtienes. Descansos cortos maximizan estres metabolico (hipertrofia). Descansos largos maximizan recuperacion del ATP (fuerza). Cada objetivo tiene su tiempo optimo respaldado por la investigacion.</div>
+        </div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th style="width:auto;text-align:left">Objetivo</th>
+              <th class="center">Descanso</th>
+              <th>Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Fuerza Maxima (1-5 reps)</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700;font-size:13px">3-5 min</td>
+              <td><span class="notes-text">Recuperacion completa del sistema ATP-CP. El sistema nervioso central necesita resetearse completamente para producir contracciones maximas. Nunca recortar este tiempo.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Hipertrofia (6-12 reps)</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700;font-size:13px">60-120s</td>
+              <td><span class="notes-text">Balance optimo entre estres metabolico y tension mecanica. Permite recuperacion parcial del ATP mientras mantiene acumulacion de metabolitos (lactato, iones H+).</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Resistencia (12-20 reps)</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700;font-size:13px">30-60s</td>
+              <td><span class="notes-text">Mantener fatiga metabolica alta. Maximiza la acumulacion de metabolitos. Mejora la capacidad del musculo de trabajar bajo estres acido.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Supersets</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700;font-size:13px">0-30s</td>
+              <td><span class="notes-text">Entre ejercicios del superset: transicion inmediata o maximo 30 segundos. Despues del superset completo: descanso normal segun el objetivo (60-120s para hipertrofia).</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Compuestos Pesados</td>
+              <td class="td-mono center" style="color:var(--red);font-weight:700;font-size:13px">2-3 min</td>
+              <td><span class="notes-text">Sentadilla, peso muerto, press de banca. Aunque entrenes en rango de hipertrofia, estos ejercicios demandan mas descanso por la cantidad de masa muscular involucrada.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Reglas Practicas del Descanso Entre Series</span>
+        </div>
+        <ul class="notes-list">
+          <li>Usa un temporizador. La percepcion subjetiva del tiempo es inexacta — la mayoria de personas descansan menos de lo que creen.</li>
+          <li>Si no puedes completar las repeticiones programadas con la misma carga, el descanso fue insuficiente. Anade 30 segundos.</li>
+          <li>El descanso entre series es tiempo de preparacion mental: visualiza la proxima serie, revisa la tecnica, ajusta la respiracion.</li>
+          <li>En ejercicios unilaterales (una pierna, un brazo), el descanso empieza cuando terminas AMBOS lados, no cuando terminas el primero.</li>
+          <li>Durante el descanso, no te sientes completamente. Caminar o estar de pie mantiene el flujo sanguineo y facilita la limpieza de metabolitos.</li>
+          <li>Schoenfeld et al. (2016): descansos de 3 min producen mayor hipertrofia que descansos de 1 min en sujetos entrenados, posiblemente por permitir mayor volumen efectivo.</li>
+        </ul>
+      </div>
+
+      <div class="warmup-block" style="border-left-color: var(--text-subtle); opacity: 0.8;">
+        <span class="warmup-icon" style="color:var(--text-subtle);font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Nota del Coach</div>
+          <div class="warmup-text">Si entrenas con RPE/RIR alto (8-9), necesitaras el rango superior de descanso. Si el RPE es moderado (6-7), puedes usar el rango inferior. Ajusta segun como te sientes, no segun la prisa.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">05 / 08</div>
+      </div>
+    </div><!-- /page entre-series -->
+
+
+    <!-- =====================================================
+         PAGE 6 — SECCION 6: SEMANA DE DELOAD
+    ===================================================== -->
+    <div class="page" id="page-deload">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Descanso &rarr; Seccion 06</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Semana de Deload</div>
+          <div class="section-divider-sub">// descarga programada para maximizar la supercompensacion</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Frecuencia</span>
+          <span class="stat-pill-val red">4-6</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">SEMANAS</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Volumen</span>
+          <span class="stat-pill-val">-40%</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">A -50%</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Intensidad</span>
+          <span class="stat-pill-val">60-70</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">% PESO</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Duracion</span>
+          <span class="stat-pill-val">1</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">SEMANA</span>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Protocolo de Deload — Como Ejecutarlo</span>
+        </div>
+        <ul class="notes-list">
+          <li><strong>Frecuencia:</strong> cada 4-6 semanas de entrenamiento progresivo. Principiantes pueden necesitarlo cada 6 semanas; avanzados cada 4.</li>
+          <li><strong>Reduccion de volumen:</strong> bajar el numero de series un 40-50%. Si normalmente haces 4 series, haz 2. Mantener las mismas repeticiones.</li>
+          <li><strong>Reduccion de intensidad:</strong> usar el 60-70% del peso habitual. Si tu press de banca es de 100kg, usar 60-70kg durante la semana de deload.</li>
+          <li><strong>NO eliminar ejercicios:</strong> hacer exactamente los mismos ejercicios del programa, pero con menos carga y menos series. Esto mantiene el patron motor.</li>
+          <li><strong>Duracion:</strong> 1 semana completa (7 dias). No hacer mini-deloads de 3 dias — son insuficientes para la recuperacion del tejido conectivo.</li>
+          <li><strong>Beneficios principales:</strong> recuperacion del tejido conectivo (tendones y ligamentos que se recuperan mas lento que el musculo), descanso del sistema nervioso central, y prevencion de lesiones por sobreuso.</li>
+        </ul>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Senales de que Necesitas un Deload</div>
+          <div class="section-divider-sub">// no esperes a lesionarte — lee las senales</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Senales de Rendimiento</div>
+          <div class="info-card-body">
+            RPE cronicamente alto: el peso que antes era RPE 7 ahora se siente RPE 9.<br>
+            <strong>Estancamiento:</strong> 2+ semanas sin progresion en peso o repeticiones.<br>
+            Calidad tecnica degradada en ejercicios compuestos.<br>
+            <strong>Tiempos de descanso</strong> que se alargan involuntariamente.<br>
+            <em>Estos son datos objetivos, no opiniones.</em>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Senales Fisicas y Mentales</div>
+          <div class="info-card-body">
+            <strong>Dolor articular</strong> persistente (no DOMS) en rodillas, hombros o codos.<br>
+            Fatiga cronica: levantarse cansado a pesar de dormir 7+ horas.<br>
+            <strong>Irritabilidad</strong> y falta de motivacion para entrenar.<br>
+            Frecuencia cardiaca en reposo <strong>elevada 5+ bpm</strong> sobre tu linea base.<br>
+            <em>Tu cuerpo te habla antes de lesionarte. Escuchalo.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Mentalidad del Deload</div>
+          <div class="warmup-text">El deload NO es perder el tiempo. Es la fase donde ocurre la supercompensacion a nivel de tejido conectivo y sistema nervioso. Los atletas de elite programan deloads porque entienden que el rendimiento es ciclico. Despues de un deload bien ejecutado, tu fuerza y capacidad de trabajo seran MAYORES que antes.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">06 / 08</div>
+      </div>
+    </div><!-- /page deload -->
+
+
+    <!-- =====================================================
+         PAGE 7 — SECCION 7: HERRAMIENTAS DE RECUPERACION
+    ===================================================== -->
+    <div class="page" id="page-herramientas">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Descanso &rarr; Seccion 07</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Herramientas de Recuperacion</div>
+          <div class="section-divider-sub">// clasificadas por nivel de evidencia cientifica</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Sistema de Evidencia</div>
+          <div class="warmup-text">Cada herramienta esta clasificada por su nivel de evidencia cientifica. A+ = multiples meta-analisis de alta calidad. B+ = estudios controlados con resultados consistentes. C+ = evidencia preliminar o mixta. Prioriza las herramientas de mayor evidencia.</div>
+        </div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th style="width:auto;text-align:left">Herramienta</th>
+              <th class="center">Efectividad</th>
+              <th class="center">Evidencia</th>
+              <th class="center">Cuando Usar</th>
+              <th>Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Sueno 7-9h</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Alta</td>
+              <td class="center"><span class="evidence-badge high">A+</span></td>
+              <td class="td-mono center">Diario</td>
+              <td><span class="notes-text">La herramienta mas poderosa. Gratuita. Sin sustitucion posible. Prioridad absoluta.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Nutricion Post-Entreno</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Alta</td>
+              <td class="center"><span class="evidence-badge high">A</span></td>
+              <td class="td-mono center">Post-sesion</td>
+              <td><span class="notes-text">30-40g proteina + carbohidratos dentro de las 2h post-entreno. Inicia sintesis proteica.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Foam Rolling</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Media</td>
+              <td class="center"><span class="evidence-badge medium">B+</span></td>
+              <td class="td-mono center">Pre/Post</td>
+              <td><span class="notes-text">Reduce DOMS percibido. Mejora rango de movimiento temporal. No reemplaza estiramientos.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Bano Frio (10-15 C)</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Media</td>
+              <td class="center"><span class="evidence-badge medium">B</span></td>
+              <td class="td-mono center">Post-Intensa</td>
+              <td><span class="notes-text">Reduce inflamacion aguda. Util despues de sesiones de alto volumen. Puede atenuar hipertrofia si se usa cronicamente.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Sauna (80-100 C)</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Media</td>
+              <td class="center"><span class="evidence-badge medium">B</span></td>
+              <td class="td-mono center">Dias Descanso</td>
+              <td><span class="notes-text">Aumenta proteinas de choque termico. Mejora recuperacion cardiovascular. 15-20 min maximo.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Masaje Deportivo</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Media</td>
+              <td class="center"><span class="evidence-badge medium">B</span></td>
+              <td class="td-mono center">Semanal</td>
+              <td><span class="notes-text">Reduce tension muscular y DOMS. Beneficio psicologico significativo. Semanal si el presupuesto lo permite.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Compresion (Medias)</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Baja-Media</td>
+              <td class="center"><span class="evidence-badge low">C+</span></td>
+              <td class="td-mono center">Post Piernas</td>
+              <td><span class="notes-text">Evidencia mixta. Puede reducir hinchazon post-entrenamiento. Efecto placebo significativo.</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:var(--font-sans);font-weight:600;color:var(--text-primary);text-align:left">Suplementos</td>
+              <td class="td-mono center" style="color:var(--text-primary);font-weight:700">Media</td>
+              <td class="center"><span class="evidence-badge medium">B</span></td>
+              <td class="td-mono center">Diario</td>
+              <td><span class="notes-text">Creatina (5g/dia): mejora recuperacion entre series. Omega-3 (2-3g/dia): reduce inflamacion cronica. Magnesio: mejora sueno.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Jerarquia de Recuperacion — Orden de Prioridad</span>
+        </div>
+        <ul class="notes-list">
+          <li><strong>Nivel 1 (obligatorio):</strong> sueno de calidad (7-9h), nutricion adecuada (proteina y carbohidratos), hidratacion (35ml/kg + 500-750ml en dias de entreno).</li>
+          <li><strong>Nivel 2 (recomendado):</strong> descanso activo semanal, foam rolling, movilidad articular, suplementacion basica (creatina, omega-3, magnesio).</li>
+          <li><strong>Nivel 3 (complementario):</strong> bano frio, sauna, masaje deportivo, medias de compresion. Utiles pero NO sustituyen el Nivel 1.</li>
+          <li>Error comun: invertir en herramientas de Nivel 3 mientras se ignora el Nivel 1. Ningun bano frio compensa dormir 5 horas.</li>
+        </ul>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">07 / 08</div>
+      </div>
+    </div><!-- /page herramientas -->
+
+
+    <!-- =====================================================
+         PAGE 8 — SECCION 8: TRACKING SEMANAL
+    ===================================================== -->
+    <div class="page" id="page-tracking">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Protocolo de Descanso &rarr; Seccion 08</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Tracking Semanal de Recuperacion</div>
+          <div class="section-divider-sub">// lo que no se mide, no se mejora</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Instrucciones de Uso</div>
+          <div class="warmup-text">Completa esta tabla cada dia antes de acostarte. Usa una escala del 1 al 10 donde 1 = peor posible y 10 = optimo. Al finalizar la semana, calcula los promedios. Un promedio inferior a 6 en cualquier indicador durante 2 semanas consecutivas requiere ajustes en tu protocolo de descanso.</div>
+        </div>
+      </div>
+
+      <div class="tracking-table-wrap">
+        <table class="tracking-table">
+          <thead>
+            <tr>
+              <th style="text-align:left">Indicador</th>
+              <th>Lun</th>
+              <th>Mar</th>
+              <th>Mie</th>
+              <th>Jue</th>
+              <th>Vie</th>
+              <th>Sab</th>
+              <th>Dom</th>
+              <th>Prom.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Calidad Sueno (1-10)</td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+            </tr>
+            <tr>
+              <td>Horas Dormidas</td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+            </tr>
+            <tr>
+              <td>Dolor Muscular (1-10)</td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+            </tr>
+            <tr>
+              <td>Nivel Energia (1-10)</td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+            </tr>
+            <tr>
+              <td>Motivacion (1-10)</td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+              <td class="write-cell"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- NOTES ROW -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Notas de la Semana</div>
+          <div class="section-divider-sub">// registro libre — lesiones, estres, cambios de rutina</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="tracking-table-wrap">
+        <table class="tracking-table">
+          <thead>
+            <tr>
+              <th style="text-align:left">Dia</th>
+              <th style="text-align:left;width:85%">Notas / Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lunes</td>
+              <td class="write-cell" style="text-align:left"></td>
+            </tr>
+            <tr>
+              <td>Martes</td>
+              <td class="write-cell" style="text-align:left"></td>
+            </tr>
+            <tr>
+              <td>Miercoles</td>
+              <td class="write-cell" style="text-align:left"></td>
+            </tr>
+            <tr>
+              <td>Jueves</td>
+              <td class="write-cell" style="text-align:left"></td>
+            </tr>
+            <tr>
+              <td>Viernes</td>
+              <td class="write-cell" style="text-align:left"></td>
+            </tr>
+            <tr>
+              <td>Sabado</td>
+              <td class="write-cell" style="text-align:left"></td>
+            </tr>
+            <tr>
+              <td>Domingo</td>
+              <td class="write-cell" style="text-align:left"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FINAL COACH NOTES -->
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Nota Final del Coach</span>
+        </div>
+        <ul class="notes-list">
+          <li>Imprime varias copias de esta pagina de tracking y completalas semanalmente. Envia los resultados a tu coach cada semana junto con tu check-in de fotos (frontal, perfil, espalda).</li>
+          <li>Si 3 o mas indicadores bajan por debajo de 5 durante mas de 3 dias consecutivos, detente y contacta a tu coach inmediatamente. Puede ser necesario un deload anticipado.</li>
+          <li>La recuperacion no es pereza. Es la mitad de la ecuacion del rendimiento. Tu compromiso con el descanso dice mas de tu disciplina que tu compromiso con el entrenamiento.</li>
+          <li>Para cualquier duda sobre este protocolo: <strong>info@wellcorefitness.com</strong> | WhatsApp: <strong>+57 312 4904720</strong></li>
+        </ul>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Protocolo de Descanso</div>
+        <div class="page-footer-num">08 / 08</div>
+      </div>
+    </div><!-- /page tracking -->
+
+  </div><!-- /page-wrapper -->
+
+
+  <!-- =====================================================
+       JAVASCRIPT — DATE AND CLIENT DATA
+  ===================================================== -->
+  <script>
+    /* --------------------------------------------------
+       UTILITY: Read data from localStorage
+    -------------------------------------------------- */
+    function getProfile() {
+      try {
+        return JSON.parse(localStorage.getItem('wc_profile') || '{}');
+      } catch(e) { return {}; }
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Format date in Spanish
+    -------------------------------------------------- */
+    function formatDateES(date) {
+      var months = ['enero','febrero','marzo','abril','mayo','junio',
+                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      return date.getDate() + ' de ' + months[date.getMonth()] + ' de ' + date.getFullYear();
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Get ISO week number
+    -------------------------------------------------- */
+    function getWeekNumber(date) {
+      var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      var dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    /* --------------------------------------------------
+       RENDER: Client info + date
+    -------------------------------------------------- */
+    function renderPage() {
+      var profile = getProfile();
+
+      // Client name
+      var nameEls = document.querySelectorAll('[data-field="nombre"]');
+      nameEls.forEach(function(el) {
+        el.textContent = profile.nombre
+          || localStorage.getItem('wc_client_name')
+          || 'CLIENTE DEMO';
+      });
+
+      // Plan
+      var planEls = document.querySelectorAll('[data-field="plan"]');
+      planEls.forEach(function(el) {
+        var plan = (localStorage.getItem('wc_client_plan') || profile.plan || '').toUpperCase();
+        if (plan) {
+          el.textContent = 'PLAN ' + plan;
+        } else {
+          el.textContent = 'TODOS LOS PLANES';
+        }
+      });
+
+      // Issue date
+      var issueDateEl = document.getElementById('issue-date');
+      if (issueDateEl) {
+        issueDateEl.textContent = formatDateES(new Date());
+      }
+
+      // Doc ID
+      var docIdEl = document.getElementById('doc-id');
+      if (docIdEl) {
+        var now = new Date();
+        var week = getWeekNumber(now);
+        docIdEl.textContent = 'WCF-REST-' + now.getFullYear() + '-W' + String(week).padStart(2, '0');
+      }
+    }
+
+    /* --------------------------------------------------
+       MAIN
+    -------------------------------------------------- */
+    document.addEventListener('DOMContentLoaded', function() {
+      renderPage();
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+# WellCore Fitness — robots.txt
+User-agent: *
+Allow: /
+
+# Bloquear admin y areas privadas
+Disallow: /admin.html
+Disallow: /admin-clientes.html
+Disallow: /admin-coaches.html
+Disallow: /admin-ia.html
+Disallow: /admin-jefe.html
+Disallow: /coach-portal.html
+Disallow: /cliente.html
+Disallow: /login.html
+Disallow: /checkout-tienda.html
+Disallow: /pago-exitoso.html
+Disallow: /plan-negocio-wellcore.html
+Disallow: /api/
+Disallow: /test/
+
+# Sitemap
+Sitemap: https://wellcorefitness.com/sitemap.xml

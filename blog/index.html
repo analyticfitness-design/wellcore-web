@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | WellCore Fitness</title>
+  <meta name="description" content="Contenido basado en evidencia sobre entrenamiento, nutricion y fisiologia. Sin tendencias. Sin modas." />
+  <link rel="canonical" href="https://wellcorefitness.com/blog/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+
+    /* ============================================================
+       BLOG INDEX — WellCore Fitness v3
+    ============================================================ */
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --card:      #18181b;
+      --border:    rgba(255,255,255,0.06);
+      --red:       #E31E24;
+      --red-dim:   rgba(227,30,36,0.08);
+      --white:     #ffffff;
+      --gray:      rgba(255,255,255,0.45);
+      --gray-dim:  rgba(255,255,255,0.18);
+      --red-dark:  #B8181D;
+      --accent:    #00D9FF;
+      --green:     #22C55E;
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ---- NAVBAR ---- */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 72px; display: flex; align-items: center;
+      background: rgba(10,10,10,0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      width: 100%; max-width: 1280px; margin: 0 auto;
+      padding: 0 32px; display: flex; align-items: center;
+      justify-content: space-between; gap: 32px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); transition: color 0.1s linear;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: #fff; }
+    .nav-cta {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--red);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-hamburger {
+      display: none; background: none; border: none;
+      color: #fff; font-size: 18px; cursor: pointer;
+    }
+    #navMobileMenu {
+      display: none; position: fixed; top: 72px; left: 0; right: 0;
+      background: rgba(10,10,10,0.98); padding: 24px 32px;
+      z-index: 999; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    #navMobileMenu ul {
+      list-style: none; padding: 0; margin: 0 0 20px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .nav-mobile-link {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .nav-mobile-cta {
+      display: inline-block; background: var(--red); color: #fff;
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 12px 24px;
+    }
+    @media (max-width: 991px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* ---- HERO ---- */
+    .blog-hero {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .blog-hero::before {
+      content: '';
+      position: absolute; top: -60px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(227,30,36,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .blog-hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    }
+    .blog-hero-top {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 40px; align-items: flex-end; margin-bottom: 48px;
+    }
+    .blog-label {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 20px;
+    }
+    .blog-title {
+      font-family: var(--font-head);
+      font-size: clamp(72px, 10vw, 140px);
+      line-height: 0.88; letter-spacing: 3px; color: var(--white);
+    }
+    .blog-title .sub {
+      font-family: var(--font-body);
+      font-style: italic; font-weight: 300;
+      font-size: 0.35em; letter-spacing: 0;
+      color: rgba(255,255,255,0.25); display: block;
+    }
+    .blog-hero-stats {
+      display: flex; gap: 0; border: 1px solid var(--border);
+      flex-shrink: 0; align-self: flex-end;
+    }
+    .bhs-item {
+      padding: 20px 28px; border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .bhs-item:last-child { border-right: none; }
+    .bhs-num {
+      font-family: var(--font-mono); font-size: 28px;
+      color: var(--white); display: block; margin-bottom: 4px;
+    }
+    .bhs-label {
+      font-family: var(--font-mono); font-size: 7px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray-dim);
+    }
+    .blog-desc {
+      font-size: 14px; color: var(--gray); max-width: 560px;
+      line-height: 1.8;
+    }
+
+    /* ---- CATEGORY FILTERS ---- */
+    .blog-filters {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .filters-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .filter-label {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray-dim); margin-right: 8px;
+    }
+    .filter-btn {
+      background: none; border: 1px solid var(--border);
+      color: rgba(255,255,255,0.4); font-family: var(--font-mono);
+      font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 8px 18px; cursor: pointer; transition: all 0.1s linear;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--red-dim); border-color: rgba(227,30,36,0.3);
+      color: var(--red);
+    }
+
+    /* ---- FEATURED ARTICLE ---- */
+    .featured-section {
+      padding: 80px 0 0;
+    }
+    .featured-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    }
+    .featured-tag {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gray-dim); display: block; margin-bottom: 20px;
+    }
+    .featured-card {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border);
+      transition: background 0.1s linear;
+      overflow: hidden;
+    }
+    .featured-card:hover { background: var(--surface); }
+    .featured-img {
+      aspect-ratio: 4/3; background: var(--surface);
+      overflow: hidden; position: relative;
+    }
+    .featured-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.1s linear;
+    }
+    .featured-card:hover .featured-img img { transform: scale(1.03); }
+    .featured-badge {
+      position: absolute; top: 20px; left: 20px;
+      background: var(--red); color: #fff;
+      font-family: var(--font-mono); font-size: 7px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 14px;
+    }
+    .featured-content {
+      padding: 52px 48px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .featured-cat {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 16px;
+    }
+    .featured-title {
+      font-family: var(--font-head); font-size: clamp(36px, 4vw, 56px);
+      letter-spacing: 1px; color: var(--white);
+      line-height: 0.95; margin-bottom: 20px;
+    }
+    .featured-excerpt {
+      font-size: 14px; color: var(--gray); line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .featured-meta {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .art-date {
+      font-family: var(--font-mono); font-size: 9px;
+      color: var(--gray-dim);
+    }
+    .art-read-link {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 1px; color: var(--red); font-weight: 600;
+      display: flex; align-items: center; gap: 8px;
+      transition: gap 0.1s linear;
+    }
+    .art-read-link:hover { gap: 12px; }
+
+    /* ---- GRID SECTION ---- */
+    .grid-section {
+      padding: 64px 0 120px;
+    }
+    .grid-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    }
+    .grid-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .grid-label {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gray-dim);
+    }
+    .grid-divider {
+      flex: 1; height: 1px; background: var(--border);
+      margin: 0 20px;
+    }
+    .grid-count {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 2px; color: var(--red);
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+    }
+    .art-card {
+      border-right: 1px solid var(--border);
+      transition: background 0.1s linear;
+      overflow: hidden;
+    }
+    .art-card:last-child { border-right: none; }
+    .art-card:hover { background: var(--surface); }
+    .art-card-img {
+      aspect-ratio: 16/9; background: var(--surface); overflow: hidden;
+    }
+    .art-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.1s linear;
+    }
+    .art-card:hover .art-card-img img { transform: scale(1.04); }
+    .art-card-body { padding: 32px 28px; }
+    .art-card-cat {
+      font-family: var(--font-mono); font-size: 7px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 12px;
+    }
+    .art-card-title {
+      font-family: var(--font-head); font-size: 26px;
+      letter-spacing: 1px; color: var(--white);
+      margin-bottom: 12px; line-height: 1.1;
+    }
+    .art-card-title a { color: inherit; transition: color 0.1s linear; }
+    .art-card-title a:hover { color: rgba(255,255,255,0.7); }
+    .art-card-excerpt {
+      font-size: 13px; color: var(--gray);
+      line-height: 1.75; margin-bottom: 24px;
+    }
+    .art-card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    /* ---- NEWSLETTER / CTA ---- */
+    .blog-cta {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 0;
+    }
+    .blog-cta-inner {
+      max-width: 700px; margin: 0 auto;
+      padding: 0 32px; text-align: center;
+    }
+    .blog-cta-label {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 20px;
+    }
+    .blog-cta-title {
+      font-family: var(--font-head); font-size: clamp(40px, 5vw, 64px);
+      letter-spacing: 2px; color: var(--white);
+      margin-bottom: 16px;
+    }
+    .blog-cta-desc {
+      font-size: 14px; color: var(--gray); margin-bottom: 40px;
+      line-height: 1.8;
+    }
+    .cta-start-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--red); color: #fff;
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 16px 40px; border: 4px solid var(--red); transition: opacity 0.1s linear;
+    }
+    .cta-start-btn:hover { opacity: 0.88; }
+
+    /* ---- FOOTER ---- */
+    #footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 0;
+    }
+    .footer-grid-wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px; padding-bottom: 40px;
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 1.5px; color: rgba(255,255,255,0.18);
+    }
+    .footer-legal a {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); margin-left: 24px;
+    }
+    .footer-legal a:hover { color: #fff; }
+    .footer-col-title {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 20px; display: block;
+    }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.1s linear; }
+    .footer-links a:hover { color: #fff; }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-content { padding: 40px 36px; }
+      .articles-grid { grid-template-columns: 1fr 1fr; }
+      .art-card:nth-child(2n) { border-right: none; }
+      .art-card:nth-child(n+3) { border-top: 1px solid var(--border); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .blog-hero { padding: 60px 0 40px; }
+      .blog-hero-inner { padding: 0 20px; }
+      .blog-hero-top { grid-template-columns: 1fr; }
+      .blog-hero-stats { display: none; }
+      .filters-inner { padding: 0 20px; }
+      .featured-inner { padding: 0 20px; }
+      .featured-content { padding: 28px 24px; }
+      .grid-inner { padding: 0 20px; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .art-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .art-card:last-child { border-bottom: none; }
+      .art-card:nth-child(n+2) { border-top: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .blog-cta-inner { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html">
+      <img src="../images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:36px;width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="../metodo.html">Metodo</a></li>
+      <li><a href="../nosotros.html">Nosotros</a></li>
+      <li><a href="../coaches.html">Coaches</a></li>
+      <li><a href="../planes.html">Planes</a></li>
+      <li><a href="../proceso.html">Proceso</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a href="../login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+      <a href="../pagar.html" class="nav-cta">Empezar &rarr;</a>
+    </div>
+    <button class="nav-hamburger" id="navToggle" aria-label="Menu">
+      &#9776;
+    </button>
+  </div>
+</nav>
+<div id="navMobileMenu">
+  <ul>
+    <li><a href="../metodo.html" class="nav-mobile-link">Metodo</a></li>
+    <li><a href="../nosotros.html" class="nav-mobile-link">Nosotros</a></li>
+    <li><a href="../coaches.html" class="nav-mobile-link">Coaches</a></li>
+    <li><a href="../planes.html" class="nav-mobile-link">Planes</a></li>
+    <li><a href="../proceso.html" class="nav-mobile-link">Proceso</a></li>
+    <li><a href="index.html" class="nav-mobile-link" style="color:#fff;">Blog</a></li>
+    <li><a href="../faq.html" class="nav-mobile-link">FAQ</a></li>
+  </ul>
+  <a href="../pagar.html" class="nav-mobile-cta">Empezar ahora</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="blog-hero">
+  <div class="blog-hero-inner">
+    <div class="blog-hero-top" data-aos="fade-up" data-aos-duration="700">
+      <div>
+        <span class="blog-label">// CONOCIMIENTO</span>
+        <h1 class="blog-title">
+          BLOG<br>
+          <span class="sub">wellcore fitness</span>
+        </h1>
+      </div>
+      <div class="blog-hero-stats">
+        <div class="bhs-item">
+          <span class="bhs-num">9</span>
+          <span class="bhs-label">// Articulos</span>
+        </div>
+        <div class="bhs-item">
+          <span class="bhs-num">4</span>
+          <span class="bhs-label">// Categorias</span>
+        </div>
+        <div class="bhs-item">
+          <span class="bhs-num">74</span>
+          <span class="bhs-label">// Min lectura</span>
+        </div>
+      </div>
+    </div>
+    <p class="blog-desc" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+      Contenido basado en evidencia sobre entrenamiento, nutricion y fisiologia. Sin tendencias. Sin modas. Solo lo que funciona y por que funciona.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     CATEGORY FILTERS
+============================================================ -->
+<div class="blog-filters">
+  <div class="filters-inner">
+    <span class="filter-label">// Filtrar:</span>
+    <button class="filter-btn active" data-cat="all" onclick="filterPosts('all', this)">Todo</button>
+    <button class="filter-btn" data-cat="nutricion" onclick="filterPosts('nutricion', this)">Nutricion</button>
+    <button class="filter-btn" data-cat="entrenamiento" onclick="filterPosts('entrenamiento', this)">Entrenamiento</button>
+    <button class="filter-btn" data-cat="fisiologia" onclick="filterPosts('fisiologia', this)">Fisiologia</button>
+    <button class="filter-btn" data-cat="recuperacion" onclick="filterPosts('recuperacion', this)">Recuperacion</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     FEATURED ARTICLE
+============================================================ -->
+<section class="featured-section">
+  <div class="featured-inner" data-aos="fade-up" data-aos-duration="700">
+    <span class="featured-tag">// ARTICULO DESTACADO</span>
+    <a href="deficit-calorico.html" class="featured-card" data-post-cat="nutricion">
+      <div class="featured-img">
+        <img src="../images/blog/deficit-calorico.jpg" alt="La Verdad Sobre el Deficit Calorico" loading="lazy" />
+        <span class="featured-badge">Destacado</span>
+      </div>
+      <div class="featured-content">
+        <span class="featured-cat">// Nutricion &mdash; 8 min lectura</span>
+        <h2 class="featured-title">LA VERDAD SOBRE EL DEFICIT CALORICO</h2>
+        <p class="featured-excerpt">Comer menos no siempre significa perder mas. La mayoria de personas fracasa en su deficit porque lo aplica mal: demasiado agresivo, sin considerar la termogenesis adaptativa, sin preservar masa muscular. Te explicamos como calcular tu deficit real sin destruir tu metabolismo en el proceso.</p>
+        <div class="featured-meta">
+          <span class="art-date">// 15 Ene 2026</span>
+          <span class="art-read-link">Leer articulo &rarr;</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     ARTICLES GRID
+============================================================ -->
+<section class="grid-section">
+  <div class="grid-inner">
+    <div class="grid-header" data-aos="fade-up">
+      <span class="grid-label">// TODOS LOS ARTICULOS</span>
+      <div class="grid-divider"></div>
+      <span class="grid-count" id="articleCount">9 articulos</span>
+    </div>
+
+    <div class="articles-grid" id="articlesGrid">
+
+      <!-- Card 1: Deficit Calorico -->
+      <article class="art-card" data-cat="nutricion" data-aos="fade-up" data-aos-duration="700">
+        <a href="deficit-calorico.html">
+          <div class="art-card-img">
+            <img src="../images/blog/deficit-calorico.jpg" alt="Deficit Calorico" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Nutricion</span>
+          <h2 class="art-card-title">
+            <a href="deficit-calorico.html">La Verdad Sobre el Deficit Calorico</a>
+          </h2>
+          <p class="art-card-excerpt">Comer menos no siempre significa perder mas. Te explicamos como calcular tu deficit real sin destruir tu metabolismo en el proceso.</p>
+          <div class="art-card-footer">
+            <span class="art-date">15 Ene 2026 &middot; 8 min</span>
+            <a href="deficit-calorico.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Hipertrofia -->
+      <article class="art-card" data-cat="entrenamiento" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+        <a href="hipertrofia.html">
+          <div class="art-card-img">
+            <img src="../images/blog/hipertrofia.jpg" alt="Hipertrofia" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Entrenamiento</span>
+          <h2 class="art-card-title">
+            <a href="hipertrofia.html">Hipertrofia: Los 3 Mecanismos</a>
+          </h2>
+          <p class="art-card-excerpt">Tension mecanica, dano muscular y estres metabolico. Los tres pilares del crecimiento muscular y como aplicarlos en tu programa para resultados reales.</p>
+          <div class="art-card-footer">
+            <span class="art-date">22 Ene 2026 &middot; 10 min</span>
+            <a href="hipertrofia.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Rebote -->
+      <article class="art-card" data-cat="fisiologia" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+        <a href="rebote-peso.html">
+          <div class="art-card-img">
+            <img src="../images/blog/rebote-peso.jpg" alt="Rebote de Peso" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Fisiologia</span>
+          <h2 class="art-card-title">
+            <a href="rebote-peso.html">Por Que Recuperas el Peso</a>
+          </h2>
+          <p class="art-card-excerpt">El rebote no es falta de fuerza de voluntad. Es biologico. Los mecanismos adaptativos del cuerpo durante la perdida de peso y como contrarrestarlos.</p>
+          <div class="art-card-footer">
+            <span class="art-date">29 Ene 2026 &middot; 9 min</span>
+            <a href="rebote-peso.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4: Estres y Cortisol -->
+      <article class="art-card" data-cat="fisiologia" data-aos="fade-up" data-aos-duration="700">
+        <a href="estres-cortisol.html">
+          <div class="art-card-img">
+            <img src="../images/blog/estres-cortisol.jpg" alt="Estres y Cortisol" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Fisiologia</span>
+          <h2 class="art-card-title">
+            <a href="estres-cortisol.html">Estres y Cortisol: El Saboteador Invisible</a>
+          </h2>
+          <p class="art-card-excerpt">Puedes entrenar perfecto y comer bien, pero si el cortisol esta elevado cronicamente, tus resultados seran una fraccion de tu potencial.</p>
+          <div class="art-card-footer">
+            <span class="art-date">22 Ene 2026 &middot; 8 min</span>
+            <a href="estres-cortisol.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5: Sueno y Recuperacion -->
+      <article class="art-card" data-cat="recuperacion" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+        <a href="sueno-recuperacion.html">
+          <div class="art-card-img">
+            <img src="../images/blog/sueno-recuperacion.jpg" alt="Sueno y Recuperacion" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Recuperacion</span>
+          <h2 class="art-card-title">
+            <a href="sueno-recuperacion.html">Sueno: El Suplemento Gratuito</a>
+          </h2>
+          <p class="art-card-excerpt">Dormir menos de 7 horas reduce la sintesis de musculo hasta un 55% y eleva el cortisol. La ciencia del sueno aplicada a la composicion corporal.</p>
+          <div class="art-card-footer">
+            <span class="art-date">18 Feb 2026 &middot; 7 min</span>
+            <a href="sueno-recuperacion.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6: Proteina y Musculo -->
+      <article class="art-card" data-cat="nutricion" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+        <a href="proteina-muscular.html">
+          <div class="art-card-img">
+            <img src="../images/blog/proteina-muscular.jpg" alt="Proteina y Musculo" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Nutricion</span>
+          <h2 class="art-card-title">
+            <a href="proteina-muscular.html">Cuanta Proteina Necesitas Realmente</a>
+          </h2>
+          <p class="art-card-excerpt">La ciencia tiene una respuesta clara: 1.6g/kg de peso corporal. Todo lo demas es marketing. Lo que la evidencia dice sobre timing, distribucion y fuentes.</p>
+          <div class="art-card-footer">
+            <span class="art-date">14 Feb 2026 &middot; 8 min</span>
+            <a href="proteina-muscular.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 7: Cardio vs Pesas -->
+      <article class="art-card" data-cat="entrenamiento" data-aos="fade-up" data-aos-duration="700">
+        <a href="cardio-vs-pesas.html">
+          <div class="art-card-img">
+            <img src="../images/blog/cardio-vs-pesas.jpg" alt="Cardio vs Pesas" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Entrenamiento</span>
+          <h2 class="art-card-title">
+            <a href="cardio-vs-pesas.html">Cardio vs Pesas: El Debate Resuelto</a>
+          </h2>
+          <p class="art-card-excerpt">Un debate de decadas resuelto por la ciencia. La respuesta no es la que ninguno de los dos extremos quiere escuchar.</p>
+          <div class="art-card-footer">
+            <span class="art-date">10 Feb 2026 &middot; 7 min</span>
+            <a href="cardio-vs-pesas.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 8: Periodizacion -->
+      <article class="art-card" data-cat="entrenamiento" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+        <a href="periodizacion.html">
+          <div class="art-card-img">
+            <img src="../images/blog/periodizacion.jpg" alt="Periodizacion" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Entrenamiento</span>
+          <h2 class="art-card-title">
+            <a href="periodizacion.html">Periodizacion: La Clave del Progreso Continuo</a>
+          </h2>
+          <p class="art-card-excerpt">Tu cuerpo se adapta al mismo estimulo en 6-8 semanas. La periodizacion es la ciencia de mantenerte en zona de adaptacion permanente.</p>
+          <div class="art-card-footer">
+            <span class="art-date">05 Feb 2026 &middot; 8 min</span>
+            <a href="periodizacion.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 9: Suplementos -->
+      <article class="art-card" data-cat="nutricion" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+        <a href="suplementos-ciencia.html">
+          <div class="art-card-img">
+            <img src="../images/blog/suplementos-ciencia.jpg" alt="Suplementos con Evidencia" loading="lazy" />
+          </div>
+        </a>
+        <div class="art-card-body">
+          <span class="art-card-cat">// Nutricion</span>
+          <h2 class="art-card-title">
+            <a href="suplementos-ciencia.html">Los 4 Suplementos con Evidencia Real</a>
+          </h2>
+          <p class="art-card-excerpt">La industria mueve billones. El 95% son marketing. Estos 4 tienen decadas de investigacion solida y funcionan si la base esta en orden.</p>
+          <div class="art-card-footer">
+            <span class="art-date">01 Feb 2026 &middot; 9 min</span>
+            <a href="suplementos-ciencia.html" class="art-read-link">Leer &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /articles-grid -->
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA FINAL
+============================================================ -->
+<div class="blog-cta">
+  <div class="blog-cta-inner" data-aos="fade-up" data-aos-duration="700">
+    <span class="blog-cta-label">// ¿LISTO PARA APLICARLO?</span>
+    <h2 class="blog-cta-title">EL CONOCIMIENTO<br>SIN ACCION<br>NO CAMBIA NADA</h2>
+    <p class="blog-cta-desc">Leer sobre ciencia del entrenamiento es el primer paso. El segundo es aplicarla con un plan personalizado y un coach que garantice que lo estas haciendo bien.</p>
+    <a href="../pagar.html" class="cta-start-btn">
+      Empezar mi programa &rarr;
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-grid-wrap">
+    <div class="footer-grid">
+      <div>
+        <img src="../images/logo/imagotipo-blanco.png" alt="WellCore Fitness" style="height:32px;width:auto;margin-bottom:24px;" />
+        <p style="font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;max-width:260px;">Coaching fitness basado en ciencia. Transforma tu cuerpo con metodologia validada.</p>
+      </div>
+      <div>
+        <span class="footer-col-title">Navegacion</span>
+        <ul class="footer-links">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../metodo.html">Metodo</a></li>
+          <li><a href="../planes.html">Planes</a></li>
+          <li><a href="../coaches.html">Coaches</a></li>
+          <li><a href="index.html">Blog</a></li>
+          <li><a href="../faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer-col-title">Servicios</span>
+        <ul class="footer-links">
+          <li><a href="../planes.html">Plan Metodo</a></li>
+          <li><a href="../planes.html">Plan Elite</a></li>
+          <li><a href="../proceso.html">Como Funciona</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer-col-title">Contacto</span>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/573124904720"><span style="color:#00D9FF;font-weight:700;margin-right:8px;">WA</span>WhatsApp</a></li>
+          <li><a href="mailto:info@wellcorefitness.com"><span style="color:#00D9FF;font-weight:700;margin-right:8px;">@</span>Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 WellCore Fitness &mdash; Todos los derechos reservados</span>
+      <div class="footer-legal">
+        <a href="../legal/privacidad.html">Privacidad</a>
+        <a href="../legal/terminos.html">Terminos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 700, once: true, offset: 60 });
+
+  /* ---- NAVBAR MOBILE ---- */
+  var navToggle = document.getElementById('navToggle');
+  var navMobileMenu = document.getElementById('navMobileMenu');
+  if (navToggle) {
+    navToggle.addEventListener('click', function() {
+      var isOpen = navMobileMenu.style.display === 'block';
+      navMobileMenu.style.display = isOpen ? 'none' : 'block';
+      navToggle.textContent = isOpen ? '\u2630' : '\u2715';
+    });
+  }
+
+  /* ---- CATEGORY FILTER (using DOM, no innerHTML for user data) ---- */
+  function filterPosts(cat, btn) {
+    /* Update active button */
+    document.querySelectorAll('.filter-btn').forEach(function(b) {
+      b.classList.toggle('active', b === btn);
+    });
+
+    /* Show/hide featured card */
+    var featCard = document.querySelector('.featured-card[data-post-cat]');
+    if (featCard) {
+      var featCat = featCard.dataset.postCat || '';
+      var showFeat = (cat === 'all' || cat === featCat);
+      featCard.closest('.featured-section').style.display = showFeat ? '' : 'none';
+    }
+
+    /* Show/hide grid cards */
+    var cards = document.querySelectorAll('#articlesGrid .art-card');
+    var visible = 0;
+    cards.forEach(function(card) {
+      var cardCat = card.dataset.cat || '';
+      var show = (cat === 'all' || cat === cardCat);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    /* Update count */
+    var countEl = document.getElementById('articleCount');
+    if (countEl) {
+      countEl.textContent = visible + ' articulo' + (visible !== 1 ? 's' : '');
+    }
+  }
+</script>
+
+<a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  📞
+</a>
+</body>
+</html>

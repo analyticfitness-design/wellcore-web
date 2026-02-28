@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programa de Entrenamiento — WellCore Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS — WellCore Fitness Training Template
+    ========================================================= */
+    :root {
+      --bg-primary:      #000000;
+      --bg-card:         #111114;
+      --bg-card-alt:     #0D0D10;
+      --bg-row-alt:      #141417;
+      --red:             #E31E24;
+      --red-dark:        #B01519;
+      --red-glow:        rgba(227,30,36,0.15);
+      --red-dim:         rgba(227,30,36,0.08);
+      --text-primary:    #FFFFFF;
+      --text-body:       #D4D4D8;
+      --text-muted:      #71717A;
+      --text-subtle:     #52525B;
+      --border-subtle:   rgba(255,255,255,0.06);
+      --border-medium:   rgba(255,255,255,0.10);
+      --border-strong:   rgba(255,255,255,0.18);
+      --font-display:    'Bebas Neue', sans-serif;
+      --font-sans:       'Inter', sans-serif;
+      --font-heading:    'Montserrat', sans-serif;
+      --font-mono:       'JetBrains Mono', monospace;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       PRINT BUTTON (screen only)
+    ========================================================= */
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border: 4px solid var(--red);
+      border-radius: 0;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.1s linear;
+    }
+    .print-btn:hover {
+      background: #ff2a31;
+    }
+    .print-btn:active {
+    }
+
+    /* =========================================================
+       PAGE WRAPPER
+    ========================================================= */
+    .page-wrapper {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20px 0 60px;
+    }
+
+    /* =========================================================
+       PAGE UNIT — A4 DIMENSIONS
+    ========================================================= */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg-primary);
+      margin: 0 auto 24px;
+      padding: 14mm 14mm 14mm 14mm;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* =========================================================
+       COVER PAGE
+    ========================================================= */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* --- Cover: header band --- */
+    .cover-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-medium);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .cover-logo-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .logo-wordmark {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .logo-wordmark span {
+      color: var(--red);
+    }
+
+    .cover-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag {
+      text-align: right;
+    }
+
+    .cover-doc-tag .doc-type {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .cover-doc-tag .doc-id {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+
+    /* --- Cover: hero title area --- */
+    .cover-hero {
+      text-align: center;
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .cover-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover-hero-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover-hero-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .cover-hero-sub {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* --- Cover: client info grid --- */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .client-cell {
+      background: var(--bg-card);
+      padding: 14px 18px;
+    }
+
+    .client-cell-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .client-cell-value {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+
+    .client-cell-value.accent {
+      color: var(--red);
+    }
+
+    /* --- Cover: metrics row --- */
+    .metrics-section {
+      margin-bottom: 24px;
+    }
+
+    .metrics-label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metrics-label-row .section-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .metrics-label-row::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 12px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      opacity: 0.6;
+    }
+
+    .metric-card-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .metric-card-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .metric-card-value span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* --- Cover: footer --- */
+    .cover-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cover-footer-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cover-footer-item .f-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .cover-footer-item .f-value {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-body);
+    }
+
+    /* =========================================================
+       WEEKLY CALENDAR SECTION
+    ========================================================= */
+    .calendar-section {
+      margin-bottom: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 16px;
+    }
+
+    .section-header-bar {
+      width: 4px;
+      height: 32px;
+      background: var(--red);
+      border-radius: 0;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+
+    .section-header-text {
+      flex: 1;
+    }
+
+    .section-header-title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .section-header-subtitle {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .section-header-action {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+    }
+
+    /* --- Calendar grid --- */
+    .calendar-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 16px 18px;
+    }
+
+    .calendar-month-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .calendar-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .day-name {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .day-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-subtle);
+      transition: all 0.1s linear;
+    }
+
+    .day-circle.done {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    .day-circle.today {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .day-date {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+    }
+
+    .calendar-summary {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .calendar-summary-text {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .calendar-summary-text strong {
+      color: var(--red);
+    }
+
+    .progress-bar-wrap {
+      flex: 1;
+      max-width: 120px;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-left: 16px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--red);
+      border-radius: 2px;
+      transition: width 0.1s linear;
+    }
+
+    /* =========================================================
+       TRAINING DAY PAGES
+    ========================================================= */
+    .day-page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .day-page-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .day-page-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .day-page-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .day-page-subtitle {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .day-page-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .day-badge {
+      background: var(--red);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 0;
+    }
+
+    .day-meta {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.1em;
+    }
+
+    /* --- Warmup block --- */
+    .warmup-block {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .warmup-icon {
+      color: var(--red);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .warmup-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .warmup-text {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.4;
+    }
+
+    /* --- Exercise table --- */
+    .exercise-table-wrap {
+      margin-bottom: 20px;
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .exercise-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .exercise-table thead tr {
+      background: var(--red);
+    }
+
+    .exercise-table thead th {
+      padding: 9px 10px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: left;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .exercise-table thead th:first-child {
+      width: 36px;
+      text-align: center;
+    }
+
+    .exercise-table thead th.center {
+      text-align: center;
+    }
+
+    .exercise-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.1s linear;
+    }
+
+    .exercise-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .exercise-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .exercise-table tbody td {
+      padding: 9px 10px;
+      color: var(--text-body);
+      border: none;
+      vertical-align: top;
+    }
+
+    .exercise-table tbody td:first-child {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .exercise-table tbody td.center {
+      text-align: center;
+    }
+
+    .exercise-name {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .td-mono {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .rpe-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.2);
+      padding: 1px 6px;
+      border-radius: 0;
+    }
+
+    .notes-text {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       SECTION DIVIDERS
+    ========================================================= */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 16px;
+    }
+
+    .section-divider-bar {
+      width: 4px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+
+    .section-divider-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-divider-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-subtle);
+      letter-spacing: 0.15em;
+      margin-top: 2px;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* =========================================================
+       MESOCYCLE PROGRESSION TABLE
+    ========================================================= */
+    .meso-table-wrap {
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .meso-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .meso-table thead tr {
+      background: var(--bg-card-alt);
+      border-bottom: 2px solid var(--red);
+    }
+
+    .meso-table thead th {
+      padding: 10px 14px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    .meso-table thead th.center {
+      text-align: center;
+    }
+
+    .meso-table tbody tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .meso-table tbody tr:nth-child(even) {
+      background: var(--bg-row-alt);
+    }
+
+    .meso-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .meso-table tbody td {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-body);
+    }
+
+    .meso-table tbody td.center {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .week-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .week-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .week-badge.deload .dot {
+      background: var(--text-subtle);
+    }
+
+    .week-badge.deload {
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       CARDIO & RECOVERY CARDS
+    ========================================================= */
+    .info-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--red);
+      opacity: 0.7;
+    }
+
+    .info-card-icon {
+      color: var(--red);
+      font-size: 16px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .info-card-title {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-card-body {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .info-card-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       COACH NOTES
+    ========================================================= */
+    .notes-box {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-medium);
+      border-radius: 0;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+
+    .notes-box-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .notes-box-icon {
+      color: var(--red);
+      font-size: 14px;
+    }
+
+    .notes-box-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .notes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .notes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .notes-list li::before {
+      content: '//';
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* =========================================================
+       PAGE FOOTER (small pages watermark)
+    ========================================================= */
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 14mm;
+      right: 14mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 6px;
+    }
+
+    .page-footer-brand {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .page-footer-brand span {
+      color: var(--red);
+    }
+
+    .page-footer-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--text-subtle);
+    }
+
+    /* =========================================================
+       SECONDARY PAGE HEADER (compact logo for inner pages)
+    ========================================================= */
+    .page-header-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .phc-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .phc-logo span {
+      color: var(--red);
+    }
+
+    .phc-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       INLINE STATS ROW
+    ========================================================= */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .stat-pill-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .stat-pill-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-pill-val.red {
+      color: var(--red);
+    }
+
+    /* =========================================================
+       PRINT STYLES
+    ========================================================= */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: #fff;
+        color: #000;
+      }
+
+      .print-btn {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        padding: 0;
+      }
+
+      .page {
+        margin: 0;
+        padding: 14mm;
+        page-break-after: always;
+        background: #fff;
+        border: none;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+
+      /* Invert colors for print */
+      :root {
+        --bg-primary:      #ffffff;
+        --bg-card:         #f5f5f7;
+        --bg-card-alt:     #eeeeef;
+        --bg-row-alt:      #f0f0f3;
+        --red:             #cc1a1f;
+        --red-dark:        #99131a;
+        --red-glow:        transparent;
+        --red-dim:         rgba(204,26,31,0.08);
+        --text-primary:    #0a0a0a;
+        --text-body:       #2a2a2d;
+        --text-muted:      #5a5a60;
+        --text-subtle:     #8a8a90;
+        --border-subtle:   rgba(0,0,0,0.10);
+        --border-medium:   rgba(0,0,0,0.16);
+        --border-strong:   rgba(0,0,0,0.22);
+      }
+
+      .exercise-table tbody tr,
+      .meso-table tbody tr {
+        break-inside: avoid;
+      }
+
+      .exercise-table-wrap,
+      .meso-table-wrap {
+        break-inside: avoid;
+      }
+
+      .calendar-day .day-circle.done {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .exercise-table thead tr,
+      .day-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PRINT BUTTON (hidden in print) -->
+  <button class="print-btn" onclick="window.print()">
+    <span style="color:#00D9FF;font-weight:700;">//</span> Imprimir / PDF
+  </button>
+
+  <div class="page-wrapper">
+
+    <!-- =====================================================
+         PAGE 1 — COVER
+    ===================================================== -->
+    <div class="page cover" id="page-cover">
+
+      <!-- HEADER BAND -->
+      <div class="cover-header">
+        <div class="cover-logo-group">
+          <div class="logo-wordmark">WELL<span>CORE</span> FITNESS</div>
+          <div class="cover-subtitle">Entrenamiento de Alto Rendimiento</div>
+        </div>
+        <div class="cover-doc-tag">
+          <div class="doc-type">Programa Oficial</div>
+          <div class="doc-id" id="doc-id">WCF-TRN-2026</div>
+        </div>
+      </div>
+
+      <!-- HERO TITLE -->
+      <div class="cover-hero">
+        <div class="cover-hero-label">// documento de entrenamiento personalizado //</div>
+        <div class="cover-hero-title">PROGRAMA DE<br>ENTRENAMIENTO</div>
+        <div class="cover-hero-sub">Mesociclo de Fuerza e Hipertrofia — 4 Semanas</div>
+      </div>
+
+      <!-- CLIENT INFO GRID -->
+      <div class="client-grid">
+        <div class="client-cell">
+          <div class="client-cell-label">Cliente</div>
+          <div class="client-cell-value" data-field="nombre">Cargando...</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Plan Activo</div>
+          <div class="client-cell-value accent" data-field="plan">—</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Objetivo Principal</div>
+          <div class="client-cell-value" data-field="objetivo">—</div>
+        </div>
+        <div class="client-cell">
+          <div class="client-cell-label">Semanas Activo</div>
+          <div class="client-cell-value" id="weeks-active">—</div>
+        </div>
+      </div>
+
+      <!-- CURRENT METRICS -->
+      <div class="metrics-section">
+        <div class="metrics-label-row">
+          <span class="section-tag">// metricas actuales</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-card-label">Peso</div>
+            <div class="metric-card-value" data-field="peso">—<span>kg</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Altura</div>
+            <div class="metric-card-value" data-field="altura">—<span>cm</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">% Grasa</div>
+            <div class="metric-card-value" data-field="grasa">—<span>%</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">% Músculo</div>
+            <div class="metric-card-value" data-field="musculo">—<span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEEKLY CALENDAR -->
+      <div class="calendar-section">
+        <div class="section-header">
+          <div class="section-header-bar"></div>
+          <div class="section-header-text">
+            <div class="section-header-title">Seguimiento Semanal</div>
+            <div class="section-header-subtitle" id="calendar-week-label">Semana actual</div>
+          </div>
+          <div class="section-header-action" id="calendar-week-num">Sem. —</div>
+        </div>
+
+        <div class="calendar-container">
+          <div class="calendar-month-label" id="calendar-month">Cargando...</div>
+          <div class="calendar-days" id="weekly-calendar">
+            <!-- JS renders 7 day cells -->
+          </div>
+          <div class="calendar-summary">
+            <div class="calendar-summary-text" id="week-completed">— días completados esta semana</div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="week-progress-bar" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COVER FOOTER -->
+      <div class="cover-footer">
+        <div class="cover-footer-item">
+          <span class="f-label">Fecha de Emisión</span>
+          <span class="f-value" id="issue-date">—</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:center">
+          <span class="f-label">Coach</span>
+          <span class="f-value">WellCore Fitness</span>
+        </div>
+        <div class="cover-footer-item" style="text-align:right">
+          <span class="f-label">Contacto</span>
+          <span class="f-value">info@wellcorefitness.com</span>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Programa Oficial</div>
+        <div class="page-footer-num">01 / 05</div>
+      </div>
+    </div><!-- /page cover -->
+
+
+    <!-- =====================================================
+         PAGE 2 — DÍA A: TREN SUPERIOR — FUERZA
+    ===================================================== -->
+    <div class="page" id="page-dia-a">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Programa de Entrenamiento &rarr; Día A</div>
+      </div>
+
+      <!-- DAY HEADER -->
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// sesion 01 de 03 — lunes</div>
+          <div class="day-page-title">DÍA A</div>
+          <div class="day-page-subtitle">Tren Superior — Fuerza</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">LUNES</div>
+          <div class="day-meta">6 ejercicios &bull; ~75 min</div>
+        </div>
+      </div>
+
+      <!-- STATS ROW -->
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Volumen</span>
+          <span class="stat-pill-val">22</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">SERIES</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">RPE Prom.</span>
+          <span class="stat-pill-val red">7.5</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">/ 10</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Énfasis</span>
+          <span class="stat-pill-val" style="font-size:11px">FUERZA</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">+TÉCNICA</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Músculos</span>
+          <span class="stat-pill-val" style="font-size:11px">PUSH</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">+ PULL</span>
+        </div>
+      </div>
+
+      <!-- WARM-UP -->
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Calentamiento — 10 min</div>
+          <div class="warmup-text">Protocolo RAMP: movilidad de hombros (circles, dislocations), activación de rotadores externos, face pulls con banda, 2 series de press de banca al 40% con excéntrico lento.</div>
+        </div>
+      </div>
+
+      <!-- EXERCISE TABLE -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Ejercicios Principales</div>
+          <div class="section-divider-sub">// Registra el peso usado en cada serie</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Ejercicio</th>
+              <th class="center">Series</th>
+              <th class="center">Reps</th>
+              <th class="center">RPE</th>
+              <th class="center">Descanso</th>
+              <th>Notas Técnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td data-exercise="Press de Banca con Barra" data-gender="h"><span class="exercise-name">Press de Banca con Barra</span></td>
+              <td class="td-mono center">4</td>
+              <td class="td-mono center">5</td>
+              <td class="center"><span class="rpe-badge">8/10</span></td>
+              <td class="td-mono center">120s</td>
+              <td><span class="notes-text">Agarre a anchura de hombros. Excéntrico 3s. Omóplatos retraídos y deprimidos.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td data-exercise="Remo con Barra Pendlay" data-gender="h"><span class="exercise-name">Remo con Barra Pendlay</span></td>
+              <td class="td-mono center">4</td>
+              <td class="td-mono center">6</td>
+              <td class="center"><span class="rpe-badge">8/10</span></td>
+              <td class="td-mono center">90s</td>
+              <td><span class="notes-text">Torso paralelo al suelo. Tirar hacia ombligo. Barra parte del suelo cada rep.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td data-exercise="Press Militar con Barra" data-gender="h"><span class="exercise-name">Press Militar con Barra</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">8</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">90s</td>
+              <td><span class="notes-text">Core activado. Sin impulso lumbar. Codos ligeramente al frente.</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td data-exercise="Dominadas Lastradas" data-gender="h"><span class="exercise-name">Dominadas Lastradas</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">5</td>
+              <td class="center"><span class="rpe-badge">8/10</span></td>
+              <td class="td-mono center">120s</td>
+              <td><span class="notes-text">Rango completo obligatorio. Escápulas activas en punto muerto inferior.</span></td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td data-exercise="Curl de Bíceps con Barra" data-gender="h"><span class="exercise-name">Curl de Bíceps con Barra</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">10</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">60s</td>
+              <td><span class="notes-text">Sin balanceo de torso. Supinar completamente en contracción máxima.</span></td>
+            </tr>
+            <tr>
+              <td>06</td>
+              <td data-exercise="Extensión de Tríceps en Polea" data-gender="h"><span class="exercise-name">Extensión de Tríceps en Polea</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">12</td>
+              <td class="center"><span class="rpe-badge">6/10</span></td>
+              <td class="td-mono center">60s</td>
+              <td><span class="notes-text">Codos fijos al cuerpo. Extensión completa. Contracción 1s en punto final.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- COOLDOWN NOTE -->
+      <div class="warmup-block" style="border-left-color: var(--text-subtle); opacity: 0.8;">
+        <span class="warmup-icon" style="color:var(--text-subtle);font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Vuelta a la Calma — 10 min</div>
+          <div class="warmup-text">Movilidad: pectoral en pared, rotación torácica, estiramiento de tríceps. Opcional: foam roller zona dorsal alta.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Programa Oficial</div>
+        <div class="page-footer-num">02 / 05</div>
+      </div>
+    </div><!-- /page dia-a -->
+
+
+    <!-- =====================================================
+         PAGE 3 — DÍA B: TREN INFERIOR — FUERZA
+    ===================================================== -->
+    <div class="page" id="page-dia-b">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Programa de Entrenamiento &rarr; Día B</div>
+      </div>
+
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// sesion 02 de 03 — miércoles</div>
+          <div class="day-page-title">DÍA B</div>
+          <div class="day-page-subtitle">Tren Inferior — Fuerza</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">MIÉRCOLES</div>
+          <div class="day-meta">6 ejercicios &bull; ~80 min</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Volumen</span>
+          <span class="stat-pill-val">24</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">SERIES</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">RPE Prom.</span>
+          <span class="stat-pill-val red">7.5</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">/ 10</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Énfasis</span>
+          <span class="stat-pill-val" style="font-size:11px">FUERZA</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">CUÁDRICEPS</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Músculos</span>
+          <span class="stat-pill-val" style="font-size:11px">LEGS</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">POSTERIOR</span>
+        </div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Calentamiento — 10 min</div>
+          <div class="warmup-text">Protocolo RAMP: movilidad de caderas (hip circles, 90/90), activación de glúteos con banda (clamshells, hip bridges), sentadilla de goblet 3×8 al 30%. Movilidad de tobillos.</div>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Ejercicios Principales</div>
+          <div class="section-divider-sub">// Registra el peso usado en cada serie</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Ejercicio</th>
+              <th class="center">Series</th>
+              <th class="center">Reps</th>
+              <th class="center">RPE</th>
+              <th class="center">Descanso</th>
+              <th>Notas Técnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td data-exercise="Sentadilla con Barra" data-gender="h"><span class="exercise-name">Sentadilla con Barra (Back Squat)</span></td>
+              <td class="td-mono center">4</td>
+              <td class="td-mono center">5</td>
+              <td class="center"><span class="rpe-badge">8/10</span></td>
+              <td class="td-mono center">120s</td>
+              <td><span class="notes-text">Profundidad mínima parallel. Rodillas tracking pies. Pecho arriba en todo momento.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td data-exercise="Peso Muerto Rumano" data-gender="h"><span class="exercise-name">Peso Muerto Rumano (RDL)</span></td>
+              <td class="td-mono center">4</td>
+              <td class="td-mono center">6</td>
+              <td class="center"><span class="rpe-badge">8/10</span></td>
+              <td class="td-mono center">90s</td>
+              <td><span class="notes-text">Bisagra de cadera perfecta. Espalda neutral. Barra desliza por piernas. Empuje cadera al frente.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td data-exercise="Prensa Inclinada" data-gender="h"><span class="exercise-name">Prensa Inclinada 45°</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">10</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">90s</td>
+              <td><span class="notes-text">Pies a anchura de hombros. No bloquear rodillas al tope. Glúteo en contacto con asiento.</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td data-exercise="Curl Femoral Tumbado" data-gender="h"><span class="exercise-name">Curl Femoral Tumbado</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">12</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">60s</td>
+              <td><span class="notes-text">Excéntrico 3s, concéntrico explosivo. Plantar el pie con fuerza en la plataforma.</span></td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td data-exercise="Extensión de Cuádriceps" data-gender="h"><span class="exercise-name">Extensión de Cuádriceps</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">12</td>
+              <td class="center"><span class="rpe-badge">6/10</span></td>
+              <td class="td-mono center">60s</td>
+              <td><span class="notes-text">No hiperextender rodillas. Contracción cuádriceps 2s en posición extendida.</span></td>
+            </tr>
+            <tr>
+              <td>06</td>
+              <td data-exercise="Elevación de Pantorrillas" data-gender="h"><span class="exercise-name">Elevación de Pantorrillas de Pie</span></td>
+              <td class="td-mono center">4</td>
+              <td class="td-mono center">15</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">45s</td>
+              <td><span class="notes-text">Rango completo obligatorio. Pausa 1s en posición alta. Descenso controlado 2s.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warmup-block" style="border-left-color: var(--text-subtle); opacity: 0.8;">
+        <span class="warmup-icon" style="color:var(--text-subtle);font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Vuelta a la Calma — 10 min</div>
+          <div class="warmup-text">Estiramiento de cuádriceps, isquiotibiales (sentado y de pie), caderas (paloma), pantorrillas en pared. Foam roller en cuádriceps e IT band.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Programa Oficial</div>
+        <div class="page-footer-num">03 / 05</div>
+      </div>
+    </div><!-- /page dia-b -->
+
+
+    <!-- =====================================================
+         PAGE 4 — DÍA C: FULLBODY FUNCIONAL
+    ===================================================== -->
+    <div class="page" id="page-dia-c">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Programa de Entrenamiento &rarr; Día C</div>
+      </div>
+
+      <div class="day-page-header">
+        <div class="day-page-left">
+          <div class="day-page-tag">// sesion 03 de 03 — viernes</div>
+          <div class="day-page-title">DÍA C</div>
+          <div class="day-page-subtitle">Fullbody Funcional — Potencia</div>
+        </div>
+        <div class="day-page-badge">
+          <div class="day-badge">VIERNES</div>
+          <div class="day-meta">6 ejercicios &bull; ~85 min</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Volumen</span>
+          <span class="stat-pill-val">22</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">SERIES</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">RPE Prom.</span>
+          <span class="stat-pill-val red">7.8</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">/ 10</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Énfasis</span>
+          <span class="stat-pill-val" style="font-size:11px">FUERZA</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">FULLBODY</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Principal</span>
+          <span class="stat-pill-val" style="font-size:10px">DEADLIFT</span>
+          <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-subtle)">PESADO</span>
+        </div>
+      </div>
+
+      <div class="warmup-block">
+        <span class="warmup-icon" style="color:#00D9FF;font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Calentamiento — 12 min</div>
+          <div class="warmup-text">Protocolo RAMP: movilidad torácica, activación de glúteos y core (dead bug, bird dog), peso muerto con barra vacía 3×5 técnica perfecta. Rampa de carga: 40% → 60% × 3 reps.</div>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Ejercicios Principales</div>
+          <div class="section-divider-sub">// El Peso Muerto es el ejercicio estrella — prioriza técnica</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="exercise-table-wrap">
+        <table class="exercise-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Ejercicio</th>
+              <th class="center">Series</th>
+              <th class="center">Reps</th>
+              <th class="center">RPE</th>
+              <th class="center">Descanso</th>
+              <th>Notas Técnicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td data-exercise="Peso Muerto Convencional" data-gender="h"><span class="exercise-name">Peso Muerto Convencional</span></td>
+              <td class="td-mono center">4</td>
+              <td class="td-mono center">4</td>
+              <td class="center"><span class="rpe-badge">9/10</span></td>
+              <td class="td-mono center">180s</td>
+              <td><span class="notes-text">TÉCNICA IMPECABLE. Principal del día. Cadera baja en inicio, espalda recta, empuje el suelo.</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td data-exercise="Press de Banca Inclinado" data-gender="h"><span class="exercise-name">Press de Banca Inclinado</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">8</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">90s</td>
+              <td><span class="notes-text">30-45° inclinación. Énfasis en clavicular. Codos a 45° respecto al torso.</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td data-exercise="Jalón al Pecho en Polea" data-gender="h"><span class="exercise-name">Jalón al Pecho en Polea</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">10</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">75s</td>
+              <td><span class="notes-text">Agarre amplio pronado. Bajar hasta barbilla. Retracción escapular activa.</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td data-exercise="Hip Thrust con Barra" data-gender="h"><span class="exercise-name">Hip Thrust con Barra</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">10</td>
+              <td class="center"><span class="rpe-badge">7/10</span></td>
+              <td class="td-mono center">75s</td>
+              <td><span class="notes-text">Hombros apoyados en banco. Glúteo activo en contracción máxima. Pelvis neutra arriba.</span></td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td data-exercise="Zancadas Caminando con Mancuernas" data-gender="h"><span class="exercise-name">Zancadas Caminando con Mancuernas</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">12 c/p</td>
+              <td class="center"><span class="rpe-badge">6/10</span></td>
+              <td class="td-mono center">60s</td>
+              <td><span class="notes-text">Rodilla trasera cerca del suelo sin tocar. Torso erguido. Paso largo y controlado.</span></td>
+            </tr>
+            <tr>
+              <td>06</td>
+              <td data-exercise="Plancha con Elevación de Brazos" data-gender="h"><span class="exercise-name">Plancha con Elevación de Brazos</span></td>
+              <td class="td-mono center">3</td>
+              <td class="td-mono center">30s</td>
+              <td class="center"><span class="rpe-badge">—</span></td>
+              <td class="td-mono center">45s</td>
+              <td><span class="notes-text">Alternar brazos elevados. Core absolutamente rígido. Caderas sin rotación lateral.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warmup-block" style="border-left-color: var(--text-subtle); opacity: 0.8;">
+        <span class="warmup-icon" style="color:var(--text-subtle);font-weight:700;">//</span>
+        <div>
+          <div class="warmup-label">Vuelta a la Calma — 10 min</div>
+          <div class="warmup-text">Estiramiento de cadena posterior completa: espalda baja (child's pose), glúteos (figura 4), isquiotibiales. Respiración diafragmática 5 min post-sesión.</div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Programa Oficial</div>
+        <div class="page-footer-num">04 / 05</div>
+      </div>
+    </div><!-- /page dia-c -->
+
+
+    <!-- =====================================================
+         PAGE 5 — MESOCICLO + CARDIO + NOTAS
+    ===================================================== -->
+    <div class="page" id="page-extras">
+
+      <div class="page-header-compact">
+        <div class="phc-logo">WELL<span>CORE</span></div>
+        <div class="phc-breadcrumb">Programa de Entrenamiento &rarr; Guías Generales</div>
+      </div>
+
+      <!-- MESOCYCLE PROGRESSION -->
+      <div class="section-divider" style="margin-top:0">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Progresión del Mesociclo</div>
+          <div class="section-divider-sub">// 4 semanas — Periodización ondulante diaria</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="meso-table-wrap">
+        <table class="meso-table">
+          <thead>
+            <tr>
+              <th>Semana</th>
+              <th class="center">Series / Ejercicio</th>
+              <th class="center">RPE Objetivo</th>
+              <th class="center">Intensidad</th>
+              <th>Notas del Bloque</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="week-badge"><span class="dot"></span> Semana 1</span></td>
+              <td class="center">3 series</td>
+              <td class="center">6 — 7</td>
+              <td class="center">65 — 72%</td>
+              <td style="font-size:11px; color:var(--text-body)">Adaptación técnica. Prioridad al aprendizaje motor. Carga conservadora.</td>
+            </tr>
+            <tr>
+              <td><span class="week-badge"><span class="dot"></span> Semana 2</span></td>
+              <td class="center">4 series</td>
+              <td class="center">7 — 8</td>
+              <td class="center">72 — 80%</td>
+              <td style="font-size:11px; color:var(--text-body)">Carga moderada. Aumentar peso 2.5-5kg en ejercicios principales si RPE &lt; 7.</td>
+            </tr>
+            <tr>
+              <td><span class="week-badge"><span class="dot"></span> Semana 3</span></td>
+              <td class="center">4 series</td>
+              <td class="center">8 — 9</td>
+              <td class="center">80 — 87%</td>
+              <td style="font-size:11px; color:var(--text-body)">Sobrecarga progresiva máxima. Semana de alto estrés. Dormir 8+ horas obligatorio.</td>
+            </tr>
+            <tr>
+              <td><span class="week-badge deload"><span class="dot"></span> Semana 4</span></td>
+              <td class="center">2 — 3 series</td>
+              <td class="center">5 — 6</td>
+              <td class="center">50 — 60%</td>
+              <td style="font-size:11px; color:var(--text-muted); font-style:italic">DELOAD. Reducción de volumen 40-50%. Mismos ejercicios, sin agotamiento. Supercompensación.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CARDIO & RECOVERY SECTION -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Cardio &amp; Recuperación</div>
+          <div class="section-divider-sub">// Protocolos complementarios al entrenamiento</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Cardio Zona 2</div>
+          <div class="info-card-body">
+            <strong>2× semana</strong>, días de descanso (Mar/Jue/Dom).<br>
+            <strong>20–30 min</strong> a intensidad moderada.<br>
+            FC objetivo: <strong>60–70% FC máx</strong><br>
+            Modalidades: caminar inclinado, bicicleta suave, natación, elíptica.<br>
+            <em>Nunca cardio intenso el día antes de fuerza pesada.</em>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Sueño y Descanso</div>
+          <div class="info-card-body">
+            <strong>7–9 horas</strong> de sueño por noche, mínimo.<br>
+            Semana 3 (alta carga): <strong>8+ horas obligatorio</strong>.<br>
+            Rutina de sueño consistente: misma hora ±30 min.<br>
+            Evitar pantallas 60 min antes de dormir.<br>
+            <em>El sueño es cuando ocurre la adaptación muscular.</em>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Hidratación</div>
+          <div class="info-card-body">
+            Fórmula base: <strong>35 ml × kg de peso corporal</strong>.<br>
+            Días de entrenamiento: añadir <strong>500–750 ml</strong> extra.<br>
+            Comenzar el día con <strong>500 ml</strong> en ayunas.<br>
+            Electrolitos si la sesión supera <strong>60 min</strong>.<br>
+            <em>Orina color amarillo pálido = bien hidratado.</em>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+          <div class="info-card-title">Movilidad Activa</div>
+          <div class="info-card-body">
+            <strong>10 min post-entrenamiento</strong>, cada sesión.<br>
+            Zonas críticas: tobillos, caderas, columna torácica, hombros.<br>
+            Opcional: <strong>yoga 15–20 min</strong> en días de descanso activo.<br>
+            Foam roller en grupos musculares trabajados.<br>
+            <em>La movilidad determina la calidad del movimiento futuro.</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- COACH NOTES -->
+      <div class="section-divider">
+        <div class="section-divider-bar"></div>
+        <div>
+          <div class="section-divider-title">Notas del Coach</div>
+          <div class="section-divider-sub">// Directrices de progresión y autoregulación</div>
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-box-header">
+          <span class="notes-box-icon" style="color:#00D9FF;font-weight:700;">//</span>
+          <span class="notes-box-title">Protocolo de Autoregulación — RPE</span>
+        </div>
+        <ul class="notes-list">
+          <li>Progresa de peso cuando completes TODAS las series programadas con RPE por debajo del objetivo indicado en la tabla.</li>
+          <li>Si el RPE supera 9 en cualquier serie: reduce 5–10% el peso ese día. No es un fallo, es inteligencia competitiva.</li>
+          <li>Registra cada día de entrenamiento completado en tu dashboard — el seguimiento es parte del protocolo de resultados.</li>
+          <li>Los ejercicios auxiliares (N° 05 y 06) pueden ajustarse en peso e incluso cambiarse si el gimnasio no dispone del equipo. Consulta al coach.</li>
+          <li>Nunca omitas el calentamiento. El protocolo RAMP reduce lesiones y mejora el rendimiento en la primera serie en un 8–12%.</li>
+          <li>Para consultas técnicas, ajustes de carga o reprogramación: <strong>info@wellcorefitness.com</strong></li>
+        </ul>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-brand">WELL<span>CORE</span> FITNESS — Programa Oficial</div>
+        <div class="page-footer-num">05 / 05</div>
+      </div>
+    </div><!-- /page extras -->
+
+  </div><!-- /page-wrapper -->
+
+
+  <!-- VIDEO LIBRARY — Auto-adds play buttons to exercises with data-exercise attribute -->
+  <script src="../js/video-library.js"></script>
+
+  <!-- =====================================================
+       JAVASCRIPT — localStorage INTEGRATION
+  ===================================================== -->
+  <script>
+    /* --------------------------------------------------
+       UTILITY: Read data from localStorage
+    -------------------------------------------------- */
+    function getProfile() {
+      try {
+        return JSON.parse(localStorage.getItem('wc_profile') || '{}');
+      } catch(e) { return {}; }
+    }
+
+    function getMetrics() {
+      try {
+        const m = JSON.parse(localStorage.getItem('wc_metrics') || '[]');
+        return (Array.isArray(m) && m.length > 0) ? m[m.length - 1] : null;
+      } catch(e) { return null; }
+    }
+
+    function getWeekLog() {
+      const now = new Date();
+      const week = getWeekNumber(now);
+      const year = now.getFullYear();
+      const key = 'wc_training_' + year + '_W' + String(week).padStart(2, '0');
+      try {
+        const val = JSON.parse(localStorage.getItem(key) || '[false,false,false,false,false,false,false]');
+        return Array.isArray(val) ? val : [false,false,false,false,false,false,false];
+      } catch(e) {
+        return [false,false,false,false,false,false,false];
+      }
+    }
+
+    function getWeekNumber(date) {
+      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Calculate weeks active from join date
+    -------------------------------------------------- */
+    function calcWeeksActive(profile) {
+      if (!profile.fechaInicio) return '—';
+      try {
+        const start = new Date(profile.fechaInicio);
+        const now = new Date();
+        const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24 * 7));
+        return diff > 0 ? diff + ' sem.' : '< 1 sem.';
+      } catch(e) { return '—'; }
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Format date in Spanish
+    -------------------------------------------------- */
+    function formatDateES(date) {
+      const months = ['enero','febrero','marzo','abril','mayo','junio',
+                      'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      return date.getDate() + ' de ' + months[date.getMonth()] + ' de ' + date.getFullYear();
+    }
+
+    function getMonthNameES(date) {
+      const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                      'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+      return months[date.getMonth()] + ' ' + date.getFullYear();
+    }
+
+    /* --------------------------------------------------
+       UTILITY: Get Monday dates for current week
+    -------------------------------------------------- */
+    function getCurrentWeekDates() {
+      const now = new Date();
+      const day = now.getDay(); // 0=Sun, 1=Mon ... 6=Sat
+      // Adjust so week starts on Monday
+      const diffToMon = (day === 0) ? -6 : 1 - day;
+      const monday = new Date(now);
+      monday.setDate(now.getDate() + diffToMon);
+
+      const dates = [];
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        dates.push(d);
+      }
+      return dates;
+    }
+
+    /* --------------------------------------------------
+       RENDER: Client info fields
+    -------------------------------------------------- */
+    function renderClientInfo(profile, metrics) {
+      document.querySelectorAll('[data-field]').forEach(function(el) {
+        const field = el.dataset.field;
+
+        if (field === 'nombre') {
+          el.textContent = profile.nombre
+            || localStorage.getItem('wc_client_name')
+            || 'Cliente WellCore';
+        }
+
+        if (field === 'plan') {
+          const plan = (localStorage.getItem('wc_client_plan') || profile.plan || 'esencial').toUpperCase();
+          el.textContent = 'PLAN ' + plan;
+        }
+
+        if (field === 'objetivo') {
+          el.textContent = profile.objetivo || 'Composición Corporal';
+        }
+
+        if (field === 'peso') {
+          if (metrics && metrics.peso) {
+            el.innerHTML = metrics.peso + '<span>kg</span>';
+          } else {
+            el.innerHTML = '—<span>kg</span>';
+          }
+        }
+
+        if (field === 'altura') {
+          if (profile.altura) {
+            el.innerHTML = profile.altura + '<span>cm</span>';
+          } else if (metrics && metrics.altura) {
+            el.innerHTML = metrics.altura + '<span>cm</span>';
+          } else {
+            el.innerHTML = '—<span>cm</span>';
+          }
+        }
+
+        if (field === 'grasa') {
+          if (metrics && metrics.grasa) {
+            el.innerHTML = metrics.grasa + '<span>%</span>';
+          } else {
+            el.innerHTML = '—<span>%</span>';
+          }
+        }
+
+        if (field === 'musculo') {
+          if (metrics && metrics.musculo) {
+            el.innerHTML = metrics.musculo + '<span>%</span>';
+          } else {
+            el.innerHTML = '—<span>%</span>';
+          }
+        }
+      });
+
+      // Weeks active
+      const weeksEl = document.getElementById('weeks-active');
+      if (weeksEl) weeksEl.textContent = calcWeeksActive(profile);
+
+      // Issue date
+      const issueDateEl = document.getElementById('issue-date');
+      if (issueDateEl) issueDateEl.textContent = formatDateES(new Date());
+
+      // Doc ID (dynamic year + week)
+      const docIdEl = document.getElementById('doc-id');
+      if (docIdEl) {
+        const now = new Date();
+        const week = getWeekNumber(now);
+        docIdEl.textContent = 'WCF-TRN-' + now.getFullYear() + '-W' + String(week).padStart(2,'0');
+      }
+    }
+
+    /* --------------------------------------------------
+       RENDER: Weekly calendar
+    -------------------------------------------------- */
+    function renderWeeklyCalendar(weekLog) {
+      const calendarEl = document.getElementById('weekly-calendar');
+      if (!calendarEl) return;
+
+      const dayNames = ['LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB', 'DOM'];
+      const weekDates = getCurrentWeekDates();
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      // Clear existing content
+      calendarEl.innerHTML = '';
+
+      weekDates.forEach(function(date, i) {
+        const isDone = weekLog[i] === true;
+        const isToday = date.getTime() === today.getTime();
+
+        const dayEl = document.createElement('div');
+        dayEl.className = 'calendar-day';
+
+        const nameEl = document.createElement('div');
+        nameEl.className = 'day-name';
+        nameEl.textContent = dayNames[i];
+
+        const circleEl = document.createElement('div');
+        circleEl.className = 'day-circle';
+        if (isDone) circleEl.classList.add('done');
+        else if (isToday) circleEl.classList.add('today');
+
+        if (isDone) {
+          circleEl.textContent = '\u2713';
+        } else {
+          circleEl.textContent = date.getDate();
+        }
+
+        const dateEl = document.createElement('div');
+        dateEl.className = 'day-date';
+        dateEl.textContent = date.getDate() + '/' + String(date.getMonth()+1).padStart(2,'0');
+
+        dayEl.appendChild(nameEl);
+        dayEl.appendChild(circleEl);
+        dayEl.appendChild(dateEl);
+        calendarEl.appendChild(dayEl);
+      });
+
+      // Summary counter
+      const completed = weekLog.filter(Boolean).length;
+      const counterEl = document.getElementById('week-completed');
+      if (counterEl) {
+        counterEl.innerHTML = '<strong>' + completed + '</strong> / 7 días completados esta semana';
+      }
+
+      // Progress bar
+      const barEl = document.getElementById('week-progress-bar');
+      if (barEl) {
+        barEl.style.width = Math.round((completed / 7) * 100) + '%';
+      }
+
+      // Calendar month label
+      const monthEl = document.getElementById('calendar-month');
+      if (monthEl) {
+        monthEl.textContent = 'Semana Actual — ' + getMonthNameES(today);
+      }
+
+      // Week number in header
+      const weekNumEl = document.getElementById('calendar-week-num');
+      if (weekNumEl) {
+        weekNumEl.textContent = 'Sem. ' + getWeekNumber(today);
+      }
+    }
+
+    /* --------------------------------------------------
+       MAIN: DOMContentLoaded
+    -------------------------------------------------- */
+    document.addEventListener('DOMContentLoaded', function() {
+      const profile  = getProfile();
+      const metrics  = getMetrics();
+      const weekLog  = getWeekLog();
+
+      renderClientInfo(profile, metrics);
+      renderWeeklyCalendar(weekLog);
+    });
+  </script>
+
+</body>
+</html>

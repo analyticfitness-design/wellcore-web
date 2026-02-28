@@ -1,0 +1,272 @@
+[
+  {
+    "id": "planes_precios",
+    "keywords": ["plan", "planes", "precio", "precios", "costo", "cuanto", "valor", "mensual", "esencial", "metodo", "elite"],
+    "content": "WellCore tiene 3 planes mensuales:\n- ESENCIAL: $399.000 COP/mes (~$109 USD) — Plan de entrenamiento personalizado + portal del cliente\n- METODO: $504.000 COP/mes (~$138 USD) — Entrenamiento + Nutricion + ajustes mensuales (mas popular)\n- ELITE: $630.000 COP/mes (~$173 USD) — Todo incluido: Entrenamiento, Nutricion, Habitos y Check-in semanal\nPlan anual disponible con 2 meses gratis. Pago via Wompi (Bancolombia) — tarjeta, PSE, Nequi, Efecty."
+  },
+  {
+    "id": "metodologia",
+    "keywords": ["como funciona", "metodologia", "metodo", "proceso", "fases", "que hacen"],
+    "content": "WellCore usa un metodo de 4 fases: F01 Diagnostico (evaluacion inicial completa), F02 Diseno (programa personalizado de entrenamiento y nutricion), F03 Ejecucion (seguimiento guiado con ajustes), F04 Analisis (revision de resultados y optimizacion). Cada cliente recibe atencion individualizada basada en evidencia cientifica."
+  },
+  {
+    "id": "entrenamiento_fuerza",
+    "keywords": ["entrenamiento", "fuerza", "hipertrofia", "series", "repeticiones", "rpe", "rir", "volumen", "intensidad", "periodizacion"],
+    "content": "Los programas de entrenamiento WellCore se basan en periodizacion ondulante o lineal segun el nivel del cliente. Usamos RPE (Rating of Perceived Exertion) y RIR (Reps in Reserve) para autoregular la intensidad. Volumen semanal por grupo muscular: 10-20 series efectivas. Frecuencia: 2x por grupo muscular por semana. Progresion: aumento de carga cuando se logran todas las reps al RIR objetivo."
+  },
+  {
+    "id": "nutricion_macros",
+    "keywords": ["nutricion", "macros", "proteina", "calorias", "dieta", "carbohidratos", "grasas", "comer", "alimentacion", "tdee"],
+    "content": "Calculo de TDEE con formula Mifflin-St Jeor + factor de actividad. Proteina: 1.6-2.2g/kg para hipertrofia. Grasas: minimo 0.8g/kg. Carbohidratos: el resto de calorias. Para perdida de grasa: deficit de 300-500 kcal. Para volumen: superavit de 200-300 kcal. Timing: mayor ingesta de carbos pre y post entrenamiento."
+  },
+  {
+    "id": "suplementacion",
+    "keywords": ["suplemento", "suplementos", "creatina", "proteina en polvo", "whey", "vitamina"],
+    "content": "Suplementos con evidencia solida: Creatina monohidrato (5g/dia, cualquier hora), Proteina whey (complementar si no llega a 1.6g/kg con comida), Vitamina D (2000-4000 IU si no hay exposicion solar), Cafeina (3-6mg/kg pre-entreno). Todo lo demas es opcional. La base siempre es la alimentacion real."
+  },
+  {
+    "id": "recuperacion_descanso",
+    "keywords": ["descanso", "recuperacion", "sueno", "dormir", "overtraining", "sobreentrenamiento", "deload"],
+    "content": "El descanso es parte del entrenamiento. Recomendaciones: 7-9 horas de sueno, deload cada 4-6 semanas (reducir volumen 40-50%), minimo 1 dia de descanso completo por semana. Senales de sobreentrenamiento: fuerza estancada, fatiga cronica, irritabilidad, mal sueno. Si aparecen, reducir volumen inmediatamente."
+  },
+  {
+    "id": "inscripcion",
+    "keywords": ["inscribir", "inscribirme", "empezar", "comenzar", "registro", "unirme", "como me uno"],
+    "content": "Para inscribirse: 1) Elegir plan en wellcorefitness.com/pagar.html, 2) Completar datos y pagar via Wompi (tarjeta, PSE, Nequi o Efecty), 3) En menos de 24h recibes credenciales de acceso al portal, 4) En 48h tienes tu programa personalizado. Sin compromiso de permanencia, pago mes a mes."
+  },
+  {
+    "id": "contacto",
+    "keywords": ["contacto", "contactar", "whatsapp", "email", "correo", "horario", "atencion"],
+    "content": "Contacto WellCore: Email info@wellcorefitness.com | WhatsApp +57 312 4904720 | Instagram @wellcore.fitness. Tiempos de respuesta: Esencial 48h, Metodo 24h, Elite 8h (prioritario). Disponibles 7 dias a la semana."
+  },
+  {
+    "id": "cancelacion",
+    "keywords": ["cancelar", "cancelacion", "baja", "pausa", "devolucion", "cambiar plan"],
+    "content": "Sin compromisos de permanencia. Pago mes a mes, cancelas cuando quieras sin penalidades. Upgrade en cualquier momento (pagas diferencia proporcional). Downgrade aplica al siguiente periodo. Pausa temporal disponible por lesion o viaje (consultar con coach)."
+  },
+  {
+    "id": "resultados",
+    "keywords": ["resultados", "cuanto tiempo", "cuando veo", "transformacion", "progreso", "bajar peso", "ganar musculo"],
+    "content": "Resultados tipicos con consistencia: Semana 1-2 adaptacion y mas energia, Semana 3-4 mejora notable en fuerza, Mes 2-3 cambios visuales significativos. Promedio: -4kg grasa y +2kg musculo en 3 meses. Los resultados varian segun adherencia al plan, genetica, y punto de partida."
+  },
+  {
+    "id": "lesiones",
+    "keywords": ["lesion", "lesiones", "dolor", "hernia", "hombro", "rodilla", "espalda"],
+    "content": "Si tienes una lesion, informala en tu evaluacion inicial. Adaptamos el programa completamente: ejercicios alternativos, progresion conservadora, enfoque en lo que SI puedes trabajar. Para lesiones activas, recomendamos consultar con un fisioterapeuta. Podemos pausar el plan sin costo si la lesion lo requiere."
+  },
+  {
+    "id": "equipo_casa",
+    "keywords": ["casa", "home", "sin gym", "mancuernas", "bandas", "equipamiento", "gimnasio"],
+    "content": "Disenamos programas tanto para gym completo como para casa. Indica tu equipamiento disponible (mancuernas, bandas, barra, nada) y adaptamos todo el programa. Resultados son igual de efectivos con consistencia y progresion adecuada."
+  },
+  {
+    "id": "plan_principiante",
+    "keywords": ["principiante", "nuevo", "empezar", "sin experiencia", "novato", "cero", "primer mes", "comenzar desde cero"],
+    "content": "Para principiantes o personas con menos de 12 meses de entrenamiento consistente, el Plan Metodo es el punto de entrada recomendado. Construye bases solidas: patrones de movimiento, habitos alimenticios y estructura progresiva. No necesitas experiencia previa, el programa empieza desde donde estas."
+  },
+  {
+    "id": "cambiar_plan",
+    "keywords": ["cambiar plan", "upgrade", "downgrade", "cambio de plan", "pasar a elite", "subir plan", "bajar plan"],
+    "content": "Puedes hacer upgrade o downgrade de plan en cualquier momento, con efecto en el siguiente ciclo de facturacion. Sin penalizaciones por cambio. El proceso se gestiona desde el panel de cliente en 'Mi Suscripcion'. Tu coach recibe notificacion y ajusta el programa automaticamente."
+  },
+  {
+    "id": "diferencia_metodo_elite",
+    "keywords": ["diferencia metodo elite", "metodo vs elite", "que incluye elite", "comparar planes", "cual es mejor plan"],
+    "content": "Ambos planes incluyen entrenamiento y nutricion personalizados. El Plan Metodo ofrece check-in semanal escrito, ajuste mensual y soporte 3 veces por semana. El Plan Elite agrega check-in semanal por videollamada de 30 minutos, ajuste quincenal, soporte prioritario ilimitado y analisis de composicion corporal mensual. Elite esta pensado para atletas u objetivos competitivos."
+  },
+  {
+    "id": "descuentos_anual",
+    "keywords": ["descuento", "anual", "trimestral", "ahorro", "oferta anual", "precio anual", "pago anual", "meses gratis"],
+    "content": "WellCore ofrece descuentos por compromiso: 10% en planes trimestrales (3 meses), 20% en planes anuales (equivale a 2 meses gratis). Los precios anuales son: Esencial $3.990.000 COP, Metodo $5.040.000 COP, Elite $6.300.000 COP. Los planes trimestrales y anuales se pagan en un solo cobro sin renovacion automatica."
+  },
+  {
+    "id": "compartir_plan",
+    "keywords": ["compartir plan", "cuenta familiar", "dos personas", "pareja", "acceso multiple", "cuenta compartida"],
+    "content": "Las suscripciones son estrictamente personales e intransferibles. El programa se construye con tus datos biometricos individuales, compartirlo invalida el plan para ambas personas. Si quieren entrenar en pareja o familia, WellCore tiene tarifa especial para cuentas vinculadas. Consulta a soporte para condiciones."
+  },
+  {
+    "id": "frecuencia_entrenamiento",
+    "keywords": ["cuantos dias", "frecuencia", "dias semana", "sesiones por semana", "cuantas veces entrenar", "3 dias", "4 dias", "5 dias"],
+    "content": "El programa se adapta a tu disponibilidad real: 3 dias por semana (full body o push-pull-legs), 4 dias (upper-lower split) o 5 dias (mayor especificidad por grupo muscular). El minimo recomendado para resultados consistentes es 3 sesiones semanales. Mas sesiones no siempre es mejor: la recuperacion es parte del programa."
+  },
+  {
+    "id": "calentamiento_warm_up",
+    "keywords": ["calentamiento", "warm up", "cool down", "estiramiento", "antes de entrenar", "entrada en calor", "preparacion"],
+    "content": "Cada sesion incluye tres bloques: warm-up de 8-12 minutos (activacion neuromuscular y movilidad articular), bloque principal de 35-55 minutos con sets, reps y RIR especificados, y cool-down de 5-8 minutos de estiramiento estatico. El warm-up no es opcional: esta disenado para los ejercicios de esa sesion especifica y reduce el riesgo de lesion."
+  },
+  {
+    "id": "actualizacion_programa",
+    "keywords": ["cada cuanto cambia programa", "actualizar rutina", "nuevo programa", "estancamiento", "meseta", "cambiar ejercicios"],
+    "content": "Los programas siguen bloques de periodizacion de 4 a 6 semanas. Al finalizar cada bloque el coach ajusta volumen, intensidad, seleccion de ejercicios y frecuencia por grupo muscular. Fuera del ciclo, se realizan ajustes puntuales si el check-in semanal revela fatiga acumulada, meseta o cambios en disponibilidad."
+  },
+  {
+    "id": "plan_nutricional_recetas",
+    "keywords": ["recetas", "menu semanal", "plan de comidas", "que comer", "alimentos", "menu diario", "comidas especificas"],
+    "content": "WellCore ofrece dos modalidades nutricionales: plan de macros flexible (objetivos de proteina, carbohidratos y grasas diarios, tu eliges los alimentos) o plan de comidas estructurado (menu semanal con cantidades y preparaciones). La mayoria empieza con el plan estructurado y migra al flexible. Tu coach guia ese proceso."
+  },
+  {
+    "id": "vegetariano_vegano",
+    "keywords": ["vegetariano", "vegano", "plant based", "sin carne", "dieta vegetariana", "proteina vegetal", "alergias"],
+    "content": "Los planes nutricionales se adaptan completamente a tu patron alimenticio: vegetariano, vegano, omnivoro, pescetariano u otras restricciones. Declaras preferencias, alimentos que no consumes, alergias e intolerancias en el onboarding. Para dietas plant-based se presta especial atencion a la completitud proteica y posible suplementacion especifica (B12, omega-3, hierro)."
+  },
+  {
+    "id": "suplementos_obligatorios",
+    "keywords": ["necesito suplementos", "obligatorio comprar", "sin suplementos", "solo comida real", "suplementos necesarios"],
+    "content": "No. Los suplementos no son necesarios ni obligatorios. El programa de nutricion esta disenado para funcionar completamente con alimentos reales. WellCore no tiene comisiones ni acuerdos con marcas. Si quieres usar suplementos, los unicos con evidencia solida son: creatina monohidrato, proteina en polvo (conveniencia), vitamina D y omega-3 para deficiencias especificas."
+  },
+  {
+    "id": "sustitucion_alimentos",
+    "keywords": ["no me gusta", "sustituir alimento", "cambiar comida", "alimento alternativo", "no como", "intolerancia"],
+    "content": "Un plan que no puedes seguir no es un buen plan. Si hay alimentos que no consumes o no te gustan, notificas al coach y los sustituye por equivalentes nutricionales. No hay limite de sustituciones. La adherencia supera a la precision teorica: el objetivo es que el plan sea sostenible, no perfectamente optimo en papel."
+  },
+  {
+    "id": "tiempo_entrega_plan",
+    "keywords": ["cuanto tarda", "cuando recibo", "tiempo de entrega", "demora", "48 horas", "onboarding", "primer dia"],
+    "content": "Tras el pago: en las primeras 24 horas recibes acceso y completas el formulario de onboarding (medidas, historial, fotos, objetivos). En las siguientes 24-48 horas el coach construye tu programa personalizado. El plazo maximo es 72 horas desde que completas el onboarding. En la practica, la mayoria recibe su programa en menos de 48 horas."
+  },
+  {
+    "id": "seguimiento_check_in",
+    "keywords": ["check in", "seguimiento semanal", "reporte semanal", "como funciona seguimiento", "progreso semanal", "fotos progreso"],
+    "content": "Cada semana completas un check-in desde tu panel de cliente: peso promedio, nivel de energia, calidad de sueno, adherencia al plan, sensaciones en el entrenamiento y foto de progreso cada 2 semanas (opcional pero recomendada). Tu coach responde en maximo 24 horas con feedback especifico, ajustes y orientacion para la semana siguiente. Es una respuesta humana, no automatizada."
+  },
+  {
+    "id": "comunicacion_coach",
+    "keywords": ["hablar coach", "mensaje coach", "cuantas veces coach", "soporte chat", "atencion coach", "videollamada"],
+    "content": "Plan Metodo: 1 check-in semanal escrito + soporte por chat 3 veces por semana en horario habil. Plan Elite: 1 check-in por videollamada semanal de 30 minutos + soporte prioritario ilimitado. Todos los planes garantizan respuesta en menos de 24 horas habiles a cualquier consulta."
+  },
+  {
+    "id": "check_in_elite",
+    "keywords": ["check in elite", "videollamada elite", "sesion elite", "que es check in elite", "llamada con coach"],
+    "content": "El Check-in Elite es una sesion semanal por videollamada de 30 minutos que permite revision de tecnica en vivo, discusion de datos biometricos, ajuste inmediato de variables de entrenamiento y nutricion, y planificacion estrategica. Las sesiones se agendan con 48 horas de anticipacion y se pueden reprogramar con 12 horas de aviso."
+  },
+  {
+    "id": "pausa_programa",
+    "keywords": ["pausar", "pausa", "viaje", "vacaciones", "suspender", "congelar suscripcion", "vacaciones fitness"],
+    "content": "Puedes pausar tu suscripcion hasta 14 dias por ciclo mensual sin perder tiempo ni dinero. Si viajas, el coach puede disenar una rutina de viaje adaptada al equipamiento disponible (hotel, parques, bodyweight). Para pausas mayores a 14 dias por lesion u otras causas justificadas, se gestiona con soporte una pausa extendida."
+  },
+  {
+    "id": "metodos_pago",
+    "keywords": ["metodos de pago", "tarjeta credito", "debito", "paypal", "nequi", "daviplata", "transferencia", "como pagar"],
+    "content": "WellCore acepta: tarjeta de credito o debito (Visa, Mastercard, Amex), PayPal, transferencia bancaria para planes trimestrales y anuales, y Nequi/Daviplata para clientes en Colombia. Todos los pagos son procesados via pasarelas certificadas PCI-DSS. WellCore nunca almacena datos de tarjeta directamente."
+  },
+  {
+    "id": "reembolso_garantia",
+    "keywords": ["reembolso", "devolucion", "garantia", "7 dias", "insatisfecho", "politica reembolso", "no me convencio"],
+    "content": "WellCore ofrece garantia de satisfaccion de 7 dias para nuevos clientes. Si en los primeros 7 dias desde que recibes tu programa completo no estas satisfecho, se devuelve el dinero sin preguntas. Para solicitar: email a info@wellcorefitness.com con asunto REEMBOLSO [tu nombre]. El proceso tarda 5-7 dias habiles segun el banco."
+  },
+  {
+    "id": "app_movil",
+    "keywords": ["app", "aplicacion", "movil", "android", "iphone", "descargar app", "plataforma movil"],
+    "content": "WellCore no tiene app nativa para descargar. El panel de cliente esta optimizado para acceso via navegador en movil, sin necesidad de instalacion. Puedes acceder a tu programa, registrar entrenamientos y hacer check-in desde cualquier dispositivo con conexion a internet."
+  },
+  {
+    "id": "elegir_coach",
+    "keywords": ["elegir coach", "cambiar coach", "asignacion coach", "quien es mi coach", "preferencia coach"],
+    "content": "En el onboarding puedes indicar preferencias de perfil de coach. El equipo asigna segun afinidad tecnica y disponibilidad. Si despues de las primeras 2 semanas quieres cambiar de coach, se gestiona sin costo adicional. Cada coach maneja entre 15 y 25 clientes activos simultaneamente para garantizar calidad de seguimiento."
+  },
+  {
+    "id": "hombres_mujeres_mayores",
+    "keywords": ["mujeres", "hombres", "mas de 40", "mayores de 40", "40 anos", "diferencias hombre mujer", "edad"],
+    "content": "Los programas consideran diferencias fisiologicas entre hombres y mujeres (hormonales, composicion corporal, respuesta al entrenamiento). Para mayores de 40 anos la progresion de carga es mas conservadora, la recuperacion recibe mas atencion y la proteina se ajusta para preservacion muscular. No es el mismo programa para todos."
+  },
+  {
+    "id": "cardio_vs_pesas",
+    "keywords": ["cardio vs pesas", "cardio o pesas", "que quema mas grasa", "correr o levantar pesas", "aerobico o fuerza", "epoc", "metabolismo basal"],
+    "content": "El entrenamiento de fuerza es superior para composicion corporal a largo plazo porque aumenta la masa muscular (que eleva el metabolismo basal) y genera un EPOC elevado de 24-48 horas post-sesion. El cardio quema mas calorias en el momento pero no construye musculo. La combinacion optima es 3-4 dias de fuerza + 2-3 dias de cardio. El cardio excesivo en deficit sin suficiente proteina puede canibalizar musculo."
+  },
+  {
+    "id": "deficit_calorico",
+    "keywords": ["deficit calorico", "como perder grasa", "cuantas calorias", "balance energetico", "restriccion calorica", "cuanto comer para adelgazar"],
+    "content": "El deficit calorico es el unico mecanismo por el que el cuerpo pierde grasa: consumes menos calorias de las que gastas. Un deficit de 300-500 kcal diarias es lo optimo para perder grasa sin perder musculo. El deficit excesivo (mas de 700-1000 kcal) acelera la perdida muscular y reduce el metabolismo. La proteina alta (1.6-2.2g/kg) protege el musculo durante el deficit."
+  },
+  {
+    "id": "estres_cortisol",
+    "keywords": ["cortisol", "estres", "grasa abdominal", "estres y peso", "cortisol alto", "estres cronico", "hormona estres"],
+    "content": "El cortisol cronicamente elevado por estres laboral o vital sabotea la composicion corporal: acumula grasa abdominal (activa lipoproteina lipasa en tejido adiposo abdominal), destruye musculo (proteolisis para convertir aminoacidos en glucosa) y suprime la testosterona. El manejo del estres, el sueno y el volumen de entrenamiento adecuado son variables clave que WellCore incorpora al programa."
+  },
+  {
+    "id": "hipertrofia_mecanismos",
+    "keywords": ["hipertrofia", "crecer musculo", "ganar masa muscular", "tension mecanica", "dano muscular", "estres metabolico", "como crece el musculo"],
+    "content": "La hipertrofia muscular ocurre por 3 mecanismos: tension mecanica (el principal, generada por carga progresiva y trabajo en rangos de rango completo), dano muscular (micro-roturas que desencadenan reparacion y crecimiento) y estres metabolico (acumulacion de metabolitos en series de alta repeticion). El volumen efectivo semanal por grupo muscular es 10-20 series, con frecuencia de 2 veces por semana."
+  },
+  {
+    "id": "periodizacion_programas",
+    "keywords": ["periodizacion", "bloques de entrenamiento", "progresion", "estancamiento", "meseta", "cambiar rutina", "dejar de progresar"],
+    "content": "La periodizacion es la planificacion sistematica de cargas para evitar la adaptacion y mantener el progreso continuo. WellCore usa periodizacion lineal (para principiantes, aumenta carga progresivamente), ondulante (varia volumen e intensidad dentro de la semana) o por bloques (fases de acumulacion, intensificacion y realizacion para avanzados). Sin periodizacion, el cuerpo se adapta y el progreso se detiene en 6-8 semanas."
+  },
+  {
+    "id": "proteina_muscular",
+    "keywords": ["cuanta proteina", "proteina muscular", "gramos proteina", "1.6 2.2 gramos", "fuentes proteina", "proteina diaria", "cuando comer proteina"],
+    "content": "El rango optimo de proteina para hipertrofia es 1.6 a 2.2 gramos por kilogramo de peso corporal diarios. Distribuir la ingesta en 3-5 comidas maximiza la sintesis proteica muscular. Las mejores fuentes son carnes magras, pescado, huevos, lacteos y leguminosas para dietas plant-based. La ventana anabolica post-entrenamiento es de varias horas, no son solo los 30 minutos post-sesion."
+  },
+  {
+    "id": "efecto_rebote",
+    "keywords": ["efecto rebote", "recuperar peso", "volver a engordar", "yo yo", "mantener peso", "rebote", "perder y ganar peso"],
+    "content": "El efecto rebote ocurre principalmente por: deficit calorico demasiado agresivo (pierde musculo y baja el metabolismo basal), restricciones insostenibles (genera relacion disfuncional con la comida) y adaptacion metabolica (el cuerpo reduce el TDEE durante el deficit). La solucion es un deficit moderado de 300-500 kcal, alta proteina para preservar musculo, y transicion gradual a mantenimiento con nueva composicion corporal."
+  },
+  {
+    "id": "sueno_recuperacion_ciencia",
+    "keywords": ["dormir poco", "sueno y musculo", "sueno y grasa", "importancia dormir", "hormona crecimiento", "cuanto dormir", "7 horas"],
+    "content": "Dormir menos de 7 horas reduce la produccion de hormona de crecimiento (que ocurre principalmente en sueno profundo), eleva el cortisol cronicamente, aumenta el apetito por alimentos caloricos via grelina, y reduce la sintesis proteica muscular. El sueno es cuando el musculo se repara y crece, no durante el entrenamiento. 7-9 horas es el rango optimo para composicion corporal."
+  },
+  {
+    "id": "suplementos_evidencia_ciencia",
+    "keywords": ["suplementos que funcionan", "suplementos ciencia", "creatina efectiva", "cafeina rendimiento", "vitamina d deporte", "mejores suplementos"],
+    "content": "Los 4 suplementos con evidencia cientifica solida son: creatina monohidrato (3-5g diarios, cualquier hora, mejora fuerza y potencia), proteina en polvo (conveniencia, no necesidad si ya llegas a 1.6g/kg con comida), cafeina (3-6mg/kg 30-60 min antes, reduce percepcion del esfuerzo) y vitamina D3+K2 (2000-4000 UI diarios si hay deficiencia). El 95% del resto del mercado es marketing sin respaldo real."
+  },
+  {
+    "id": "volumen_vs_definicion",
+    "keywords": ["volumen o definicion", "volumen y definicion", "bulk y cut", "ganar musculo y perder grasa", "cuando hacer volumen", "cuando hacer definicion", "fase de volumen"],
+    "content": "Volumen (superavit calorico de 200-300 kcal) maximiza la ganancia muscular con minima grasa acumulada. Definicion (deficit de 300-500 kcal) reduce grasa preservando el musculo con suficiente proteina y entrenamiento de fuerza. La recomposicion corporal (ganar musculo y perder grasa simultaneamente) es posible en principiantes o personas con mucha grasa corporal, pero limitada en avanzados. Cada fase dura tipicamente 8-16 semanas."
+  },
+  {
+    "id": "cuando_cambiar_programa",
+    "keywords": ["cuando cambiar programa", "cuanto tiempo mismo programa", "rutina obsoleta", "seguir mismo programa", "cuantas semanas mismo programa"],
+    "content": "Un programa debe cambiarse cuando: llevas mas de 4-6 semanas sin progreso en fuerza (meseta real, no variacion normal), el estimulo ya no genera fatiga adecuada, o el bloque de periodizacion programado llega a su fin. Cambiar por aburrimiento sin haber agotado las adaptaciones posibles es un error comun. La consistencia supera a la variedad prematura."
+  },
+  {
+    "id": "como_medir_progreso",
+    "keywords": ["medir progreso", "como saber si progreso", "fotos de progreso", "peso vs musculo", "medidas corporales", "seguimiento resultados"],
+    "content": "El progreso se mide por multiples indicadores: progresion de carga en ejercicios principales (el mas objetivo), fotos de progreso cada 2-4 semanas en las mismas condiciones, medidas corporales (cintura, cadera, brazo), peso corporal como promedio semanal (no diario), y niveles de energia y rendimiento en entrenamiento. El peso en la bascula puede estancarse mientras mejora la composicion corporal por retencion de agua o ganancia muscular."
+  },
+  {
+    "id": "fuerza_vs_hipertrofia",
+    "keywords": ["fuerza vs hipertrofia", "diferencia fuerza hipertrofia", "entrenar fuerza o masa", "repeticiones para hipertrofia", "peso para hipertrofia", "rangos de repeticiones"],
+    "content": "El entrenamiento de fuerza prioriza cargas altas y pocas repeticiones (1-5 reps al 85-95% del maximo) para maximizar adaptaciones neurales. La hipertrofia ocurre en rangos mas amplios (6-30 reps) con enfasis en tension mecanica y volumen total. En la practica, ambos objetivos se superponen: mas fuerza permite mas carga, que genera mas hipertrofia. WellCore integra ambos segun la fase del programa."
+  },
+  {
+    "id": "sudar_quemar_grasa",
+    "keywords": ["sudar grasa", "sudar mas adelgazar", "transpiracion adelgazar", "mucho sudor quemar", "sudor y calorias"],
+    "content": "El sudor es un mecanismo de termorregulacion, no de quema de grasa. La cantidad de sudor depende de temperatura, humedad y genetica individual. No correlaciona con el gasto calorico del ejercicio. Lo que se pierde al sudar es agua y electrolitos, que se recuperan al hidratarse. La grasa se quema via deficit calorico, no via sudoracion."
+  },
+  {
+    "id": "atletas_competitivos",
+    "keywords": ["atletas", "competencia", "competicion", "rendimiento deportivo", "peak week", "periodizacion competencia", "preparacion torneo"],
+    "content": "El Plan Elite de WellCore esta disenado para atletas con objetivos de rendimiento o competencia. Incluye periodizacion por fases de competencia, protocolo de peak week, ajustes de carga segun calendario competitivo y analisis detallado de composicion corporal. Para deportes especificos se adapta el programa al calendario de la temporada."
+  },
+  {
+    "id": "tienda_general",
+    "keywords": ["tienda", "comprar", "productos", "shop", "catalogo", "que venden", "suplementos tienda", "accesorios tienda"],
+    "content": "WellCore tiene una tienda online en wellcorefitness.com/tienda.html con mas de 45 productos en 10 categorias: Proteinas (whey blend, isolate, mass gainers), Creatinas (monohidrato, Creapure, saborizada), Aminoacidos (EAAs, BCAAs, L-Glutamina), Pre-Entrenos (alta y baja estimulacion), Quemadores de Grasa (termogenicos, yohimbina), Vitaminas y Salud (multivitaminicos, omega-3, protectores hepaticos, colageno), Potenciadores Naturales (turkesterone, ashwagandha, ZMA), Combos y Packs (ahorro vs compra individual), Accesorios (bandas de resistencia, shaker, guantes, foam roller) y Productos Digitales (guia de nutricion PDF, pack de recetas fitness). Todos los precios estan en COP (pesos colombianos). Envios a toda Colombia."
+  },
+  {
+    "id": "tienda_accesorios",
+    "keywords": ["accesorios", "bandas", "shaker", "guantes", "foam roller", "rodillo", "equipamiento", "mezclador"],
+    "content": "La tienda WellCore ofrece accesorios de entrenamiento: Bandas de Resistencia Set x5 ($44.900 COP, 5 niveles de resistencia en latex premium con bolsa de transporte), Shaker WellCore 700ml ($24.900 COP, compartimento inferior, bola mezcladora de acero, libre de BPA), Guantes de Entrenamiento ($29.900 COP, agarre reforzado, malla transpirable, tallas S-XL) y Foam Roller 45cm ($39.900 COP, espuma de alta densidad para liberacion miofascial y recuperacion). Todos los accesorios son marca WellCore."
+  },
+  {
+    "id": "tienda_digital",
+    "keywords": ["digital", "pdf", "guia nutricion", "recetas", "descargable", "ebook", "guia alimentacion", "recetas fitness"],
+    "content": "WellCore ofrece productos digitales de descarga inmediata: Guia Nutricion WellCore PDF ($19.900 COP, 85 paginas con plan nutricional personalizable por fase, calculadora de macros, 4 plantillas de menu semanal, lista de compras y tablas de equivalencias) y Pack Recetas Fitness 50+ ($14.900 COP, mas de 50 recetas altas en proteina con macros exactos, tiempo de preparacion e ingredientes accesibles en Latinoamerica). Ambos productos son PDF descargables con acceso inmediato tras la compra."
+  },
+  {
+    "id": "tienda_envios_pagos",
+    "keywords": ["envio", "envios", "despacho", "costo envio", "cuanto demora envio", "pagar tienda", "metodo pago tienda"],
+    "content": "Los envios de la tienda WellCore son a toda Colombia. Los productos digitales (PDFs) tienen entrega inmediata tras la compra. Para productos fisicos (suplementos y accesorios), el envio se coordina tras confirmar el pago. Los pagos se procesan via Wompi (plataforma de Bancolombia). Todos los precios estan en COP (pesos colombianos). Al realizar un pedido recibes un codigo de orden (formato WC-XXXXXX) para consultar el estado."
+  },
+  {
+    "id": "tienda_proteinas_populares",
+    "keywords": ["proteina", "whey", "isolate", "bipro", "mass gainer", "hipercalorico", "proteina en polvo"],
+    "content": "Las proteinas mas populares de la tienda WellCore: Proteina Whey Blend 4LB de Macroblends ($280.000 COP, 60 servicios, 4 sabores — la mas vendida), Proteina BiPro Classic 2LB de Nutramerican ($165.000 COP, isolate colombiana de referencia), CR-PURE Creatina Creapure ($120.000 COP, pureza 99.95% grado farmaceutico), Mesomorph Pre-Workout de Hi-Tech ($170.000 COP, uno de los pre-entrenos mas potentes), y Protein Pancake de Nutramerican ($44.000 COP, la opcion mas accesible del catalogo)."
+  }
+]

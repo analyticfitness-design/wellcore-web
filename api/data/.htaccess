@@ -1,0 +1,2 @@
+# Deny direct access to data files
+Require all denied
