@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Diagnostic - Script Execution Test</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #0a0a0a;
+      color: #fff;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .section { margin: 20px 0; padding: 15px; border-left: 3px solid #E31E24; background: rgba(227,30,36,0.1); }
+    .success { color: #22C55E; }
+    .error { color: #E31E24; }
+    .info { color: #00D9FF; }
+    pre { background: #111; padding: 10px; overflow-x: auto; border: 1px solid #333; }
+  </style>
+</head>
+<body>
+
+<h1>📋 WellCore Admin Diagnostic</h1>
+
+<div class="section">
+  <h3 class="info">1. Script Execution Test</h3>
+  <p id="script-test">Testing if this script executes...</p>
+</div>
+
+<div class="section">
+  <h3 class="info">2. API Loading Test</h3>
+  <p id="api-test">Testing if js/api.js loaded...</p>
+  <p id="api-details"></p>
+</div>
+
+<div class="section">
+  <h3 class="info">3. localStorage Status</h3>
+  <pre id="storage"></pre>
+</div>
+
+<div class="section">
+  <h3 class="info">4. Admin.html Test</h3>
+  <button onclick="testAdminNav()">Test Navigation to Admin</button>
+  <p id="nav-result"></p>
+</div>
+
+<div class="section">
+  <h3 class="info">5. Logs</h3>
+  <pre id="logs"></pre>
+</div>
+
+<script src="js/api.js"></script>
+
+<script>
+// Execution test - using safe DOM methods
+var scriptTestEl = document.getElementById('script-test');
+var successSpan = document.createElement('span');
+successSpan.className = 'success';
+successSpan.textContent = '✓ This script executed successfully!';
+scriptTestEl.innerHTML = '';
+scriptTestEl.appendChild(successSpan);
+console.log('Diagnostic script loaded');
+
+// API test
+setTimeout(function() {
+  var apiTestEl = document.getElementById('api-test');
+  var detailsEl = document.getElementById('api-details');
+
+  if (typeof WC_API !== 'undefined') {
+    var successEl = document.createElement('span');
+    successEl.className = 'success';
+    successEl.textContent = '✓ WC_API loaded successfully';
+    apiTestEl.innerHTML = '';
+    apiTestEl.appendChild(successEl);
+
+    var hasAuth = typeof WC_API.auth !== 'undefined' ? '✓' : '✗';
+    var hasMe = typeof WC_API.auth?.me === 'function' ? '✓' : '✗';
+    detailsEl.textContent = 'WC_API.auth available: ' + hasAuth + ', WC_API.auth.me available: ' + hasMe;
+  } else {
+    var errorEl = document.createElement('span');
+    errorEl.className = 'error';
+    errorEl.textContent = '✗ WC_API not loaded';
+    apiTestEl.innerHTML = '';
+    apiTestEl.appendChild(errorEl);
+  }
+}, 500);
+
+// Storage test
+function updateStorage() {
+  var token = localStorage.getItem('wc_token');
+  var storage = {
+    wc_token: token ? '✓ EXISTS (' + token.substring(0, 20) + '...)' : '✗ NOT SET',
+    wc_user_type: localStorage.getItem('wc_user_type') || '(empty)',
+    wc_auth_check_started: localStorage.getItem('wc_auth_check_started') || '(empty)',
+    admin_page_load_debug: sessionStorage.getItem('admin_page_load_debug') ? '✓ SET' : '(empty)',
+    admin_auth_logs_debug: (JSON.parse(localStorage.getItem('admin_auth_logs_debug') || '[]')).length + ' items',
+  };
+  document.getElementById('storage').textContent = JSON.stringify(storage, null, 2);
+}
+updateStorage();
+setInterval(updateStorage, 1000);
+
+// Navigation test
+function testAdminNav() {
+  var navEl = document.getElementById('nav-result');
+  if (!localStorage.getItem('wc_token')) {
+    localStorage.setItem('wc_token', 'test_token_' + Date.now());
+    localStorage.setItem('wc_user_type', 'admin');
+    navEl.textContent = 'Token set, navigating to admin.html in 500ms...';
+    setTimeout(function() {
+      window.location.href = 'admin.html';
+    }, 500);
+  } else {
+    navEl.textContent = 'Token already exists, navigating to admin.html...';
+    setTimeout(function() {
+      window.location.href = 'admin.html';
+    }, 500);
+  }
+}
+
+// Log the diagnostic
+var logs = [];
+logs.push('=== Diagnostic Started ===');
+logs.push('Page: ' + window.location.href);
+logs.push('Time: ' + new Date().toISOString());
+logs.push('API loaded: ' + (typeof WC_API !== 'undefined' ? 'YES' : 'NO'));
+
+document.getElementById('logs').textContent = logs.join('\n');
+</script>
+
+</body>
+</html>
