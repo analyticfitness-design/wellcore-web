@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Panel Admin &mdash; WellCore Fitness</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -963,18 +966,6 @@
 </head>
 <body>
 <script src="js/api.js"></script>
-<script>
-// IMMEDIATE LOGGING - Debug page load
-(function() {
-  var debugLog = [];
-  debugLog.push('=== PAGE LOAD START ===');
-  debugLog.push('Timestamp: ' + new Date().toISOString());
-  debugLog.push('URL: ' + window.location.href);
-
-  // Store in sessionStorage (survives redirects within same session)
-  sessionStorage.setItem('admin_page_load_debug', JSON.stringify(debugLog));
-})();
-</script>
 
 <div class="app">
 
@@ -1310,7 +1301,6 @@
      JAVASCRIPT
 ═══════════════════════════════════════ -->
 <script>
-console.log('========== ADMIN.HTML SCRIPT LOADED ==========');
   /* ─── MOBILE SIDEBAR ─── */
   function toggleMobileSidebar() {
     document.getElementById('sidebar').classList.toggle('mobile-open');
@@ -1323,70 +1313,26 @@ console.log('========== ADMIN.HTML SCRIPT LOADED ==========');
 
   /* ─── AUTH CHECK (token + role verification via API) ─── */
   (function() {
-    // IMMEDIATE MARKER - write timestamp FIRST before anything else
-    localStorage.setItem('wc_auth_check_started', new Date().toISOString());
-
-    // Store logs in localStorage for debugging
-    var logs = JSON.parse(localStorage.getItem('admin_auth_logs_debug') || '[]');
-    function log(msg) {
-      logs.push(msg);
-      console.log('[AUTH]', msg);
-      localStorage.setItem('admin_auth_logs_debug', JSON.stringify(logs.slice(-50))); // Keep last 50 logs
-
-      // Also store in sessionStorage to preserve across redirects
-      var sessionLogs = JSON.parse(sessionStorage.getItem('admin_auth_logs_session') || '[]');
-      sessionLogs.push('[' + new Date().toISOString() + '] ' + msg);
-      sessionStorage.setItem('admin_auth_logs_session', JSON.stringify(sessionLogs));
-    }
-
-    log('Starting authentication check');
     var token = localStorage.getItem('wc_token');
-    log('Token: ' + (token ? token.substring(0, 20) + '...' : 'NOT FOUND'));
-
-    if (!token) {
-      log('No token found, redirecting to login');
-      window.location.replace('login.html');
-      return;
-    }
-
-    log('Calling WC_API.auth.me()...');
-    log('WC_API available: ' + (typeof WC_API !== 'undefined'));
-    log('WC_API.auth available: ' + (typeof WC_API?.auth !== 'undefined'));
-    log('WC_API.auth.me available: ' + (typeof WC_API?.auth?.me === 'function'));
-
-    if (typeof WC_API?.auth?.me !== 'function') {
-      log('ERROR: WC_API.auth.me is not available, checking again in 500ms');
-      setTimeout(function() {
-        log('Retry: WC_API available: ' + (typeof WC_API !== 'undefined'));
-        log('Retry: WC_API.auth.me available: ' + (typeof WC_API?.auth?.me === 'function'));
-      }, 500);
-    }
+    if (!token) { window.location.replace('login.html'); return; }
 
     WC_API.auth.me().then(function(data) {
-      log('auth.me() success: ' + JSON.stringify(data).substring(0, 100));
       if (!data || data.type !== 'admin') {
-        log('Invalid data type: ' + data?.type);
         window.location.replace('login.html');
         return;
       }
       var role = data.admin ? data.admin.role : '';
-      log('Admin role: ' + role);
       if (role !== 'admin' && role !== 'jefe' && role !== 'superadmin') {
-        log('Insufficient role: ' + role);
         window.location.replace('login.html');
         return;
       }
       var name = (data.admin && data.admin.name) ? data.admin.name : (data.admin && data.admin.username) || 'Admin';
-      log('Setting admin name: ' + name);
       document.getElementById('adminName').textContent = name;
       document.getElementById('adminAvatar').textContent = name.charAt(0).toUpperCase();
       document.getElementById('adminUserDisplay').textContent = name;
       document.body.style.visibility = 'visible';
-      log('Authentication successful, app loaded');
-      if (typeof initApp === 'function') initApp();
-    }).catch(function(err) {
-      log('auth.me() error: ' + (err?.message || err));
-      log('Full error: ' + (err?.toString ? err.toString() : String(err)));
+      try { if (typeof initApp === 'function') initApp(); } catch(e) { console.warn('[admin] initApp error:', e); }
+    }).catch(function() {
       localStorage.removeItem('wc_token');
       window.location.replace('login.html');
     });
@@ -1739,6 +1685,15 @@ console.log('========== ADMIN.HTML SCRIPT LOADED ==========');
           <td><span class="badge ${isPending ? 'badge-yellow' : 'badge-green'}">${t.status}</span></td>
         </tr>`;
     }).join('');
+  }
+
+  /* ─── API FETCH HELPER ─── */
+  function apiFetch(path, opts) {
+    var token = localStorage.getItem('wc_token');
+    var headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    var ext = path.endsWith('.php') ? '' : '.php';
+    return fetch('/api' + path + ext, Object.assign({ method: 'GET', headers: headers }, opts || {}));
   }
 
   /* ─── LOAD FROM API ─── */

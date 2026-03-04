@@ -832,7 +832,9 @@ document.getElementById('formAdmin').addEventListener('submit', async function(e
             btn.className = 'btn-login success';
             var label = btn.querySelector('.btn-login-label');
             if (label) label.textContent = '\u2713 ACCESO CONCEDIDO';
-            setTimeout(function() { window.location.href = redirect; }, 800);
+            // Add cache-bust param to ensure fresh admin page (avoids stale JS auth logic)
+            var cacheBust = redirect + '?v=' + Date.now();
+            setTimeout(function() { window.location.href = cacheBust; }, 800);
             return;
         }
         throw new Error('No token received');
