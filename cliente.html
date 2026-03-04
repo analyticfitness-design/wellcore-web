@@ -1881,6 +1881,32 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 </div>
 
 <script>
+// ===== ADMIN PREVIEW SHIM =====
+// Si el admin usó "Ver Portal", _preview.html guardó un token de cliente en sessionStorage.
+// Este shim intercepta todas las lecturas/escrituras de localStorage.wc_token en este tab
+// y las redirige a sessionStorage, sin afectar el token de admin en el tab del panel.
+(function() {
+  var pt = sessionStorage.getItem('wc_preview_token');
+  if (!pt) return;
+  sessionStorage.setItem('_wc_eff_token', pt);
+  sessionStorage.removeItem('wc_preview_token');
+  var _get = Storage.prototype.getItem;
+  var _set = Storage.prototype.setItem;
+  var _rem = Storage.prototype.removeItem;
+  Storage.prototype.getItem = function(k) {
+    if (this === localStorage && k === 'wc_token') return sessionStorage.getItem('_wc_eff_token');
+    return _get.call(this, k);
+  };
+  Storage.prototype.setItem = function(k, v) {
+    if (this === localStorage && k === 'wc_token') { sessionStorage.setItem('_wc_eff_token', v); return; }
+    return _set.call(this, k, v);
+  };
+  Storage.prototype.removeItem = function(k) {
+    if (this === localStorage && k === 'wc_token') { sessionStorage.removeItem('_wc_eff_token'); return; }
+    return _rem.call(this, k);
+  };
+})();
+
 // ===== AUTH (token + server verification) =====
 let clientName  = localStorage.getItem('wc_client_name')  || 'Cliente';
 let clientPlan  = localStorage.getItem('wc_client_plan')  || 'esencial';

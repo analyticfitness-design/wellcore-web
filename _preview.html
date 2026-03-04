@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cargando portal...</title>
+<style>
+  body { background:#0a0a0a; color:#fff; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+  .msg { text-align:center; }
+  .spinner { width:32px; height:32px; border:3px solid rgba(255,255,255,0.1); border-top-color:#E31E24; border-radius:50%; animation:spin .7s linear infinite; margin:0 auto 16px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="msg">
+  <div class="spinner"></div>
+  <p style="color:rgba(255,255,255,0.5);font-size:14px">Abriendo portal del cliente...</p>
+</div>
+<script>
+// Lee el token del hash de la URL (nunca enviado al servidor)
+var hash = location.hash.slice(1);
+if (!hash) {
+  document.querySelector('p').textContent = 'Error: token no encontrado.';
+} else {
+  // Guarda en sessionStorage (aislado por tab, no afecta al admin)
+  sessionStorage.setItem('wc_preview_token', hash);
+  // Limpia el hash antes de redirigir
+  history.replaceState(null, '', location.pathname);
+  // Redirige al portal del cliente en el mismo tab
+  window.location.replace('/cliente.html');
+}
+</script>
+</body>
+</html>

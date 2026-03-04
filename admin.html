@@ -1632,18 +1632,25 @@
   }
 
   /* ─── VIEW CLIENT PORTAL ─── */
-  function viewClientPortal(clientId) {
+  function viewClientPortal(clientCode) {
     var allClients = (LIVE_CLIENTS && LIVE_CLIENTS.length) ? LIVE_CLIENTS : DEMO_CLIENTS;
     var client = allClients.find(function(c) {
-      return c.client_code === clientId || String(c.id) === String(clientId);
+      return c.client_code === clientCode || String(c.id) === String(clientCode);
     });
-    if (!client) return;
-    // Set UI display data for client portal preview (admin already has wc_token)
-    localStorage.setItem('wc_client_name', client.name || '');
-    localStorage.setItem('wc_client_email', client.email || '');
-    localStorage.setItem('wc_client_plan', (client.plan || '').toLowerCase());
-    localStorage.setItem('wc_client_id', String(client.client_code || client.id));
-    window.open('cliente.html', '_blank');
+    if (!client) { showToast('Cliente no encontrado'); return; }
+
+    apiFetch('/admin/impersonate', {
+      method: 'POST',
+      body: JSON.stringify({ client_id: client.id })
+    })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (!d.token) { showToast('Error al obtener acceso al portal'); return; }
+        // Abre _preview.html con el token en el hash (nunca enviado al servidor)
+        // _preview.html guarda el token en sessionStorage y redirige a cliente.html
+        window.open('/_preview.html#' + d.token, '_blank');
+      })
+      .catch(function() { showToast('Error de conexión al abrir portal'); });
   }
 
   /* ─── RENDER: CHECK-INS ─── */
