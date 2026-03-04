@@ -62,7 +62,7 @@ if ($type === 'admin') {
 }
 
 // Client login
-$stmt = $db->prepare("SELECT id, client_code, name, email, plan, status, password_hash, coach_id FROM clients WHERE email = ?");
+$stmt = $db->prepare("SELECT id, client_code, name, email, plan, status, password_hash FROM clients WHERE email = ?");
 $stmt->execute([strtolower($identity)]);
 $client = $stmt->fetch();
 
