@@ -31,7 +31,9 @@ const WC_API = (() => {
     if (body) opts.body = isForm ? body : JSON.stringify(body);
 
     try {
-      const res  = await fetch(BASE + path, opts);
+      // Append .php extension to API paths (Nginx rewrite workaround)
+      const apiPath = path.endsWith('.php') ? path : path + '.php';
+      const res  = await fetch(BASE + apiPath, opts);
       const data = await res.json().catch(() => ({}));
 
       if (res.status === 401 && !path.startsWith('/auth/login')) {
