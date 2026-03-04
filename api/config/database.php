@@ -7,13 +7,13 @@ $isDocker = file_exists('/.dockerenv');
 
 if ($isDocker) {
     // Production (EasyPanel Docker)
-    define('DB_HOST',    'wellcore-fitness_mysql-db');
+    define('DB_HOST',    'wellcorefitness_wellcorefitness-mysql');
     define('DB_PORT',    '3306');
-    define('DB_NAME',    'wellcore_fitness');
-    define('DB_USER',    'wellcore');
-    define('DB_PASS',    '01e3951218591b77af8e');
+    define('DB_NAME',    'wellcorefitness');
+    define('DB_USER',    'wellcorefitness');
+    define('DB_PASS',    'fYCVgn4XZ7twq34');
     define('APP_ENV',    'production');
-    define('UPLOAD_DIR', '/var/www/html/wellcore/uploads/');
+    define('UPLOAD_DIR', '/code/uploads/');
 } else {
     // Local development (WSL2)
     define('DB_HOST',    '127.0.0.1');
