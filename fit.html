@@ -426,12 +426,30 @@
         background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(220,60,100,0.22) 0%, rgba(227,30,36,0.08) 50%, transparent 75%);
       }
       .hero-silvia {
-        display: none;
+        position: relative;
+        right: auto;
+        bottom: auto;
+        height: 320px;
+        width: 100%;
+        overflow: hidden;
+        order: 2;
+        pointer-events: none;
+      }
+      .hero-silvia img {
+        height: 100%;
+        width: auto;
+        max-width: none;
+        display: block;
+        margin: 0 auto;
+        object-fit: contain;
+        object-position: top center;
+        filter: drop-shadow(0 -20px 40px rgba(220,60,100,0.35));
       }
       .hero-content {
         max-width: 100%;
         padding: 40px 24px;
-        min-height: calc(100vh - 72px);
+        min-height: auto;
+        order: 1;
       }
       .hero-h1 {
         font-size: clamp(56px, 14vw, 80px);

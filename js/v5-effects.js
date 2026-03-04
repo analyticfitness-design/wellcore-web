@@ -221,4 +221,29 @@
     printBtn.addEventListener('click', function () { window.print(); });
   }
 
+  /* ── Mobile: prevent accidental clicks during scroll ── */
+  if ('ontouchstart' in window) {
+    var touchStartY = 0;
+    var touchMoved  = false;
+
+    document.addEventListener('touchstart', function (e) {
+      touchStartY = e.touches[0].clientY;
+      touchMoved  = false;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function (e) {
+      if (Math.abs(e.touches[0].clientY - touchStartY) > 10) {
+        touchMoved = true;
+      }
+    }, { passive: true });
+
+    document.addEventListener('click', function (e) {
+      if (touchMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+        touchMoved = false;
+      }
+    }, { capture: true });
+  }
+
 })();

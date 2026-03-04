@@ -3463,39 +3463,41 @@
   })();
 
   /* --- Hamburger menu toggle --- */
+  /* NOTE: v5-effects.js handles the toggle click. Here we only handle
+     icon update, close-on-link-click, and close-on-outside-click. */
   (function () {
     var toggle = document.getElementById('navToggle');
     var menu   = document.getElementById('navMobileMenu');
+    var nav    = document.getElementById('navbar');
     if (!toggle || !menu) return;
 
-    toggle.addEventListener('click', function () {
-      var isOpen = menu.classList.contains('open');
-      if (isOpen) {
-        menu.classList.remove('open');
-        toggle.textContent = '\u2630';
-        toggle.setAttribute('aria-label', 'Abrir menú');
-      } else {
-        menu.classList.add('open');
+    function closeMenu() {
+      menu.classList.remove('open');
+      toggle.textContent = '\u2630';
+      toggle.setAttribute('aria-label', 'Abrir menú');
+    }
+
+    /* Update icon when v5-effects.js toggles the class */
+    var observer = new MutationObserver(function () {
+      if (menu.classList.contains('open')) {
         toggle.textContent = '\u2715';
         toggle.setAttribute('aria-label', 'Cerrar menú');
-      }
-    });
-
-    /* Close menu when a mobile link is clicked */
-    var mobileLinks = menu.querySelectorAll('.nav-mobile-link, .nav-mobile-cta');
-    mobileLinks.forEach(function (link) {
-      link.addEventListener('click', function () {
-        menu.classList.remove('open');
+      } else {
         toggle.textContent = '\u2630';
         toggle.setAttribute('aria-label', 'Abrir menú');
-      });
+      }
+    });
+    observer.observe(menu, { attributes: true, attributeFilter: ['class'] });
+
+    /* Close menu when a mobile link is clicked */
+    menu.querySelectorAll('.nav-mobile-link, .nav-mobile-cta').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
     });
 
     /* Close menu on outside click */
     document.addEventListener('click', function (e) {
-      if (!navbar.contains(e.target) && !menu.contains(e.target)) {
-        menu.classList.remove('open');
-        toggle.textContent = '\u2630';
+      if (nav && !nav.contains(e.target) && !menu.contains(e.target)) {
+        closeMenu();
       }
     });
   })();

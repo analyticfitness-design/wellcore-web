@@ -327,7 +327,11 @@
       '@keyframes wc-pulse{0%,100%{opacity:1}50%{opacity:.4}}',
       '@keyframes wc-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}',
       '@keyframes wc-slide-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}',
-      '@media(max-width:400px){#wc-window{width:calc(100vw - 32px);right:-4px}#wc-chat-root{right:16px;bottom:16px}}'
+      '@media(max-width:400px){#wc-window{width:calc(100vw - 32px);right:-4px}#wc-chat-root{right:16px;bottom:16px}}',
+      /* WA float button: position above chat trigger so they don't overlap */
+      '.wa-float{position:fixed!important;bottom:90px!important;right:24px!important;z-index:1000;width:54px;height:54px;border-radius:50%;background:#25D366;border:3px solid #fff;display:flex;align-items:center;justify-content:center;color:white;font-size:26px;text-decoration:none;transition:transform 0.1s linear}',
+      '.wa-float:hover{transform:scale(1.08)}',
+      '@media(max-width:400px){.wa-float{bottom:80px!important;right:16px!important}}'
     ].join('');
 
     var style = document.createElement('style');
