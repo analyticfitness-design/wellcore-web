@@ -18,6 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
   <style>
@@ -324,6 +325,10 @@
       transform: rotate(45deg);
       border-color: var(--red); color: var(--red);
     }
+    .faq-item.open .faq-toggle-icon {
+      transform: rotate(180deg);
+      color: var(--red);
+    }
     .faq-answer {
       max-height: 0; overflow: hidden;
       transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -614,36 +619,36 @@
 <section class="faq-hero">
   <div class="faq-hero-inner">
     <div data-aos="fade-right" data-aos-duration="700">
-      <span class="faq-hero-label">// BASE DE CONOCIMIENTO</span>
+      <span class="faq-hero-label"><i class="fas fa-database" aria-hidden="true"></i> BASE DE CONOCIMIENTO</span>
       <h1 class="faq-hero-title">BASE<br>DE<br><span>DATOS</span></h1>
       <p class="faq-hero-desc">Todo lo que necesitas saber antes, durante y despues de tu transformacion con WellCore. Respuestas precisas, sin rodeos.</p>
       <div class="faq-hero-stats">
         <div>
           <span class="faq-stat-num">25</span>
-          <span class="faq-stat-label">// preguntas</span>
+          <span class="faq-stat-label"><i class="fas fa-circle-question" aria-hidden="true"></i> preguntas</span>
         </div>
         <div>
           <span class="faq-stat-num">05</span>
-          <span class="faq-stat-label">// categorias</span>
+          <span class="faq-stat-label"><i class="fas fa-tag" aria-hidden="true"></i> categorias</span>
         </div>
         <div>
           <span class="faq-stat-num">&lt;2m</span>
-          <span class="faq-stat-label">// lectura</span>
+          <span class="faq-stat-label"><i class="fas fa-clock" aria-hidden="true"></i> lectura</span>
         </div>
       </div>
     </div>
 
     <div class="faq-search-wrap" data-aos="fade-left" data-aos-duration="700">
-      <span class="search-label">// BUSCAR EN LA BASE DE DATOS</span>
+      <span class="search-label"><i class="fas fa-database" aria-hidden="true"></i> BUSCAR EN LA BASE DE DATOS</span>
       <div class="faq-search-box">
         <span class="faq-search-icon" style="color:var(--gray);">&#8981;</span>
         <input type="text" id="faqSearch" placeholder="Escribe tu pregunta..." autocomplete="off" spellcheck="false" />
         <button class="search-clear" id="searchClear" title="Limpiar">&#10005;</button>
       </div>
-      <p class="search-hint">// Ej: "principiante", "reembolso", "macros", "lesion"</p>
+      <p class="search-hint"><i class="fas fa-magnifying-glass" aria-hidden="true"></i> Ej: "principiante", "reembolso", "macros", "lesion"</p>
       <p id="searchResultCount"></p>
       <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">
-        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:12px;">// Mas buscado:</p>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:12px;"><i class="fas fa-fire" aria-hidden="true"></i> Mas buscado:</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <button class="quick-tag" data-tag="principiante">principiante</button>
           <button class="quick-tag" data-tag="reembolso">reembolso</button>
@@ -659,30 +664,30 @@
 <!-- QUICK LINKS -->
 <div class="faq-quicklinks">
   <div class="ql-inner">
-    <span class="ql-label">// NAVEGAR POR CATEGORIA</span>
+    <span class="ql-label"><i class="fas fa-route" aria-hidden="true"></i> NAVEGAR POR CATEGORIA</span>
     <div class="ql-grid">
       <div class="ql-item" onclick="switchTab('planes')">
-        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <div class="ql-item-icon"><i class="fas fa-tag" aria-hidden="true" style="color:#00D9FF;"></i></div>
         <span class="ql-item-name">Planes</span>
         <span class="ql-item-count">06</span>
       </div>
       <div class="ql-item" onclick="switchTab('entrenamiento')">
-        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <div class="ql-item-icon"><i class="fas fa-dumbbell" aria-hidden="true" style="color:#00D9FF;"></i></div>
         <span class="ql-item-name">Entrenamiento</span>
         <span class="ql-item-count">05</span>
       </div>
       <div class="ql-item" onclick="switchTab('nutricion')">
-        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <div class="ql-item-icon"><i class="fas fa-utensils" aria-hidden="true" style="color:#00D9FF;"></i></div>
         <span class="ql-item-name">Nutricion</span>
         <span class="ql-item-count">05</span>
       </div>
       <div class="ql-item" onclick="switchTab('proceso')">
-        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <div class="ql-item-icon"><i class="fas fa-route" aria-hidden="true" style="color:#00D9FF;"></i></div>
         <span class="ql-item-name">Proceso</span>
         <span class="ql-item-count">05</span>
       </div>
       <div class="ql-item" onclick="switchTab('pagos')">
-        <div class="ql-item-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+        <div class="ql-item-icon"><i class="fas fa-credit-card" aria-hidden="true" style="color:#00D9FF;"></i></div>
         <span class="ql-item-name">Pagos</span>
         <span class="ql-item-count">04</span>
       </div>
@@ -696,26 +701,26 @@
   <!-- TABS BAR -->
   <div class="faq-tabs-bar" id="faqTabsBar">
     <button class="faq-tab-btn active" data-tab="planes" onclick="switchTab('planes')">
-      <span style="color:#00D9FF;font-weight:700;">//</span> Planes <span class="faq-tab-count">06</span>
+      <i class="fas fa-tag" aria-hidden="true" style="color:#00D9FF;"></i> Planes <span class="faq-tab-count">06</span>
     </button>
     <button class="faq-tab-btn" data-tab="entrenamiento" onclick="switchTab('entrenamiento')">
-      <span style="color:#00D9FF;font-weight:700;">//</span> Entrenamiento <span class="faq-tab-count">05</span>
+      <i class="fas fa-dumbbell" aria-hidden="true" style="color:#00D9FF;"></i> Entrenamiento <span class="faq-tab-count">05</span>
     </button>
     <button class="faq-tab-btn" data-tab="nutricion" onclick="switchTab('nutricion')">
-      <span style="color:#00D9FF;font-weight:700;">//</span> Nutricion <span class="faq-tab-count">05</span>
+      <i class="fas fa-utensils" aria-hidden="true" style="color:#00D9FF;"></i> Nutricion <span class="faq-tab-count">05</span>
     </button>
     <button class="faq-tab-btn" data-tab="proceso" onclick="switchTab('proceso')">
-      <span style="color:#00D9FF;font-weight:700;">//</span> Proceso <span class="faq-tab-count">05</span>
+      <i class="fas fa-route" aria-hidden="true" style="color:#00D9FF;"></i> Proceso <span class="faq-tab-count">05</span>
     </button>
     <button class="faq-tab-btn" data-tab="pagos" onclick="switchTab('pagos')">
-      <span style="color:#00D9FF;font-weight:700;">//</span> Pagos <span class="faq-tab-count">04</span>
+      <i class="fas fa-credit-card" aria-hidden="true" style="color:#00D9FF;"></i> Pagos <span class="faq-tab-count">04</span>
     </button>
   </div>
 
   <!-- SEARCH RESULTS AREA -->
   <div id="searchResultsPanel"></div>
   <div id="noResults">
-    <div class="nr-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+    <div class="nr-icon"><i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;font-size:24px;"></i></div>
     <h3>Sin resultados</h3>
     <p>Intenta con otras palabras clave o navega por las categorias.</p>
   </div>
@@ -723,9 +728,9 @@
   <!-- ===================== PLANES ===================== -->
   <div class="faq-panel active" id="panel-planes">
     <div class="faq-category-header" data-aos="fade-up">
-      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div class="faq-cat-icon"><i class="fas fa-tag" aria-hidden="true" style="color:#00D9FF;font-size:20px;"></i></div>
       <div>
-        <span class="faq-cat-tag">// CATEGORIA 01</span>
+        <span class="faq-cat-tag"><i class="fas fa-tag" aria-hidden="true"></i> CATEGORIA 01</span>
         <h2 class="faq-cat-title">PLANES Y SUSCRIPCIONES</h2>
         <p class="faq-cat-desc">Todo sobre planes de coaching, diferencias, precios y condiciones de contratacion.</p>
       </div>
@@ -734,13 +739,14 @@
 
       <div class="faq-item" data-category="planes" data-keywords="principiante nuevo empezar sin experiencia gimnasio basico">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q01</span>
           <span class="faq-qtext">¿Cual plan me conviene si soy principiante?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// RECOMENDADO PARA PRINCIPIANTES</span>
+            <span class="answer-tag"><i class="fas fa-circle-info" aria-hidden="true"></i> RECOMENDADO PARA PRINCIPIANTES</span>
             <p>Si estas comenzando desde cero o llevas menos de 12 meses entrenando de forma consistente, el <strong>Plan Metodo</strong> es el punto de entrada correcto. Esta disenado para construir bases solidas: patrones de movimiento, habitos alimenticios y una relacion sana con el entrenamiento.</p>
             <p>El Plan Metodo incluye:</p>
             <ul>
@@ -757,9 +763,10 @@
 
       <div class="faq-item" data-category="planes" data-keywords="cambiar plan upgrade downgrade suscripcion metodo elite">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q02</span>
           <span class="faq-qtext">¿Puedo cambiar de plan despues de suscribirme?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -778,9 +785,10 @@
 
       <div class="faq-item" data-category="planes" data-keywords="diferencia metodo elite premium basico comparacion">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q03</span>
           <span class="faq-qtext">¿Que diferencia hay entre el Plan Metodo y el Plan Elite?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -808,13 +816,14 @@
 
       <div class="faq-item" data-category="planes" data-keywords="precio mensual pago unico cobro facturacion recurrente">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q04</span>
           <span class="faq-qtext">¿El precio es mensual o hay pago unico?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// MODELO DE SUSCRIPCION</span>
+            <span class="answer-tag"><i class="fas fa-credit-card" aria-hidden="true"></i> MODELO DE SUSCRIPCION</span>
             <p>WellCore funciona con un modelo de <strong>suscripcion mensual recurrente</strong>. No hay pago unico porque el coaching es un servicio continuo que requiere actualizacion constante de tu programa segun tu progreso.</p>
             <p>La suscripcion se renueva automaticamente cada 30 dias desde la fecha de tu primer pago. Puedes cancelar en cualquier momento antes de la proxima fecha de renovacion sin cargo adicional.</p>
             <p>Tambien ofrecemos modalidades trimestrales y anuales con descuento incluido (ver Q05).</p>
@@ -824,9 +833,10 @@
 
       <div class="faq-item" data-category="planes" data-keywords="descuento trimestral anual ahorro oferta semestral precio">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q05</span>
           <span class="faq-qtext">¿Hay descuentos por pago trimestral o anual?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -843,9 +853,10 @@
 
       <div class="faq-item" data-category="planes" data-keywords="compartir plan cuenta otra persona familia pareja acceso multiple">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q06</span>
           <span class="faq-qtext">¿Puedo compartir el plan con alguien mas?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -861,9 +872,9 @@
   <!-- ===================== ENTRENAMIENTO ===================== -->
   <div class="faq-panel" id="panel-entrenamiento">
     <div class="faq-category-header" data-aos="fade-up">
-      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div class="faq-cat-icon"><i class="fas fa-dumbbell" aria-hidden="true" style="color:#00D9FF;font-size:20px;"></i></div>
       <div>
-        <span class="faq-cat-tag">// CATEGORIA 02</span>
+        <span class="faq-cat-tag"><i class="fas fa-dumbbell" aria-hidden="true"></i> CATEGORIA 02</span>
         <h2 class="faq-cat-title">ENTRENAMIENTO</h2>
         <p class="faq-cat-desc">Como funciona tu programa de entrenamiento, frecuencia, adaptaciones y actualizaciones.</p>
       </div>
@@ -872,13 +883,14 @@
 
       <div class="faq-item" data-category="entrenamiento" data-keywords="gym gimnasio casa home workout sin equipo entrenamiento domicilio">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q07</span>
           <span class="faq-qtext">¿Necesito ir al gym o puedo entrenar en casa?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// FLEXIBLE</span>
+            <span class="answer-tag"><i class="fas fa-arrows-spin" aria-hidden="true"></i> FLEXIBLE</span>
             <p>Puedes entrenar en cualquier entorno. Al completar tu formulario de onboarding seleccionas el tipo de entrenamiento que prefieres:</p>
             <ul>
               <li><strong>Gym completo:</strong> Pesas libres, maquinas y equipo profesional</li>
@@ -893,9 +905,10 @@
 
       <div class="faq-item" data-category="entrenamiento" data-keywords="cuantos dias semana entrenar frecuencia sesiones rutina">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q08</span>
           <span class="faq-qtext">¿Cuantos dias a la semana debo entrenar?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -912,13 +925,14 @@
 
       <div class="faq-item" data-category="entrenamiento" data-keywords="lesion lesionado limitacion fisica rodilla espalda adaptacion">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q09</span>
           <span class="faq-qtext">¿Que pasa si tengo una lesion o limitacion fisica?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// PROTOCOLO DE ADAPTACION</span>
+            <span class="answer-tag"><i class="fas fa-shield-halved" aria-hidden="true"></i> PROTOCOLO DE ADAPTACION</span>
             <p>Tu programa se construye considerando tus condiciones fisicas reales. En el formulario de onboarding declaras historial de lesiones, cirugias, dolores cronicos o limitaciones de movilidad.</p>
             <p>Nuestros coaches estan capacitados para <strong>disenar programas alrededor de las limitaciones</strong>, incluyendo:</p>
             <ul>
@@ -934,9 +948,10 @@
 
       <div class="faq-item" data-category="entrenamiento" data-keywords="warm up calentamiento cool down estiramiento incluido sesion">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q10</span>
           <span class="faq-qtext">¿El programa incluye warm-up y cool-down?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -953,9 +968,10 @@
 
       <div class="faq-item" data-category="entrenamiento" data-keywords="actualiza programa frecuencia cambio progresion meseta periodizacion">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q11</span>
           <span class="faq-qtext">¿Cada cuanto se actualiza el programa de entrenamiento?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -977,9 +993,9 @@
   <!-- ===================== NUTRICION ===================== -->
   <div class="faq-panel" id="panel-nutricion">
     <div class="faq-category-header" data-aos="fade-up">
-      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div class="faq-cat-icon"><i class="fas fa-utensils" aria-hidden="true" style="color:#00D9FF;font-size:20px;"></i></div>
       <div>
-        <span class="faq-cat-tag">// CATEGORIA 03</span>
+        <span class="faq-cat-tag"><i class="fas fa-utensils" aria-hidden="true"></i> CATEGORIA 03</span>
         <h2 class="faq-cat-title">NUTRICION</h2>
         <p class="faq-cat-desc">Plan nutricional, personalizacion, restricciones alimenticias y suplementacion.</p>
       </div>
@@ -988,9 +1004,10 @@
 
       <div class="faq-item" data-category="nutricion" data-keywords="plan nutricional recetas especificas comidas menu diario">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q12</span>
           <span class="faq-qtext">¿El plan nutricional incluye recetas especificas?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1006,13 +1023,14 @@
 
       <div class="faq-item" data-category="nutricion" data-keywords="vegetariano vegano plant based sin carne restriccion dietetica">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q13</span>
           <span class="faq-qtext">¿Puedo seguir el plan si soy vegetariano o vegano?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// TOTALMENTE COMPATIBLE</span>
+            <span class="answer-tag"><i class="fas fa-circle-check" aria-hidden="true"></i> TOTALMENTE COMPATIBLE</span>
             <p>Si. Los planes nutricionales se construyen adaptados a tu patron alimenticio. Durante el onboarding declaras:</p>
             <ul>
               <li>Tipo de dieta (vegetariano, vegano, omnivoro, pescetariano, etc.)</li>
@@ -1027,13 +1045,14 @@
 
       <div class="faq-item" data-category="nutricion" data-keywords="suplementos proteina creatina necesito comprar obligatorio whey">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q14</span>
           <span class="faq-qtext">¿Necesito comprar suplementos para seguir el programa?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag" style="background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.2);color:#4ade80;">// RESPUESTA: NO</span>
+            <span class="answer-tag" style="background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.2);color:#4ade80;"><i class="fas fa-circle-xmark" aria-hidden="true"></i> RESPUESTA: NO</span>
             <p><strong>No. Los suplementos no son necesarios ni obligatorios.</strong> El programa de nutricion esta disenado para funcionar completamente con alimentos reales.</p>
             <p>Si ya usas o quieres usar suplementos, tu coach puede orientarte. Los unicos con evidencia cientifica solida son:</p>
             <ul>
@@ -1048,9 +1067,10 @@
 
       <div class="faq-item" data-category="nutricion" data-keywords="calculo macros proteina calorias tdee metabolismo calorico">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q15</span>
           <span class="faq-qtext">¿Como funciona el calculo de macros?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1068,9 +1088,10 @@
 
       <div class="faq-item" data-category="nutricion" data-keywords="no me gusta alimento sustitucion intercambiar comida cambiar">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q16</span>
           <span class="faq-qtext">¿Que pasa si no me gusta algun alimento del plan?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1091,9 +1112,9 @@
   <!-- ===================== PROCESO ===================== -->
   <div class="faq-panel" id="panel-proceso">
     <div class="faq-category-header" data-aos="fade-up">
-      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div class="faq-cat-icon"><i class="fas fa-route" aria-hidden="true" style="color:#00D9FF;font-size:20px;"></i></div>
       <div>
-        <span class="faq-cat-tag">// CATEGORIA 04</span>
+        <span class="faq-cat-tag"><i class="fas fa-route" aria-hidden="true"></i> CATEGORIA 04</span>
         <h2 class="faq-cat-title">PROCESO Y SEGUIMIENTO</h2>
         <p class="faq-cat-desc">Flujo de trabajo, check-ins, comunicacion con tu coach y casos especiales.</p>
       </div>
@@ -1102,13 +1123,14 @@
 
       <div class="faq-item" data-category="proceso" data-keywords="cuanto tiempo demora recibo plan pago entrega onboarding inicio">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q17</span>
           <span class="faq-qtext">¿Cuanto tiempo desde que pago hasta que recibo mi plan?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// TIEMPO DE ENTREGA: 48-72H</span>
+            <span class="answer-tag"><i class="fas fa-clock" aria-hidden="true"></i> TIEMPO DE ENTREGA: 48-72H</span>
             <p>El proceso post-pago es el siguiente:</p>
             <ul>
               <li><strong>Hora 0:</strong> Confirmacion de pago y acceso al formulario de onboarding</li>
@@ -1123,9 +1145,10 @@
 
       <div class="faq-item" data-category="proceso" data-keywords="seguimiento semanal check in reporte progreso fotos como funciona">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q18</span>
           <span class="faq-qtext">¿Como funciona el seguimiento semanal?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1144,9 +1167,10 @@
 
       <div class="faq-item" data-category="proceso" data-keywords="cuantas veces hablo coach comunicacion mensajes soporte contacto">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q19</span>
           <span class="faq-qtext">¿Cuantas veces por semana hablo con mi coach?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1162,13 +1186,14 @@
 
       <div class="faq-item" data-category="proceso" data-keywords="check in elite videollamada llamada analisis evaluacion profundo">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q20</span>
           <span class="faq-qtext">¿Que es el Check-in Elite?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// EXCLUSIVO PLAN ELITE</span>
+            <span class="answer-tag"><i class="fas fa-crown" aria-hidden="true"></i> EXCLUSIVO PLAN ELITE</span>
             <p>El Check-in Elite es la sesion semanal de seguimiento por videollamada de 30 minutos. Permite:</p>
             <ul>
               <li>Revision de tecnica en vivo (muestras un ejercicio, el coach corrige en tiempo real)</li>
@@ -1184,9 +1209,10 @@
 
       <div class="faq-item" data-category="proceso" data-keywords="pausar programa viaje vacaciones pausa temporal suspender">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q21</span>
           <span class="faq-qtext">¿Puedo pausar el programa si viajo?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1203,9 +1229,9 @@
   <!-- ===================== PAGOS ===================== -->
   <div class="faq-panel" id="panel-pagos">
     <div class="faq-category-header" data-aos="fade-up">
-      <div class="faq-cat-icon"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+      <div class="faq-cat-icon"><i class="fas fa-credit-card" aria-hidden="true" style="color:#00D9FF;font-size:20px;"></i></div>
       <div>
-        <span class="faq-cat-tag">// CATEGORIA 05</span>
+        <span class="faq-cat-tag"><i class="fas fa-credit-card" aria-hidden="true"></i> CATEGORIA 05</span>
         <h2 class="faq-cat-title">PAGOS Y SEGURIDAD</h2>
         <p class="faq-cat-desc">Metodos de pago, cancelacion, reembolsos y seguridad de tus datos financieros.</p>
       </div>
@@ -1214,9 +1240,10 @@
 
       <div class="faq-item" data-category="pagos" data-keywords="metodos pago tarjeta credito debito transferencia paypal nequi">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q22</span>
           <span class="faq-qtext">¿Que metodos de pago aceptan?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1234,9 +1261,10 @@
 
       <div class="faq-item" data-category="pagos" data-keywords="cancelar suscripcion baja darme de baja cobro como">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q23</span>
           <span class="faq-qtext">¿Como cancelo mi suscripcion?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
@@ -1254,13 +1282,14 @@
 
       <div class="faq-item" data-category="pagos" data-keywords="reembolso devolucion dinero garantia insatisfecho politica">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q24</span>
           <span class="faq-qtext">¿Hay politica de reembolso?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// GARANTIA DE 7 DIAS</span>
+            <span class="answer-tag"><i class="fas fa-shield-halved" aria-hidden="true"></i> GARANTIA DE 7 DIAS</span>
             <p>Si. Ofrecemos una <strong>garantia de satisfaccion de 7 dias</strong> para nuevos clientes. Si en los primeros 7 dias desde que recibes tu programa completo no estas satisfecho con la calidad, te devolvemos el dinero sin preguntas.</p>
             <p>Condiciones:</p>
             <ul>
@@ -1275,13 +1304,14 @@
 
       <div class="faq-item" data-category="pagos" data-keywords="pagos seguros seguridad datos tarjeta encriptacion fraude ssl pci">
         <button class="faq-question" onclick="toggleFAQ(this)">
+          <i class="fas fa-circle-question" aria-hidden="true" style="color:#00D9FF;flex-shrink:0;"></i>
           <span class="faq-qnum">Q25</span>
           <span class="faq-qtext">¿Los pagos son seguros?</span>
-          <span class="faq-icon">+</span>
+          <i class="fas fa-chevron-down faq-toggle-icon" aria-hidden="true" style="margin-left:auto;transition:transform 0.2s;flex-shrink:0;"></i>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <span class="answer-tag">// CERTIFICACION PCI-DSS</span>
+            <span class="answer-tag"><i class="fas fa-lock" aria-hidden="true"></i> CERTIFICACION PCI-DSS</span>
             <p>Si. La seguridad es gestionada por pasarelas externas certificadas bajo el estandar <strong>PCI-DSS Nivel 1</strong>, el mas alto de la industria:</p>
             <ul>
               <li>Los datos de tu tarjeta nunca pasan por los servidores de WellCore</li>
@@ -1305,24 +1335,24 @@
 <section style="padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:40px;">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);">// NUMEROS QUE RESPALDAN LAS RESPUESTAS</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);"><i class="fas fa-chart-line" aria-hidden="true"></i> NUMEROS QUE RESPALDAN LAS RESPUESTAS</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);" data-aos="fade-up">
       <div style="padding:40px 32px;border-right:1px solid var(--border);text-align:center;">
         <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">350<span style="color:var(--red);font-size:28px;">+</span></span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Clientes transformados</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);"><i class="fas fa-users" aria-hidden="true"></i> Clientes transformados</span>
       </div>
       <div style="padding:40px 32px;border-right:1px solid var(--border);text-align:center;">
         <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">91<span style="color:var(--red);font-size:28px;">%</span></span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Adherencia promedio</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);"><i class="fas fa-percent" aria-hidden="true"></i> Adherencia promedio</span>
       </div>
       <div style="padding:40px 32px;border-right:1px solid var(--border);text-align:center;">
         <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">&lt;48<span style="color:var(--red);font-size:28px;">h</span></span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Tiempo entrega plan</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);"><i class="fas fa-clock" aria-hidden="true"></i> Tiempo entrega plan</span>
       </div>
       <div style="padding:40px 32px;text-align:center;">
         <span style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#fff;display:block;margin-bottom:8px;">4.9<span style="color:var(--red);font-size:28px;">/5</span></span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// Satisfaccion clientes</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);"><i class="fas fa-star" aria-hidden="true"></i> Satisfaccion clientes</span>
       </div>
     </div>
   </div>
@@ -1335,7 +1365,7 @@
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start;">
       <div data-aos="fade-right" data-aos-duration="700">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:20px;">// RESULTADOS</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:20px;"><i class="fas fa-chart-line" aria-hidden="true"></i> RESULTADOS</span>
         <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,80px);letter-spacing:2px;color:#fff;line-height:0.9;margin-bottom:28px;">LO QUE<br>PUEDES<br>ESPERAR</h2>
         <p style="font-size:14px;color:var(--gray);line-height:1.9;margin-bottom:16px;">Los resultados son reales cuando el programa es real. En WellCore no prometemos numeros magicos porque la biologia individual varia. Lo que si garantizamos es un proceso estructurado, basado en evidencia y con el soporte necesario para maximizar tu progreso.</p>
         <p style="font-size:14px;color:var(--gray);line-height:1.9;">Los promedios de nuestros clientes hablan de resultados sostenibles, no de transformaciones express que se revierten en semanas.</p>
@@ -1343,30 +1373,30 @@
       <div data-aos="fade-left" data-aos-duration="700">
         <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);">
           <div style="padding:28px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:20px;">
-            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;">//</div>
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;"><i class="fas fa-fire" aria-hidden="true"></i></div>
             <div>
-              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Perdida de grasa</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;"><i class="fas fa-fire" aria-hidden="true"></i> Perdida de grasa</p>
               <p style="font-size:14px;color:var(--gray);">Promedio de <strong style="color:#fff;">0.5 a 1% del peso corporal por semana</strong> en fase de deficit. Sostenible y sin destruir masa muscular.</p>
             </div>
           </div>
           <div style="padding:28px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:20px;">
-            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;"><i class="fas fa-dumbbell" aria-hidden="true" style="color:#00D9FF;"></i></div>
             <div>
-              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Ganancia muscular</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;"><i class="fas fa-dumbbell" aria-hidden="true"></i> Ganancia muscular</p>
               <p style="font-size:14px;color:var(--gray);">Entre <strong style="color:#fff;">1 a 2 kg de masa magra por mes</strong> para principiantes. Avanzados: 0.25 a 0.5 kg mensual (biologicamente normal).</p>
             </div>
           </div>
           <div style="padding:28px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:20px;">
-            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;">//</div>
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;"><i class="fas fa-bolt" aria-hidden="true"></i></div>
             <div>
-              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Mejora de fuerza</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;"><i class="fas fa-bolt" aria-hidden="true"></i> Mejora de fuerza</p>
               <p style="font-size:14px;color:var(--gray);">Los clientes reportan en promedio <strong style="color:#fff;">15 a 30% de incremento en lifts principales</strong> al finalizar el primer bloque de 12 semanas.</p>
             </div>
           </div>
           <div style="padding:28px 28px;display:flex;align-items:flex-start;gap:20px;">
-            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;">//</div>
+            <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
             <div>
-              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">// Tiempo para ver resultados</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;"><i class="fas fa-calendar-check" aria-hidden="true"></i> Tiempo para ver resultados</p>
               <p style="font-size:14px;color:var(--gray);">Cambios visibles en composicion corporal a partir de la <strong style="color:#fff;">semana 4-6</strong>. Resultados fotograficamente evidentes entre semana 8 y 12.</p>
             </div>
           </div>
@@ -1382,14 +1412,14 @@
 <section style="padding:100px 0;border-bottom:1px solid var(--border);background:var(--surface);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// COMPARATIVA RAPIDA</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-table-columns" aria-hidden="true"></i> COMPARATIVA RAPIDA</span>
       <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">METODO vs ELITE</h2>
     </div>
     <div style="overflow-x:auto;" data-aos="fade-up" data-aos-delay="100">
       <table style="width:100%;border-collapse:collapse;border:1px solid var(--border);font-size:14px;">
         <thead>
           <tr>
-            <th style="padding:20px 24px;text-align:left;background:var(--card);border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);">// CARACTERISTICA</th>
+            <th style="padding:20px 24px;text-align:left;background:var(--card);border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-dim);"><i class="fas fa-list" aria-hidden="true"></i> CARACTERISTICA</th>
             <th style="padding:20px 24px;text-align:center;background:var(--card);border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;">Plan Metodo</th>
             <th style="padding:20px 24px;text-align:center;background:rgba(227,30,36,0.08);border-bottom:1px solid rgba(227,30,36,0.2);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);">Plan Elite</th>
           </tr>
@@ -1452,7 +1482,7 @@
 <section style="padding:100px 0;border-bottom:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// TU PRIMER MES CON WELLCORE</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-route" aria-hidden="true"></i> TU PRIMER MES CON WELLCORE</span>
       <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">DE PAGO<br>A RESULTADOS</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
@@ -1486,7 +1516,7 @@
 <section style="padding:100px 0;border-bottom:1px solid var(--border);background:var(--surface);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// CLIENTES QUE YA LO HICIERON</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-users" aria-hidden="true"></i> CLIENTES QUE YA LO HICIERON</span>
       <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">SIN FILTROS</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
@@ -1548,7 +1578,7 @@
 <!-- CTA FINAL -->
 <section style="padding: 0 32px 120px; max-width:1280px; margin:0 auto;">
   <div class="faq-cta" data-aos="fade-up">
-    <span class="faq-cta-tag">// ¿SIGUES CON DUDAS?</span>
+    <span class="faq-cta-tag"><i class="fas fa-circle-question" aria-hidden="true"></i> ¿SIGUES CON DUDAS?</span>
     <h2>NO ENCONTRASTE<br>TU RESPUESTA</h2>
     <p>Habla directamente con nuestro equipo. Respondemos en menos de 24 horas. Sin bots, sin formularios eternos.</p>
     <div class="faq-cta-btns">
@@ -1556,11 +1586,11 @@
         <span style="color:#25d366;font-weight:700;">WA</span> Escribir por WhatsApp
       </a>
       <a href="mailto:info@wellcorefitness.com" class="btn-cta-secondary">
-        <span style="color:var(--red);font-weight:700;">//</span> Enviar email
+        <i class="fas fa-envelope" aria-hidden="true" style="color:var(--red);"></i> Enviar email
       </a>
     </div>
     <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);margin-top:32px;text-transform:uppercase;">
-      // Tiempo de respuesta promedio: 4.2 horas habiles
+      <i class="fas fa-clock" aria-hidden="true"></i> Tiempo de respuesta promedio: 4.2 horas habiles
     </p>
   </div>
 </section>
@@ -1572,28 +1602,28 @@
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:flex-start;" data-aos="fade-up">
       <div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:20px;">// LA CIENCIA IMPORTA</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:20px;"><i class="fas fa-flask" aria-hidden="true"></i> LA CIENCIA IMPORTA</span>
         <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;line-height:0.92;margin-bottom:28px;">POR QUE<br>BASADO EN<br>EVIDENCIA</h2>
         <p style="font-size:14px;color:var(--gray);line-height:1.8;">En fitness existe mas desinformacion que en casi cualquier otra industria. Cada anio aparecen nuevas "dietas revolucionarias", "metodos secretos" y "hacks metabolicos". La ciencia nos da un filtro para separar lo que funciona de lo que solo suena bien.</p>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);">
         <div style="padding:32px 28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
-          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;"><i class="fas fa-book-open" aria-hidden="true"></i></div>
           <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Estudios peer-reviewed</p>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">Todos los protocolos de WellCore estan respaldados por investigacion revisada por pares, no por testimonios aislados o logica intuitiva.</p>
         </div>
         <div style="padding:32px 28px;border-bottom:1px solid var(--border);">
-          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;"><i class="fas fa-arrows-rotate" aria-hidden="true"></i></div>
           <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Actualizacion constante</p>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">La ciencia del ejercicio avanza rapidamente. Los protocolos de WellCore se revisan y actualizan trimestralmente con la literatura mas reciente.</p>
         </div>
         <div style="padding:32px 28px;border-right:1px solid var(--border);">
-          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
           <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Datos del cliente</p>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">Cada decision de ajuste de programa se toma con datos reales del cliente, no con promedios poblacionales. Tu respuesta individual supera cualquier formula generica.</p>
         </div>
         <div style="padding:32px 28px;">
-          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;">//</div>
+          <div style="width:40px;height:40px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;margin-bottom:16px;"><i class="fas fa-ban" aria-hidden="true"></i></div>
           <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">Cero pseudociencia</p>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">Si algo no tiene evidencia solida, no esta en nuestros programas. Aunque sea popular en redes sociales o lo recomiende un influencer con millones de seguidores.</p>
         </div>
@@ -1608,7 +1638,7 @@
 <section style="padding:100px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// POR QUE WELLCORE Y NO OTRO</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-star" aria-hidden="true"></i> POR QUE WELLCORE Y NO OTRO</span>
       <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">LA DIFERENCIA<br>ES EL METODO</h2>
     </div>
     <div style="overflow-x:auto;" data-aos="fade-up" data-aos-delay="100">
@@ -1664,7 +1694,7 @@
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" data-aos="fade-up">
       <div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// SOPORTE DIRECTO</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-headset" aria-hidden="true"></i> SOPORTE DIRECTO</span>
         <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,56px);letter-spacing:2px;color:#fff;margin-bottom:16px;line-height:0.92;">CANALES DE<br>CONTACTO</h2>
         <p style="font-size:14px;color:var(--gray);line-height:1.8;">Para preguntas que no encontraste en la base de datos, el equipo de soporte responde en menos de 24 horas habiles. Preferimos WhatsApp para consultas rapidas y email para temas que requieren documentacion.</p>
       </div>
@@ -1678,7 +1708,7 @@
           <span style="margin-left:auto;color:var(--gray-dim);font-size:11px;">&rarr;</span>
         </a>
         <a href="mailto:info@wellcorefitness.com" style="display:flex;align-items:center;gap:20px;padding:24px 28px;border-bottom:1px solid var(--border);transition:background 0.1s linear;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='none'">
-          <div style="width:44px;height:44px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:16px;flex-shrink:0;"><span style="color:var(--red);font-weight:700;">//</span></div>
+          <div style="width:44px;height:44px;background:var(--red-dim);border:1px solid rgba(227,30,36,0.15);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:16px;flex-shrink:0;"><i class="fas fa-envelope" aria-hidden="true"></i></div>
           <div>
             <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;margin-bottom:4px;">Email soporte</span>
             <span style="font-size:14px;color:rgba(255,255,255,0.8);">info@wellcorefitness.com</span>
@@ -1686,7 +1716,7 @@
           <span style="margin-left:auto;color:var(--gray-dim);font-size:11px;">&rarr;</span>
         </a>
         <div style="display:flex;align-items:center;gap:20px;padding:20px 28px;">
-          <span style="color:var(--gray-dim);font-size:14px;flex-shrink:0;font-weight:700;">//</span>
+          <i class="fas fa-clock" aria-hidden="true" style="color:var(--gray-dim);font-size:14px;flex-shrink:0;"></i>
           <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--gray-dim);">Lunes a Viernes &mdash; 8:00am a 7:00pm (COT) &mdash; Respuesta en &lt;24h habiles</span>
         </div>
       </div>
@@ -1700,47 +1730,47 @@
 <section style="padding:100px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:56px;" data-aos="fade-up">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// LO QUE TODO EL MUNDO CREE Y ESTA MAL</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-circle-xmark" aria-hidden="true"></i> LO QUE TODO EL MUNDO CREE Y ESTA MAL</span>
       <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,72px);letter-spacing:2px;color:#fff;">MITOS<br>DESMONTADOS</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
       <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
         <div style="padding:28px 32px;border-right:1px solid var(--border);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-xmark" aria-hidden="true"></i> Mito</span>
           <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"Para perder peso hay que comer lo menos posible."</p>
         </div>
         <div style="padding:28px 32px;">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-check" aria-hidden="true"></i> Realidad</span>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">Comer demasiado poco activa la termogenesis adaptativa: el cuerpo reduce el metabolismo para sobrevivir. Un deficit de 300-500 kcal sobre el TDEE real es suficiente y mas sostenible.</p>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
         <div style="padding:28px 32px;border-right:1px solid var(--border);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-xmark" aria-hidden="true"></i> Mito</span>
           <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"El cardio es lo mejor para perder grasa."</p>
         </div>
         <div style="padding:28px 32px;">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-check" aria-hidden="true"></i> Realidad</span>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">El entrenamiento de fuerza genera mayor gasto calorico post-ejercicio (EPOC) y preserva masa muscular durante el deficit. Combinacion optima: fuerza + deficit nutricional + cardio moderado.</p>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
         <div style="padding:28px 32px;border-right:1px solid var(--border);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-xmark" aria-hidden="true"></i> Mito</span>
           <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"Si como carbohidratos de noche engorda."</p>
         </div>
         <div style="padding:28px 32px;">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-check" aria-hidden="true"></i> Realidad</span>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">El cuerpo no tiene reloj para almacenar grasa. Lo que determina la composicion corporal es el balance calorico total del dia, no el momento en que consumes los macros.</p>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;">
         <div style="padding:28px 32px;border-right:1px solid var(--border);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;">// Mito</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-xmark" aria-hidden="true"></i> Mito</span>
           <p style="font-size:14px;color:rgba(255,255,255,0.4);font-style:italic;">"Sudar mas significa quemar mas grasa."</p>
         </div>
         <div style="padding:28px 32px;">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;">// Realidad</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-circle-check" aria-hidden="true"></i> Realidad</span>
           <p style="font-size:14px;color:var(--gray);line-height:1.7;">El sudor es un mecanismo de termorregulacion, no de quema de grasa. La cantidad de sudor depende de temperatura, humedad y genetica individual. No correlaciona con el gasto calorico del ejercicio.</p>
         </div>
       </div>
@@ -1754,7 +1784,7 @@
 <section style="padding:80px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:48px;" data-aos="fade-up">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;">// PREGUNTAS FRECUENTES ADICIONALES</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-circle-question" aria-hidden="true"></i> PREGUNTAS FRECUENTES ADICIONALES</span>
       <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,56px);letter-spacing:2px;color:#fff;">MAS RESPUESTAS</h2>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="100">
