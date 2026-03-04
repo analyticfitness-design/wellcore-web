@@ -384,6 +384,100 @@
 
             button:not(.topbar-user-menu-toggle):not(.hamburger-menu) { width: 100%; }
         }
+
+        /* ──────── SECTION TRANSITIONS ──────── */
+        .section {
+            animation: fadeIn 0.15s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ──────── SEARCH RESULTS ──────── */
+        .search-results {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: none;
+            min-width: 280px;
+            display: none;
+            z-index: 200;
+        }
+
+        .search-results.show { display: block; }
+
+        .search-result-item {
+            padding: 10px 16px;
+            font-size: 13px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .search-result-item:hover,
+        .search-result-item.highlighted {
+            background: var(--red-dim);
+            color: var(--white);
+        }
+
+        .search-result-item i {
+            width: 20px;
+            color: var(--red);
+            margin-right: 8px;
+        }
+
+        /* ──────── STREAK BADGE ──────── */
+        .streak-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--red-dim);
+            border: 1px solid rgba(227,30,36,0.3);
+            padding: 4px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--red);
+            margin-bottom: 20px;
+        }
+
+        /* ──────── TRACKING HISTORY ──────── */
+        .tracking-log-entry {
+            padding: 12px 16px;
+            background: var(--surface);
+            margin-bottom: 6px;
+            font-size: 12px;
+            border-left: 3px solid var(--border);
+        }
+
+        .tracking-log-entry.good { border-left-color: var(--green); }
+        .tracking-log-entry.partial { border-left-color: var(--red); }
+
+        /* ──────── TOAST NOTIFICATION ──────── */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--surface);
+            border: 1px solid var(--green);
+            color: var(--white);
+            padding: 14px 20px;
+            font-size: 13px;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -393,9 +487,10 @@
             <button class="hamburger-menu" id="hamburgerBtn" aria-label="Menú">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="topbar-search">
+            <div class="topbar-search" style="position: relative;">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Buscar..." id="searchInput" autocomplete="off">
+                <input type="text" placeholder="Buscar sección..." id="searchInput" autocomplete="off">
+                <div class="search-results" id="searchResults"></div>
             </div>
             <div class="topbar-user">
                 <div class="topbar-user-avatar" id="userAvatar" aria-label="Avatar de usuario">U</div>
@@ -485,6 +580,12 @@
 
             <!-- ═══════════════════ DASHBOARD ═══════════════════ -->
             <section class="section active" id="dashboard">
+                <!-- Streak Badge -->
+                <div class="streak-badge" id="streakBadge" style="display:none;">
+                    <i class="fas fa-fire"></i>
+                    <span id="streakCount">0</span> días de racha
+                </div>
+
                 <!-- Hero Countdown -->
                 <div class="card" style="background: linear-gradient(135deg, var(--red-dim) 0%, var(--surface) 100%); border: 1px solid rgba(227,30,36,0.3); padding: 40px; text-align: center; margin-bottom: 30px;">
                     <div style="font-family: 'Bebas Neue'; font-size: 60px; color: var(--red); margin-bottom: 20px; line-height: 1;">
@@ -711,6 +812,14 @@
                         <i class="fas fa-save"></i> Guardar Registro
                     </button>
                 </div>
+
+                <!-- Tracking History -->
+                <div class="card">
+                    <div class="card-title">Historial de Registros</div>
+                    <div id="trackingHistory">
+                        <p style="color: var(--gray); font-size: 13px;">Sin registros aún.</p>
+                    </div>
+                </div>
             </section>
 
             <!-- ═══════════════════ MEASUREMENTS ═══════════════════ -->
@@ -897,21 +1006,26 @@
         </main>
     </div>
 
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+
     <script>
         // ════════════════════════════════════════
-        // UTILITIES
+        // PHASE 4-6: FULL ENHANCED JAVASCRIPT
         // ════════════════════════════════════════
 
-        // Escape user-provided text before inserting into DOM
-        function escHtml(str) {
-            const div = document.createElement('div');
-            div.appendChild(document.createTextNode(String(str)));
-            return div.innerHTML;
+        const TODAY = new Date().toISOString().split('T')[0];
+
+        // ─── TOAST ───────────────────────────────
+        function showToast(msg, color) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.style.borderColor = color || 'var(--green)';
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
         }
 
-        // ════════════════════════════════════════
-        // NAVIGATION
-        // ════════════════════════════════════════
+        // ─── NAVIGATION ──────────────────────────
         function showSection(sectionId, triggerEl) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(sectionId);
@@ -929,6 +1043,9 @@
                 document.getElementById('sidebar').classList.remove('show');
                 document.getElementById('sidebarOverlay').classList.remove('show');
             }
+
+            // Hide search results on navigate
+            document.getElementById('searchResults').classList.remove('show');
         }
 
         function toggleSubMenu(itemsId, toggleEl) {
@@ -939,7 +1056,6 @@
             if (chevron) chevron.style.transform = subItems.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
         }
 
-        // Mobile hamburger
         document.getElementById('hamburgerBtn').addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('show');
             document.getElementById('sidebarOverlay').classList.toggle('show');
@@ -950,7 +1066,6 @@
             document.getElementById('sidebarOverlay').classList.remove('show');
         });
 
-        // User dropdown
         document.getElementById('userMenuBtn').addEventListener('click', (e) => {
             e.stopPropagation();
             document.getElementById('userDropdown').classList.toggle('show');
@@ -958,6 +1073,7 @@
 
         document.addEventListener('click', () => {
             document.getElementById('userDropdown').classList.remove('show');
+            document.getElementById('searchResults').classList.remove('show');
         });
 
         function logout() {
@@ -965,31 +1081,95 @@
             window.location.href = '/login.html';
         }
 
-        // ════════════════════════════════════════
-        // COUNTDOWN
-        // ════════════════════════════════════════
+        // ─── PHASE 5: SEARCH ─────────────────────
+        const SECTIONS = [
+            { id: 'dashboard',    label: 'Dashboard',        icon: 'fa-home' },
+            { id: 'training',     label: 'Entrenamiento',     icon: 'fa-dumbbell' },
+            { id: 'nutrition',    label: 'Nutrición',         icon: 'fa-utensils' },
+            { id: 'habits',       label: 'Hábitos',           icon: 'fa-tasks' },
+            { id: 'tracking',     label: 'Tracking Diario',   icon: 'fa-check-circle' },
+            { id: 'measurements', label: 'Mediciones',        icon: 'fa-ruler-vertical' },
+            { id: 'photos',       label: 'Fotos Progreso',    icon: 'fa-image' },
+            { id: 'community',    label: 'Comunidad',         icon: 'fa-users' },
+            { id: 'support',      label: 'Soporte',           icon: 'fa-headset' }
+        ];
+
+        const searchInput   = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', (e) => {
+            e.stopPropagation();
+            const q = searchInput.value.trim().toLowerCase();
+            searchResults.textContent = '';
+
+            if (!q) { searchResults.classList.remove('show'); return; }
+
+            const matches = SECTIONS.filter(s => s.label.toLowerCase().includes(q));
+            if (matches.length === 0) { searchResults.classList.remove('show'); return; }
+
+            matches.forEach(s => {
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                const icon = document.createElement('i');
+                icon.className = 'fas ' + s.icon;
+                item.appendChild(icon);
+                item.appendChild(document.createTextNode(s.label));
+                item.addEventListener('mousedown', () => {
+                    showSection(s.id, null);
+                    searchInput.value = '';
+                    searchResults.classList.remove('show');
+                });
+                searchResults.appendChild(item);
+            });
+
+            searchResults.classList.add('show');
+        });
+
+        searchInput.addEventListener('click', (e) => e.stopPropagation());
+
+        // ─── PHASE 5: COUNTDOWN (real-time) ──────
         function updateCountdown() {
             const end   = new Date('2026-03-31T23:59:59');
             const start = new Date('2026-03-01T00:00:00');
             const now   = new Date();
 
-            const totalMs   = end - start;
-            const elapsedMs = now - start;
-            const progress  = Math.min(100, Math.max(0, (elapsedMs / totalMs) * 100));
+            const totalMs       = end - start;
+            const elapsedMs     = now - start;
+            const remainingMs   = end - now;
+            const progress      = Math.min(100, Math.max(0, (elapsedMs / totalMs) * 100));
             const daysElapsed   = Math.max(0, Math.floor(elapsedMs / 86400000));
-            const daysRemaining = Math.max(0, Math.ceil((end - now) / 86400000));
+            const daysRemaining = Math.max(0, Math.ceil(remainingMs / 86400000));
 
+            // Sidebar countdown
             document.getElementById('countdownDays').textContent = daysRemaining;
-            document.getElementById('countdownFill').style.width  = progress + '%';
+            document.getElementById('countdownFill').style.width  = progress.toFixed(1) + '%';
             document.getElementById('countdownText').textContent  = daysRemaining + ' días restantes';
 
+            // Dashboard hero
             document.getElementById('dashCountdownDays').textContent = daysElapsed;
-            document.getElementById('dashCountdownBar').style.width  = progress + '%';
+            document.getElementById('dashCountdownBar').style.width  = progress.toFixed(1) + '%';
         }
 
-        // ════════════════════════════════════════
-        // HABITS
-        // ════════════════════════════════════════
+        // Update every 60 seconds
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+
+        // ─── PHASE 4: HABITS (persist by date) ───
+        function saveHabitsToStorage() {
+            const state = {};
+            document.querySelectorAll('.habit-check').forEach(cb => {
+                state[cb.dataset.habit] = cb.checked;
+            });
+            localStorage.setItem('rise_habits_' + TODAY, JSON.stringify(state));
+        }
+
+        function loadHabitsFromStorage() {
+            const saved = JSON.parse(localStorage.getItem('rise_habits_' + TODAY) || '{}');
+            document.querySelectorAll('.habit-check').forEach(cb => {
+                if (saved[cb.dataset.habit] !== undefined) cb.checked = saved[cb.dataset.habit];
+            });
+        }
+
         function updateHabitsProgress() {
             const all     = document.querySelectorAll('.habit-check');
             const checked = document.querySelectorAll('.habit-check:checked').length;
@@ -997,25 +1177,30 @@
             document.getElementById('habitsProgress').textContent    = pct + '%';
             document.getElementById('habitsProgressBar').style.width = pct + '%';
             document.getElementById('habitsToday').textContent       = checked + ' de ' + all.length + ' hábitos completados';
+            saveHabitsToStorage();
         }
 
         document.querySelectorAll('.habit-check').forEach(cb => {
             cb.addEventListener('change', updateHabitsProgress);
         });
 
-        // ════════════════════════════════════════
-        // HYDRATION
-        // ════════════════════════════════════════
-        let waterToday = 0;
-
-        function addWater(ml) {
-            waterToday += ml;
-            document.getElementById('waterTotal').textContent = 'Total hoy: ' + waterToday + ' ml';
+        // ─── PHASE 4: HYDRATION (persist by date) ─
+        function loadWaterFromStorage() {
+            return parseInt(localStorage.getItem('rise_water_' + TODAY) || '0', 10);
         }
 
-        // ════════════════════════════════════════
-        // TRACKING
-        // ════════════════════════════════════════
+        function saveWaterToStorage(ml) {
+            localStorage.setItem('rise_water_' + TODAY, String(ml));
+        }
+
+        function addWater(ml) {
+            const current = loadWaterFromStorage() + ml;
+            saveWaterToStorage(current);
+            document.getElementById('waterTotal').textContent = 'Total hoy: ' + current + ' ml' +
+                (current >= 3000 ? ' ✓ Meta alcanzada' : ' / 3000 ml');
+        }
+
+        // ─── TRACKING ────────────────────────────
         const trackingState = {};
 
         function logTracking(type, value, containerId) {
@@ -1027,33 +1212,112 @@
         }
 
         function saveTracking() {
-            const today = new Date().toISOString().split('T')[0];
             const water = parseFloat(document.getElementById('waterInput').value) || 0;
             const sleep = parseFloat(document.getElementById('sleepInput').value) || 0;
-            const note  = document.getElementById('noteInput').value.slice(0, 500); // truncate
+            const note  = document.getElementById('noteInput').value.slice(0, 500);
 
             const log = {
-                date: today,
-                training: trackingState.training || false,
+                date:      TODAY,
+                training:  trackingState.training  || false,
                 nutrition: trackingState.nutrition || false,
-                water: water,
-                sleep: sleep,
-                note: note
+                water,
+                sleep,
+                note
             };
 
             const logs = JSON.parse(localStorage.getItem('rise_tracking') || '[]');
-            logs.push(log);
+            // Replace today's log if already exists
+            const idx = logs.findIndex(l => l.date === TODAY);
+            if (idx >= 0) logs[idx] = log; else logs.push(log);
             localStorage.setItem('rise_tracking', JSON.stringify(logs));
-            alert('¡Registro guardado correctamente!');
+
+            renderTrackingHistory(logs);
+            updateStreak(logs);
+            showToast('¡Registro guardado!');
         }
 
-        // ════════════════════════════════════════
-        // MEASUREMENTS
-        // ════════════════════════════════════════
+        function renderTrackingHistory(logs) {
+            const container = document.getElementById('trackingHistory');
+            if (!logs || logs.length === 0) {
+                container.textContent = 'Sin registros aún.';
+                return;
+            }
+
+            container.textContent = '';
+            // Show most recent first (max 7)
+            const recent = [...logs].reverse().slice(0, 7);
+            recent.forEach(log => {
+                const score = (log.training ? 1 : 0) + (log.nutrition ? 1 : 0) + (log.water >= 2 ? 1 : 0) + (log.sleep >= 7 ? 1 : 0);
+                const entry = document.createElement('div');
+                entry.className = 'tracking-log-entry ' + (score >= 3 ? 'good' : 'partial');
+
+                const row = document.createElement('div');
+                row.style.cssText = 'display: flex; justify-content: space-between; align-items: center;';
+
+                const dateSpan = document.createElement('span');
+                dateSpan.style.cssText = 'font-family: JetBrains Mono, monospace; color: var(--white);';
+                dateSpan.textContent = log.date;
+
+                const badges = document.createElement('div');
+                badges.style.cssText = 'display: flex; gap: 6px;';
+
+                const items = [
+                    [log.training,  'fa-dumbbell', 'Entreno'],
+                    [log.nutrition, 'fa-utensils', 'Nutrición'],
+                    [log.water >= 2,'fa-tint',     'Agua'],
+                    [log.sleep >= 7,'fa-moon',     'Sueño']
+                ];
+
+                items.forEach(([ok, icon, title]) => {
+                    const b = document.createElement('i');
+                    b.className = 'fas ' + icon;
+                    b.title = title;
+                    b.style.color = ok ? 'var(--green)' : 'var(--gray-dim)';
+                    b.style.fontSize = '12px';
+                    badges.appendChild(b);
+                });
+
+                row.appendChild(dateSpan);
+                row.appendChild(badges);
+                entry.appendChild(row);
+
+                if (log.note) {
+                    const noteEl = document.createElement('p');
+                    noteEl.style.cssText = 'color: var(--gray); font-size: 11px; margin-top: 6px;';
+                    noteEl.textContent = log.note;
+                    entry.appendChild(noteEl);
+                }
+
+                container.appendChild(entry);
+            });
+        }
+
+        // ─── PHASE 5: STREAK COUNTER ─────────────
+        function updateStreak(logs) {
+            if (!logs || logs.length === 0) return;
+            const dates = new Set(logs.map(l => l.date));
+            let streak = 0;
+            let cursor = new Date();
+
+            while (true) {
+                const d = cursor.toISOString().split('T')[0];
+                if (dates.has(d)) {
+                    streak++;
+                    cursor.setDate(cursor.getDate() - 1);
+                } else break;
+            }
+
+            if (streak > 0) {
+                document.getElementById('streakCount').textContent = streak;
+                document.getElementById('streakBadge').style.display = 'inline-flex';
+            }
+        }
+
+        // ─── MEASUREMENTS ────────────────────────
         function saveMeasurement() {
             const getValue = (id) => parseFloat(document.getElementById(id).value) || 0;
             const m = {
-                date:   new Date().toISOString().split('T')[0],
+                date:   TODAY,
                 weight: getValue('mWeight'),
                 chest:  getValue('mChest'),
                 waist:  getValue('mWaist'),
@@ -1067,7 +1331,7 @@
             localStorage.setItem('rise_measurements', JSON.stringify(list));
             renderMeasurements(list);
             document.getElementById('lastMeasurementText').textContent = 'Última: ' + m.date;
-            alert('¡Medición guardada!');
+            showToast('¡Medición guardada!');
         }
 
         function renderMeasurements(list) {
@@ -1077,9 +1341,8 @@
                 return;
             }
 
-            // Build DOM safely (no innerHTML with user data)
             container.textContent = '';
-            list.forEach(m => {
+            [...list].reverse().forEach(m => {
                 const entry = document.createElement('div');
                 entry.style.cssText = 'padding: 15px; background: var(--surface); margin-bottom: 8px; font-size: 12px;';
 
@@ -1091,16 +1354,9 @@
                 const grid = document.createElement('div');
                 grid.style.cssText = 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;';
 
-                const fields = [
-                    ['Peso', m.weight, 'kg'],
-                    ['Pecho', m.chest, 'cm'],
-                    ['Cintura', m.waist, 'cm'],
-                    ['Cadera', m.hips, 'cm'],
-                    ['Muslo', m.thigh, 'cm'],
-                    ['Brazo', m.arm, 'cm']
-                ];
-
-                fields.forEach(([label, val, unit]) => {
+                [['Peso', m.weight, 'kg'], ['Pecho', m.chest, 'cm'], ['Cintura', m.waist, 'cm'],
+                 ['Cadera', m.hips, 'cm'], ['Muslo', m.thigh, 'cm'], ['Brazo', m.arm, 'cm']]
+                .forEach(([label, val, unit]) => {
                     const cell = document.createElement('div');
                     cell.style.color = 'var(--gray)';
                     const strong = document.createElement('span');
@@ -1116,9 +1372,7 @@
             });
         }
 
-        // ════════════════════════════════════════
-        // PHOTOS
-        // ════════════════════════════════════════
+        // ─── PHOTOS ──────────────────────────────
         function previewPhoto(input, previewId) {
             const preview = document.getElementById(previewId);
             if (input.files && input.files[0]) {
@@ -1132,18 +1386,16 @@
         }
 
         function savePhotos() {
-            const date  = document.getElementById('photoDate').value || new Date().toISOString().split('T')[0];
-            const list  = JSON.parse(localStorage.getItem('rise_photos') || '[]');
+            const date = document.getElementById('photoDate').value || TODAY;
+            const list = JSON.parse(localStorage.getItem('rise_photos') || '[]');
             list.push({ date });
             localStorage.setItem('rise_photos', JSON.stringify(list));
-            document.getElementById('photoCountText').textContent = list.length + ' set(s) de fotos guardado(s)';
-            document.getElementById('photoGalleryText').textContent = list.length + ' registro(s) de fotos guardado(s).';
-            alert('¡Fotos registradas!');
+            document.getElementById('photoCountText').textContent    = list.length + ' set(s) de fotos guardado(s)';
+            document.getElementById('photoGalleryText').textContent  = list.length + ' registro(s) de fotos guardado(s).';
+            showToast('¡Fotos registradas!');
         }
 
-        // ════════════════════════════════════════
-        // COMMUNITY
-        // ════════════════════════════════════════
+        // ─── COMMUNITY ───────────────────────────
         function postToFeed() {
             const textarea = document.getElementById('communityPost');
             const text = textarea.value.trim().slice(0, 500);
@@ -1154,8 +1406,6 @@
             const initial = name.charAt(0).toUpperCase();
 
             const feed = document.getElementById('communityFeed');
-
-            // Build post DOM without innerHTML
             const post = document.createElement('div');
             post.style.cssText = 'padding: 20px; background: var(--surface); margin-bottom: 10px;';
 
@@ -1181,18 +1431,15 @@
 
             const body = document.createElement('p');
             body.style.cssText = 'color: var(--gray); font-size: 13px;';
-            body.textContent = text; // textContent is XSS-safe
+            body.textContent = text;
 
             post.appendChild(header);
             post.appendChild(body);
             feed.insertBefore(post, feed.firstChild);
-
             textarea.value = '';
         }
 
-        // ════════════════════════════════════════
-        // INITIALIZE
-        // ════════════════════════════════════════
+        // ─── INITIALIZE ──────────────────────────
         window.addEventListener('load', () => {
             // User info
             const clientInfo = JSON.parse(localStorage.getItem('client_info') || '{}');
@@ -1201,15 +1448,11 @@
                 document.getElementById('userAvatar').textContent = clientInfo.name.charAt(0).toUpperCase();
             }
 
-            // Today's date
-            const today = new Date().toISOString().split('T')[0];
-            const todayEl = document.getElementById('todayDate');
-            if (todayEl) todayEl.textContent = today;
+            // Set today's date in forms
+            const todayEl    = document.getElementById('todayDate');
             const photoDateEl = document.getElementById('photoDate');
-            if (photoDateEl) photoDateEl.value = today;
-
-            // Countdown
-            updateCountdown();
+            if (todayEl)     todayEl.textContent = TODAY;
+            if (photoDateEl) photoDateEl.value   = TODAY;
 
             // Measurements
             const measurements = JSON.parse(localStorage.getItem('rise_measurements') || '[]');
@@ -1218,13 +1461,26 @@
                 document.getElementById('lastMeasurementText').textContent = 'Última: ' + measurements[measurements.length - 1].date;
             }
 
-            // Habits initial state
+            // Phase 4: Restore habits for today
+            loadHabitsFromStorage();
             updateHabitsProgress();
+
+            // Phase 4: Restore water for today
+            const waterMl = loadWaterFromStorage();
+            if (waterMl > 0) {
+                document.getElementById('waterTotal').textContent = 'Total hoy: ' + waterMl + ' ml' +
+                    (waterMl >= 3000 ? ' ✓ Meta alcanzada' : ' / 3000 ml');
+            }
+
+            // Tracking history
+            const logs = JSON.parse(localStorage.getItem('rise_tracking') || '[]');
+            renderTrackingHistory(logs);
+            updateStreak(logs);
 
             // Photos count
             const photos = JSON.parse(localStorage.getItem('rise_photos') || '[]');
             if (photos.length > 0) {
-                document.getElementById('photoCountText').textContent = photos.length + ' set(s) de fotos guardado(s)';
+                document.getElementById('photoCountText').textContent   = photos.length + ' set(s) de fotos guardado(s)';
                 document.getElementById('photoGalleryText').textContent = photos.length + ' registro(s) de fotos guardado(s).';
             }
         });
