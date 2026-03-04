@@ -822,7 +822,7 @@ document.getElementById('formAdmin').addEventListener('submit', async function(e
         if (data && data.token) {
             var role = (data.user && data.user.role) ? data.user.role : '';
             var redirect = 'admin.html';
-            if (role === 'jefe' || role === 'superadmin') redirect = 'admin-jefe.html';
+            if (role === 'jefe' || role === 'superadmin') redirect = 'admin.html';
             else if (role === 'coach') redirect = 'coach-portal.html';
             else if (role === 'coaches' || role === 'coach_manager') redirect = 'admin-coaches.html';
             else if (role === 'clientes') redirect = 'admin-clientes.html';

@@ -36,14 +36,14 @@
         }
 
         .rise-modal-content {
-            background: linear-gradient(135deg, #1a1917 0%, #2d1b1f 100%);
-            border: 2px solid #E31E24;
-            border-radius: 16px;
+            background: #111113;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
             padding: 40px;
             max-width: 500px;
             width: 90%;
             position: relative;
-            box-shadow: 0 20px 60px rgba(227, 30, 36, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             animation: slideUp 0.4s ease-out;
         }
 
@@ -170,13 +170,12 @@
         }
 
         .rise-modal-btn-primary {
-            background: linear-gradient(135deg, #E31E24 0%, #c41820 100%);
+            background: #E31E24;
             color: white;
         }
 
         .rise-modal-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(227, 30, 36, 0.3);
+            background: #B8181D;
         }
 
         .rise-modal-btn-secondary {
@@ -186,8 +185,7 @@
         }
 
         .rise-modal-btn-secondary:hover {
-            background: #E31E24;
-            color: #1a1917;
+            background: rgba(227, 30, 36, 0.1);
         }
 
         @media (max-width: 600px) {
