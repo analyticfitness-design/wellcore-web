@@ -3743,5 +3743,72 @@
   }).catch(function(){});
 })();
 </script>
+
+<!-- ============================================================
+     RISE Scripts — Countdown + Bar Dismiss
+============================================================ -->
+<script>
+(function () {
+  var DEADLINE = new Date('2026-03-31T23:59:59');
+
+  /* ── Announcement Bar ── */
+  var bar      = document.getElementById('riseBar');
+  var nav      = document.getElementById('navbar');
+  var closeBtn = document.getElementById('riseBarClose');
+  var barCd    = document.getElementById('riseBarCountdown');
+
+  function fmtBar() {
+    var diff = DEADLINE - new Date();
+    if (diff <= 0) return 'Inscripciones cerradas';
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    return 'Cierra en\u00a0' + d + 'D\u00a0' +
+      String(h).padStart(2,'0') + 'H\u00a0' +
+      String(m).padStart(2,'0') + 'M\u00a0' +
+      String(s).padStart(2,'0') + 'S';
+  }
+
+  if (bar) {
+    if (sessionStorage.getItem('rise_bar_closed')) {
+      bar.style.display = 'none';
+    } else {
+      if (nav) nav.classList.add('bar-open');
+      barCd.textContent = fmtBar();
+      setInterval(function () { barCd.textContent = fmtBar(); }, 1000);
+      closeBtn.addEventListener('click', function () {
+        bar.classList.add('hidden');
+        setTimeout(function () { bar.style.display = 'none'; }, 350);
+        if (nav) nav.classList.remove('bar-open');
+        sessionStorage.setItem('rise_bar_closed', '1');
+      });
+    }
+  }
+
+  /* ── Section Countdown ── */
+  var dEl = document.getElementById('riseSecDays');
+  var hEl = document.getElementById('riseSecHours');
+  var mEl = document.getElementById('riseSecMins');
+  var sEl = document.getElementById('riseSecSecs');
+
+  function tickSection() {
+    var diff = DEADLINE - new Date();
+    if (diff <= 0) {
+      if (dEl) dEl.textContent = '00';
+      if (hEl) hEl.textContent = '00';
+      if (mEl) mEl.textContent = '00';
+      if (sEl) sEl.textContent = '00';
+      return;
+    }
+    if (dEl) dEl.textContent = Math.floor(diff / 86400000);
+    if (hEl) hEl.textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+    if (mEl) mEl.textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+    if (sEl) sEl.textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+  }
+
+  if (dEl) { tickSection(); setInterval(tickSection, 1000); }
+})();
+</script>
 </body>
 </html>
