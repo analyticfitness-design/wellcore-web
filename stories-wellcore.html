@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WellCore Stories — Marketing Kit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ───── BRIEF PARA AGENTE — WELLCORE PLATFORM ─────
+     * PROYECTO: WellCore Fitness — Instagram Stories de Marca + Planes
+     * FORMATO: 1080x1920px / 9:16 / Instagram Stories
+     * PALETA: bg:#0a0a0a · surface:#111113 · red:#E31E24 · cyan:#00D9FF · green:#22C55E · white:#fff
+     * TIPOGRAFÍA: Bebas Neue (headlines) · JetBrains Mono (labels) · Inter (body)
+     * ICONOS FA: contenedor 52px · rgba(227,30,36,0.08) · borde rgba(227,30,36,0.25) · radius:8px
+     *
+     * CONTEXTO WELLCORE PLATFORM:
+     * - Plataforma online de coaching fitness 1:1, basada en ciencia
+     * - Enfoque: Personalización real, sin planes genéricos, sin atajos
+     * - Fase: Beta / Acceso Fundador (Marzo 2026)
+     * - 3 Planes mensuales:
+     *   1. fa-seedling   → ESENCIAL     ($399.000 COP/mes) — base, seguimiento básico
+     *   2. fa-chart-line → MÉTODO       ($504.000 COP/mes) — featured, +60% clientes lo eligen
+     *   3. fa-crown      → ÉLITE        ($630.000 COP/mes) — premium 1:1 completo
+     * - Diferenciadores: Ciencia · Sin dogmas · 1:1 real · Ajuste semanal del plan
+     * - Mercado: LATAM · Hispanohablantes · Profesionales 25-45 años
+     * - Metodología propia: diagnóstico → diseño → ejecución → resultados
+     *
+     * NARRATIVA STORIES (flujo en orden):
+     * Story 1 — MARCA: "WELLCORE FITNESS." · ciencia sin dogmas · tono aspiracional
+     * Story 2 — EL PROBLEMA: "¿Cansado de planes genéricos?" · puntos de dolor
+     * Story 3 — LA SOLUCIÓN: El método 1:1 · 4 fases · cómo funciona
+     * Story 4 — LOS PLANES: 3 opciones con iconos FA y precios
+     * Story 5 — BETA/FUNDADOR: acceso exclusivo · CTA · por qué ahora
+     *
+     * TONO: Premium · Directo · Anti-fluff · Científico sin ser frío · "Resultados reales, no promesas"
+     * ─────────────────────────────────────────────────────────────────── */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --surface-2: #1a1a1d;
+      --card:      #18181b;
+      --border:    rgba(255,255,255,0.06);
+      --red:       #E31E24;
+      --red-dark:  #B8181D;
+      --red-dim:   rgba(227,30,36,0.10);
+      --cyan:      #00D9FF;
+      --green:     #22C55E;
+      --gold:      #FFD700;
+      --white:     #ffffff;
+      --gray:      rgba(255,255,255,0.45);
+      --gray-dim:  rgba(255,255,255,0.18);
+    }
+
+    body {
+      background: #050505;
+      font-family: 'Inter', sans-serif;
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+      max-width: 700px;
+    }
+    .page-header .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,217,255,0.08);
+      border: 1px solid rgba(0,217,255,0.25);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .page-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      padding: 20px 10px 40px;
+      max-width: 100%;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--cyan) var(--surface);
+    }
+    .gallery::-webkit-scrollbar { height: 4px; }
+    .gallery::-webkit-scrollbar-track { background: var(--surface); }
+    .gallery::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+    .story-wrapper {
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .story-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gray-dim);
+      text-transform: uppercase;
+    }
+    .story {
+      width: 360px;
+      height: 640px;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .story-progress {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      gap: 4px;
+      z-index: 10;
+    }
+    .progress-bar { height: 2px; flex: 1; background: rgba(255,255,255,0.25); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--white); border-radius: 2px; }
+    .progress-fill.done { width: 100%; }
+    .progress-fill.active { width: 55%; }
+    .progress-fill.empty { width: 0%; }
+
+    .story-brand {
+      position: absolute;
+      top: 30px;
+      left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 10;
+    }
+    .story-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+    .story-username { font-size: 12px; font-weight: 600; color: var(--white); text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+    .story-time { font-size: 10px; color: rgba(255,255,255,0.6); }
+
+    /* ═══════════════════════
+       STORY 1 — MARCA
+       ═══════════════════════ */
+    .w1 {
+      background: var(--bg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .w1-bg-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 59px,
+        rgba(255,255,255,0.015) 60px
+      );
+      pointer-events: none;
+    }
+    .w1-content {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 80px 28px 50px;
+    }
+    .w1-top { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .w1-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(0,217,255,0.08);
+      border: 1px solid rgba(0,217,255,0.2);
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      align-self: flex-start;
+    }
+    .w1-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      letter-spacing: 2px;
+      line-height: 0.9;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .w1-headline span { color: var(--red); }
+    .w1-manifesto {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.8;
+      border-left: 2px solid var(--red);
+      padding-left: 16px;
+      margin-bottom: 32px;
+    }
+    .w1-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .w1-stat {
+      background: var(--surface);
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .w1-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      color: var(--red);
+      line-height: 1;
+    }
+    .w1-stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7px;
+      color: var(--gray-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ═══════════════════════
+       STORY 2 — EL PROBLEMA
+       ═══════════════════════ */
+    .w2 {
+      background: var(--bg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 80px 24px 50px;
+    }
+    .w2-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.25);
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      align-self: flex-start;
+    }
+    .w2-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 60px;
+      letter-spacing: 1px;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+    .w2-problems {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .w2-problem {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .w2-x {
+      width: 32px;
+      height: 32px;
+      background: rgba(227,30,36,0.08);
+      border: 1px solid rgba(227,30,36,0.2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .w2-problem-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+    }
+    .w2-problem-sub {
+      font-size: 10px;
+      color: var(--gray);
+      margin-top: 3px;
+    }
+    .w2-divider {
+      text-align: center;
+      padding: 16px 0 12px;
+    }
+    .w2-divider span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--red);
+      letter-spacing: 3px;
+    }
+    .w2-answer {
+      background: linear-gradient(135deg, rgba(227,30,36,0.08) 0%, var(--surface) 100%);
+      border: 1px solid rgba(227,30,36,0.25);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .w2-answer-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--red);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .w2-answer-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 1px;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    /* ═══════════════════════
+       STORY 3 — EL MÉTODO
+       ═══════════════════════ */
+    .w3 {
+      background: var(--bg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 80px 24px 50px;
+    }
+    .w3-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.25);
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    .w3-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 54px;
+      letter-spacing: 1px;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 22px;
+    }
+    .w3-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .w3-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      position: relative;
+    }
+    .w3-step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: var(--red);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      text-transform: uppercase;
+    }
+    .w3-step-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(227,30,36,0.08);
+      border: 1px solid rgba(227,30,36,0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .w3-step-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: var(--white);
+    }
+    .w3-step-desc {
+      font-size: 10px;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+    .w3-promise {
+      margin-top: 12px;
+      text-align: center;
+      padding: 14px;
+      background: rgba(34,197,94,0.06);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .w3-promise-text {
+      font-size: 11px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════
+       STORY 4 — LOS PLANES
+       ═══════════════════════ */
+    .w4 {
+      background: var(--bg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 80px 20px 50px;
+    }
+    .w4-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--red-dim);
+      border: 1px solid rgba(227,30,36,0.25);
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    .w4-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      letter-spacing: 1px;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 18px;
+    }
+    .w4-plans {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .w4-plan {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .w4-plan.featured {
+      border-color: rgba(227,30,36,0.4);
+      background: linear-gradient(135deg, rgba(227,30,36,0.06) 0%, var(--surface) 100%);
+    }
+    .w4-plan-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .icon-esencial { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: var(--green); }
+    .icon-metodo   { background: rgba(227,30,36,0.10); border: 1px solid rgba(227,30,36,0.3); color: var(--red); }
+    .icon-elite    { background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.25); color: var(--gold); }
+    .w4-plan-info { flex: 1; }
+    .w4-plan-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: var(--white);
+    }
+    .w4-plan-desc {
+      font-size: 10px;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+    .w4-plan-price {
+      text-align: right;
+    }
+    .w4-plan-amount {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--white);
+      line-height: 1;
+    }
+    .w4-plan-period {
+      font-size: 9px;
+      color: var(--gray-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .w4-popular {
+      position: absolute;
+      top: -1px;
+      right: 12px;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 0 0 4px 4px;
+    }
+    .w4-note {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--gray-dim);
+    }
+    .w4-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    /* ═══════════════════════
+       STORY 5 — BETA/FUNDADOR
+       ═══════════════════════ */
+    .w5 {
+      background: var(--bg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 28px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .w5-glow-1 {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(0,217,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .w5-glow-2 {
+      position: absolute;
+      bottom: 10%;
+      right: -20%;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(227,30,36,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .w5-content { position: relative; z-index: 2; width: 100%; }
+    .w5-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,217,255,0.08);
+      border: 1px solid rgba(0,217,255,0.25);
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .w5-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 76px;
+      letter-spacing: 2px;
+      line-height: 0.9;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .w5-sub {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--red);
+      letter-spacing: 2px;
+      margin-bottom: 28px;
+    }
+    .w5-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .w5-perk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .w5-perk i { color: var(--cyan); font-size: 13px; }
+    .w5-perk-text { font-size: 11px; color: var(--white); font-weight: 600; }
+    .w5-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 24px rgba(227,30,36,0.3);
+      margin-bottom: 10px;
+    }
+    .w5-url {
+      font-size: 10px;
+      color: var(--gray-dim);
+      letter-spacing: 1px;
+    }
+    .w5-url span { color: var(--red); }
+
+    /* BRIEF SECTION */
+    .brief-section {
+      max-width: 760px;
+      width: 100%;
+      margin-top: 60px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .brief-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brief-section h2 i { color: var(--cyan); font-size: 20px; }
+    .brief-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .brief-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    .brief-card h3 { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 10px; }
+    .brief-card p, .brief-card li { font-size: 12px; color: var(--gray); line-height: 1.7; }
+    .brief-card ul { padding-left: 16px; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="tag">
+      <i class="fas fa-layer-group" aria-hidden="true"></i>
+      WellCore — Platform Instagram Stories Kit
+    </div>
+    <h1>STORIES PLATAFORMA WELLCORE</h1>
+    <p>5 slides: marca → problema → solución → planes → beta/fundador.<br>
+    Formato 1080×1920px · Paleta WellCore · Font Awesome 6.4</p>
+  </div>
+
+  <div class="gallery">
+
+    <!-- STORY 1: MARCA -->
+    <div class="story-wrapper">
+      <div class="story-label">01 — Marca / Brand Statement</div>
+      <div class="story">
+        <div class="story-progress">
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+        </div>
+        <div class="story-brand">
+          <div class="story-avatar">WC</div>
+          <div>
+            <div class="story-username">wellcorefitness</div>
+            <div class="story-time">Hace 1 minuto</div>
+          </div>
+        </div>
+        <div class="w1">
+          <div class="w1-bg-line"></div>
+          <div class="w1-content">
+            <div class="w1-top">
+              <div class="w1-tag">
+                <i class="fas fa-flask" aria-hidden="true"></i>
+                Coaching 1:1 · Ciencia real
+              </div>
+              <div class="w1-headline">WELL<br><span>CORE</span><br>FITNESS.</div>
+              <div class="w1-manifesto">Entrenamiento personalizado basado en evidencia. Sin planes genéricos. Sin promesas vacías. Resultados medibles.</div>
+              <div class="w1-stats">
+                <div class="w1-stat">
+                  <div class="w1-stat-num">1:1</div>
+                  <div class="w1-stat-label">Atención directa</div>
+                </div>
+                <div class="w1-stat">
+                  <div class="w1-stat-num">SEMANAL</div>
+                  <div class="w1-stat-label">Ajuste del plan</div>
+                </div>
+                <div class="w1-stat">
+                  <div class="w1-stat-num">BETA</div>
+                  <div class="w1-stat-label">Acceso fundador</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STORY 2: EL PROBLEMA -->
+    <div class="story-wrapper">
+      <div class="story-label">02 — El Problema</div>
+      <div class="story">
+        <div class="story-progress">
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+        </div>
+        <div class="story-brand">
+          <div class="story-avatar">WC</div>
+          <div><div class="story-username">wellcorefitness</div><div class="story-time">Ahora</div></div>
+        </div>
+        <div class="w2" style="height:100%;">
+          <div class="w2-tag"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> ¿Te suena familiar?</div>
+          <div class="w2-headline">PLANS<br>GENÉRI&shy;COS.<br>CERO RESULTADOS.</div>
+          <div class="w2-problems">
+            <div class="w2-problem">
+              <div class="w2-x"><i class="fas fa-times" aria-hidden="true"></i></div>
+              <div>
+                <div class="w2-problem-text">Planes copiados de internet</div>
+                <div class="w2-problem-sub">Sin considerar tu cuerpo, tu nivel, tu vida.</div>
+              </div>
+            </div>
+            <div class="w2-problem">
+              <div class="w2-x"><i class="fas fa-times" aria-hidden="true"></i></div>
+              <div>
+                <div class="w2-problem-text">Resultados que no duran</div>
+                <div class="w2-problem-sub">Efecto rebote. Frustración. Empezar de cero otra vez.</div>
+              </div>
+            </div>
+            <div class="w2-problem">
+              <div class="w2-x"><i class="fas fa-times" aria-hidden="true"></i></div>
+              <div>
+                <div class="w2-problem-text">Sin seguimiento real</div>
+                <div class="w2-problem-sub">Pagas un plan y no vuelves a saber nada.</div>
+              </div>
+            </div>
+          </div>
+          <div class="w2-divider"><span>LA SOLUCIÓN →</span></div>
+          <div class="w2-answer">
+            <div class="w2-answer-icon"><i class="fas fa-flask" aria-hidden="true"></i></div>
+            <div class="w2-answer-text">MÉTODO WELLCORE.<br>PERSONALIZADO. CON CIENCIA.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STORY 3: EL MÉTODO -->
+    <div class="story-wrapper">
+      <div class="story-label">03 — El Método</div>
+      <div class="story">
+        <div class="story-progress">
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+        </div>
+        <div class="story-brand">
+          <div class="story-avatar">WC</div>
+          <div><div class="story-username">wellcorefitness</div><div class="story-time">Ahora</div></div>
+        </div>
+        <div class="w3" style="height:100%;">
+          <div class="w3-tag"><i class="fas fa-route" aria-hidden="true"></i> Cómo funciona</div>
+          <div class="w3-headline">4 FASES.<br>TU PROCESO.</div>
+          <div class="w3-steps">
+            <div class="w3-step">
+              <div class="w3-step-num">01 —</div>
+              <div class="w3-step-icon"><i class="fas fa-search" aria-hidden="true"></i></div>
+              <div>
+                <div class="w3-step-title">DIAGNÓSTICO</div>
+                <div class="w3-step-desc">Medimos tu punto de partida con exactitud.</div>
+              </div>
+            </div>
+            <div class="w3-step">
+              <div class="w3-step-num">02 —</div>
+              <div class="w3-step-icon"><i class="fas fa-pencil-ruler" aria-hidden="true"></i></div>
+              <div>
+                <div class="w3-step-title">DISEÑO</div>
+                <div class="w3-step-desc">Tu plan 1:1 construido para ti, no copiado.</div>
+              </div>
+            </div>
+            <div class="w3-step">
+              <div class="w3-step-num">03 —</div>
+              <div class="w3-step-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
+              <div>
+                <div class="w3-step-title">EJECUCIÓN</div>
+                <div class="w3-step-desc">Entrenamiento + nutrición + hábitos integrados.</div>
+              </div>
+            </div>
+            <div class="w3-step">
+              <div class="w3-step-num">04 —</div>
+              <div class="w3-step-icon"><i class="fas fa-trophy" aria-hidden="true"></i></div>
+              <div>
+                <div class="w3-step-title">RESULTADOS</div>
+                <div class="w3-step-desc">Medibles. Sostenibles. Sin efecto rebote.</div>
+              </div>
+            </div>
+          </div>
+          <div class="w3-promise">
+            <i class="fas fa-check-circle" aria-hidden="true" style="color:var(--green);"></i>
+            <span class="w3-promise-text">Ajuste semanal del plan incluido en todos los planes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STORY 4: LOS PLANES -->
+    <div class="story-wrapper">
+      <div class="story-label">04 — Los 3 Planes</div>
+      <div class="story">
+        <div class="story-progress">
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill active"></div></div>
+          <div class="progress-bar"><div class="progress-fill empty"></div></div>
+        </div>
+        <div class="story-brand">
+          <div class="story-avatar">WC</div>
+          <div><div class="story-username">wellcorefitness</div><div class="story-time">Ahora</div></div>
+        </div>
+        <div class="w4" style="height:100%;">
+          <div class="w4-tag"><i class="fas fa-layer-group" aria-hidden="true"></i> Planes mensuales</div>
+          <div class="w4-headline">3 PLANES.<br>1 MÉTODO.</div>
+          <div class="w4-plans">
+            <div class="w4-plan">
+              <div class="w4-plan-icon icon-esencial"><i class="fas fa-seedling" aria-hidden="true"></i></div>
+              <div class="w4-plan-info">
+                <div class="w4-plan-name">ESENCIAL</div>
+                <div class="w4-plan-desc">Coaching base + seguimiento mensual</div>
+              </div>
+              <div class="w4-plan-price">
+                <div class="w4-plan-amount">$399k</div>
+                <div class="w4-plan-period">COP/mes</div>
+              </div>
+            </div>
+            <div class="w4-plan featured">
+              <div class="w4-popular"><i class="fas fa-star" aria-hidden="true" style="font-size:7px;margin-right:3px;"></i>MÁS ELEGIDO</div>
+              <div class="w4-plan-icon icon-metodo"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+              <div class="w4-plan-info">
+                <div class="w4-plan-name">MÉTODO</div>
+                <div class="w4-plan-desc">Seguimiento semanal + ajuste continuo</div>
+              </div>
+              <div class="w4-plan-price">
+                <div class="w4-plan-amount">$504k</div>
+                <div class="w4-plan-period">COP/mes</div>
+              </div>
+            </div>
+            <div class="w4-plan">
+              <div class="w4-plan-icon icon-elite"><i class="fas fa-crown" aria-hidden="true"></i></div>
+              <div class="w4-plan-info">
+                <div class="w4-plan-name">ÉLITE</div>
+                <div class="w4-plan-desc">1:1 premium + video feedback</div>
+              </div>
+              <div class="w4-plan-price">
+                <div class="w4-plan-amount">$630k</div>
+                <div class="w4-plan-period">COP/mes</div>
+              </div>
+            </div>
+          </div>
+          <div class="w4-note">Cancelación sin penalización &middot; Sin contratos forzados</div>
+          <div class="w4-cta">
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            Ver planes completos
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STORY 5: BETA/FUNDADOR -->
+    <div class="story-wrapper">
+      <div class="story-label">05 — Beta / Acceso Fundador</div>
+      <div class="story">
+        <div class="story-progress">
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill done"></div></div>
+          <div class="progress-bar"><div class="progress-fill active"></div></div>
+        </div>
+        <div class="story-brand">
+          <div class="story-avatar">WC</div>
+          <div><div class="story-username">wellcorefitness</div><div class="story-time">Ahora</div></div>
+        </div>
+        <div class="w5" style="height:100%;">
+          <div class="w5-glow-1"></div>
+          <div class="w5-glow-2"></div>
+          <div class="w5-content">
+            <div class="w5-badge">
+              <i class="fas fa-shield-alt" aria-hidden="true"></i>
+              Acceso Fundador · Beta 2026
+            </div>
+            <div class="w5-headline">AHORA<br>ES EL<br>MOMENTO.</div>
+            <div class="w5-sub">PRECIOS DE FUNDADOR.</div>
+            <div class="w5-perks">
+              <div class="w5-perk">
+                <i class="fas fa-tag" aria-hidden="true"></i>
+                <span class="w5-perk-text">Precio bloqueado de por vida en tu plan</span>
+              </div>
+              <div class="w5-perk">
+                <i class="fas fa-user-check" aria-hidden="true"></i>
+                <span class="w5-perk-text">Acceso prioritario al equipo de coaches</span>
+              </div>
+              <div class="w5-perk">
+                <i class="fas fa-rocket" aria-hidden="true"></i>
+                <span class="w5-perk-text">Primero en nuevas funcionalidades</span>
+              </div>
+            </div>
+            <div class="w5-cta">
+              <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              Quiero mi acceso fundador
+            </div>
+            <div class="w5-url">wellcorefitness.com <span>/ planes</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end gallery -->
+
+  <!-- BRIEF SECTION -->
+  <div class="brief-section">
+    <h2><i class="fas fa-file-alt" aria-hidden="true"></i> Brief para Agente de Diseño — WellCore Platform</h2>
+    <div class="brief-row">
+      <div class="brief-card">
+        <h3>Planes y Precios</h3>
+        <ul>
+          <li><strong>ESENCIAL</strong> — $399.000 COP/mes · fa-seedling (verde)</li>
+          <li><strong>MÉTODO</strong> — $504.000 COP/mes · fa-chart-line (rojo) · featured</li>
+          <li><strong>ÉLITE</strong> — $630.000 COP/mes · fa-crown (dorado)</li>
+          <li>El +60% de clientes elige MÉTODO</li>
+          <li>Cancelación sin penalización</li>
+        </ul>
+      </div>
+      <div class="brief-card">
+        <h3>Diferenciadores clave</h3>
+        <ul>
+          <li>Coaching 1:1 real (no bots, no plantillas)</li>
+          <li>Ajuste semanal del plan incluido</li>
+          <li>Metodología basada en evidencia científica</li>
+          <li>Sin planes genéricos copiados</li>
+          <li>Fase Beta → Acceso Fundador activo</li>
+          <li>LATAM · Español · Profesionales 25-45</li>
+        </ul>
+      </div>
+    </div>
+    <div class="brief-row">
+      <div class="brief-card">
+        <h3>El Método (4 fases)</h3>
+        <ul>
+          <li><strong>fa-search</strong> → Diagnóstico</li>
+          <li><strong>fa-pencil-ruler</strong> → Diseño del plan</li>
+          <li><strong>fa-fire</strong> → Ejecución</li>
+          <li><strong>fa-trophy</strong> → Resultados medibles</li>
+        </ul>
+      </div>
+      <div class="brief-card">
+        <h3>Tono de Comunicación</h3>
+        <ul>
+          <li>Directo. Sin rodeos. Sin fluff.</li>
+          <li>"Resultados reales, no promesas vacías"</li>
+          <li>Ciencia sin ser frío ni técnico</li>
+          <li>Anti-guru, anti-atajo</li>
+          <li>Aspiracional pero honesto</li>
+          <li>Urgencia real (Beta limitado)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
