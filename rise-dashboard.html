@@ -3,1242 +3,1231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi RISE 30 Días | WellCore Fitness</title>
+    <title>RISE Dashboard - Reto 30 Días | WellCore</title>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6.4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --bg:       #0a0a0a;
-            --surface:  #111113;
-            --surface-2:#1a1a1d;
-            --card:     #18181b;
-            --border:   rgba(255,255,255,0.06);
-            --red:      #E31E24;
-            --red-dark: #B8181D;
-            --red-dim:  rgba(227,30,36,0.10);
-            --green:    #22C55E;
-            --white:    #ffffff;
-            --gray:     rgba(255,255,255,0.45);
-            --gray-dim: rgba(255,255,255,0.18);
+            --bg:           #0a0a0a;
+            --surface:      #111113;
+            --surface-2:    #1a1a1d;
+            --card:         #18181b;
+            --border:       rgba(255,255,255,0.06);
+            --red:          #E31E24;
+            --red-dark:     #B8181D;
+            --red-dim:      rgba(227,30,36,0.10);
+            --white:        #ffffff;
+            --gray:         rgba(255,255,255,0.45);
+            --gray-dim:     rgba(255,255,255,0.18);
+            --green:        #22C55E;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--white);
             line-height: 1.6;
+            height: 100%;
         }
 
-        /* ──────── HEADER ──────── */
-        header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 0;
+        /* ──────── TOPBAR ──────── */
+        .topbar {
             position: sticky;
             top: 0;
+            height: 60px;
+            background: rgba(17,17,19,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
             z-index: 100;
         }
 
-        .header-content {
+        .topbar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
+        .topbar-search {
+            flex: 1;
+            max-width: 300px;
+            display: flex;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin: 0 30px;
+        }
+
+        .topbar-search input {
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 13px;
+            width: 100%;
+            outline: none;
+        }
+
+        .topbar-search input::placeholder { color: var(--gray); }
+        .topbar-search i { color: var(--gray); margin-right: 8px; }
+
+        .topbar-user { display: flex; align-items: center; gap: 15px; }
+
+        .topbar-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--red-dim);
+            border: 1px solid var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 18px;
-            letter-spacing: 0.05em;
-            color: var(--red);
         }
 
-        .header-nav {
+        .topbar-user-menu { position: relative; }
+
+        .topbar-user-menu-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 5px;
+            padding: 0;
         }
 
-        .header-nav a {
-            color: var(--gray);
+        .topbar-user-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 8px 0;
+            min-width: 150px;
+            display: none;
+            z-index: 200;
+            margin-top: 8px;
+        }
+
+        .topbar-user-dropdown.show { display: block; }
+
+        .topbar-user-dropdown a {
+            display: block;
+            padding: 10px 16px;
+            color: var(--white);
             text-decoration: none;
             font-size: 13px;
-            transition: color 0.3s;
+            transition: background 0.1s;
         }
 
-        .header-nav a:hover {
+        .topbar-user-dropdown a:hover {
+            background: var(--red-dim);
             color: var(--red);
         }
 
-        .user-info {
-            font-size: 13px;
-            color: var(--gray);
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
         }
 
-        /* ──────── MAIN LAYOUT ──────── */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            min-height: calc(100vh - 100px);
-        }
+        /* ──────── MAIN CONTAINER ──────── */
+        .container { display: flex; }
 
         /* ──────── SIDEBAR ──────── */
         .sidebar {
+            width: 260px;
             background: var(--surface);
             border-right: 1px solid var(--border);
-            padding: 32px 0;
-            position: sticky;
-            top: 64px;
-            height: calc(100vh - 64px);
+            padding: 20px 0;
             overflow-y: auto;
+            position: fixed;
+            left: 0;
+            top: 60px;
+            height: calc(100vh - 60px);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
         }
 
-        .sidebar-section {
-            margin-bottom: 32px;
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 98;
         }
 
-        .sidebar-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.1em;
-            color: var(--gray-dim);
-            text-transform: uppercase;
-            padding: 0 20px;
-            margin-bottom: 12px;
-        }
+        .sidebar-overlay.show { display: block; }
 
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin: 0;
-        }
-
-        .sidebar-menu a {
-            display: block;
+        /* ──────── NAVIGATION ──────── */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             padding: 12px 20px;
             color: var(--gray);
             text-decoration: none;
             font-size: 13px;
-            transition: all 0.3s;
+            transition: all 0.1s linear;
             border-left: 2px solid transparent;
             cursor: pointer;
         }
 
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            color: var(--red);
-            background: var(--red-dim);
-            border-left-color: var(--red);
-        }
-
-        /* ──────── CONTENT ──────── */
-        .content {
-            padding: 40px;
-            max-width: 1200px;
-        }
-
-        .section {
-            margin-bottom: 60px;
-        }
-
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 0.02em;
-            margin-bottom: 24px;
+        .nav-item:hover {
+            background: rgba(227,30,36,0.04);
+            border-left-color: rgba(227,30,36,0.3);
             color: var(--white);
         }
 
-        /* ──────── COUNTDOWN ──────── */
-        .countdown-container {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 4px;
-            margin-bottom: 40px;
-            text-align: center;
+        .nav-item.active {
+            background: rgba(227,30,36,0.08);
+            border-left-color: var(--red);
+            color: var(--white);
         }
 
-        .countdown-label {
-            font-family: 'JetBrains Mono', monospace;
+        .nav-item i { width: 18px; text-align: center; }
+
+        .nav-section-title {
+            padding: 16px 20px 8px;
             font-size: 11px;
-            letter-spacing: 0.1em;
-            color: var(--gray);
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .countdown-timer {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .countdown-item {
-            text-align: center;
-        }
-
-        .countdown-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 42px;
-            color: var(--red);
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .countdown-unit {
-            font-size: 11px;
-            color: var(--gray);
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            color: var(--gray-dim);
         }
 
-        .progress-bar {
+        .nav-sub-items { display: none; }
+        .nav-sub-items.show { display: block; }
+
+        .nav-sub-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px 10px 40px;
+            font-size: 12px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.1s linear;
+            cursor: pointer;
+        }
+
+        .nav-sub-item:hover { color: var(--white); padding-left: 44px; }
+        .nav-sub-item.active { color: var(--red); }
+
+        /* ──────── COUNTDOWN WIDGET ──────── */
+        .countdown-widget {
+            margin-top: auto;
+            padding: 20px;
+            background: var(--red-dim);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: var(--red);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .countdown-bar {
             width: 100%;
             height: 8px;
-            background: var(--surface-2);
+            background: var(--gray-dim);
             border-radius: 4px;
             overflow: hidden;
-            margin-top: 20px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--red), var(--red-dark));
-            width: 50%;
-            transition: width 0.3s;
-        }
-
-        /* ──────── CARDS GRID ──────── */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 32px;
-            border-radius: 4px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            border-color: var(--red);
-            background: var(--surface-2);
-        }
-
-        .card-icon {
-            font-size: 32px;
-            margin-bottom: 16px;
-        }
-
-        .card-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 0.02em;
             margin-bottom: 12px;
-            color: var(--white);
         }
 
-        .card-description {
-            font-size: 13px;
+        .countdown-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--red) 0%, var(--gray-dim) 100%);
+            transition: width 0.5s ease;
+        }
+
+        .countdown-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             color: var(--gray);
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .card-button {
-            background: var(--red-dim);
-            color: var(--red);
-            border: 1px solid var(--red);
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            font-family: 'Inter', sans-serif;
         }
 
-        .card-button:hover {
-            background: var(--red);
-            color: var(--white);
-        }
-
-        /* ──────── PROGRAM SECTIONS ──────── */
-        .program-section {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 4px;
-            margin-bottom: 24px;
-        }
-
-        .program-section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.02em;
-            margin-bottom: 20px;
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .program-section-content {
-            color: var(--gray);
-            font-size: 13px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .program-section-content h4 {
-            color: var(--white);
-            font-size: 14px;
-            margin-top: 16px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .program-section-content ul {
-            margin-left: 20px;
-            margin-top: 8px;
-        }
-
-        .program-section-content li {
-            margin-bottom: 6px;
-        }
-
-        /* ──────── DAILY TRACKING ──────── */
-        .tracking-item {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .tracking-checkbox {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            accent-color: var(--red);
-            flex-shrink: 0;
-        }
-
-        .tracking-info {
+        /* ──────── MAIN CONTENT ──────── */
+        .main-content {
+            margin-left: 260px;
+            min-height: calc(100vh - 60px);
+            padding: 30px 40px;
             flex: 1;
         }
 
-        .tracking-title {
-            font-weight: 600;
-            color: var(--white);
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
+        .section { display: none; }
+        .section.active { display: block; }
 
-        .tracking-desc {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .tracking-status {
-            font-size: 11px;
-            color: var(--gray);
-            background: var(--surface);
-            padding: 4px 8px;
-            border-radius: 3px;
-            white-space: nowrap;
-        }
-
-        /* ──────── MEASUREMENTS ──────── */
-        .measurement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
-        }
-
-        .measurement-item {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .measurement-label {
-            font-size: 11px;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
-        .measurement-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            color: var(--red);
-            margin-bottom: 8px;
-        }
-
-        .measurement-input {
-            width: 100%;
-            padding: 8px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--white);
-            border-radius: 4px;
-            font-size: 12px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* ──────── PHOTOS ──────── */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .photo-item {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            overflow: hidden;
-            aspect-ratio: 3/4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .photo-item:hover {
-            border-color: var(--red);
+        /* ──────── CARDS ──────── */
+        .card {
             background: var(--card);
-        }
-
-        .photo-placeholder {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-
-        .photo-label {
-            font-size: 12px;
-            color: var(--gray);
-            text-align: center;
-            padding: 0 16px;
-        }
-
-        /* ──────── COMMUNITY ──────── */
-        .community-post {
-            background: var(--surface-2);
             border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: border-color 0.1s linear;
+        }
+
+        .card:hover { border-color: var(--red); }
+
+        .card-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 0.02em;
             margin-bottom: 16px;
-        }
-
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .post-author {
-            font-weight: 600;
             color: var(--white);
-            font-size: 13px;
         }
 
-        .post-time {
-            font-size: 11px;
-            color: var(--gray);
-        }
-
-        .post-content {
-            color: var(--gray);
-            font-size: 13px;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .post-engagement {
-            display: flex;
-            gap: 20px;
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .post-engagement button {
-            background: none;
-            border: none;
-            color: var(--gray);
-            cursor: pointer;
-            transition: color 0.3s;
-            font-family: 'Inter', sans-serif;
-            font-size: 12px;
-        }
-
-        .post-engagement button:hover {
-            color: var(--red);
-        }
+        /* ──────── GRID LAYOUTS ──────── */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
 
         /* ──────── BUTTONS ──────── */
         button {
-            background: var(--red);
-            color: var(--white);
+            padding: 12px 20px;
             border: none;
-            padding: 12px 24px;
-            border-radius: 4px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.1s linear;
             font-family: 'Inter', sans-serif;
         }
 
-        button:hover {
-            background: var(--red-dark);
-        }
+        .btn-primary { background: var(--red); color: var(--white); }
+        .btn-primary:hover { background: var(--red-dark); }
+        .btn-secondary { background: transparent; color: var(--red); border: 1px solid var(--red); }
+        .btn-secondary:hover { background: var(--red-dim); }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* ──────── FOOTER ──────── */
-        footer {
+        /* ──────── FORM ELEMENTS ──────── */
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
             background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 32px 20px;
-            text-align: center;
-            color: var(--gray);
-            font-size: 12px;
-            grid-column: 1 / -1;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--white);
+            padding: 10px 12px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            outline: none;
         }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus { border-color: var(--red); }
+
+        label {
+            font-size: 12px;
+            color: var(--gray);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .form-group { margin-bottom: 16px; }
 
         /* ──────── RESPONSIVE ──────── */
         @media (max-width: 1024px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                position: static;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-                padding: 20px;
-                display: flex;
-                gap: 20px;
-                overflow-x: auto;
-            }
-
-            .sidebar-section {
-                margin-bottom: 0;
-                flex-shrink: 0;
-            }
-
-            .sidebar-menu {
-                display: flex;
-                gap: 8px;
-            }
-
-            .sidebar-menu a {
-                padding: 8px 16px;
-                white-space: nowrap;
-            }
-
-            .content {
-                padding: 24px;
-            }
+            .sidebar { width: 200px; }
+            .main-content { margin-left: 200px; }
+            .topbar-search { max-width: 200px; margin: 0 20px; }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-out;
+                width: 70vw;
             }
 
-            .countdown-timer {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 20px; }
+            .hamburger-menu { display: block; }
+            .topbar-search { display: none; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
 
-            .measurement-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .photo-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .section-title {
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-content {
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
-            }
-
-            .content {
-                padding: 16px;
-            }
-
-            .countdown-timer {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
-
-            .countdown-value {
-                font-size: 28px;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .measurement-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .photo-grid {
-                grid-template-columns: 1fr;
-            }
+            button:not(.topbar-user-menu-toggle):not(.hamburger-menu) { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <div class="logo">WELLCORE RISE</div>
-            <nav class="header-nav">
-                <span class="user-info">Cliente: <span id="clientName">-</span></span>
-                <a href="#" onclick="logout(); return false;">Salir</a>
-            </nav>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-content">
+            <button class="hamburger-menu" id="hamburgerBtn" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar..." id="searchInput" autocomplete="off">
+            </div>
+            <div class="topbar-user">
+                <div class="topbar-user-avatar" id="userAvatar" aria-label="Avatar de usuario">U</div>
+                <div class="topbar-user-menu">
+                    <button class="topbar-user-menu-toggle" id="userMenuBtn" aria-haspopup="true">
+                        <span id="userName">Usuario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="topbar-user-dropdown" id="userDropdown" role="menu">
+                        <a href="#" onclick="logout(); return false;">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
 
-    <!-- Main Layout -->
-    <div class="main-layout">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-section">
-                <div class="sidebar-label">Mi RISE</div>
-                <ul class="sidebar-menu">
-                    <li><a href="#overview" class="nav-link active" onclick="showSection('overview'); return false;">📊 Resumen</a></li>
-                    <li><a href="#programa" class="nav-link" onclick="showSection('programa'); return false;">🏋️ Mi Programa</a></li>
-                    <li><a href="#tracking" class="nav-link" onclick="showSection('tracking'); return false;">✅ Seguimiento</a></li>
-                    <li><a href="#medidas" class="nav-link" onclick="showSection('medidas'); return false;">📏 Medidas</a></li>
-                    <li><a href="#fotos" class="nav-link" onclick="showSection('fotos'); return false;">📸 Fotos</a></li>
-                </ul>
+    <!-- Main Container -->
+    <div class="container">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="nav-section-title">General</div>
+            <a href="#" class="nav-item active" data-section="dashboard" onclick="showSection('dashboard', this); return false;">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <div class="nav-section-title" style="margin-top: 20px;">Mi Programa RISE</div>
+            <a href="#" class="nav-item" id="programaToggle" onclick="toggleSubMenu('programaItems', this); return false;">
+                <i class="fas fa-book"></i>
+                <span>Mi Programa</span>
+                <i class="fas fa-chevron-down" style="margin-left: auto; transition: transform 0.2s;" id="programaChevron"></i>
+            </a>
+            <div class="nav-sub-items" id="programaItems">
+                <a href="#" class="nav-sub-item" data-section="training" onclick="showSection('training', this); return false;">
+                    <i class="fas fa-dumbbell"></i> Entrenamiento
+                </a>
+                <a href="#" class="nav-sub-item" data-section="nutrition" onclick="showSection('nutrition', this); return false;">
+                    <i class="fas fa-utensils"></i> Nutrición
+                </a>
+                <a href="#" class="nav-sub-item" data-section="habits" onclick="showSection('habits', this); return false;">
+                    <i class="fas fa-tasks"></i> Hábitos
+                </a>
             </div>
 
-            <div class="sidebar-section">
-                <div class="sidebar-label">Comunidad</div>
-                <ul class="sidebar-menu">
-                    <li><a href="#comunidad" class="nav-link" onclick="showSection('comunidad'); return false;">👥 Comunidad</a></li>
-                    <li><a href="#soporte" class="nav-link" onclick="showSection('soporte'); return false;">💬 Soporte</a></li>
-                </ul>
+            <div class="nav-section-title" style="margin-top: 20px;">Seguimiento</div>
+            <a href="#" class="nav-item" data-section="tracking" onclick="showSection('tracking', this); return false;">
+                <i class="fas fa-check-circle"></i>
+                <span>Tracking Diario</span>
+            </a>
+            <a href="#" class="nav-item" data-section="measurements" onclick="showSection('measurements', this); return false;">
+                <i class="fas fa-ruler-vertical"></i>
+                <span>Mediciones</span>
+            </a>
+            <a href="#" class="nav-item" data-section="photos" onclick="showSection('photos', this); return false;">
+                <i class="fas fa-image"></i>
+                <span>Fotos Progreso</span>
+            </a>
+
+            <div class="nav-section-title" style="margin-top: 20px;">Comunidad</div>
+            <a href="#" class="nav-item" data-section="community" onclick="showSection('community', this); return false;">
+                <i class="fas fa-users"></i>
+                <span>Comunidad</span>
+            </a>
+
+            <div class="nav-section-title" style="margin-top: 20px;">Soporte</div>
+            <a href="#" class="nav-item" data-section="support" onclick="showSection('support', this); return false;">
+                <i class="fas fa-headset"></i>
+                <span>Soporte</span>
+            </a>
+
+            <!-- Countdown Widget -->
+            <div class="countdown-widget">
+                <div class="countdown-number" id="countdownDays">--</div>
+                <div class="countdown-bar">
+                    <div class="countdown-fill" id="countdownFill" style="width: 0%;"></div>
+                </div>
+                <div class="countdown-text" id="countdownText">Finaliza el 31 de Marzo</div>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <div class="content">
-            <!-- OVERVIEW SECTION -->
-            <section id="overview" class="section-view">
-                <h1 class="section-title">🚀 Bienvenido a tu Reto RISE</h1>
+        <main class="main-content">
 
-                <!-- Countdown -->
-                <div class="countdown-container">
-                    <div class="countdown-label">Tiempo Restante en tu Reto</div>
-                    <div class="countdown-timer">
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="days">30</div>
-                            <div class="countdown-unit">Días</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="hours">0</div>
-                            <div class="countdown-unit">Horas</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="minutes">0</div>
-                            <div class="countdown-unit">Minutos</div>
-                        </div>
+            <!-- ═══════════════════ DASHBOARD ═══════════════════ -->
+            <section class="section active" id="dashboard">
+                <!-- Hero Countdown -->
+                <div class="card" style="background: linear-gradient(135deg, var(--red-dim) 0%, var(--surface) 100%); border: 1px solid rgba(227,30,36,0.3); padding: 40px; text-align: center; margin-bottom: 30px;">
+                    <div style="font-family: 'Bebas Neue'; font-size: 60px; color: var(--red); margin-bottom: 20px; line-height: 1;">
+                        <span id="dashCountdownDays">--</span> de 30
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
+                    <div style="height: 10px; background: var(--gray-dim); border-radius: 5px; margin-bottom: 20px; overflow: hidden;">
+                        <div id="dashCountdownBar" style="height: 100%; background: linear-gradient(90deg, var(--red) 0%, var(--gray-dim) 100%); width: 0%; transition: width 0.5s ease;"></div>
                     </div>
+                    <div style="color: var(--gray); font-size: 14px; font-family: 'JetBrains Mono'; text-transform: uppercase; letter-spacing: 0.05em;" id="dashCountdownLabel">Días completados — Finaliza el 31 de Marzo de 2026</div>
                 </div>
 
-                <!-- Quick Access Cards -->
-                <div class="cards-grid">
-                    <div class="card" onclick="showSection('programa')">
-                        <div class="card-icon">🏋️</div>
-                        <div class="card-title">Mi Programa</div>
-                        <div class="card-description">Entrenamientos personalizados, nutrición y hábitos.</div>
-                        <button class="card-button">Ver →</button>
-                    </div>
-
-                    <div class="card" onclick="showSection('tracking')">
-                        <div class="card-icon">✅</div>
-                        <div class="card-title">Hoy</div>
-                        <div class="card-description">Marca tu entrenamiento y hábitos completados.</div>
-                        <button class="card-button">Registrar →</button>
-                    </div>
-
-                    <div class="card" onclick="showSection('fotos')">
-                        <div class="card-icon">📸</div>
-                        <div class="card-title">Tu Transformación</div>
-                        <div class="card-description">Documenta tu progreso con fotos antes/después.</div>
-                        <button class="card-button">Subir →</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PROGRAMA SECTION -->
-            <section id="programa" class="section-view" style="display: none;">
-                <h1 class="section-title">Mi Programa RISE</h1>
-
-                <!-- Training -->
-                <div class="program-section">
-                    <div class="program-section-title">
-                        🏋️ Entrenamientos Personalizados
-                    </div>
-                    <div class="program-section-content">
-                        <p>Tu programa de entrenamiento ha sido diseñado específicamente basado en tu historial, disponibilidad, equipamiento y objetivos.</p>
-
-                        <h4>Tu Plan:</h4>
-                        <ul>
-                            <li>Frecuencia: <strong id="trainFrequency">5 días por semana</strong></li>
-                            <li>Duración: <strong id="trainDuration">60 minutos por sesión</strong></li>
-                            <li>Ubicación: <strong id="trainLocation">Gym</strong></li>
-                            <li>Nivel: <strong id="trainLevel">Intermedio</strong></li>
-                        </ul>
-
-                        <h4>Estructura del Programa:</h4>
-                        <p id="programStructure">Tu entrenamiento personalizado está disponible. <button class="card-button" style="margin-top: 12px;">Descargar PDF →</button></p>
-                    </div>
+                <!-- Quick Actions -->
+                <div class="grid-3" style="margin-bottom: 30px;">
+                    <button class="btn-primary" onclick="showSection('measurements', null)">
+                        <i class="fas fa-ruler-vertical"></i> Medición
+                    </button>
+                    <button class="btn-primary" onclick="showSection('photos', null)">
+                        <i class="fas fa-camera"></i> Foto
+                    </button>
+                    <button class="btn-primary" onclick="showSection('habits', null)">
+                        <i class="fas fa-tasks"></i> Hábitos
+                    </button>
                 </div>
 
-                <!-- Nutrition -->
-                <div class="program-section">
-                    <div class="program-section-title">
-                        🍎 Guía de Nutrición
+                <!-- Summary Grid -->
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-book"></i> Mi Programa</div>
+                        <p style="color: var(--gray); font-size: 13px; margin-bottom: 12px;">Semana 2 de 4 — Entrenamiento personalizado</p>
+                        <button class="btn-secondary" style="width: 100%;" onclick="showSection('training', null)">Ver Detalles</button>
                     </div>
-                    <div class="program-section-content">
-                        <p>Esta es una guía general de nutrición saludable para acompañar tu entrenamiento. Aprenderás principios fundamentales de una alimentación que potencia tus resultados.</p>
-
-                        <h4>Pilares Fundamentales:</h4>
-                        <ul>
-                            <li><strong>Proteína:</strong> Base para la recuperación muscular. Objetivo: 1.6-2.2g por kg de peso corporal.</li>
-                            <li><strong>Carbohidratos:</strong> Energía para entrenamientos intensos. Distribuidos según actividad.</li>
-                            <li><strong>Grasas Saludables:</strong> Esenciales para hormonas y salud. Incluye omega-3 y omega-6.</li>
-                            <li><strong>Hidratación:</strong> Mínimo 3-4 litros diarios, más en entrenamiento.</li>
-                        </ul>
-
-                        <h4>Alimentos Recomendados:</h4>
-                        <ul>
-                            <li>Proteínas: pollo, pescado, huevo, tofu, legumbres</li>
-                            <li>Carbohidratos: arroz, avena, papa, pan integral, frutas</li>
-                            <li>Grasas: aguacate, frutos secos, aceite de oliva</li>
-                            <li>Vegetales: brócoli, espinaca, zanahoria, aguacate</li>
-                        </ul>
-
-                        <h4>Plan de Comidas:</h4>
-                        <p>Realiza 4-5 comidas al día. Combina proteína, carbohidrato complejo y verdura en cada comida. <button class="card-button" style="margin-top: 12px;">Ver Recetas →</button></p>
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-ruler-vertical"></i> Mediciones</div>
+                        <p style="color: var(--gray); font-size: 13px; margin-bottom: 12px;" id="lastMeasurementText">Sin mediciones registradas</p>
+                        <button class="btn-secondary" style="width: 100%;" onclick="showSection('measurements', null)">Registrar</button>
                     </div>
-                </div>
-
-                <!-- Habits -->
-                <div class="program-section">
-                    <div class="program-section-title">
-                        ⭐ 30 Hábitos para tu Transformación
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-image"></i> Fotos Progreso</div>
+                        <p style="color: var(--gray); font-size: 13px; margin-bottom: 12px;" id="photoCountText">Sin fotos subidas</p>
+                        <button class="btn-secondary" style="width: 100%;" onclick="showSection('photos', null)">Galería</button>
                     </div>
-                    <div class="program-section-content">
-                        <p>Los hábitos son el corazón de tu transformación. Durante estos 30 días, construiremos hábitos sólidos que garanticen tus resultados y hagan visible tu cambio en las comparativas finales.</p>
-
-                        <h4>Hábitos Clave (Días 1-10):</h4>
-                        <ul>
-                            <li>Entrena 5 días a la semana sin faltar</li>
-                            <li>Desayuna proteína en cada comida principal</li>
-                            <li>Bebe 3 litros de agua diarios</li>
-                            <li>Duerme 7-8 horas cada noche</li>
-                            <li>Toma una foto de tu comida antes de comer (conciencia)</li>
-                        </ul>
-
-                        <h4>Hábitos Avanzados (Días 11-20):</h4>
-                        <ul>
-                            <li>Registra tu peso 3 veces por semana</li>
-                            <li>Planifica tus comidas del día anterior</li>
-                            <li>Añade 10 minutos de estiramiento post-entrenamiento</li>
-                            <li>Realiza caminata 15 minutos en descansos</li>
-                            <li>Documenta energía y bienestar diario</li>
-                        </ul>
-
-                        <h4>Hábitos de Mantenimiento (Días 21-30):</h4>
-                        <ul>
-                            <li>Lleva registro fotográfico semanal (antes/después)</li>
-                            <li>Mide tus progresos: peso, medidas, fuerza</li>
-                            <li>Reflexiona sobre cambios en tu cuerpo y mentalidad</li>
-                            <li>Celebra pequeños hitos cada semana</li>
-                            <li>Prepara tu comparativa final</li>
-                        </ul>
-
-                        <h4>Acciones Diarias:</h4>
-                        <p>Completa tu checklist diario en la sección de Seguimiento para mantener la consistencia.</p>
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-tasks"></i> Hábitos Hoy</div>
+                        <p style="color: var(--gray); font-size: 13px; margin-bottom: 12px;" id="habitsToday">Registra tus hábitos del día</p>
+                        <button class="btn-secondary" style="width: 100%;" onclick="showSection('habits', null)">Registrar</button>
                     </div>
                 </div>
             </section>
 
-            <!-- TRACKING SECTION -->
-            <section id="tracking" class="section-view" style="display: none;">
-                <h1 class="section-title">✅ Seguimiento Diario</h1>
+            <!-- ═══════════════════ TRAINING ═══════════════════ -->
+            <section class="section" id="training">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-dumbbell"></i> Entrenamiento
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Tu programa personalizado de entrenamiento para los 30 días</p>
 
-                <div style="margin-bottom: 40px;">
-                    <p style="color: var(--gray); margin-bottom: 24px; font-size: 14px;">Marca tus actividades completadas hoy. Mantener la consistencia es la clave de tu transformación.</p>
-
-                    <div class="tracking-item">
-                        <input type="checkbox" class="tracking-checkbox" id="habit1">
-                        <div class="tracking-info">
-                            <div class="tracking-title">Entrenamiento</div>
-                            <div class="tracking-desc">Completa tu sesión de entrenamiento del día</div>
+                <div class="card">
+                    <div class="card-title">Semana 2 de 4</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                        <div style="text-align: center; padding: 15px; background: var(--surface);">
+                            <div style="color: var(--red); font-weight: 600; margin-bottom: 8px;">Día 8</div>
+                            <div style="color: var(--gray); font-size: 12px;">Pecho &amp; Tríceps</div>
                         </div>
-                        <div class="tracking-status">Hoy</div>
-                    </div>
-
-                    <div class="tracking-item">
-                        <input type="checkbox" class="tracking-checkbox" id="habit2">
-                        <div class="tracking-info">
-                            <div class="tracking-title">Nutrición - Desayuno</div>
-                            <div class="tracking-desc">Desayuno completo con proteína</div>
+                        <div style="text-align: center; padding: 15px; background: var(--surface);">
+                            <div style="color: var(--red); font-weight: 600; margin-bottom: 8px;">Día 9</div>
+                            <div style="color: var(--gray); font-size: 12px;">Descanso</div>
                         </div>
-                        <div class="tracking-status">Hoy</div>
-                    </div>
-
-                    <div class="tracking-item">
-                        <input type="checkbox" class="tracking-checkbox" id="habit3">
-                        <div class="tracking-info">
-                            <div class="tracking-title">Nutrición - Almuerzo</div>
-                            <div class="tracking-desc">Almuerzo balanceado</div>
+                        <div style="text-align: center; padding: 15px; background: var(--surface);">
+                            <div style="color: var(--red); font-weight: 600; margin-bottom: 8px;">Día 10</div>
+                            <div style="color: var(--gray); font-size: 12px;">Espalda &amp; Bíceps</div>
                         </div>
-                        <div class="tracking-status">Hoy</div>
                     </div>
+                </div>
 
-                    <div class="tracking-item">
-                        <input type="checkbox" class="tracking-checkbox" id="habit4">
-                        <div class="tracking-info">
-                            <div class="tracking-title">Agua - 3 Litros</div>
-                            <div class="tracking-desc">Consume mínimo 3 litros de agua</div>
-                        </div>
-                        <div class="tracking-status">Hoy</div>
-                    </div>
-
-                    <div class="tracking-item">
-                        <input type="checkbox" class="tracking-checkbox" id="habit5">
-                        <div class="tracking-info">
-                            <div class="tracking-title">Sueño 7-8 Horas</div>
-                            <div class="tracking-desc">Duerme entre 7-8 horas</div>
-                        </div>
-                        <div class="tracking-status">Hoy</div>
-                    </div>
-
-                    <div class="tracking-item">
-                        <input type="checkbox" class="tracking-checkbox" id="habit6">
-                        <div class="tracking-info">
-                            <div class="tracking-title">Foto Diaria</div>
-                            <div class="tracking-desc">Toma foto de tu comida o tu día</div>
-                        </div>
-                        <div class="tracking-status">Hoy</div>
-                    </div>
-
-                    <button style="margin-top: 24px; width: 100%;" onclick="saveDailyTracking()">💾 Guardar Registro del Día</button>
+                <div class="card">
+                    <div class="card-title">Descarga tu Programa</div>
+                    <button class="btn-primary" style="width: 100%; margin-bottom: 10px;">
+                        <i class="fas fa-download"></i> Descargar PDF Completo
+                    </button>
+                    <button class="btn-secondary" style="width: 100%;">
+                        <i class="fas fa-play-circle"></i> Ver Videos de Ejercicios
+                    </button>
                 </div>
             </section>
 
-            <!-- MEDIDAS SECTION -->
-            <section id="medidas" class="section-view" style="display: none;">
-                <h1 class="section-title">📏 Medidas y Progreso</h1>
+            <!-- ═══════════════════ NUTRITION ═══════════════════ -->
+            <section class="section" id="nutrition">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-utensils"></i> Nutrición
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Guía de nutrición para optimizar tus resultados</p>
 
-                <p style="color: var(--gray); margin-bottom: 32px; font-size: 14px;">Registra tus medidas cada 10 días para monitorear tu progreso. Esto será clave para tu comparativa final.</p>
-
-                <div style="background: var(--card); border: 1px solid var(--border); padding: 32px; border-radius: 4px; margin-bottom: 32px;">
-                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 16px; margin-bottom: 24px; color: var(--white);">Registrar Medidas de Hoy</h3>
-
-                    <div class="measurement-grid">
-                        <div class="measurement-item">
-                            <div class="measurement-label">Peso (kg)</div>
-                            <input type="number" class="measurement-input" id="weight" placeholder="80.5" step="0.1">
+                <div class="card">
+                    <div class="card-title">Tus Macronutrientes Diarios</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
+                        <div style="text-align: center; padding: 20px; background: var(--surface); border-left: 3px solid var(--red);">
+                            <div style="color: var(--red); font-family: 'Bebas Neue'; font-size: 24px; margin-bottom: 5px;">180g</div>
+                            <div style="color: var(--gray); font-size: 12px;">Proteína</div>
                         </div>
-
-                        <div class="measurement-item">
-                            <div class="measurement-label">Pecho (cm)</div>
-                            <input type="number" class="measurement-input" id="chest" placeholder="100" step="0.1">
+                        <div style="text-align: center; padding: 20px; background: var(--surface); border-left: 3px solid var(--red);">
+                            <div style="color: var(--red); font-family: 'Bebas Neue'; font-size: 24px; margin-bottom: 5px;">150g</div>
+                            <div style="color: var(--gray); font-size: 12px;">Carbohidratos</div>
                         </div>
-
-                        <div class="measurement-item">
-                            <div class="measurement-label">Cintura (cm)</div>
-                            <input type="number" class="measurement-input" id="waist" placeholder="85" step="0.1">
-                        </div>
-
-                        <div class="measurement-item">
-                            <div class="measurement-label">Cadera (cm)</div>
-                            <input type="number" class="measurement-input" id="hips" placeholder="95" step="0.1">
-                        </div>
-
-                        <div class="measurement-item">
-                            <div class="measurement-label">Muslo (cm)</div>
-                            <input type="number" class="measurement-input" id="thigh" placeholder="55" step="0.1">
-                        </div>
-
-                        <div class="measurement-item">
-                            <div class="measurement-label">Brazo (cm)</div>
-                            <input type="number" class="measurement-input" id="arm" placeholder="35" step="0.1">
+                        <div style="text-align: center; padding: 20px; background: var(--surface); border-left: 3px solid var(--red);">
+                            <div style="color: var(--red); font-family: 'Bebas Neue'; font-size: 24px; margin-bottom: 5px;">60g</div>
+                            <div style="color: var(--gray); font-size: 12px;">Grasas</div>
                         </div>
                     </div>
-
-                    <button style="margin-top: 24px; width: 100%;" onclick="saveMeasurements()">📊 Guardar Medidas</button>
                 </div>
 
-                <!-- Progress History -->
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 16px; margin-bottom: 16px; color: var(--white);">Historial de Medidas</h3>
+                <div class="card">
+                    <div class="card-title">Hidratación Diaria</div>
+                    <p style="color: var(--gray); font-size: 13px; margin-bottom: 15px;">Meta: 3L de agua por día</p>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-primary" style="flex: 1; width: auto;" onclick="addWater(250)">250ml</button>
+                        <button class="btn-primary" style="flex: 1; width: auto;" onclick="addWater(500)">500ml</button>
+                        <button class="btn-primary" style="flex: 1; width: auto;" onclick="addWater(1000)">1L</button>
+                    </div>
+                    <p style="color: var(--gray); font-size: 12px; margin-top: 10px; font-family: 'JetBrains Mono';" id="waterTotal">Total hoy: 0 ml</p>
+                </div>
 
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 16px; border-radius: 4px; text-align: center; color: var(--gray); font-size: 13px;">
-                    Registra tus primeras medidas para comenzar el seguimiento.
+                <div class="card">
+                    <div class="card-title">Recetas Sugeridas</div>
+                    <button class="btn-secondary" style="width: 100%;">
+                        <i class="fas fa-book"></i> Ver Recetas Recomendadas
+                    </button>
                 </div>
             </section>
 
-            <!-- FOTOS SECTION -->
-            <section id="fotos" class="section-view" style="display: none;">
-                <h1 class="section-title">📸 Galería de Progreso</h1>
+            <!-- ═══════════════════ HABITS ═══════════════════ -->
+            <section class="section" id="habits">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-tasks"></i> Hábitos 30 Días
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Seguimiento de hábitos para garantizar tus resultados</p>
 
-                <p style="color: var(--gray); margin-bottom: 32px; font-size: 14px;">Documenta tu transformación visual. Estas imágenes serán cruciales para tu comparativa final de 30 días.</p>
-
-                <div style="margin-bottom: 40px;">
-                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 16px; margin-bottom: 16px; color: var(--white);">Subir Fotos de Progreso</h3>
-
-                    <div class="photo-grid">
-                        <div class="photo-item" onclick="document.getElementById('photoInput').click()">
-                            <div class="photo-placeholder">📸</div>
-                            <div class="photo-label">Frente</div>
-                        </div>
-
-                        <div class="photo-item" onclick="document.getElementById('photoInput').click()">
-                            <div class="photo-placeholder">📸</div>
-                            <div class="photo-label">Perfil</div>
-                        </div>
-
-                        <div class="photo-item" onclick="document.getElementById('photoInput').click()">
-                            <div class="photo-placeholder">📸</div>
-                            <div class="photo-label">Espalda</div>
-                        </div>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div class="card-title" style="margin: 0;">Progreso General</div>
+                        <span style="color: var(--red); font-family: 'Bebas Neue'; font-size: 20px;" id="habitsProgress">0%</span>
                     </div>
-
-                    <input type="file" id="photoInput" accept="image/*" style="display: none;">
-
-                    <button style="margin-top: 24px; width: 100%;" onclick="uploadPhoto()">📤 Subir Foto</button>
-                </div>
-
-                <!-- Photos Gallery -->
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 16px; margin-bottom: 16px; color: var(--white);">Tus Fotos</h3>
-
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 16px; border-radius: 4px; text-align: center; color: var(--gray); font-size: 13px;">
-                    Todavía no hay fotos. Sube tu primera foto hoy.
-                </div>
-            </section>
-
-            <!-- COMUNIDAD SECTION -->
-            <section id="comunidad" class="section-view" style="display: none;">
-                <h1 class="section-title">👥 Comunidad RISE</h1>
-
-                <p style="color: var(--gray); margin-bottom: 32px; font-size: 14px;">Conecta con otros retadores RISE. Comparte tu progreso, inspírate con otros y mantente motivado.</p>
-
-                <!-- New Post -->
-                <div style="background: var(--card); border: 1px solid var(--border); padding: 24px; border-radius: 4px; margin-bottom: 32px;">
-                    <textarea id="newPost" placeholder="Comparte tu progreso, una motivación o una pregunta..."
-                              style="width: 100%; min-height: 100px; padding: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--white); border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 13px; margin-bottom: 16px;"></textarea>
-                    <button onclick="publishPost()" style="width: 100%;">Publicar</button>
-                </div>
-
-                <!-- Community Feed -->
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 16px; margin-bottom: 16px; color: var(--white);">Feed de Comunidad</h3>
-
-                <div class="community-post">
-                    <div class="post-header">
-                        <div class="post-author">Carlos M. 💪</div>
-                        <div class="post-time">Hace 2 horas</div>
-                    </div>
-                    <div class="post-content">
-                        ¡Día 7 y ya noto cambios! El entrenamiento personalizado es increíble. Hoy hice mi mejor marcado en press de banca. ¡Vamos con todo!
-                    </div>
-                    <div class="post-engagement">
-                        <button>❤️ Me gusta (8)</button>
-                        <button>💬 Comentar (3)</button>
+                    <div style="height: 12px; background: var(--gray-dim); border-radius: 6px; overflow: hidden;">
+                        <div id="habitsProgressBar" style="height: 100%; background: linear-gradient(90deg, var(--red) 0%, var(--green) 100%); width: 0%; transition: width 0.3s;"></div>
                     </div>
                 </div>
 
-                <div class="community-post">
-                    <div class="post-header">
-                        <div class="post-author">Andrea R. 🔥</div>
-                        <div class="post-time">Hace 5 horas</div>
+                <div class="card">
+                    <div class="card-title">Hábitos para Hoy</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="breakfast">
+                            <span>Desayunar en los primeros 30 min de despertar</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="training">
+                            <span>Entrenar según programa (45-60 min)</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="water">
+                            <span>Beber 3L de agua mínimo</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="sleep">
+                            <span>Dormir 7-8 horas</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="photo">
+                            <span>Tomar foto de progreso (2-3 veces por semana)</span>
+                        </label>
                     </div>
-                    <div class="post-content">
-                        La guía de nutrición me ayudó a entender por qué comía mal antes. Ahora preparo mis comidas y me siento con más energía. ¡Recomendado!
-                    </div>
-                    <div class="post-engagement">
-                        <button>❤️ Me gusta (12)</button>
-                        <button>💬 Comentar (5)</button>
-                    </div>
-                </div>
-
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 24px; border-radius: 4px; text-align: center; color: var(--gray); font-size: 13px;">
-                    Sé el primero en compartir tu progreso. ¡La comunidad te espera!
                 </div>
             </section>
 
-            <!-- SOPORTE SECTION -->
-            <section id="soporte" class="section-view" style="display: none;">
-                <h1 class="section-title">💬 Soporte y Coach</h1>
+            <!-- ═══════════════════ TRACKING ═══════════════════ -->
+            <section class="section" id="tracking">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-check-circle"></i> Tracking Diario
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Registra tu progreso día a día durante el reto</p>
 
-                <p style="color: var(--gray); margin-bottom: 32px; font-size: 14px;">¿Preguntas sobre tu programa? Contacta a tu coach o accede a nuestra base de conocimiento.</p>
+                <div class="card">
+                    <div class="card-title">Registro de Hoy — <span id="todayDate"></span></div>
 
-                <!-- Contact Coach -->
-                <div style="background: var(--card); border: 1px solid var(--border); padding: 32px; border-radius: 4px; margin-bottom: 32px;">
-                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 16px; margin-bottom: 16px; color: var(--white);">Contactar a tu Coach</h3>
+                    <div class="form-group">
+                        <label>Entrenamiento completado</label>
+                        <div style="display: flex; gap: 10px;" id="trainingBtns">
+                            <button class="btn-primary" style="flex: 1; width: auto;" onclick="logTracking('training', true, 'trainingBtns')">
+                                <i class="fas fa-check"></i> Sí
+                            </button>
+                            <button class="btn-secondary" style="flex: 1; width: auto;" onclick="logTracking('training', false, 'trainingBtns')">
+                                <i class="fas fa-times"></i> No
+                            </button>
+                        </div>
+                    </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                        <div>
-                            <div style="font-weight: 600; color: var(--white); margin-bottom: 8px;">Coach Asignado</div>
-                            <div style="color: var(--gray); font-size: 13px; margin-bottom: 16px;">
-                                <strong id="coachName">Coach Dann</strong><br>
-                                Especialista en transformación
+                    <div class="form-group">
+                        <label>Nutrición seguida</label>
+                        <div style="display: flex; gap: 10px;" id="nutritionBtns">
+                            <button class="btn-primary" style="flex: 1; width: auto;" onclick="logTracking('nutrition', true, 'nutritionBtns')">
+                                <i class="fas fa-check"></i> Sí
+                            </button>
+                            <button class="btn-secondary" style="flex: 1; width: auto;" onclick="logTracking('nutrition', false, 'nutritionBtns')">
+                                <i class="fas fa-times"></i> No
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Agua consumida (litros)</label>
+                        <input type="number" id="waterInput" min="0" max="5" step="0.25" placeholder="Ej: 2.5">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Horas de sueño</label>
+                        <input type="number" id="sleepInput" min="0" max="12" step="0.5" placeholder="Ej: 7.5">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nota del día (opcional)</label>
+                        <textarea id="noteInput" rows="3" placeholder="¿Cómo te sentiste hoy?" maxlength="500"></textarea>
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%;" onclick="saveTracking()">
+                        <i class="fas fa-save"></i> Guardar Registro
+                    </button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════ MEASUREMENTS ═══════════════════ -->
+            <section class="section" id="measurements">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-ruler-vertical"></i> Mediciones
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Registra tus medidas cada 10 días para comparar tu progreso</p>
+
+                <div class="card">
+                    <div class="card-title">Nueva Medición</div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Peso (kg)</label>
+                            <input type="number" id="mWeight" step="0.1" placeholder="Ej: 75.5" min="0" max="300">
+                        </div>
+                        <div class="form-group">
+                            <label>Pecho (cm)</label>
+                            <input type="number" id="mChest" step="0.5" placeholder="Ej: 95" min="0" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label>Cintura (cm)</label>
+                            <input type="number" id="mWaist" step="0.5" placeholder="Ej: 80" min="0" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label>Cadera (cm)</label>
+                            <input type="number" id="mHips" step="0.5" placeholder="Ej: 95" min="0" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label>Muslo (cm)</label>
+                            <input type="number" id="mThigh" step="0.5" placeholder="Ej: 55" min="0" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label>Brazo (cm)</label>
+                            <input type="number" id="mArm" step="0.5" placeholder="Ej: 35" min="0" max="200">
+                        </div>
+                    </div>
+                    <button class="btn-primary" style="width: 100%;" onclick="saveMeasurement()">
+                        <i class="fas fa-save"></i> Guardar Medición
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Historial de Mediciones</div>
+                    <div id="measurementHistory">
+                        <p style="color: var(--gray); font-size: 13px;">Sin mediciones registradas aún.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════ PHOTOS ═══════════════════ -->
+            <section class="section" id="photos">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-image"></i> Fotos de Progreso
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Documenta tu transformación con fotos de frente, perfil y espalda</p>
+
+                <div class="card">
+                    <div class="card-title">Subir Fotos</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
+                        <div style="text-align: center; padding: 30px; background: var(--surface); border: 1px dashed var(--border); cursor: pointer;" onclick="document.getElementById('photoFront').click()">
+                            <i class="fas fa-camera" style="color: var(--gray); font-size: 24px; display: block; margin-bottom: 8px;"></i>
+                            <span style="color: var(--gray); font-size: 12px;">Frente</span>
+                            <input type="file" id="photoFront" accept="image/*" style="display:none" onchange="previewPhoto(this, 'previewFront')">
+                            <img id="previewFront" style="display:none; width:100%; margin-top:10px;" alt="Vista previa frente">
+                        </div>
+                        <div style="text-align: center; padding: 30px; background: var(--surface); border: 1px dashed var(--border); cursor: pointer;" onclick="document.getElementById('photoSide').click()">
+                            <i class="fas fa-camera" style="color: var(--gray); font-size: 24px; display: block; margin-bottom: 8px;"></i>
+                            <span style="color: var(--gray); font-size: 12px;">Perfil</span>
+                            <input type="file" id="photoSide" accept="image/*" style="display:none" onchange="previewPhoto(this, 'previewSide')">
+                            <img id="previewSide" style="display:none; width:100%; margin-top:10px;" alt="Vista previa perfil">
+                        </div>
+                        <div style="text-align: center; padding: 30px; background: var(--surface); border: 1px dashed var(--border); cursor: pointer;" onclick="document.getElementById('photoBack').click()">
+                            <i class="fas fa-camera" style="color: var(--gray); font-size: 24px; display: block; margin-bottom: 8px;"></i>
+                            <span style="color: var(--gray); font-size: 12px;">Espalda</span>
+                            <input type="file" id="photoBack" accept="image/*" style="display:none" onchange="previewPhoto(this, 'previewBack')">
+                            <img id="previewBack" style="display:none; width:100%; margin-top:10px;" alt="Vista previa espalda">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de las fotos</label>
+                        <input type="date" id="photoDate">
+                    </div>
+                    <button class="btn-primary" style="width: 100%;" onclick="savePhotos()">
+                        <i class="fas fa-cloud-upload-alt"></i> Guardar Registro de Fotos
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Galería de Progreso</div>
+                    <p id="photoGalleryText" style="color: var(--gray); font-size: 13px;">Sin fotos registradas aún. ¡Documenta tu transformación!</p>
+                </div>
+            </section>
+
+            <!-- ═══════════════════ COMMUNITY ═══════════════════ -->
+            <section class="section" id="community">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-users"></i> Comunidad RISE
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Conecta con otros participantes del reto</p>
+
+                <div class="card">
+                    <div class="card-title">Compartir Progreso</div>
+                    <div class="form-group">
+                        <textarea id="communityPost" rows="3" placeholder="¿Cómo va tu reto? Comparte tu progreso..." maxlength="500"></textarea>
+                    </div>
+                    <button class="btn-primary" style="width: 100%;" onclick="postToFeed()">
+                        <i class="fas fa-paper-plane"></i> Publicar
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Feed del Reto</div>
+                    <div id="communityFeed">
+                        <!-- Static example posts (no user data) -->
+                        <div style="padding: 20px; background: var(--surface); margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--red-dim); border: 1px solid var(--red); display: flex; align-items: center; justify-content: center; font-size: 14px;">M</div>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 13px;">María G.</div>
+                                    <div style="color: var(--gray); font-size: 11px; font-family: 'JetBrains Mono';">Día 8 · hace 2 horas</div>
+                                </div>
                             </div>
-                            <button style="width: 100%;" onclick="contactCoach()">📧 Enviar Mensaje</button>
+                            <p style="color: var(--gray); font-size: 13px;">¡Completé mi primer semana sin fallar un solo día! La consistencia es clave.</p>
                         </div>
-
-                        <div>
-                            <div style="font-weight: 600; color: var(--white); margin-bottom: 8px;">Horarios de Disponibilidad</div>
-                            <div style="color: var(--gray); font-size: 13px; margin-bottom: 16px;">
-                                📱 Lunes a Viernes: 9am - 6pm (UTC-5)<br>
-                                Respuesta en &lt; 24 horas
+                        <div style="padding: 20px; background: var(--surface);">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--red-dim); border: 1px solid var(--red); display: flex; align-items: center; justify-content: center; font-size: 14px;">C</div>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 13px;">Carlos M.</div>
+                                    <div style="color: var(--gray); font-size: 11px; font-family: 'JetBrains Mono';">Día 7 · hace 5 horas</div>
+                                </div>
                             </div>
-                            <button style="width: 100%;" onclick="scheduleCall()">📞 Agendar Llamada</button>
+                            <p style="color: var(--gray); font-size: 13px;">Bajé 2kg en la primera semana. La nutrición hace toda la diferencia. ¡Vamos RISE!</p>
                         </div>
-                    </div>
-                </div>
-
-                <!-- FAQ -->
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 16px; margin-bottom: 16px; color: var(--white);">Preguntas Frecuentes</h3>
-
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 24px; border-radius: 4px; margin-bottom: 16px;">
-                    <div style="font-weight: 600; color: var(--white); margin-bottom: 8px; cursor: pointer;" onclick="toggleFAQ(this)">
-                        ¿Puedo cambiar mi programa si no me siento cómodo?
-                    </div>
-                    <div style="color: var(--gray); font-size: 13px; display: none;">
-                        Sí. Si tienes dudas sobre tu programa, contacta a tu coach para ajustes. Queremos que te sientas cómodo y motivado.
-                    </div>
-                </div>
-
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 24px; border-radius: 4px; margin-bottom: 16px;">
-                    <div style="font-weight: 600; color: var(--white); margin-bottom: 8px; cursor: pointer;" onclick="toggleFAQ(this)">
-                        ¿Qué hago si me salto un día de entrenamiento?
-                    </div>
-                    <div style="color: var(--gray); font-size: 13px; display: none;">
-                        No te desanimes. La consistencia importa más que la perfección. Retoma al día siguiente y mantén el ritmo. Cada día cuenta.
-                    </div>
-                </div>
-
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 24px; border-radius: 4px;">
-                    <div style="font-weight: 600; color: var(--white); margin-bottom: 8px; cursor: pointer;" onclick="toggleFAQ(this)">
-                        ¿Cómo hago la comparativa final de 30 días?
-                    </div>
-                    <div style="color: var(--gray); font-size: 13px; display: none;">
-                        Tu coach te guiará. Compararemos tus fotos (día 1 vs día 30), medidas y sentimientos. Esto documenta tu verdadera transformación.
                     </div>
                 </div>
             </section>
-        </div>
 
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 WellCore Fitness RISE. Todos los derechos reservados. | <a href="/privacy.html" style="color: var(--red);">Privacidad</a> | <a href="/terms.html" style="color: var(--red);">Términos</a></p>
-        </footer>
+            <!-- ═══════════════════ SUPPORT ═══════════════════ -->
+            <section class="section" id="support">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-headset"></i> Soporte
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 30px;">Tu coach está aquí para ayudarte durante el reto</p>
+
+                <div class="card">
+                    <div class="card-title">Contactar Coach</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn-primary" style="width: 100%; background: #25D366; color: white;" onclick="window.open('https://wa.me/1234567890', '_blank')">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Coach
+                        </button>
+                        <button class="btn-secondary" style="width: 100%;">
+                            <i class="fas fa-calendar-alt"></i> Agendar Sesión
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Preguntas Frecuentes</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <details style="background: var(--surface); padding: 15px; cursor: pointer;">
+                            <summary style="color: var(--white); font-size: 13px; font-weight: 600;">
+                                ¿Puedo modificar el programa de entrenamiento?
+                            </summary>
+                            <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">Sí, puedes contactar a tu coach para adaptar ejercicios según tus necesidades o lesiones.</p>
+                        </details>
+                        <details style="background: var(--surface); padding: 15px; cursor: pointer;">
+                            <summary style="color: var(--white); font-size: 13px; font-weight: 600;">
+                                ¿Qué pasa si fallo un día?
+                            </summary>
+                            <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">No pasa nada. Lo importante es la consistencia general. Continúa el día siguiente sin culpas.</p>
+                        </details>
+                        <details style="background: var(--surface); padding: 15px; cursor: pointer;">
+                            <summary style="color: var(--white); font-size: 13px; font-weight: 600;">
+                                ¿Cuándo veré resultados?
+                            </summary>
+                            <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">Los primeros cambios visibles suelen aparecer en la semana 2-3. Las fotos y mediciones te ayudarán a verlos objetivamente.</p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+        </main>
     </div>
 
     <script>
-        // Initialize dashboard
-        function initDashboard() {
-            loadClientInfo();
-            updateCountdown();
-            setInterval(updateCountdown, 60000);
+        // ════════════════════════════════════════
+        // UTILITIES
+        // ════════════════════════════════════════
+
+        // Escape user-provided text before inserting into DOM
+        function escHtml(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(String(str)));
+            return div.innerHTML;
         }
 
-        // Load client info from localStorage
-        function loadClientInfo() {
-            const clientInfo = JSON.parse(localStorage.getItem('client_info') || '{}');
-            const riseEnrollment = JSON.parse(localStorage.getItem('rise_enrollment') || '{}');
+        // ════════════════════════════════════════
+        // NAVIGATION
+        // ════════════════════════════════════════
+        function showSection(sectionId, triggerEl) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
 
-            document.getElementById('clientName').textContent = clientInfo.name || riseEnrollment.fullName || 'Cliente';
+            document.querySelectorAll('.nav-item, .nav-sub-item').forEach(el => el.classList.remove('active'));
+            if (triggerEl) {
+                triggerEl.classList.add('active');
+            } else {
+                const match = document.querySelector('[data-section="' + sectionId + '"]');
+                if (match) match.classList.add('active');
+            }
+
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('show');
+                document.getElementById('sidebarOverlay').classList.remove('show');
+            }
         }
 
-        // Update countdown timer
+        function toggleSubMenu(itemsId, toggleEl) {
+            const subItems = document.getElementById(itemsId);
+            const chevronId = toggleEl.id.replace('Toggle', 'Chevron');
+            const chevron = document.getElementById(chevronId);
+            subItems.classList.toggle('show');
+            if (chevron) chevron.style.transform = subItems.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+        }
+
+        // Mobile hamburger
+        document.getElementById('hamburgerBtn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('show');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        });
+
+        document.getElementById('sidebarOverlay').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.remove('show');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+        });
+
+        // User dropdown
+        document.getElementById('userMenuBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('userDropdown').classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('userDropdown').classList.remove('show');
+        });
+
+        function logout() {
+            localStorage.removeItem('auth_token');
+            window.location.href = '/login.html';
+        }
+
+        // ════════════════════════════════════════
+        // COUNTDOWN
+        // ════════════════════════════════════════
         function updateCountdown() {
-            const clientInfo = JSON.parse(localStorage.getItem('client_info') || '{}');
-            const paymentDate = new Date(); // In real scenario, get from token expiration
-            const endDate = new Date(paymentDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+            const end   = new Date('2026-03-31T23:59:59');
+            const start = new Date('2026-03-01T00:00:00');
+            const now   = new Date();
 
-            const now = new Date();
-            const diff = endDate - now;
+            const totalMs   = end - start;
+            const elapsedMs = now - start;
+            const progress  = Math.min(100, Math.max(0, (elapsedMs / totalMs) * 100));
+            const daysElapsed   = Math.max(0, Math.floor(elapsedMs / 86400000));
+            const daysRemaining = Math.max(0, Math.ceil((end - now) / 86400000));
 
-            if (diff <= 0) {
-                document.getElementById('days').textContent = '0';
-                document.getElementById('hours').textContent = '0';
-                document.getElementById('minutes').textContent = '0';
-                document.getElementById('progressFill').style.width = '100%';
+            document.getElementById('countdownDays').textContent = daysRemaining;
+            document.getElementById('countdownFill').style.width  = progress + '%';
+            document.getElementById('countdownText').textContent  = daysRemaining + ' días restantes';
+
+            document.getElementById('dashCountdownDays').textContent = daysElapsed;
+            document.getElementById('dashCountdownBar').style.width  = progress + '%';
+        }
+
+        // ════════════════════════════════════════
+        // HABITS
+        // ════════════════════════════════════════
+        function updateHabitsProgress() {
+            const all     = document.querySelectorAll('.habit-check');
+            const checked = document.querySelectorAll('.habit-check:checked').length;
+            const pct     = all.length > 0 ? Math.round((checked / all.length) * 100) : 0;
+            document.getElementById('habitsProgress').textContent    = pct + '%';
+            document.getElementById('habitsProgressBar').style.width = pct + '%';
+            document.getElementById('habitsToday').textContent       = checked + ' de ' + all.length + ' hábitos completados';
+        }
+
+        document.querySelectorAll('.habit-check').forEach(cb => {
+            cb.addEventListener('change', updateHabitsProgress);
+        });
+
+        // ════════════════════════════════════════
+        // HYDRATION
+        // ════════════════════════════════════════
+        let waterToday = 0;
+
+        function addWater(ml) {
+            waterToday += ml;
+            document.getElementById('waterTotal').textContent = 'Total hoy: ' + waterToday + ' ml';
+        }
+
+        // ════════════════════════════════════════
+        // TRACKING
+        // ════════════════════════════════════════
+        const trackingState = {};
+
+        function logTracking(type, value, containerId) {
+            trackingState[type] = value;
+            const container = document.getElementById(containerId);
+            const btns = container.querySelectorAll('button');
+            btns[0].className = value ? 'btn-primary' : 'btn-secondary';
+            btns[1].className = value ? 'btn-secondary' : 'btn-primary';
+        }
+
+        function saveTracking() {
+            const today = new Date().toISOString().split('T')[0];
+            const water = parseFloat(document.getElementById('waterInput').value) || 0;
+            const sleep = parseFloat(document.getElementById('sleepInput').value) || 0;
+            const note  = document.getElementById('noteInput').value.slice(0, 500); // truncate
+
+            const log = {
+                date: today,
+                training: trackingState.training || false,
+                nutrition: trackingState.nutrition || false,
+                water: water,
+                sleep: sleep,
+                note: note
+            };
+
+            const logs = JSON.parse(localStorage.getItem('rise_tracking') || '[]');
+            logs.push(log);
+            localStorage.setItem('rise_tracking', JSON.stringify(logs));
+            alert('¡Registro guardado correctamente!');
+        }
+
+        // ════════════════════════════════════════
+        // MEASUREMENTS
+        // ════════════════════════════════════════
+        function saveMeasurement() {
+            const getValue = (id) => parseFloat(document.getElementById(id).value) || 0;
+            const m = {
+                date:   new Date().toISOString().split('T')[0],
+                weight: getValue('mWeight'),
+                chest:  getValue('mChest'),
+                waist:  getValue('mWaist'),
+                hips:   getValue('mHips'),
+                thigh:  getValue('mThigh'),
+                arm:    getValue('mArm')
+            };
+
+            const list = JSON.parse(localStorage.getItem('rise_measurements') || '[]');
+            list.push(m);
+            localStorage.setItem('rise_measurements', JSON.stringify(list));
+            renderMeasurements(list);
+            document.getElementById('lastMeasurementText').textContent = 'Última: ' + m.date;
+            alert('¡Medición guardada!');
+        }
+
+        function renderMeasurements(list) {
+            const container = document.getElementById('measurementHistory');
+            if (!list || list.length === 0) {
+                container.textContent = 'Sin mediciones registradas aún.';
                 return;
             }
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            // Build DOM safely (no innerHTML with user data)
+            container.textContent = '';
+            list.forEach(m => {
+                const entry = document.createElement('div');
+                entry.style.cssText = 'padding: 15px; background: var(--surface); margin-bottom: 8px; font-size: 12px;';
 
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
+                const dateEl = document.createElement('div');
+                dateEl.style.cssText = 'color: var(--white); font-weight: 600; margin-bottom: 8px; font-family: JetBrains Mono, monospace;';
+                dateEl.textContent = m.date;
+                entry.appendChild(dateEl);
 
-            // Update progress bar (from 30 to 0 days)
-            const totalDays = 30;
-            const daysElapsed = totalDays - days;
-            const progress = (daysElapsed / totalDays) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
+                const grid = document.createElement('div');
+                grid.style.cssText = 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;';
 
-        // Navigation
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.section-view').forEach(el => el.style.display = 'none');
+                const fields = [
+                    ['Peso', m.weight, 'kg'],
+                    ['Pecho', m.chest, 'cm'],
+                    ['Cintura', m.waist, 'cm'],
+                    ['Cadera', m.hips, 'cm'],
+                    ['Muslo', m.thigh, 'cm'],
+                    ['Brazo', m.arm, 'cm']
+                ];
 
-            // Show selected section
-            document.getElementById(sectionId).style.display = 'block';
+                fields.forEach(([label, val, unit]) => {
+                    const cell = document.createElement('div');
+                    cell.style.color = 'var(--gray)';
+                    const strong = document.createElement('span');
+                    strong.style.color = 'var(--white)';
+                    strong.textContent = val + unit;
+                    cell.textContent = label + ': ';
+                    cell.appendChild(strong);
+                    grid.appendChild(cell);
+                });
 
-            // Update sidebar active link
-            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        // Daily tracking
-        function saveDailyTracking() {
-            const tracking = {
-                date: new Date().toISOString().split('T')[0],
-                habits: {
-                    training: document.getElementById('habit1').checked,
-                    breakfast: document.getElementById('habit2').checked,
-                    lunch: document.getElementById('habit3').checked,
-                    water: document.getElementById('habit4').checked,
-                    sleep: document.getElementById('habit5').checked,
-                    photo: document.getElementById('habit6').checked
-                }
-            };
-
-            let dailyLogs = JSON.parse(localStorage.getItem('daily_logs') || '[]');
-            dailyLogs.push(tracking);
-            localStorage.setItem('daily_logs', JSON.stringify(dailyLogs));
-
-            alert('✅ Registro del día guardado exitosamente');
-        }
-
-        // Measurements
-        function saveMeasurements() {
-            const measurements = {
-                date: new Date().toISOString().split('T')[0],
-                weight: parseFloat(document.getElementById('weight').value) || 0,
-                chest: parseFloat(document.getElementById('chest').value) || 0,
-                waist: parseFloat(document.getElementById('waist').value) || 0,
-                hips: parseFloat(document.getElementById('hips').value) || 0,
-                thigh: parseFloat(document.getElementById('thigh').value) || 0,
-                arm: parseFloat(document.getElementById('arm').value) || 0
-            };
-
-            let measurementLog = JSON.parse(localStorage.getItem('measurement_log') || '[]');
-            measurementLog.push(measurements);
-            localStorage.setItem('measurement_log', JSON.stringify(measurementLog));
-
-            alert('📊 Medidas guardadas. ¡Excelente trabajo!');
-
-            // Clear inputs
-            ['weight', 'chest', 'waist', 'hips', 'thigh', 'arm'].forEach(id => {
-                document.getElementById(id).value = '';
+                entry.appendChild(grid);
+                container.appendChild(entry);
             });
         }
 
-        // Photos
-        function uploadPhoto() {
-            alert('📤 Función de carga de fotos disponible próximamente');
-        }
-
-        // Community
-        function publishPost() {
-            const content = document.getElementById('newPost').value.trim();
-            if (!content) {
-                alert('Escribe algo antes de publicar');
-                return;
-            }
-
-            alert('✅ Publicado en la comunidad. ¡Gracias por compartir tu progreso!');
-            document.getElementById('newPost').value = '';
-        }
-
-        // Support
-        function contactCoach() {
-            alert('📧 Abriendo formulario de mensaje...');
-        }
-
-        function scheduleCall() {
-            alert('📞 Abriendo calendario de disponibilidad...');
-        }
-
-        function toggleFAQ(element) {
-            const answer = element.nextElementSibling;
-            answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Logout
-        function logout() {
-            if (confirm('¿Seguro que deseas cerrar sesión?')) {
-                localStorage.removeItem('auth_token');
-                localStorage.removeItem('client_info');
-                window.location.href = '/rise.html';
+        // ════════════════════════════════════════
+        // PHOTOS
+        // ════════════════════════════════════════
+        function previewPhoto(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        // Initialize on load
-        window.addEventListener('load', initDashboard);
+        function savePhotos() {
+            const date  = document.getElementById('photoDate').value || new Date().toISOString().split('T')[0];
+            const list  = JSON.parse(localStorage.getItem('rise_photos') || '[]');
+            list.push({ date });
+            localStorage.setItem('rise_photos', JSON.stringify(list));
+            document.getElementById('photoCountText').textContent = list.length + ' set(s) de fotos guardado(s)';
+            document.getElementById('photoGalleryText').textContent = list.length + ' registro(s) de fotos guardado(s).';
+            alert('¡Fotos registradas!');
+        }
+
+        // ════════════════════════════════════════
+        // COMMUNITY
+        // ════════════════════════════════════════
+        function postToFeed() {
+            const textarea = document.getElementById('communityPost');
+            const text = textarea.value.trim().slice(0, 500);
+            if (!text) return;
+
+            const clientInfo = JSON.parse(localStorage.getItem('client_info') || '{}');
+            const name    = (clientInfo.name || 'Usuario').slice(0, 50);
+            const initial = name.charAt(0).toUpperCase();
+
+            const feed = document.getElementById('communityFeed');
+
+            // Build post DOM without innerHTML
+            const post = document.createElement('div');
+            post.style.cssText = 'padding: 20px; background: var(--surface); margin-bottom: 10px;';
+
+            const header = document.createElement('div');
+            header.style.cssText = 'display: flex; align-items: center; gap: 10px; margin-bottom: 10px;';
+
+            const avatar = document.createElement('div');
+            avatar.style.cssText = 'width: 36px; height: 36px; border-radius: 50%; background: var(--red-dim); border: 1px solid var(--red); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;';
+            avatar.textContent = initial;
+
+            const meta = document.createElement('div');
+            const nameEl = document.createElement('div');
+            nameEl.style.cssText = 'font-weight: 600; font-size: 13px;';
+            nameEl.textContent = name;
+            const timeEl = document.createElement('div');
+            timeEl.style.cssText = 'color: var(--gray); font-size: 11px; font-family: JetBrains Mono, monospace;';
+            timeEl.textContent = 'Ahora mismo';
+
+            meta.appendChild(nameEl);
+            meta.appendChild(timeEl);
+            header.appendChild(avatar);
+            header.appendChild(meta);
+
+            const body = document.createElement('p');
+            body.style.cssText = 'color: var(--gray); font-size: 13px;';
+            body.textContent = text; // textContent is XSS-safe
+
+            post.appendChild(header);
+            post.appendChild(body);
+            feed.insertBefore(post, feed.firstChild);
+
+            textarea.value = '';
+        }
+
+        // ════════════════════════════════════════
+        // INITIALIZE
+        // ════════════════════════════════════════
+        window.addEventListener('load', () => {
+            // User info
+            const clientInfo = JSON.parse(localStorage.getItem('client_info') || '{}');
+            if (clientInfo.name) {
+                document.getElementById('userName').textContent = clientInfo.name.slice(0, 50);
+                document.getElementById('userAvatar').textContent = clientInfo.name.charAt(0).toUpperCase();
+            }
+
+            // Today's date
+            const today = new Date().toISOString().split('T')[0];
+            const todayEl = document.getElementById('todayDate');
+            if (todayEl) todayEl.textContent = today;
+            const photoDateEl = document.getElementById('photoDate');
+            if (photoDateEl) photoDateEl.value = today;
+
+            // Countdown
+            updateCountdown();
+
+            // Measurements
+            const measurements = JSON.parse(localStorage.getItem('rise_measurements') || '[]');
+            renderMeasurements(measurements);
+            if (measurements.length > 0) {
+                document.getElementById('lastMeasurementText').textContent = 'Última: ' + measurements[measurements.length - 1].date;
+            }
+
+            // Habits initial state
+            updateHabitsProgress();
+
+            // Photos count
+            const photos = JSON.parse(localStorage.getItem('rise_photos') || '[]');
+            if (photos.length > 0) {
+                document.getElementById('photoCountText').textContent = photos.length + ' set(s) de fotos guardado(s)';
+                document.getElementById('photoGalleryText').textContent = photos.length + ' registro(s) de fotos guardado(s).';
+            }
+        });
     </script>
 </body>
 </html>
