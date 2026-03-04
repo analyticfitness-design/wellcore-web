@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago RISE - Reto 30 Días | WellCore Fitness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1917 0%, #2d1b1f 100%);
+            border-bottom: 1px solid #E31E24;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #E31E24;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            color: #aaa;
+            font-size: 16px;
+        }
+
+        .payment-container {
+            background: linear-gradient(135deg, rgba(26, 25, 23, 0.8) 0%, rgba(45, 27, 31, 0.8) 100%);
+            border: 1px solid rgba(227, 30, 36, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .price-box {
+            background: rgba(227, 30, 36, 0.15);
+            border: 2px solid #E31E24;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .price-label {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #E31E24;
+            margin-bottom: 10px;
+        }
+
+        .price-subtext {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #fff;
+            border-bottom: 1px solid rgba(227, 30, 36, 0.2);
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(227, 30, 36, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #E31E24;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 2px rgba(227, 30, 36, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-row input {
+            margin-bottom: 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #E31E24;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 13px;
+            color: #bbb;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .alert.error {
+            background: rgba(227, 30, 36, 0.2);
+            border: 1px solid #E31E24;
+            color: #ff6b6b;
+        }
+
+        .alert.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #81c784;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #E31E24 0%, #c41820 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(227, 30, 36, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(227, 30, 36, 0.3);
+            border-top-color: #E31E24;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .info-section {
+            background: rgba(227, 30, 36, 0.05);
+            border: 1px solid rgba(227, 30, 36, 0.15);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .info-section strong {
+            color: #ddd;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">WellCore</div>
+            <nav class="header-nav">
+                <a href="/rise-intake.html">← Volver</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="hero">
+            <h1>Confirmar Pago</h1>
+            <p class="subtitle">Completa tu inscripción al Reto RISE</p>
+        </div>
+
+        <div class="payment-container">
+            <!-- Alert messages -->
+            <div class="alert error" id="errorAlert"></div>
+            <div class="alert success" id="successAlert">
+                ¡Pago procesado exitosamente! Accediendo a tu dashboard...
+            </div>
+
+            <!-- Price Box -->
+            <div class="price-box">
+                <div class="price-label">Monto a pagar</div>
+                <div class="price-value">$33</div>
+                <div class="price-subtext">USD / 99,900 COP</div>
+            </div>
+
+            <!-- Payment Form -->
+            <form id="paymentForm">
+                <!-- Cardholder Info -->
+                <div class="section">
+                    <h2>Información de Pago</h2>
+
+                    <label for="fullName">Nombre Completo *</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Juan Pérez García"
+                        required
+                    >
+
+                    <label for="email">Correo Electrónico *</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="tu@email.com"
+                        required
+                    >
+                </div>
+
+                <!-- Payment Method -->
+                <div class="section">
+                    <h2>Método de Pago</h2>
+
+                    <label for="paymentMethod">Selecciona el método *</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="">-- Selecciona un método --</option>
+                        <option value="credit_card">Tarjeta de Crédito/Débito</option>
+                        <option value="wompi">Wompi (Colombia)</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bank_transfer">Transferencia Bancaria</option>
+                    </select>
+                </div>
+
+                <!-- Card Details (shown when credit_card selected) -->
+                <div class="section" id="cardDetails" style="display: none;">
+                    <h2>Datos de la Tarjeta</h2>
+
+                    <label for="cardNumber">Número de Tarjeta *</label>
+                    <input
+                        type="text"
+                        id="cardNumber"
+                        name="cardNumber"
+                        placeholder="4532 1234 5678 9010"
+                        maxlength="19"
+                    >
+
+                    <div class="form-row">
+                        <div>
+                            <label for="expiry">Vencimiento (MM/YY) *</label>
+                            <input
+                                type="text"
+                                id="expiry"
+                                name="expiry"
+                                placeholder="12/25"
+                                maxlength="5"
+                            >
+                        </div>
+                        <div>
+                            <label for="cvv">CVV *</label>
+                            <input
+                                type="text"
+                                id="cvv"
+                                name="cvv"
+                                placeholder="123"
+                                maxlength="4"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="section">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">
+                            Acepto los términos y condiciones de pago
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary">
+                    Procesar Pago ($33 USD)
+                </button>
+
+                <div class="loading" id="loading">
+                    <span class="spinner"></span>
+                    Procesando pago...
+                </div>
+            </form>
+
+            <!-- Info section -->
+            <div class="info-section">
+                <strong>🔒 Pago Seguro</strong><br>
+                Tus datos de pago están protegidos y encriptados. No almacenamos información de tarjeta.
+                Una vez completado el pago, tendrás acceso inmediato a tu programa RISE personalizado.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const paymentForm = document.getElementById('paymentForm');
+        const errorAlert = document.getElementById('errorAlert');
+        const successAlert = document.getElementById('successAlert');
+        const loading = document.getElementById('loading');
+        const paymentMethodSelect = document.getElementById('paymentMethod');
+        const cardDetails = document.getElementById('cardDetails');
+
+        // Show/hide card details based on payment method
+        paymentMethodSelect.addEventListener('change', (e) => {
+            cardDetails.style.display = e.target.value === 'credit_card' ? 'block' : 'none';
+        });
+
+        // Prefill email from localStorage
+        window.addEventListener('load', () => {
+            const enrollment = JSON.parse(localStorage.getItem('rise_enrollment') || '{}');
+            if (enrollment.email) {
+                document.getElementById('email').value = enrollment.email;
+                document.getElementById('fullName').value = enrollment.fullName || '';
+            }
+        });
+
+        paymentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            errorAlert.classList.remove('show');
+            successAlert.classList.remove('show');
+
+            const formData = new FormData(paymentForm);
+            const enrollment = JSON.parse(localStorage.getItem('rise_enrollment') || '{}');
+
+            if (!enrollment.client_id || !enrollment.program_id) {
+                showError('Error: Datos de inscripción incompletos. Vuelve a la forma anterior.');
+                return;
+            }
+
+            loading.style.display = 'block';
+            paymentForm.querySelector('button[type="submit"]').disabled = true;
+
+            try {
+                // Call backend payment API
+                const response = await fetch('/api/rise/payment.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        client_id: enrollment.client_id,
+                        program_id: enrollment.program_id,
+                        payment_method: formData.get('paymentMethod'),
+                        amount: 33 // USD
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    showError(result.error || 'Error al procesar el pago');
+                    return;
+                }
+
+                // Save token to localStorage
+                localStorage.setItem('auth_token', result.token);
+                localStorage.setItem('client_info', JSON.stringify(result.client));
+
+                // Show success
+                successAlert.classList.add('show');
+
+                // Redirect to client dashboard after 3 seconds
+                setTimeout(() => {
+                    window.location.href = '/cliente.html';
+                }, 3000);
+
+            } catch (error) {
+                showError('Error al procesar el pago. Intenta de nuevo.');
+                console.error('Payment error:', error);
+            } finally {
+                loading.style.display = 'none';
+                paymentForm.querySelector('button[type="submit"]').disabled = false;
+            }
+        });
+
+        function showError(message) {
+            errorAlert.textContent = message;
+            errorAlert.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE 30-Day Challenge | WellCore Fitness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(227, 30, 36, 0.2);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #E31E24;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #E31E24;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1917 0%, #2d1b1f 100%);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(227, 30, 36, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.2);
+            border: 1px solid #E31E24;
+            color: #E31E24;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff 0%, #E31E24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: #ccc;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #E31E24 0%, #c41820 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(227, 30, 36, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(227, 30, 36, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #E31E24;
+            border: 2px solid #E31E24;
+        }
+
+        .btn-secondary:hover {
+            background: #E31E24;
+            color: white;
+        }
+
+        /* Countdown */
+        .countdown-section {
+            background: rgba(227, 30, 36, 0.1);
+            border: 1px solid rgba(227, 30, 36, 0.3);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 50px auto;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #E31E24;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: 48px;
+            color: #E31E24;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .countdown-label-small {
+            font-size: 12px;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+
+        .countdown-closed {
+            color: #E31E24;
+            font-size: 18px;
+            padding: 20px;
+        }
+
+        /* Content Sections */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-dark {
+            background: #0a0a0a;
+        }
+
+        .section-light {
+            background: #1a1917;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .section-title .highlight {
+            color: #E31E24;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(227, 30, 36, 0.2);
+            padding: 40px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            background: rgba(227, 30, 36, 0.1);
+            border-color: #E31E24;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Info Section */
+        .info-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .info-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .info-section p {
+            color: #aaa;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .info-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .info-list li {
+            padding: 12px 0;
+            color: #ccc;
+            font-size: 16px;
+            border-bottom: 1px solid rgba(227, 30, 36, 0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        .info-list li:before {
+            content: '✓';
+            color: #E31E24;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        /* Pricing */
+        .pricing-box {
+            background: linear-gradient(135deg, rgba(227, 30, 36, 0.1) 0%, rgba(227, 30, 36, 0.05) 100%);
+            border: 2px solid #E31E24;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .price-label {
+            color: #E31E24;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 56px;
+            font-weight: 700;
+            color: #E31E24;
+            margin-bottom: 10px;
+        }
+
+        .price-subtext {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid rgba(227, 30, 36, 0.2);
+            padding: 40px 20px;
+            text-align: center;
+            color: #aaa;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .info-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .countdown-timer {
+                flex-wrap: wrap;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">WellCore</a>
+            <ul class="nav-links">
+                <li><a href="#features">Características</a></li>
+                <li><a href="#info">Información</a></li>
+                <li><a href="login.html">Ingresar</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🚀 Inscripciones Abiertas</div>
+            <h1>Reto RISE</h1>
+            <p class="subtitle">30 días transformando tu entrenamiento con traabilidad, guías personalizadas y programa 100% adaptado</p>
+
+            <!-- Countdown -->
+            <div class="countdown-section">
+                <div class="countdown-label">Válido solo en Marzo</div>
+                <div class="countdown-timer" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">30</span>
+                        <span class="countdown-label-small">Días</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">24</span>
+                        <span class="countdown-label-small">Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">60</span>
+                        <span class="countdown-label-small">Minutos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="rise-enroll.html" class="btn btn-primary">Inscribirse Ahora</a>
+                <a href="#info" class="btn btn-secondary">Más Información</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section section-dark">
+        <div class="pricing-box">
+            <div class="price-label">Precio Especial</div>
+            <div class="price">$33 USD / $99,900 COP</div>
+            <div class="price-subtext">Acceso completo a 30 días de reto</div>
+            <a href="rise-enroll.html" class="btn btn-primary">Comenzar Ahora</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section section-light" id="features">
+        <h2 class="section-title">¿Qué incluye el <span class="highlight">RISE</span>?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">📊</span>
+                <h3>Trazabilidad Completa</h3>
+                <p>Registra cada entrenamiento, medidas corporales y progreso día a día durante 30 días</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💪</span>
+                <h3>Programa Personalizado 100%</h3>
+                <p>Ejercicios adaptados a tu nivel, equipamiento disponible (gym o casa) y objetivos</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📚</span>
+                <h3>Guía de Hábitos</h3>
+                <p>Desarrolla disciplina con 30 hábitos pequeños que transforman tu estilo de vida</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🍽️</span>
+                <h3>Guía de Nutrición</h3>
+                <p>Plan nutricional adaptado a tu dieta, objetivos y preferencias alimenticias</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">👥</span>
+                <h3>Comunidad RISE</h3>
+                <p>Únete a otros participantes en el reto, comparte progreso y motívate mutuamente</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📸</span>
+                <h3>Antes y Después</h3>
+                <p>Documenta tu transformación con fotos. Muchos ven resultados en 30 días</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information -->
+    <section class="section section-dark" id="info">
+        <h2 class="section-title">Por qué elegir <span class="highlight">RISE</span></h2>
+        <div class="info-section">
+            <div>
+                <h2>Diseñado para resultados</h2>
+                <p>RISE no es un reto más. Es un sistema integral que combina entrenamiento, nutrición y desarrollo de hábitos para garantizar transformación real en 30 días.</p>
+                <p>Cada aspecto está diseñado científicamente y personalizado para TI.</p>
+                <ul class="info-list">
+                    <li>Programa adaptado a tu experiencia (principiante, intermedio, avanzado)</li>
+                    <li>Entrenamientos gym o casa (tú eliges)</li>
+                    <li>Nutrición según tu dieta (omnívora, vegetariana, vegana, etc.)</li>
+                    <li>Tracking diario de progreso</li>
+                    <li>Acceso a comunidad de participantes</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Lo que logran los participantes</h2>
+                <ul class="info-list">
+                    <li>Pérdida de grasa visible en 30 días</li>
+                    <li>Aumento de fuerza y resistencia</li>
+                    <li>Mayor disciplina y consistencia</li>
+                    <li>Mejora en sueño y energía</li>
+                    <li>Hábitos saludables establecidos</li>
+                    <li>Confianza y motivación renovada</li>
+                </ul>
+                <p style="margin-top: 30px; color: #E31E24; font-weight: 600;">Cientos de personas ya transformaron su cuerpo y mente con RISE.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="section section-light" style="text-align: center;">
+        <h2 class="section-title">¿Listo para el reto?</h2>
+        <p style="color: #aaa; font-size: 18px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Las inscripciones están abiertas solo en Marzo. Este es tu momento para transformarte. ¿Vamos?
+        </p>
+        <a href="rise-enroll.html" class="btn btn-primary" style="font-size: 18px; padding: 16px 48px;">Inscribirse Ahora</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 WellCore Fitness. Todos los derechos reservados.</p>
+            <p style="margin-top: 10px; font-size: 12px;">RISE es un programa de 30 días. Resultados varían según el compromiso individual.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer - Hasta fin de Marzo
+        function updateCountdown() {
+            const now = new Date();
+            const endOfMarch = new Date(now.getFullYear(), 2, 31, 23, 59, 59);
+
+            const distance = endOfMarch - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const countdownEl = document.getElementById('countdown');
+
+            if (distance < 0) {
+                daysEl.textContent = '0';
+                hoursEl.textContent = '0';
+                minutesEl.textContent = '0';
+                countdownEl.insertAdjacentHTML('afterend', '<p class="countdown-closed">¡Las inscripciones cerraron!</p>');
+                countdownEl.style.display = 'none';
+            } else {
+                daysEl.textContent = days;
+                hoursEl.textContent = hours;
+                minutesEl.textContent = minutes;
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
