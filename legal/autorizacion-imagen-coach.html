@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autorización de Uso de Imagen — WellCore Fitness</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+    :root {
+      --red: #E31E24;
+      --bg: #0a0a0a;
+      --surface: #111113;
+      --border: rgba(255,255,255,0.08);
+      --gray: rgba(255,255,255,0.45);
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 60px 40px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    @media print {
+      body { background: #fff; color: #000; padding: 40px; }
+      .no-print { display: none; }
+      h1, h2 { color: #000 !important; }
+      .clause-title { color: #E31E24 !important; }
+    }
+
+    .doc-header { text-align: center; border-bottom: 2px solid var(--red); padding-bottom: 32px; margin-bottom: 40px; }
+    .doc-logo { font-family: var(--font-head); font-size: 36px; letter-spacing: 4px; color: #fff; margin-bottom: 8px; }
+    .doc-logo span { color: var(--red); }
+    .doc-subtitle { font-family: var(--font-mono); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--red); margin-bottom: 24px; }
+    h1 { font-family: var(--font-head); font-size: 42px; letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin-bottom: 8px; }
+    .doc-ref { font-family: var(--font-mono); font-size: 11px; color: var(--gray); margin-top: 12px; }
+    .doc-version { font-family: var(--font-mono); font-size: 10px; color: var(--gray); }
+
+    .parties { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--red); padding: 24px 28px; margin: 32px 0; }
+    .parties h2 { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; }
+    .party-item { margin-bottom: 12px; }
+    .party-label { font-family: var(--font-mono); font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+    .party-field { border-bottom: 1px solid rgba(255,255,255,0.15); min-height: 28px; display: block; margin-top: 4px; font-size: 15px; padding-bottom: 4px; }
+
+    .clause { margin: 28px 0; }
+    .clause-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; padding: 6px 0; border-bottom: 1px solid rgba(227,30,36,0.2); }
+    .clause p { margin-bottom: 10px; color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.75; }
+    .clause p strong { color: #fff; }
+    .clause ol, .clause ul { padding-left: 20px; margin-bottom: 10px; }
+    .clause li { margin-bottom: 6px; font-size: 14px; color: rgba(255,255,255,0.85); }
+
+    .highlight-box { background: rgba(227,30,36,0.06); border: 1px solid rgba(227,30,36,0.2); padding: 16px 20px; margin: 20px 0; font-size: 13px; color: rgba(255,255,255,0.7); font-family: var(--font-mono); }
+
+    .signature-section { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .signature-section h2 { font-family: var(--font-head); font-size: 24px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .sig-block { }
+    .sig-line { border-bottom: 1px solid rgba(255,255,255,0.3); height: 48px; margin-bottom: 8px; }
+    .sig-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+    .sig-name-line { margin-top: 16px; }
+    .sig-date { margin-top: 28px; }
+    .sig-date .sig-label { margin-bottom: 4px; }
+    .sig-date-field { border-bottom: 1px solid rgba(255,255,255,0.2); min-height: 28px; width: 180px; }
+
+    .legal-note { margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-size: 12px; color: var(--gray); font-family: var(--font-mono); }
+
+    .print-btn {
+      display: block; width: fit-content; margin: 0 auto 40px;
+      background: var(--red); color: #fff; border: none; cursor: pointer;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; padding: 14px 32px; text-decoration: none;
+    }
+    .print-btn:hover { background: #B8181D; }
+  </style>
+</head>
+<body>
+
+  <div class="no-print" style="text-align:center;margin-bottom:32px;">
+    <button class="print-btn" onclick="window.print()">&#9113; IMPRIMIR / GUARDAR PDF</button>
+  </div>
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-logo">WELL<span>CORE</span></div>
+    <div class="doc-subtitle">Documento Oficial — Uso Privado y Confidencial</div>
+    <h1>Autorización de<br>Uso de Imagen</h1>
+    <div class="doc-ref">REF: WC-IMG-2026 | Ley 23 de 1982 (Art. 72) — Colombia</div>
+    <div class="doc-version" style="margin-top:8px;">Versión: Marzo 2026</div>
+  </div>
+
+  <!-- PARTES -->
+  <div class="parties">
+    <h2>Identificación de las Partes</h2>
+    <div class="party-item">
+      <div class="party-label">La Empresa (Cedente):</div>
+      <span class="party-field">WellCore Fitness — NIT: ________________</span>
+    </div>
+    <div class="party-item">
+      <div class="party-label">El Coach / Colaborador (Autorizante):</div>
+      <span class="party-field">Nombre completo: ___________________________________________</span>
+    </div>
+    <div class="party-item">
+      <div class="party-label">Número de documento de identidad:</div>
+      <span class="party-field">___________________________________________</span>
+    </div>
+    <div class="party-item">
+      <div class="party-label">Rol en WellCore:</div>
+      <span class="party-field">&#9633; Coach Fitness &nbsp;&nbsp; &#9633; Colaborador de Contenido &nbsp;&nbsp; &#9633; Otro: ____________</span>
+    </div>
+  </div>
+
+  <!-- CLÁUSULAS -->
+  <div class="clause">
+    <div class="clause-title">Cláusula 1 — Objeto de la Autorización</div>
+    <p>El/la suscrito/a (en adelante "EL AUTORIZANTE") otorga a WellCore Fitness (en adelante "LA EMPRESA") autorización expresa para el uso de su imagen, nombre, voz, fotografías, videos, testimonios, declaraciones y cualquier otro material visual o audiovisual en el que aparezca su persona, en los términos establecidos en el presente documento.</p>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Cláusula 2 — Alcance y Medios Autorizados</div>
+    <p>La presente autorización comprende, sin carácter limitativo:</p>
+    <ol>
+      <li>Publicación en el sitio web oficial de WellCore Fitness (wellcorefitness.com) y sus subdominios.</li>
+      <li>Publicación en redes sociales administradas por WellCore Fitness: Instagram, TikTok, YouTube, Facebook, LinkedIn y cualquier otra plataforma activa o futura.</li>
+      <li>Material publicitario digital: anuncios de pago (Meta Ads, Google Ads, TikTok Ads), banners, landing pages y email marketing.</li>
+      <li>Material impreso: flyers, brochures, tarjetas, carteles y cualquier soporte físico de comunicación.</li>
+      <li>Presentaciones corporativas, propuestas comerciales y material de formación interna.</li>
+      <li>Prensa y medios de comunicación, entrevistas y apariciones públicas relacionadas con WellCore Fitness.</li>
+      <li>Campañas de relaciones públicas y reputación de marca.</li>
+    </ol>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Cláusula 3 — Ámbito Territorial y Temporal</div>
+    <p><strong>Territorial:</strong> La autorización es de carácter mundial, sin restricción geográfica.</p>
+    <p><strong>Temporal:</strong> La autorización tiene carácter indefinido a partir de la fecha de suscripción. EL AUTORIZANTE podrá revocarla mediante comunicación escrita dirigida a WellCore Fitness, con efectos a partir de los 30 días calendario siguientes a su recepción. Los materiales ya publicados antes de la revocación podrán permanecer activos hasta su renovación natural o retiro programado por la plataforma.</p>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Cláusula 4 — Contraprestación</div>
+    <p>La presente autorización se otorga de forma <strong>gratuita</strong>, como parte de la relación de colaboración establecida en el Contrato de Coach WellCore. EL AUTORIZANTE reconoce que el uso de su imagen en los términos descritos contribuye a la construcción de su propia marca personal y visibilidad profesional, siendo esto considerado contraprestación suficiente.</p>
+    <p>WellCore Fitness no asume obligación de pago adicional por concepto de derechos de imagen derivados de la presente autorización.</p>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Cláusula 5 — Limitaciones al Uso</div>
+    <p>WellCore Fitness se compromete a:</p>
+    <ul>
+      <li>No alterar la imagen de EL AUTORIZANTE de forma que afecte su reputación, dignidad o integridad personal o profesional.</li>
+      <li>No utilizar la imagen en contextos discriminatorios, denigrantes o contrarios a la ética profesional.</li>
+      <li>No ceder ni sublicenciar el material a terceros no vinculados a WellCore Fitness sin consentimiento previo.</li>
+    </ul>
+
+    <div class="highlight-box">
+      NOTA: El uso de la imagen en testimonios de resultados de clientes deberá contar con autorización expresa adicional del cliente involucrado, separada de la presente autorización.
+    </div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Cláusula 6 — Declaración de Titularidad</div>
+    <p>EL AUTORIZANTE declara bajo la gravedad del juramento que:</p>
+    <ol>
+      <li>Es el titular legítimo de los derechos sobre su imagen y los materiales que entrega.</li>
+      <li>Los materiales visuales entregados a WellCore Fitness (fotos, videos) son de su propiedad o cuenta con las licencias necesarias para cederlos.</li>
+      <li>No existe ningún contrato, acuerdo o relación jurídica que impida o restrinja el otorgamiento de la presente autorización.</li>
+      <li>Exime a WellCore Fitness de cualquier reclamación de terceros que alegue derechos sobre los materiales entregados.</li>
+    </ol>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Cláusula 7 — Protección de Datos del Autorizante</div>
+    <p>De conformidad con la Ley 1581 de 2012 (Habeas Data, Colombia), WellCore Fitness informa que los datos personales de EL AUTORIZANTE serán tratados con fines de identificación, relación contractual y comunicación comercial. EL AUTORIZANTE podrá ejercer sus derechos de acceso, rectificación, cancelación u oposición escribiendo a: legal@wellcorefitness.com.</p>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Cláusula 8 — Ley Aplicable</div>
+    <p>El presente documento se rige por las disposiciones de la Ley 23 de 1982 sobre derechos de autor, la Ley 1581 de 2012 sobre protección de datos, y las demás normas aplicables de la República de Colombia. Para cualquier controversia, las partes se someten a la jurisdicción de los tribunales de Bogotá D.C.</p>
+  </div>
+
+  <!-- FIRMAS -->
+  <div class="signature-section">
+    <h2>Firmas y Aceptación</h2>
+
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <div class="sig-label">Firma de EL AUTORIZANTE (Coach)</div>
+        <div class="sig-name-line">
+          <div class="sig-label">Nombre completo:</div>
+          <div class="party-field" style="margin-top:4px;"></div>
+        </div>
+        <div class="sig-name-line" style="margin-top:12px;">
+          <div class="sig-label">C.C. / Pasaporte:</div>
+          <div class="party-field" style="margin-top:4px;"></div>
+        </div>
+      </div>
+
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <div class="sig-label">Firma por WellCore Fitness (Representante Legal)</div>
+        <div class="sig-name-line">
+          <div class="sig-label">Nombre:</div>
+          <div class="party-field" style="margin-top:4px;"></div>
+        </div>
+        <div class="sig-name-line" style="margin-top:12px;">
+          <div class="sig-label">Cargo:</div>
+          <div class="party-field" style="margin-top:4px;">Director / CEO</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sig-date" style="margin-top:32px;">
+      <div class="sig-label">Fecha de suscripción:</div>
+      <div style="border-bottom:1px solid rgba(255,255,255,0.2);width:220px;margin-top:8px;height:28px;"></div>
+    </div>
+
+    <div style="margin-top:32px;padding:16px 20px;background:rgba(227,30,36,0.06);border:1px solid rgba(227,30,36,0.2);">
+      <div style="display:flex;align-items:flex-start;gap:12px;">
+        <div style="width:16px;height:16px;border:1px solid rgba(227,30,36,0.5);flex-shrink:0;margin-top:2px;"></div>
+        <p style="font-size:12px;color:rgba(255,255,255,0.65);font-family:'IBM Plex Mono',monospace;line-height:1.6;">
+          Al firmar el presente documento, EL AUTORIZANTE declara haber leído, comprendido y aceptado voluntariamente todas las cláusulas contenidas en esta Autorización de Uso de Imagen, sin que medie presión, error, fuerza o dolo.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTA LEGAL FINAL -->
+  <div class="legal-note">
+    Documento generado por WellCore Fitness — Uso interno y legal. Ref: WC-IMG-2026. Este documento tiene validez jurídica una vez suscrito por ambas partes de conformidad con la legislación colombiana. Conserve una copia firmada en sus archivos.
+  </div>
+
+</body>
+</html>
