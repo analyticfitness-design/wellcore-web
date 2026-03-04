@@ -35,6 +35,16 @@ if ($stmt->rowCount() === 0) {
 $program = $stmt->fetch(PDO::FETCH_ASSOC);
 $client_id = $program['client_id'];
 
+// Mapear años de experiencia a niveles
+$years = intval($input['training']['years'] ?? 0);
+$experience_level = 'principiante';
+if ($years >= 2) {
+    $experience_level = 'intermedio';
+}
+if ($years >= 5) {
+    $experience_level = 'avanzado';
+}
+
 // Preparar datos para guardar
 $intake_data = [
     'measurements' => $input['measurements'] ?? [],
@@ -61,8 +71,8 @@ try {
 
     $stmt->execute([
         $personalized_json,
-        $input['training']['years'] ?? '',
-        $input['training']['years'] ?? '',
+        $experience_level,
+        $experience_level,
         $input['availability']['place'] ?? '',
         $input['availability']['place'] ?? '',
         $input['enrollment']['gender'] ?? '',
