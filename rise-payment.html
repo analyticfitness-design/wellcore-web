@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg:       #0a0a0a;
@@ -319,6 +320,7 @@
     <!-- Main content -->
     <div class="container">
         <div class="hero">
+            <div style="margin-bottom:16px;"><span style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#E31E24;text-transform:uppercase;"><i class="fas fa-check-circle" aria-hidden="true"></i> Paso 3 de 3</span></div>
             <h1>Confirmar Pago</h1>
             <p class="subtitle">Completa tu inscripción al Reto RISE</p>
         </div>
@@ -335,6 +337,49 @@
                 <div class="price-label">Monto a pagar</div>
                 <div class="price-value">$33</div>
                 <div class="price-subtext">USD / 99,900 COP</div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">
+                <div style="display:flex;align-items:center;gap:8px;background:rgba(227,30,36,0.06);border:1px solid rgba(227,30,36,0.15);border-radius:4px;padding:10px 12px;">
+                    <i class="fas fa-lock" aria-hidden="true" style="color:#E31E24;font-size:14px;flex-shrink:0;"></i>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);">Pago 100% Seguro</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;background:rgba(227,30,36,0.06);border:1px solid rgba(227,30,36,0.15);border-radius:4px;padding:10px 12px;">
+                    <i class="fas fa-shield-alt" aria-hidden="true" style="color:#E31E24;font-size:14px;flex-shrink:0;"></i>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);">Protección garantizada</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;background:rgba(227,30,36,0.06);border:1px solid rgba(227,30,36,0.15);border-radius:4px;padding:10px 12px;">
+                    <i class="fas fa-credit-card" aria-hidden="true" style="color:#E31E24;font-size:14px;flex-shrink:0;"></i>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);">Múltiples métodos</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;background:rgba(227,30,36,0.06);border:1px solid rgba(227,30,36,0.15);border-radius:4px;padding:10px 12px;">
+                    <i class="fas fa-certificate" aria-hidden="true" style="color:#E31E24;font-size:14px;flex-shrink:0;"></i>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);">Certificado SSL</span>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div style="margin-bottom:24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.05em;color:rgba(255,255,255,0.6);margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:10px;">Incluye en tu Plan RISE</div>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <i class="fas fa-dumbbell" aria-hidden="true" style="color:#E31E24;width:16px;text-align:center;"></i>
+                        <span style="font-size:13px;color:rgba(255,255,255,0.75);">Entrenamiento Personalizado</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <i class="fas fa-utensils" aria-hidden="true" style="color:#E31E24;width:16px;text-align:center;"></i>
+                        <span style="font-size:13px;color:rgba(255,255,255,0.75);">Guía de Nutrición</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <i class="fas fa-calendar-check" aria-hidden="true" style="color:#E31E24;width:16px;text-align:center;"></i>
+                        <span style="font-size:13px;color:rgba(255,255,255,0.75);">Guía de Hábitos</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <i class="fas fa-chart-line" aria-hidden="true" style="color:#E31E24;width:16px;text-align:center;"></i>
+                        <span style="font-size:13px;color:rgba(255,255,255,0.75);">Seguimiento 30 Días</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Payment Form -->
@@ -425,7 +470,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit" class="btn-primary">
-                    Procesar Pago ($33 USD)
+                    <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Procesar Pago ($33 USD)
                 </button>
 
                 <div class="loading" id="loading">
@@ -436,7 +481,7 @@
 
             <!-- Info section -->
             <div class="info-section">
-                <strong>🔒 Pago Seguro</strong><br>
+                <strong><i class="fas fa-lock" aria-hidden="true" style="margin-right:6px;color:#E31E24;"></i>Pago Seguro</strong><br>
                 Tus datos de pago están protegidos y encriptados. No almacenamos información de tarjeta.
                 Una vez completado el pago, tendrás acceso inmediato a tu programa RISE personalizado.
             </div>
