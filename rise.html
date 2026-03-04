@@ -231,17 +231,25 @@
         }
 
         .feature-icon {
-            font-size: 28px;
-            margin-bottom: 16px;
+            font-size: 24px;
+            margin-bottom: 20px;
             color: var(--red);
-            width: 48px;
-            height: 48px;
-            background: var(--red-dim);
-            border: 1px solid rgba(227,30,36,0.2);
-            border-radius: 4px;
+            width: 52px;
+            height: 52px;
+            background: rgba(227,30,36,0.08);
+            border: 1px solid rgba(227,30,36,0.25);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: rgba(227,30,36,0.15);
+            box-shadow: 0 0 18px rgba(227,30,36,0.3);
+            transform: translateY(-2px);
         }
 
         .feature-card h3 {
@@ -421,7 +429,10 @@
     <!-- Features -->
     <section class="container" id="features">
         <div style="text-align:center;margin-bottom:48px;">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--red);text-transform:uppercase;margin-bottom:12px;">// QUÉ INCLUYE</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;margin-bottom:16px;">
+                <i class="fas fa-list-check" aria-hidden="true" style="color:var(--red);font-size:11px;"></i>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">QUÉ INCLUYE</span>
+            </div>
             <h2 style="font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:0.02em;">RISE. 4 PILARES.</h2>
         </div>
 
@@ -471,7 +482,10 @@
     <!-- Info Section -->
     <section class="container">
         <div style="text-align:center;margin-bottom:48px;">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--red);text-transform:uppercase;margin-bottom:12px;">// PREGUNTAS FRECUENTES</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;margin-bottom:16px;">
+                <i class="fas fa-circle-question" aria-hidden="true" style="color:var(--red);font-size:11px;"></i>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">PREGUNTAS FRECUENTES</span>
+            </div>
             <h2 style="font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:0.02em;">LO QUE NECESITAS SABER.</h2>
         </div>
         <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
