@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg:       #0a0a0a;
@@ -178,7 +179,7 @@
 
         .countdown-timer {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
         }
 
@@ -230,8 +231,17 @@
         }
 
         .feature-icon {
-            font-size: 32px;
+            font-size: 28px;
             margin-bottom: 16px;
+            color: var(--red);
+            width: 48px;
+            height: 48px;
+            background: var(--red-dim);
+            border: 1px solid rgba(227,30,36,0.2);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .feature-card h3 {
@@ -374,9 +384,9 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-tag">🚀 Disponible Todo Marzo</div>
+            <div class="hero-tag"><i class="fas fa-fire"></i> Disponible Todo Marzo</div>
             <h1>Reto RISE 30 Días</h1>
-            <p>Transforma tu entrenamiento con un programa 100% personalizado. Mediciones, tracking diario, guías de hábitos y nutrición en una sola plataforma.</p>
+            <p>30 días. Un plan personalizado. Resultados reales.</p>
 
             <div class="cta-buttons">
                 <a href="/rise-enroll.html" class="btn btn-primary">Inscribirse Ahora</a>
@@ -399,6 +409,10 @@
                         <div class="countdown-value" id="minutes">0</div>
                         <div class="countdown-unit">Minutos</div>
                     </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">0</div>
+                        <div class="countdown-unit">Segundos</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -406,43 +420,34 @@
 
     <!-- Features -->
     <section class="container" id="features">
-        <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 0.02em; margin-bottom: 48px; text-align: center;">Qué Incluye RISE</h2>
+        <div style="text-align:center;margin-bottom:48px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--red);text-transform:uppercase;margin-bottom:12px;">// QUÉ INCLUYE</div>
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:0.02em;">RISE. 4 PILARES.</h2>
+        </div>
 
-        <div class="features">
+        <div class="features" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
             <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Trazabilidad Completa</h3>
-                <p>Trackea cada entrenamiento, peso, medidas corporales y hábitos diarios. Dashboard con métricas personalizadas.</p>
+                <div class="feature-icon"><i class="fas fa-dumbbell"></i></div>
+                <h3>Entrenamiento Personalizado</h3>
+                <p>Programa 1:1 diseñado para tu nivel, tu cuerpo y tus objetivos. Gym o casa &mdash; tú eliges.</p>
             </div>
 
             <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Programa Personalizado</h3>
-                <p>Diseñado según tu nivel, disponibilidad, equipamiento y objetivos. Gym o casa — tú eliges.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📚</div>
-                <h3>Guía de Hábitos</h3>
-                <p>Entrenamientos progresivos con descripción de cada ejercicio, variaciones y ajustes según tu progreso.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🍎</div>
+                <div class="feature-icon"><i class="fas fa-utensils"></i></div>
                 <h3>Guía de Nutrición</h3>
-                <p>Recomendaciones nutricionales alineadas con tu plan de entrenamiento y objetivos específicos.</p>
+                <p>Cómo alimentarte correctamente durante el reto. Principios claros, sin dietas extremas.</p>
             </div>
 
             <div class="feature-card">
-                <div class="feature-icon">👥</div>
-                <h3>Comunidad RISE</h3>
-                <p>Acceso a una comunidad de retadores. Comparte progreso, inspírate y motívate con otros.</p>
+                <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+                <h3>Guía de Hábitos</h3>
+                <p>Sistema de hábitos diarios para garantizar consistencia. Pequeños cambios, gran impacto.</p>
             </div>
 
             <div class="feature-card">
-                <div class="feature-icon">📸</div>
-                <h3>Antes & Después</h3>
-                <p>Sistema de seguimiento visual. Captura tu progreso con fotos que demuestren la transformación.</p>
+                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Seguimiento del Reto</h3>
+                <p>Revisión de tu progreso durante los 30 días. No estarás solo en este proceso.</p>
             </div>
         </div>
     </section>
@@ -455,8 +460,8 @@
             <p class="pricing-description">Acceso de 30 días con garantía de satisfacción</p>
 
             <div class="price-display">
-                <div class="price-amount">$33</div>
-                <div class="price-currency">USD / $99,900 COP</div>
+                <div class="price-amount">$99.900</div>
+                <div class="price-currency">COP &middot; Pago único &middot; 30 días</div>
             </div>
 
             <a href="/rise-enroll.html" class="btn btn-primary">Comenzar Ahora</a>
@@ -465,35 +470,29 @@
 
     <!-- Info Section -->
     <section class="container">
-        <div class="info-grid">
+        <div style="text-align:center;margin-bottom:48px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--red);text-transform:uppercase;margin-bottom:12px;">// PREGUNTAS FRECUENTES</div>
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:0.02em;">LO QUE NECESITAS SABER.</h2>
+        </div>
+        <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
             <div class="info-item">
-                <h3>¿Quién puede apuntarse?</h3>
-                <p>Todos los niveles. Principiantes, intermedios o avanzados. El programa se adapta a ti.</p>
+                <h3><i class="fas fa-user-check" style="color:var(--red);margin-right:8px;"></i>¿Quién puede apuntarse?</h3>
+                <p>Todos los niveles. El programa se adapta a ti.</p>
             </div>
 
             <div class="info-item">
-                <h3>¿Dónde entreno?</h3>
-                <p>Gym, casa o ambos. Personalizado según tu equipamiento y disponibilidad.</p>
+                <h3><i class="fas fa-map-marker-alt" style="color:var(--red);margin-right:8px;"></i>¿Dónde entreno?</h3>
+                <p>Gym, casa o ambos. Sin equipamiento obligatorio.</p>
             </div>
 
             <div class="info-item">
-                <h3>¿Qué pasa después?</h3>
-                <p>Al completar RISE, acceso a planes continuos. Seguimiento permanente de tu progreso.</p>
+                <h3><i class="fas fa-fingerprint" style="color:var(--red);margin-right:8px;"></i>¿Es personalizado de verdad?</h3>
+                <p>Sí. Tu intake captura medidas, objetivos, horarios y limitaciones.</p>
             </div>
 
             <div class="info-item">
-                <h3>¿Necesito equipamiento?</h3>
-                <p>No obligatorio. Opciones para gym completo, mancuernas, bandas, o solo peso corporal.</p>
-            </div>
-
-            <div class="info-item">
-                <h3>¿Hay soporte?</h3>
-                <p>Comunidad activa, guías detalladas, y actualizaciones de programa según tu feedback.</p>
-            </div>
-
-            <div class="info-item">
-                <h3>¿Es realmente personalizado?</h3>
-                <p>Sí. Intake detallado captura tus medidas, objetivos, equipamiento, horarios y limitaciones.</p>
+                <h3><i class="fas fa-arrow-right" style="color:var(--red);margin-right:8px;"></i>¿Qué pasa después?</h3>
+                <p>Al completar RISE, accedes a nuestros planes mensuales 1:1.</p>
             </div>
         </div>
     </section>
@@ -506,27 +505,26 @@
     <script>
         function updateCountdown() {
             const now = new Date();
-            const end = new Date(now.getFullYear(), 2, 31, 23, 59, 59);
+            const end = new Date('2026-03-31T23:59:59');
 
             if (now > end) {
-                document.getElementById('days').textContent = '0';
-                document.getElementById('hours').textContent = '0';
-                document.getElementById('minutes').textContent = '0';
+                ['days','hours','minutes','seconds'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = '00';
+                });
                 return;
             }
 
             const diff = end - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('days').textContent = Math.floor(diff / 86400000);
+            document.getElementById('hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+            document.getElementById('minutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+            const secEl = document.getElementById('seconds');
+            if (secEl) secEl.textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
         }
 
         updateCountdown();
-        setInterval(updateCountdown, 60000);
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
