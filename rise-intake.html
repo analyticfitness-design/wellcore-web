@@ -386,11 +386,24 @@
         }
 
         .alert {
-            padding: 12px 16px;
+            padding: 16px 20px;
             border-radius: 4px;
-            margin-bottom: 20px;
-            font-size: 13px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 500;
             display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .alert.error {
@@ -903,9 +916,42 @@
                 }
             };
 
-            if (!data.enrollment.email || !data.training.years) {
-                errorAlert.textContent = 'Por favor completa todos los campos requeridos';
+            // Validar campos específicos
+            if (!data.enrollment.email) {
+                errorAlert.textContent = '❌ Correo electrónico no encontrado. Vuelve a la inscripción.';
                 errorAlert.classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            if (!data.training.years) {
+                errorAlert.textContent = '⚠️ Debes seleccionar tu experiencia en entrenamiento (Años de experiencia)';
+                errorAlert.classList.add('show');
+                document.querySelector('[name="trainingYears"]').focus();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            if (!data.availability.time) {
+                errorAlert.textContent = '⚠️ Debes seleccionar tu disponibilidad de horario';
+                errorAlert.classList.add('show');
+                document.querySelector('[name="trainingTime"]').focus();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            if (!data.availability.duration) {
+                errorAlert.textContent = '⚠️ Debes seleccionar la duración de tus sesiones';
+                errorAlert.classList.add('show');
+                document.querySelector('[name="sessionDuration"]').focus();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            if (!data.availability.place) {
+                errorAlert.textContent = '⚠️ Debes seleccionar dónde vas a entrenar';
+                errorAlert.classList.add('show');
+                document.querySelector('[name="trainingPlace"]').focus();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
