@@ -1367,6 +1367,9 @@
               <a href="/rise.html" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(0,217,255,0.07);border:1px solid rgba(0,217,255,0.15);border-radius:6px;color:#00D9FF;text-decoration:none;font-size:13px;transition:background 0.2s" onmouseover="this.style.background='rgba(0,217,255,0.15)'" onmouseout="this.style.background='rgba(0,217,255,0.07)'">
                 <span style="font-weight:700">&#9672;</span> Landing page RISE publica
               </a>
+              <button onclick="openRiseInviteModal()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:6px;color:#22C55E;font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='rgba(34,197,94,0.16)'" onmouseout="this.style.background='rgba(34,197,94,0.08)'">
+                <span style="font-weight:700">&#10009;</span> Invitar a RISE (acceso gratuito)
+              </button>
               <button onclick="loadRiseData()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='var(--surface-3,#222)'" onmouseout="this.style.background='var(--surface-2)'">
                 <span>&#8635;</span> Actualizar datos
               </button>
@@ -1393,6 +1396,78 @@
     </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /app -->
+
+<!-- ═══ MODAL INVITAR RISE ═══ -->
+<div id="riseInviteOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#111113;border:1px solid rgba(34,197,94,0.3);border-top:3px solid #22C55E;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;border-radius:8px;">
+    <div style="padding:24px 28px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:#22C55E;margin-bottom:4px;text-transform:uppercase;">Acceso sin pago</div>
+        <div style="font-size:16px;font-weight:600;color:#fff;">Invitar a Reto RISE</div>
+      </div>
+      <button onclick="closeRiseInviteModal()" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1;" title="Cerrar">&times;</button>
+    </div>
+    <div style="padding:24px 28px;">
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;line-height:1.6;">
+        Crea acceso directo al programa RISE para alguien que ya pago por otro medio (transferencia, efectivo, etc.). No requiere pago en linea.
+      </p>
+      <div id="riseInviteError" style="display:none;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.3);padding:10px 14px;margin-bottom:16px;font-size:12px;color:#E31E24;font-family:'JetBrains Mono',monospace;letter-spacing:1px;border-radius:4px;"></div>
+      <form id="riseInviteForm" autocomplete="off">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Nombre completo</label>
+            <input id="invNombre" type="text" placeholder="Ej: María García" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#22C55E'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Email</label>
+            <input id="invEmail" type="email" placeholder="correo@ejemplo.com" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#22C55E'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Contraseña temporal</label>
+          <input id="invPassword" type="text" placeholder="Min. 6 caracteres" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;font-family:'JetBrains Mono',monospace;" onfocus="this.style.borderColor='#22C55E'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+          <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px;">El usuario puede cambiarla luego desde su perfil.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;">
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Nivel</label>
+            <select id="invNivel" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#22C55E'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <option value="principiante">Principiante</option>
+              <option value="intermedio" selected>Intermedio</option>
+              <option value="avanzado">Avanzado</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Modalidad</label>
+            <select id="invModalidad" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#22C55E'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <option value="gym">Gym</option>
+              <option value="home">Casa</option>
+              <option value="hybrid" selected>Hibrido</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Genero</label>
+            <select id="invGenero" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#22C55E'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <option value="male">Masculino</option>
+              <option value="female">Femenino</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <button type="button" onclick="closeRiseInviteModal()" style="flex:1;padding:12px;background:var(--surface-2,#1a1a1d);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:13px;border-radius:4px;cursor:pointer;">Cancelar</button>
+          <button type="submit" id="invSubmitBtn" style="flex:2;padding:12px;background:#22C55E;border:none;color:#000;font-weight:700;font-size:14px;border-radius:4px;cursor:pointer;letter-spacing:1px;">Crear acceso RISE</button>
+        </div>
+      </form>
+      <div id="riseInviteSuccess" style="display:none;text-align:center;padding:20px 0;">
+        <div style="font-size:40px;margin-bottom:12px;">&#10003;</div>
+        <div style="font-size:16px;font-weight:600;color:#22C55E;margin-bottom:8px;">Acceso creado correctamente</div>
+        <div id="riseInviteSuccessDetail" style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;"></div>
+        <button onclick="closeRiseInviteModal()" style="margin-top:20px;padding:10px 28px;background:#22C55E;border:none;color:#000;font-weight:700;font-size:13px;border-radius:4px;cursor:pointer;">Listo</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast">
@@ -1922,6 +1997,79 @@
         tbody.appendChild(row);
       });
   }
+
+  /* ─── MODAL INVITAR RISE ─── */
+  function openRiseInviteModal() {
+    var overlay = document.getElementById('riseInviteOverlay');
+    overlay.style.display = 'flex';
+    document.getElementById('riseInviteForm').style.display = 'block';
+    document.getElementById('riseInviteSuccess').style.display = 'none';
+    document.getElementById('riseInviteError').style.display = 'none';
+    document.getElementById('riseInviteForm').reset();
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeRiseInviteModal();
+    }, { once: true });
+  }
+
+  function closeRiseInviteModal() {
+    document.getElementById('riseInviteOverlay').style.display = 'none';
+  }
+
+  document.getElementById('riseInviteForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('invSubmitBtn');
+    var errBox = document.getElementById('riseInviteError');
+    errBox.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Creando...';
+
+    var nombre    = document.getElementById('invNombre').value.trim();
+    var email     = document.getElementById('invEmail').value.trim();
+    var password  = document.getElementById('invPassword').value.trim();
+    var nivel     = document.getElementById('invNivel').value;
+    var modalidad = document.getElementById('invModalidad').value;
+    var genero    = document.getElementById('invGenero').value;
+
+    if (!nombre || !email || !password) {
+      errBox.textContent = 'COMPLETA TODOS LOS CAMPOS OBLIGATORIOS';
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Crear acceso RISE';
+      return;
+    }
+
+    try {
+      var token = localStorage.getItem('wc_token') || '';
+      var res = await fetch('/api/admin/rise-invite.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ name: nombre, email: email, password: password, experience_level: nivel, training_location: modalidad, gender: genero })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || data.message || 'Error desconocido');
+
+      document.getElementById('riseInviteForm').style.display = 'none';
+      var detail = document.getElementById('riseInviteSuccessDetail');
+      detail.textContent = '';
+      var line1 = document.createElement('span');
+      line1.style.color = '#fff';
+      line1.textContent = data.client.name;
+      detail.appendChild(line1);
+      detail.appendChild(document.createTextNode(' ya puede ingresar a RISE. Email: '));
+      var emailSpan = document.createElement('code');
+      emailSpan.style.color = '#22C55E';
+      emailSpan.textContent = data.client.email;
+      detail.appendChild(emailSpan);
+      detail.appendChild(document.createTextNode('. Inicio: ' + data.program.start_date + ' — Fin: ' + data.program.end_date));
+      document.getElementById('riseInviteSuccess').style.display = 'block';
+      loadRiseData();
+    } catch(err) {
+      errBox.textContent = (err.message || 'Error al crear acceso').toUpperCase();
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Crear acceso RISE';
+    }
+  });
 
   /* ─── INIT (called after auth verification) ─── */
   function initApp() {

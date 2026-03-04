@@ -8,14 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6.4 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AOS Animations -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    <!-- WellCore v5 Design System -->
     <link rel="stylesheet" href="css/wellcore-v5.css">
     <style>
-        /* CSS Variables fallback — garantiza dark mode incluso sin el CSS externo */
         :root {
             --bg:       #0a0a0a;
             --surface:  #111113;
@@ -25,16 +20,11 @@
             --red:      #E31E24;
             --red-dark: #B8181D;
             --red-dim:  rgba(227,30,36,0.10);
-            --accent:   #00D9FF;
             --green:    #22C55E;
             --white:    #ffffff;
             --gray:     rgba(255,255,255,0.45);
             --gray-dim: rgba(255,255,255,0.18);
         }
-
-        /* ================================================================
-           LOGIN PAGE — INLINE SPECIFICS
-           ================================================================ */
 
         html, body {
             height: 100%;
@@ -44,386 +34,338 @@
             overflow: hidden;
         }
 
-        /* ---- SPLIT LAYOUT ---- */
+        /* ── LAYOUT ── */
         .login-wrapper {
             display: flex;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* ===== LEFT PANEL 40% ===== */
+        /* ── LEFT PANEL ── */
         .panel-left {
-            width: 40%;
-            background: var(--surface);
-            border-right: 1px solid var(--border);
+            width: 42%;
+            background: #0d0d10;
+            border-right: 1px solid rgba(227,30,36,0.12);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            padding: 60px 56px;
+            justify-content: space-between;
+            padding: 56px 52px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Top red accent bar */
-        .panel-left-top-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #E31E24;
-            z-index: 3;
-        }
-
-        /* Animated grid background */
+        /* Subtle grid */
         .panel-left::before {
             content: '';
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(227,30,36,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(227,30,36,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: gridDrift 18s linear infinite;
+                linear-gradient(rgba(227,30,36,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(227,30,36,0.025) 1px, transparent 1px);
+            background-size: 48px 48px;
+            animation: gridDrift 22s linear infinite;
         }
 
         @keyframes gridDrift {
-            0%   { transform: translate(0, 0); }
-            100% { transform: translate(40px, 40px); }
+            0%   { transform: translate(0,0); }
+            100% { transform: translate(48px,48px); }
         }
 
+        /* Red vignette bottom-right */
         .panel-left::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 30% 50%, transparent 40%, rgba(10,10,10,0.8) 100%);
+            background: radial-gradient(ellipse 70% 60% at 100% 100%, rgba(227,30,36,0.07) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        .left-content {
-            position: relative;
-            z-index: 2;
+        /* Top accent bar */
+        .panel-top-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #E31E24 0%, rgba(227,30,36,0.3) 100%);
         }
 
-        .accent-line {
-            width: 48px;
-            height: 3px;
-            background: var(--red);
-            margin-bottom: 32px;
+        .left-body { position: relative; z-index: 2; }
+
+        .accent-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(227,30,36,0.08);
+            border: 1px solid rgba(227,30,36,0.2);
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 36px;
         }
 
-        .wordmark-large {
+        .accent-pill-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%,100% { opacity:1; }
+            50%      { opacity:0.3; }
+        }
+
+        .wordmark {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(64px, 6vw, 96px);
+            font-size: clamp(60px, 5.5vw, 92px);
             color: var(--white);
-            line-height: 0.9;
+            line-height: 0.88;
             letter-spacing: 0.02em;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .wordmark-sub {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.45em;
+            font-size: 10px;
+            letter-spacing: 0.5em;
             color: var(--red);
-            text-transform: uppercase;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
         }
 
         .left-tagline {
-            font-size: 16px;
-            line-height: 1.7;
-            color: var(--gray);
-            max-width: 300px;
-            margin-bottom: 48px;
+            font-size: 15px;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.4);
+            max-width: 280px;
         }
 
-        .left-tagline strong { color: var(--white); }
+        .left-tagline strong { color: rgba(255,255,255,0.8); }
 
-        /* Original stats block */
-        .left-stats {
+        /* Stats row */
+        .left-footer { position: relative; z-index: 2; }
+
+        .stats-divider {
+            border: none;
+            border-top: 1px solid rgba(227,30,36,0.18);
+            margin-bottom: 20px;
+        }
+
+        .stats-row {
             display: flex;
-            gap: 32px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border);
+            gap: 0;
+        }
+
+        .stat-item {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .stat-item:not(:last-child) {
+            border-right: 1px solid var(--border);
+            margin-right: 20px;
         }
 
         .stat-value {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
+            font-size: 26px;
             color: var(--red);
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .stat-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            color: #52525B;
-            text-transform: uppercase;
-        }
-
-        /* V5 mini stats — JetBrains Mono 9px, letter-spacing 2px, border-top red */
-        .left-ministats {
-            display: flex;
-            gap: 0;
-            margin-top: 24px;
-            border-top: 1px solid var(--red);
-            padding-top: 14px;
-        }
-
-        .left-ministat-item {
-            flex: 1;
-            padding-right: 14px;
-        }
-
-        .left-ministat-item:not(:last-child) {
-            border-right: 1px solid var(--border);
-            margin-right: 14px;
-        }
-
-        .left-ministat-value {
-            font-family: 'JetBrains Mono', monospace;
             font-size: 9px;
-            letter-spacing: 2px;
-            color: var(--gray);
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.22);
             text-transform: uppercase;
-            line-height: 1.5;
         }
 
-        .left-badge {
-            position: absolute;
-            bottom: 40px;
-            left: 56px;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--green);
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50%       { opacity: 0.4; transform: scale(0.65); }
-        }
-
-        .badge-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.14em;
-            color: #52525B;
-        }
-
-        /* ===== RIGHT PANEL 60% ===== */
+        /* ── RIGHT PANEL ── */
         .panel-right {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 56px;
+            padding: 56px 52px;
             background: var(--bg);
+            position: relative;
             overflow-y: auto;
         }
 
-        .login-box {
-            width: 100%;
-            max-width: 420px;
+        /* Subtle center glow */
+        .panel-right::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(227,30,36,0.04) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        /* V5 secure access label */
-        .login-secure-label {
+        /* ── LOGIN BOX ── */
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-label {
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--red);
-            margin-bottom: 18px;
+            color: rgba(227,30,36,0.7);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .login-secure-label::before {
+        .login-label::before {
             content: '';
-            display: inline-block;
-            width: 20px;
+            display: block;
+            width: 24px;
             height: 1px;
             background: var(--red);
-        }
-
-        .login-header {
-            margin-bottom: 32px;
-            text-align: center;
-        }
-
-        .login-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            letter-spacing: 0.35em;
-            color: #52525B;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+            flex-shrink: 0;
         }
 
         .login-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 38px;
+            font-size: 44px;
             color: var(--white);
             letter-spacing: 0.04em;
+            line-height: 1;
+            margin-bottom: 6px;
         }
 
-        /* TABS */
-        .tabs-row {
-            display: flex;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 4px;
-            gap: 4px;
-            margin-bottom: 28px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px 0;
+        .login-hint {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: #52525B;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            transition: 0.1s linear;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.22);
+            margin-bottom: 36px;
         }
 
-        .tab-btn.active {
-            background: var(--red);
-            color: var(--white);
-        }
-
-        .tab-btn:not(.active):hover {
-            color: var(--gray);
-        }
-
-        /* TAB PANELS */
-        .tab-panel { display: none; }
-        .tab-panel.active { display: block; }
-
-        /* FORM FIELDS */
+        /* ── FORM ── */
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
             margin-bottom: 16px;
         }
 
         .form-label {
+            display: block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            color: var(--gray);
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 7px;
         }
+
+        .input-wrap { position: relative; }
 
         .form-input {
             width: 100%;
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
             color: var(--white);
-            padding: 13px 16px;
+            padding: 14px 16px;
             font-family: 'Inter', sans-serif;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.1s linear;
+            transition: border-color 0.15s, background 0.15s;
+            border-radius: 2px;
         }
 
-        .form-input::placeholder { color: #52525B; }
-        .form-input:focus { border-color: var(--red); }
+        .form-input::placeholder { color: rgba(255,255,255,0.18); }
 
-        .input-wrap {
-            position: relative;
+        .form-input:focus {
+            border-color: rgba(227,30,36,0.5);
+            border-bottom-color: var(--red);
+            background: rgba(255,255,255,0.04);
         }
 
         .pw-toggle {
             position: absolute;
-            right: 14px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: #52525B;
+            color: rgba(255,255,255,0.25);
             cursor: pointer;
-            font-size: 14px;
-            transition: 0.1s linear;
-            padding: 4px;
+            font-size: 13px;
+            padding: 6px;
+            transition: color 0.15s;
         }
-        .pw-toggle:hover { color: var(--gray); }
+        .pw-toggle:hover { color: rgba(255,255,255,0.5); }
 
-        /* ERROR BOX */
+        /* ── ERROR ── */
         .login-error {
             display: none;
-            background: rgba(227,30,36,0.08);
-            border: 1px solid rgba(227,30,36,0.3);
-            padding: 12px 16px;
+            background: rgba(227,30,36,0.07);
+            border-left: 2px solid var(--red);
+            padding: 10px 14px;
             margin-bottom: 16px;
-            animation: shakeIn 0.3s ease;
-        }
-        @keyframes shakeIn {
-            0%, 100% { transform: translateX(0); }
-            25%       { transform: translateX(-6px); }
-            75%       { transform: translateX(6px); }
+            border-radius: 0 2px 2px 0;
         }
         .login-error.visible { display: block; }
         .login-error-text {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             color: var(--red);
             text-transform: uppercase;
         }
+        @keyframes shakeIn {
+            0%,100% { transform: translateX(0); }
+            25%      { transform: translateX(-5px); }
+            75%      { transform: translateX(5px); }
+        }
 
-        /* SUBMIT BUTTON — v5 enhanced with fill sweep animation */
+        /* ── SUBMIT BUTTON ── */
         .btn-login {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
+            font-size: 19px;
             letter-spacing: 0.12em;
             color: var(--white);
             background: var(--red);
-            border: 4px solid var(--red);
+            border: none;
             cursor: pointer;
-            transition: border-color 0.1s linear;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 10px;
+            margin-top: 10px;
             position: relative;
             overflow: hidden;
+            transition: opacity 0.15s;
+            border-radius: 2px;
         }
 
-        /* V5 fill sweep overlay */
         .btn-login .btn-sweep {
             position: absolute;
             inset: 0;
             background: var(--red-dark);
             transform: translateY(101%);
-            transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
             z-index: 0;
         }
         .btn-login:hover:not(:disabled) .btn-sweep { transform: translateY(0); }
 
-        .btn-login .btn-login-label {
+        .btn-login-label {
             position: relative;
             z-index: 1;
             display: flex;
@@ -431,27 +373,35 @@
             gap: 8px;
         }
 
-        .btn-login:active { opacity: 0.9; }
         .btn-login:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-login.success { background: var(--green); border-color: var(--green); }
+        .btn-login.success { background: var(--green); }
         .btn-login.success .btn-sweep { display: none; }
 
         /* Spinner */
         .spin-ring {
             width: 16px; height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: var(--white);
+            border: 2px solid rgba(255,255,255,0.25);
+            border-top-color: #fff;
             border-radius: 50%;
-            animation: spin 0.7s linear infinite;
+            animation: spin 0.65s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* LINKS BELOW FORM */
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20%      { transform: translateX(-6px); }
+            40%      { transform: translateX(6px); }
+            60%      { transform: translateX(-4px); }
+            80%      { transform: translateX(4px); }
+        }
+        .shake { animation: shake 0.4s ease; }
+
+        /* ── LINKS ── */
         .login-links {
-            margin-top: 24px;
+            margin-top: 22px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 9px;
             align-items: center;
         }
 
@@ -460,73 +410,31 @@
             font-size: 10px;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #52525B;
+            color: rgba(255,255,255,0.25);
             text-decoration: none;
-            transition: 0.1s linear;
+            transition: color 0.15s;
         }
-        .login-link:hover { color: var(--gray); }
+        .login-link:hover { color: rgba(255,255,255,0.55); }
         .login-link.highlight { color: var(--red); }
         .login-link.highlight:hover { color: #ff3a40; }
 
-        /* SHAKE ANIMATION ON FORM */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%       { transform: translateX(-8px); }
-            40%       { transform: translateX(8px); }
-            60%       { transform: translateX(-5px); }
-            80%       { transform: translateX(5px); }
-        }
-        .shake { animation: shake 0.45s ease; }
-
-        /* RESPONSIVE */
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             html, body { overflow: auto; }
             .login-wrapper { flex-direction: column; height: auto; min-height: 100vh; }
-            .panel-left { width: 100%; padding: 40px 28px; min-height: 240px; }
+            .panel-left { width: 100%; padding: 40px 28px 36px; min-height: 220px; justify-content: flex-start; }
             .panel-right { padding: 40px 24px 60px; }
-            .wordmark-large { font-size: 56px; }
-            .left-badge { display: none; }
-            .left-ministats { display: none; }
-            .form-input { font-size: 16px; }
-        }
-
-        @media (max-width: 576px) {
-            .panel-left { padding: 32px 20px; min-height: 200px; }
-            .panel-right { padding: 32px 20px 48px; }
-            .wordmark-large { font-size: 44px; }
-            .wordmark-sub { font-size: 10px; margin-bottom: 32px; }
-            .left-tagline { font-size: 15px; margin-bottom: 32px; }
-            .accent-line { margin-bottom: 24px; }
-            .login-title { font-size: 32px; }
-            .login-header { margin-bottom: 24px; }
-            .tabs-row { margin-bottom: 22px; }
-            .tab-btn { padding: 12px 0; font-size: 10px; min-height: 44px; }
-            .form-input { padding: 14px 16px; font-size: 16px; }
-            .btn-login { padding: 16px; font-size: 18px; min-height: 48px; }
-            .left-stats { gap: 20px; }
-            .stat-value { font-size: 24px; }
-            .login-links { gap: 12px; }
-            .login-link { font-size: 11px; min-height: 44px; display: flex; align-items: center; }
+            .wordmark { font-size: 52px; }
+            .left-tagline { display: none; }
         }
 
         @media (max-width: 480px) {
-            .panel-left { padding: 24px 16px; min-height: 180px; }
-            .panel-right { padding: 24px 16px 40px; }
-            .wordmark-large { font-size: 38px; }
-            .wordmark-sub { font-size: 9px; letter-spacing: 0.35em; margin-bottom: 24px; }
-            .left-tagline { font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
-            .accent-line { margin-bottom: 20px; width: 36px; }
-            .login-title { font-size: 28px; }
-            .login-header { margin-bottom: 20px; }
-            .login-secure-label { font-size: 8px; letter-spacing: 2px; margin-bottom: 14px; }
-            .tabs-row { margin-bottom: 18px; }
-            .tab-btn { padding: 12px 0; min-height: 44px; }
-            .form-group { margin-bottom: 14px; gap: 6px; }
-            .form-input { padding: 14px 14px; font-size: 16px; }
-            .btn-login { padding: 16px; font-size: 16px; min-height: 48px; }
-            .pw-toggle { padding: 8px; min-width: 44px; min-height: 44px; }
-            .left-stats { flex-wrap: wrap; gap: 16px; }
-            .login-box { max-width: 100%; }
+            .panel-left { padding: 28px 20px; min-height: 180px; }
+            .panel-right { padding: 28px 20px 48px; }
+            .wordmark { font-size: 42px; }
+            .login-title { font-size: 36px; }
+            .form-input { font-size: 16px; padding: 14px; }
+            .btn-login { font-size: 17px; min-height: 50px; }
         }
     </style>
 </head>
@@ -538,159 +446,101 @@
     <div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div>
 </div>
 
-<!-- Early redirect if already logged in (token-based) -->
+<!-- Early redirect if already logged in -->
 <script>
     (function() {
-        if (localStorage.getItem('wc_token')) {
-            var role = localStorage.getItem('wc_user_type');
+        var token = localStorage.getItem('wc_token');
+        var role  = localStorage.getItem('wc_user_type');
+        if (token) {
             if (role === 'admin') { window.location.replace('admin.html'); return; }
-            window.location.replace('cliente.html'); return;
+            window.location.replace('cliente.html');
         }
     })();
 </script>
 
 <div class="login-wrapper">
 
-    <!-- ===== LEFT PANEL ===== -->
+    <!-- ═══ LEFT ═══ -->
     <div class="panel-left">
+        <div class="panel-top-bar"></div>
 
-        <!-- V5 top red accent bar -->
-        <div class="panel-left-top-bar"></div>
-
-        <div class="left-content">
-
-            <div class="accent-line" data-aos="fade-right" data-aos-duration="600"></div>
-
-            <div class="wordmark-large" data-aos="fade-up" data-aos-delay="60">WELLCORE</div>
-            <div class="wordmark-sub" data-aos="fade-up" data-aos-delay="120">FITNESS</div>
-
-            <p class="left-tagline" data-aos="fade-up" data-aos-delay="180">
-                Tu portal de acceso exclusivo. Aquí encontrarás tu <strong>programación, nutrición y seguimiento</strong> personalizado con el coach.
+        <div class="left-body">
+            <div class="accent-pill">
+                <div class="accent-pill-dot"></div>
+                Portal activo
+            </div>
+            <div class="wordmark">WELLCORE</div>
+            <div class="wordmark-sub">FITNESS</div>
+            <p class="left-tagline">
+                Tu portal de acceso exclusivo.<br>
+                <strong>Programación, nutrición y seguimiento</strong> personalizado con tu coach.
             </p>
+        </div>
 
-            <!-- Original stats block -->
-            <div class="left-stats" data-aos="fade-up" data-aos-delay="240">
+        <div class="left-footer">
+            <hr class="stats-divider">
+            <div class="stats-row">
                 <div class="stat-item">
                     <div class="stat-value">200+</div>
                     <div class="stat-label">Clientes activos</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value">3</div>
-                    <div class="stat-label">Planes disponibles</div>
+                    <div class="stat-label">Planes</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value">24/7</div>
-                    <div class="stat-label">Acceso al portal</div>
+                    <div class="stat-label">Acceso</div>
                 </div>
             </div>
-
-            <!-- V5 mini stats row — 3 items, JetBrains Mono 9px, letter-spacing 2px, border-top red -->
-            <div class="left-ministats" data-aos="fade-up" data-aos-delay="310">
-                <div class="left-ministat-item">
-                    <div class="left-ministat-value">+500 CLIENTES</div>
-                </div>
-                <div class="left-ministat-item">
-                    <div class="left-ministat-value">3 PLANES</div>
-                </div>
-                <div class="left-ministat-item">
-                    <div class="left-ministat-value">100% ONLINE</div>
-                </div>
-            </div>
-
         </div>
-
-        <div class="left-badge">
-            <div class="badge-dot"></div>
-            <div class="badge-text">Portal activo y seguro</div>
-        </div>
-
     </div>
 
-    <!-- ===== RIGHT PANEL ===== -->
+    <!-- ═══ RIGHT ═══ -->
     <div class="panel-right">
-        <div class="login-box" data-v5-reveal>
+        <div class="login-box">
 
-            <!-- V5 secure access label above form -->
-            <div class="login-secure-label" data-aos="fade-down" data-aos-duration="500">
-                <i class="fas fa-shield-alt" aria-hidden="true"></i> ACCESO SEGURO
+            <div class="login-label">
+                <i class="fas fa-lock" aria-hidden="true"></i> Acceso seguro
             </div>
 
-            <div class="login-header" data-aos="fade-up" data-aos-delay="60">
-                <div class="login-eyebrow">Portal de acceso</div>
-                <div class="login-title">INICIA SESIÓN</div>
+            <div class="login-title">INICIA SESIÓN</div>
+            <div class="login-hint">Ingresa tu email o usuario y contraseña</div>
+
+            <div class="login-error" id="loginError">
+                <div class="login-error-text" id="loginErrorText">Credenciales incorrectas</div>
             </div>
 
-            <!-- TABS -->
-            <div class="tabs-row" role="tablist" data-aos="fade-up" data-aos-delay="120">
-                <button class="tab-btn active" id="tabClientes" role="tab" aria-selected="true" onclick="switchTab('clientes')">
-                    <i class="fas fa-user-circle" aria-hidden="true" style="margin-right:6px;font-size:11px;"></i> Clientes
+            <form id="loginForm" autocomplete="off" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="loginId">Email o usuario</label>
+                    <input class="form-input" type="text" id="loginId" placeholder="tu@email.com o usuario" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="loginPw">Contraseña</label>
+                    <div class="input-wrap">
+                        <input class="form-input" type="password" id="loginPw" placeholder="••••••••" autocomplete="current-password" style="padding-right:44px">
+                        <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="Mostrar contraseña">
+                            <i class="fas fa-eye" id="pwIcon" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="btn-login" type="submit" id="btnLogin">
+                    <div class="btn-sweep"></div>
+                    <div class="btn-login-label">
+                        <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i>
+                        INGRESAR
+                    </div>
                 </button>
-                <button class="tab-btn" id="tabAdmin" role="tab" aria-selected="false" onclick="switchTab('admin')">
-                    <i class="fas fa-user-shield" aria-hidden="true" style="margin-right:6px;font-size:11px;"></i> Admin
-                </button>
-            </div>
+            </form>
 
-            <!-- ===== CLIENTES PANEL ===== -->
-            <div class="tab-panel active" id="panelClientes" data-aos="fade-up" data-aos-delay="180">
-                <div class="login-error" id="errorClientes">
-                    <div class="login-error-text"><i class="fas fa-exclamation-circle" aria-hidden="true" style="color:#E31E24;margin-right:6px;"></i>Email o contraseña incorrectos</div>
-                </div>
-                <form id="formClientes" autocomplete="off" novalidate>
-                    <div class="form-group">
-                        <label class="form-label" for="cEmail"><i class="fas fa-user" aria-hidden="true" style="margin-right:5px;"></i>Email</label>
-                        <input class="form-input" type="email" id="cEmail" placeholder="tu@email.com" autocomplete="username">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="cPassword"><i class="fas fa-lock" aria-hidden="true" style="margin-right:5px;"></i>Contraseña</label>
-                        <div class="input-wrap">
-                            <input class="form-input" type="password" id="cPassword" placeholder="••••••••" autocomplete="current-password" style="padding-right:44px">
-                            <button type="button" class="pw-toggle" onclick="togglePw('cPassword',this)" aria-label="Mostrar contraseña"><i class="fas fa-eye" aria-hidden="true"></i></button>
-                        </div>
-                    </div>
-                    <button class="btn-login" type="submit" id="btnClientes">
-                        <div class="btn-sweep"></div>
-                        <div class="btn-login-label"><i class="fas fa-arrow-right-to-bracket" aria-hidden="true" style="margin-right:7px;"></i>INGRESAR AL PORTAL</div>
-                    </button>
-                </form>
-                <div class="login-links">
-                    <a href="mailto:info@wellcorefitness.com" class="login-link">
-                        <i class="fas fa-question-circle" aria-hidden="true" style="margin-right:5px;"></i>¿Olvidaste tu acceso? Escríbenos
-                    </a>
-                    <a href="pagar.html" class="login-link highlight">
-                        <i class="fas fa-star" aria-hidden="true" style="margin-right:5px;"></i>¿Aún no eres cliente? Únete ahora →
-                    </a>
-                </div>
-            </div>
-
-            <!-- ===== ADMIN PANEL ===== -->
-            <div class="tab-panel" id="panelAdmin">
-                <div class="login-error" id="errorAdmin">
-                    <div class="login-error-text"><i class="fas fa-exclamation-circle" aria-hidden="true" style="color:#E31E24;margin-right:6px;"></i>Usuario o contraseña incorrectos</div>
-                </div>
-                <form id="formAdmin" autocomplete="off" novalidate>
-                    <div class="form-group">
-                        <label class="form-label" for="aUser"><i class="fas fa-user-shield" aria-hidden="true" style="margin-right:5px;"></i>Usuario</label>
-                        <input class="form-input" type="text" id="aUser" placeholder="usuario" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="aPassword"><i class="fas fa-lock" aria-hidden="true" style="margin-right:5px;"></i>Contraseña</label>
-                        <div class="input-wrap">
-                            <input class="form-input" type="password" id="aPassword" placeholder="••••••••" autocomplete="off" style="padding-right:44px">
-                            <button type="button" class="pw-toggle" onclick="togglePw('aPassword',this)" aria-label="Mostrar contraseña"><i class="fas fa-eye" aria-hidden="true"></i></button>
-                        </div>
-                    </div>
-                    <button class="btn-login" type="submit" id="btnAdmin">
-                        <div class="btn-sweep"></div>
-                        <div class="btn-login-label">
-                            <i class="fas fa-arrow-right-to-bracket" aria-hidden="true" style="margin-right:7px;"></i>ACCESO ADMINISTRATIVO
-                        </div>
-                    </button>
-                </form>
-                <div class="login-links">
-                    <a href="mailto:info@wellcorefitness.com" class="login-link">
-                        <i class="fas fa-question-circle" aria-hidden="true" style="margin-right:5px;"></i>¿Problemas de acceso? Escríbenos
-                    </a>
-                </div>
+            <div class="login-links">
+                <a href="mailto:info@wellcorefitness.com" class="login-link">
+                    <i class="fas fa-question-circle" aria-hidden="true" style="margin-right:4px;"></i>¿Problemas de acceso? Escríbenos
+                </a>
+                <a href="pagar.html" class="login-link highlight">
+                    <i class="fas fa-star" aria-hidden="true" style="margin-right:4px;"></i>¿Aún no eres cliente? Únete →
+                </a>
             </div>
 
         </div>
@@ -700,185 +550,122 @@
 
 <script src="js/api.js"></script>
 <script>
-/* ================================================================
-   TAB SWITCHER
-   ================================================================ */
-function switchTab(tab) {
-    var panels = document.querySelectorAll('.tab-panel');
-    var btns   = document.querySelectorAll('.tab-btn');
-    panels.forEach(function(p) { p.classList.remove('active'); });
-    btns.forEach(function(b)   { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-
-    if (tab === 'clientes') {
-        document.getElementById('panelClientes').classList.add('active');
-        document.getElementById('tabClientes').classList.add('active');
-        document.getElementById('tabClientes').setAttribute('aria-selected','true');
-    } else {
-        document.getElementById('panelAdmin').classList.add('active');
-        document.getElementById('tabAdmin').classList.add('active');
-        document.getElementById('tabAdmin').setAttribute('aria-selected','true');
-    }
-    document.getElementById('errorClientes').classList.remove('visible');
-    document.getElementById('errorAdmin').classList.remove('visible');
-}
-
-/* ================================================================
-   PASSWORD TOGGLE
-   ================================================================ */
-function togglePw(inputId, btn) {
-    var el = document.getElementById(inputId);
-    var icon = btn.querySelector('i');
+/* ── TOGGLE PASSWORD ── */
+function togglePw() {
+    var el   = document.getElementById('loginPw');
+    var icon = document.getElementById('pwIcon');
     if (el.type === 'password') {
         el.type = 'text';
-        if (icon) { icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); }
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
     } else {
         el.type = 'password';
-        if (icon) { icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); }
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
     }
 }
 
-/* ================================================================
-   HELPERS
-   ================================================================ */
-function setLoading(btnId, loading) {
-    var btn = document.getElementById(btnId);
-    if (loading) {
-        btn.disabled = true;
-        var label = btn.querySelector('.btn-login-label');
-        if (label) {
-            label.textContent = '';
-            var ring = document.createElement('div');
-            ring.className = 'spin-ring';
-            label.appendChild(ring);
+/* ── HELPERS ── */
+function setLoading(on) {
+    var btn   = document.getElementById('btnLogin');
+    var label = btn.querySelector('.btn-login-label');
+    btn.disabled = on;
+    label.textContent = '';
+    if (on) {
+        var ring = document.createElement('div');
+        ring.className = 'spin-ring';
+        label.appendChild(ring);
+    } else {
+        var icon = document.createElement('i');
+        icon.className = 'fas fa-arrow-right-to-bracket';
+        icon.setAttribute('aria-hidden', 'true');
+        label.appendChild(icon);
+        label.appendChild(document.createTextNode(' INGRESAR'));
+    }
+}
+
+function showError(msg) {
+    var errBox = document.getElementById('loginError');
+    document.getElementById('loginErrorText').textContent = msg;
+    errBox.classList.add('visible');
+    errBox.style.animation = 'none';
+    errBox.offsetHeight; // reflow
+    errBox.style.animation = 'shakeIn 0.3s ease';
+    document.getElementById('loginForm').classList.add('shake');
+    setTimeout(function() { document.getElementById('loginForm').classList.remove('shake'); }, 450);
+}
+
+function hideError() {
+    document.getElementById('loginError').classList.remove('visible');
+}
+
+function onSuccess(redirect) {
+    var btn   = document.getElementById('btnLogin');
+    var label = btn.querySelector('.btn-login-label');
+    btn.disabled = true;
+    btn.className = 'btn-login success';
+    label.textContent = '\u2713 BIENVENIDO';
+    setTimeout(function() { window.location.href = redirect + '?v=' + Date.now(); }, 750);
+}
+
+/* ── UNIFIED LOGIN ── */
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    hideError();
+
+    var identifier = document.getElementById('loginId').value.trim();
+    var password   = document.getElementById('loginPw').value;
+
+    if (!identifier || !password) return;
+    setLoading(true);
+
+    // Detect type: email → client, plain username → admin
+    var isEmail = identifier.indexOf('@') !== -1;
+
+    if (isEmail) {
+        // Try client login
+        try {
+            var data = await WC_API.auth.login('client', identifier, password);
+            if (data && data.token) { onSuccess('cliente.html'); return; }
+            throw new Error('No token');
+        } catch(err) {
+            setLoading(false);
+            var msg = err.message && err.message.indexOf('429') !== -1
+                ? 'DEMASIADOS INTENTOS. ESPERA 15 MIN.'
+                : err.message && err.message.indexOf('fetch') !== -1
+                    ? 'SERVIDOR NO DISPONIBLE'
+                    : 'EMAIL O CONTRASE\u00d1A INCORRECTOS';
+            showError(msg);
         }
     } else {
-        btn.disabled = false;
-    }
-}
-
-function showError(errId, formId, msg) {
-    var errBox = document.getElementById(errId);
-    if (msg) {
-        var textEl = errBox.querySelector('.login-error-text');
-        if (textEl) textEl.textContent = msg;
-    }
-    errBox.classList.add('visible');
-    var form = document.getElementById(formId);
-    form.classList.add('shake');
-    setTimeout(function() { form.classList.remove('shake'); }, 500);
-}
-
-/* ================================================================
-   CLIENTES LOGIN — API only (no fallback)
-   ================================================================ */
-document.getElementById('formClientes').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    document.getElementById('errorClientes').classList.remove('visible');
-
-    var email    = document.getElementById('cEmail').value.trim().toLowerCase();
-    var password = document.getElementById('cPassword').value;
-
-    if (!email || !password) return;
-    setLoading('btnClientes', true);
-
-    try {
-        var data = await WC_API.auth.login('client', email, password);
-        if (data && data.token) {
-            var btn = document.getElementById('btnClientes');
-            btn.disabled = true;
-            btn.className = 'btn-login success';
-            var label = btn.querySelector('.btn-login-label');
-            if (label) label.textContent = '\u2713 BIENVENIDO/A';
-            setTimeout(function() { window.location.href = 'cliente.html'; }, 800);
-            return;
+        // Try admin login (username)
+        try {
+            var data = await WC_API.auth.login('admin', identifier, password);
+            if (data && data.token) {
+                var role = (data.user && data.user.role) ? data.user.role : '';
+                var redirect = 'admin.html';
+                if (role === 'coach') redirect = 'coach-portal.html';
+                onSuccess(redirect);
+                return;
+            }
+            throw new Error('No token');
+        } catch(err) {
+            setLoading(false);
+            var msg = err.message && err.message.indexOf('429') !== -1
+                ? 'DEMASIADOS INTENTOS. ESPERA 15 MIN.'
+                : err.message && err.message.indexOf('fetch') !== -1
+                    ? 'SERVIDOR NO DISPONIBLE'
+                    : 'USUARIO O CONTRASE\u00d1A INCORRECTOS';
+            showError(msg);
         }
-        throw new Error('No token received');
-    } catch (err) {
-        setLoading('btnClientes', false);
-        var label = document.getElementById('btnClientes').querySelector('.btn-login-label');
-        if (label) label.textContent = 'INGRESAR AL PORTAL';
-        var msg = (err.message && err.message.indexOf('429') !== -1)
-            ? 'DEMASIADOS INTENTOS. ESPERA 15 MINUTOS.'
-            : (err.message && err.message.indexOf('fetch') !== -1)
-                ? 'SERVIDOR NO DISPONIBLE. INTENTA MAS TARDE.'
-                : 'EMAIL O CONTRASENA INCORRECTOS';
-        showError('errorClientes', 'formClientes', msg);
     }
 });
 
-/* ================================================================
-   ADMIN LOGIN — API only (no fallback)
-   ================================================================ */
-document.getElementById('formAdmin').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    document.getElementById('errorAdmin').classList.remove('visible');
-
-    var user     = document.getElementById('aUser').value.trim();
-    var password = document.getElementById('aPassword').value;
-
-    if (!user || !password) return;
-    setLoading('btnAdmin', true);
-
-    try {
-        var data = await WC_API.auth.login('admin', user, password);
-        if (data && data.token) {
-            var role = (data.user && data.user.role) ? data.user.role : '';
-            var redirect = 'admin.html';
-            if (role === 'jefe' || role === 'superadmin') redirect = 'admin.html';
-            else if (role === 'coach') redirect = 'coach-portal.html';
-            else if (role === 'coaches' || role === 'coach_manager') redirect = 'admin-coaches.html';
-            else if (role === 'clientes') redirect = 'admin-clientes.html';
-
-            var btn = document.getElementById('btnAdmin');
-            btn.disabled = true;
-            btn.className = 'btn-login success';
-            var label = btn.querySelector('.btn-login-label');
-            if (label) label.textContent = '\u2713 ACCESO CONCEDIDO';
-            // Add cache-bust param to ensure fresh admin page (avoids stale JS auth logic)
-            var cacheBust = redirect + '?v=' + Date.now();
-            setTimeout(function() { window.location.href = cacheBust; }, 800);
-            return;
-        }
-        throw new Error('No token received');
-    } catch (err) {
-        setLoading('btnAdmin', false);
-        var adminBtn = document.getElementById('btnAdmin');
-        var adminLabel = adminBtn.querySelector('.btn-login-label');
-        if (adminLabel) {
-            adminLabel.textContent = '';
-            var iconEl = document.createElement('i');
-            iconEl.className = 'fas fa-arrow-right-to-bracket';
-            iconEl.setAttribute('aria-hidden', 'true');
-            iconEl.style.marginRight = '7px';
-            adminLabel.appendChild(iconEl);
-            adminLabel.appendChild(document.createTextNode('ACCESO ADMINISTRATIVO'));
-        }
-        var msg = (err.message && err.message.indexOf('429') !== -1)
-            ? 'DEMASIADOS INTENTOS. ESPERA 15 MINUTOS.'
-            : (err.message && err.message.indexOf('fetch') !== -1)
-                ? 'SERVIDOR NO DISPONIBLE. INTENTA MAS TARDE.'
-                : 'USUARIO O CONTRASENA INCORRECTOS';
-        showError('errorAdmin', 'formAdmin', msg);
-    }
-});
-
-/* Clear errors on input */
-document.getElementById('cEmail').addEventListener('input',    function() { document.getElementById('errorClientes').classList.remove('visible'); });
-document.getElementById('cPassword').addEventListener('input', function() { document.getElementById('errorClientes').classList.remove('visible'); });
-document.getElementById('aUser').addEventListener('input',     function() { document.getElementById('errorAdmin').classList.remove('visible'); });
-document.getElementById('aPassword').addEventListener('input', function() { document.getElementById('errorAdmin').classList.remove('visible'); });
+document.getElementById('loginId').addEventListener('input', hideError);
+document.getElementById('loginPw').addEventListener('input', hideError);
 </script>
+
 <script src="js/chat-widget.js" defer></script>
-
-<!-- AOS Init -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init({duration:700, once:true, offset:30});</script>
-
-<!-- V5 Effects (preloader, v5-reveal, custom cursor) -->
-<script src="js/v5-effects.js" defer></script>
-
-<!-- RISE Challenge Modal -->
 <script src="js/rise-modal.js"></script>
+<script src="js/v5-effects.js" defer></script>
 
 <a href="https://wa.me/573124904720" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="white" style="display:block;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
