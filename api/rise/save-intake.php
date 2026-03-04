@@ -80,6 +80,8 @@ try {
     ], 200);
 
 } catch (PDOException $e) {
-    respondError('Error al guardar datos de intake', 500);
+    // Log the actual error
+    error_log('save-intake.php error: ' . $e->getMessage());
+    respondError('Error al guardar datos de intake: ' . $e->getMessage(), 500);
 }
 ?>
