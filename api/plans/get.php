@@ -13,13 +13,14 @@ $db     = getDB();
 $type = $_GET['type'] ?? null;
 
 // Plan-level access control
+// Los clientes RISE tienen acceso a todos los tipos de plan
 $planAccess = [
     'entrenamiento' => 'esencial',
     'nutricion'     => 'metodo',
     'habitos'       => 'elite',
 ];
 
-if ($type && isset($planAccess[$type])) {
+if ($type && isset($planAccess[$type]) && $client['plan'] !== 'rise') {
     requirePlan($client, $planAccess[$type]);
 }
 

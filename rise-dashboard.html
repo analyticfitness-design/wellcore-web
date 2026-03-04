@@ -642,31 +642,30 @@
                 </h1>
                 <p style="color: var(--gray); margin-bottom: 30px;">Tu programa personalizado de entrenamiento para los 30 días</p>
 
-                <div class="card">
-                    <div class="card-title">Semana 2 de 4</div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                        <div style="text-align: center; padding: 15px; background: var(--surface);">
-                            <div style="color: var(--red); font-weight: 600; margin-bottom: 8px;">Día 8</div>
-                            <div style="color: var(--gray); font-size: 12px;">Pecho &amp; Tríceps</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: var(--surface);">
-                            <div style="color: var(--red); font-weight: 600; margin-bottom: 8px;">Día 9</div>
-                            <div style="color: var(--gray); font-size: 12px;">Descanso</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: var(--surface);">
-                            <div style="color: var(--red); font-weight: 600; margin-bottom: 8px;">Día 10</div>
-                            <div style="color: var(--gray); font-size: 12px;">Espalda &amp; Bíceps</div>
-                        </div>
-                    </div>
+                <!-- Estado cargando -->
+                <div id="trainingLoading" class="card" style="text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--red); font-size: 24px; margin-bottom: 15px; display: block;"></i>
+                    <span style="color: var(--gray); font-size: 14px;">Cargando tu programa personalizado...</span>
                 </div>
 
-                <div class="card">
-                    <div class="card-title">Descarga tu Programa</div>
-                    <button class="btn-primary" style="width: 100%; margin-bottom: 10px;">
-                        <i class="fas fa-download"></i> Descargar PDF Completo
+                <!-- Plan cargado desde API -->
+                <div id="trainingPlanContainer" style="display: none;">
+                    <!-- El HTML del plan personalizado se inyecta aquí via JS -->
+                </div>
+
+                <!-- Fallback: sin plan asignado aún -->
+                <div id="trainingEmpty" class="card" style="display: none; text-align: center; padding: 40px;">
+                    <i class="fas fa-clock" style="color: var(--gray); font-size: 36px; margin-bottom: 15px; display: block;"></i>
+                    <div style="color: var(--white); font-weight: 600; margin-bottom: 8px;">Tu programa está en preparación</div>
+                    <p style="color: var(--gray); font-size: 13px;">Tu coach está personalizando tu plan. Lo verás aquí en las próximas horas. ¿Tienes dudas? Escríbenos por soporte.</p>
+                    <button class="btn-secondary" style="width: 100%; margin-top: 20px;" onclick="showSection('support', null)">
+                        <i class="fas fa-headset"></i> Contactar Soporte
                     </button>
-                    <button class="btn-secondary" style="width: 100%;">
-                        <i class="fas fa-play-circle"></i> Ver Videos de Ejercicios
+                </div>
+
+                <div class="card" style="margin-top: 20px;">
+                    <button class="btn-primary" style="width: 100%;" onclick="printPlan('entrenamiento')">
+                        <i class="fas fa-download"></i> Imprimir / Descargar PDF
                     </button>
                 </div>
             </section>
@@ -676,27 +675,26 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-utensils"></i> Nutrición
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Guía de nutrición para optimizar tus resultados</p>
+                <p style="color: var(--gray); margin-bottom: 30px;">Tu guía de nutrición personalizada para el reto</p>
 
-                <div class="card">
-                    <div class="card-title">Tus Macronutrientes Diarios</div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
-                        <div style="text-align: center; padding: 20px; background: var(--surface); border-left: 3px solid var(--red);">
-                            <div style="color: var(--red); font-family: 'Bebas Neue'; font-size: 24px; margin-bottom: 5px;">180g</div>
-                            <div style="color: var(--gray); font-size: 12px;">Proteína</div>
-                        </div>
-                        <div style="text-align: center; padding: 20px; background: var(--surface); border-left: 3px solid var(--red);">
-                            <div style="color: var(--red); font-family: 'Bebas Neue'; font-size: 24px; margin-bottom: 5px;">150g</div>
-                            <div style="color: var(--gray); font-size: 12px;">Carbohidratos</div>
-                        </div>
-                        <div style="text-align: center; padding: 20px; background: var(--surface); border-left: 3px solid var(--red);">
-                            <div style="color: var(--red); font-family: 'Bebas Neue'; font-size: 24px; margin-bottom: 5px;">60g</div>
-                            <div style="color: var(--gray); font-size: 12px;">Grasas</div>
-                        </div>
-                    </div>
+                <!-- Plan de nutrición dinámico -->
+                <div id="nutritionLoading" class="card" style="text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--red); font-size: 24px; margin-bottom: 15px; display: block;"></i>
+                    <span style="color: var(--gray); font-size: 14px;">Cargando tu guía de nutrición...</span>
                 </div>
 
-                <div class="card">
+                <div id="nutritionPlanContainer" style="display: none;">
+                    <!-- HTML de nutrición inyectado desde API -->
+                </div>
+
+                <div id="nutritionEmpty" class="card" style="display: none; text-align: center; padding: 40px;">
+                    <i class="fas fa-utensils" style="color: var(--gray); font-size: 36px; margin-bottom: 15px; display: block;"></i>
+                    <div style="color: var(--white); font-weight: 600; margin-bottom: 8px;">Guía de nutrición en preparación</div>
+                    <p style="color: var(--gray); font-size: 13px;">Tu coach está personalizando tu guía nutricional.</p>
+                </div>
+
+                <!-- Hidratación siempre disponible -->
+                <div class="card" style="margin-top: 20px;">
                     <div class="card-title">Hidratación Diaria</div>
                     <p style="color: var(--gray); font-size: 13px; margin-bottom: 15px;">Meta: 3L de agua por día</p>
                     <div style="display: flex; gap: 8px;">
@@ -708,9 +706,8 @@
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Recetas Sugeridas</div>
-                    <button class="btn-secondary" style="width: 100%;">
-                        <i class="fas fa-book"></i> Ver Recetas Recomendadas
+                    <button class="btn-primary" style="width: 100%;" onclick="printPlan('nutricion')">
+                        <i class="fas fa-download"></i> Imprimir / Descargar PDF
                     </button>
                 </div>
             </section>
@@ -734,28 +731,33 @@
 
                 <div class="card">
                     <div class="card-title">Hábitos para Hoy</div>
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Hábitos se renderizan dinámicamente desde el plan asignado -->
+                    <div id="habitsCheckList" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Hábitos por defecto (se reemplazan si hay plan habitos en la API) -->
                         <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
-                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="breakfast">
-                            <span>Desayunar en los primeros 30 min de despertar</span>
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="h1">
+                            <span>Entrenar según mi programa del día</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
-                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="training">
-                            <span>Entrenar según programa (45-60 min)</span>
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="h2">
+                            <span>Seguir el plan de nutrición</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
-                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="water">
-                            <span>Beber 3L de agua mínimo</span>
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="h3">
+                            <span>Beber mínimo 2.5L de agua</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
-                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="sleep">
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="h4">
                             <span>Dormir 7-8 horas</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--gray);">
-                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="photo">
-                            <span>Tomar foto de progreso (2-3 veces por semana)</span>
+                            <input type="checkbox" class="habit-check" style="width: 18px; height: 18px; accent-color: var(--red); cursor: pointer;" data-habit="h5">
+                            <span>Registrar progreso en el dashboard</span>
                         </label>
                     </div>
+                    <button class="btn-primary" style="width: 100%; margin-top: 16px;" onclick="saveHabitsToAPI()">
+                        <i class="fas fa-save"></i> Guardar Hábitos del Día
+                    </button>
                 </div>
             </section>
 
@@ -808,7 +810,7 @@
                         <textarea id="noteInput" rows="3" placeholder="¿Cómo te sentiste hoy?" maxlength="500"></textarea>
                     </div>
 
-                    <button class="btn-primary" style="width: 100%;" onclick="saveTracking()">
+                    <button class="btn-primary" style="width: 100%;" onclick="saveTrackingToAPI()">
                         <i class="fas fa-save"></i> Guardar Registro
                     </button>
                 </div>
@@ -857,7 +859,7 @@
                             <input type="number" id="mArm" step="0.5" placeholder="Ej: 35" min="0" max="200">
                         </div>
                     </div>
-                    <button class="btn-primary" style="width: 100%;" onclick="saveMeasurement()">
+                    <button class="btn-primary" style="width: 100%;" onclick="saveMeasurementToAPI()">
                         <i class="fas fa-save"></i> Guardar Medición
                     </button>
                 </div>
@@ -1011,10 +1013,223 @@
 
     <script>
         // ════════════════════════════════════════
-        // PHASE 4-6: FULL ENHANCED JAVASCRIPT
+        // RISE DASHBOARD — API-CONNECTED
         // ════════════════════════════════════════
 
-        const TODAY = new Date().toISOString().split('T')[0];
+        const TODAY    = new Date().toISOString().split('T')[0];
+        const API_BASE = '/api';
+        const TOKEN    = localStorage.getItem('wc_token') || '';
+
+        // ─── WATERMARK ───────────────────────────────────────────────────────────
+        // Superpone el nombre+email del cliente en el dashboard y en los planes.
+        // No previene screenshots técnicamente, pero deja rastro del usuario si
+        // la imagen se filtra — disuasivo real y legal.
+        function applyWatermark() {
+            var name  = localStorage.getItem('wc_client_name')  || TOKEN ? 'Cliente' : '';
+            var email = localStorage.getItem('wc_client_email') || '';
+            if (!name && !email) return;
+
+            // Evitar duplicar
+            if (document.getElementById('wc-watermark')) return;
+
+            var wm = document.createElement('div');
+            wm.id = 'wc-watermark';
+
+            var label = (name + (email ? '  ·  ' + email : '') + '  ·  WELLCORE RISE').repeat(6);
+
+            wm.style.cssText = [
+                'position:fixed;inset:0;z-index:9000',
+                'pointer-events:none',
+                'display:flex;align-items:center;justify-content:center',
+                'overflow:hidden'
+            ].join(';');
+
+            var inner = document.createElement('div');
+            inner.style.cssText = [
+                'width:200%;height:200%',
+                'transform:rotate(-25deg)',
+                'display:flex;flex-wrap:wrap;align-items:flex-start;gap:48px 32px',
+                'opacity:0.045'
+            ].join(';');
+
+            // Generar grilla de texto repetido
+            for (var i = 0; i < 40; i++) {
+                var span = document.createElement('span');
+                span.style.cssText = [
+                    'font-family:monospace;font-size:11px',
+                    'letter-spacing:.06em;color:#ffffff',
+                    'white-space:nowrap;user-select:none'
+                ].join(';');
+                span.textContent = name.toUpperCase() + '  ·  ' + (email || 'WELLCORE')  + '  ·  RISE 2026';
+                inner.appendChild(span);
+            }
+
+            wm.appendChild(inner);
+            document.body.appendChild(wm);
+        }
+
+        // Renders server-supplied plan HTML safely inside a sandboxed iframe
+        function renderPlanContent(containerId, htmlContent) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            // Remove old iframe if any
+            var old = container.querySelector('iframe.plan-frame');
+            if (old) old.remove();
+            var frame = document.createElement('iframe');
+            frame.className    = 'plan-frame';
+            frame.style.cssText = 'width:100%;border:none;min-height:600px;background:transparent;';
+            frame.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups');
+            container.appendChild(frame);
+            // srcdoc renders HTML without requiring a network URL
+            frame.srcdoc = htmlContent;
+            // Auto-resize once content loads
+            frame.addEventListener('load', function() {
+                try { frame.style.height = frame.contentDocument.body.scrollHeight + 'px'; } catch(e) {}
+            });
+        }
+
+        // ─── API HELPER ──────────────────────────
+        async function api(method, path, body) {
+            const opts = {
+                method: method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN }
+            };
+            if (body) opts.body = JSON.stringify(body);
+            try {
+                const r = await fetch(API_BASE + path, opts);
+                if (r.status === 401) { logout(); return null; }
+                return await r.json();
+            } catch(e) { return null; }
+        }
+
+        // ─── CARGAR PLAN PERSONALIZADO ───────────
+        async function loadPlan(type) {
+            const loadingEl   = document.getElementById(type + 'Loading');
+            const containerEl = document.getElementById(type + 'PlanContainer');
+            const emptyEl     = document.getElementById(type + 'Empty');
+
+            const data = await api('GET', '/plans/get.php?type=' + type, null);
+            if (loadingEl) loadingEl.style.display = 'none';
+
+            if (!data) { if(emptyEl) emptyEl.style.display='block'; return; }
+
+            const plans = (data.plans || []);
+            if (plans.length > 0 && plans[0].content) {
+                if (containerEl) {
+                    renderPlanContent(type + 'PlanContainer', plans[0].content);
+                    containerEl.style.display = 'block';
+                }
+            } else {
+                if (emptyEl) emptyEl.style.display = 'block';
+            }
+        }
+
+        // ─── IMPRIMIR / PDF ───────────────────────
+        function printPlan(type) {
+            const frame = document.querySelector('#' + type + 'PlanContainer iframe.plan-frame');
+            if (!frame) { showToast('No hay plan disponible para imprimir', 'var(--red)'); return; }
+            try { frame.contentWindow.print(); } catch(e) { showToast('Abre el plan y usa Ctrl+P', 'var(--red)'); }
+        }
+
+        // ─── GUARDAR TRACKING VÍA API ─────────────
+        async function saveTrackingToAPI() {
+            const water = parseFloat(document.getElementById('waterInput').value) || 0;
+            const sleep = parseFloat(document.getElementById('sleepInput').value) || 0;
+            const note  = document.getElementById('noteInput').value.slice(0, 500);
+            const payload  = {
+                date:           TODAY,
+                training_done:  trackingState.training  || false,
+                nutrition_done: trackingState.nutrition || false,
+                water_liters:   water,
+                sleep_hours:    sleep,
+                note:           note
+            };
+
+            // Backup en localStorage
+            const logs = JSON.parse(localStorage.getItem('rise_tracking') || '[]');
+            const idx  = logs.findIndex(function(l){ return l.date === TODAY; });
+            const localLog = { date: TODAY, training: payload.training_done, nutrition: payload.nutrition_done, water: water, sleep: sleep, note: note };
+            if (idx >= 0) logs[idx] = localLog; else logs.push(localLog);
+            localStorage.setItem('rise_tracking', JSON.stringify(logs));
+            renderTrackingHistory(logs);
+            updateStreak(logs);
+
+            if (TOKEN) {
+                const result = await api('POST', '/rise/tracking.php', payload);
+                showToast(result ? '¡Registro guardado!' : '¡Guardado localmente!');
+            } else {
+                showToast('¡Guardado localmente!');
+            }
+        }
+
+        // ─── GUARDAR HÁBITOS VÍA API ─────────────
+        async function saveHabitsToAPI() {
+            const habitsJson = {};
+            document.querySelectorAll('.habit-check').forEach(function(cb) {
+                habitsJson[cb.dataset.habit] = cb.checked;
+            });
+            const completed = document.querySelectorAll('.habit-check:checked').length;
+            localStorage.setItem('rise_habits_' + TODAY, JSON.stringify(habitsJson));
+            updateHabitsProgress();
+            if (TOKEN) {
+                const result = await api('POST', '/rise/habits.php', { date: TODAY, habits_json: habitsJson, completed: completed });
+                showToast(result ? '¡Hábitos guardados!' : '¡Guardado localmente!');
+            } else {
+                showToast('¡Hábitos guardados localmente!');
+            }
+        }
+
+        // ─── GUARDAR MEDICIÓN VÍA API ─────────────
+        async function saveMeasurementToAPI() {
+            const getValue = function(id) { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; };
+            const m = {
+                date:      TODAY,
+                weight_kg: getValue('mWeight'),
+                chest_cm:  getValue('mChest'),
+                waist_cm:  getValue('mWaist'),
+                hips_cm:   getValue('mHips'),
+                thigh_cm:  getValue('mThigh'),
+                arm_cm:    getValue('mArm')
+            };
+            const list = JSON.parse(localStorage.getItem('rise_measurements') || '[]');
+            const localM = { date: TODAY, weight: m.weight_kg, chest: m.chest_cm, waist: m.waist_cm, hips: m.hips_cm, thigh: m.thigh_cm, arm: m.arm_cm };
+            list.push(localM);
+            localStorage.setItem('rise_measurements', JSON.stringify(list));
+            renderMeasurements(list);
+            document.getElementById('lastMeasurementText').textContent = 'Última: ' + TODAY;
+            if (TOKEN) {
+                const result = await api('POST', '/rise/measurements.php', m);
+                showToast(result ? '¡Medición guardada!' : '¡Guardada localmente!');
+            } else {
+                showToast('¡Medición guardada localmente!');
+            }
+        }
+
+        // ─── CARGAR DATOS DESDE API ───────────────
+        async function loadMeasurementsFromAPI() {
+            if (!TOKEN) return;
+            const data = await api('GET', '/rise/measurements.php', null);
+            if (data && data.measurements && data.measurements.length > 0) {
+                const apiMeasurements = data.measurements.map(function(m) {
+                    return { date: m.log_date, weight: m.weight_kg, chest: m.chest_cm, waist: m.waist_cm, hips: m.hips_cm, thigh: m.thigh_cm, arm: m.arm_cm };
+                });
+                renderMeasurements(apiMeasurements);
+                document.getElementById('lastMeasurementText').textContent = 'Última: ' + data.measurements[0].log_date;
+            }
+        }
+
+        async function loadTrackingFromAPI() {
+            if (!TOKEN) return;
+            const data = await api('GET', '/rise/tracking.php', null);
+            if (data && data.tracking && data.tracking.length > 0) {
+                const logs = data.tracking.map(function(t) {
+                    return { date: t.log_date, training: !!t.training_done, nutrition: !!t.nutrition_done, water: parseFloat(t.water_liters), sleep: parseFloat(t.sleep_hours), note: t.note || '' };
+                });
+                renderTrackingHistory(logs);
+                updateStreak(logs);
+                localStorage.setItem('rise_tracking', JSON.stringify(logs));
+            }
+        }
 
         // ─── TOAST ───────────────────────────────
         function showToast(msg, color) {
@@ -1077,7 +1292,7 @@
         });
 
         function logout() {
-            localStorage.removeItem('auth_token');
+            localStorage.removeItem('wc_token');
             window.location.href = '/login.html';
         }
 
@@ -1449,41 +1664,132 @@
             }
 
             // Set today's date in forms
-            const todayEl    = document.getElementById('todayDate');
+            const todayEl     = document.getElementById('todayDate');
             const photoDateEl = document.getElementById('photoDate');
             if (todayEl)     todayEl.textContent = TODAY;
             if (photoDateEl) photoDateEl.value   = TODAY;
 
-            // Measurements
-            const measurements = JSON.parse(localStorage.getItem('rise_measurements') || '[]');
-            renderMeasurements(measurements);
-            if (measurements.length > 0) {
-                document.getElementById('lastMeasurementText').textContent = 'Última: ' + measurements[measurements.length - 1].date;
+            // Cargar desde localStorage primero (respuesta inmediata)
+            const localMeasurements = JSON.parse(localStorage.getItem('rise_measurements') || '[]');
+            renderMeasurements(localMeasurements);
+            if (localMeasurements.length > 0) {
+                document.getElementById('lastMeasurementText').textContent = 'Última: ' + localMeasurements[localMeasurements.length - 1].date;
             }
 
-            // Phase 4: Restore habits for today
             loadHabitsFromStorage();
             updateHabitsProgress();
 
-            // Phase 4: Restore water for today
             const waterMl = loadWaterFromStorage();
             if (waterMl > 0) {
                 document.getElementById('waterTotal').textContent = 'Total hoy: ' + waterMl + ' ml' +
                     (waterMl >= 3000 ? ' ✓ Meta alcanzada' : ' / 3000 ml');
             }
 
-            // Tracking history
-            const logs = JSON.parse(localStorage.getItem('rise_tracking') || '[]');
-            renderTrackingHistory(logs);
-            updateStreak(logs);
+            const localLogs = JSON.parse(localStorage.getItem('rise_tracking') || '[]');
+            renderTrackingHistory(localLogs);
+            updateStreak(localLogs);
 
-            // Photos count
             const photos = JSON.parse(localStorage.getItem('rise_photos') || '[]');
             if (photos.length > 0) {
                 document.getElementById('photoCountText').textContent   = photos.length + ' set(s) de fotos guardado(s)';
                 document.getElementById('photoGalleryText').textContent = photos.length + ' registro(s) de fotos guardado(s).';
             }
+
+            // Si hay token, cargar datos de la API y planes personalizados
+            if (TOKEN) {
+                applyWatermark(); // Marca de agua con nombre+email del cliente
+                checkRiseStatus().then(function(status) {
+                    if (status && !status.expired) {
+                        loadPlan('training');
+                        loadPlan('nutrition');
+                        loadMeasurementsFromAPI();
+                        loadTrackingFromAPI();
+                    }
+                });
+            } else {
+                // Sin token: mostrar estado vacío en los planes
+                document.querySelectorAll('[id$="Loading"]').forEach(function(el) { el.style.display = 'none'; });
+                document.querySelectorAll('[id$="Empty"]').forEach(function(el) { el.style.display = 'block'; });
+            }
         });
+
+        // ─── VERIFICAR VIGENCIA RISE ─────────────
+        async function checkRiseStatus() {
+            if (!TOKEN) return null;
+            const status = await api('GET', '/rise/status.php', null);
+            if (!status) return null;
+
+            // Actualizar nombre si viene del servidor
+            if (status.client_name) {
+                document.getElementById('userName').textContent = status.client_name.slice(0, 50);
+                document.getElementById('userAvatar').textContent = status.client_name.charAt(0).toUpperCase();
+                localStorage.setItem('client_info', JSON.stringify({ name: status.client_name }));
+            }
+
+            if (status.expired) {
+                showExpiredOverlay(status);
+                return status;
+            }
+
+            // Actualizar días restantes en la barra
+            if (status.days_elapsed !== undefined) {
+                const pct = Math.min(100, Math.round((status.days_elapsed / 30) * 100));
+                document.getElementById('dashCountdownDays').textContent = status.days_elapsed;
+                document.getElementById('dashCountdownBar').style.width  = pct + '%';
+            }
+
+            return status;
+        }
+
+        function showExpiredOverlay(status) {
+            // Mostrar modal de plan expirado
+            const overlay = document.createElement('div');
+            overlay.id = 'riseExpiredOverlay';
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,10,0.97);z-index:9999;display:flex;align-items:center;justify-content:center;';
+            const box = document.createElement('div');
+            box.style.cssText = 'background:#18181b;border:1px solid rgba(227,30,36,0.3);padding:48px 36px;text-align:center;max-width:480px;width:90%;';
+            // Logo
+            const logo = document.createElement('div');
+            logo.style.cssText = "font-family:'Bebas Neue',sans-serif;font-size:28px;color:#E31E24;letter-spacing:3px;margin-bottom:8px;";
+            logo.textContent = 'RETO RISE — EXPIRADO';
+            // Message
+            const msg = document.createElement('p');
+            msg.style.cssText = 'color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;margin:20px 0;';
+            msg.textContent = '¡Lo lograste! Completaste el RETO RISE 30 días. Para seguir con tu progreso, renueva tu plan o pasa a un plan mensual WellCore.';
+            // Days
+            const days = document.createElement('div');
+            days.style.cssText = "font-family:'Bebas Neue',sans-serif;font-size:48px;color:#E31E24;margin:16px 0;";
+            days.textContent = '30 / 30';
+            const daysLabel = document.createElement('div');
+            daysLabel.style.cssText = 'color:rgba(255,255,255,0.3);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;';
+            daysLabel.textContent = 'Días completados';
+            // CTA
+            const cta = document.createElement('a');
+            cta.href = 'https://wellcorefitness.com/rise.html';
+            cta.style.cssText = 'display:block;background:#E31E24;color:#fff;text-decoration:none;padding:14px 32px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;';
+            cta.textContent = 'RENOVAR RETO RISE →';
+            const secondary = document.createElement('a');
+            secondary.href = 'https://wellcorefitness.com/#planes';
+            secondary.style.cssText = 'display:block;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);text-decoration:none;padding:12px 32px;font-size:12px;letter-spacing:1px;text-transform:uppercase;';
+            secondary.textContent = 'Ver planes mensuales';
+            box.appendChild(logo);
+            box.appendChild(days);
+            box.appendChild(daysLabel);
+            box.appendChild(msg);
+            box.appendChild(cta);
+            box.appendChild(secondary);
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+
+            // Bloquear botones del sidebar excepto soporte
+            document.querySelectorAll('.nav-item, .nav-sub-item').forEach(function(el) {
+                const section = el.dataset.section;
+                if (section && section !== 'support') {
+                    el.style.opacity = '0.3';
+                    el.style.pointerEvents = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>

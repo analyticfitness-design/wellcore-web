@@ -2041,6 +2041,12 @@ function init() {
 
   // Load profile from API (also updates dashboard KPIs)
   loadProfileForm();
+
+  // Verificar vigencia del plan (bloquea si expiró)
+  checkPlanVigencia();
+
+  // Marca de agua con datos del cliente
+  applyClientWatermark();
 }
 
 // ===== NAVIGATION =====
@@ -3636,6 +3642,109 @@ function loadWeeklyInsight(force) {
     content.textContent = 'Sin conexion con el motor IA. El insight se generara cuando el servicio este disponible.';
     meta.textContent = '';
   });
+}
+
+// ===== VIGENCIA DEL PLAN (aplica a todos los planes: esencial, metodo, elite) =====
+function buildExpiredOverlay(planLabel, endDate) {
+  function mk(tag, css, txt) {
+    var e = document.createElement(tag);
+    if (css) e.style.cssText = css;
+    if (txt !== undefined) e.textContent = txt;
+    return e;
+  }
+  var ov = mk('div', [
+    'position:fixed;inset:0;z-index:99999',
+    'background:rgba(10,10,10,0.96)',
+    'display:flex;flex-direction:column;align-items:center;justify-content:center',
+    'text-align:center;padding:32px;backdrop-filter:blur(8px)'
+  ].join(';'));
+  ov.id = 'plan-expired-overlay';
+
+  var box = mk('div', 'max-width:440px;width:100%');
+  box.appendChild(mk('div', 'font-size:3.5rem;margin-bottom:20px', '\u23f0'));
+  box.appendChild(mk('h2', 'font-family:"Bebas Neue",sans-serif;font-size:2.2rem;letter-spacing:.08em;color:#fff;margin-bottom:12px', 'Tu Plan ha Expirado'));
+
+  var p1 = mk('p', 'color:#A1A1AA;font-size:.9rem;margin-bottom:8px');
+  p1.appendChild(document.createTextNode('Tu '));
+  var strong = mk('strong', 'color:#fff', 'Plan ' + planLabel);
+  p1.appendChild(strong);
+  p1.appendChild(document.createTextNode(' venci\u00f3' + (endDate ? ' el ' + endDate : '') + '.'));
+  box.appendChild(p1);
+
+  box.appendChild(mk('p', 'color:#A1A1AA;font-size:.875rem;margin-bottom:32px',
+    'Renueva tu plan para seguir accediendo a tu programa, seguimiento y soporte.'));
+
+  var a = document.createElement('a');
+  a.href = 'pagar.html';
+  a.style.cssText = 'display:block;width:100%;padding:14px;background:#E31E24;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:1.2rem;letter-spacing:.08em;text-decoration:none;margin-bottom:14px';
+  a.textContent = '\u2192 RENOVAR MI PLAN';
+  box.appendChild(a);
+
+  var btn = mk('button', 'background:transparent;border:1px solid #252528;color:#A1A1AA;padding:10px 24px;font-size:.8rem;cursor:pointer;width:100%', 'Contactar Soporte');
+  btn.addEventListener('click', function() { ov.style.display = 'none'; });
+  box.appendChild(btn);
+
+  ov.appendChild(box);
+  return ov;
+}
+
+function applyClientWatermark() {
+  if (document.getElementById('wc-watermark')) return;
+  var name  = clientName  || '';
+  var email = clientEmail || '';
+  if (!name && !email) return;
+
+  var wm = document.createElement('div');
+  wm.id = 'wc-watermark';
+  wm.style.cssText = [
+    'position:fixed;inset:0;z-index:9000',
+    'pointer-events:none',
+    'display:flex;align-items:center;justify-content:center',
+    'overflow:hidden'
+  ].join(';');
+
+  var inner = document.createElement('div');
+  inner.style.cssText = [
+    'width:200%;height:200%',
+    'transform:rotate(-25deg)',
+    'display:flex;flex-wrap:wrap;align-items:flex-start;gap:48px 32px',
+    'opacity:0.04'
+  ].join(';');
+
+  var text = name.toUpperCase() + '  ·  ' + (email || 'WELLCORE') + '  ·  WELLCORE';
+  for (var i = 0; i < 40; i++) {
+    var s = document.createElement('span');
+    s.style.cssText = 'font-family:monospace;font-size:11px;letter-spacing:.06em;color:#ffffff;white-space:nowrap;user-select:none';
+    s.textContent = text;
+    inner.appendChild(s);
+  }
+
+  wm.appendChild(inner);
+  document.body.appendChild(wm);
+}
+
+function checkPlanVigencia() {
+  var token = localStorage.getItem('wc_token');
+  if (!token) return;
+  fetch('/api/clients/plan-status.php', {
+    headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }
+  })
+  .then(function(r) { return r.ok ? r.json() : null; })
+  .then(function(data) {
+    if (!data || data.pending_setup) return;
+    if (!data.expired) return;
+    var label = (clientPlan || 'plan').charAt(0).toUpperCase() + (clientPlan || 'plan').slice(1);
+    var ov = buildExpiredOverlay(label, data.end_date || '');
+    document.body.appendChild(ov);
+    // Deshabilitar sidebar (excepto soporte)
+    document.querySelectorAll('.sidebar a, .sidebar button').forEach(function(el) {
+      if (!(el.textContent || '').toLowerCase().includes('soporte')) {
+        el.style.opacity = '0.35';
+        el.style.pointerEvents = 'none';
+      }
+    });
+  })
+  .catch(function() { /* Offline — no bloquear */ });
 }
 
 // ===== LOGOUT =====
