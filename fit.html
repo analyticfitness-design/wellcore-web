@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>WellCore Fitness &mdash; Coaching Online para Mujeres | Con Silvia</title>
+
+  <!-- Font Awesome 6.4 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Bootstrap 5.3 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS Variables
+    ============================================================ */
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111113;
+      --card:      #18181b;
+      --border:    rgba(255,255,255,0.06);
+      --red:       #E31E24;
+      --red-dim:   rgba(227,30,36,0.12);
+      --red-dark:  #B8181D;
+      --rose:      #DC3C64;
+      --rose-dim:  rgba(220,60,100,0.12);
+      --white:     #ffffff;
+      --gray:      rgba(255,255,255,0.45);
+      --gray-dim:  rgba(255,255,255,0.18);
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+      --accent:    #00D9FF;
+      --green:     #22C55E;
+    }
+
+    /* --- Reset & Base --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* --- Utility --- */
+    .mono      { font-family: var(--font-mono); }
+    .bebas     { font-family: var(--font-head); }
+    .text-red  { color: var(--red); }
+    .text-rose { color: var(--rose); }
+    .text-gray { color: var(--gray); }
+    .section-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      border: none;
+      margin: 0;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.1s linear, border-color 0.1s linear;
+    }
+    #navbar.scrolled {
+      background: rgba(10,10,10,0.95);
+      border-bottom-color: var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--white);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.15s;
+      position: relative;
+      display: inline-block;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.15s linear;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--red); }
+    .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.1s linear;
+      flex-shrink: 0;
+    }
+    .nav-cta:hover { gap: 12px; color: var(--red); }
+
+    /* Hamburger button */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 0;
+      width: 40px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    /* Mobile menu */
+    #navMobileMenu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      z-index: 999;
+      padding: 24px 32px 32px;
+    }
+    #navMobileMenu.open { display: block; }
+    #navMobileMenu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+    }
+    #navMobileMenu ul li { border-bottom: 1px solid var(--border); }
+    #navMobileMenu ul li a {
+      display: block;
+      padding: 14px 0;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.1s linear;
+    }
+    #navMobileMenu ul li a:hover { color: var(--white); }
+    #navMobileMenu .nav-mobile-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border-radius: 0;
+      width: 100%;
+      justify-content: center;
+    }
+
+    @media (max-width: 991px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-cta { display: none; }
+    }
+
+    /* ============================================================
+       PULSE DOT ANIMATION
+    ============================================================ */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      padding-top: 72px;
+    }
+
+    /* Rose glow overlay */
+    .hero-rose-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 90% at 75% 60%, rgba(220,60,100,0.28) 0%, rgba(227,30,36,0.12) 40%, transparent 75%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Silvia photo — absolute right side */
+    .hero-silvia {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hero-silvia img {
+      height: 100%;
+      width: auto;
+      max-width: none;
+      display: block;
+      filter: drop-shadow(-30px 0 60px rgba(220,60,100,0.4));
+      object-fit: contain;
+      object-position: bottom right;
+    }
+
+    /* Content side — left */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 560px;
+      padding: 80px 64px;
+      min-height: calc(100vh - 72px);
+    }
+
+    /* Tag line */
+    .hero-tag {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .hero-tag-line {
+      width: 48px;
+      height: 2px;
+      background: var(--rose);
+      flex-shrink: 0;
+    }
+    .hero-tag-text {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rose);
+    }
+
+    /* H1 */
+    .hero-h1 {
+      font-family: var(--font-head);
+      font-size: clamp(64px, 9vw, 108px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+    .hero-h1 .accent { color: var(--rose); }
+
+    /* Paragraph */
+    .hero-para {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      max-width: 440px;
+      margin-bottom: 40px;
+    }
+
+    /* CTA group */
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .btn-rose {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--rose);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 15px 32px;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      transition: background 0.15s linear, transform 0.1s linear;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-rose:hover {
+      background: #c4304f;
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+    .btn-text-link {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      transition: color 0.15s;
+    }
+    .btn-text-link:hover { color: var(--white); }
+
+    /* Stats bar */
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 28px;
+    }
+    .hero-stat {
+      flex: 1;
+      padding-right: 24px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-stat:last-child {
+      border-right: none;
+      padding-right: 0;
+      padding-left: 24px;
+    }
+    .hero-stat:not(:first-child):not(:last-child) {
+      padding-left: 24px;
+    }
+    .hero-stat-num {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 22px;
+      letter-spacing: 1px;
+      color: var(--rose);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .hero-stat-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ============================================================
+       MOBILE RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      #hero {
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .hero-rose-glow {
+        background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(220,60,100,0.22) 0%, rgba(227,30,36,0.08) 50%, transparent 75%);
+      }
+      .hero-silvia {
+        display: none;
+      }
+      .hero-content {
+        max-width: 100%;
+        padding: 40px 24px;
+        min-height: calc(100vh - 72px);
+      }
+      .hero-h1 {
+        font-size: clamp(56px, 14vw, 80px);
+      }
+      .hero-para {
+        font-size: 15px;
+      }
+      .hero-ctas {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .hero-stats {
+        flex-direction: column;
+        gap: 20px;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding-top: 24px;
+      }
+      .hero-stat {
+        padding: 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding-bottom: 16px;
+      }
+      .hero-stat:last-child {
+        border-bottom: none;
+        padding-left: 0;
+        padding-bottom: 0;
+      }
+      .hero-stat:not(:first-child):not(:last-child) {
+        padding-left: 0;
+      }
+      .nav-inner { padding: 0 20px; }
+      .nav-logo { font-size: 18px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content { padding: 32px 20px; }
+      .hero-h1 { font-size: clamp(48px, 16vw, 72px); }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">WELL<span>CORE</span></a>
+
+    <!-- Desktop nav links -->
+    <ul class="nav-links">
+      <li><a href="metodo.html">M&eacute;todo</a></li>
+      <li><a href="rise.html" style="color:var(--red);position:relative;font-weight:600;">RISE<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="planes.html">Planes</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="coaches.html" style="color:rgba(227,30,36,0.7);position:relative;">Coaches<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
+    </ul>
+
+    <!-- Acceso Clientes -->
+    <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+
+    <!-- Desktop CTA -->
+    <a href="inscripcion.html" class="nav-cta">Empezar &rarr;</a>
+
+    <!-- Hamburger for mobile -->
+    <button class="nav-hamburger" id="navToggle" aria-label="Abrir men&uacute;">
+      &#9776;
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="navMobileMenu" role="navigation" aria-label="Men&uacute; m&oacute;vil">
+  <ul>
+    <li><a href="metodo.html" class="nav-mobile-link">M&eacute;todo</a></li>
+    <li><a href="rise.html" class="nav-mobile-link" style="color:#E31E24;font-weight:700;">&#9670; RISE &mdash; Reto 30 D&iacute;as</a></li>
+    <li><a href="nosotros.html" class="nav-mobile-link">Nosotros</a></li>
+    <li><a href="proceso.html" class="nav-mobile-link">Proceso</a></li>
+    <li><a href="planes.html" class="nav-mobile-link">Planes</a></li>
+    <li><a href="tienda.html" class="nav-mobile-link">Tienda</a></li>
+    <li><a href="blog/index.html" class="nav-mobile-link">Blog</a></li>
+    <li><a href="faq.html" class="nav-mobile-link">FAQ</a></li>
+    <li><a href="coaches.html" class="nav-mobile-link" style="color:#E31E24;">&#9670; Trabaja con Nosotros</a></li>
+    <li><a href="login.html" class="nav-mobile-link" style="color:#fff;background:var(--red);padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;">MI CUENTA</a></li>
+  </ul>
+  <a href="inscripcion.html" class="nav-mobile-cta">Empezar &rarr;</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+
+  <!-- Rose glow overlay -->
+  <div class="hero-rose-glow"></div>
+
+  <!-- Silvia photo — right side, full height -->
+  <div class="hero-silvia">
+    <img src="images/silvia/IMG_2470.JPG-3.png" alt="Silvia &mdash; Coach WellCore Fitness" />
+  </div>
+
+  <!-- Left content -->
+  <div class="hero-content" data-aos="fade-right" data-aos-duration="700" data-aos-once="true">
+
+    <!-- Tag -->
+    <div class="hero-tag">
+      <div class="hero-tag-line"></div>
+      <span class="hero-tag-text">WellCore Fitness &middot; Para Ellas</span>
+    </div>
+
+    <!-- H1 -->
+    <h1 class="hero-h1">
+      SIN<br>
+      DOGMAS.<br>
+      SIN<br>
+      <span class="accent">ATAJOS.</span>
+    </h1>
+
+    <!-- Paragraph -->
+    <p class="hero-para">
+      Coaching 1:1 dise&ntilde;ado para la mujer que quiere resultados reales. Sin dietas extremas, sin entrenamientos gen&eacute;ricos. Solo ciencia aplicada a tu cuerpo.
+    </p>
+
+    <!-- CTAs -->
+    <div class="hero-ctas">
+      <a href="inscripcion.html" class="btn-rose">EMPEZAR MI PROCESO &rarr;</a>
+      <a href="planes.html" class="btn-text-link">Ver planes</a>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">200+</span>
+        <span class="hero-stat-label">Mujeres transformadas</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">1:1</span>
+        <span class="hero-stat-label">Atenci&oacute;n personalizada</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">100%</span>
+        <span class="hero-stat-label">Basado en ciencia</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-rule" />
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<!-- Bootstrap 5.3 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+  /* --- AOS init --- */
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+
+  /* --- Navbar scroll effect --- */
+  (function () {
+    var navbar = document.getElementById('navbar');
+    function onScroll() {
+      if (window.scrollY > 20) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  /* --- Hamburger menu toggle --- */
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var menu   = document.getElementById('navMobileMenu');
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.contains('open');
+      if (isOpen) {
+        menu.classList.remove('open');
+        toggle.textContent = '\u2630';
+        toggle.setAttribute('aria-label', 'Abrir men\u00fa');
+      } else {
+        menu.classList.add('open');
+        toggle.textContent = '\u2715';
+        toggle.setAttribute('aria-label', 'Cerrar men\u00fa');
+      }
+    });
+
+    /* Close menu when a mobile link is clicked */
+    var mobileLinks = menu.querySelectorAll('.nav-mobile-link, .nav-mobile-cta');
+    mobileLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.textContent = '\u2630';
+        toggle.setAttribute('aria-label', 'Abrir men\u00fa');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
