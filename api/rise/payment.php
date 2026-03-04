@@ -53,36 +53,28 @@ if ($stmt->rowCount() === 0) {
 try {
     $db->beginTransaction();
 
-    // 1. Registrar pago en tabla payments
+    // 1. Registrar pago en tabla payments (usar columnas que existen)
     $reference = 'RISE-' . strtoupper(bin2hex(random_bytes(6)));
     $stmt = $db->prepare("
         INSERT INTO payments
-        (client_id, amount, currency, plan_type, payment_method, reference, status, created_at)
-        VALUES (?, ?, 'USD', 'rise', ?, ?, 'completed', NOW())
+        (client_id, amount, currency, plan, payu_reference, status, created_at)
+        VALUES (?, ?, 'USD', 'rise', ?, 'approved', NOW())
     ");
-    $stmt->execute([$client_id, $amount, $payment_method, $reference]);
+    $stmt->execute([$client_id, $amount, $reference]);
     $payment_id = $db->lastInsertId();
 
     // 2. Crear auth token para el cliente
     // Generar token seguro
     $token = bin2hex(random_bytes(32));
-    $token_hash = hash('sha256', $token);
     $expiration = date('Y-m-d H:i:s', strtotime('+30 days'));
 
     $stmt = $db->prepare("
         INSERT INTO auth_tokens
-        (client_id, token_hash, token_type, expires_at, created_at, metadata)
-        VALUES (?, ?, 'client', ?, NOW(), ?)
+        (user_type, user_id, token, expires_at, created_at)
+        VALUES ('client', ?, ?, ?, NOW())
     ");
 
-    $metadata = json_encode([
-        'program_id' => $program_id,
-        'payment_id' => $payment_id,
-        'payment_reference' => $reference,
-        'rise_challenge' => true
-    ]);
-
-    $stmt->execute([$client_id, $token_hash, $expiration, $metadata]);
+    $stmt->execute([$client_id, $token, $expiration]);
 
     // 3. Actualizar estado del programa a 'active'
     $stmt = $db->prepare("
