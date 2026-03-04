@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Bienvenido al Sistema | WellCore Fitness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:      #0a0a0a;
+            --surface: #111113;
+            --card:    #18181b;
+            --border:  rgba(255,255,255,0.07);
+            --red:     #E31E24;
+            --red-dim: rgba(227,30,36,0.12);
+            --cyan:    #00D9FF;
+            --cyan-dim:rgba(0,217,255,0.08);
+            --white:   #ffffff;
+            --gray:    rgba(255,255,255,0.5);
+            --gold:    #FACC15;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html, body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 0.08em;
+            color: var(--red);
+        }
+        .logo span { color: var(--white); }
+        .header-tag {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        /* ─── MAIN ─── */
+        .wrapper {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red-dim);
+            border: 1px solid rgba(227,30,36,0.3);
+            color: var(--red);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(40px, 7vw, 72px);
+            letter-spacing: 0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+        .hero h1 span { color: var(--red); }
+        .hero p {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* ─── DIVIDER ─── */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 40px 0;
+        }
+
+        /* ─── SECTION LABEL ─── */
+        .sec-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--cyan);
+            margin-bottom: 16px;
+        }
+
+        /* ─── CREDENTIAL CARD ─── */
+        .cred-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+        .cred-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        .cred-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 12px 20px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .cred-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        .cred-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: var(--cyan);
+            cursor: pointer;
+            transition: border-color 0.2s;
+            user-select: all;
+        }
+        .cred-value:hover { border-color: var(--cyan); }
+        .cred-value.red { color: var(--red); }
+        .copy-hint {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 12px;
+            opacity: 0.7;
+        }
+
+        /* ─── CAPABILITIES GRID ─── */
+        .caps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .cap-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+        .cap-item:hover { border-color: rgba(0,217,255,0.25); }
+        .cap-icon {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .cap-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .cap-desc {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ─── PROTOCOL TABLE ─── */
+        .proto-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .proto-table th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+        }
+        .proto-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+        }
+        .proto-table tr:last-child td { border-bottom: none; }
+        .proto-table td:first-child { color: var(--gray); font-weight: 500; white-space: nowrap; }
+
+        /* ─── BADGES ─── */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge-red   { background: var(--red-dim); color: var(--red); border: 1px solid rgba(227,30,36,0.3); }
+        .badge-cyan  { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(0,217,255,0.2); }
+        .badge-gold  { background: rgba(250,204,21,0.1); color: var(--gold); border: 1px solid rgba(250,204,21,0.3); }
+        .badge-green { background: rgba(34,197,94,0.1); color: #22C55E; border: 1px solid rgba(34,197,94,0.3); }
+
+        /* ─── CTA ─── */
+        .cta-block {
+            background: linear-gradient(135deg, rgba(227,30,36,0.08) 0%, rgba(0,217,255,0.05) 100%);
+            border: 1px solid rgba(227,30,36,0.2);
+            border-radius: 10px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 48px;
+        }
+        .cta-block h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+        .cta-block p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--red);
+            color: white;
+        }
+        .btn-primary:hover { background: #B8181D; transform: translateY(-1px); }
+        .btn-secondary {
+            background: transparent;
+            color: var(--cyan);
+            border: 1px solid rgba(0,217,255,0.3);
+            margin-left: 10px;
+        }
+        .btn-secondary:hover { background: var(--cyan-dim); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 24px 40px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 60px;
+        }
+
+        /* ─── TOAST ─── */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--surface);
+            border: 1px solid rgba(34,197,94,0.4);
+            color: #22C55E;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 600px) {
+            header { padding: 16px 20px; }
+            .wrapper { padding: 40px 16px 60px; }
+            .cred-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">WELL<span>CORE</span> FITNESS</div>
+    <div class="header-tag">Acceso Ejecutivo &mdash; Confidencial</div>
+</header>
+
+<div class="wrapper">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-badge">&#9650; Superadmin &mdash; CEO Access</div>
+        <h1>Bienvenido,<br><span>Daniel Esparza</span></h1>
+        <p>Tienes acceso total al sistema WellCore Fitness. Aquí están tus credenciales y el protocolo de operación del panel de administración.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- CREDENCIALES -->
+    <div class="sec-label">&#9670; Credenciales de Acceso</div>
+    <div class="cred-card">
+        <h3>Panel de Administración — wellcorefitness.test</h3>
+        <div class="cred-row">
+            <span class="cred-label">URL del Panel</span>
+            <span class="cred-value" onclick="copyText(this, 'https://wellcorefitness.test/admin.html')">/admin.html</span>
+        </div>
+        <div class="cred-row">
+            <span class="cred-label">URL Login</span>
+            <span class="cred-value" onclick="copyText(this, 'https://wellcorefitness.test/login.html')">/login.html</span>
+        </div>
+        <div class="cred-row">
+            <span class="cred-label">Usuario</span>
+            <span class="cred-value" onclick="copyText(this, 'daniel.esparza')">daniel.esparza</span>
+        </div>
+        <div class="cred-row">
+            <span class="cred-label">Contraseña</span>
+            <span class="cred-value red" onclick="copyText(this, 'RISE2026Admin!SuperPower')">RISE2026Admin!SuperPower</span>
+        </div>
+        <div class="cred-row">
+            <span class="cred-label">Rol</span>
+            <span class="cred-value">superadmin &mdash; CEO</span>
+        </div>
+        <div class="cred-row">
+            <span class="cred-label">Nombre</span>
+            <span class="cred-value">Daniel Esparza - CEO</span>
+        </div>
+        <p class="copy-hint">Haz clic en cualquier valor para copiarlo al portapapeles.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- CAPACIDADES -->
+    <div class="sec-label">&#9670; Capacidades del Panel</div>
+    <div class="caps-grid">
+        <div class="cap-item">
+            <div class="cap-icon">&#9673;</div>
+            <div class="cap-title">Gestión de Clientes</div>
+            <div class="cap-desc">Ver todos los clientes activos, historial de check-ins, planes contratados y estado de cada usuario.</div>
+        </div>
+        <div class="cap-item">
+            <div class="cap-icon">&#10003;</div>
+            <div class="cap-title">Check-ins</div>
+            <div class="cap-desc">Revisar y responder check-ins semanales. Seguimiento de progreso por cliente. Alertas de pendientes.</div>
+        </div>
+        <div class="cap-item">
+            <div class="cap-icon">&#9672;</div>
+            <div class="cap-title">Pagos &amp; MRR</div>
+            <div class="cap-desc">Registro de transacciones, ingreso mensual recurrente, historial financiero del negocio.</div>
+        </div>
+        <div class="cap-item">
+            <div class="cap-icon">&#9650;</div>
+            <div class="cap-title">Reto RISE</div>
+            <div class="cap-desc">Dashboard exclusivo del programa RISE 30 días. Ver inscritos, estado de intake, métricas del reto.</div>
+        </div>
+        <div class="cap-item">
+            <div class="cap-icon">&#9678;</div>
+            <div class="cap-title">Configuración</div>
+            <div class="cap-desc">Ajustes del sistema, gestión de administradores y coaches, configuración de la plataforma.</div>
+        </div>
+        <div class="cap-item">
+            <div class="cap-icon">&#9655;</div>
+            <div class="cap-title">Acceso Total</div>
+            <div class="cap-desc">Como superadmin, tienes visibilidad completa sobre todas las secciones sin restricciones de rol.</div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- PROTOCOLO -->
+    <div class="sec-label">&#9670; Protocolo de Operación</div>
+    <div class="cred-card">
+        <table class="proto-table">
+            <thead>
+                <tr>
+                    <th>Proceso</th>
+                    <th>Detalle</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Login inicial</td>
+                    <td>Ingresar a /login.html con credenciales CEO. El sistema redirige automáticamente al panel admin.</td>
+                    <td><span class="badge badge-green">Activo</span></td>
+                </tr>
+                <tr>
+                    <td>Sesión</td>
+                    <td>Los tokens de acceso expiran en 24 horas. Al regresar, el sistema solicita re-autenticación automáticamente.</td>
+                    <td><span class="badge badge-cyan">Seguro</span></td>
+                </tr>
+                <tr>
+                    <td>Reto RISE</td>
+                    <td>Sección dedicada en el panel admin. Ver inscritos al programa de 30 días. Enlace directo al formulario público.</td>
+                    <td><span class="badge badge-green">Activo</span></td>
+                </tr>
+                <tr>
+                    <td>Check-ins</td>
+                    <td>Los clientes envían check-ins semanales. El panel muestra pendientes con alerta visual. Responder desde el admin.</td>
+                    <td><span class="badge badge-green">Activo</span></td>
+                </tr>
+                <tr>
+                    <td>Cambio de contraseña</td>
+                    <td>Contactar al equipo técnico para actualizar la contraseña CEO. No se puede cambiar desde el panel por seguridad.</td>
+                    <td><span class="badge badge-gold">Manual</span></td>
+                </tr>
+                <tr>
+                    <td>Multi-device</td>
+                    <td>Al iniciar sesión desde un nuevo dispositivo, la sesión anterior se invalida automáticamente por seguridad.</td>
+                    <td><span class="badge badge-cyan">Single-session</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="divider">
+
+    <!-- LINKS UTILES -->
+    <div class="sec-label">&#9670; Links del Sistema</div>
+    <div class="cred-card">
+        <table class="proto-table">
+            <thead>
+                <tr><th>Página</th><th>URL</th><th>Acceso</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Panel Admin</td>
+                    <td><a href="/admin.html" style="color:var(--cyan);text-decoration:none">/admin.html</a></td>
+                    <td><span class="badge badge-red">Admin Only</span></td>
+                </tr>
+                <tr>
+                    <td>Login</td>
+                    <td><a href="/login.html" style="color:var(--cyan);text-decoration:none">/login.html</a></td>
+                    <td><span class="badge badge-cyan">Publico</span></td>
+                </tr>
+                <tr>
+                    <td>Landing RISE</td>
+                    <td><a href="/rise.html" style="color:var(--cyan);text-decoration:none">/rise.html</a></td>
+                    <td><span class="badge badge-cyan">Publico</span></td>
+                </tr>
+                <tr>
+                    <td>Formulario RISE</td>
+                    <td><a href="/rise-enroll.html" style="color:var(--cyan);text-decoration:none">/rise-enroll.html</a></td>
+                    <td><span class="badge badge-cyan">Publico</span></td>
+                </tr>
+                <tr>
+                    <td>Dashboard Cliente</td>
+                    <td><a href="/dashboard.html" style="color:var(--cyan);text-decoration:none">/dashboard.html</a></td>
+                    <td><span class="badge badge-gold">Clientes</span></td>
+                </tr>
+                <tr>
+                    <td>Web Principal</td>
+                    <td><a href="/index.html" style="color:var(--cyan);text-decoration:none">/index.html</a></td>
+                    <td><span class="badge badge-cyan">Publico</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+        <h3>Todo listo para operar</h3>
+        <p>El sistema WellCore está configurado y funcionando. Ingresa al panel para comenzar.</p>
+        <a href="/login.html" class="btn btn-primary">&#9654; Ir al Login</a>
+        <a href="/rise.html" target="_blank" class="btn btn-secondary">&#9650; Ver RISE</a>
+    </div>
+
+</div>
+
+<footer>
+    WellCore Fitness &mdash; Sistema de Administración &mdash; Documento Confidencial &mdash; 2026
+</footer>
+
+<div class="toast" id="toast">&#10003; Copiado al portapapeles</div>
+
+<script>
+function copyText(el, text) {
+    navigator.clipboard.writeText(text).then(function() {
+        var toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }).catch(function() {
+        // fallback: select text
+        var range = document.createRange();
+        range.selectNode(el);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1006,6 +1006,12 @@
         Pagos
       </div>
 
+      <div class="nav-item" data-section="rise">
+        <span class="nav-icon" style="color:#E31E24;font-weight:700">&#9650;</span>
+        Reto RISE
+        <span class="badge" id="riseBadge" style="background:rgba(227,30,36,0.15);color:#E31E24;border:1px solid rgba(227,30,36,0.3);display:none">0</span>
+      </div>
+
       <div class="nav-item" data-section="configuracion">
         <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9678;</span>
         Configuracion
@@ -1282,6 +1288,103 @@
             </table>
           </div>
 
+        </div>
+
+      </div>
+      <!-- ─────────────────────────────
+           RISE — RETO 30 DIAS
+      ───────────────────────────── -->
+      <div class="section" id="section-rise">
+
+        <div class="section-title">RETO RISE</div>
+        <div class="section-sub">GESTION DEL PROGRAMA RISE 30 DIAS</div>
+
+        <!-- KPI RISE -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#E31E24;font-weight:700">&#9650;</span>
+            <div class="kpi-label">Inscritos Totales</div>
+            <div class="kpi-value" id="riseTotal">-</div>
+            <div class="kpi-footer">todos los tiempos</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#22C55E;font-weight:700">&#10003;</span>
+            <div class="kpi-label">Activos Ahora</div>
+            <div class="kpi-value green" id="riseActive">-</div>
+            <div class="kpi-footer">en progreso</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#FACC15;font-weight:700">&#9670;</span>
+            <div class="kpi-label">Pendientes Intake</div>
+            <div class="kpi-value" style="color:var(--gold);" id="risePendingIntake">-</div>
+            <div class="kpi-footer">formulario sin completar</div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9672;</span>
+            <div class="kpi-label">Ingresos RISE</div>
+            <div class="kpi-value" style="color:#00D9FF;" id="riseRevenue">-</div>
+            <div class="kpi-footer">$33 USD por inscrito</div>
+          </div>
+        </div>
+
+        <!-- TABLA INSCRITOS -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Participantes RISE</span>
+            <span class="card-count" id="riseCount">cargando...</span>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="table" id="riseTable">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Nivel</th>
+                  <th>Lugar</th>
+                  <th>Inicio</th>
+                  <th>Fin</th>
+                  <th>Estado</th>
+                  <th>Intake</th>
+                </tr>
+              </thead>
+              <tbody id="riseTableBody">
+                <tr><td colspan="8" style="text-align:center;color:var(--gray);padding:30px">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ACCIONES RAPIDAS -->
+        <div class="grid-2" style="margin-top:16px">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Acciones Rapidas</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;padding:8px 0">
+              <a href="/rise-enroll.html" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(227,30,36,0.1);border:1px solid rgba(227,30,36,0.25);border-radius:6px;color:#E31E24;text-decoration:none;font-size:13px;transition:background 0.2s" onmouseover="this.style.background='rgba(227,30,36,0.2)'" onmouseout="this.style.background='rgba(227,30,36,0.1)'">
+                <span style="font-weight:700">&#9650;</span> Ver formulario de inscripcion
+              </a>
+              <a href="/rise.html" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(0,217,255,0.07);border:1px solid rgba(0,217,255,0.15);border-radius:6px;color:#00D9FF;text-decoration:none;font-size:13px;transition:background 0.2s" onmouseover="this.style.background='rgba(0,217,255,0.15)'" onmouseout="this.style.background='rgba(0,217,255,0.07)'">
+                <span style="font-weight:700">&#9672;</span> Landing page RISE publica
+              </a>
+              <button onclick="loadRiseData()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='var(--surface-3,#222)'" onmouseout="this.style.background='var(--surface-2)'">
+                <span>&#8635;</span> Actualizar datos
+              </button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Info del Programa</span>
+            </div>
+            <table class="table">
+              <tr><td>Precio</td><td><strong style="color:#E31E24">$33 USD</strong></td></tr>
+              <tr><td>Duracion</td><td>30 dias</td></tr>
+              <tr><td>Modalidad</td><td>Gym / Casa / Hibrido</td></tr>
+              <tr><td>Generos</td><td>Masculino / Femenino</td></tr>
+              <tr><td>Niveles</td><td>Principiante / Intermedio / Avanzado</td></tr>
+              <tr><td>Estado</td><td><span class="badge badge-green">ACTIVO</span></td></tr>
+            </table>
+          </div>
         </div>
 
       </div>
@@ -1729,11 +1832,96 @@
       });
   }
 
+  /* ─── RISE: LOAD ENROLLMENTS ─── */
+  function loadRiseData() {
+    var levelLabel = { principiante: 'Principiante', intermedio: 'Intermedio', avanzado: 'Avanzado' };
+    var placeLabel = { gym: 'Gym', home: 'Casa', hybrid: 'Hibrido' };
+    var SAFE_STATUS = { active: 'Activo', completed: 'Completado', paused: 'Pausado' };
+    var STATUS_CLS  = { active: 'badge-green', completed: 'badge-gray', paused: 'badge-yellow' };
+
+    function makeTd(text, styleStr) {
+      var el = document.createElement('td');
+      if (styleStr) el.setAttribute('style', styleStr);
+      el.textContent = text || '';
+      return el;
+    }
+
+    apiFetch('/rise/get-enrollments')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        document.getElementById('riseTotal').textContent         = d.total || 0;
+        document.getElementById('riseActive').textContent        = d.active || 0;
+        document.getElementById('risePendingIntake').textContent = d.pending_intake || 0;
+        document.getElementById('riseRevenue').textContent       = '$' + (d.revenue_usd || 0) + ' USD';
+        document.getElementById('riseCount').textContent         = (d.total || 0) + ' participantes';
+        var badge = document.getElementById('riseBadge');
+        if (d.total > 0) {
+          badge.textContent   = d.total;
+          badge.style.display = 'inline-flex';
+        }
+        var tbody = document.getElementById('riseTableBody');
+        tbody.textContent = '';
+        if (!d.programs || d.programs.length === 0) {
+          var emptyRow = document.createElement('tr');
+          var emptyCell = document.createElement('td');
+          emptyCell.colSpan = 8;
+          emptyCell.style.cssText = 'text-align:center;color:var(--gray);padding:30px';
+          emptyCell.textContent = 'Sin inscritos aun.';
+          emptyRow.appendChild(emptyCell);
+          tbody.appendChild(emptyRow);
+          return;
+        }
+        d.programs.forEach(function(p) {
+          var tr = document.createElement('tr');
+          var nameEl = document.createElement('strong');
+          nameEl.textContent = p.name;
+          var nameTd = document.createElement('td');
+          nameTd.appendChild(nameEl);
+          var statSpan = document.createElement('span');
+          statSpan.className = 'badge ' + (STATUS_CLS[p.status] || 'badge-gray');
+          statSpan.textContent = SAFE_STATUS[p.status] || p.status;
+          var statTd = document.createElement('td');
+          statTd.appendChild(statSpan);
+          var intakeSpan = document.createElement('span');
+          if (p.has_intake) {
+            intakeSpan.style.cssText = 'color:#22C55E;font-weight:700';
+            intakeSpan.textContent = '\u2713 Completo';
+          } else {
+            intakeSpan.style.color = '#FACC15';
+            intakeSpan.textContent = 'Pendiente';
+          }
+          var intakeTd = document.createElement('td');
+          intakeTd.appendChild(intakeSpan);
+          tr.appendChild(nameTd);
+          tr.appendChild(makeTd(p.email, 'color:var(--gray);font-size:12px'));
+          tr.appendChild(makeTd(levelLabel[p.experience_level] || p.experience_level));
+          tr.appendChild(makeTd(placeLabel[p.training_location] || p.training_location));
+          tr.appendChild(makeTd(fmtDate(p.start_date), 'font-size:12px'));
+          tr.appendChild(makeTd(fmtDate(p.end_date), 'font-size:12px'));
+          tr.appendChild(statTd);
+          tr.appendChild(intakeTd);
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(function() {
+        var tbody = document.getElementById('riseTableBody');
+        tbody.textContent = '';
+        var row = document.createElement('tr');
+        var cell = document.createElement('td');
+        cell.colSpan = 8;
+        cell.style.cssText = 'text-align:center;color:var(--gray);padding:30px';
+        cell.textContent = 'Error cargando datos RISE';
+        row.appendChild(cell);
+        tbody.appendChild(row);
+      });
+  }
+
   /* ─── INIT (called after auth verification) ─── */
   function initApp() {
     renderRecentTransactions();
     renderPagos();
     loadAdminData();
+    loadRiseData();
   }
 </script>
 
