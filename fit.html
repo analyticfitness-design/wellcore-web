@@ -318,7 +318,7 @@
       color: var(--white);
       margin-bottom: 28px;
     }
-    .hero-h1 .accent { color: var(--rose); }
+    .hero-h1 .accent { color: var(--red); }
 
     /* Paragraph */
     .hero-para {
@@ -473,6 +473,22 @@
       .hero-h1 { font-size: clamp(48px, 16vw, 72px); }
     }
 
+    /* ============================================================
+       SECTIONS RESPONSIVE
+    ============================================================ */
+    @media(max-width:768px){
+      .silvia-grid { grid-template-columns:1fr !important; gap:40px !important; }
+    }
+    @media(max-width:768px){
+      .benefits-grid { grid-template-columns:1fr !important; }
+    }
+    @media(max-width:768px){
+      .planes-grid { grid-template-columns:1fr !important; }
+    }
+    @media(max-width:768px){
+      .testimonials-grid { grid-template-columns:1fr !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -589,6 +605,256 @@
 </section>
 
 <hr class="section-rule" />
+
+<!-- ═══ SILVIA COACH INTRO ═══ -->
+<section id="sec-silvia" style="padding:100px 0;background:var(--surface);position:relative;overflow:hidden;">
+  <!-- rose accent line top -->
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(220,60,100,0.5),transparent);"></div>
+  <div class="container">
+    <div class="silvia-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+      <!-- Foto -->
+      <div style="position:relative;text-align:center;" data-aos="fade-right">
+        <div style="position:absolute;inset:-20px;background:radial-gradient(ellipse at center,rgba(220,60,100,0.10) 0%,transparent 70%);pointer-events:none;"></div>
+        <img src="images/silvia/IMG_2471.JPG4.png" alt="Silvia — Coach certificada WellCore Fitness"
+          style="max-width:380px;width:100%;display:block;margin:0 auto;filter:drop-shadow(0 20px 60px rgba(220,60,100,0.22));position:relative;z-index:1;">
+      </div>
+      <!-- Texto -->
+      <div data-aos="fade-left">
+        <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:16px;">Tu coach</div>
+        <h2 style="font-family:var(--font-head);font-size:clamp(44px,6vw,72px);line-height:0.93;color:var(--white);margin-bottom:28px;">
+          YO TAMBIÉN<br>ESTUVE<br><span style="color:var(--red);">AHÍ.</span>
+        </h2>
+        <p style="font-size:15px;color:var(--gray);line-height:1.8;margin-bottom:18px;">
+          Sé lo que es buscar resultados y no ver cambios. Probar de todo y sentir que tu cuerpo no responde. La diferencia no eres tú — es el método.
+        </p>
+        <p style="font-size:15px;color:var(--gray);line-height:1.8;margin-bottom:32px;">
+          Como coach certificada de WellCore, diseño programas que respetan cómo funciona el cuerpo femenino de verdad: tu ciclo, tus hormonas, tu estilo de vida.
+        </p>
+        <div style="display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(220,60,100,0.35);padding:12px 22px;background:rgba(220,60,100,0.06);">
+          <i class="fas fa-certificate" style="color:var(--rose);font-size:14px;"></i>
+          <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.55);">Coach Certificada WellCore</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PARA TI SECTION ═══ -->
+<section id="sec-para-ti" style="padding:100px 0;background:var(--bg);" data-aos="fade-up">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:64px;">
+      <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;">Diseñado para ti</div>
+      <h2 style="font-family:var(--font-head);font-size:clamp(44px,7vw,80px);line-height:0.93;color:var(--white);">
+        TU CUERPO<br><span style="color:var(--red);">TIENE REGLAS.</span>
+      </h2>
+      <p style="font-size:15px;color:var(--gray);margin-top:16px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">
+        Tu programa considera lo que los planes genéricos ignoran.
+      </p>
+    </div>
+    <div class="benefits-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+      <div style="background:var(--surface);padding:48px 40px;border-left:3px solid var(--rose);position:relative;overflow:hidden;" data-aos="fade-up" data-aos-delay="0">
+        <div style="position:absolute;top:-20px;right:-20px;width:140px;height:140px;background:radial-gradient(circle,rgba(220,60,100,0.07),transparent);pointer-events:none;"></div>
+        <i class="fas fa-person-dress" style="font-size:26px;color:var(--rose);margin-bottom:20px;display:block;"></i>
+        <h3 style="font-family:var(--font-head);font-size:30px;color:var(--white);letter-spacing:1px;margin-bottom:12px;">GLÚTEOS Y CURVAS</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Hipertrofia orientada a la forma femenina. Rutinas que construyen donde quieres construir.</p>
+      </div>
+      <div style="background:var(--surface);padding:48px 40px;border-left:3px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;" data-aos="fade-up" data-aos-delay="100">
+        <div style="position:absolute;top:-20px;right:-20px;width:140px;height:140px;background:radial-gradient(circle,rgba(227,30,36,0.05),transparent);pointer-events:none;"></div>
+        <i class="fas fa-fire-flame-curved" style="font-size:26px;color:var(--red);margin-bottom:20px;display:block;"></i>
+        <h3 style="font-family:var(--font-head);font-size:30px;color:var(--white);letter-spacing:1px;margin-bottom:12px;">DEFINICIÓN SIN PERDER CURVAS</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Déficit calculado para quemar grasa preservando el músculo que construiste. Sin "adelgazar todo".</p>
+      </div>
+      <div style="background:var(--surface);padding:48px 40px;border-left:3px solid rgba(255,255,255,0.05);position:relative;" data-aos="fade-up" data-aos-delay="200">
+        <i class="fas fa-apple-whole" style="font-size:26px;color:var(--red);margin-bottom:20px;display:block;"></i>
+        <h3 style="font-family:var(--font-head);font-size:30px;color:var(--white);letter-spacing:1px;margin-bottom:12px;">NUTRICIÓN SIN OBSESIÓN</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Aprendes a comer para rendir y verte bien. Sin contar cada caloría. Sin eliminar grupos de alimentos.</p>
+      </div>
+      <div style="background:var(--surface);padding:48px 40px;border-left:3px solid rgba(220,60,100,0.25);position:relative;overflow:hidden;" data-aos="fade-up" data-aos-delay="300">
+        <div style="position:absolute;top:-20px;right:-20px;width:140px;height:140px;background:radial-gradient(circle,rgba(220,60,100,0.06),transparent);pointer-events:none;"></div>
+        <i class="fas fa-circle-nodes" style="font-size:26px;color:var(--rose);margin-bottom:20px;display:block;"></i>
+        <h3 style="font-family:var(--font-head);font-size:30px;color:var(--white);letter-spacing:1px;margin-bottom:12px;">RESPETA TU CICLO</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Tu entrenamiento y nutrición se adaptan a las fases de tu ciclo menstrual. Ciencia, no suposiciones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PLANES SECTION ═══ -->
+<section id="sec-planes" style="padding:100px 0;background:var(--surface);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:64px;" data-aos="fade-up">
+      <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;">Inversión en ti</div>
+      <h2 style="font-family:var(--font-head);font-size:clamp(44px,7vw,80px);line-height:0.93;color:var(--white);">
+        ELIGE TU NIVEL<br><span style="color:var(--red);">DE ACOMPAÑAMIENTO.</span>
+      </h2>
+      <p style="font-size:15px;color:var(--gray);margin-top:16px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.7;">
+        Cada plan incluye entrenamiento + nutrición + acompañamiento 1:1. Diseñado para el cuerpo femenino.
+      </p>
+    </div>
+    <div class="planes-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;" data-aos="fade-up" data-aos-delay="100">
+
+      <!-- ESENCIAL -->
+      <div style="background:var(--card);padding:48px 36px;border:1px solid var(--border);position:relative;">
+        <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:20px;">Plan</div>
+        <h3 style="font-family:var(--font-head);font-size:40px;color:var(--white);margin-bottom:8px;">ESENCIAL</h3>
+        <div style="font-family:var(--font-head);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$95<span style="font-size:18px;color:var(--gray);">/mes</span></div>
+        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">USD · facturación mensual</div>
+        <div style="height:1px;background:var(--border);margin-bottom:28px;"></div>
+        <ul style="list-style:none;padding:0;margin-bottom:36px;">
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Plan de entrenamiento personalizado</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Plan nutricional completo</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Check-in semanal por escrito</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Ajustes mensuales al programa</li>
+        </ul>
+        <a href="inscripcion.html?plan=esencial" style="display:block;text-align:center;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:14px;text-decoration:none;">ELEGIR ESENCIAL</a>
+      </div>
+
+      <!-- MÉTODO (destacado) -->
+      <div style="background:var(--card);padding:48px 36px;border:1px solid var(--rose);position:relative;">
+        <div style="position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--rose));"></div>
+        <div style="display:inline-block;background:var(--red);color:#fff;font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:6px 14px;margin-bottom:20px;">MÁS ELEGIDO</div>
+        <h3 style="font-family:var(--font-head);font-size:40px;color:var(--white);margin-bottom:8px;">MÉTODO</h3>
+        <div style="font-family:var(--font-head);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$120<span style="font-size:18px;color:var(--gray);">/mes</span></div>
+        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">USD · facturación mensual</div>
+        <div style="height:1px;background:rgba(220,60,100,0.2);margin-bottom:28px;"></div>
+        <ul style="list-style:none;padding:0;margin-bottom:36px;">
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Todo lo del plan Esencial</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Videollamada de revisión mensual</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Plan periodizado por fases</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Adaptación a tu ciclo menstrual</li>
+        </ul>
+        <a href="inscripcion.html?plan=metodo" style="display:block;text-align:center;background:var(--red);color:#fff;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:14px;text-decoration:none;">ELEGIR MÉTODO</a>
+      </div>
+
+      <!-- ELITE -->
+      <div style="background:var(--card);padding:48px 36px;border:1px solid var(--border);position:relative;">
+        <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:20px;">Plan</div>
+        <h3 style="font-family:var(--font-head);font-size:40px;color:var(--white);margin-bottom:8px;">ELITE</h3>
+        <div style="font-family:var(--font-head);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$150<span style="font-size:18px;color:var(--gray);">/mes</span></div>
+        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">USD · facturación mensual</div>
+        <div style="height:1px;background:var(--border);margin-bottom:28px;"></div>
+        <ul style="list-style:none;padding:0;margin-bottom:36px;">
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Todo lo del plan Método</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Acompañamiento diario por WhatsApp</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Ajustes en tiempo real</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Prioridad total de respuesta</li>
+        </ul>
+        <a href="inscripcion.html?plan=elite" style="display:block;text-align:center;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:14px;text-decoration:none;">ELEGIR ELITE</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIOS ═══ -->
+<section id="sec-testimonios" style="padding:100px 0;background:var(--bg);" data-aos="fade-up">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:64px;">
+      <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;">Resultados reales</div>
+      <h2 style="font-family:var(--font-head);font-size:clamp(44px,7vw,80px);line-height:0.93;color:var(--white);">
+        ELLAS YA<br><span style="color:var(--red);">EMPEZARON.</span>
+      </h2>
+    </div>
+    <div class="testimonials-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+
+      <div style="background:var(--surface);padding:36px;border:1px solid var(--border);position:relative;" data-aos="fade-up" data-aos-delay="0">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--rose),transparent);"></div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+          <div style="width:48px;height:48px;background:rgba(220,60,100,0.12);border:1px solid rgba(220,60,100,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:22px;color:var(--rose);flex-shrink:0;">V</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--white);">Valentina R.</div>
+            <div style="font-size:11px;color:var(--rose);letter-spacing:1px;margin-top:2px;">–8 kg · 4 meses</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+        </div>
+        <p style="font-size:13px;color:var(--gray);line-height:1.8;font-style:italic;">"Por primera vez entendí cómo comer sin restricción y seguir perdiendo grasa. El plan respeta mi ciclo y eso cambió todo."</p>
+      </div>
+
+      <div style="background:var(--surface);padding:36px;border:1px solid var(--border);position:relative;" data-aos="fade-up" data-aos-delay="100">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent);"></div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+          <div style="width:48px;height:48px;background:rgba(227,30,36,0.10);border:1px solid rgba(227,30,36,0.25);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:22px;color:var(--red);flex-shrink:0;">C</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--white);">Camila T.</div>
+            <div style="font-size:11px;color:var(--red);letter-spacing:1px;margin-top:2px;">+4 kg músculo · 6 meses</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <i class="fas fa-star" style="color:var(--red);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--red);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--red);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--red);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--red);font-size:11px;"></i>
+        </div>
+        <p style="font-size:13px;color:var(--gray);line-height:1.8;font-style:italic;">"Quería glúteos y curvas reales, no solo perder peso. Silvia diseñó exactamente eso. Los resultados hablan solos."</p>
+      </div>
+
+      <div style="background:var(--surface);padding:36px;border:1px solid var(--border);position:relative;" data-aos="fade-up" data-aos-delay="200">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--rose),transparent);"></div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+          <div style="width:48px;height:48px;background:rgba(220,60,100,0.12);border:1px solid rgba(220,60,100,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:22px;color:var(--rose);flex-shrink:0;">S</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--white);">Sara M.</div>
+            <div style="font-size:11px;color:var(--rose);letter-spacing:1px;margin-top:2px;">Tonificación · 3 meses</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+          <i class="fas fa-star" style="color:var(--rose);font-size:11px;"></i>
+        </div>
+        <p style="font-size:13px;color:var(--gray);line-height:1.8;font-style:italic;">"Había probado de todo. La diferencia es que aquí te explican el por qué de cada decisión. Ya no me pierdo en redes."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA FINAL ═══ -->
+<section id="sec-cta-final" style="padding:120px 0;background:var(--surface);position:relative;overflow:hidden;text-align:center;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(220,60,100,0.09) 0%,transparent 65%);pointer-events:none;"></div>
+  <div class="container" style="position:relative;z-index:2;" data-aos="fade-up">
+    <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:16px;">¿Lista?</div>
+    <h2 style="font-family:var(--font-head);font-size:clamp(52px,10vw,120px);line-height:0.9;color:var(--white);margin-bottom:24px;">
+      TU CUERPO.<br>TU PROCESO.<br><span style="color:var(--red);">TU MOMENTO.</span>
+    </h2>
+    <p style="font-size:16px;color:var(--gray);max-width:420px;margin:0 auto 40px;line-height:1.7;">
+      El primer paso es el más difícil. El resto lo hacemos juntas.
+    </p>
+    <a href="inscripcion.html" style="display:inline-block;background:var(--red);color:#fff;font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;padding:18px 56px;text-decoration:none;">
+      EMPEZAR AHORA →
+    </a>
+    <div style="margin-top:20px;">
+      <a href="planes.html" style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:2px;">
+        Ver todos los planes
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="padding:48px 40px;background:var(--bg);border-top:1px solid var(--border);text-align:center;">
+  <div style="font-family:var(--font-head);font-size:28px;letter-spacing:3px;margin-bottom:20px;">
+    WELL<span style="color:var(--red);">CORE</span>
+  </div>
+  <div style="display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-bottom:20px;">
+    <a href="metodo.html" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;">Método</a>
+    <a href="planes.html" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;">Planes</a>
+    <a href="proceso.html" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;">Proceso</a>
+    <a href="inscripcion.html" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-decoration:none;">Inscripción</a>
+    <a href="index.html" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;">Sitio Principal</a>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.18);line-height:1.6;">
+    © 2026 WellCore Fitness · Coaching 1:1 basado en ciencia<br>
+    <span style="color:rgba(255,255,255,0.12);">Este sitio está diseñado especialmente para ti.</span>
+  </div>
+</footer>
 
 <!-- ============================================================
      SCRIPTS
