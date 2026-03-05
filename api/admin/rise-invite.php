@@ -17,9 +17,10 @@ function sendRiseWelcomeEmail(string $toEmail, string $toName, string $password,
     $loginUrl = 'https://wellcorefitness.com/login.html';
     $endFmt   = date('d/m/Y', strtotime($endDate));
     $startFmt = date('d/m/Y', strtotime($startDate));
-    $n = htmlspecialchars($toName,   ENT_QUOTES, 'UTF-8');
-    $e = htmlspecialchars($toEmail,  ENT_QUOTES, 'UTF-8');
-    $p = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+    $n            = htmlspecialchars($toName,   ENT_QUOTES, 'UTF-8');
+    $e            = htmlspecialchars($toEmail,  ENT_QUOTES, 'UTF-8');
+    $p            = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+    $passwordSafe = $p;
 
     $html = "<!DOCTYPE html><html lang=es><head><meta charset=UTF-8></head>"
         . "<body style=\"margin:0;padding:0;background:#0a0a0a;font-family:Arial,sans-serif;\">"
@@ -49,12 +50,14 @@ function sendRiseWelcomeEmail(string $toEmail, string $toName, string $password,
         . "<p style=\"color:#444;font-size:11px;margin:0;text-transform:uppercase;\">WellCore Fitness &mdash; wellcorefitness.com</p>"
         . "</td></tr></table></td></tr></table></body></html>";
 
+    $textPart = "Hola {$toName}, tu acceso al Reto RISE 30 dias ha sido activado. Email: {$toEmail} | Contrasena: {$passwordSafe} | Vigencia: {$startFmt} a {$endFmt} | Ingresar en: https://wellcorefitness.com/login.html";
+
     $payload = json_encode([
-        'from_name'  => 'WellCore Fitness',
-        'from_email' => 'info@wellcorefitness.com',
-        'subject'    => 'Tu acceso al Reto RISE 30 Dias esta listo',
-        'html_body'  => $html,
-        'recipients' => [['name' => $toName, 'email' => $toEmail]]
+        'from'      => ['name' => 'WellCore Fitness', 'email' => 'info@wellcorefitness.com'],
+        'to'        => [['name' => $toName, 'email' => $toEmail]],
+        'subject'   => 'Tu acceso al Reto RISE 30 Dias esta listo',
+        'html_part' => $html,
+        'text_part' => $textPart,
     ]);
 
     $ch = curl_init(MAILRELAY_ENDPOINT);
