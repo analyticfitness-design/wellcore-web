@@ -453,6 +453,8 @@
         var role  = localStorage.getItem('wc_user_type');
         if (token) {
             if (role === 'admin') { window.location.replace('admin.html'); return; }
+            var plan = localStorage.getItem('wc_client_plan');
+            if (plan === 'rise') { window.location.replace('rise-dashboard.html'); return; }
             window.location.replace('cliente.html');
         }
     })();
@@ -624,7 +626,11 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         // Try client login
         try {
             var data = await WC_API.auth.login('client', identifier, password);
-            if (data && data.token) { onSuccess('cliente.html'); return; }
+            if (data && data.token) {
+                var plan = data.client && data.client.plan;
+                onSuccess(plan === 'rise' ? 'rise-dashboard.html' : 'cliente.html');
+                return;
+            }
             throw new Error('No token');
         } catch(err) {
             setLoading(false);
