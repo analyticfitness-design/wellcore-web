@@ -1093,6 +1093,124 @@
                 </h1>
                 <p style="color: var(--gray); margin-bottom: 30px;">Registra tus medidas cada 10 días para comparar tu progreso</p>
 
+
+                <!-- ═══ GUÍA DE MEDICIÓN ═══ -->
+                <div class="card" style="margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleMeasGuide(this)">
+                        <div class="card-title" style="margin:0;display:flex;align-items:center;gap:10px;">
+                            <i class="fas fa-book-open" style="color:var(--red);"></i>
+                            ¿Cómo tomarme las medidas?
+                        </div>
+                        <span id="measGuideArrow" style="color:var(--gray);font-size:20px;transition:transform .3s;display:inline-block;">&#8964;</span>
+                    </div>
+                    <div id="measGuideContent" style="display:none;margin-top:20px;">
+
+                        <!-- Reglas generales -->
+                        <div style="background:rgba(227,30,36,0.07);border:1px solid rgba(227,30,36,0.2);border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;color:var(--gray);line-height:1.7;">
+                            <div style="color:#fff;font-weight:700;margin-bottom:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">Reglas generales</div>
+                            <ul style="margin:0;padding-left:18px;">
+                                <li>Mídete siempre a la <strong style="color:#fff;">misma hora</strong> (mañana, en ayunas)</li>
+                                <li>Usa una <strong style="color:#fff;">cinta métrica flexible</strong>, no metálica</li>
+                                <li>La cinta debe quedar <strong style="color:#fff;">paralela al suelo</strong> y sin presionar la piel</li>
+                                <li>Posición erguida, <strong style="color:#fff;">relajado</strong> — no succiones el abdomen</li>
+                                <li>Repite cada medida <strong style="color:#fff;">2 veces</strong> y toma el promedio</li>
+                            </ul>
+                        </div>
+
+                        <!-- Diagrama + leyenda -->
+                        <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+
+                            <!-- SVG cuerpo humano con puntos de medición -->
+                            <div style="flex:0 0 130px;display:flex;justify-content:center;">
+                                <svg width="130" height="310" viewBox="0 0 130 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Cabeza -->
+                                    <ellipse cx="65" cy="26" rx="17" ry="20" fill="#222226" stroke="#3a3a3e" stroke-width="1.5"/>
+                                    <!-- Cuello -->
+                                    <rect x="59" y="44" width="12" height="12" rx="3" fill="#222226" stroke="#3a3a3e" stroke-width="1.5"/>
+                                    <!-- Torso -->
+                                    <path d="M35 58 Q27 72 26 115 Q25 140 34 150 Q50 160 65 160 Q80 160 96 150 Q105 140 104 115 Q103 72 95 58 Q82 52 65 52 Q48 52 35 58Z" fill="#222226" stroke="#3a3a3e" stroke-width="1.5"/>
+                                    <!-- Brazo izq -->
+                                    <path d="M35 62 Q20 78 16 108 Q14 124 18 136" stroke="#3a3a3e" stroke-width="9" stroke-linecap="round" fill="none"/>
+                                    <!-- Brazo der -->
+                                    <path d="M95 62 Q110 78 114 108 Q116 124 112 136" stroke="#3a3a3e" stroke-width="9" stroke-linecap="round" fill="none"/>
+                                    <!-- Manos -->
+                                    <ellipse cx="17" cy="140" rx="6" ry="8" fill="#222226" stroke="#3a3a3e" stroke-width="1.5"/>
+                                    <ellipse cx="113" cy="140" rx="6" ry="8" fill="#222226" stroke="#3a3a3e" stroke-width="1.5"/>
+                                    <!-- Pierna izq -->
+                                    <path d="M48 158 Q43 185 41 222 Q40 252 43 282" stroke="#3a3a3e" stroke-width="13" stroke-linecap="round" fill="none"/>
+                                    <!-- Pierna der -->
+                                    <path d="M82 158 Q87 185 89 222 Q90 252 87 282" stroke="#3a3a3e" stroke-width="13" stroke-linecap="round" fill="none"/>
+                                    <!-- Pies -->
+                                    <ellipse cx="43" cy="285" rx="9" ry="5" fill="#222226" stroke="#3a3a3e" stroke-width="1.5"/>
+                                    <ellipse cx="87" cy="285" rx="9" ry="5" fill="#222226" stroke="#3a3a3e" stroke-width="1.5"/>
+
+                                    <!-- PECHO — línea roja -->
+                                    <line x1="22" y1="85" x2="108" y2="85" stroke="#E31E24" stroke-width="1.8" stroke-dasharray="4,3"/>
+                                    <circle cx="12" cy="85" r="8" fill="#E31E24"/>
+                                    <text x="12" y="89" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">P</text>
+
+                                    <!-- CINTURA — naranja -->
+                                    <line x1="24" y1="113" x2="106" y2="113" stroke="#FF6B35" stroke-width="1.8" stroke-dasharray="4,3"/>
+                                    <circle cx="118" cy="113" r="8" fill="#FF6B35"/>
+                                    <text x="118" y="117" fill="#fff" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">C</text>
+
+                                    <!-- CADERA — amarillo -->
+                                    <line x1="28" y1="143" x2="102" y2="143" stroke="#FFB800" stroke-width="1.8" stroke-dasharray="4,3"/>
+                                    <circle cx="12" cy="143" r="8" fill="#FFB800"/>
+                                    <text x="12" y="147" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">Ca</text>
+
+                                    <!-- MUSLO — cian -->
+                                    <line x1="34" y1="188" x2="55" y2="188" stroke="#00D9FF" stroke-width="1.8" stroke-dasharray="4,3"/>
+                                    <circle cx="118" cy="188" r="8" fill="#00D9FF"/>
+                                    <text x="118" y="192" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">M</text>
+
+                                    <!-- BRAZO — morado -->
+                                    <line x1="105" y1="100" x2="120" y2="100" stroke="#A855F7" stroke-width="1.8" stroke-dasharray="4,3"/>
+                                    <circle cx="12" cy="100" r="8" fill="#A855F7"/>
+                                    <text x="12" y="104" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">B</text>
+                                </svg>
+                            </div>
+
+                            <!-- Cards de instrucciones -->
+                            <div style="flex:1;min-width:160px;display:flex;flex-direction:column;gap:10px;">
+
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #E31E24;">
+                                    <span style="background:#E31E24;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">P · PECHO</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Rodea el pecho a la altura de los <strong style="color:#fff;">pezones</strong>. Brazos relajados, exhala antes de medir.</p>
+                                </div>
+
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #FF6B35;">
+                                    <span style="background:#FF6B35;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">C · CINTURA</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Punto más estrecho, <strong style="color:#fff;">2-3 cm sobre el ombligo</strong>. No metas la barriga — mide relajado.</p>
+                                </div>
+
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #FFB800;">
+                                    <span style="background:#FFB800;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">Ca · CADERA</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Punto más ancho de los glúteos, <strong style="color:#fff;">pies juntos</strong>. La cinta debe quedar horizontal.</p>
+                                </div>
+
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #00D9FF;">
+                                    <span style="background:#00D9FF;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">M · MUSLO</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Parte más gruesa, <strong style="color:#fff;">justo debajo del glúteo</strong>. Pierna ligeramente separada, peso distribuido.</p>
+                                </div>
+
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #A855F7;">
+                                    <span style="background:#A855F7;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">B · BRAZO</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Bícep <strong style="color:#fff;">contraído y flexionado a 90°</strong>. Mide en el punto más alto del músculo.</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div style="margin-top:14px;padding:12px;background:#111113;border-radius:8px;font-size:12px;color:var(--gray);text-align:center;line-height:1.6;">
+                            <i class="fas fa-lightbulb" style="color:#FFB800;margin-right:6px;"></i>
+                            <strong style="color:#fff;">Tip:</strong> Pídele a alguien que te ayude para mayor precisión, especialmente en espalda y cadera.
+                            Siempre mide el mismo lado del cuerpo.
+                        </div>
+                    </div>
+                </div>
+                <!-- ═══ FIN GUÍA ═══ -->
+
                 <div class="card">
                     <div class="card-title">Nueva Medición</div>
                     <div class="grid-2">
@@ -1498,6 +1616,15 @@
             } else {
                 showToast('¡Hábitos guardados localmente!');
             }
+        }
+
+        // ─── TOGGLE GUÍA DE MEDICIÓN ─────────────
+        function toggleMeasGuide(header) {
+            var content = document.getElementById('measGuideContent');
+            var arrow   = document.getElementById('measGuideArrow');
+            var open    = content.style.display !== 'none';
+            content.style.display = open ? 'none' : 'block';
+            arrow.style.transform  = open ? '' : 'rotate(180deg)';
         }
 
         // ─── GUARDAR MEDICIÓN VÍA API ─────────────
