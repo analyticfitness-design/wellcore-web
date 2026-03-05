@@ -1838,9 +1838,7 @@
 
   /* ─── DELETE CLIENT ─── */
   function deleteClient(clientId, clientName) {
-    if (!confirm('¿Eliminar a ' + clientName + '?
-
-Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshacer.')) return;
+    if (!confirm('¿Eliminar a ' + clientName + '?\n\nEsta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshacer.')) return;
     apiFetch('/admin/delete-client', {
       method: 'POST',
       body: JSON.stringify({ client_id: clientId })
