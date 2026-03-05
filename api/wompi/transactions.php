@@ -25,7 +25,8 @@
  * ============================================================
  */
 
-define('TRANSACTIONS_FILE', __DIR__ . '/data/transactions.json');
+// Usar /tmp/ para archivos transitorios (siempre writable en contenedores Docker)
+define('TRANSACTIONS_FILE', sys_get_temp_dir() . '/wc_transactions.json');
 
 function transactions_read_all(): array {
     if (!file_exists(TRANSACTIONS_FILE)) return [];
@@ -40,7 +41,7 @@ function transactions_append(array $transaction): bool {
     if (!is_dir($dir)) mkdir($dir, 0755, true);
     $all   = transactions_read_all();
     $all[] = $transaction;
-    return file_put_contents(
+    return @file_put_contents(
         TRANSACTIONS_FILE,
         json_encode($all, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
         LOCK_EX
@@ -80,7 +81,7 @@ function transactions_update(string $referenceCode, array $updates): bool {
 
     if (!$updated) return false;
 
-    return file_put_contents(
+    return @file_put_contents(
         TRANSACTIONS_FILE,
         json_encode($all, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
         LOCK_EX

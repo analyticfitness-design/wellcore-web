@@ -5,7 +5,8 @@
  * ============================================================
  */
 
-define('RATE_LIMIT_FILE', __DIR__ . '/data/rate_limits.json');
+// Usar /tmp/ para archivos transitorios (siempre writable en contenedores Docker)
+define('RATE_LIMIT_FILE', sys_get_temp_dir() . '/wc_rate_limits.json');
 
 function get_client_ip(): string {
     $headers = [
@@ -27,7 +28,7 @@ function get_client_ip(): string {
 
 function rate_limit_check(string $ip, string $action, int $limit, int $window): bool {
     $dir = dirname(RATE_LIMIT_FILE);
-    if (!is_dir($dir)) mkdir($dir, 0755, true);
+    if (!is_dir($dir)) @mkdir($dir, 0755, true);
 
     $data = [];
     if (file_exists(RATE_LIMIT_FILE)) {
@@ -51,7 +52,7 @@ function rate_limit_check(string $ip, string $action, int $limit, int $window): 
         if ($now - $entry['window_start'] > $window * 2) unset($data[$k]);
     }
 
-    file_put_contents(RATE_LIMIT_FILE, json_encode($data), LOCK_EX);
+    @file_put_contents(RATE_LIMIT_FILE, json_encode($data), LOCK_EX);
 
     return $data[$key]['count'] <= $limit;
 }

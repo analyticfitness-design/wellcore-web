@@ -309,7 +309,7 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 6px 32px rgba(37,211,102,0.55);
 }
 @media (max-width: 768px) {
-  .wa-float { bottom: 24px; left: 16px; right: auto; }
+  .wa-float { display: none !important; }
 }
 
 /* === ANIMATIONS === */
