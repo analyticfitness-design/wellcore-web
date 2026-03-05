@@ -44,6 +44,28 @@
         }
 
         /* ──────── TOPBAR ──────── */
+        .topbar-logo { display:flex; align-items:center; text-decoration:none; flex-shrink:0; }
+        .topbar-logo img { height:26px; width:auto; display:block; }
+        .topbar-center { flex:1; display:flex; align-items:center; justify-content:center; }
+        .rise-badge-top {
+            display:flex; align-items:center; gap:5px;
+            font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:.12em;
+            color:var(--red); background:rgba(200,16,46,0.10);
+            border:1px solid rgba(200,16,46,0.25); border-radius:20px; padding:4px 12px;
+        }
+        .topbar-actions { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+        .topbar-user-name-inline {
+            font-size:12px; font-weight:600; color:rgba(255,255,255,0.65);
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:120px;
+        }
+        .topbar-logout-btn {
+            background:rgba(200,16,46,0.08); border:1px solid rgba(200,16,46,0.28);
+            color:var(--red); border-radius:8px; padding:7px 14px;
+            font-size:11px; font-weight:700; cursor:pointer; letter-spacing:.05em;
+            display:flex; align-items:center; gap:5px; transition:all 0.2s;
+            white-space:nowrap; text-transform:uppercase; min-height:0 !important;
+        }
+        .topbar-logout-btn:hover { background:rgba(200,16,46,0.18); border-color:var(--red); }
         .topbar {
             position: sticky;
             top: 0;
@@ -412,63 +434,50 @@
             .grid-3 { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* ──────── BOTTOM NAV (app mobile) ──────── */
+        /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 BOTTOM NAV (app mobile) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
         .bottom-nav {
             display: none;
             position: fixed; bottom: 0; left: 0; right: 0;
-            height: 72px; z-index: 300;
-            background: rgba(14,14,17,0.97);
-            border-top: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 -12px 40px rgba(0,0,0,0.5);
+            z-index: 300;
+            background: rgba(10,10,12,0.97);
+            border-top: 1px solid rgba(255,255,255,0.09);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
             padding-bottom: env(safe-area-inset-bottom, 0px);
         }
         .bottom-nav-inner {
-            display: flex; align-items: stretch; height: 72px;
+            display: flex; align-items: stretch; height: 62px; width: 100%;
         }
         .bnav-item {
             flex: 1; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            gap: 4px; background: none; border: none;
-            color: rgba(255,255,255,0.35); font-size: .58rem;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500; letter-spacing: .04em; cursor: pointer;
-            transition: all 0.2s ease; padding: 8px 4px;
-            min-width: 0; -webkit-tap-highlight-color: transparent;
-            position: relative;
+            gap: 3px; background: none; border: none; color: rgba(255,255,255,0.38);
+            font-family: 'Inter',sans-serif; font-weight: 500;
+            transition: all 0.18s ease; padding: 0; min-width: 0;
+            -webkit-tap-highlight-color: transparent; position: relative; cursor: pointer;
+            min-height: 0 !important;
         }
-        .bnav-item i {
-            font-size: 1.4rem; line-height: 1;
-            transition: all 0.2s ease;
-        }
+        .bnav-item i { font-size: 1.6rem; line-height: 1; transition: all 0.18s ease; }
         .bnav-item span {
-            white-space: nowrap; overflow: hidden;
-            text-overflow: ellipsis; max-width: 100%;
-            font-size: .6rem;
+            font-size: .52rem; letter-spacing: .03em; text-transform: uppercase;
+            white-space: nowrap; padding: 0 2px;
         }
-        .bnav-item.active {
-            color: #fff;
-        }
+        .bnav-item.active { color: #fff; }
         .bnav-item.active i {
-            background: linear-gradient(135deg, var(--red), var(--red-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 8px rgba(200,16,46,0.6));
-            transform: translateY(-2px) scale(1.15);
+            background: linear-gradient(135deg, var(--red), #ff2040);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            filter: drop-shadow(0 0 8px rgba(200,16,46,0.55));
+            transform: translateY(-2px) scale(1.1);
         }
         .bnav-item.active span { color: var(--red); }
         .bnav-item.active::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 32px; height: 2px;
-            background: linear-gradient(90deg, var(--red), #ff4060);
-            border-radius: 0 0 4px 4px;
+            content: ''; position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 26px; height: 2px;
+            background: linear-gradient(90deg, var(--red), #ff2040);
+            border-radius: 0 0 3px 3px;
         }
-        .bnav-item:active { transform: scale(0.93); }
+        .bnav-item:active { transform: scale(0.88); opacity: 0.8; }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -477,12 +486,16 @@
                 width: 70vw;
             }
             .sidebar.show { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 16px 14px 80px; }
+            .main-content { margin-left: 0; padding: 16px 14px 74px; }
             .hamburger-menu { display: none; }
             .bottom-nav { display: flex; }
+            .topbar-user-name-inline { display: none; }
+            .topbar-logout-label { display: none; }
+            .topbar-logout-btn { padding: 8px 10px; }
+            .topbar-center { display: none; }
             .topbar-search { display: none; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
-            button:not(.topbar-user-menu-toggle) { min-height: 44px; }
+            a, button { -webkit-tap-highlight-color: transparent; }
         }
 
         /* ──────── SECTION TRANSITIONS ──────── */
@@ -678,27 +691,20 @@
     <!-- Topbar -->
     <div class="topbar">
         <div class="topbar-content">
-            <button class="hamburger-menu" id="hamburgerBtn" aria-label="Menú">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="topbar-search" style="position: relative;">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Buscar sección..." id="searchInput" autocomplete="off">
-                <div class="search-results" id="searchResults"></div>
-            </div>
-            <div class="topbar-user">
-                <div class="topbar-user-avatar" id="userAvatar" aria-label="Avatar de usuario">U</div>
-                <div class="topbar-user-menu">
-                    <button class="topbar-user-menu-toggle" id="userMenuBtn" aria-haspopup="true">
-                        <span id="userName">Usuario</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="topbar-user-dropdown" id="userDropdown" role="menu">
-                        <a href="#" onclick="logout(); return false;">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
+            <a href="/" class="topbar-logo">
+                <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness">
+            </a>
+            <div class="topbar-center">
+                <div class="rise-badge-top">
+                    <i class="fas fa-fire-flame-curved"></i> RETO RISE 30
                 </div>
+            </div>
+            <div class="topbar-actions">
+                <span class="topbar-user-name-inline" id="userName">Cliente</span>
+                <button class="topbar-logout-btn" onclick="logout()" aria-label="Cerrar sesión">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="topbar-logout-label">Salir</span>
+                </button>
             </div>
         </div>
     </div>
@@ -781,14 +787,23 @@
                 </div>
 
                 <!-- Hero Countdown -->
-                <div class="card" style="background: linear-gradient(135deg, var(--red-dim) 0%, var(--surface) 100%); border: 1px solid rgba(227,30,36,0.3); padding: 40px; text-align: center; margin-bottom: 30px;">
-                    <div style="font-family: 'Bebas Neue'; font-size: 60px; color: var(--red); margin-bottom: 20px; line-height: 1;">
-                        <span id="dashCountdownDays">--</span> de 30
+                <div class="card" id="heroCountdownCard" style="background: linear-gradient(135deg, var(--red-dim) 0%, var(--surface) 100%); border: 1px solid rgba(227,30,36,0.3); padding: 30px; text-align: center; margin-bottom: 30px;">
+                    <!-- Estado: pendiente (hasta que el coach suba el plan) -->
+                    <div id="heroPending" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+                        <div style="font-size:2rem;opacity:0.4;">⏳</div>
+                        <div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:.08em;color:var(--gray);">PROGRAMA EN PREPARACIÓN</div>
+                        <p style="color:var(--gray);font-size:13px;max-width:260px;line-height:1.5;">Tu coach está personalizando tu plan. El contador inicia cuando tu programa esté listo.</p>
                     </div>
-                    <div style="height: 10px; background: var(--gray-dim); border-radius: 5px; margin-bottom: 20px; overflow: hidden;">
-                        <div id="dashCountdownBar" style="height: 100%; background: linear-gradient(90deg, var(--red) 0%, var(--gray-dim) 100%); width: 0%; transition: width 0.5s ease;"></div>
+                    <!-- Estado: activo (una vez que el plan existe) -->
+                    <div id="heroActive" style="display:none;">
+                        <div style="font-family: 'Bebas Neue'; font-size: 60px; color: var(--red); margin-bottom: 16px; line-height: 1;">
+                            <span id="dashCountdownDays">0</span> <span style="font-size:30px;color:var(--gray);">de 30</span>
+                        </div>
+                        <div style="height: 8px; background: var(--gray-dim); border-radius: 5px; margin-bottom: 16px; overflow: hidden;">
+                            <div id="dashCountdownBar" style="height: 100%; background: linear-gradient(90deg, var(--red), #ff2040); width: 0%; transition: width 0.5s ease;"></div>
+                        </div>
+                        <div style="color: var(--gray); font-size: 13px; font-family: 'JetBrains Mono'; text-transform: uppercase; letter-spacing: 0.05em;" id="dashCountdownLabel">Días completados de tu reto</div>
                     </div>
-                    <div style="color: var(--gray); font-size: 14px; font-family: 'JetBrains Mono'; text-transform: uppercase; letter-spacing: 0.05em;" id="dashCountdownLabel">Días completados — Finaliza el 31 de Marzo de 2026</div>
                 </div>
 
                 <!-- Quick Actions -->
@@ -1241,7 +1256,7 @@
             var wm = document.createElement('div');
             wm.id = 'wc-watermark';
 
-            var label = (name + (email ? '  ·  ' + email : '') + '  ·  WELLCORE RISE').repeat(6);
+            var label = (name.toUpperCase() + '  ·  WWW.WELLCOREFITNESS.COM').repeat(6);
 
             wm.style.cssText = [
                 'position:fixed;inset:0;z-index:9000',
@@ -1309,6 +1324,8 @@
         }
 
         // ─── CARGAR PLAN PERSONALIZADO ───────────
+        var programStartDate = null; // Se establece cuando el plan de entrenamiento es cargado
+
         async function loadPlan(type) {
             const loadingEl   = document.getElementById(type + 'Loading');
             const containerEl = document.getElementById(type + 'PlanContainer');
@@ -1321,6 +1338,13 @@
 
             const plans = (data.plans || []);
             if (plans.length > 0 && plans[0].content) {
+                // Si es el plan de entrenamiento, activar el contador
+                if (type === 'training' && plans[0].valid_from) {
+                    programStartDate = new Date(plans[0].valid_from);
+                    activateProgramCounter(programStartDate);
+                } else if (type === 'training') {
+                    activateProgramCounter(null);
+                }
                 if (containerEl) {
                     renderPlanContent(type + 'PlanContainer', plans[0].content);
                     containerEl.style.display = 'block';
@@ -1487,10 +1511,8 @@
             document.getElementById('sidebarOverlay').classList.remove('show');
         });
 
-        document.getElementById('userMenuBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            document.getElementById('userDropdown').classList.toggle('show');
-        });
+        // userMenuBtn removed - topbar now uses direct logout button
+        // document.getElementById('userMenuBtn') no longer exists
 
         document.addEventListener('click', () => {
             document.getElementById('userDropdown').classList.remove('show');
@@ -1549,30 +1571,44 @@
         searchInput.addEventListener('click', (e) => e.stopPropagation());
 
         // ─── PHASE 5: COUNTDOWN (real-time) ──────
-        function updateCountdown() {
-            const end   = new Date('2026-03-31T23:59:59');
-            const start = new Date('2026-03-01T00:00:00');
-            const now   = new Date();
-
-            const totalMs       = end - start;
-            const elapsedMs     = now - start;
-            const remainingMs   = end - now;
-            const progress      = Math.min(100, Math.max(0, (elapsedMs / totalMs) * 100));
-            const daysElapsed   = Math.max(0, Math.floor(elapsedMs / 86400000));
-            const daysRemaining = Math.max(0, Math.ceil(remainingMs / 86400000));
-
-            // Sidebar countdown
-            document.getElementById('countdownDays').textContent = daysRemaining;
-            document.getElementById('countdownFill').style.width  = progress.toFixed(1) + '%';
-            document.getElementById('countdownText').textContent  = daysRemaining + ' días restantes';
-
-            // Dashboard hero
-            document.getElementById('dashCountdownDays').textContent = daysElapsed;
-            document.getElementById('dashCountdownBar').style.width  = progress.toFixed(1) + '%';
+        function activateProgramCounter(startDate) {
+            var pending = document.getElementById('heroPending');
+            var active  = document.getElementById('heroActive');
+            if (pending) pending.style.display = 'none';
+            if (active)  active.style.display  = 'block';
+            if (startDate) programStartDate = startDate;
+            updateCountdown();
         }
 
-        // Update every 60 seconds
-        updateCountdown();
+        function updateCountdown() {
+            var now = new Date();
+            var start = programStartDate || null;
+
+            // Sidebar countdown (usa fecha de status.php o programStartDate)
+            if (start) {
+                var end = new Date(start);
+                end.setDate(end.getDate() + 30);
+                var totalMs       = end - start;
+                var elapsedMs     = now - start;
+                var remainingMs   = end - now;
+                var progress      = Math.min(100, Math.max(0, (elapsedMs / totalMs) * 100));
+                var daysElapsed   = Math.max(0, Math.floor(elapsedMs / 86400000));
+                var daysRemaining = Math.max(0, Math.ceil(remainingMs / 86400000));
+
+                var cdDays = document.getElementById('countdownDays');
+                var cdFill = document.getElementById('countdownFill');
+                var cdText = document.getElementById('countdownText');
+                if (cdDays) cdDays.textContent = daysRemaining;
+                if (cdFill) cdFill.style.width  = progress.toFixed(1) + '%';
+                if (cdText) cdText.textContent  = daysRemaining + ' días restantes';
+
+                var dcDays = document.getElementById('dashCountdownDays');
+                var dcBar  = document.getElementById('dashCountdownBar');
+                if (dcDays) dcDays.textContent = daysElapsed;
+                if (dcBar)  dcBar.style.width  = progress.toFixed(1) + '%';
+            }
+        }
+
         setInterval(updateCountdown, 60000);
 
         // ─── PHASE 4: HABITS (persist by date) ───
@@ -1879,7 +1915,7 @@
             const clientInfo = JSON.parse(localStorage.getItem('client_info') || '{}');
             if (clientInfo.name) {
                 document.getElementById('userName').textContent = clientInfo.name.slice(0, 50);
-                document.getElementById('userAvatar').textContent = clientInfo.name.charAt(0).toUpperCase();
+                // userAvatar removed from topbar
             }
 
             // Set today's date in forms
@@ -1941,7 +1977,7 @@
             // Actualizar nombre si viene del servidor
             if (status.client_name) {
                 document.getElementById('userName').textContent = status.client_name.slice(0, 50);
-                document.getElementById('userAvatar').textContent = status.client_name.charAt(0).toUpperCase();
+                // userAvatar removed from topbar
                 localStorage.setItem('client_info', JSON.stringify({ name: status.client_name }));
             }
 
@@ -1950,11 +1986,13 @@
                 return status;
             }
 
-            // Actualizar días restantes en la barra
-            if (status.days_elapsed !== undefined) {
-                const pct = Math.min(100, Math.round((status.days_elapsed / 30) * 100));
-                document.getElementById('dashCountdownDays').textContent = status.days_elapsed;
-                document.getElementById('dashCountdownBar').style.width  = pct + '%';
+            // Usar start_date del status para el contador
+            if (status.pending_start || !status.start_date) {
+                // Plan no iniciado aun - mostrar estado pendiente
+                // La pantalla ya muestra heroPending por defecto
+            } else if (status.start_date) {
+                programStartDate = new Date(status.start_date);
+                activateProgramCounter(programStartDate);
             }
 
             return status;
@@ -2018,13 +2056,13 @@
                 <i class="fas fa-fire-flame-curved"></i><span>Inicio</span>
             </button>
             <button class="bnav-item" id="bnav-tracking" onclick="showSection('tracking',null);setRiseBnav('tracking')">
-                <i class="fas fa-camera-retro"></i><span>Registro</span>
+                <i class="fas fa-camera-retro"></i><span>Diario</span>
             </button>
             <button class="bnav-item" id="bnav-training" onclick="showSection('training',null);setRiseBnav('training')">
                 <i class="fas fa-dumbbell"></i><span>Plan</span>
             </button>
             <button class="bnav-item" id="bnav-measurements" onclick="showSection('measurements',null);setRiseBnav('measurements')">
-                <i class="fas fa-chart-line"></i><span>Progreso</span>
+                <i class="fas fa-chart-line"></i><span>Avance</span>
             </button>
             <button class="bnav-item" id="bnav-support" onclick="showSection('support',null);setRiseBnav('support')">
                 <i class="fas fa-headset"></i><span>Soporte</span>

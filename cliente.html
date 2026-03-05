@@ -149,6 +149,14 @@ input,textarea,select{font-family:'Inter',sans-serif}
 .upgrade-link:hover{color:var(--white)}
 
 /* ===== TOPBAR ===== */
+.topbar-logo-link { display:flex; align-items:center; text-decoration:none; flex-shrink:0; }
+.topbar-logo-img { height:26px; width:auto; display:block; }
+.topbar-plan-badge {
+  font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:.12em;
+  color:var(--red); background:rgba(200,16,46,0.1);
+  border:1px solid rgba(200,16,46,0.25); border-radius:20px;
+  padding:3px 10px; white-space:nowrap;
+}
 .topbar{
   position:sticky;top:0;
   height:var(--topbar-h);
@@ -195,9 +203,10 @@ input,textarea,select{font-family:'Inter',sans-serif}
 }
 .topbar-client-name{font-size:.855rem;font-weight:600;color:var(--white)}
 .btn-logout-top{
-  background:none;border:1px solid var(--border);
-  color:var(--gray);border-radius:var(--radius-sm);
-  padding:5px 12px;font-size:.75rem;font-weight:500;
+  background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.28);
+  color:var(--red);border-radius:var(--radius-sm);
+  padding:6px 13px;font-size:.72rem;font-weight:700;
+  display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.04em;
   transition:all var(--transition);
 }
 .btn-logout-top:hover{border-color:var(--red);color:var(--red)}
@@ -1078,52 +1087,40 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
 /* ===== BOTTOM NAV (mobile app style) ===== */
 .bottom-nav{
-  display:none;
-  position:fixed;bottom:0;left:0;right:0;
-  height:72px;z-index:300;
-  background:rgba(14,14,17,0.97);
-  border-top:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  box-shadow:0 -12px 40px rgba(0,0,0,0.5);
+  display:none; position:fixed;bottom:0;left:0;right:0;
+  z-index:300;
+  background:rgba(10,10,12,0.97);
+  border-top:1px solid rgba(255,255,255,0.09);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 -8px 32px rgba(0,0,0,0.6);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
-.bottom-nav-inner{
-  display:flex;align-items:stretch;height:72px;
-}
+.bottom-nav-inner{ display:flex;align-items:stretch;height:62px;width:100%; }
 .bnav-item{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4px;background:none;border:none;color:rgba(255,255,255,0.35);
-  font-size:.58rem;font-family:'Inter',sans-serif;font-weight:500;
-  letter-spacing:.04em;cursor:pointer;
-  transition:all 0.2s ease;
-  padding:8px 4px;min-width:0;
-  -webkit-tap-highlight-color:transparent;
-  position:relative;
+  gap:3px;background:none;border:none;color:rgba(255,255,255,0.38);
+  font-family:'Inter',sans-serif;font-weight:500;
+  transition:all 0.18s ease; padding:0;min-width:0;
+  -webkit-tap-highlight-color:transparent; position:relative; cursor:pointer;
+  min-height:0 !important;
 }
-.bnav-item i{
-  font-size:1.4rem;line-height:1;
-  transition:all 0.2s ease;
-}
-.bnav-item span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;font-size:.6rem}
-.bnav-item.active{color:#fff}
+.bnav-item i{ font-size:1.6rem;line-height:1;transition:all 0.18s ease; }
+.bnav-item span{ font-size:.52rem;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;padding:0 2px; }
+.bnav-item.active{ color:#fff }
 .bnav-item.active i{
-  background:linear-gradient(135deg,var(--red),var(--red-dark));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  filter:drop-shadow(0 0 8px rgba(200,16,46,0.6));
-  transform:translateY(-2px) scale(1.15);
+  background:linear-gradient(135deg,var(--red),#ff2040);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 8px rgba(200,16,46,0.55));
+  transform:translateY(-2px) scale(1.1);
 }
-.bnav-item.active span{color:var(--red)}
+.bnav-item.active span{ color:var(--red) }
 .bnav-item.active::after{
-  content:'';position:absolute;
-  top:0;left:50%;transform:translateX(-50%);
-  width:32px;height:2px;
-  background:linear-gradient(90deg,var(--red),#ff4060);
-  border-radius:0 0 4px 4px;
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:26px;height:2px;
+  background:linear-gradient(90deg,var(--red),#ff2040);
+  border-radius:0 0 3px 3px;
 }
-.bnav-item:active{transform:scale(0.93)}
+.bnav-item:active{ transform:scale(0.88);opacity:0.8; }
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
@@ -1133,7 +1130,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   .main-wrap{margin-left:0}
   .hamburger{display:none}
   .bottom-nav{display:flex}
-  .content-area{padding:16px 14px 80px}
+  .content-area{padding:16px 14px 74px}
+  .logout-label{display:none}
+  .btn-logout-top{padding:7px 10px}
+  .topbar-plan-badge{display:none}
   .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .week-grid{grid-template-columns:repeat(7,1fr);gap:4px}
   .day-toggle{padding:10px 2px}
@@ -1226,18 +1226,13 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
   <!-- TOPBAR -->
   <header class="topbar">
-    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()">&#9776;</button>
-    <div class="breadcrumb">
-      WELLCORE / <span id="topbar-breadcrumb">Dashboard</span>
-    </div>
+    <a href="/" class="topbar-logo-link">
+      <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" class="topbar-logo-img">
+    </a>
     <div class="topbar-right">
-      <div class="online-indicator">
-        <div class="pulse-dot"></div>
-        Activo
-      </div>
-      <span class="topbar-client-name" id="topbar-name">Cliente</span>
+      <div class="topbar-plan-badge" id="topbar-plan-badge">ESENCIAL</div>
       <button class="btn-logout-top" onclick="doLogout()">
-        &rarr; Salir
+        <i class="fas fa-sign-out-alt"></i> <span class="logout-label">Salir</span>
       </button>
     </div>
   </header>
@@ -1582,7 +1577,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
     <!-- ===== SECTION: FOTOS DE PROGRESO ===== -->
     <section id="sec-fotos" class="section">
-      <h1 class="section-title">Fotos de <span>Progreso</span></h1>
+      <h1 class="section-title">Fotos de <span>Avance</span></h1>
 
       <!-- Upload Area -->
       <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:24px">
@@ -1951,7 +1946,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <i class="fas fa-home"></i><span>Inicio</span>
     </button>
     <button class="bnav-item" id="bnav-plan" onclick="showSection('plan');setActiveBottomNav('plan')">
-      <i class="fas fa-dumbbell"></i><span>Mi Plan</span>
+      <i class="fas fa-dumbbell"></i><span>Plan</span>
     </button>
     <button class="bnav-item" id="bnav-seguimiento" onclick="showSection('seguimiento');setActiveBottomNav('seguimiento')">
       <i class="fas fa-chart-line"></i><span>Progreso</span>
@@ -2072,7 +2067,9 @@ function apiFetch(path, opts) {
 // ===== INIT =====
 function init() {
   // Topbar
-  document.getElementById('topbar-name').textContent = clientName;
+  document.getElementById('topbar-name') && (document.getElementById('topbar-name').textContent = clientName);
+      var pb = document.getElementById('topbar-plan-badge');
+      if(pb) pb.textContent = (clientPlan || 'esencial').toUpperCase();
 
   // Coach branding in topbar
   if (window._coachName) {
@@ -3814,7 +3811,7 @@ function applyClientWatermark() {
     'opacity:0.04'
   ].join(';');
 
-  var text = name.toUpperCase() + '  ·  ' + (email || 'WELLCORE') + '  ·  WWW.WELLCOREFITNESS.COM';
+  var text = name.toUpperCase() + '  ·  WWW.WELLCOREFITNESS.COM';
   for (var i = 0; i < 40; i++) {
     var s = document.createElement('span');
     s.style.cssText = 'font-family:monospace;font-size:11px;letter-spacing:.06em;color:#ffffff;white-space:nowrap;user-select:none';
