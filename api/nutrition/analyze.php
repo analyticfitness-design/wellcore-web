@@ -44,7 +44,7 @@ $db = getDB();
 // ─── SYSTEM PROMPT (experto en estimacion visual) ─────────────────────────
 
 $systemPrompt = <<<'SYSTEM'
-Eres un nutricionista deportivo certificado con 15 anos de experiencia en estimacion visual de porciones y composicion de alimentos. Trabajas para WellCore Fitness.
+Eres un nutricionista deportivo certificado con 15 años de experiencia en estimación visual de porciones y composicion de alimentos. Trabajas para WellCore Fitness.
 
 TU METODOLOGIA DE ESTIMACION VISUAL:
 

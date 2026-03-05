@@ -290,6 +290,67 @@ if ($status === 'approved') {
         ]);
     }
 
+    // Si es RISE: crear auth_token (30 días) y guardarlo en la transacción
+    if ($plan === 'rise') {
+        try {
+            require_once __DIR__ . '/../config/database.php';
+            $dbRise = getDB();
+
+            $riseStmt = $dbRise->prepare("SELECT id FROM clients WHERE email = ? LIMIT 1");
+            $riseStmt->execute([$buyerEmail]);
+            $riseClientId = (int) $riseStmt->fetchColumn();
+
+            if ($riseClientId) {
+                $riseToken  = bin2hex(random_bytes(32));
+                $riseExpiry = date('Y-m-d H:i:s', strtotime('+30 days'));
+
+                // Revocar tokens anteriores del cliente
+                $dbRise->prepare("DELETE FROM auth_tokens WHERE user_type = 'client' AND user_id = ?")
+                       ->execute([$riseClientId]);
+
+                $dbRise->prepare("
+                    INSERT INTO auth_tokens (user_type, user_id, token, expires_at, created_at)
+                    VALUES ('client', ?, ?, ?, NOW())
+                ")->execute([$riseClientId, $riseToken, $riseExpiry]);
+
+                // Guardar token en la transacción local para que rise-session.php lo entregue
+                transactions_update($referenceCode, ['rise_token' => $riseToken]);
+
+                wc_log($webhookLog, 'INFO', 'RISE auth_token creado', [
+                    'client_id' => $riseClientId,
+                    'email'     => $buyerEmail,
+                    'expires'   => $riseExpiry,
+                ]);
+
+                // Email de bienvenida — pago confirmado
+                try {
+                    require_once __DIR__ . '/../includes/email.php';
+                    require_once __DIR__ . '/../emails/templates.php';
+
+                    // Detectar género desde rise_programs
+                    $genderRow = $dbRise->prepare("SELECT gender FROM rise_programs WHERE client_id = ? ORDER BY id DESC LIMIT 1");
+                    $genderRow->execute([$riseClientId]);
+                    $gRow = $genderRow->fetch(PDO::FETCH_ASSOC);
+                    $gender = ($gRow && in_array($gRow['gender'] ?? '', ['female', 'mujer', 'f'], true)) ? 'female' : 'male';
+
+                    $emailHtml = email_rise_payment_confirmed($tx['buyer_name'] ?? $buyerEmail, $gender);
+                    $subjPrefix = ($gender === 'female') ? 'Bienvenida' : 'Bienvenido';
+                    sendEmail(
+                        $buyerEmail,
+                        "{$subjPrefix} al Reto RISE — Pago confirmado ✓",
+                        $emailHtml
+                    );
+                } catch (\Throwable $emailErr) {
+                    wc_log($errorLog, 'WARNING', 'Error enviando email bienvenida RISE', ['error' => $emailErr->getMessage()]);
+                }
+            }
+        } catch (\Throwable $riseErr) {
+            wc_log($errorLog, 'WARNING', 'Error creando auth_token RISE (no critico)', [
+                'error' => $riseErr->getMessage(),
+            ]);
+        }
+    }
+
     // Encolar generacion IA
     try {
         require_once __DIR__ . '/../config/database.php';

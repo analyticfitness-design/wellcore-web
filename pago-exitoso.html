@@ -575,6 +575,14 @@
             </ul>
         </div>
 
+        <!-- Botón manual RISE (mostrado solo si el webhook demora >10s) -->
+        <div style="text-align:center;margin-top:24px;">
+            <a id="riseManualBtn" href="/rise-dashboard.html"
+               style="display:none;background:var(--red);color:#fff;padding:14px 32px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-weight:700;text-decoration:none;letter-spacing:.05em;">
+                → Ir a mi Dashboard RISE
+            </a>
+        </div>
+
         <!-- Info cards (siempre visibles) -->
         <div class="info-grid">
             <div class="info-card green">
@@ -735,13 +743,25 @@
         }
     }
 
+    var isRise = reference && reference.indexOf('WC-rise-') === 0;
+
     function showApprovedUI(data) {
-        setText('pageLabel', 'Pago confirmado');
-        setText('titleWord',  'PAGO');
-        setText('titleWord2', 'EXITOSO');
-        setText('pageText',
-            'Tu suscripcion ' + (data.plan_name || '') + ' ha sido procesada. ' +
-            'En las proximas 24 horas recibiras tus credenciales de acceso al portal.');
+        var planLabel = data.plan_name || data.plan || '';
+        var isRisePlan = isRise || planLabel.toLowerCase().indexOf('rise') !== -1;
+
+        if (isRisePlan) {
+            setText('pageLabel', 'Bienvenido al Reto RISE');
+            setText('titleWord',  'BIENVENIDO');
+            setText('titleWord2', 'AL RETO');
+            setText('pageText', 'Tu pago fue aprobado. Preparando tu dashboard RISE...');
+        } else {
+            setText('pageLabel', 'Pago confirmado');
+            setText('titleWord',  'PAGO');
+            setText('titleWord2', 'EXITOSO');
+            setText('pageText',
+                'Tu suscripcion ' + planLabel + ' ha sido procesada. ' +
+                'En las proximas 24 horas recibiras tus credenciales de acceso al portal.');
+        }
 
         setText('detailPlan',      data.plan_name || data.plan || '-');
         setText('detailAmount',    data.amount || '-');
@@ -753,6 +773,55 @@
         showEl('paymentDetailCard');
         showEl('nextSteps');
         setStatusBanner('approved', 'Pago aprobado por Wompi');
+    }
+
+    // --- LOGICA RISE: obtener token y redirigir ---
+    function fetchRiseToken(attempt) {
+        attempt = attempt || 1;
+        fetch('/api/wompi/rise-session.php?reference=' + encodeURIComponent(reference), {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' },
+            cache: 'no-store'
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data.ok && data.token) {
+                // Token listo — guardar y redirigir
+                try { localStorage.setItem('wc_rise_token', data.token); } catch(e) {}
+                try {
+                    var enroll = JSON.parse(localStorage.getItem('rise_enrollment') || '{}');
+                    if (data.buyer) { enroll.buyer_name = data.buyer; }
+                    localStorage.setItem('rise_enrollment', JSON.stringify(enroll));
+                } catch(e) {}
+                var counter = 3;
+                var counterEl = document.getElementById('riseCountdown');
+                setText('pageText', 'Redirigiendo a tu dashboard RISE en ' + counter + '...');
+                if (counterEl) { counterEl.textContent = counter; showEl('riseCountdown'); }
+                var tick = setInterval(function() {
+                    counter--;
+                    setText('pageText', 'Redirigiendo a tu dashboard RISE en ' + counter + '...');
+                    if (counterEl) { counterEl.textContent = counter; }
+                    if (counter <= 0) {
+                        clearInterval(tick);
+                        window.location.href = '/rise-dashboard.html';
+                    }
+                }, 1000);
+            } else if (attempt < 6) {
+                // Webhook aun no llego — reintentar con backoff
+                setTimeout(function() { fetchRiseToken(attempt + 1); }, 2000);
+            } else {
+                // Timeout: mostrar mensaje manual
+                setText('pageText',
+                    'Tu pago fue aprobado. Haz clic aqui para acceder a tu dashboard RISE.');
+                var el = document.getElementById('riseManualBtn');
+                if (el) { el.style.display = 'inline-block'; }
+            }
+        })
+        .catch(function() {
+            if (attempt < 6) {
+                setTimeout(function() { fetchRiseToken(attempt + 1); }, 2000);
+            }
+        });
     }
 
     function showPendingUI(data) {
@@ -837,7 +906,8 @@
             // No encontrada aun (webhook puede llegar con delay)
             // Usar status de URL como fallback inmediato (Wompi: APPROVED/DECLINED/PENDING)
             if (txStatus === 'APPROVED') {
-                showApprovedUI({ plan: '', plan_name: '', amount: '', reference: reference });
+                showApprovedUI({ plan: isRise ? 'rise' : '', plan_name: isRise ? 'RISE 30 Días' : '', amount: '', reference: reference });
+                if (isRise) { fetchRiseToken(1); }
             } else if (txStatus === 'PENDING') {
                 showPendingUI(null);
             } else if (txStatus === 'DECLINED' || txStatus === 'VOIDED' || txStatus === 'ERROR') {
@@ -850,7 +920,10 @@
 
         // Transaccion encontrada — usar datos del backend
         switch (payload.status) {
-            case 'approved': showApprovedUI(payload);  break;
+            case 'approved':
+                showApprovedUI(payload);
+                if (isRise) { fetchRiseToken(1); }
+                break;
             case 'pending':  showPendingUI(payload);   break;
             case 'declined':
             case 'error':    showDeclinedUI();         break;

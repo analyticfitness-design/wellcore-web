@@ -79,6 +79,14 @@ define('WELLCORE_PLANS', [
         'currency'          => 'COP',
         'description'       => 'WellCore Fitness - Plan Elite ($630.000 COP/mes)',
     ],
+    'rise' => [
+        'name'              => 'WellCore RISE 30 Días',
+        'display'           => 'RISE',
+        'amount_cop'        => 135000,
+        'amount_in_cents'   => 13500000,
+        'currency'          => 'COP',
+        'description'       => 'WellCore RISE - Reto 30 Días (~$33 USD)',
+    ],
 ]);
 
 // -------------------------------------------------------

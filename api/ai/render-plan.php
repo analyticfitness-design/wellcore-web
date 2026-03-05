@@ -51,9 +51,22 @@ if ($planId > 0) {
 $plan = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$plan) respondError('Plan no encontrado', 404);
 
-$validTypes = ['entrenamiento', 'nutricion', 'habitos'];
+$validTypes = ['entrenamiento', 'nutricion', 'habitos', 'rise'];
 if (!in_array($plan['plan_type'], $validTypes, true)) {
     respondError('Tipo de plan inválido para renderizar', 400);
+}
+
+// ── Para RISE: obtener género del cliente (para identidad visual) ──
+$clientGender = 'male';
+if ($plan['plan_type'] === 'rise') {
+    try {
+        $gStmt = $db->prepare("SELECT gender FROM rise_programs WHERE client_id = ? ORDER BY id DESC LIMIT 1");
+        $gStmt->execute([$plan['client_id']]);
+        $gRow = $gStmt->fetch(PDO::FETCH_ASSOC);
+        if ($gRow && in_array($gRow['gender'], ['female', 'mujer', 'f'], true)) {
+            $clientGender = 'female';
+        }
+    } catch (\Throwable $ignored) {}
 }
 
 // ── Parsear contenido JSON ────────────────────────────────────
@@ -65,6 +78,7 @@ $html = match($plan['plan_type']) {
     'entrenamiento' => render_entrenamiento($plan, $content),
     'nutricion'     => render_nutricion($plan, $content),
     'habitos'       => render_habitos($plan, $content),
+    'rise'          => render_rise($plan, $content, $clientGender),
 };
 
 // ── Guardar archivo HTML ──────────────────────────────────────
@@ -92,6 +106,31 @@ if (!empty($plan['ai_generation_id'])) {
         $db->prepare("UPDATE ai_generations SET status = 'approved', approved_by = ?, approved_at = NOW() WHERE id = ?")
            ->execute([$admin['id'], $plan['ai_generation_id']]);
     } catch (\Throwable $ignore) {}
+}
+
+// ── Email de plan listo (solo para RISE) ──────────────────────
+if ($plan['plan_type'] === 'rise') {
+    try {
+        require_once __DIR__ . '/../includes/email.php';
+        require_once __DIR__ . '/../emails/templates.php';
+
+        $clientStmt = $db->prepare("SELECT email, name FROM clients WHERE id = ?");
+        $clientStmt->execute([$plan['client_id']]);
+        $clientRow = $clientStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($clientRow && $clientRow['email']) {
+            $planPublicUrl = 'https://wellcorefitness.com/planes/' . $filename;
+            $emailHtml = email_rise_plan_ready(
+                $clientRow['name'] ?? $clientRow['email'],
+                $clientGender,
+                $planPublicUrl
+            );
+            $subjPrefix = ($clientGender === 'female') ? 'Tu plan RISE está listo' : 'Tu plan RISE está listo';
+            sendEmail($clientRow['email'], $subjPrefix . ' — WellCore Fitness', $emailHtml);
+        }
+    } catch (\Throwable $emailErr) {
+        error_log('[WellCore] Error email plan RISE: ' . $emailErr->getMessage());
+    }
 }
 
 respond([
@@ -326,6 +365,323 @@ function render_nutricion(array $plan, array $c): string {
     }
 
     return $html . footer_html();
+}
+
+// ── RISE ─────────────────────────────────────────────────────────
+// Renderer de plan RISE 30 días — usa el CSS/identidad de la plantilla
+// RISE_V2_MUJER_AVANZADO_CASA.html
+// Columna "Ver" por ejercicio es placeholder — se linkeará a videos futura versión
+function render_rise(array $plan, array $c, string $gender = 'male'): string {
+    $name    = htmlspecialchars($plan['client_name'] ?? 'Cliente');
+    $fecha   = date('d/m/Y');
+    $diasSem = (int) ($c['dias_entreno_semana'] ?? 4);
+    $objetivo  = htmlspecialchars($c['objetivo_30_dias'] ?? '');
+    $resumen   = htmlspecialchars($c['resumen_cliente'] ?? '');
+    $estructura = htmlspecialchars($c['estructura_semana'] ?? '');
+
+    // Paleta según género
+    $accentColor  = ($gender === 'female') ? '#D4A8C7' : '#E31E24';
+    $accentBorder = ($gender === 'female') ? 'rgba(212,168,199,0.35)' : 'rgba(227,30,36,0.3)';
+    $coverBg      = ($gender === 'female')
+        ? 'linear-gradient(135deg,#0d0008 0%,#0a0a0a 100%)'
+        : 'linear-gradient(135deg,#0d0000 0%,#0a0a0a 100%)';
+
+    // ── CSS (igual que RISE_V2 template) ─────────────────────────
+    $h  = "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n";
+    $h .= "<meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\">\n";
+    $h .= "<title>RISE 30 Días — {$name} | WellCore Fitness</title>\n";
+    $h .= "<link href=\"https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap\" rel=\"stylesheet\">\n";
+    $h .= "<style>\n";
+    $h .= ":root{--red:{$accentColor};--bg:#0A0A0A;--surface:#111113;--card:#161618;--border:#2A2A2E;--border-subtle:#1E1E22;--text:#FFFFFF;--text-sec:#D4D4D8;--muted:#71717A;--accent:#00D9FF;}\n";
+    $h .= "*{margin:0;padding:0;box-sizing:border-box;}\n";
+    $h .= "body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:11px;line-height:1.5;}\n";
+    $h .= ".page{width:100%;max-width:860px;margin:0 auto;padding:40px 32px;}\n";
+    $h .= ".print-btn{position:fixed;top:16px;right:16px;z-index:9999;background:var(--red);color:#fff;border:none;padding:10px 20px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;}\n";
+    $h .= "@media print{.print-btn{display:none}.page{padding:12px}}\n";
+    // Cover
+    $h .= ".cover{position:relative;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border:1px solid var(--border);margin-bottom:32px;background:{$coverBg};}\n";
+    $h .= ".cover-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,0.05) 0%,rgba(10,10,10,0.97) 65%);}\n";
+    $h .= ".cover-content{position:relative;z-index:2;padding:40px 36px 28px;}\n";
+    $h .= ".cover-badge{display:inline-block;background:var(--red);color:#fff;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;padding:4px 12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}\n";
+    $h .= ".cover-title{font-family:'Bebas Neue',sans-serif;font-size:64px;letter-spacing:3px;line-height:0.95;color:var(--text);margin-bottom:6px;}\n";
+    $h .= ".cover-title span{color:var(--red);}\n";
+    $h .= ".cover-subtitle{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:var(--text-sec);letter-spacing:4px;text-transform:uppercase;margin-bottom:20px;}\n";
+    $h .= ".cover-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);}\n";
+    $h .= ".cover-meta-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}\n";
+    $h .= ".cover-meta-value{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--text);}\n";
+    $h .= ".cover-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 36px;background:rgba(0,0,0,0.7);border-top:1px solid var(--border);position:relative;z-index:2;}\n";
+    $h .= ".cover-footer-brand{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--muted);}\n";
+    $h .= ".cover-footer-coach{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;}\n";
+    // Sections
+    $h .= ".section-header{margin-bottom:20px;margin-top:32px;}\n";
+    $h .= ".section-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}\n";
+    $h .= ".section-title{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text);letter-spacing:2px;line-height:1;}\n";
+    $h .= ".section-divider{width:40px;height:3px;background:var(--red);margin:7px 0 18px;}\n";
+    // Overview
+    $h .= ".overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}\n";
+    $h .= ".overview-item{background:var(--surface);border-top:2px solid var(--red);padding:12px;}\n";
+    $h .= ".overview-number{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text);line-height:1;margin-bottom:2px;}\n";
+    $h .= ".overview-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}\n";
+    $h .= ".description-block{background:var(--surface);border-left:3px solid var(--border);padding:14px 18px;margin-bottom:20px;font-size:11px;color:var(--text-sec);line-height:1.7;}\n";
+    $h .= ".description-block strong{color:var(--text);font-weight:600;}\n";
+    // Prog grid
+    $h .= ".prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:28px;}\n";
+    $h .= ".prog-item{background:var(--surface);border-top:2px solid var(--accent);padding:12px;}\n";
+    $h .= ".prog-week{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}\n";
+    $h .= ".prog-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--text);margin-bottom:4px;}\n";
+    $h .= ".prog-desc{font-size:10px;color:var(--text-sec);line-height:1.5;}\n";
+    // Days
+    $h .= ".day-section{margin-bottom:32px;}\n";
+    $h .= ".day-header{display:flex;align-items:center;gap:14px;padding-bottom:10px;border-bottom:2px solid var(--border);margin-bottom:14px;}\n";
+    $h .= ".day-number{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--red);line-height:1;min-width:42px;}\n";
+    $h .= ".day-info{flex:1;}\n";
+    $h .= ".day-name{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:2px;}\n";
+    $h .= ".day-focus{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;}\n";
+    $h .= ".day-duration{text-align:right;}\n";
+    $h .= ".day-duration-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}\n";
+    $h .= ".day-duration-value{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--text);letter-spacing:1px;}\n";
+    // Warmup
+    $h .= ".warmup-block{background:var(--surface);border-left:3px solid var(--accent);padding:10px 14px;margin-bottom:12px;}\n";
+    $h .= ".warmup-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}\n";
+    $h .= ".warmup-text{font-size:10px;color:var(--text-sec);line-height:1.6;}\n";
+    // Table
+    $h .= ".table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;}\n";
+    $h .= "table{width:100%;min-width:560px;border-collapse:collapse;font-size:10px;background:var(--surface);}\n";
+    $h .= "thead tr{background:var(--red);}thead th{padding:7px 6px;font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;text-align:left;white-space:nowrap;}\n";
+    $h .= "thead th:first-child{width:26px;text-align:center;}\n";
+    $h .= "tbody tr{border-bottom:1px solid var(--border-subtle);}tbody tr:last-child{border-bottom:none;}\n";
+    $h .= "tbody tr:nth-child(even){background:#0D0D0F;}tbody tr:nth-child(odd){background:var(--surface);}\n";
+    $h .= "tbody td{padding:7px 6px;color:var(--text-sec);vertical-align:top;line-height:1.4;}\n";
+    $h .= "tbody td:first-child{color:var(--red);font-weight:700;font-size:11px;text-align:center;vertical-align:middle;}\n";
+    $h .= "td.exercise-name{font-weight:600;color:var(--text);font-size:11px;white-space:normal;min-width:140px;max-width:190px;}\n";
+    $h .= "td.exercise-name .muscle-tag{display:block;font-size:9px;font-weight:400;color:var(--muted);margin-top:2px;}\n";
+    $h .= "td.sets-col{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent);text-align:center;white-space:nowrap;min-width:38px;vertical-align:middle;}\n";
+    $h .= "td.reps-col{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent);text-align:center;white-space:nowrap;min-width:48px;vertical-align:middle;}\n";
+    $h .= "td.rest-col{font-family:'JetBrains Mono',monospace;font-size:10px;color:#888;text-align:center;white-space:nowrap;min-width:52px;vertical-align:middle;}\n";
+    $h .= "td.rir-col{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--red);text-align:center;white-space:nowrap;min-width:38px;vertical-align:middle;}\n";
+    $h .= "td.notes-col{font-size:10px;color:var(--muted);white-space:normal;min-width:120px;max-width:170px;line-height:1.4;vertical-align:top;}\n";
+    $h .= "td.ver-col{text-align:center;vertical-align:middle;min-width:40px;}\n";
+    $h .= ".ver-btn{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.5px;padding:3px 7px;background:rgba(0,217,255,0.08);border:1px solid rgba(0,217,255,0.18);color:var(--accent);text-decoration:none;cursor:default;white-space:nowrap;}\n";
+    // Cardio
+    $h .= ".cardio-block{background:var(--surface);border-left:3px solid #22C55E;padding:10px 16px;margin-top:10px;margin-bottom:8px;}\n";
+    $h .= ".cardio-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:#22C55E;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}\n";
+    $h .= ".cardio-text{font-size:10px;color:var(--text-sec);line-height:1.5;}\n";
+    // Nutricion
+    $h .= ".nutr-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}\n";
+    $h .= ".nutr-card{background:var(--surface);border-left:3px solid var(--red);padding:12px 16px;}\n";
+    $h .= ".nutr-card-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}\n";
+    $h .= ".nutr-card-text{font-size:10px;color:var(--text-sec);line-height:1.6;}\n";
+    $h .= ".nutr-list{list-style:none;display:flex;flex-direction:column;gap:3px;font-size:10px;color:var(--text-sec);}\n";
+    $h .= ".nutr-list li::before{content:'› ';color:var(--red);font-weight:700;}\n";
+    $h .= ".nutr-cta{background:var(--surface);border:1px solid {$accentBorder};padding:14px 18px;margin-top:14px;font-size:10px;color:var(--text-sec);line-height:1.7;}\n";
+    $h .= ".nutr-cta strong{color:var(--red);}\n";
+    // Footer
+    $h .= ".doc-footer{border-top:1px solid var(--border);padding-top:14px;margin-top:32px;display:flex;justify-content:space-between;align-items:center;}\n";
+    $h .= ".doc-footer-brand{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--text);}\n";
+    $h .= ".doc-footer-brand span{color:var(--red);}\n";
+    $h .= ".doc-footer-info{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;text-align:right;line-height:1.6;}\n";
+    $h .= "@media(max-width:600px){.page{padding:16px}.cover-content{padding:24px 20px}.cover-title{font-size:46px}.cover-meta,.overview-grid,.prog-grid{grid-template-columns:1fr 1fr}.nutr-grid{grid-template-columns:1fr}}\n";
+    $h .= "</style></head><body>\n";
+    $h .= "<button class=\"print-btn\" onclick=\"window.print()\">Imprimir / PDF</button>\n";
+    $h .= "<div class=\"page\">\n";
+
+    // ── COVER ──────────────────────────────────────────────────
+    $cardioLabel = ($c['incluye_cardio'] ?? false) ? 'Sí' : 'No';
+    $h .= "<div class=\"cover\"><div class=\"cover-overlay\"></div><div class=\"cover-content\">";
+    $h .= "<div class=\"cover-badge\">RETO RISE &middot; 30 D&Iacute;AS</div>";
+    $h .= "<div class=\"cover-title\">RISE<br><span>30 D&Iacute;AS</span></div>";
+    $h .= "<div class=\"cover-subtitle\">" . htmlspecialchars($name) . "</div>";
+    $h .= "<div class=\"cover-meta\">";
+    $h .= "<div><div class=\"cover-meta-label\">Cliente</div><div class=\"cover-meta-value\">{$name}</div></div>";
+    $h .= "<div><div class=\"cover-meta-label\">Frecuencia</div><div class=\"cover-meta-value\">{$diasSem} d&iacute;as/sem</div></div>";
+    $h .= "<div><div class=\"cover-meta-label\">Duraci&oacute;n</div><div class=\"cover-meta-value\">30 d&iacute;as</div></div>";
+    $h .= "<div><div class=\"cover-meta-label\">Generado</div><div class=\"cover-meta-value\">{$fecha}</div></div>";
+    $h .= "</div></div>";
+    $h .= "<div class=\"cover-footer\"><div class=\"cover-footer-brand\">WELLCORE FITNESS</div><div class=\"cover-footer-coach\">@wellcore.fitness</div></div>";
+    $h .= "</div>\n";
+
+    // ── RESUMEN ────────────────────────────────────────────────
+    $h .= "<div class=\"section-header\"><div class=\"section-label\">Plan de Entrenamiento</div><div class=\"section-title\">RESUMEN DEL PROGRAMA</div><div class=\"section-divider\"></div></div>\n";
+    $h .= "<div class=\"overview-grid\">";
+    $h .= "<div class=\"overview-item\"><div class=\"overview-number\">{$diasSem} d&iacute;as</div><div class=\"overview-label\">Frecuencia semanal</div></div>";
+    $h .= "<div class=\"overview-item\"><div class=\"overview-number\">4 semanas</div><div class=\"overview-label\">Duraci&oacute;n total</div></div>";
+    $h .= "<div class=\"overview-item\"><div class=\"overview-number\">{$cardioLabel}</div><div class=\"overview-label\">Incluye cardio</div></div>";
+    $h .= "<div class=\"overview-item\"><div class=\"overview-number\">Tips</div><div class=\"overview-label\">Gu&iacute;a nutricional</div></div>";
+    $h .= "</div>\n";
+
+    if ($objetivo || $resumen || $estructura) {
+        $h .= "<div class=\"description-block\">";
+        if ($objetivo)   { $h .= "<strong>Objetivo 30 d&iacute;as:</strong> " . nl2br(htmlspecialchars($objetivo)) . "<br><br>"; }
+        if ($resumen)    { $h .= "<strong>Perfil:</strong> " . nl2br(htmlspecialchars($resumen)) . "<br><br>"; }
+        if ($estructura) { $h .= "<strong>Estructura semanal:</strong> " . htmlspecialchars($estructura); }
+        $h .= "</div>\n";
+    }
+
+    // ── PROGRESION 4 SEMANAS ──────────────────────────────────
+    $semanas = $c['plan_entrenamiento']['semanas'] ?? [];
+    if (!empty($semanas)) {
+        $h .= "<div class=\"prog-grid\">";
+        foreach ($semanas as $s) {
+            $sw = (int) ($s['semana'] ?? 0);
+            $sn = htmlspecialchars($s['nombre'] ?? 'Semana ' . $sw);
+            $sd = htmlspecialchars($s['descripcion'] ?? '');
+            $sr = $s['rir_objetivo'] ?? '';
+            $h .= "<div class=\"prog-item\"><div class=\"prog-week\">Semana {$sw}</div><div class=\"prog-title\">{$sn}</div><div class=\"prog-desc\">{$sd}</div>";
+            if ($sr !== '') { $h .= "<div style=\"margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--red)\">RIR: {$sr}</div>"; }
+            $h .= "</div>";
+        }
+        $h .= "</div>\n";
+    }
+
+    // ── DÍAS DE ENTRENAMIENTO (base: semana 1) ────────────────
+    $sesionesBase = $semanas[0]['sesiones'] ?? [];
+    $dayNum = 1;
+    foreach ($sesionesBase as $sesion) {
+        $diaNombre = htmlspecialchars(strtoupper($sesion['dia'] ?? ('DÍA ' . $dayNum)));
+        $diaFocus  = htmlspecialchars($sesion['nombre'] ?? '');
+        $calent    = htmlspecialchars($sesion['calentamiento'] ?? '');
+        $vuelta    = htmlspecialchars($sesion['vuelta_calma'] ?? '');
+        $numPad    = str_pad((string) $dayNum, 2, '0', STR_PAD_LEFT);
+
+        $h .= "<div class=\"day-section\">\n";
+        $h .= "<div class=\"day-header\">";
+        $h .= "<div class=\"day-number\">{$numPad}</div>";
+        $h .= "<div class=\"day-info\"><div class=\"day-name\">{$diaNombre} &mdash; {$diaFocus}</div><div class=\"day-focus\">Progresi&oacute;n RIR: 3 &middot; 2 &middot; 1 &middot; 4 (deload)</div></div>";
+        $h .= "<div class=\"day-duration\"><div class=\"day-duration-label\">Duraci&oacute;n</div><div class=\"day-duration-value\">45-60 MIN</div></div>";
+        $h .= "</div>\n";
+
+        if ($calent) {
+            $h .= "<div class=\"warmup-block\"><div class=\"warmup-title\">Calentamiento</div><div class=\"warmup-text\">{$calent}</div></div>\n";
+        }
+
+        $ejercicios = $sesion['ejercicios'] ?? [];
+        if (!empty($ejercicios)) {
+            $h .= "<div class=\"table-wrap\"><table>";
+            $h .= "<thead><tr><th>#</th><th>Ejercicio</th><th>Series</th><th>Reps</th><th>Descanso</th><th>RIR</th><th>Nota del Coach</th><th>Ver</th></tr></thead><tbody>";
+            foreach ($ejercicios as $ei => $ej) {
+                $eNum    = $ei + 1;
+                $eNombre = htmlspecialchars($ej['nombre'] ?? '');
+                $eMuscle = htmlspecialchars($ej['musculos'] ?? $ej['patron_motor'] ?? $ej['musculos_prim'][0] ?? '');
+                $eSeries = htmlspecialchars((string) ($ej['series'] ?? '-'));
+                $eReps   = htmlspecialchars($ej['reps'] ?? '-');
+                $eDesc   = htmlspecialchars($ej['descanso'] ?? '-');
+                $eRir    = htmlspecialchars(is_array($ej['rir_semana'] ?? null)
+                    ? implode('·', $ej['rir_semana'])
+                    : (string) ($ej['rir'] ?? '2'));
+                $eNotas  = htmlspecialchars($ej['notas'] ?? '');
+
+                $h .= "<tr>";
+                $h .= "<td>{$eNum}</td>";
+                $h .= "<td class=\"exercise-name\">{$eNombre}";
+                if ($eMuscle) { $h .= "<span class=\"muscle-tag\">{$eMuscle}</span>"; }
+                $h .= "</td>";
+                $h .= "<td class=\"sets-col\">{$eSeries}</td>";
+                $h .= "<td class=\"reps-col\">{$eReps}</td>";
+                $h .= "<td class=\"rest-col\">{$eDesc}</td>";
+                $h .= "<td class=\"rir-col\">{$eRir}</td>";
+                $h .= "<td class=\"notes-col\">{$eNotas}</td>";
+                // Botón Ver — placeholder hasta vincular videos
+                $h .= "<td class=\"ver-col\"><span class=\"ver-btn\">Ver</span></td>";
+                $h .= "</tr>";
+            }
+            $h .= "</tbody></table></div>\n";
+        }
+
+        // Cardio del día (si viene en la sesión)
+        $cardioDia = $sesion['cardio_finalizador'] ?? $sesion['cardio'] ?? null;
+        if (!empty($cardioDia)) {
+            $cardioTxt = is_array($cardioDia)
+                ? htmlspecialchars($cardioDia['descripcion'] ?? implode(' | ', array_filter(array_map(fn($v) => is_string($v) ? $v : '', $cardioDia))))
+                : htmlspecialchars((string) $cardioDia);
+            $h .= "<div class=\"cardio-block\"><div class=\"cardio-title\">CARDIO FINALIZADOR</div><div class=\"cardio-text\">{$cardioTxt}</div></div>\n";
+        }
+
+        if ($vuelta) {
+            $h .= "<div class=\"warmup-block\" style=\"border-left-color:var(--muted);margin-top:10px\"><div class=\"warmup-title\" style=\"color:var(--muted)\">Vuelta a la calma</div><div class=\"warmup-text\">{$vuelta}</div></div>\n";
+        }
+
+        $h .= "</div>\n"; // day-section
+        $dayNum++;
+    }
+
+    // ── PROTOCOLO CARDIO (sección general) ───────────────────
+    $cardio = $c['cardio'] ?? null;
+    if (!empty($cardio) && ($cardio['incluido'] ?? false)) {
+        $h .= "<div class=\"section-header\"><div class=\"section-label\">Cardio</div><div class=\"section-title\">PROTOCOLO DE CARDIO</div><div class=\"section-divider\"></div></div>\n";
+        $cFr  = htmlspecialchars((string) ($cardio['frecuencia_semanal'] ?? ''));
+        $cDu  = htmlspecialchars((string) ($cardio['duracion_min'] ?? ''));
+        $cTi  = htmlspecialchars($cardio['tipo'] ?? '');
+        $cCu  = htmlspecialchars($cardio['cuando'] ?? '');
+        $cGym = is_array($cardio['opciones_gym'] ?? null)  ? htmlspecialchars(implode(' &middot; ', $cardio['opciones_gym']))  : '';
+        $cCas = is_array($cardio['opciones_casa'] ?? null) ? htmlspecialchars(implode(' &middot; ', $cardio['opciones_casa'])) : '';
+        $cPr  = htmlspecialchars($cardio['semanas_progresion'] ?? '');
+
+        $h .= "<div class=\"cardio-block\"><div class=\"cardio-title\">CARDIO &mdash; {$cFr}x/SEMANA &mdash; {$cDu} MIN</div><div class=\"cardio-text\">";
+        if ($cTi)  { $h .= "<strong>Tipo:</strong> {$cTi}<br>"; }
+        if ($cCu)  { $h .= "<strong>Cu&aacute;ndo:</strong> {$cCu}<br>"; }
+        if ($cGym) { $h .= "<strong>Opciones gym:</strong> {$cGym}<br>"; }
+        if ($cCas) { $h .= "<strong>Opciones casa:</strong> {$cCas}<br>"; }
+        if ($cPr)  { $h .= "<strong>Progresi&oacute;n:</strong> {$cPr}"; }
+        $h .= "</div></div>\n";
+    }
+
+    // ── TIPS NUTRICIÓN ────────────────────────────────────────
+    $nutr = $c['tips_nutricion'] ?? null;
+    if (!empty($nutr)) {
+        $h .= "<div class=\"section-header\"><div class=\"section-label\">Nutrici&oacute;n</div><div class=\"section-title\">GU&Iacute;A DE ALIMENTACI&Oacute;N</div><div class=\"section-divider\"></div></div>\n";
+        $campos = [
+            'principio_base'        => 'Principio Base',
+            'proteina'              => 'Prote&iacute;na',
+            'hidratacion'           => 'Hidrataci&oacute;n',
+            'distribucion_comidas'  => 'Distribuci&oacute;n de Comidas',
+            'pre_entreno'           => 'Pre-Entreno',
+            'post_entreno'          => 'Post-Entreno',
+            'respeto_dieta_cliente' => 'Tu Tipo de Dieta',
+        ];
+        $h .= "<div class=\"nutr-grid\">";
+        foreach ($campos as $key => $label) {
+            if (!empty($nutr[$key])) {
+                $val = htmlspecialchars($nutr[$key]);
+                $h .= "<div class=\"nutr-card\"><div class=\"nutr-card-title\">{$label}</div><div class=\"nutr-card-text\">{$val}</div></div>";
+            }
+        }
+        $h .= "</div>\n";
+
+        if (!empty($nutr['alimentos_aliados']) && is_array($nutr['alimentos_aliados'])) {
+            $h .= "<div class=\"nutr-card\" style=\"margin-bottom:10px\"><div class=\"nutr-card-title\">Alimentos Aliados</div><ul class=\"nutr-list\">";
+            foreach ($nutr['alimentos_aliados'] as $al) { $h .= '<li>' . htmlspecialchars($al) . '</li>'; }
+            $h .= "</ul></div>\n";
+        }
+        if (!empty($nutr['alimentos_reducir']) && is_array($nutr['alimentos_reducir'])) {
+            $h .= "<div class=\"nutr-card\" style=\"margin-bottom:10px;border-left-color:#FACC15\"><div class=\"nutr-card-title\" style=\"color:#FACC15\">Reducir / Evitar</div><ul class=\"nutr-list\">";
+            foreach ($nutr['alimentos_reducir'] as $al) { $h .= '<li>' . htmlspecialchars($al) . '</li>'; }
+            $h .= "</ul></div>\n";
+        }
+
+        $ctaText = htmlspecialchars($nutr['nota_asesoria_nutricional'] ?? 'Para maximizar tus resultados con un plan nutricional 100% personalizado — macros exactos, seguimiento semanal y ajustes continuos — te recomendamos la Asesor&iacute;a Nutricional WellCore al finalizar el reto.');
+        $h .= "<div class=\"nutr-cta\"><strong>&iquest;Quieres resultados m&aacute;ximos?</strong><br>{$ctaText}</div>\n";
+    }
+
+    // ── INDICADORES ───────────────────────────────────────────
+    $indicadores = $c['indicadores_progreso'] ?? [];
+    if (!empty($indicadores) && is_array($indicadores)) {
+        $h .= "<div class=\"section-header\"><div class=\"section-label\">Seguimiento</div><div class=\"section-title\">INDICADORES DE PROGRESO</div><div class=\"section-divider\"></div></div>\n";
+        $h .= "<div class=\"description-block\"><ul class=\"nutr-list\">";
+        foreach ($indicadores as $ind) { $h .= '<li>' . htmlspecialchars($ind) . '</li>'; }
+        $h .= "</ul></div>\n";
+    }
+
+    // ── NOTA DEL COACH ────────────────────────────────────────
+    if (!empty($c['nota_coach'])) {
+        $h .= "<div class=\"section-header\"><div class=\"section-label\">Del Coach</div><div class=\"section-title\">MENSAJE FINAL</div><div class=\"section-divider\"></div></div>\n";
+        $h .= "<div class=\"description-block\" style=\"border-left-color:var(--red);font-size:12px;line-height:1.8;font-style:italic\">" . nl2br(htmlspecialchars($c['nota_coach'])) . "</div>\n";
+    }
+
+    // ── FOOTER ────────────────────────────────────────────────
+    $h .= "<div class=\"doc-footer\"><div class=\"doc-footer-brand\">WELL<span>CORE</span></div>";
+    $h .= "<div class=\"doc-footer-info\"><div>wellcorefitness.com</div><div>@wellcore.fitness</div><div>Plan generado con IA &middot; {$fecha}</div></div></div>\n";
+    $h .= "</div></body></html>";
+    return $h;
 }
 
 // ── HÁBITOS ───────────────────────────────────────────────────
