@@ -1699,11 +1699,39 @@
       var btn = document.createElement('button'); btn.className = 'btn btn-sm btn-primary'; btn.textContent = '\u2192 Ver Portal';
       var codeRef = c.client_code || c.id;
       btn.addEventListener('click', function() { viewClientPortal(codeRef); });
+      var delBtnC = document.createElement('button');
+      delBtnC.className = 'btn btn-sm';
+      delBtnC.style.cssText = 'margin-left:6px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#EF4444;';
+      delBtnC.textContent = '✕';
+      (function(cid, cname){ delBtnC.addEventListener('click', function(){ deleteClient(cid, cname); }); })(c.id, c.name);
       tdBtn.appendChild(btn);
+      tdBtn.appendChild(delBtnC);
 
       [tdName, tdEmail, tdPlan, tdWeeks, tdStatus, tdCI, tdMrr, tdBtn].forEach(function(td) { tr.appendChild(td); });
       tbody.appendChild(tr);
     });
+  }
+
+  /* ─── DELETE CLIENT ─── */
+  function deleteClient(clientId, clientName) {
+    if (!confirm('¿Eliminar a ' + clientName + '?
+
+Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshacer.')) return;
+    apiFetch('/admin/delete-client', {
+      method: 'POST',
+      body: JSON.stringify({ client_id: clientId })
+    })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.success) {
+          showToast('Cliente ' + clientName + ' eliminado');
+          loadAdminData();
+          loadRiseData();
+        } else {
+          showToast('Error: ' + (d.error || 'No se pudo eliminar'), 'error');
+        }
+      })
+      .catch(function() { showToast('Error de conexion al eliminar', 'error'); });
   }
 
   /* ─── VIEW CLIENT PORTAL ─── */
@@ -1974,6 +2002,13 @@
           }
           var intakeTd = document.createElement('td');
           intakeTd.appendChild(intakeSpan);
+          var delTd = document.createElement('td');
+          var delBtn = document.createElement('button');
+          delBtn.className = 'btn btn-sm';
+          delBtn.style.cssText = 'background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#EF4444;';
+          delBtn.textContent = '✕ Eliminar';
+          (function(cid, cname){ delBtn.addEventListener('click', function(){ deleteClient(cid, cname); }); })(p.client_id, p.name);
+          delTd.appendChild(delBtn);
           tr.appendChild(nameTd);
           tr.appendChild(makeTd(p.email, 'color:var(--gray);font-size:12px'));
           tr.appendChild(makeTd(levelLabel[p.experience_level] || p.experience_level));
@@ -1982,6 +2017,7 @@
           tr.appendChild(makeTd(fmtDate(p.end_date), 'font-size:12px'));
           tr.appendChild(statTd);
           tr.appendChild(intakeTd);
+          tr.appendChild(delTd);
           tbody.appendChild(tr);
         });
       })
