@@ -21,3 +21,11 @@ vendor/
 # IDE
 .vscode/
 .idea/
+
+# Playwright MCP screenshots
+.playwright-mcp/
+
+# Temporary scripts
+fix_*.py
+_append_*.py
+_fix_*.py
