@@ -1593,7 +1593,8 @@
             if (chevron) chevron.style.transform = subItems.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
         }
 
-        document.getElementById('hamburgerBtn').addEventListener('click', () => {
+        const _hambBtn = document.getElementById('hamburgerBtn');
+        if (_hambBtn) _hambBtn.addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('show');
             document.getElementById('sidebarOverlay').classList.toggle('show');
         });
