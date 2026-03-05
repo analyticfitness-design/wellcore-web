@@ -15,18 +15,22 @@
 
     <style>
         :root {
-            --bg:           #0a0a0a;
-            --surface:      #111113;
-            --surface-2:    #1a1a1d;
-            --card:         #18181b;
-            --border:       rgba(255,255,255,0.06);
-            --red:          #E31E24;
-            --red-dark:     #B8181D;
-            --red-dim:      rgba(227,30,36,0.10);
-            --white:        #ffffff;
-            --gray:         rgba(255,255,255,0.45);
-            --gray-dim:     rgba(255,255,255,0.18);
+            --bg:           #080809;
+            --surface:      #0e0e11;
+            --surface-2:    #16161a;
+            --card:         #121215;
+            --border:       rgba(255,255,255,0.07);
+            --red:          #C8102E;
+            --red-dark:     #a50d25;
+            --red-dim:      rgba(200,16,46,0.10);
+            --gold:         #d4a853;
+            --gold-dim:     rgba(212,168,83,0.12);
+            --white:        #f2f2f4;
+            --gray:         rgba(255,255,255,0.48);
+            --gray-dim:     rgba(255,255,255,0.12);
             --green:        #22C55E;
+            --radius:       12px;
+            --radius-sm:    8px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,13 +47,13 @@
         .topbar {
             position: sticky;
             top: 0;
-            height: 60px;
-            background: rgba(17,17,19,0.95);
-            backdrop-filter: blur(10px);
+            height: 64px;
+            background: rgba(10,10,12,0.96);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 24px;
             z-index: 100;
         }
 
@@ -64,15 +68,17 @@
 
         .topbar-search {
             flex: 1;
-            max-width: 300px;
+            max-width: 320px;
             display: flex;
             align-items: center;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 8px 12px;
+            border-radius: 40px;
+            padding: 8px 16px;
             margin: 0 30px;
+            transition: border-color 0.2s;
         }
+        .topbar-search:focus-within { border-color: rgba(200,16,46,0.4); }
 
         .topbar-search input {
             background: transparent;
@@ -89,15 +95,17 @@
         .topbar-user { display: flex; align-items: center; gap: 15px; }
 
         .topbar-user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            background: var(--red-dim);
-            border: 1px solid var(--red);
+            background: linear-gradient(135deg, var(--red-dim), rgba(212,168,83,0.08));
+            border: 1.5px solid var(--red);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--red);
         }
 
         .topbar-user-menu { position: relative; }
@@ -118,14 +126,15 @@
             position: absolute;
             right: 0;
             top: 100%;
-            background: var(--surface);
+            background: var(--surface-2);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             padding: 8px 0;
-            min-width: 150px;
+            min-width: 160px;
             display: none;
             z-index: 200;
-            margin-top: 8px;
+            margin-top: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
         .topbar-user-dropdown.show { display: block; }
@@ -160,14 +169,14 @@
         /* ──────── SIDEBAR ──────── */
         .sidebar {
             width: 260px;
-            background: var(--surface);
+            background: rgba(10,10,12,0.98);
             border-right: 1px solid var(--border);
-            padding: 20px 0;
+            padding: 24px 0;
             overflow-y: auto;
             position: fixed;
             left: 0;
-            top: 60px;
-            height: calc(100vh - 60px);
+            top: 64px;
+            height: calc(100vh - 64px);
             z-index: 99;
             display: flex;
             flex-direction: column;
@@ -176,7 +185,7 @@
         .sidebar-overlay {
             display: none;
             position: fixed;
-            top: 60px;
+            top: 64px;
             left: 0;
             right: 0;
             bottom: 0;
@@ -191,25 +200,28 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 20px;
+            padding: 11px 20px;
             color: var(--gray);
             text-decoration: none;
             font-size: 13px;
-            transition: all 0.1s linear;
+            font-weight: 400;
+            transition: all 0.15s ease;
             border-left: 2px solid transparent;
             cursor: pointer;
+            letter-spacing: 0.01em;
         }
 
         .nav-item:hover {
-            background: rgba(227,30,36,0.04);
-            border-left-color: rgba(227,30,36,0.3);
+            background: rgba(200,16,46,0.05);
+            border-left-color: rgba(200,16,46,0.35);
             color: var(--white);
         }
 
         .nav-item.active {
-            background: rgba(227,30,36,0.08);
+            background: rgba(200,16,46,0.1);
             border-left-color: var(--red);
             color: var(--white);
+            font-weight: 500;
         }
 
         .nav-item i { width: 18px; text-align: center; }
@@ -284,8 +296,8 @@
         /* ──────── MAIN CONTENT ──────── */
         .main-content {
             margin-left: 260px;
-            min-height: calc(100vh - 60px);
-            padding: 30px 40px;
+            min-height: calc(100vh - 64px);
+            padding: 36px 44px;
             flex: 1;
         }
 
@@ -296,20 +308,28 @@
         .card {
             background: var(--card);
             border: 1px solid var(--border);
-            padding: 24px;
-            margin-bottom: 20px;
-            transition: border-color 0.1s linear;
+            border-radius: var(--radius);
+            padding: 26px;
+            margin-bottom: 22px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .card:hover { border-color: var(--red); }
+        .card:hover {
+            border-color: rgba(200,16,46,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
 
         .card-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.02em;
-            margin-bottom: 16px;
+            font-size: 17px;
+            letter-spacing: 0.05em;
+            margin-bottom: 18px;
             color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        .card-title i { color: var(--red); font-size: 14px; }
 
         /* ──────── GRID LAYOUTS ──────── */
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px; }
@@ -317,19 +337,37 @@
 
         /* ──────── BUTTONS ──────── */
         button {
-            padding: 12px 20px;
+            padding: 12px 22px;
             border: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.1s linear;
+            transition: all 0.18s ease;
             font-family: 'Inter', sans-serif;
+            border-radius: var(--radius-sm);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
 
-        .btn-primary { background: var(--red); color: var(--white); }
-        .btn-primary:hover { background: var(--red-dark); }
-        .btn-secondary { background: transparent; color: var(--red); border: 1px solid var(--red); }
-        .btn-secondary:hover { background: var(--red-dim); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(200,16,46,0.25);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--red-dark) 0%, #8b0d1f 100%);
+            box-shadow: 0 6px 20px rgba(200,16,46,0.35);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--red);
+            border: 1px solid rgba(200,16,46,0.5);
+        }
+        .btn-secondary:hover {
+            background: var(--red-dim);
+            border-color: var(--red);
+        }
 
         /* ──────── FORM ELEMENTS ──────── */
         input[type="text"],
@@ -339,18 +377,23 @@
         select {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             color: var(--white);
-            padding: 10px 12px;
+            padding: 11px 14px;
             font-size: 13px;
             font-family: 'Inter', sans-serif;
             width: 100%;
             outline: none;
+            transition: border-color 0.2s ease;
         }
 
         input[type="text"]:focus,
         input[type="number"]:focus,
-        textarea:focus { border-color: var(--red); }
+        input[type="date"]:focus,
+        textarea:focus {
+            border-color: rgba(200,16,46,0.6);
+            box-shadow: 0 0 0 3px rgba(200,16,46,0.08);
+        }
 
         label {
             font-size: 12px;
@@ -398,7 +441,7 @@
         /* ──────── SEARCH RESULTS ──────── */
         .search-results {
             position: absolute;
-            top: 60px;
+            top: 64px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--surface);
@@ -436,48 +479,142 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: var(--red-dim);
-            border: 1px solid rgba(227,30,36,0.3);
-            padding: 4px 10px;
+            background: var(--gold-dim);
+            border: 1px solid rgba(212,168,83,0.4);
+            padding: 5px 12px;
+            border-radius: 40px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--red);
-            margin-bottom: 20px;
+            font-size: 11px;
+            color: var(--gold);
+            margin-bottom: 22px;
+            letter-spacing: 0.04em;
         }
 
         /* ──────── TRACKING HISTORY ──────── */
         .tracking-log-entry {
-            padding: 12px 16px;
+            padding: 13px 16px;
             background: var(--surface);
             margin-bottom: 6px;
             font-size: 12px;
             border-left: 3px solid var(--border);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
 
         .tracking-log-entry.good { border-left-color: var(--green); }
-        .tracking-log-entry.partial { border-left-color: var(--red); }
+        .tracking-log-entry.partial { border-left-color: var(--gold); }
 
         /* ──────── TOAST NOTIFICATION ──────── */
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--surface);
-            border: 1px solid var(--green);
+            bottom: 32px;
+            right: 32px;
+            background: var(--surface-2);
+            border: 1px solid rgba(34,197,94,0.4);
+            border-radius: var(--radius-sm);
             color: var(--white);
-            padding: 14px 20px;
+            padding: 14px 22px;
             font-size: 13px;
+            font-weight: 500;
             z-index: 999;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(12px);
             transition: all 0.25s ease;
             pointer-events: none;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .toast.show {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* ──────── PHOTO UPLOAD ──────── */
+        .photo-upload-box {
+            position: relative;
+            aspect-ratio: 3/4;
+            background: var(--surface);
+            border: 1.5px dashed rgba(255,255,255,0.12);
+            border-radius: var(--radius);
+            cursor: pointer;
+            overflow: hidden;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .photo-upload-box:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px var(--red-dim);
+        }
+        .photo-upload-box.has-image .photo-placeholder { display: none; }
+        .photo-upload-box.has-image {
+            border-style: solid;
+            border-color: rgba(200,16,46,0.4);
+        }
+        .photo-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .photo-placeholder i {
+            font-size: 26px;
+            color: rgba(255,255,255,0.2);
+        }
+        .photo-placeholder span {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+        }
+        .photo-placeholder .plus-icon {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 26px;
+            height: 26px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 700;
+        }
+        .photo-preview-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .photo-remove-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 26px;
+            height: 26px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #fff;
+            cursor: pointer;
+            z-index: 2;
+            padding: 0;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .photo-upload-box.has-image .photo-remove-btn { display: flex; }
     </style>
 </head>
 <body>
@@ -881,24 +1018,36 @@
 
                 <div class="card">
                     <div class="card-title">Subir Fotos</div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
-                        <div style="text-align: center; padding: 30px; background: var(--surface); border: 1px dashed var(--border); cursor: pointer;" onclick="document.getElementById('photoFront').click()">
-                            <i class="fas fa-camera" style="color: var(--gray); font-size: 24px; display: block; margin-bottom: 8px;"></i>
-                            <span style="color: var(--gray); font-size: 12px;">Frente</span>
-                            <input type="file" id="photoFront" accept="image/*" style="display:none" onchange="previewPhoto(this, 'previewFront')">
-                            <img id="previewFront" style="display:none; width:100%; margin-top:10px;" alt="Vista previa frente">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px;">
+                        <div class="photo-upload-box" id="boxFront" onclick="document.getElementById('photoFront').click()">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-camera"></i>
+                                <span>Frente</span>
+                                <div class="plus-icon">+</div>
+                            </div>
+                            <img id="previewFront" class="photo-preview-img" alt="Frente">
+                            <button class="photo-remove-btn" onclick="removePhoto(event,'photoFront','previewFront','boxFront')"><i class="fas fa-times"></i></button>
+                            <input type="file" id="photoFront" accept="image/*" style="display:none" onchange="previewPhoto(this,'previewFront','boxFront')">
                         </div>
-                        <div style="text-align: center; padding: 30px; background: var(--surface); border: 1px dashed var(--border); cursor: pointer;" onclick="document.getElementById('photoSide').click()">
-                            <i class="fas fa-camera" style="color: var(--gray); font-size: 24px; display: block; margin-bottom: 8px;"></i>
-                            <span style="color: var(--gray); font-size: 12px;">Perfil</span>
-                            <input type="file" id="photoSide" accept="image/*" style="display:none" onchange="previewPhoto(this, 'previewSide')">
-                            <img id="previewSide" style="display:none; width:100%; margin-top:10px;" alt="Vista previa perfil">
+                        <div class="photo-upload-box" id="boxSide" onclick="document.getElementById('photoSide').click()">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-camera"></i>
+                                <span>Perfil</span>
+                                <div class="plus-icon">+</div>
+                            </div>
+                            <img id="previewSide" class="photo-preview-img" alt="Perfil">
+                            <button class="photo-remove-btn" onclick="removePhoto(event,'photoSide','previewSide','boxSide')"><i class="fas fa-times"></i></button>
+                            <input type="file" id="photoSide" accept="image/*" style="display:none" onchange="previewPhoto(this,'previewSide','boxSide')">
                         </div>
-                        <div style="text-align: center; padding: 30px; background: var(--surface); border: 1px dashed var(--border); cursor: pointer;" onclick="document.getElementById('photoBack').click()">
-                            <i class="fas fa-camera" style="color: var(--gray); font-size: 24px; display: block; margin-bottom: 8px;"></i>
-                            <span style="color: var(--gray); font-size: 12px;">Espalda</span>
-                            <input type="file" id="photoBack" accept="image/*" style="display:none" onchange="previewPhoto(this, 'previewBack')">
-                            <img id="previewBack" style="display:none; width:100%; margin-top:10px;" alt="Vista previa espalda">
+                        <div class="photo-upload-box" id="boxBack" onclick="document.getElementById('photoBack').click()">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-camera"></i>
+                                <span>Espalda</span>
+                                <div class="plus-icon">+</div>
+                            </div>
+                            <img id="previewBack" class="photo-preview-img" alt="Espalda">
+                            <button class="photo-remove-btn" onclick="removePhoto(event,'photoBack','previewBack','boxBack')"><i class="fas fa-times"></i></button>
+                            <input type="file" id="photoBack" accept="image/*" style="display:none" onchange="previewPhoto(this,'previewBack','boxBack')">
                         </div>
                     </div>
                     <div class="form-group">
@@ -971,10 +1120,10 @@
                 <div class="card">
                     <div class="card-title">Contactar Coach</div>
                     <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <button class="btn-primary" style="width: 100%; background: #25D366; color: white;" onclick="window.open('https://wa.me/1234567890', '_blank')">
+                        <button class="btn-primary" style="width: 100%; background: linear-gradient(135deg,#1da851,#15803d); box-shadow: 0 4px 14px rgba(29,168,81,0.3);" onclick="window.open('https://wa.me/573124904720?text=Hola%20Coach%2C%20quiero%20hacer%20seguimiento%20de%20mi%20Reto%20RISE%20%F0%9F%94%A5', '_blank')">
                             <i class="fab fa-whatsapp"></i> WhatsApp Coach
                         </button>
-                        <button class="btn-secondary" style="width: 100%;">
+                        <button class="btn-secondary" style="width: 100%;" onclick="window.open('https://wa.me/573124904720?text=Hola%20Coach%2C%20quiero%20agendar%20una%20sesi%C3%B3n%20de%20seguimiento%20del%20Reto%20RISE', '_blank')">
                             <i class="fas fa-calendar-alt"></i> Agendar Sesión
                         </button>
                     </div>
@@ -1060,7 +1209,7 @@
                     'letter-spacing:.06em;color:#ffffff',
                     'white-space:nowrap;user-select:none'
                 ].join(';');
-                span.textContent = name.toUpperCase() + '  ·  ' + (email || 'WELLCORE')  + '  ·  RISE 2026';
+                span.textContent = name.toUpperCase() + '  ·  ' + (email || 'WELLCORE')  + '  ·  WWW.WELLCOREFITNESS.COM';
                 inner.appendChild(span);
             }
 
@@ -1588,16 +1737,29 @@
         }
 
         // ─── PHOTOS ──────────────────────────────
-        function previewPhoto(input, previewId) {
+        function previewPhoto(input, previewId, boxId) {
             const preview = document.getElementById(previewId);
+            const box     = document.getElementById(boxId);
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
+                reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
+                    box.classList.add('has-image');
                 };
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        function removePhoto(event, inputId, previewId, boxId) {
+            event.stopPropagation();
+            const input   = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const box     = document.getElementById(boxId);
+            input.value   = '';
+            preview.src   = '';
+            preview.style.display = 'none';
+            box.classList.remove('has-image');
         }
 
         function savePhotos() {
