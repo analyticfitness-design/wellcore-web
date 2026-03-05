@@ -108,6 +108,20 @@ runDDL($db, 'CREATE TABLE rise_habits_log', "
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 ");
 
+// 8. Tabla progress_photos (si no se creó con schema.sql principal)
+runDDL($db, 'CREATE TABLE progress_photos', "
+    CREATE TABLE IF NOT EXISTS progress_photos (
+        id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        client_id   INT UNSIGNED NOT NULL,
+        photo_date  DATE NOT NULL,
+        tipo        ENUM('frente','perfil','espalda') NOT NULL,
+        filename    VARCHAR(255) NOT NULL,
+        created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_client (client_id, photo_date),
+        FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+");
+
 $ok    = array_filter($results, fn($r) =>  $r['ok']);
 $fails = array_filter($results, fn($r) => !$r['ok']);
 ?>

@@ -1164,9 +1164,23 @@
                     </button>
                 </div>
 
+                <div class="card" id="photoUploadStatus" style="display:none;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <i class="fas fa-spinner fa-spin" style="color:var(--red);font-size:18px;" id="photoSpinIcon"></i>
+                        <span id="photoStatusText" style="color:var(--gray);font-size:13px;">Subiendo fotos...</span>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <div class="card-title">Galería de Progreso</div>
-                    <p id="photoGalleryText" style="color: var(--gray); font-size: 13px;">Sin fotos registradas aún. ¡Documenta tu transformación!</p>
+                    <div class="card-title"><i class="fas fa-images"></i> Galería de Progreso</div>
+                    <p id="photoGalleryText" style="color: var(--gray); font-size: 13px; margin-bottom: 16px;">Sin fotos registradas aún. ¡Documenta tu transformación!</p>
+                    <div id="photoGalleryGrid" style="display:none;"></div>
+                </div>
+
+                <div class="card" id="photoComparativaCard" style="display:none;">
+                    <div class="card-title"><i class="fas fa-not-equal"></i> Comparativa de tus Cambios</div>
+                    <p style="color:var(--gray);font-size:12px;margin-bottom:18px;">Primer registro vs. último registro por posición</p>
+                    <div id="photoComparativaGrid"></div>
                 </div>
             </section>
 
@@ -1907,14 +1921,222 @@
             box.classList.remove('has-image');
         }
 
-        function savePhotos() {
-            const date = document.getElementById('photoDate').value || TODAY;
-            const list = JSON.parse(localStorage.getItem('rise_photos') || '[]');
-            list.push({ date });
-            localStorage.setItem('rise_photos', JSON.stringify(list));
-            document.getElementById('photoCountText').textContent    = list.length + ' set(s) de fotos guardado(s)';
-            document.getElementById('photoGalleryText').textContent  = list.length + ' registro(s) de fotos guardado(s).';
-            showToast('¡Fotos registradas!');
+        async function savePhotos() {
+            const date    = document.getElementById('photoDate').value || TODAY;
+            const inputFr = document.getElementById('photoFront');
+            const inputSi = document.getElementById('photoSide');
+            const inputBk = document.getElementById('photoBack');
+
+            const hasFiles = (inputFr.files && inputFr.files[0]) ||
+                             (inputSi.files && inputSi.files[0]) ||
+                             (inputBk.files && inputBk.files[0]);
+
+            if (!hasFiles) { showToast('Selecciona al menos una foto', '#F59E0B'); return; }
+            if (!TOKEN)    { showToast('Inicia sesi\u00f3n para guardar fotos', '#E31E24'); return; }
+
+            const statusCard = document.getElementById('photoUploadStatus');
+            const spinIcon   = document.getElementById('photoSpinIcon');
+            const statusText = document.getElementById('photoStatusText');
+            statusCard.style.display = 'block';
+            spinIcon.className = 'fas fa-spinner fa-spin';
+            spinIcon.style.color = 'var(--red)';
+            statusText.textContent = 'Subiendo fotos...';
+
+            const fd = new FormData();
+            fd.append('photo_date', date);
+            if (inputFr.files && inputFr.files[0]) fd.append('frente',  inputFr.files[0]);
+            if (inputSi.files && inputSi.files[0]) fd.append('perfil',  inputSi.files[0]);
+            if (inputBk.files && inputBk.files[0]) fd.append('espalda', inputBk.files[0]);
+
+            try {
+                const res  = await fetch(API_BASE + '/rise/photos.php', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + TOKEN },
+                    body: fd
+                });
+                const data = await res.json();
+                if (data && data.ok) {
+                    spinIcon.className = 'fas fa-check-circle';
+                    spinIcon.style.color = 'var(--green)';
+                    statusText.textContent = data.message + ' \u2014 ' + date;
+                    showToast('\u00a1Fotos guardadas en tu perfil!');
+                    ['photoFront','photoSide','photoBack'].forEach(function(id) {
+                        document.getElementById(id).value = '';
+                    });
+                    ['previewFront','previewSide','previewBack'].forEach(function(id) {
+                        const img = document.getElementById(id);
+                        img.src = ''; img.style.display = 'none';
+                    });
+                    ['boxFront','boxSide','boxBack'].forEach(function(id) {
+                        document.getElementById(id).classList.remove('has-image');
+                    });
+                    loadPhotosFromAPI();
+                } else {
+                    spinIcon.className = 'fas fa-exclamation-triangle';
+                    spinIcon.style.color = 'var(--red)';
+                    statusText.textContent = (data && data.error) ? data.error : 'Error al subir fotos';
+                    showToast('Error al guardar fotos', '#E31E24');
+                }
+            } catch(e) {
+                spinIcon.className = 'fas fa-exclamation-triangle';
+                spinIcon.style.color = 'var(--red)';
+                statusText.textContent = 'Error de conexi\u00f3n';
+                showToast('Error de conexi\u00f3n', '#E31E24');
+            }
+            setTimeout(function() { statusCard.style.display = 'none'; }, 4000);
+        }
+
+        // --- CARGAR FOTOS DESDE API ---
+        async function loadPhotosFromAPI() {
+            if (!TOKEN) return;
+            const data = await api('GET', '/rise/photos.php', null);
+            if (!data) return;
+            const sets = data.sets || [];
+            const txt  = document.getElementById('photoGalleryText');
+            if (txt) txt.textContent = sets.length > 0
+                ? sets.length + ' registro(s) de fotos guardado(s).'
+                : 'Sin fotos registradas a\u00fan. \u00a1Documenta tu transformaci\u00f3n!';
+            renderPhotoGallery(sets);
+            renderPhotoComparativa(sets);
+        }
+
+        function renderPhotoGallery(sets) {
+            const grid = document.getElementById('photoGalleryGrid');
+            const txt  = document.getElementById('photoGalleryText');
+            if (!sets || sets.length === 0) {
+                if (grid) grid.style.display = 'none';
+                if (txt)  txt.style.display  = 'block';
+                return;
+            }
+            if (txt)  txt.style.display  = 'none';
+            if (grid) grid.style.display = 'block';
+            grid.textContent = '';
+            var tiposLabel = { frente:'Frente', perfil:'Perfil', espalda:'Espalda' };
+            [...sets].reverse().forEach(function(set) {
+                var block = document.createElement('div');
+                block.style.cssText = 'margin-bottom:20px;';
+
+                var label = document.createElement('div');
+                label.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:11px;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;';
+                label.textContent = set.date;
+                block.appendChild(label);
+
+                var row = document.createElement('div');
+                row.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:8px;';
+
+                ['frente','perfil','espalda'].forEach(function(tipo) {
+                    var cell = document.createElement('div');
+                    if (set.photos && set.photos[tipo]) {
+                        var img = document.createElement('img');
+                        img.src = set.photos[tipo].url;
+                        img.alt = tiposLabel[tipo];
+                        img.style.cssText = 'width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(255,255,255,0.06);display:block;';
+                        var lbl = document.createElement('div');
+                        lbl.style.cssText = 'text-align:center;font-size:10px;color:var(--gray);margin-top:4px;text-transform:uppercase;letter-spacing:1px;';
+                        lbl.textContent = tiposLabel[tipo];
+                        cell.appendChild(img);
+                        cell.appendChild(lbl);
+                    } else {
+                        cell.style.cssText = 'background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.08);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;';
+                        var noFoto = document.createElement('span');
+                        noFoto.style.cssText = 'color:rgba(255,255,255,0.15);font-size:11px;';
+                        noFoto.textContent = tiposLabel[tipo];
+                        cell.appendChild(noFoto);
+                    }
+                    row.appendChild(cell);
+                });
+                block.appendChild(row);
+                grid.appendChild(block);
+            });
+        }
+
+        function renderPhotoComparativa(sets) {
+            var card = document.getElementById('photoComparativaCard');
+            var grid = document.getElementById('photoComparativaGrid');
+            if (!card || !grid) return;
+            if (!sets || sets.length < 2) { card.style.display = 'none'; return; }
+            card.style.display = 'block';
+            grid.textContent = '';
+
+            var first  = sets[0];
+            var latest = sets[sets.length - 1];
+            var tiposLabel = { frente:'Frente', perfil:'Perfil', espalda:'Espalda' };
+
+            ['frente','perfil','espalda'].forEach(function(tipo) {
+                var firstUrl  = first.photos  && first.photos[tipo]  ? first.photos[tipo].url  : null;
+                var latestUrl = latest.photos && latest.photos[tipo] ? latest.photos[tipo].url : null;
+                if (!firstUrl && !latestUrl) return;
+
+                var section = document.createElement('div');
+                section.style.cssText = 'margin-bottom:24px;';
+
+                var heading = document.createElement('div');
+                heading.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:11px;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06);';
+                var icon = document.createElement('i');
+                icon.className = 'fas fa-camera';
+                icon.style.cssText = 'color:var(--red);margin-right:6px;';
+                heading.appendChild(icon);
+                heading.appendChild(document.createTextNode(tiposLabel[tipo].toUpperCase()));
+                section.appendChild(heading);
+
+                var pair = document.createElement('div');
+                pair.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:10px;';
+
+                function makeCol(url, dateLabel, tagText, isFirst) {
+                    var col = document.createElement('div');
+                    if (url) {
+                        var img = document.createElement('img');
+                        img.src = url;
+                        img.alt = tagText;
+                        img.style.cssText = 'width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(255,255,255,0.08);display:block;';
+                        col.appendChild(img);
+                    } else {
+                        col.style.cssText = 'background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.07);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;';
+                        var noFoto = document.createElement('span');
+                        noFoto.style.cssText = 'color:rgba(255,255,255,0.15);font-size:11px;';
+                        noFoto.textContent = 'Sin foto';
+                        col.appendChild(noFoto);
+                    }
+                    var tagEl = document.createElement('div');
+                    tagEl.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-top:5px;';
+                    var badge = document.createElement('span');
+                    badge.style.cssText = 'font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;' +
+                        (isFirst ? 'background:rgba(227,30,36,0.15);color:var(--red);' : 'background:rgba(34,197,94,0.12);color:#22C55E;');
+                    badge.textContent = tagText;
+                    var dateEl = document.createElement('span');
+                    dateEl.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:9px;color:var(--gray);';
+                    dateEl.textContent = dateLabel;
+                    tagEl.appendChild(badge);
+                    tagEl.appendChild(dateEl);
+                    col.appendChild(tagEl);
+                    return col;
+                }
+                pair.appendChild(makeCol(firstUrl,  first.date,  'INICIO', true));
+                pair.appendChild(makeCol(latestUrl, latest.date, 'HOY',    false));
+                section.appendChild(pair);
+                grid.appendChild(section);
+            });
+        }
+
+        // --- CARGAR HABITOS DESDE API ---
+        async function loadHabitsFromAPI() {
+            if (!TOKEN) return;
+            const data = await api('GET', '/rise/habits.php', null);
+            if (!data || !data.habits || !data.habits.length) return;
+            const todayRec = data.habits.find(function(h) { return h.log_date === TODAY; });
+            if (!todayRec) return;
+            try {
+                var hj = typeof todayRec.habits_json === 'string'
+                    ? JSON.parse(todayRec.habits_json)
+                    : todayRec.habits_json;
+                document.querySelectorAll('.habit-check').forEach(function(cb) {
+                    if (Object.prototype.hasOwnProperty.call(hj, cb.dataset.habit)) {
+                        cb.checked = !!hj[cb.dataset.habit];
+                    }
+                });
+                updateHabitsProgress();
+                localStorage.setItem('rise_habits_' + TODAY, JSON.stringify(hj));
+            } catch(e) {}
         }
 
         // ─── COMMUNITY ───────────────────────────
@@ -1996,11 +2218,7 @@
             renderTrackingHistory(localLogs);
             updateStreak(localLogs);
 
-            const photos = JSON.parse(localStorage.getItem('rise_photos') || '[]');
-            if (photos.length > 0) {
-                document.getElementById('photoCountText').textContent   = photos.length + ' set(s) de fotos guardado(s)';
-                document.getElementById('photoGalleryText').textContent = photos.length + ' registro(s) de fotos guardado(s).';
-            }
+            // Fotos se cargan desde API (ver loadPhotosFromAPI)
 
             // Si hay token, cargar datos de la API y planes personalizados
             if (TOKEN) {
@@ -2011,6 +2229,8 @@
                         loadPlan('nutrition');
                         loadMeasurementsFromAPI();
                         loadTrackingFromAPI();
+                        loadPhotosFromAPI();
+                        loadHabitsFromAPI();
                     }
                 });
             } else {
