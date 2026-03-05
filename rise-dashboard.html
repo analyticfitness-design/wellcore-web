@@ -185,6 +185,30 @@
             padding: 0;
         }
 
+
+        /* ──────── FAQ ACCORDION ──────── */
+        .rise-faq-list { display: flex; flex-direction: column; margin-top: 4px; }
+        .rise-faq-item { border-bottom: 1px solid var(--border); }
+        .rise-faq-item:last-child { border-bottom: none; }
+        .rise-faq-q {
+            width: 100%; background: none; border: none; color: var(--white);
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px; padding: 14px 4px; text-align: left; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+            -webkit-tap-highlight-color: transparent; min-height: 0 !important;
+        }
+        .rise-faq-q:hover { color: var(--red); }
+        .rise-faq-icon {
+            color: var(--gray); font-size: 0.8rem; flex-shrink: 0;
+            transition: transform 0.22s ease, color 0.18s ease;
+        }
+        .rise-faq-q.open .rise-faq-icon { transform: rotate(180deg); color: var(--red); }
+        .rise-faq-a {
+            display: none; color: var(--gray); font-size: 13px; line-height: 1.65;
+            padding: 0 4px 14px;
+        }
+        .rise-faq-a.open { display: block; }
+
         /* ──────── MAIN CONTAINER ──────── */
         .container { display: flex; }
 
@@ -1211,26 +1235,36 @@
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Preguntas Frecuentes</div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <details style="background: var(--surface); padding: 15px; cursor: pointer;">
-                            <summary style="color: var(--white); font-size: 13px; font-weight: 600;">
-                                ¿Puedo modificar el programa de entrenamiento?
-                            </summary>
-                            <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">Sí, puedes contactar a tu coach para adaptar ejercicios según tus necesidades o lesiones.</p>
-                        </details>
-                        <details style="background: var(--surface); padding: 15px; cursor: pointer;">
-                            <summary style="color: var(--white); font-size: 13px; font-weight: 600;">
-                                ¿Qué pasa si fallo un día?
-                            </summary>
-                            <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">No pasa nada. Lo importante es la consistencia general. Continúa el día siguiente sin culpas.</p>
-                        </details>
-                        <details style="background: var(--surface); padding: 15px; cursor: pointer;">
-                            <summary style="color: var(--white); font-size: 13px; font-weight: 600;">
-                                ¿Cuándo veré resultados?
-                            </summary>
-                            <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">Los primeros cambios visibles suelen aparecer en la semana 2-3. Las fotos y mediciones te ayudarán a verlos objetivamente.</p>
-                        </details>
+                    <div class="card-title"><i class="fas fa-circle-question" style="color:var(--red);margin-right:6px;"></i> Preguntas Frecuentes</div>
+                    <div class="rise-faq-list">
+                        <div class="rise-faq-item">
+                            <button class="rise-faq-q" onclick="riseToggleFaq(this)">
+                                <span>¿Puedo modificar el programa de entrenamiento?</span>
+                                <i class="fas fa-chevron-down rise-faq-icon"></i>
+                            </button>
+                            <div class="rise-faq-a">Sí, puedes contactar a tu coach para adaptar ejercicios según tus necesidades o lesiones. Tu programa es 100% personalizable.</div>
+                        </div>
+                        <div class="rise-faq-item">
+                            <button class="rise-faq-q" onclick="riseToggleFaq(this)">
+                                <span>¿Qué pasa si fallo un día?</span>
+                                <i class="fas fa-chevron-down rise-faq-icon"></i>
+                            </button>
+                            <div class="rise-faq-a">No pasa nada. Lo importante es la consistencia general. Continúa el día siguiente sin culpas — un día no define tu reto.</div>
+                        </div>
+                        <div class="rise-faq-item">
+                            <button class="rise-faq-q" onclick="riseToggleFaq(this)">
+                                <span>¿Cuándo veré resultados?</span>
+                                <i class="fas fa-chevron-down rise-faq-icon"></i>
+                            </button>
+                            <div class="rise-faq-a">Los primeros cambios visibles suelen aparecer en la semana 2-3. Las fotos y mediciones te ayudarán a verlos objetivamente.</div>
+                        </div>
+                        <div class="rise-faq-item">
+                            <button class="rise-faq-q" onclick="riseToggleFaq(this)">
+                                <span>¿Qué necesito para empezar?</span>
+                                <i class="fas fa-chevron-down rise-faq-icon"></i>
+                            </button>
+                            <div class="rise-faq-a">Solo motivación y constancia. Tu programa estará adaptado a tu nivel y equipo disponible. Puedes entrenar en casa o en el gym.</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -2100,7 +2134,24 @@
                 setRiseBnav(el.dataset.section);
             });
         });
-    </script>
+    
+        function riseToggleFaq(qEl) {
+            var item = qEl.parentElement;
+            var ans  = item.querySelector('.rise-faq-a');
+            var isOpen = qEl.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.rise-faq-q').forEach(function(q) {
+                q.classList.remove('open');
+                var a = q.parentElement.querySelector('.rise-faq-a');
+                if (a) a.classList.remove('open');
+            });
+            // Open this one if it was closed
+            if (!isOpen) {
+                qEl.classList.add('open');
+                if (ans) ans.classList.add('open');
+            }
+        }
+</script>
     <style>
         /* Override: better bottom nav sizing for touch */
         @media (max-width: 768px) {
