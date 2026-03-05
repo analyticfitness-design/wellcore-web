@@ -1012,6 +1012,11 @@
         <span class="badge" id="riseBadge" style="background:rgba(227,30,36,0.15);color:#E31E24;border:1px solid rgba(227,30,36,0.3);display:none">0</span>
       </div>
 
+      <div class="nav-item" data-section="invitaciones" id="navInvitaciones" style="display:none">
+        <span class="nav-icon" style="color:#E31E24;font-weight:700">&#9993;</span>
+        Invitaciones
+      </div>
+
       <div class="nav-item" data-section="configuracion">
         <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9678;</span>
         Configuracion
@@ -1345,10 +1350,37 @@
                   <th>Fin</th>
                   <th>Estado</th>
                   <th>Intake</th>
+                  <th>Plan IA</th>
                 </tr>
               </thead>
               <tbody id="riseTableBody">
-                <tr><td colspan="8" style="text-align:center;color:var(--gray);padding:30px">Cargando...</td></tr>
+                <tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PLANES IA POR VALIDAR -->
+        <div class="card" id="risePlanesCard" style="margin-top:16px">
+          <div class="card-header">
+            <span class="card-title">Planes IA por Validar</span>
+            <span class="badge badge-yellow" id="planesPendientesBadge" style="display:none">0 pendientes</span>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="table" id="planesTable">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Tipo</th>
+                  <th>Modelo</th>
+                  <th>Tokens</th>
+                  <th>Generado</th>
+                  <th>Estado plan</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="planesTableBody">
+                <tr><td colspan="7" style="text-align:center;color:var(--gray);padding:30px">Sin planes pendientes.</td></tr>
               </tbody>
             </table>
           </div>
@@ -1387,6 +1419,61 @@
               <tr><td>Niveles</td><td>Principiante / Intermedio / Avanzado</td></tr>
               <tr><td>Estado</td><td><span class="badge badge-green">ACTIVO</span></td></tr>
             </table>
+          </div>
+        </div>
+
+      </div>
+      <!-- ─────────────────────────────
+           6. INVITACIONES
+      ───────────────────────────── -->
+      <div class="section" id="section-invitaciones">
+
+        <div class="section-title">INVITACIONES</div>
+        <div class="section-sub">ENVIAR EMAIL DE PROSPECTO — SUPERADMIN</div>
+
+        <div style="max-width:560px;">
+          <div class="card" style="padding:28px;">
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:#E31E24;text-transform:uppercase;margin-bottom:18px;">// Enviar invitación de plan</div>
+
+            <div style="margin-bottom:16px;">
+              <label style="display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray);text-transform:uppercase;margin-bottom:6px;">Nombre del prospecto</label>
+              <input type="text" id="invName" placeholder="Ej: Carlos Rodríguez" style="width:100%;background:#0a0a0a;border:1px solid #2a2a2e;color:#fff;padding:10px 14px;font-family:var(--font-mono);font-size:12px;outline:none;box-sizing:border-box;">
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <label style="display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray);text-transform:uppercase;margin-bottom:6px;">Email del prospecto *</label>
+              <input type="email" id="invEmail" placeholder="prospecto@email.com" style="width:100%;background:#0a0a0a;border:1px solid #2a2a2e;color:#fff;padding:10px 14px;font-family:var(--font-mono);font-size:12px;outline:none;box-sizing:border-box;">
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+              <div>
+                <label style="display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray);text-transform:uppercase;margin-bottom:6px;">Plan</label>
+                <select id="invPlan" style="width:100%;background:#0a0a0a;border:1px solid #2a2a2e;color:#fff;padding:10px 14px;font-family:var(--font-mono);font-size:12px;outline:none;box-sizing:border-box;">
+                  <option value="rise">Reto RISE — $99.900 COP</option>
+                  <option value="esencial">Plan Esencial — $399.000 COP</option>
+                  <option value="metodo">Plan Método — $504.000 COP</option>
+                  <option value="elite">Plan Elite — $630.000 COP</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray);text-transform:uppercase;margin-bottom:6px;">Género</label>
+                <select id="invGender" style="width:100%;background:#0a0a0a;border:1px solid #2a2a2e;color:#fff;padding:10px 14px;font-family:var(--font-mono);font-size:12px;outline:none;box-sizing:border-box;">
+                  <option value="male">Masculino</option>
+                  <option value="female">Femenino</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-bottom:20px;">
+              <label style="display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray);text-transform:uppercase;margin-bottom:6px;">Mensaje personalizado (opcional)</label>
+              <textarea id="invMsg" rows="3" placeholder="Ej: Hablamos la semana pasada sobre tu objetivo de bajar de peso..." style="width:100%;background:#0a0a0a;border:1px solid #2a2a2e;color:#fff;padding:10px 14px;font-family:var(--font-mono);font-size:12px;outline:none;box-sizing:border-box;resize:vertical;"></textarea>
+            </div>
+
+            <button id="invSendBtn" onclick="sendInvitation()" style="background:#E31E24;color:#fff;border:none;padding:12px 28px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">
+              &#9993; Enviar Invitación
+            </button>
+
+            <div id="invFeedback" style="margin-top:14px;font-family:var(--font-mono);font-size:11px;display:none;"></div>
           </div>
         </div>
 
@@ -1508,6 +1595,11 @@
       document.getElementById('adminName').textContent = name;
       document.getElementById('adminAvatar').textContent = name.charAt(0).toUpperCase();
       document.getElementById('adminUserDisplay').textContent = name;
+      // Mostrar tab Invitaciones solo para superadmin
+      if (role === 'superadmin') {
+        var navInv = document.getElementById('navInvitaciones');
+        if (navInv) navInv.style.display = '';
+      }
       document.body.style.visibility = 'visible';
       try { if (typeof initApp === 'function') initApp(); } catch(e) { console.warn('[admin] initApp error:', e); }
     }).catch(function() {
@@ -1727,6 +1819,7 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
           showToast('Cliente ' + clientName + ' eliminado');
           loadAdminData();
           loadRiseData();
+        loadPendingPlans();
         } else {
           showToast('Error: ' + (d.error || 'No se pudo eliminar'), 'error');
         }
@@ -1974,7 +2067,7 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
         if (!d.programs || d.programs.length === 0) {
           var emptyRow = document.createElement('tr');
           var emptyCell = document.createElement('td');
-          emptyCell.colSpan = 8;
+          emptyCell.colSpan = 9;
           emptyCell.style.cssText = 'text-align:center;color:var(--gray);padding:30px';
           emptyCell.textContent = 'Sin inscritos aun.';
           emptyRow.appendChild(emptyCell);
@@ -2009,6 +2102,22 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
           delBtn.textContent = '✕ Eliminar';
           (function(cid, cname){ delBtn.addEventListener('click', function(){ deleteClient(cid, cname); }); })(p.client_id, p.name);
           delTd.appendChild(delBtn);
+          // Columna Plan IA
+          var planTd = document.createElement('td');
+          if (!p.has_intake) {
+            var noIntakeSpan = document.createElement('span');
+            noIntakeSpan.style.cssText = 'color:var(--gray);font-size:11px';
+            noIntakeSpan.textContent = 'Sin intake';
+            planTd.appendChild(noIntakeSpan);
+          } else {
+            var genBtn = document.createElement('button');
+            genBtn.className = 'btn btn-sm';
+            genBtn.style.cssText = 'background:rgba(227,30,36,0.12);border:1px solid rgba(227,30,36,0.35);color:#E31E24;font-size:11px;padding:4px 10px;';
+            genBtn.textContent = '⚡ Generar Plan';
+            (function(cid, cname){ genBtn.addEventListener('click', function(){ generateRisePlan(cid, cname); }); })(p.client_id, p.name);
+            planTd.appendChild(genBtn);
+          }
+
           tr.appendChild(nameTd);
           tr.appendChild(makeTd(p.email, 'color:var(--gray);font-size:12px'));
           tr.appendChild(makeTd(levelLabel[p.experience_level] || p.experience_level));
@@ -2017,6 +2126,7 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
           tr.appendChild(makeTd(fmtDate(p.end_date), 'font-size:12px'));
           tr.appendChild(statTd);
           tr.appendChild(intakeTd);
+          tr.appendChild(planTd);
           tr.appendChild(delTd);
           tbody.appendChild(tr);
         });
@@ -2032,6 +2142,245 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
         row.appendChild(cell);
         tbody.appendChild(row);
       });
+  }
+
+  /* ─── PLANES IA: GENERAR ─── */
+  function generateRisePlan(clientId, clientName) {
+    if (!confirm('¿Generar Plan RISE con IA para ' + clientName + '?\n\nEsto llamará a Claude y puede tardar 20-40 segundos.')) return;
+
+    // Mostrar feedback inmediato en el botón
+    var btn = event.target;
+    var origText = btn.textContent;
+    btn.textContent = '⏳ Generando...';
+    btn.disabled = true;
+
+    apiFetch('/ai/generate-plan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client_id: clientId, plan_type: 'rise', triggered_by: 'admin' })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      btn.textContent = origText;
+      btn.disabled = false;
+      if (d.ok || d.generation_id) {
+        btn.textContent = '✓ Generado';
+        btn.style.color = '#22C55E';
+        btn.style.borderColor = '#22C55E';
+        // Recargar tabla de planes pendientes
+        loadPendingPlans();
+      } else {
+        btn.textContent = origText;
+        alert('Error: ' + (d.error || 'No se pudo generar el plan'));
+      }
+    })
+    .catch(function(err) {
+      btn.textContent = origText;
+      btn.disabled = false;
+      alert('Error de red al generar plan: ' + err.message);
+    });
+  }
+
+  /* ─── PLANES IA: CARGAR PENDIENTES ─── */
+  function loadPendingPlans() {
+    var tbody = document.getElementById('planesTableBody');
+    if (!tbody) return;
+
+    apiFetch('/admin/ai-generations?status=completed&type=rise')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        tbody.textContent = '';
+        var gens = d.generations || [];
+
+        var badge = document.getElementById('planesPendientesBadge');
+        var sinActivar = gens.filter(function(g){ return !g.plan_active; });
+        if (badge) {
+          if (sinActivar.length > 0) {
+            badge.textContent = sinActivar.length + ' pendiente' + (sinActivar.length > 1 ? 's' : '');
+            badge.style.display = 'inline-flex';
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+
+        if (gens.length === 0) {
+          var emptyRow = document.createElement('tr');
+          var emptyCell = document.createElement('td');
+          emptyCell.colSpan = 7;
+          emptyCell.style.cssText = 'text-align:center;color:var(--gray);padding:30px';
+          emptyCell.textContent = 'Sin planes generados aun.';
+          emptyRow.appendChild(emptyCell);
+          tbody.appendChild(emptyRow);
+          return;
+        }
+
+        gens.forEach(function(g) {
+          var tr = document.createElement('tr');
+
+          // Cliente
+          var clientTd = document.createElement('td');
+          var nameEl = document.createElement('strong');
+          nameEl.textContent = g.client_name || ('ID ' + g.client_id);
+          var emailEl = document.createElement('div');
+          emailEl.style.cssText = 'font-size:11px;color:var(--gray)';
+          emailEl.textContent = g.client_email || '';
+          clientTd.appendChild(nameEl);
+          clientTd.appendChild(emailEl);
+
+          // Tipo
+          var typeTd = document.createElement('td');
+          var typeBadge = document.createElement('span');
+          typeBadge.className = 'badge badge-red';
+          typeBadge.textContent = (g.type || '').toUpperCase();
+          typeTd.appendChild(typeBadge);
+
+          // Modelo
+          var modelTd = document.createElement('td');
+          modelTd.style.cssText = 'font-size:11px;color:var(--gray)';
+          modelTd.textContent = (g.model || '').replace('claude-', '').replace('-20251022','');
+
+          // Tokens
+          var tokenTd = document.createElement('td');
+          tokenTd.style.cssText = 'font-size:11px;color:var(--gray)';
+          var totalTokens = (g.prompt_tokens || 0) + (g.completion_tokens || 0);
+          tokenTd.textContent = totalTokens.toLocaleString();
+
+          // Fecha
+          var dateTd = document.createElement('td');
+          dateTd.style.cssText = 'font-size:11px';
+          dateTd.textContent = fmtDate(g.created_at);
+
+          // Estado plan
+          var estadoTd = document.createElement('td');
+          var estadoSpan = document.createElement('span');
+          if (g.plan_active === true) {
+            estadoSpan.className = 'badge badge-green';
+            estadoSpan.textContent = 'Activo';
+          } else if (g.assigned_plan_id) {
+            estadoSpan.className = 'badge badge-yellow';
+            estadoSpan.textContent = 'Pendiente activar';
+          } else {
+            estadoSpan.className = 'badge badge-gray';
+            estadoSpan.textContent = 'Sin plan asignado';
+          }
+          estadoTd.appendChild(estadoSpan);
+
+          // Acciones
+          var accionesTd = document.createElement('td');
+          accionesTd.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap';
+
+          if (g.assigned_plan_id && !g.plan_active) {
+            var aprobarBtn = document.createElement('button');
+            aprobarBtn.className = 'btn btn-sm';
+            aprobarBtn.style.cssText = 'background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.35);color:#22C55E;font-size:11px;';
+            aprobarBtn.textContent = '✓ Aprobar';
+            (function(genId, planId, rowTd){
+              aprobarBtn.addEventListener('click', function(){ approvePlan(genId, planId, rowTd); });
+            })(g.id, g.assigned_plan_id, estadoTd);
+            accionesTd.appendChild(aprobarBtn);
+
+            var rechazarBtn = document.createElement('button');
+            rechazarBtn.className = 'btn btn-sm';
+            rechazarBtn.style.cssText = 'background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:11px;';
+            rechazarBtn.textContent = '✕ Rechazar';
+            (function(genId, rowEl){ rechazarBtn.addEventListener('click', function(){ rejectPlan(genId, rowEl); }); })(g.id, tr);
+            accionesTd.appendChild(rechazarBtn);
+          } else if (g.plan_active) {
+            var activoLabel = document.createElement('span');
+            activoLabel.style.cssText = 'color:#22C55E;font-size:12px;font-weight:600';
+            activoLabel.textContent = '✓ Activo en portal';
+            accionesTd.appendChild(activoLabel);
+          } else {
+            var regenBtn = document.createElement('button');
+            regenBtn.className = 'btn btn-sm';
+            regenBtn.style.cssText = 'background:var(--surface-2);border:1px solid var(--border);color:var(--gray);font-size:11px;';
+            regenBtn.textContent = '↺ Regenerar';
+            (function(cid, cname){ regenBtn.addEventListener('click', function(){ generateRisePlan(cid, cname); }); })(g.client_id, g.client_name);
+            accionesTd.appendChild(regenBtn);
+          }
+
+          tr.appendChild(clientTd);
+          tr.appendChild(typeTd);
+          tr.appendChild(modelTd);
+          tr.appendChild(tokenTd);
+          tr.appendChild(dateTd);
+          tr.appendChild(estadoTd);
+          tr.appendChild(accionesTd);
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(function() {
+        if (tbody) {
+          tbody.textContent = '';
+          var row = document.createElement('tr');
+          var cell = document.createElement('td');
+          cell.colSpan = 7;
+          cell.style.cssText = 'text-align:center;color:var(--gray);padding:20px';
+          cell.textContent = 'Error cargando planes';
+          row.appendChild(cell);
+          tbody.appendChild(row);
+        }
+      });
+  }
+
+  /* ─── PLANES IA: APROBAR ─── */
+  function approvePlan(genId, planId, estadoTdEl) {
+    if (!confirm('¿Aprobar y activar este plan? El cliente lo verá en su dashboard inmediatamente.')) return;
+
+    // 1. Marcar generación como approved
+    apiFetch('/admin/ai-generation?id=' + genId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'approved' })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      // 2. Renderizar y activar el plan HTML
+      return apiFetch('/ai/render-plan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan_id: planId })
+      });
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.ok || d.html_path) {
+        if (estadoTdEl) {
+          estadoTdEl.textContent = '';
+          var sp = document.createElement('span');
+          sp.className = 'badge badge-green';
+          sp.textContent = 'Activo';
+          estadoTdEl.appendChild(sp);
+        }
+        // Recargar lista
+        setTimeout(loadPendingPlans, 500);
+      } else {
+        alert('Error al renderizar plan: ' + (d.error || 'desconocido'));
+      }
+    })
+    .catch(function(err) {
+      alert('Error aprobando plan: ' + err.message);
+    });
+  }
+
+  /* ─── PLANES IA: RECHAZAR ─── */
+  function rejectPlan(genId, rowEl) {
+    var notes = prompt('Motivo del rechazo (opcional):');
+    if (notes === null) return; // Cancelado
+
+    apiFetch('/admin/ai-generation?id=' + genId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'rejected', coach_notes: notes || '' })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      if (rowEl) { rowEl.style.opacity = '0.35'; }
+      setTimeout(loadPendingPlans, 500);
+    })
+    .catch(function(err) {
+      alert('Error rechazando plan: ' + err.message);
+    });
   }
 
   /* ─── MODAL INVITAR RISE ─── */
@@ -2106,6 +2455,44 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
       btn.textContent = 'Crear acceso RISE';
     }
   });
+
+  /* ─── INVITACIONES ─── */
+  async function sendInvitation() {
+    var name   = document.getElementById('invName').value.trim();
+    var email  = document.getElementById('invEmail').value.trim();
+    var plan   = document.getElementById('invPlan').value;
+    var gender = document.getElementById('invGender').value;
+    var msg    = document.getElementById('invMsg').value.trim();
+    var fb     = document.getElementById('invFeedback');
+    var btn    = document.getElementById('invSendBtn');
+
+    if (!email) { fb.style.display='block'; fb.style.color='#E31E24'; fb.textContent='⚠ El email es obligatorio.'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    fb.style.display = 'none';
+
+    try {
+      var res  = await apiFetch('/admin/send-invitation', {
+        method: 'POST',
+        body: JSON.stringify({ to_name: name, to_email: email, plan: plan, gender: gender, custom_msg: msg })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || data.message || 'Error');
+      fb.style.display = 'block';
+      fb.style.color = '#22C55E';
+      fb.textContent = '✓ Invitación enviada a ' + email;
+      document.getElementById('invEmail').value = '';
+      document.getElementById('invName').value = '';
+      document.getElementById('invMsg').value = '';
+    } catch(err) {
+      fb.style.display = 'block';
+      fb.style.color = '#E31E24';
+      fb.textContent = '✗ Error: ' + (err.message || 'desconocido');
+    }
+    btn.disabled = false;
+    btn.textContent = '✉ Enviar Invitación';
+  }
 
   /* ─── INIT (called after auth verification) ─── */
   function initApp() {
