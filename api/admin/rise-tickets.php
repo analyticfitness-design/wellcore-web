@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/auth.php';
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'OPTIONS') { http_response_code(204); exit; }
 
-requireRole(['admin', 'superadmin', 'jefe']);
+requireAdminRole('admin', 'superadmin', 'jefe');
 $db = getDB();
 
 // ─── GET: listar tickets RISE ─────────────────────────────────────────────────
