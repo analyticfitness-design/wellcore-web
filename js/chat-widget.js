@@ -328,10 +328,7 @@
       '@keyframes wc-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}',
       '@keyframes wc-slide-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}',
       '@media(max-width:400px){#wc-window{width:calc(100vw - 32px);right:-4px}#wc-chat-root{right:16px;bottom:16px}}',
-      /* WA float: desktop above chat, hidden on mobile to avoid overlap with chat widget */
-      '.wa-float{position:fixed!important;bottom:90px!important;right:24px!important;z-index:1000;width:54px;height:54px;border-radius:50%;background:#25D366;border:3px solid #fff;display:flex;align-items:center;justify-content:center;color:white;font-size:26px;text-decoration:none;transition:transform 0.1s linear}',
-      '.wa-float:hover{transform:scale(1.08)}',
-      '@media(max-width:768px){.wa-float{display:none!important;}#wc-chat-root{right:16px;bottom:16px}}'
+      '@media(max-width:768px){#wc-chat-root{right:16px;bottom:16px}}'
     ].join('');
 
     var style = document.createElement('style');
