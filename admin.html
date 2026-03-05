@@ -2123,7 +2123,17 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
           tr.appendChild(makeTd(levelLabel[p.experience_level] || p.experience_level));
           tr.appendChild(makeTd(placeLabel[p.training_location] || p.training_location));
           tr.appendChild(makeTd(fmtDate(p.start_date), 'font-size:12px'));
-          tr.appendChild(makeTd(fmtDate(p.end_date), 'font-size:12px'));
+          var endTd = makeTd(fmtDate(p.end_date), 'font-size:12px');
+          if (p.end_date) {
+            var endMs = new Date(p.end_date).getTime();
+            if (!isNaN(endMs) && endMs < Date.now()) {
+              var expBadge = document.createElement('span');
+              expBadge.textContent = 'EXPIRADO';
+              expBadge.style.cssText = 'display:inline-block;margin-left:6px;background:rgba(239,68,68,0.15);color:#EF4444;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px;border:1px solid rgba(239,68,68,0.3);vertical-align:middle;';
+              endTd.appendChild(expBadge);
+            }
+          }
+          tr.appendChild(endTd);
           tr.appendChild(statTd);
           tr.appendChild(intakeTd);
           tr.appendChild(planTd);

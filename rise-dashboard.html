@@ -2376,13 +2376,40 @@
             // Usar start_date del status para el contador
             if (status.pending_start || !status.start_date) {
                 // Plan no iniciado aun - mostrar estado pendiente
-                // La pantalla ya muestra heroPending por defecto
             } else if (status.start_date) {
                 programStartDate = new Date(status.start_date);
                 activateProgramCounter(programStartDate);
             }
 
+            // Banner de advertencia 3/2/1 dias antes de expirar
+            if (!status.expired && typeof status.days_remaining === 'number' && status.days_remaining <= 3) {
+                showExpiryWarningBanner(status.days_remaining);
+            }
+
             return status;
+        }
+
+        function showExpiryWarningBanner(daysLeft) {
+            if (document.getElementById('riseExpiryBanner')) return;
+            const banner = document.createElement('div');
+            banner.id = 'riseExpiryBanner';
+            const isUrgent = daysLeft <= 1;
+            banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:8000;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;font-weight:600;'
+                + (isUrgent
+                    ? 'background:#E31E24;color:#fff;'
+                    : 'background:#92400e;color:#fef3c7;border-bottom:2px solid #d97706;');
+            const msg = daysLeft === 0
+                ? '⚠ Tu Reto RISE vence HOY — Renueva para no perder tu acceso'
+                : '⏳ Tu Reto RISE vence en ' + daysLeft + (daysLeft === 1 ? ' día' : ' días') + ' — ¡Renueva ahora!';
+            const left = document.createElement('span');
+            left.textContent = msg;
+            const btn = document.createElement('a');
+            btn.href = 'https://wellcorefitness.com/rise.html';
+            btn.textContent = 'RENOVAR →';
+            btn.style.cssText = 'background:rgba(0,0,0,0.25);color:inherit;text-decoration:none;padding:6px 14px;font-size:11px;letter-spacing:1px;white-space:nowrap;';
+            banner.appendChild(left);
+            banner.appendChild(btn);
+            document.body.insertBefore(banner, document.body.firstChild);
         }
 
         function showExpiredOverlay(status) {
@@ -2403,17 +2430,17 @@
             // Days
             const days = document.createElement('div');
             days.style.cssText = "font-family:'Bebas Neue',sans-serif;font-size:48px;color:#E31E24;margin:16px 0;";
-            days.textContent = '30 / 30';
+            days.textContent = (status && status.days_elapsed ? Math.min(status.days_elapsed, 30) : 30) + ' / 30';
             const daysLabel = document.createElement('div');
             daysLabel.style.cssText = 'color:rgba(255,255,255,0.3);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;';
             daysLabel.textContent = 'Días completados';
             // CTA
             const cta = document.createElement('a');
-            cta.href = 'https://wellcorefitness.com/rise.html';
+            cta.href = 'https://wellcorefitness.com/rise-enroll.html';
             cta.style.cssText = 'display:block;background:#E31E24;color:#fff;text-decoration:none;padding:14px 32px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;';
             cta.textContent = 'RENOVAR RETO RISE →';
             const secondary = document.createElement('a');
-            secondary.href = 'https://wellcorefitness.com/#planes';
+            secondary.href = 'https://wellcorefitness.com/planes.html';
             secondary.style.cssText = 'display:block;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);text-decoration:none;padding:12px 32px;font-size:12px;letter-spacing:1px;text-transform:uppercase;';
             secondary.textContent = 'Ver planes mensuales';
             box.appendChild(logo);

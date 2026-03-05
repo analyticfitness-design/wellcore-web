@@ -82,10 +82,10 @@ define('WELLCORE_PLANS', [
     'rise' => [
         'name'              => 'WellCore RISE 30 Días',
         'display'           => 'RISE',
-        'amount_cop'        => 135000,
-        'amount_in_cents'   => 13500000,
+        'amount_cop'        => 99900,
+        'amount_in_cents'   => 9990000,
         'currency'          => 'COP',
-        'description'       => 'WellCore RISE - Reto 30 Días (~$33 USD)',
+        'description'       => 'WellCore RISE - Reto 30 Días (~$25 USD)',
     ],
 ]);
 

@@ -335,8 +335,8 @@
             <!-- Price Box -->
             <div class="price-box">
                 <div class="price-label">Monto a pagar</div>
-                <div class="price-value">$33</div>
-                <div class="price-subtext">USD / 99,900 COP</div>
+                <div class="price-value">$99.900</div>
+                <div class="price-subtext">COP / ~$25 USD</div>
             </div>
 
             <!-- Trust Badges -->
@@ -394,7 +394,7 @@
                 <!-- Botón de pago -->
                 <button id="risePayBtn" onclick="startRisePayment()" style="width:100%;background:#E31E24;border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;padding:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;">
                     <i class="fas fa-lock" aria-hidden="true"></i>
-                    PAGAR $135.000 COP (~$33 USD)
+                    PAGAR $99.900 COP (~$25 USD)
                 </button>
 
                 <!-- Widget de Wompi se inyecta aquí -->
@@ -475,7 +475,7 @@
                 console.error('[RISE] Wompi error:', err);
                 if (btn) {
                     btn.disabled = false;
-                    btn.textContent = 'PAGAR $135.000 COP (~$33 USD)';
+                    btn.textContent = 'PAGAR $99.900 COP (~$25 USD)';
                 }
                 if (errorAlert) {
                     errorAlert.textContent = 'No se pudo iniciar el pago. Intenta de nuevo o contáctanos.';
