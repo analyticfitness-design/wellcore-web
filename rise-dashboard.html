@@ -808,6 +808,11 @@
                 <i class="fas fa-headset"></i>
                 <span>Soporte</span>
             </a>
+            <a href="#" class="nav-item" data-section="tickets" onclick="showSection('tickets', this); return false;">
+                <i class="fas fa-ticket"></i>
+                <span>Mis Tickets</span>
+                <span id="openTicketsBadge" style="display:none;background:#E31E24;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;font-family:monospace;margin-left:auto;line-height:1.4;">!</span>
+            </a>
 
             <!-- Countdown Widget -->
             <div class="countdown-widget">
@@ -885,6 +890,23 @@
                         <p style="color: var(--gray); font-size: 13px; margin-bottom: 12px;" id="habitsToday">Registra tus hábitos del día</p>
                         <button class="btn-secondary" style="width: 100%;" onclick="showSection('habits', null)">Registrar</button>
                     </div>
+                </div>
+
+                <!-- Ticket Card -->
+                <div class="card" style="margin-top:8px;border:1px solid rgba(227,30,36,0.2);background:linear-gradient(135deg,rgba(227,30,36,0.04),var(--surface));">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <div class="card-title" style="margin:0;display:flex;align-items:center;gap:8px;">
+                            <i class="fas fa-ticket" style="color:var(--red);"></i> Solicitudes al Coach
+                        </div>
+                        <span id="dashTicketBadge" style="display:none;background:rgba(255,184,0,0.15);color:#FFB800;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;font-family:monospace;">0 abiertos</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:12px;margin-bottom:14px;line-height:1.5;">
+                        <i class="fas fa-clock" style="color:#FFB800;margin-right:4px;"></i>
+                        ¿Quieres un ajuste en tu plan, tienes una consulta o necesitas algo especial? Envíale un ticket a tu coach — respuesta garantizada en <strong style="color:#FFB800;">72 horas.</strong>
+                    </p>
+                    <button class="btn-primary" style="width:100%;" onclick="showSection('tickets', null)">
+                        <i class="fas fa-paper-plane"></i> Enviar Solicitud al Coach
+                    </button>
                 </div>
             </section>
 
@@ -1429,6 +1451,74 @@
                 </div>
             </section>
 
+
+            <!-- ═══════════════════ TICKETS RISE ═══════════════════ -->
+            <section class="section" id="tickets">
+                <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
+                    <i class="fas fa-ticket" style="color:var(--red);"></i> Solicitudes al Coach
+                </h1>
+                <p style="color: var(--gray); margin-bottom: 24px;">Pide ajustes, resuelve dudas o haz solicitudes especiales. Tu coach responde en <strong style="color:#FFB800;">máximo 72 horas.</strong></p>
+
+                <!-- Form nuevo ticket -->
+                <div class="card" style="margin-bottom:20px;">
+                    <div class="card-title"><i class="fas fa-plus-circle" style="color:var(--red);margin-right:8px;"></i>Nueva Solicitud</div>
+
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label style="font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:6px;display:block;">Tipo de solicitud</label>
+                        <select id="ticketType" style="width:100%;background:#111113;border:1px solid #2a2a2e;color:#fff;padding:12px;border-radius:8px;font-size:14px;">
+                            <option value="">— Selecciona el tipo —</option>
+                            <option value="ajuste_entrenamiento">Ajuste de entrenamiento</option>
+                            <option value="consulta_nutricion">Consulta de nutricion</option>
+                            <option value="problema_acceso">Problema de acceso / tecnico</option>
+                            <option value="solicitud_especial">Solicitud especial</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label style="font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:6px;display:block;">Descripcion detallada</label>
+                        <textarea id="ticketDesc" rows="4" placeholder="Describe con detalle tu solicitud (minimo 20 caracteres)..." style="width:100%;background:#111113;border:1px solid #2a2a2e;color:#fff;padding:12px;border-radius:8px;font-size:14px;resize:vertical;font-family:inherit;box-sizing:border-box;" oninput="ticketDescCount(this)"></textarea>
+                        <div id="ticketDescCounter" style="font-size:11px;color:var(--gray);text-align:right;margin-top:4px;font-family:'JetBrains Mono',monospace;">0 / 20 min</div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:16px;">
+                        <label style="font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:6px;display:block;">Prioridad</label>
+                        <div style="display:flex;gap:10px;">
+                            <label style="flex:1;display:flex;align-items:center;gap:8px;background:#111113;border:1px solid #2a2a2e;border-radius:8px;padding:10px 12px;cursor:pointer;font-size:13px;">
+                                <input type="radio" name="ticketPri" value="normal" checked style="accent-color:var(--red);"> Normal
+                            </label>
+                            <label style="flex:1;display:flex;align-items:center;gap:8px;background:#111113;border:1px solid rgba(255,107,53,0.4);border-radius:8px;padding:10px 12px;cursor:pointer;font-size:13px;">
+                                <input type="radio" name="ticketPri" value="alta" style="accent-color:#FF6B35;"> <span style="color:#FF6B35;">Alta prioridad</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="ticketError" style="display:none;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.3);color:#E31E24;padding:10px 14px;border-radius:6px;font-size:12px;margin-bottom:12px;font-family:'JetBrains Mono',monospace;"></div>
+
+                    <button class="btn-primary" style="width:100%;" id="sendTicketBtn" onclick="sendRiseTicket()">
+                        <i class="fas fa-paper-plane"></i> Enviar Solicitud al Coach
+                    </button>
+                    <div style="margin-top:10px;text-align:center;font-size:11px;color:var(--gray);">
+                        <i class="fas fa-shield-halved" style="color:#22C55E;margin-right:4px;"></i>
+                        Solo tu coach puede ver esta solicitud
+                        <span style="margin:0 8px;color:#333;">·</span>
+                        <i class="fas fa-clock" style="color:#FFB800;margin-right:4px;"></i>
+                        Respuesta en 72h
+                    </div>
+                </div>
+
+                <!-- Historial -->
+                <div class="card">
+                    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;">
+                        <span><i class="fas fa-list" style="color:var(--red);margin-right:6px;"></i>Historial de Solicitudes</span>
+                        <button onclick="loadMyTickets()" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:12px;padding:4px 8px;border-radius:4px;"><i class="fas fa-rotate-right"></i></button>
+                    </div>
+                    <div id="myTicketsList" style="margin-top:12px;">
+                        <p style="color:var(--gray);font-size:13px;text-align:center;padding:20px 0;">Cargando...</p>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
@@ -1618,6 +1708,134 @@
             }
         }
 
+        // ─── TICKETS RISE ─────────────────────────────
+        var TICKET_TYPE_LABELS = {
+            ajuste_entrenamiento: 'Ajuste de entrenamiento',
+            consulta_nutricion:   'Consulta de nutricion',
+            problema_acceso:      'Problema de acceso',
+            solicitud_especial:   'Solicitud especial',
+            otro:                 'Otro'
+        };
+
+        function escHtml(s) {
+            return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+
+        function ticketDescCount(el) {
+            var n = el.value.length;
+            var c = document.getElementById('ticketDescCounter');
+            if (c) { c.textContent = n + (n < 20 ? ' / 20 min' : ' OK'); c.style.color = n >= 20 ? '#22C55E' : 'var(--gray)'; }
+        }
+
+        async function sendRiseTicket() {
+            var type  = document.getElementById('ticketType').value;
+            var desc  = (document.getElementById('ticketDesc').value || '').trim();
+            var pri   = document.querySelector('input[name="ticketPri"]:checked');
+            var errEl = document.getElementById('ticketError');
+            var btn   = document.getElementById('sendTicketBtn');
+            errEl.style.display = 'none';
+            if (!type)          { errEl.textContent = 'Selecciona el tipo de solicitud'; errEl.style.display = 'block'; return; }
+            if (desc.length < 20) { errEl.textContent = 'Descripcion minimo 20 caracteres'; errEl.style.display = 'block'; return; }
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            var token = localStorage.getItem('rise_token') || localStorage.getItem('wc_token') || '';
+            try {
+                var r = await fetch('/api/rise/ticket.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ ticket_type: type, description: desc, priority: pri ? pri.value : 'normal' })
+                });
+                var d = await r.json();
+                if (d.ok) {
+                    showToast('Solicitud enviada. Tu coach responde en 72h.');
+                    document.getElementById('ticketType').value = '';
+                    document.getElementById('ticketDesc').value = '';
+                    ticketDescCount(document.getElementById('ticketDesc'));
+                    loadMyTickets();
+                } else {
+                    errEl.textContent = escHtml(d.error || 'Error al enviar'); errEl.style.display = 'block';
+                }
+            } catch(e) {
+                errEl.textContent = 'Error de red. Intenta de nuevo.'; errEl.style.display = 'block';
+            }
+            btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Solicitud al Coach';
+        }
+
+        async function loadMyTickets() {
+            var el = document.getElementById('myTicketsList');
+            if (!el) return;
+            var token = localStorage.getItem('rise_token') || localStorage.getItem('wc_token') || '';
+            try {
+                var r = await fetch('/api/rise/ticket.php', { headers: { 'Authorization': 'Bearer ' + token } });
+                var d = await r.json();
+                if (!d.ok || !d.tickets || d.tickets.length === 0) {
+                    el.innerHTML = '<p style="color:var(--gray);font-size:13px;text-align:center;padding:20px 0;">Sin solicitudes registradas aun.</p>';
+                    document.getElementById('openTicketsBadge') && (document.getElementById('openTicketsBadge').style.display = 'none');
+                    return;
+                }
+                var sc = { open:'#FFB800', in_progress:'#00D9FF', closed:'#22C55E' };
+                var sl = { open:'Abierto', in_progress:'En proceso', closed:'Cerrado' };
+                var rows = document.createDocumentFragment();
+                var openN = 0;
+                d.tickets.forEach(function(t) {
+                    var div = document.createElement('div');
+                    div.style.cssText = 'padding:14px;border:1px solid #2a2a2e;border-radius:10px;margin-bottom:10px;';
+                    var color  = sc[t.status] || '#888';
+                    var label  = sl[t.status] || t.status;
+                    var dl     = new Date(t.deadline), now = new Date();
+                    var hleft  = Math.max(0, Math.round((dl - now) / 3600000));
+                    if (t.status !== 'closed') openN++;
+                    // Header row
+                    var hdr = document.createElement('div');
+                    hdr.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;';
+                    var title = document.createElement('div');
+                    title.style.cssText = 'font-size:13px;font-weight:600;color:#fff;flex:1;';
+                    title.textContent = TICKET_TYPE_LABELS[t.ticket_type] || t.ticket_type;
+                    var badge = document.createElement('span');
+                    badge.style.cssText = 'background:' + color + '22;color:' + color + ';font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px;font-family:monospace;white-space:nowrap;';
+                    badge.textContent = label;
+                    hdr.appendChild(title); hdr.appendChild(badge); div.appendChild(hdr);
+                    // Description
+                    var desc = document.createElement('p');
+                    desc.style.cssText = 'color:var(--gray);font-size:12px;margin:0 0 6px;line-height:1.5;';
+                    desc.textContent = t.description;
+                    div.appendChild(desc);
+                    // Deadline
+                    if (t.status !== 'closed') {
+                        var dl2 = document.createElement('div');
+                        dl2.style.cssText = 'font-size:11px;color:' + (hleft < 12 ? '#E31E24' : 'var(--gray)') + ';margin-bottom:4px;';
+                        dl2.textContent = hleft > 0 ? ('Tiempo restante: ' + hleft + 'h') : 'Plazo vencido';
+                        div.appendChild(dl2);
+                    }
+                    // Response
+                    if (t.response) {
+                        var resp = document.createElement('div');
+                        resp.style.cssText = 'margin-top:10px;padding:10px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:6px;font-size:12px;line-height:1.6;';
+                        var rlabel = document.createElement('span');
+                        rlabel.style.cssText = 'color:#22C55E;font-size:10px;font-family:monospace;letter-spacing:1px;display:block;margin-bottom:4px;font-weight:700;';
+                        rlabel.textContent = 'RESPUESTA DEL COACH';
+                        var rtext = document.createElement('span');
+                        rtext.textContent = t.response;
+                        resp.appendChild(rlabel); resp.appendChild(rtext); div.appendChild(resp);
+                    }
+                    // Footer
+                    var foot = document.createElement('div');
+                    foot.style.cssText = 'font-size:10px;color:#555;margin-top:6px;font-family:monospace;';
+                    foot.textContent = t.id + ' · ' + (t.created_at || '').substring(0,10);
+                    div.appendChild(foot);
+                    rows.appendChild(div);
+                });
+                el.innerHTML = '';
+                el.appendChild(rows);
+                // Badges
+                var b1 = document.getElementById('openTicketsBadge');
+                if (b1) { b1.style.display = openN > 0 ? 'inline' : 'none'; }
+                var b2 = document.getElementById('dashTicketBadge');
+                if (b2) { b2.textContent = openN + ' abierto' + (openN !== 1 ? 's' : ''); b2.style.display = openN > 0 ? 'inline' : 'none'; }
+            } catch(e) {
+                el.innerHTML = '<p style="color:var(--gray);font-size:13px;">Error cargando solicitudes.</p>';
+            }
+        }
+
         // ─── TOGGLE GUÍA DE MEDICIÓN ─────────────
         function toggleMeasGuide(header) {
             var content = document.getElementById('measGuideContent');
@@ -1690,6 +1908,7 @@
 
         // ─── NAVIGATION ──────────────────────────
         function showSection(sectionId, triggerEl) {
+            if (sectionId === 'tickets') { setTimeout(loadMyTickets, 150); }
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(sectionId);
             if (target) target.classList.add('active');

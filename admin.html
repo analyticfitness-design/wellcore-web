@@ -1422,6 +1422,38 @@
           </div>
         </div>
 
+        <!-- TICKETS RISE -->
+        <div class="card" style="margin-top:16px;" id="riseTicketsCard">
+          <div class="card-header">
+            <span class="card-title">Tickets de Clientes RISE</span>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span class="badge badge-red" id="riseTicketsOpenBadge" style="display:none;">0 abiertos</span>
+              <select id="riseTicketFilter" onchange="loadRiseTickets()" style="background:#111;border:1px solid #333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;font-family:monospace;">
+                <option value="all">Todos</option>
+                <option value="open">Abiertos</option>
+                <option value="in_progress">En proceso</option>
+                <option value="closed">Cerrados</option>
+              </select>
+              <button onclick="loadRiseTickets()" style="background:none;border:1px solid #333;color:var(--gray);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:11px;">Actualizar</button>
+            </div>
+          </div>
+          <div id="riseTicketsContainer" style="margin-top:12px;">
+            <p style="color:var(--gray);text-align:center;padding:20px 0;font-size:13px;">Cargando tickets...</p>
+          </div>
+        </div>
+
+        <div id="ticketReplyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9500;align-items:center;justify-content:center;padding:20px;">
+          <div style="background:#111113;border:1px solid #2a2a2e;border-radius:12px;padding:24px;max-width:520px;width:100%;">
+            <div style="font-family:monospace;font-size:11px;letter-spacing:2px;color:#E31E24;margin-bottom:6px;text-transform:uppercase;">Responder Ticket</div>
+            <div id="ticketReplyInfo" style="font-size:13px;color:#aaa;margin-bottom:16px;line-height:1.5;"></div>
+            <textarea id="ticketReplyText" rows="4" placeholder="Escribe tu respuesta al cliente..." style="width:100%;background:#0a0a0a;border:1px solid #333;color:#fff;padding:12px;border-radius:8px;font-size:13px;resize:vertical;font-family:inherit;box-sizing:border-box;margin-bottom:12px;"></textarea>
+            <div style="display:flex;gap:10px;">
+              <button onclick="submitTicketReply()" style="flex:2;padding:10px;background:#E31E24;border:none;color:#fff;font-weight:700;border-radius:6px;cursor:pointer;font-size:13px;">Enviar Respuesta</button>
+              <button onclick="document.getElementById('ticketReplyModal').style.display='none'" style="flex:1;padding:10px;background:#1a1a1d;border:1px solid #333;color:#aaa;border-radius:6px;cursor:pointer;font-size:13px;">Cancelar</button>
+            </div>
+          </div>
+        </div>
+
       </div>
       <!-- ─────────────────────────────
            6. INVITACIONES
@@ -2036,6 +2068,106 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
   }
 
   /* ─── RISE: LOAD ENROLLMENTS ─── */
+
+        // ─── RISE TICKETS ADMIN ───────────────────────────────────────────
+        var TKTYPE = {
+            ajuste_entrenamiento:'Ajuste entrenamiento',consulta_nutricion:'Consulta nutricion',
+            problema_acceso:'Problema acceso',solicitud_especial:'Solicitud especial',
+            rutina_nueva:'Rutina nueva',cambio_rutina:'Cambio rutina',
+            nutricion:'Nutricion',habitos:'Habitos',otro:'Otro'
+        };
+        var _rtkId = null;
+        function mkEl(tag,styles,txt){var e=document.createElement(tag);if(styles)e.style.cssText=styles;if(txt!==undefined)e.textContent=txt;return e;}
+        function mkBadge(text,bg,fg){return mkEl('span','background:'+bg+';color:'+fg+';font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px;font-family:monospace;',text);}
+
+        async function loadRiseTickets() {
+            var el = document.getElementById('riseTicketsContainer');
+            if (!el) return;
+            var filter = (document.getElementById('riseTicketFilter')||{value:'all'}).value;
+            var token = localStorage.getItem('wc_token')||'';
+            try {
+                var r = await fetch('/api/admin/rise-tickets.php?status='+filter,{headers:{'Authorization':'Bearer '+token}});
+                var d = await r.json();
+                while(el.firstChild) el.removeChild(el.firstChild);
+                if (!d.ok) { el.appendChild(mkEl('p','color:#E31E24;text-align:center;padding:20px;','Error al cargar')); return; }
+                var b = document.getElementById('riseTicketsOpenBadge');
+                if (b&&d.stats) { var n=parseInt(d.stats.open||0)+parseInt(d.stats.in_progress||0); b.textContent=n+' abierto'+(n!==1?'s':''); b.style.display=n>0?'inline':'none'; }
+                if (!d.tickets||!d.tickets.length) { el.appendChild(mkEl('p','color:var(--gray);text-align:center;padding:20px;font-size:13px;','Sin tickets.')); return; }
+                var sc={open:'#FFB800',in_progress:'#00D9FF',closed:'#22C55E'};
+                var sl={open:'Abierto',in_progress:'En proceso',closed:'Cerrado'};
+                var frag = document.createDocumentFragment();
+                d.tickets.forEach(function(t) {
+                    var row=mkEl('div','padding:14px;border:1px solid #2a2a2e;border-radius:10px;margin-bottom:10px;background:#0d0d0f;');
+                    var hdr=mkEl('div','display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;flex-wrap:wrap;');
+                    var left=mkEl('div','');
+                    left.appendChild(mkEl('div','font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;',TKTYPE[t.ticket_type]||t.ticket_type));
+                    left.appendChild(mkEl('div','font-size:11px;color:var(--gray);font-family:monospace;',(t.client_name||'Cliente')+' · '+(t.created_at||'').substring(0,10)));
+                    var bgs=mkEl('div','display:flex;gap:6px;align-items:center;flex-shrink:0;');
+                    if(t.priority==='alta') bgs.appendChild(mkBadge('ALTA','rgba(255,107,53,0.15)','#FF6B35'));
+                    bgs.appendChild(mkBadge(sl[t.status]||t.status,(sc[t.status]||'#666')+'22',sc[t.status]||'#666'));
+                    hdr.appendChild(left); hdr.appendChild(bgs); row.appendChild(hdr);
+                    row.appendChild(mkEl('p','color:#aaa;font-size:12px;margin:0 0 8px;line-height:1.5;',t.description));
+                    if(t.status!=='closed'){
+                        var hl=parseInt(t.hours_left||0);
+                        row.appendChild(mkEl('div','font-size:11px;color:'+(hl<0?'#E31E24':(hl<12?'#FF6B35':'#666'))+';margin-bottom:8px;',hl>0?('Vence en '+hl+'h'):'VENCIDO'));
+                    }
+                    if(t.response){
+                        var rb=mkEl('div','background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:6px;padding:10px;font-size:12px;margin-bottom:8px;');
+                        rb.appendChild(mkEl('div','color:#22C55E;font-size:9px;font-family:monospace;font-weight:700;margin-bottom:4px;','RESPONDIDO'));
+                        rb.appendChild(mkEl('span','color:#ccc;',t.response));
+                        row.appendChild(rb);
+                    }
+                    if(t.status!=='closed'){
+                        var acts=mkEl('div','display:flex;gap:8px;margin-top:4px;');
+                        var br=mkEl('button','flex:2;padding:8px;background:#E31E24;border:none;color:#fff;font-weight:700;border-radius:6px;cursor:pointer;font-size:12px;','Responder');
+                        (function(tid,ttype,tcl){br.onclick=function(){openTicketReply(tid,ttype,tcl);};})(t.id,t.ticket_type,t.client_name);
+                        var bp=mkEl('button','flex:1;padding:8px;background:#1a1a1d;border:1px solid #333;color:#00D9FF;border-radius:6px;cursor:pointer;font-size:12px;','En proceso');
+                        (function(tid){bp.onclick=function(){updateTicketStatus(tid,'in_progress');};})(t.id);
+                        acts.appendChild(br); acts.appendChild(bp); row.appendChild(acts);
+                    }
+                    row.appendChild(mkEl('div','font-size:10px;color:#444;margin-top:8px;font-family:monospace;',t.id));
+                    frag.appendChild(row);
+                });
+                el.appendChild(frag);
+            } catch(e){
+                while(el.firstChild) el.removeChild(el.firstChild);
+                el.appendChild(mkEl('p','color:#E31E24;text-align:center;padding:20px;','Error de red.'));
+            }
+        }
+
+        function openTicketReply(tid,ttype,tcl){
+            _rtkId=tid;
+            var info=document.getElementById('ticketReplyInfo');
+            if(info) info.textContent=(TKTYPE[ttype]||ttype)+' — '+(tcl||'');
+            var tx=document.getElementById('ticketReplyText'); if(tx) tx.value='';
+            document.getElementById('ticketReplyModal').style.display='flex';
+        }
+        async function submitTicketReply(){
+            if(!_rtkId) return;
+            var text=(document.getElementById('ticketReplyText').value||'').trim();
+            if(text.length<5){alert('Escribe una respuesta');return;}
+            var token=localStorage.getItem('wc_token')||'';
+            try{
+                var r=await fetch('/api/admin/rise-tickets.php',{
+                    method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+                    body:JSON.stringify({ticket_id:_rtkId,response:text,status:'closed'})
+                });
+                var d=await r.json();
+                if(d.ok){document.getElementById('ticketReplyModal').style.display='none';loadRiseTickets();}
+                else alert(d.error||'Error');
+            }catch(e){alert('Error de red');}
+        }
+        async function updateTicketStatus(tid,status){
+            var token=localStorage.getItem('wc_token')||'';
+            try{
+                await fetch('/api/admin/rise-tickets.php',{
+                    method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+                    body:JSON.stringify({ticket_id:tid,status:status})
+                });
+                loadRiseTickets();
+            }catch(e){}
+        }
+
   function loadRiseData() {
     var levelLabel = { principiante: 'Principiante', intermedio: 'Intermedio', avanzado: 'Avanzado' };
     var placeLabel = { gym: 'Gym', home: 'Casa', hybrid: 'Hibrido' };
@@ -2510,6 +2642,7 @@ Esta accion borrara todos sus datos, entrenamientos y tokens. No se puede deshac
     renderPagos();
     loadAdminData();
     loadRiseData();
+    setTimeout(loadRiseTickets, 800);
   }
 </script>
 
