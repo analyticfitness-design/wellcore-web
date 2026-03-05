@@ -412,20 +412,48 @@
             .grid-3 { grid-template-columns: repeat(2, 1fr); }
         }
 
+        /* ──────── BOTTOM NAV (app mobile) ──────── */
+        .bottom-nav {
+            display: none;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            height: 64px; z-index: 300;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+        }
+        .bottom-nav-inner {
+            display: flex; align-items: stretch; height: 100%;
+        }
+        .bnav-item {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 3px; background: none; border: none;
+            color: var(--gray); font-size: .6rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: .04em; cursor: pointer;
+            transition: color 0.18s ease; padding: 0 2px;
+            min-width: 0; -webkit-tap-highlight-color: transparent;
+        }
+        .bnav-item i { font-size: 1.1rem; line-height: 1; }
+        .bnav-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .bnav-item.active { color: var(--red); }
+        .bnav-item.active i { filter: drop-shadow(0 0 6px rgba(200,16,46,0.5)); }
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease-out;
                 width: 70vw;
             }
-
             .sidebar.show { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 20px; }
-            .hamburger-menu { display: block; }
+            .main-content { margin-left: 0; padding: 16px 14px 80px; }
+            .hamburger-menu { display: none; }
+            .bottom-nav { display: flex; }
             .topbar-search { display: none; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
-
-            button:not(.topbar-user-menu-toggle):not(.hamburger-menu) { width: 100%; }
+            button:not(.topbar-user-menu-toggle) { min-height: 44px; }
         }
 
         /* ──────── SECTION TRANSITIONS ──────── */
@@ -1952,6 +1980,41 @@
                 }
             });
         }
+    </script>
+
+    <!-- BOTTOM NAV (mobile app) -->
+    <nav class="bottom-nav" id="riseBottomNav">
+        <div class="bottom-nav-inner">
+            <button class="bnav-item active" id="bnav-home" onclick="showSection('home');setRiseBnav('home')">
+                <i class="fas fa-fire"></i><span>Inicio</span>
+            </button>
+            <button class="bnav-item" id="bnav-tracking" onclick="showSection('tracking');setRiseBnav('tracking')">
+                <i class="fas fa-camera"></i><span>Registro</span>
+            </button>
+            <button class="bnav-item" id="bnav-plan" onclick="showSection('plan');setRiseBnav('plan')">
+                <i class="fas fa-dumbbell"></i><span>Plan</span>
+            </button>
+            <button class="bnav-item" id="bnav-progress" onclick="showSection('progress');setRiseBnav('progress')">
+                <i class="fas fa-chart-line"></i><span>Progreso</span>
+            </button>
+            <button class="bnav-item" id="bnav-support" onclick="showSection('support');setRiseBnav('support')">
+                <i class="fas fa-headset"></i><span>Soporte</span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        function setRiseBnav(id) {
+            document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+            const btn = document.getElementById('bnav-' + id);
+            if (btn) btn.classList.add('active');
+        }
+        // Sync bottom nav when sidebar nav is clicked
+        document.querySelectorAll('.nav-item[data-section], .nav-sub-item[data-section]').forEach(function(el) {
+            el.addEventListener('click', function() {
+                setRiseBnav(el.dataset.section);
+            });
+        });
     </script>
 </body>
 </html>
