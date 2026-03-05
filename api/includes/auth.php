@@ -145,12 +145,11 @@ function requireSetupAuth(): void {
         }
     }
 
-    // GET secret for migration endpoints — DISABLED (v3 migrations complete)
-    // To re-enable temporarily: uncomment the block below, push, run migration, re-comment
-    // $secret = $_GET['secret'] ?? '';
-    // if ($secret && in_array($secret, ['WC_MIGRATE_V2_2026', 'WC_MIGRATE_V3_2026', 'WELLCORE_SETUP_2026', 'WC_AI_SETUP_2026', 'WC_AI_V3_2026', 'WC_WEBHOOK_2026', 'WC_COACH_MIGRATE_2026', 'WC_SHOP_SEED_V3_2026'], true)) {
-    //     return;
-    // }
+    // GET secret for migration endpoints — ENABLED TEMPORARILY for RISE tickets migration
+    $secret = $_GET['secret'] ?? '';
+    if ($secret && in_array($secret, ['WC_MIGRATE_V2_2026', 'WC_MIGRATE_V3_2026', 'WELLCORE_SETUP_2026', 'WC_AI_SETUP_2026', 'WC_AI_V3_2026', 'WC_WEBHOOK_2026', 'WC_COACH_MIGRATE_2026', 'WC_SHOP_SEED_V3_2026', 'WC_RISE_TICKETS_2026'], true)) {
+        return;
+    }
 
     http_response_code(401);
     echo json_encode(['error' => 'Admin authentication required for setup endpoints']);
