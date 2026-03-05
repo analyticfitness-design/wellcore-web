@@ -511,7 +511,7 @@
             }
             .sidebar.show { transform: translateX(0); }
             .main-content { margin-left: 0; padding: 16px 14px 74px; }
-            .hamburger-menu { display: none; }
+            .hamburger-menu { display: flex; align-items: center; justify-content: center; }
             .bottom-nav { display: flex; }
             .topbar-user-name-inline { display: none; }
             .topbar-logout-label { display: none; }
@@ -732,6 +732,9 @@
     <!-- Topbar -->
     <div class="topbar">
         <div class="topbar-content">
+            <button id="hamburgerBtn" class="hamburger-menu" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
             <a href="/" class="topbar-logo">
                 <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness">
             </a>
