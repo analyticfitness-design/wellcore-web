@@ -882,6 +882,14 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .faq-q:hover{background:rgba(255,255,255,0.02)}
 .faq-q span{color:var(--gray);transition:transform var(--transition);flex-shrink:0}
 .faq-q.open span{color:var(--red)}
+.faq-icon{
+  color:var(--gray);font-size:1rem;flex-shrink:0;
+  transition:transform 0.22s ease, color 0.18s ease;
+}
+.faq-q.open .faq-icon{
+  color:var(--red);
+  transform:rotate(180deg);
+}
 .faq-a{
   display:none;padding:0 24px 18px;
   font-size:.84rem;color:var(--gray);
@@ -1682,7 +1690,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span>Cada cuanto se actualiza mi plan?</span>
-            <span style="color:var(--gray);font-weight:700">+</span>
+            <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
             Tu plan se actualiza cada 4 semanas o antes si hay cambios significativos en tu progreso. Los clientes Elite reciben ajustes semanales basados en los check-ins. Siempre recibirás una notificación cuando tu plan sea actualizado.
@@ -1691,7 +1699,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span>Como envio fotos de progreso?</span>
-            <span style="color:var(--gray);font-weight:700">+</span>
+            <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
             Puedes enviar tus fotos de progreso directamente por WhatsApp a tu coach o por email a info@wellcorefitness.com. Las fotos deben ser tomadas en las mismas condiciones: misma hora (preferiblemente en ayunas), mismo angulo y ropa similar para comparacion objetiva.
@@ -1700,7 +1708,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span>Puedo cambiar de plan en cualquier momento?</span>
-            <span style="color:var(--gray);font-weight:700">+</span>
+            <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
             Si, puedes hacer upgrade a un plan superior en cualquier momento. El cambio se aplica de forma inmediata y solo pagas la diferencia proporcional del periodo restante. Para downgrades, el cambio aplica al siguiente periodo de facturacion. Contacta a tu coach o visita la seccion de pagos.
@@ -1709,7 +1717,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span>El plan incluye suplementacion?</span>
-            <span style="color:var(--gray);font-weight:700">+</span>
+            <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
             El plan incluye recomendaciones de suplementacion basadas en tu objetivo y necesidades, pero no incluye los suplementos fisicamente. Las recomendaciones son opcionales y siempre planteadas como herramientas complementarias, no esenciales. La base siempre es la alimentacion real.
@@ -1718,7 +1726,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span>Que pasa si me lesiono?</span>
-            <span style="color:var(--gray);font-weight:700">+</span>
+            <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
             Si te lesionas, contacta inmediatamente a tu coach. Adaptaremos tu programa de entrenamiento segun el tipo y grado de lesion, enfocando en lo que si puedes trabajar sin comprometer la recuperacion. Dependiendo de la gravedad, podemos pausar temporalmente tu plan sin costo adicional.
@@ -1727,7 +1735,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span>Como funciona el check-in semanal?</span>
-            <span style="color:var(--gray);font-weight:700">+</span>
+            <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
             El check-in semanal es exclusivo del Plan Elite. Cada semana completas un formulario en este portal con tu bienestar general, dias entrenados, adherencia nutricional y comentarios. Tu coach revisa la informacion y ajusta tu programa si es necesario. Es la herramienta mas poderosa para optimizar tus resultados.

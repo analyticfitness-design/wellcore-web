@@ -852,9 +852,9 @@
                 <p style="color: var(--gray); margin-bottom: 30px;">Tu programa personalizado de entrenamiento para los 30 días</p>
 
                 <!-- Estado cargando -->
-                <div id="trainingLoading" class="card" style="text-align: center; padding: 40px;">
+                <div id="trainingLoading" class="card" style="text-align: center; padding: 40px; display: none;">
                     <i class="fas fa-spinner fa-spin" style="color: var(--red); font-size: 24px; margin-bottom: 15px; display: block;"></i>
-                    <span style="color: var(--gray); font-size: 14px;">Cargando tu programa personalizado...</span>
+                    <span style="color: var(--gray); font-size: 14px;">Verificando tu programa...</span>
                 </div>
 
                 <!-- Plan cargado desde API -->
@@ -863,11 +863,20 @@
                 </div>
 
                 <!-- Fallback: sin plan asignado aún -->
-                <div id="trainingEmpty" class="card" style="display: none; text-align: center; padding: 40px;">
-                    <i class="fas fa-clock" style="color: var(--gray); font-size: 36px; margin-bottom: 15px; display: block;"></i>
-                    <div style="color: var(--white); font-weight: 600; margin-bottom: 8px;">Tu programa está en preparación</div>
-                    <p style="color: var(--gray); font-size: 13px;">Tu coach está personalizando tu plan. Lo verás aquí en las próximas horas. ¿Tienes dudas? Escríbenos por soporte.</p>
-                    <button class="btn-secondary" style="width: 100%; margin-top: 20px;" onclick="showSection('support', null)">
+                <div id="trainingEmpty" class="card" style="display: block; text-align: center; padding: 36px 24px;">
+                    <div style="font-size: 2.8rem; margin-bottom: 14px;">⏳</div>
+                    <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:.06em; color:var(--white); margin-bottom: 10px;">
+                        Tu programa está en camino
+                    </div>
+                    <p style="color: var(--gray); font-size: 13px; line-height: 1.65; margin-bottom: 18px;">
+                        Tu coach está diseñando tu plan personalizado.
+                        <strong style="color:var(--white);">En las próximas horas lo tendrás listo.</strong>
+                    </p>
+                    <div style="background:rgba(200,16,46,0.06);border:1px solid rgba(200,16,46,0.2);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;text-align:left;margin-bottom:18px;">
+                        <i class="fas fa-fire-flame-curved" style="color:var(--red);font-size:1.2rem;flex-shrink:0;"></i>
+                        <span style="color:var(--gray);font-size:12px;">Mientras tanto puedes registrar tu <strong style="color:var(--white);">tracking diario</strong> y tus <strong style="color:var(--white);">hábitos</strong> del día.</span>
+                    </div>
+                    <button class="btn-secondary" style="width: 100%;" onclick="showSection('support', null)">
                         <i class="fas fa-headset"></i> Contactar Soporte
                     </button>
                 </div>
@@ -1331,12 +1340,18 @@
             const containerEl = document.getElementById(type + 'PlanContainer');
             const emptyEl     = document.getElementById(type + 'Empty');
 
+            // Show loader briefly
+            if (loadingEl) loadingEl.style.display = 'block';
+            if (emptyEl) emptyEl.style.display = 'none';
+
             const data = await api('GET', '/plans/get.php?type=' + type, null);
             if (loadingEl) loadingEl.style.display = 'none';
 
-            if (!data) { if(emptyEl) emptyEl.style.display='block'; return; }
+            if (!data || !data.plans) { if(emptyEl) emptyEl.style.display='block'; return; }
 
             const plans = (data.plans || []);
+            if (plans.length === 0) { if(emptyEl) emptyEl.style.display='block'; return; }
+
             if (plans.length > 0 && plans[0].content) {
                 // Si es el plan de entrenamiento, activar el contador
                 if (type === 'training' && plans[0].valid_from) {
@@ -1475,6 +1490,9 @@
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(sectionId);
             if (target) target.classList.add('active');
+
+            // Sync bottom nav always
+            if (typeof setRiseBnav === 'function') setRiseBnav(sectionId);
 
             document.querySelectorAll('.nav-item, .nav-sub-item').forEach(el => el.classList.remove('active'));
             if (triggerEl) {
