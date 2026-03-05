@@ -1581,7 +1581,8 @@
             }
 
             // Hide search results on navigate
-            document.getElementById('searchResults').classList.remove('show');
+            const _sr0 = document.getElementById('searchResults');
+            if (_sr0) _sr0.classList.remove('show');
         }
 
         function toggleSubMenu(itemsId, toggleEl) {
@@ -1606,8 +1607,10 @@
         // document.getElementById('userMenuBtn') no longer exists
 
         document.addEventListener('click', () => {
-            document.getElementById('userDropdown').classList.remove('show');
-            document.getElementById('searchResults').classList.remove('show');
+            const _ud = document.getElementById('userDropdown');
+            const _sr = document.getElementById('searchResults');
+            if (_ud) _ud.classList.remove('show');
+            if (_sr) _sr.classList.remove('show');
         });
 
         function logout() {
@@ -1631,7 +1634,7 @@
         const searchInput   = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
 
-        searchInput.addEventListener('input', (e) => {
+        if (searchInput && searchResults) { searchInput.addEventListener('input', (e) => {
             e.stopPropagation();
             const q = searchInput.value.trim().toLowerCase();
             searchResults.textContent = '';
@@ -1659,7 +1662,7 @@
             searchResults.classList.add('show');
         });
 
-        searchInput.addEventListener('click', (e) => e.stopPropagation());
+        searchInput.addEventListener('click', (e) => e.stopPropagation()); } // end if searchInput
 
         // ─── PHASE 5: COUNTDOWN (real-time) ──────
         function activateProgramCounter(startDate) {
