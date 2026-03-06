@@ -11,7 +11,7 @@
 
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
-set_time_limit(300);
+set_time_limit(600);
 
 $genId    = (int) ($argv[1] ?? 0);
 $clientId = (int) ($argv[2] ?? 0);
