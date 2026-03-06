@@ -1938,23 +1938,23 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
         <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
           <!-- Frente -->
-          <div class="photo-upload-slot" id="slot-frente" onclick="document.getElementById('file-frente').click()">
-            <button type="button" class="photo-remove-btn" onclick="event.stopPropagation();clearPhotoSlot('frente')">X</button>
-            <input type="file" id="file-frente" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="previewPhoto(this,'frente')">
+          <div class="photo-upload-slot" id="slot-frente" style="position:relative">
+            <button type="button" class="photo-remove-btn" onclick="event.stopPropagation();clearPhotoSlot('frente')" style="z-index:2">X</button>
+            <input type="file" id="file-frente" accept="image/jpeg,image/png,image/webp" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1" onchange="previewPhoto(this,'frente')">
             <div class="photo-slot-preview" id="preview-frente"></div>
             <div class="photo-slot-label">FRENTE</div>
           </div>
           <!-- Perfil -->
-          <div class="photo-upload-slot" id="slot-perfil" onclick="document.getElementById('file-perfil').click()">
-            <button type="button" class="photo-remove-btn" onclick="event.stopPropagation();clearPhotoSlot('perfil')">X</button>
-            <input type="file" id="file-perfil" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="previewPhoto(this,'perfil')">
+          <div class="photo-upload-slot" id="slot-perfil" style="position:relative">
+            <button type="button" class="photo-remove-btn" onclick="event.stopPropagation();clearPhotoSlot('perfil')" style="z-index:2">X</button>
+            <input type="file" id="file-perfil" accept="image/jpeg,image/png,image/webp" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1" onchange="previewPhoto(this,'perfil')">
             <div class="photo-slot-preview" id="preview-perfil"></div>
             <div class="photo-slot-label">PERFIL</div>
           </div>
           <!-- Espalda -->
-          <div class="photo-upload-slot" id="slot-espalda" onclick="document.getElementById('file-espalda').click()">
-            <button type="button" class="photo-remove-btn" onclick="event.stopPropagation();clearPhotoSlot('espalda')">X</button>
-            <input type="file" id="file-espalda" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="previewPhoto(this,'espalda')">
+          <div class="photo-upload-slot" id="slot-espalda" style="position:relative">
+            <button type="button" class="photo-remove-btn" onclick="event.stopPropagation();clearPhotoSlot('espalda')" style="z-index:2">X</button>
+            <input type="file" id="file-espalda" accept="image/jpeg,image/png,image/webp" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1" onchange="previewPhoto(this,'espalda')">
             <div class="photo-slot-preview" id="preview-espalda"></div>
             <div class="photo-slot-label">ESPALDA</div>
           </div>

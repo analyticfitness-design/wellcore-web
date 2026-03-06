@@ -1799,9 +1799,9 @@
         // No previene screenshots técnicamente, pero deja rastro del usuario si
         // la imagen se filtra — disuasivo real y legal.
         function applyWatermark() {
-            var name  = localStorage.getItem('wc_client_name')  || TOKEN ? 'Cliente' : '';
-            var email = localStorage.getItem('wc_client_email') || '';
-            if (!name && !email) return;
+            var ci = JSON.parse(localStorage.getItem('client_info') || '{}');
+            var name  = ci.name || localStorage.getItem('wc_client_name') || (TOKEN ? 'Cliente' : '');
+            if (!name) return;
 
             // Evitar duplicar
             if (document.getElementById('wc-watermark')) return;
@@ -3062,8 +3062,11 @@
             // Actualizar nombre si viene del servidor
             if (status.client_name) {
                 document.getElementById('userName').textContent = status.client_name.slice(0, 50);
-                // userAvatar removed from topbar
                 localStorage.setItem('client_info', JSON.stringify({ name: status.client_name }));
+                // Re-apply watermark with real name
+                var oldWm = document.getElementById('wc-watermark');
+                if (oldWm) oldWm.remove();
+                applyWatermark();
             }
 
             if (status.expired) {
