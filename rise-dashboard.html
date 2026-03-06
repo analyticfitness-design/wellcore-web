@@ -942,15 +942,19 @@
                         <i class="fas fa-fire-flame-curved" style="color:var(--red);font-size:1.2rem;flex-shrink:0;"></i>
                         <span style="color:var(--gray);font-size:12px;">Mientras tanto puedes registrar tu <strong style="color:var(--white);">tracking diario</strong> y tus <strong style="color:var(--white);">hábitos</strong> del día.</span>
                     </div>
-                    <button class="btn-secondary" style="width: 100%;" onclick="showSection('support', null)">
-                        <i class="fas fa-headset"></i> Contactar Soporte
-                    </button>
+                    <div style="display:flex;gap:10px;">
+                        <button class="btn-secondary" style="flex:1;" onclick="showSection('support', null)"><i class="fas fa-headset"></i> Soporte</button>
+                        <button class="btn-primary" style="flex:1;" onclick="openTicketWithType('ajuste_entrenamiento')"><i class="fas fa-pen-to-square"></i> Pedir ajuste</button>
+                    </div>
                 </div>
 
                 <div class="card" style="margin-top: 20px;">
                     <button class="btn-primary" style="width: 100%;" onclick="printPlan('entrenamiento')">
                         <i class="fas fa-download"></i> Imprimir / Descargar PDF
                     </button>
+                </div>
+                <div class="card" style="margin-top:10px;border:1px solid rgba(227,30,36,0.2);">
+                    <button class="btn-secondary" style="width:100%;" onclick="openTicketWithType('ajuste_entrenamiento')"><i class="fas fa-pen-to-square"></i> Pedir ajuste al plan</button>
                 </div>
             </section>
 
@@ -993,6 +997,9 @@
                     <button class="btn-primary" style="width: 100%;" onclick="printPlan('nutricion')">
                         <i class="fas fa-download"></i> Imprimir / Descargar PDF
                     </button>
+                </div>
+                <div class="card" style="margin-top:10px;border:1px solid rgba(227,30,36,0.2);">
+                    <button class="btn-secondary" style="width:100%;" onclick="openTicketWithType('consulta_nutricion')"><i class="fas fa-utensils"></i> Consulta de nutricion al coach</button>
                 </div>
             </section>
 
@@ -1907,7 +1914,20 @@
         }
 
         // ─── NAVIGATION ──────────────────────────
-        function showSection(sectionId, triggerEl) {
+
+        // ─── ABRIR TICKETS CON TIPO PRE-SELECCIONADO ─────────────────
+        function openTicketWithType(type) {
+            showSection('tickets', null);
+            setRiseBnav('support');
+            setTimeout(function() {
+                var sel = document.getElementById('ticketType');
+                if (sel) { sel.value = type; sel.dispatchEvent(new Event('change')); }
+                var ta = document.getElementById('ticketDesc');
+                if (ta) ta.focus();
+            }, 200);
+        }
+
+                function showSection(sectionId, triggerEl) {
             if (sectionId === 'tickets') { setTimeout(loadMyTickets, 150); }
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(sectionId);
