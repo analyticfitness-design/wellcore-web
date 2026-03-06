@@ -174,6 +174,7 @@ function header_html(string $titulo, string $subtitulo, string $clientName, stri
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{$titulo} — {$clientName} — WellCore</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--red:#E31E24;--bg:#000;--surface:#111114;--border:rgba(255,255,255,.06);--text:#fff;--muted:#71717A;--accent:#00D9FF;--green:#22C55E}
@@ -213,7 +214,18 @@ tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 </style>
 </head>
 <body>
-<button class="print-btn" onclick="window.print()">Descargar PDF</button>
+<button class="print-btn" id="downloadPdfBtn" onclick="downloadPDF()">Descargar PDF</button>
+<script>
+function downloadPDF(){
+  var btn=document.getElementById('downloadPdfBtn');
+  var origText=btn.textContent;
+  btn.textContent='Generando PDF...';btn.disabled=true;
+  var el=document.body.cloneNode(true);
+  var b=el.querySelector('.print-btn');if(b)b.remove();
+  var opt={margin:[8,4,8,4],filename:document.title.replace(/[^a-zA-Z0-9\s\-_]/g,'')+'.pdf',image:{type:'jpeg',quality:0.95},html2canvas:{scale:2,useCORS:true,letterRendering:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}};
+  html2pdf().set(opt).from(el).save().then(function(){btn.textContent=origText;btn.disabled=false;}).catch(function(){btn.textContent=origText;btn.disabled=false;});
+}
+</script>
 <div class="cover">
   <div class="cover-eyebrow">// WellCore Fitness — Plan Personalizado</div>
   <h1 class="cover-title">{$titulo}<br><span>{$subtitulo}</span></h1>
@@ -408,6 +420,7 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
     $h .= "<meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\">\n";
     $h .= "<title>RISE 30 Días — {$name} | WellCore Fitness</title>\n";
     $h .= "<link href=\"https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap\" rel=\"stylesheet\">\n";
+    $h .= "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js\"></script>\n";
     $h .= "<style>\n";
     $h .= ":root{--red:{$accentColor};--bg:#0A0A0A;--surface:#111113;--card:#161618;--border:#2A2A2E;--border-subtle:#1E1E22;--text:#FFFFFF;--text-sec:#D4D4D8;--muted:#71717A;--accent:#00D9FF;}\n";
     $h .= "*{margin:0;padding:0;box-sizing:border-box;}\n";
@@ -501,7 +514,8 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
     $h .= ".doc-footer-info{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;text-align:right;line-height:1.6;}\n";
     $h .= "@media(max-width:600px){.page{padding:16px}.cover-content{padding:24px 20px}.cover-title{font-size:46px}.cover-meta,.overview-grid,.prog-grid{grid-template-columns:1fr 1fr}.nutr-grid{grid-template-columns:1fr}}\n";
     $h .= "</style></head><body>\n";
-    $h .= "<button class=\"print-btn\" onclick=\"window.print()\">Descargar PDF</button>\n";
+    $h .= "<button class=\"print-btn\" id=\"downloadPdfBtn\" onclick=\"downloadPDF()\">Descargar PDF</button>\n";
+    $h .= "<script>function downloadPDF(){var btn=document.getElementById('downloadPdfBtn');var origText=btn.textContent;btn.textContent='Generando PDF...';btn.disabled=true;var el=document.body.cloneNode(true);var b=el.querySelector('.print-btn');if(b)b.remove();var opt={margin:[8,4,8,4],filename:document.title.replace(/[^a-zA-Z0-9\\s\\-_]/g,'')+'.pdf',image:{type:'jpeg',quality:0.95},html2canvas:{scale:2,useCORS:true,letterRendering:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}};html2pdf().set(opt).from(el).save().then(function(){btn.textContent=origText;btn.disabled=false;}).catch(function(){btn.textContent=origText;btn.disabled=false;});}</script>\n";
     $h .= "<div class=\"page\">\n";
 
     // ── COVER ──────────────────────────────────────────────────

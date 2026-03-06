@@ -950,7 +950,7 @@
 
                 <div class="card" style="margin-top: 20px;">
                     <button class="btn-primary" style="width: 100%;" onclick="printPlan('entrenamiento')">
-                        <i class="fas fa-download"></i> Imprimir / Descargar PDF
+                        <i class="fas fa-download"></i> Descargar PDF
                     </button>
                 </div>
                 <div class="card" style="margin-top:10px;border:1px solid rgba(227,30,36,0.2);">
@@ -995,7 +995,7 @@
 
                 <div class="card">
                     <button class="btn-primary" style="width: 100%;" onclick="printPlan('nutricion')">
-                        <i class="fas fa-download"></i> Imprimir / Descargar PDF
+                        <i class="fas fa-download"></i> Descargar PDF
                     </button>
                 </div>
                 <div class="card" style="margin-top:10px;border:1px solid rgba(227,30,36,0.2);">
@@ -1709,11 +1709,12 @@
             }
         }
 
-        // ─── IMPRIMIR / PDF ───────────────────────
+        // ─── DESCARGAR PDF ───────────────────────
         function printPlan(type) {
             const frame = document.querySelector('#' + type + 'PlanContainer iframe.plan-frame');
-            if (!frame) { showToast('No hay plan disponible para imprimir', 'var(--red)'); return; }
-            try { frame.contentWindow.print(); } catch(e) { showToast('Abre el plan y usa Ctrl+P', 'var(--red)'); }
+            if (!frame || !frame.src) { showToast('No hay plan disponible para descargar', 'var(--red)'); return; }
+            window.open(frame.src, '_blank');
+            showToast('Plan abierto — usa el botón Descargar PDF', '#22C55E');
         }
 
         // ─── GUARDAR TRACKING VÍA API ─────────────
