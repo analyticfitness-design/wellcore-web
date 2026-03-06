@@ -8,11 +8,7 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/response.php';
 require_once __DIR__ . '/../includes/auth.php';
-
-
-define('MAILJET_API_KEY',    'c81bdac1248c50e373b811a663cb1f1a');
-define('MAILJET_SECRET_KEY', 'b506208ce8ab895f36d0795287158a46');
-define('MAILJET_ENDPOINT',   'https://api.mailjet.com/v3.1/send');
+require_once __DIR__ . '/../includes/email.php';
 
 function sendRiseWelcomeEmail(string $toEmail, string $toName, string $password, string $startDate, string $endDate): bool {
     $loginUrl = 'https://wellcorefitness.com/login.html';
@@ -114,31 +110,9 @@ function sendRiseWelcomeEmail(string $toEmail, string $toName, string $password,
 
         . '</table></td></tr></table></body></html>';
 
-    $textPart = "Hola {$toName},\n\nTu acceso al Reto RISE 30 dias ha sido activado.\n\nEmail: {$toEmail}\nContrasena: {$password}\nVigencia: {$startFmt} al {$endFmt}\n\nInicia sesion en: {$loginUrl}\n\nRecuerda cambiar tu contrasena al ingresar.\n\n-- WellCore Fitness";
-
-    $payload = json_encode([
-        'Messages' => [[
-            'From'     => ['Email' => 'info@wellcorefitness.com', 'Name' => 'WellCore Fitness'],
-            'To'       => [['Email' => $toEmail, 'Name' => $toName]],
-            'Subject'  => 'Tu acceso al Reto RISE 30 Dias esta listo',
-            'HTMLPart' => $html,
-            'TextPart' => $textPart,
-        ]]
-    ]);
-
-    $ch = curl_init(MAILJET_ENDPOINT);
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $payload,
-        CURLOPT_USERPWD        => MAILJET_API_KEY . ':' . MAILJET_SECRET_KEY,
-        CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
-        CURLOPT_TIMEOUT        => 15,
-    ]);
-    $result   = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    return $httpCode >= 200 && $httpCode < 300;
+    $subject = 'Tu acceso al Reto RISE 30 Dias esta listo';
+    $result  = sendEmail($toEmail, $subject, $html);
+    return $result['ok'] ?? false;
 }
 
 requireMethod('POST');
@@ -203,7 +177,7 @@ try {
 
     $db->commit();
 
-    // Enviar email de bienvenida (no bloqueante)
+    // Enviar email de bienvenida via SMTP
     $emailSent = sendRiseWelcomeEmail($email, $name, $password, $start_date, $end_date);
 
     respond([
