@@ -1518,6 +1518,24 @@
   </div><!-- /main -->
 </div><!-- /app -->
 
+<!-- ═══ MODAL PREVIEW PLAN IA ═══ -->
+<div id="planPreviewOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9100;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:#111113;border:1px solid rgba(227,30,36,0.3);border-top:3px solid #E31E24;max-width:860px;width:100%;border-radius:8px;margin:30px auto;">
+    <div style="padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#111113;z-index:2;border-radius:8px 8px 0 0;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:#E31E24;margin-bottom:4px;text-transform:uppercase;">Preview plan IA</div>
+        <div id="planPreviewTitle" style="font-size:15px;font-weight:600;color:#fff;">Plan RISE</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button id="planPreviewApproveBtn" style="display:none;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);color:#22C55E;padding:6px 16px;font-size:12px;font-weight:600;border-radius:4px;cursor:pointer;">&#10003; Aprobar</button>
+        <button id="planPreviewRejectBtn" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#EF4444;padding:6px 16px;font-size:12px;font-weight:600;border-radius:4px;cursor:pointer;">&#10005; Rechazar</button>
+        <button onclick="closePlanPreview()" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;padding:4px 8px;line-height:1;" title="Cerrar">&times;</button>
+      </div>
+    </div>
+    <div id="planPreviewBody" style="padding:24px;color:rgba(255,255,255,0.85);font-size:13px;line-height:1.7;"></div>
+  </div>
+</div>
+
 <!-- ═══ MODAL INVITAR RISE ═══ -->
 <div id="riseInviteOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9000;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#111113;border:1px solid rgba(34,197,94,0.3);border-top:3px solid #22C55E;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;border-radius:8px;">
@@ -2423,6 +2441,15 @@
             genLabel.textContent = '⏳ Procesando...';
             accionesTd.appendChild(genLabel);
           } else if (g.assigned_plan_id && !g.plan_active) {
+            var verBtn = document.createElement('button');
+            verBtn.className = 'btn btn-sm';
+            verBtn.style.cssText = 'background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.35);color:#3B82F6;font-size:11px;';
+            verBtn.textContent = '👁 Ver';
+            (function(genId, planId, clientName, rowTd){
+              verBtn.addEventListener('click', function(){ openPlanPreview(genId, planId, clientName, rowTd); });
+            })(g.id, g.assigned_plan_id, g.client_name, estadoTd);
+            accionesTd.appendChild(verBtn);
+
             var aprobarBtn = document.createElement('button');
             aprobarBtn.className = 'btn btn-sm';
             aprobarBtn.style.cssText = 'background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.35);color:#22C55E;font-size:11px;';
@@ -2473,6 +2500,124 @@
         }
       });
   }
+
+  /* ─── PLANES IA: PREVIEW ─── */
+  function openPlanPreview(genId, planId, clientName, estadoTdEl) {
+    var overlay = document.getElementById('planPreviewOverlay');
+    var body = document.getElementById('planPreviewBody');
+    var title = document.getElementById('planPreviewTitle');
+    title.textContent = 'Plan RISE — ' + (clientName || 'Cliente');
+    body.innerHTML = '<div style="text-align:center;padding:40px;color:var(--gray)">Cargando plan...</div>';
+    overlay.style.display = 'flex';
+
+    // Botones aprobar/rechazar dentro del modal
+    var approveBtn = document.getElementById('planPreviewApproveBtn');
+    var rejectBtn = document.getElementById('planPreviewRejectBtn');
+    approveBtn.style.display = 'inline-block';
+    rejectBtn.style.display = 'inline-block';
+    approveBtn.onclick = function() { closePlanPreview(); approvePlan(genId, planId, estadoTdEl); };
+    rejectBtn.onclick = function() { closePlanPreview(); rejectPlan(genId, document.querySelector('#planesTableBody tr')); };
+
+    apiFetch('/admin/ai-generation?id=' + genId)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var gen = d.generation;
+        if (!gen || !gen.parsed_json) {
+          body.innerHTML = '<div style="text-align:center;padding:40px;color:#EF4444">No se encontro plan parseado para esta generacion.</div>';
+          return;
+        }
+        body.innerHTML = renderPlanPreview(gen.parsed_json);
+      })
+      .catch(function(err) {
+        body.innerHTML = '<div style="text-align:center;padding:40px;color:#EF4444">Error: ' + err.message + '</div>';
+      });
+  }
+
+  function closePlanPreview() {
+    document.getElementById('planPreviewOverlay').style.display = 'none';
+    document.getElementById('planPreviewApproveBtn').style.display = 'none';
+    document.getElementById('planPreviewRejectBtn').style.display = 'none';
+  }
+
+  function renderPlanPreview(plan) {
+    var h = '';
+    // Resumen
+    if (plan.resumen_cliente) h += '<div style="background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);padding:14px 18px;border-radius:6px;margin-bottom:16px;"><strong style="color:#E31E24;">Resumen:</strong> ' + esc(plan.resumen_cliente) + '</div>';
+    if (plan.objetivo_30_dias) h += '<div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);padding:14px 18px;border-radius:6px;margin-bottom:16px;"><strong style="color:#22C55E;">Objetivo 30 dias:</strong> ' + esc(plan.objetivo_30_dias) + '</div>';
+    if (plan.estructura_semana) h += '<p style="margin-bottom:12px;"><strong>Estructura semanal:</strong> ' + esc(plan.estructura_semana) + '</p>';
+
+    // Entrenamiento — semanas
+    var ent = plan.plan_entrenamiento;
+    if (ent && ent.semanas) {
+      h += '<h3 style="color:#E31E24;font-family:\'JetBrains Mono\',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">Plan de Entrenamiento</h3>';
+      ent.semanas.forEach(function(sem) {
+        h += '<div style="margin-bottom:20px;">';
+        h += '<h4 style="color:#F59E0B;margin-bottom:8px;">Semana ' + sem.semana + ': ' + esc(sem.nombre || '') + ' <span style="color:rgba(255,255,255,0.4);font-size:11px;">(RIR ' + (sem.rir_objetivo || '?') + ')</span></h4>';
+        if (sem.descripcion) h += '<p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;">' + esc(sem.descripcion) + '</p>';
+        if (sem.sesiones) {
+          sem.sesiones.forEach(function(ses) {
+            h += '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:12px 16px;margin-bottom:8px;">';
+            h += '<div style="font-weight:600;margin-bottom:6px;">' + esc(ses.dia || '') + ' — ' + esc(ses.nombre || '') + '</div>';
+            if (ses.calentamiento) h += '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px;">Calentamiento: ' + esc(ses.calentamiento) + '</div>';
+            if (ses.ejercicios && ses.ejercicios.length) {
+              h += '<table style="width:100%;font-size:11px;border-collapse:collapse;">';
+              h += '<tr style="color:rgba(255,255,255,0.4);border-bottom:1px solid rgba(255,255,255,0.06);"><th style="text-align:left;padding:4px 6px;">Ejercicio</th><th style="padding:4px 6px;">Series</th><th style="padding:4px 6px;">Reps</th><th style="padding:4px 6px;">Descanso</th><th style="text-align:left;padding:4px 6px;">Notas</th></tr>';
+              ses.ejercicios.forEach(function(ej) {
+                h += '<tr style="border-bottom:1px solid rgba(255,255,255,0.03);">';
+                h += '<td style="padding:4px 6px;font-weight:500;">' + esc(ej.nombre || '') + '</td>';
+                h += '<td style="padding:4px 6px;text-align:center;">' + (ej.series || '') + '</td>';
+                h += '<td style="padding:4px 6px;text-align:center;">' + (ej.reps || '') + '</td>';
+                h += '<td style="padding:4px 6px;text-align:center;">' + esc(ej.descanso || '') + '</td>';
+                h += '<td style="padding:4px 6px;font-size:10px;color:rgba(255,255,255,0.4);">' + esc(ej.notas || '') + '</td>';
+                h += '</tr>';
+              });
+              h += '</table>';
+            }
+            if (ses.vuelta_calma) h += '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;">Vuelta a la calma: ' + esc(ses.vuelta_calma) + '</div>';
+            h += '</div>';
+          });
+        }
+        h += '</div>';
+      });
+    }
+
+    // Cardio
+    var cardio = plan.cardio;
+    if (cardio) {
+      h += '<h3 style="color:#E31E24;font-family:\'JetBrains Mono\',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">Cardio</h3>';
+      h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">';
+      if (cardio.frecuencia_semanal) h += '<div><strong>Frecuencia:</strong> ' + cardio.frecuencia_semanal + 'x/sem</div>';
+      if (cardio.duracion_min) h += '<div><strong>Duracion:</strong> ' + cardio.duracion_min + ' min</div>';
+      if (cardio.tipo) h += '<div style="grid-column:span 2;"><strong>Tipo:</strong> ' + esc(cardio.tipo) + '</div>';
+      if (cardio.cuando) h += '<div style="grid-column:span 2;"><strong>Cuando:</strong> ' + esc(cardio.cuando) + '</div>';
+      h += '</div>';
+    }
+
+    // Tips nutricion
+    var tips = plan.tips_nutricion;
+    if (tips) {
+      h += '<h3 style="color:#E31E24;font-family:\'JetBrains Mono\',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">Tips de Nutricion</h3>';
+      h += '<div style="font-size:12px;line-height:1.8;">';
+      if (tips.principio_base) h += '<p><strong>Principio base:</strong> ' + esc(tips.principio_base) + '</p>';
+      if (tips.proteina) h += '<p><strong>Proteina:</strong> ' + esc(tips.proteina) + '</p>';
+      if (tips.hidratacion) h += '<p><strong>Hidratacion:</strong> ' + esc(tips.hidratacion) + '</p>';
+      if (tips.pre_entreno) h += '<p><strong>Pre-entreno:</strong> ' + esc(tips.pre_entreno) + '</p>';
+      if (tips.post_entreno) h += '<p><strong>Post-entreno:</strong> ' + esc(tips.post_entreno) + '</p>';
+      if (tips.alimentos_aliados) h += '<p><strong>Aliados:</strong> ' + tips.alimentos_aliados.join(', ') + '</p>';
+      if (tips.alimentos_reducir) h += '<p><strong>Reducir:</strong> ' + tips.alimentos_reducir.join(', ') + '</p>';
+      h += '</div>';
+    }
+
+    // Nota coach
+    if (plan.nota_coach) h += '<div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);padding:14px 18px;border-radius:6px;margin-top:20px;"><strong style="color:#3B82F6;">Nota del coach:</strong> ' + esc(plan.nota_coach) + '</div>';
+
+    // Progresion
+    if (plan.progresion_semanal) h += '<div style="margin-top:12px;font-size:12px;"><strong>Progresion semanal:</strong> ' + esc(plan.progresion_semanal) + '</div>';
+
+    return h;
+  }
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
   /* ─── PLANES IA: APROBAR ─── */
   function approvePlan(genId, planId, estadoTdEl) {
