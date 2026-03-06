@@ -1299,7 +1299,7 @@
                 <div class="card">
                     <div class="card-title">Subir Fotos</div>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px;">
-                        <div class="photo-upload-box" id="boxFront" onclick="document.getElementById('photoFront').click()">
+                        <div class="photo-upload-box" id="boxFront">
                             <div class="photo-placeholder">
                                 <i class="fas fa-camera"></i>
                                 <span>Frente</span>
@@ -1307,9 +1307,9 @@
                             </div>
                             <img id="previewFront" class="photo-preview-img" alt="Frente">
                             <button type="button" class="photo-remove-btn" onclick="removePhoto(event,'photoFront','previewFront','boxFront')"><i class="fas fa-times"></i></button>
-                            <input type="file" id="photoFront" accept="image/*" style="position:absolute;width:0;height:0;opacity:0;overflow:hidden;pointer-events:none" onchange="previewPhoto(this,'previewFront','boxFront')">
+                            <input type="file" id="photoFront" accept="image/*" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1" onchange="previewPhoto(this,'previewFront','boxFront')">
                         </div>
-                        <div class="photo-upload-box" id="boxSide" onclick="document.getElementById('photoSide').click()">
+                        <div class="photo-upload-box" id="boxSide">
                             <div class="photo-placeholder">
                                 <i class="fas fa-camera"></i>
                                 <span>Perfil</span>
@@ -1317,9 +1317,9 @@
                             </div>
                             <img id="previewSide" class="photo-preview-img" alt="Perfil">
                             <button type="button" class="photo-remove-btn" onclick="removePhoto(event,'photoSide','previewSide','boxSide')"><i class="fas fa-times"></i></button>
-                            <input type="file" id="photoSide" accept="image/*" style="position:absolute;width:0;height:0;opacity:0;overflow:hidden;pointer-events:none" onchange="previewPhoto(this,'previewSide','boxSide')">
+                            <input type="file" id="photoSide" accept="image/*" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1" onchange="previewPhoto(this,'previewSide','boxSide')">
                         </div>
-                        <div class="photo-upload-box" id="boxBack" onclick="document.getElementById('photoBack').click()">
+                        <div class="photo-upload-box" id="boxBack">
                             <div class="photo-placeholder">
                                 <i class="fas fa-camera"></i>
                                 <span>Espalda</span>
@@ -1327,7 +1327,7 @@
                             </div>
                             <img id="previewBack" class="photo-preview-img" alt="Espalda">
                             <button type="button" class="photo-remove-btn" onclick="removePhoto(event,'photoBack','previewBack','boxBack')"><i class="fas fa-times"></i></button>
-                            <input type="file" id="photoBack" accept="image/*" style="position:absolute;width:0;height:0;opacity:0;overflow:hidden;pointer-events:none" onchange="previewPhoto(this,'previewBack','boxBack')">
+                            <input type="file" id="photoBack" accept="image/*" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1" onchange="previewPhoto(this,'previewBack','boxBack')">
                         </div>
                     </div>
                     <div class="form-group">
