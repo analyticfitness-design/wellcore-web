@@ -2690,7 +2690,7 @@ function saveMetrics() {
 }
 
 function loadMetrics() {
-  apiFetch('/metrics?limit=20')
+  apiFetch('/metrics/?limit=20')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var metrics = (data.metrics || []).map(function(m) {
@@ -2914,8 +2914,8 @@ function loadActivityFeed() {
   var ICON_STYLE = 'width:32px;height:32px;border-radius:0;background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.2);display:flex;align-items:center;justify-content:center;color:#00D9FF;font-weight:700;font-size:.8rem;flex-shrink:0';
 
   Promise.all([
-    apiFetch('/metrics?limit=3').then(function(r) { return r.json(); }).catch(function() { return { metrics: [] }; }),
-    apiFetch('/checkins?limit=2').then(function(r) { return r.json(); }).catch(function() { return { checkins: [] }; })
+    apiFetch('/metrics/?limit=3').then(function(r) { return r.json(); }).catch(function() { return { metrics: [] }; }),
+    apiFetch('/checkins/?limit=2').then(function(r) { return r.json(); }).catch(function() { return { checkins: [] }; })
   ]).then(function(results) {
     var events = [];
     var metrics = results[0].metrics || [];
@@ -2961,7 +2961,7 @@ function loadActivityFeed() {
 }
 
 function loadCheckins() {
-  apiFetch('/checkins?limit=8')
+  apiFetch('/checkins/?limit=8')
     .then(function(r) { return r.json(); })
     .then(function(data) { renderCheckins(data.checkins || []); })
     .catch(function() { renderCheckins(JSON.parse(localStorage.getItem('wc_checkins') || '[]')); });
