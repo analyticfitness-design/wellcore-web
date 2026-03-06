@@ -29,3 +29,11 @@ vendor/
 fix_*.py
 _append_*.py
 _fix_*.py
+
+# Screenshots & debug
+*.png
+*.jpeg
+snapshot.txt
+
+# CSS backups
+css/*.backup.css

@@ -5,12 +5,12 @@ function generateToken(): string {
     return bin2hex(random_bytes(32));  // 64 char hex token
 }
 
-// Generate a fingerprint from IP + User-Agent for token binding
+// Generate a fingerprint from User-Agent only (IP excluida: móvil cambia de red)
 function getClientFingerprint(): string {
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-    if (str_contains($ip, ',')) $ip = trim(explode(',', $ip)[0]);
     $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
-    return hash('sha256', $ip . '|' . $ua);
+    // Normalizar UA: solo familia de browser + OS, sin versión exacta (evita falsos positivos por updates)
+    $normalized = preg_replace('/([\w]+)\/[\d\.]+/', '$1', $ua);
+    return hash('sha256', $normalized);
 }
 
 function getClientIp(): string {
@@ -100,14 +100,12 @@ function authenticateAdmin(): array {
         respondError('Invalid or expired token', 401);
     }
 
-    // Validate fingerprint for admin tokens (token binding)
-    // TODO: Fingerprint validation disabled temporarily due to browser navigation issues
-    // When re-enabled, will need to handle browser context changes more gracefully
-    // if ($admin['fingerprint'] && $admin['fingerprint'] !== getClientFingerprint()) {
-    //     // Token stolen or used from different client — revoke it
-    //     revokeToken($token);
-    //     respondError('Session invalidated: client mismatch', 401);
-    // }
+    // Validate fingerprint for admin tokens (token binding por User-Agent)
+    // Protege contra tokens robados usados desde un browser/dispositivo diferente
+    if (!empty($admin['fingerprint']) && $admin['fingerprint'] !== getClientFingerprint()) {
+        revokeToken($token);
+        respondError('Session invalidated: client mismatch', 401);
+    }
 
     return $admin;
 }

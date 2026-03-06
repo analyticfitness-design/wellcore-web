@@ -30,11 +30,18 @@ header('Content-Type: application/json; charset=utf-8');
 // Security headers (2026 best practices)
 header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()');
 header('Cache-Control: no-store, no-cache, must-revalidate, private');
+// APIs JSON no sirven HTML — bloquear todo content rendering
+header("Content-Security-Policy: default-src 'none'");
+// Proteccion contra cross-origin attacks
+header('Cross-Origin-Opener-Policy: same-origin');
+header('Cross-Origin-Resource-Policy: same-site');
+header('Cross-Origin-Embedder-Policy: require-corp');
 if (!defined('APP_ENV') || APP_ENV !== 'development') {
-    header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+    header('Strict-Transport-Security: max-age=63072000; includeSubDomains; preload');
 }
 
 // Handle preflight
