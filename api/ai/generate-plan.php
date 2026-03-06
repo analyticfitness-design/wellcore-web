@@ -80,7 +80,7 @@ if ($planType === 'rise') {
     ];
 
     // Stage 2: llamada directa a Claude (sin pasar por WellCoreAI router)
-    $genId      = ai_save_generation(['client_id' => $clientId, 'type' => 'entrenamiento', 'status' => 'pending']);
+    $genId      = ai_save_generation(['client_id' => $clientId, 'type' => 'rise', 'status' => 'pending']);
     $userPrompt = build_rise_enriched_prompt($client, $riseIntake);
     $userPrompt .= "\n\nGENERA EL PLAN RISE 30 DÍAS EN JSON ESTRICTO (sin texto fuera del JSON).\n\nESQUEMA REQUERIDO:\n" . get_plan_schema('rise');
 

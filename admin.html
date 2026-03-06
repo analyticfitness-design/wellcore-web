@@ -1350,7 +1350,7 @@
                   <th>Fin</th>
                   <th>Estado</th>
                   <th>Intake</th>
-                  <th>Plan IA</th>
+                  <th>Plan</th>
                 </tr>
               </thead>
               <tbody id="riseTableBody">
@@ -1360,10 +1360,10 @@
           </div>
         </div>
 
-        <!-- PLANES IA POR VALIDAR -->
+        <!-- PLANES POR VALIDAR -->
         <div class="card" id="risePlanesCard" style="margin-top:16px">
           <div class="card-header">
-            <span class="card-title">Planes IA por Validar</span>
+            <span class="card-title">Planes por Validar</span>
             <span class="badge badge-yellow" id="planesPendientesBadge" style="display:none">0 pendientes</span>
           </div>
           <div style="overflow-x:auto">
@@ -1372,15 +1372,13 @@
                 <tr>
                   <th>Cliente</th>
                   <th>Tipo</th>
-                  <th>Modelo</th>
-                  <th>Tokens</th>
                   <th>Generado</th>
                   <th>Estado plan</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody id="planesTableBody">
-                <tr><td colspan="7" style="text-align:center;color:var(--gray);padding:30px">Sin planes pendientes.</td></tr>
+                <tr><td colspan="5" style="text-align:center;color:var(--gray);padding:30px">Sin planes pendientes.</td></tr>
               </tbody>
             </table>
           </div>
@@ -2232,7 +2230,7 @@
           delBtn.textContent = '✕ Eliminar';
           (function(cid, cname){ delBtn.addEventListener('click', function(){ deleteClient(cid, cname); }); })(p.client_id, p.name);
           delTd.appendChild(delBtn);
-          // Columna Plan IA
+          // Columna Plan
           var planTd = document.createElement('td');
           if (!p.has_intake) {
             var noIntakeSpan = document.createElement('span');
@@ -2243,7 +2241,7 @@
             var genBtn = document.createElement('button');
             genBtn.className = 'btn btn-sm';
             genBtn.style.cssText = 'background:rgba(227,30,36,0.12);border:1px solid rgba(227,30,36,0.35);color:#E31E24;font-size:11px;padding:4px 10px;';
-            genBtn.textContent = '⚡ Generar Plan';
+            genBtn.textContent = '⚡ Generar';
             (function(cid, cname){ genBtn.addEventListener('click', function(){ generateRisePlan(cid, cname); }); })(p.client_id, p.name);
             planTd.appendChild(genBtn);
           }
@@ -2372,17 +2370,6 @@
           typeBadge.textContent = (g.type || '').toUpperCase();
           typeTd.appendChild(typeBadge);
 
-          // Modelo
-          var modelTd = document.createElement('td');
-          modelTd.style.cssText = 'font-size:11px;color:var(--gray)';
-          modelTd.textContent = (g.model || '').replace('claude-', '').replace('-20251022','');
-
-          // Tokens
-          var tokenTd = document.createElement('td');
-          tokenTd.style.cssText = 'font-size:11px;color:var(--gray)';
-          var totalTokens = (g.prompt_tokens || 0) + (g.completion_tokens || 0);
-          tokenTd.textContent = totalTokens.toLocaleString();
-
           // Fecha
           var dateTd = document.createElement('td');
           dateTd.style.cssText = 'font-size:11px';
@@ -2439,8 +2426,6 @@
 
           tr.appendChild(clientTd);
           tr.appendChild(typeTd);
-          tr.appendChild(modelTd);
-          tr.appendChild(tokenTd);
           tr.appendChild(dateTd);
           tr.appendChild(estadoTd);
           tr.appendChild(accionesTd);
