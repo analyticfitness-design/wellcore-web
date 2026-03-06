@@ -726,6 +726,78 @@
             letter-spacing: 0;
         }
         .photo-upload-box.has-image .photo-remove-btn { display: flex; }
+
+        /* ── INTERACTIVE TRAINING ENGINE ─────────────────── */
+        .trn-toggle-wrap{display:flex;gap:8px;margin-bottom:18px}
+        .trn-toggle{font-family:'JetBrains Mono',monospace;font-size:11px;padding:8px 16px;border:1px solid var(--border,#333);background:transparent;color:var(--gray,#888);cursor:pointer;transition:all .2s;letter-spacing:.05em}
+        .trn-toggle.active{background:var(--red,#C8102E);color:#fff;border-color:var(--red,#C8102E)}
+        .trn-demo-banner{display:flex;gap:16px;align-items:flex-start;background:linear-gradient(135deg,rgba(0,217,255,.08),rgba(200,16,46,.06));border:1px solid rgba(0,217,255,.25);padding:18px 22px;margin-bottom:20px;border-radius:12px}
+        .trn-demo-icon{font-size:22px;color:#00D9FF;flex-shrink:0;margin-top:2px}
+        .trn-demo-text{display:flex;flex-direction:column;gap:6px}
+        .trn-demo-text strong{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--white,#fff)}
+        .trn-demo-text span{font-size:13px;color:var(--gray,#888);line-height:1.5}
+        .trn-progress-wrap{background:var(--surface,#1a1a1a);border:1px solid var(--border,#333);padding:18px 22px;margin-bottom:20px;border-radius:12px}
+        .trn-progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+        .trn-progress-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray,#888)}
+        .trn-progress-pct{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--white,#fff)}
+        .trn-progress-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+        .trn-progress-fill{height:100%;background:linear-gradient(90deg,var(--red,#C8102E),#ff4466);border-radius:3px;transition:width .5s ease}
+        .trn-progress-sub{font-size:11px;color:var(--gray,#888);margin-top:8px;font-family:'JetBrains Mono',monospace}
+        .trn-day{background:var(--surface,#1a1a1a);border:1px solid var(--border,#333);margin-bottom:12px;transition:all .3s;border-radius:12px;overflow:hidden}
+        .trn-day.expanded{border-color:rgba(200,16,46,.4)}
+        .trn-day-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none}
+        .trn-day-info{display:flex;flex-direction:column;gap:4px}
+        .trn-day-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--red,#C8102E)}
+        .trn-day-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white,#fff);letter-spacing:.06em}
+        .trn-day-subtitle{font-size:12px;color:var(--gray,#888)}
+        .trn-day-meta{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+        .trn-day-dow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--white,#fff)}
+        .trn-day-count{font-size:11px;color:var(--gray,#888)}
+        .trn-day-chevron{font-size:14px;color:var(--gray,#888);margin-left:12px;transition:transform .3s}
+        .trn-day.expanded .trn-day-chevron{transform:rotate(180deg)}
+        .trn-day-body{display:none;padding:0 20px 20px}
+        .trn-day.expanded .trn-day-body{display:block}
+        .trn-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+        .trn-stat{background:rgba(255,255,255,.03);padding:10px;text-align:center;border-radius:8px}
+        .trn-stat-label{font-size:9px;color:var(--gray,#888);text-transform:uppercase;letter-spacing:.12em;font-family:'JetBrains Mono',monospace}
+        .trn-stat-value{font-size:13px;color:var(--white,#fff);font-weight:600;margin-top:4px}
+        .trn-warmup{background:rgba(0,217,255,.06);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:16px;border-radius:0 8px 8px 0}
+        .trn-warmup-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;color:#00D9FF;margin-bottom:6px}
+        .trn-warmup-text{font-size:12px;color:var(--gray,#888);line-height:1.6}
+        .trn-ex{border:1px solid var(--border,#333);margin-bottom:8px;transition:all .2s;border-radius:8px;overflow:hidden}
+        .trn-ex.done{border-color:rgba(200,16,46,.3);background:rgba(200,16,46,.04)}
+        .trn-ex-row{display:flex;align-items:center;gap:10px;padding:12px 14px}
+        .trn-ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray,#888);min-width:20px}
+        .trn-ex-check{width:20px;height:20px;border:2px solid var(--border,#333);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:transparent;font-size:12px;transition:all .2s;flex-shrink:0;background:transparent}
+        .trn-ex.done .trn-ex-check{background:var(--red,#C8102E);border-color:var(--red,#C8102E);color:#fff}
+        .trn-ex-details{flex:1;min-width:0}
+        .trn-ex-name{font-size:14px;color:var(--white,#fff);font-weight:500}
+        .trn-ex.done .trn-ex-name{text-decoration:line-through;opacity:.6}
+        .trn-ex-tags{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+        .trn-ex-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray,#888);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:4px}
+        .trn-ex-actions{display:flex;gap:6px;flex-shrink:0}
+        .trn-ex-actions button{background:rgba(255,255,255,.04);border:1px solid var(--border,#333);color:var(--gray,#888);padding:6px 10px;cursor:pointer;font-size:11px;transition:all .2s;border-radius:6px}
+        .trn-ex-actions button:hover{border-color:var(--red,#C8102E);color:var(--white,#fff)}
+        .trn-ex-notes{display:none;padding:8px 14px 12px 54px;border-top:1px solid var(--border,#333)}
+        .trn-ex.notes-open .trn-ex-notes{display:flex;gap:8px;align-items:flex-start}
+        .trn-ex-notes-icon{color:#00D9FF;flex-shrink:0;font-size:12px;margin-top:2px}
+        .trn-ex-notes-text{font-size:12px;color:var(--gray,#888);line-height:1.6}
+        .trn-cooldown{background:rgba(200,16,46,.04);border-left:3px solid var(--red,#C8102E);padding:12px 16px;margin-top:16px;border-radius:0 8px 8px 0}
+        .trn-cooldown-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--red,#C8102E);margin-bottom:6px}
+        .trn-cooldown-text{font-size:12px;color:var(--gray,#888);line-height:1.6}
+        .trn-ai-bubble{display:none;padding:10px 14px;margin:0 14px 10px 54px;background:rgba(0,217,255,.06);border:1px solid rgba(0,217,255,.15);border-radius:8px}
+        .trn-ai-bubble.visible{display:block}
+        .trn-ai-bubble-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;color:#00D9FF;margin-bottom:6px}
+        .trn-ai-bubble-text{font-size:13px;color:var(--white,#fff);line-height:1.6}
+        .trn-ai-bubble-loading{font-size:12px;color:var(--gray,#888)}
+        .trn-ai-bubble-loading i{animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .trn-timer-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column}
+        .trn-timer-overlay.active{display:flex}
+        .trn-timer-display{font-family:'JetBrains Mono',monospace;font-size:72px;color:var(--white,#fff);margin-bottom:20px}
+        .trn-timer-label{font-size:14px;color:var(--gray,#888);margin-bottom:30px}
+        .trn-timer-btn{background:var(--red,#C8102E);border:none;color:#fff;padding:14px 40px;font-size:16px;cursor:pointer;border-radius:8px}
+        @media(max-width:600px){.trn-stats{grid-template-columns:repeat(2,1fr)}.trn-ex-actions{flex-direction:column;gap:4px}}
     </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
@@ -919,13 +991,38 @@
                 </h1>
                 <p style="color: var(--gray); margin-bottom: 30px;">Tu programa personalizado de entrenamiento para los 30 días</p>
 
+                <!-- View Toggle -->
+                <div class="trn-toggle-wrap" id="riseTrainingToggle" style="display:none">
+                    <button class="trn-toggle active" id="rise-tog-app" onclick="setRiseTrainingView('app')">
+                        <i class="fas fa-th-large"></i> Vista Interactiva
+                    </button>
+                    <button class="trn-toggle" id="rise-tog-pdf" onclick="setRiseTrainingView('pdf')">
+                        <i class="fas fa-file-alt"></i> Documento
+                    </button>
+                </div>
+
+                <!-- Interactive App View -->
+                <div id="riseAppView" style="display:none">
+                    <div class="trn-progress-wrap">
+                        <div class="trn-progress-header">
+                            <span class="trn-progress-label">Progreso de la semana</span>
+                            <span class="trn-progress-pct" id="rise-trn-pct">0%</span>
+                        </div>
+                        <div class="trn-progress-bar">
+                            <div class="trn-progress-fill" id="rise-trn-fill" style="width:0%"></div>
+                        </div>
+                        <div class="trn-progress-sub" id="rise-trn-sub">0 / 0 ejercicios completados</div>
+                    </div>
+                    <div id="rise-trn-days"></div>
+                </div>
+
                 <!-- Estado cargando -->
                 <div id="trainingLoading" class="card" style="text-align: center; padding: 40px; display: none;">
                     <i class="fas fa-spinner fa-spin" style="color: var(--red); font-size: 24px; margin-bottom: 15px; display: block;"></i>
                     <span style="color: var(--gray); font-size: 14px;">Verificando tu programa...</span>
                 </div>
 
-                <!-- Plan cargado desde API -->
+                <!-- Plan cargado desde API (PDF/iframe view) -->
                 <div id="trainingPlanContainer" style="display: none;">
                     <!-- El HTML del plan personalizado se inyecta aquí via JS -->
                 </div>
@@ -1718,7 +1815,11 @@
                 }
                 if (containerEl) {
                     renderPlanContent(type + 'PlanContainer', plans[0].content);
-                    containerEl.style.display = 'block';
+                    containerEl.style.display = 'none'; // Hidden initially — interactive view is default
+                }
+                // For training: parse exercises and show interactive view
+                if (type === 'training') {
+                    parseAndRenderInteractive(plans[0].content);
                 }
             } else {
                 if (emptyEl) emptyEl.style.display = 'block';
@@ -3020,6 +3121,415 @@ function closePhotoLightbox() {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closePhotoLightbox();
 });
+</script>
+
+<!-- Timer Overlay -->
+<div class="trn-timer-overlay" id="rise-trn-timer">
+    <div class="trn-timer-label" id="rise-trn-timer-label">Descanso</div>
+    <div class="trn-timer-display" id="rise-trn-timer-display">00:00</div>
+    <button class="trn-timer-btn" onclick="closeRiseRestTimer()">Saltar descanso</button>
+</div>
+<div id="rise-trn-timer-backdrop" style="display:none;position:fixed;inset:0;z-index:9998;background:transparent" onclick="closeRiseRestTimer()"></div>
+
+<script>
+/* ============================================================
+   INTERACTIVE TRAINING ENGINE — RISE Dashboard
+   Parses exercise data from the personalized HTML plan
+============================================================ */
+(function() {
+  'use strict';
+
+  var RISE_TRAINING = { days: [] };
+  var riseCompleted = {};
+  var riseTimerInterval = null;
+  var riseTimerSeconds = 0;
+
+  // Load saved state
+  try {
+    var saved = localStorage.getItem('wc_rise_trn_completed');
+    if (saved) riseCompleted = JSON.parse(saved);
+  } catch(e) {}
+
+  function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+
+  // ── PARSE HTML PLAN ──────────────────────────────────────
+  window.parseAndRenderInteractive = function(htmlContent) {
+    // Parse the HTML content into a DOM
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(htmlContent, 'text/html');
+
+    // Find all day sections (each has a table with exercises)
+    var daySections = doc.querySelectorAll('.exercise-table, table');
+    if (daySections.length === 0) { return; } // No tables found
+
+    // Find day headers — look for elements before each table
+    var days = [];
+    var dayNames = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
+    var allTables = Array.from(doc.querySelectorAll('table'));
+
+    allTables.forEach(function(table, ti) {
+      // Find the closest preceding header with day info
+      var dayTitle = '';
+      var daySubtitle = '';
+      var warmupText = '';
+      var cooldownText = '';
+
+      // Look backwards for day header
+      var prev = table.previousElementSibling;
+      while (prev) {
+        var text = prev.textContent || '';
+        if (text.indexOf('Calentamiento') >= 0) {
+          // Found warmup section
+          var warmupContent = prev.querySelectorAll('div, p, span');
+          warmupContent.forEach(function(el) {
+            var t = el.textContent.trim();
+            if (t.length > 20 && t.indexOf('Calentamiento') < 0) warmupText = t;
+          });
+          if (!warmupText) {
+            warmupText = text.replace(/Calentamiento/gi, '').trim();
+          }
+        }
+        // Check for day title pattern like "LUNES — Tren Inferior"
+        for (var dn = 0; dn < dayNames.length; dn++) {
+          if (text.toUpperCase().indexOf(dayNames[dn]) >= 0) {
+            dayTitle = text.trim();
+            break;
+          }
+        }
+        if (dayTitle) break;
+        // Also check for numbered day headers like "01"
+        if (prev.querySelector && prev.querySelector('[class*="day"]')) {
+          dayTitle = text.trim();
+          break;
+        }
+        prev = prev.previousElementSibling;
+      }
+
+      // Look after table for cooldown
+      var next = table.nextElementSibling;
+      while (next) {
+        var nextText = next.textContent || '';
+        if (nextText.indexOf('Vuelta a la calma') >= 0 || nextText.indexOf('calma') >= 0) {
+          var cooldownContent = next.querySelectorAll('div, p, span');
+          cooldownContent.forEach(function(el) {
+            var t = el.textContent.trim();
+            if (t.length > 15 && t.indexOf('Vuelta') < 0 && t.indexOf('calma') < 0) cooldownText = t;
+          });
+          if (!cooldownText) cooldownText = nextText.replace(/Vuelta a la calma/gi, '').trim();
+          break;
+        }
+        if (next.querySelector && next.querySelector('table')) break; // Hit next day
+        next = next.nextElementSibling;
+      }
+
+      // Parse exercises from table rows
+      var exercises = [];
+      var rows = table.querySelectorAll('tbody tr, tr');
+      rows.forEach(function(row) {
+        var cells = row.querySelectorAll('td');
+        if (cells.length < 4) return; // Skip header rows
+
+        var nameIdx = 1; // Usually column 2 is exercise name
+        var setsIdx = 2;
+        var repsIdx = 3;
+        var restIdx = 4;
+        var rirIdx = cells.length > 5 ? 5 : -1;
+        var notesIdx = cells.length > 6 ? 6 : (cells.length > 5 ? 5 : -1);
+
+        // If first cell looks like a number, it's the # column
+        var firstCell = (cells[0].textContent || '').trim();
+        if (isNaN(parseInt(firstCell))) {
+          nameIdx = 0; setsIdx = 1; repsIdx = 2; restIdx = 3;
+          rirIdx = cells.length > 4 ? 4 : -1;
+          notesIdx = cells.length > 5 ? 5 : (cells.length > 4 ? 4 : -1);
+        }
+
+        var name = (cells[nameIdx] ? cells[nameIdx].textContent : '').trim();
+        if (!name || name.length < 3) return;
+
+        exercises.push({
+          name: name,
+          sets: (cells[setsIdx] ? cells[setsIdx].textContent : '3').trim(),
+          reps: (cells[repsIdx] ? cells[repsIdx].textContent : '10').trim(),
+          rest: (cells[restIdx] ? cells[restIdx].textContent : '90s').trim(),
+          rpe: rirIdx >= 0 && cells[rirIdx] ? 'RIR ' + cells[rirIdx].textContent.trim() : '',
+          notes: notesIdx >= 0 && cells[notesIdx] ? cells[notesIdx].textContent.trim() : ''
+        });
+      });
+
+      if (exercises.length === 0) return;
+
+      // Extract day name from title
+      var parsedDay = dayNames[ti] || ('DIA ' + (ti + 1));
+      var parsedSubtitle = '';
+      if (dayTitle) {
+        for (var d = 0; d < dayNames.length; d++) {
+          if (dayTitle.toUpperCase().indexOf(dayNames[d]) >= 0) {
+            parsedDay = dayNames[d];
+            var parts = dayTitle.split(/[—–-]/);
+            if (parts.length > 1) parsedSubtitle = parts.slice(1).join(' — ').trim();
+            break;
+          }
+        }
+      }
+
+      // Determine group
+      var sub = parsedSubtitle.toLowerCase();
+      var group = 'full';
+      if (sub.indexOf('superior') >= 0 || sub.indexOf('push') >= 0 || sub.indexOf('pecho') >= 0 || sub.indexOf('empuje') >= 0) group = 'push';
+      else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('glute') >= 0) group = 'legs';
+      else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0 || sub.indexOf('jale') >= 0) group = 'pull';
+
+      days.push({
+        id: 'rise-dia-' + String.fromCharCode(97 + ti),
+        day: parsedDay,
+        label: '// sesion ' + String(ti + 1).padStart(2, '0') + ' de ' + String(allTables.length).padStart(2, '0'),
+        title: 'DIA ' + String.fromCharCode(65 + ti),
+        subtitle: parsedSubtitle || parsedDay,
+        group: group,
+        stats: {
+          volume: exercises.reduce(function(a, e) { return a + (parseInt(e.sets) || 3); }, 0) + ' series',
+          rpe: exercises[0].rpe || '—',
+          focus: group.toUpperCase(),
+          muscles: (parsedSubtitle || parsedDay).toUpperCase()
+        },
+        warmup: warmupText || 'Movilidad articular general + activacion especifica. 8-10 min.',
+        warmupTime: '8 min',
+        exercises: exercises,
+        cooldown: cooldownText || 'Estiramiento estatico 5 min. Respiracion diafragmatica.'
+      });
+    });
+
+    if (days.length === 0) return;
+
+    RISE_TRAINING.days = days;
+
+    // Show toggle and interactive view
+    var toggle = document.getElementById('riseTrainingToggle');
+    if (toggle) toggle.style.display = 'flex';
+    renderRiseTraining();
+    setRiseTrainingView('app');
+  };
+
+  // ── RENDER ──────────────────────────────────────────────
+  function renderRiseTraining() {
+    var container = document.getElementById('rise-trn-days');
+    if (!container) return;
+    container.innerHTML = '';
+
+    var totalEx = 0, doneEx = 0;
+
+    RISE_TRAINING.days.forEach(function(day, di) {
+      var dayEl = document.createElement('div');
+      dayEl.className = 'trn-day';
+      dayEl.id = 'rise-trn-' + day.id;
+      if (di === 0) dayEl.classList.add('expanded');
+
+      totalEx += day.exercises.length;
+      day.exercises.forEach(function(ex, ei) {
+        if (riseCompleted[day.id + '-' + ei]) doneEx++;
+      });
+
+      // Header
+      var header = document.createElement('div');
+      header.className = 'trn-day-header';
+      header.onclick = function() { dayEl.classList.toggle('expanded'); };
+      header.innerHTML =
+        '<div class="trn-day-info">' +
+          '<div class="trn-day-label">' + esc(day.label) + '</div>' +
+          '<div class="trn-day-title">' + esc(day.title) + '</div>' +
+          '<div class="trn-day-subtitle">' + esc(day.subtitle) + '</div>' +
+        '</div>' +
+        '<div class="trn-day-meta">' +
+          '<div class="trn-day-dow">' + esc(day.day) + '</div>' +
+          '<div class="trn-day-count">' + day.exercises.length + ' ejercicios</div>' +
+        '</div>' +
+        '<div class="trn-day-chevron"><i class="fas fa-chevron-down"></i></div>';
+
+      // Body
+      var body = document.createElement('div');
+      body.className = 'trn-day-body';
+
+      // Stats
+      var stats = document.createElement('div');
+      stats.className = 'trn-stats';
+      stats.innerHTML =
+        '<div class="trn-stat"><div class="trn-stat-label">Volumen</div><div class="trn-stat-value">' + esc(day.stats.volume) + '</div></div>' +
+        '<div class="trn-stat"><div class="trn-stat-label">RPE/RIR</div><div class="trn-stat-value">' + esc(day.stats.rpe) + '</div></div>' +
+        '<div class="trn-stat"><div class="trn-stat-label">Enfasis</div><div class="trn-stat-value">' + esc(day.stats.focus) + '</div></div>' +
+        '<div class="trn-stat"><div class="trn-stat-label">Musculos</div><div class="trn-stat-value">' + esc(day.stats.muscles) + '</div></div>';
+      body.appendChild(stats);
+
+      // Warmup
+      var warmup = document.createElement('div');
+      warmup.className = 'trn-warmup';
+      warmup.innerHTML = '<div class="trn-warmup-title"><i class="fas fa-fire"></i> Calentamiento — ' + esc(day.warmupTime) + '</div><div class="trn-warmup-text">' + esc(day.warmup) + '</div>';
+      body.appendChild(warmup);
+
+      // Exercises
+      day.exercises.forEach(function(ex, ei) {
+        var key = day.id + '-' + ei;
+        var isDone = !!riseCompleted[key];
+        var exEl = document.createElement('div');
+        exEl.className = 'trn-ex' + (isDone ? ' done' : '');
+        exEl.id = 'rise-trn-ex-' + key;
+
+        var setsReps = ex.sets + '×' + ex.reps;
+        var restSeconds = parseInt(ex.rest) || 90;
+
+        exEl.innerHTML =
+          '<div class="trn-ex-row">' +
+            '<div class="trn-ex-num">' + String(ei + 1).padStart(2, '0') + '</div>' +
+            '<div class="trn-ex-check" onclick="toggleRiseEx(\'' + key + '\')">\uf00c</div>' +
+            '<div class="trn-ex-details">' +
+              '<div class="trn-ex-name">' + esc(ex.name) + '</div>' +
+              '<div class="trn-ex-tags">' +
+                '<span class="trn-ex-tag">' + esc(setsReps) + '</span>' +
+                (ex.rpe ? '<span class="trn-ex-tag">' + esc(ex.rpe) + '</span>' : '') +
+                '<span class="trn-ex-tag"><i class="fas fa-clock"></i> ' + esc(ex.rest) + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="trn-ex-actions">' +
+              '<button onclick="toggleRiseExNotes(\'' + key + '\')"><i class="fas fa-sticky-note"></i></button>' +
+              '<button onclick="getRiseCoachTip(\'' + key + '\',\'' + esc(ex.name).replace(/'/g, "\\'") + '\')"><i class="fas fa-user-md"></i> Coach</button>' +
+              '<button onclick="startRiseRestTimer(' + restSeconds + ',\'' + esc(ex.name).replace(/'/g, "\\'") + '\')"><i class="fas fa-stopwatch"></i></button>' +
+            '</div>' +
+          '</div>' +
+          (ex.notes ? '<div class="trn-ex-notes"><div class="trn-ex-notes-icon"><i class="fas fa-info-circle"></i></div><div class="trn-ex-notes-text">' + esc(ex.notes) + '</div></div>' : '') +
+          '<div class="trn-ai-bubble" id="rise-trn-ai-' + key + '"></div>';
+
+        body.appendChild(exEl);
+      });
+
+      // Cooldown
+      var cooldown = document.createElement('div');
+      cooldown.className = 'trn-cooldown';
+      cooldown.innerHTML = '<div class="trn-cooldown-title"><i class="fas fa-wind"></i> Vuelta a la Calma</div><div class="trn-cooldown-text">' + esc(day.cooldown) + '</div>';
+      body.appendChild(cooldown);
+
+      dayEl.appendChild(header);
+      dayEl.appendChild(body);
+      container.appendChild(dayEl);
+    });
+
+    updateRiseProgress();
+  }
+
+  // ── INTERACTIONS ──────────────────────────────────────
+  window.toggleRiseEx = function(key) {
+    riseCompleted[key] = !riseCompleted[key];
+    localStorage.setItem('wc_rise_trn_completed', JSON.stringify(riseCompleted));
+    var el = document.getElementById('rise-trn-ex-' + key);
+    if (el) el.classList.toggle('done', riseCompleted[key]);
+    updateRiseProgress();
+  };
+
+  window.toggleRiseExNotes = function(key) {
+    var el = document.getElementById('rise-trn-ex-' + key);
+    if (el) el.classList.toggle('notes-open');
+  };
+
+  function updateRiseProgress() {
+    var total = 0, done = 0;
+    RISE_TRAINING.days.forEach(function(day) {
+      day.exercises.forEach(function(ex, ei) {
+        total++;
+        if (riseCompleted[day.id + '-' + ei]) done++;
+      });
+    });
+    var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    var pctEl = document.getElementById('rise-trn-pct');
+    var fillEl = document.getElementById('rise-trn-fill');
+    var subEl = document.getElementById('rise-trn-sub');
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (subEl) subEl.textContent = done + ' / ' + total + ' ejercicios completados';
+  }
+
+  // ── COACH TIP ──────────────────────────────────────────
+  window.getRiseCoachTip = function(key, exerciseName) {
+    var bubble = document.getElementById('rise-trn-ai-' + key);
+    if (!bubble) return;
+    if (bubble.classList.contains('visible') && !bubble.querySelector('.trn-ai-bubble-loading')) {
+      bubble.classList.remove('visible');
+      return;
+    }
+    bubble.classList.add('visible');
+    bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-loading"><i class="fas fa-spinner"></i> Tu coach esta preparando un tip...</div>';
+
+    var token = localStorage.getItem('wc_token');
+    fetch('/api/ai/exercise-tip.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (token || '') },
+      body: JSON.stringify({ exercise: exerciseName })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok && data.tip) {
+        bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-text">' + esc(data.tip) + '</div>';
+      } else {
+        bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-text">No se pudo obtener el tip. Intenta de nuevo.</div>';
+      }
+    })
+    .catch(function() {
+      bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-text">Error de conexion. Intenta de nuevo.</div>';
+    });
+  };
+
+  // ── REST TIMER ─────────────────────────────────────────
+  window.startRiseRestTimer = function(seconds, exName) {
+    riseTimerSeconds = seconds || 90;
+    var overlay = document.getElementById('rise-trn-timer');
+    var label = document.getElementById('rise-trn-timer-label');
+    if (label) label.textContent = 'Descanso — ' + (exName || '');
+    if (overlay) overlay.classList.add('active');
+    updateRiseTimerDisplay();
+    if (riseTimerInterval) clearInterval(riseTimerInterval);
+    riseTimerInterval = setInterval(function() {
+      riseTimerSeconds--;
+      if (riseTimerSeconds <= 0) {
+        closeRiseRestTimer();
+        try { new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgip2teleVkYl9hYeIkJiVloCWr7iyk3pXUWaJn6SQcE44RWV7hHtxZV5jbHd/hn+MlZiZmY+RlZeXk4qBfICGjI+Ph4B9f4WLj42MiYWFho2VmZqZkYiFiIuOjYmBe3d3fYKFhH9+fn+FjJCTkpCLh4WHio2NiYJ9eXl+g4WEgH5+gIWKj5GRj4uHhYaJjI2KhH97eXx/goOBfn5/gYaMj5CPjYmGhIWIi4uIgn56eHt+gIGAfn5/gYWKj5CQjYqHhYWHiouJhH97eXp9gIGAgH5+f4OIjI+Qj4yJhoWGiIqKh4J9enl7foCBgH5+foGFio2PkI6LiIaFhoiKiYWAfXp5e3+AgYB+fn6BhYqOj5CPjImGhYaIioiEf3t5eXx/gIGAfn5+gYWKjo+Qj4yJhoWFh4qKhoF8eXl7fn+AgH5+foKGio6PkI+MiYaFhYiKioaBfHl5e35/gIB+fn6BhYqOj5CQjYmGhYWHioqGgXx5eXt+f4CAf35+gYWKjo+Qj4yJhoWFiIqJhYF8eXl7fn+AgH5+foGFio2Pj4+MiYaFhYiJiYWAfHp5e35/gIB+fn6BhYqNj5CPjImGhYWHiYmFgHx6eXt+f4B/fn5+gYWKjo+Qj4yJhYWFh4mJhYB8enl7fn+Af35+foGFio6PkI+MiYaFhYeJiYWAfHl5e36Af35+fn6BhYqOj5CPjImGhYWHiomFgHx5eXt+gH9+fn5+gYWKjo+Qj4yJhoWFh4mJhYB8eXl7fn+Af35+foGFio6PkJCMiYaFhYeJiYWAfHl5e35/f35+fn6BhYqOj5CPjImGhYWHiYmFgHx6eXt+f4B/fn5+gYWKjo+Qj42JhoWFh4mJhYB8enl7fn9/fn5+foGFio2Pj4+MiYaFhYeJiYWAfHp5e35/f35+fn6BhYqNj4+PjImGhYWHiYmFgHx6eXt+f39+fn5+gYWKjY+Pj4yJhoWFh4mJhYB8enl7fn+Af35+foGFio6Pj4+MiYaFhYeJiYWAfHp5e35/gH9+fn6BhYqOj4+PjImGhYWHiYmFgHx6eXt+f4B/fn5+gYWKjo+Pj4yJhoWFh4mJhYB8enl7fn+Af35+foGFio6Pj4+MiYaFhYeJiYWAfHp5e35/gH9+fn6BhYqOj5CPjImGhYWHiYmF').play(); } catch(e) {}
+      } else {
+        updateRiseTimerDisplay();
+      }
+    }, 1000);
+  };
+
+  window.closeRiseRestTimer = function() {
+    if (riseTimerInterval) clearInterval(riseTimerInterval);
+    riseTimerInterval = null;
+    var overlay = document.getElementById('rise-trn-timer');
+    if (overlay) overlay.classList.remove('active');
+  };
+
+  function updateRiseTimerDisplay() {
+    var display = document.getElementById('rise-trn-timer-display');
+    if (!display) return;
+    var m = Math.floor(riseTimerSeconds / 60);
+    var s = riseTimerSeconds % 60;
+    display.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  // ── VIEW TOGGLE ────────────────────────────────────────
+  window.setRiseTrainingView = function(view) {
+    var appView = document.getElementById('riseAppView');
+    var pdfView = document.getElementById('trainingPlanContainer');
+    var togApp = document.getElementById('rise-tog-app');
+    var togPdf = document.getElementById('rise-tog-pdf');
+    if (view === 'pdf') {
+      if (appView) appView.style.display = 'none';
+      if (pdfView) pdfView.style.display = 'block';
+      if (togApp) togApp.classList.remove('active');
+      if (togPdf) togPdf.classList.add('active');
+    } else {
+      if (appView) appView.style.display = 'block';
+      if (pdfView) pdfView.style.display = 'none';
+      if (togApp) togApp.classList.add('active');
+      if (togPdf) togPdf.classList.remove('active');
+    }
+  };
+})();
 </script>
 </body>
 </html>

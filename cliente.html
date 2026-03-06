@@ -1207,6 +1207,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   .trn-toggle.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
 
   /* --- Global Progress --- */
+  .trn-demo-banner{display:flex;gap:16px;align-items:flex-start;background:linear-gradient(135deg,rgba(0,217,255,.08),rgba(200,16,46,.06));border:1px solid rgba(0,217,255,.25);padding:18px 22px;margin-bottom:20px}
+  .trn-demo-icon{font-size:22px;color:#00D9FF;flex-shrink:0;margin-top:2px}
+  .trn-demo-text{display:flex;flex-direction:column;gap:6px}
+  .trn-demo-text strong{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--white)}
+  .trn-demo-text span{font-size:13px;color:var(--gray);line-height:1.5}
   .trn-progress-wrap{background:var(--surface);border:1px solid var(--border);padding:18px 22px;margin-bottom:20px}
   .trn-progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
   .trn-progress-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
@@ -1564,7 +1569,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
           <!-- Coach floating hint -->
           <div id="trn-ai-hint" style="display:none">
-            <div class="trn-ai-hint-icon"><i class="fas fa-brain"></i></div>
+            <div class="trn-ai-hint-icon"><i class="fas fa-user-md"></i></div>
             <div class="trn-ai-hint-text">Toca <strong>Coach Tip</strong> en cualquier ejercicio para recibir coaching personalizado en tiempo real.</div>
             <button onclick="this.parentElement.style.display='none'" class="trn-ai-hint-close">&times;</button>
           </div>
@@ -4229,6 +4234,7 @@ document.addEventListener('keydown', function(e) {
   'use strict';
 
   // Demo training data — replaced when real plan loads from API
+  var isUsingDemo = true; // Flag: true until real plan loads
   var TRAINING_DATA = {
     title: 'Mesociclo de Fuerza e Hipertrofia',
     subtitle: '4 Semanas',
@@ -4301,6 +4307,18 @@ document.addEventListener('keydown', function(e) {
     var container = document.getElementById('trn-days-container');
     if (!container) return;
     container.innerHTML = '';
+
+    // Show "plan in preparation" banner when using demo data
+    if (isUsingDemo) {
+      var banner = document.createElement('div');
+      banner.className = 'trn-demo-banner';
+      banner.innerHTML = '<div class="trn-demo-icon"><i class="fas fa-hard-hat"></i></div>' +
+        '<div class="trn-demo-text">' +
+        '<strong>Tu plan personalizado esta en preparacion</strong>' +
+        '<span>Tu coach esta diseñando un programa a tu medida. Mientras tanto, aqui tienes un programa demo para que inicies tu entrenamiento y vayas calentando motores.</span>' +
+        '</div>';
+      container.appendChild(banner);
+    }
 
     var totalEx = 0, doneEx = 0;
 
@@ -4619,6 +4637,7 @@ document.addEventListener('keydown', function(e) {
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(data) {
       if (data && data.plan && data.plan.days && data.plan.days.length > 0) {
+        isUsingDemo = false;
         // Map API plan to our format
         TRAINING_DATA.title = data.plan.titulo || data.plan.title || TRAINING_DATA.title;
         TRAINING_DATA.subtitle = data.plan.subtitulo || data.plan.subtitle || TRAINING_DATA.subtitle;
