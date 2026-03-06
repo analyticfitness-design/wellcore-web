@@ -79,53 +79,53 @@ $emailHtml = <<<HTML
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tu Plan RISE - {$planLabel} | WellCore Fitness</title>
 </head>
-<body style="margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%">
+<body style="margin:0;padding:0;background:#0A0A0A;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%">
 
 <!-- Preheader -->
 <div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;overflow:hidden">
 {$firstName}, tu plan de {$planLabel} RISE esta adjunto — abrelo en tu navegador para verlo completo.
 </div>
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:20px 10px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;padding:20px 10px">
 <tr><td align="center">
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border:1px solid #e0e0e0">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#111114;border:1px solid #2A2A2E">
 
 <!-- Red top bar -->
 <tr><td style="background:#C8102E;padding:4px 0;font-size:0;line-height:0">&nbsp;</td></tr>
 
 <!-- Logo -->
-<tr><td style="padding:28px 32px 16px;text-align:center;background:#ffffff">
+<tr><td style="padding:28px 32px 16px;text-align:center;background:#111114">
   <table role="presentation" cellpadding="0" cellspacing="0" align="center">
   <tr>
-    <td style="font-family:Arial,Helvetica,sans-serif;font-size:26px;font-weight:700;color:#222;letter-spacing:3px">WELL</td>
+    <td style="font-family:Arial,Helvetica,sans-serif;font-size:26px;font-weight:700;color:#FFFFFF;letter-spacing:3px">WELL</td>
     <td style="font-family:Arial,Helvetica,sans-serif;font-size:26px;font-weight:700;color:#C8102E;letter-spacing:3px">[CORE]</td>
   </tr>
   </table>
-  <div style="font-size:9px;color:#999;letter-spacing:3px;margin-top:4px;text-transform:uppercase">RETO RISE &middot; 30 DIAS</div>
+  <div style="font-size:9px;color:#71717A;letter-spacing:3px;margin-top:4px;text-transform:uppercase">RETO RISE &middot; 30 DIAS</div>
 </td></tr>
 
 <!-- Divider -->
-<tr><td style="padding:0 32px"><div style="border-top:1px solid #eee"></div></td></tr>
+<tr><td style="padding:0 32px"><div style="border-top:1px solid #2A2A2E"></div></td></tr>
 
 <!-- Greeting -->
-<tr><td style="padding:24px 32px 16px">
+<tr><td style="padding:24px 32px 16px;background:#111114">
   <div style="font-size:11px;color:#C8102E;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px">TU PLAN DE {$planLabel}</div>
-  <div style="font-size:22px;font-weight:700;color:#222;line-height:1.3;margin-bottom:16px">
+  <div style="font-size:22px;font-weight:700;color:#FFFFFF;line-height:1.3;margin-bottom:16px">
     {$firstName}, tu programa esta listo
   </div>
-  <div style="font-size:14px;color:#555;line-height:1.7;margin-bottom:12px">
-    Tu plan completo de <strong style="color:#222">{$planLabel}</strong> va adjunto como archivo HTML. Abrelo en cualquier navegador para verlo exactamente como en la plataforma &mdash; <strong style="color:#222">funciona sin conexion a internet.</strong>
+  <div style="font-size:14px;color:#D4D4D8;line-height:1.7;margin-bottom:12px">
+    Tu plan completo de <strong style="color:#FFFFFF">{$planLabel}</strong> va adjunto como archivo HTML. Abrelo en cualquier navegador para verlo exactamente como en la plataforma &mdash; <strong style="color:#FFFFFF">funciona sin conexion a internet.</strong>
   </div>
 </td></tr>
 
 <!-- Attachment instruction -->
-<tr><td style="padding:0 32px 20px">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#111;border:1px solid #333">
+<tr><td style="padding:0 32px 20px;background:#111114">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;border:1px solid #2A2A2E;border-top:3px solid #C8102E">
   <tr><td style="padding:20px 24px;text-align:center">
     <div style="font-size:28px;margin-bottom:10px">&#128206;</div>
-    <div style="font-family:Arial,sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:6px">{$attachFilename}</div>
-    <div style="font-size:12px;color:#999;line-height:1.5">
+    <div style="font-family:Arial,sans-serif;font-size:14px;font-weight:700;color:#FFFFFF;margin-bottom:6px">{$attachFilename}</div>
+    <div style="font-size:12px;color:#71717A;line-height:1.5">
       Descarga el archivo adjunto y abrelo en Chrome, Safari o cualquier navegador
     </div>
   </td></tr>
@@ -133,11 +133,11 @@ $emailHtml = <<<HTML
 </td></tr>
 
 <!-- Steps -->
-<tr><td style="padding:0 32px 20px">
+<tr><td style="padding:0 32px 20px;background:#111114">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
   <tr>
-    <td style="padding:10px 14px;background:#fafafa;border-left:3px solid #C8102E;margin-bottom:6px">
-      <div style="font-size:12px;color:#555;line-height:1.6">
+    <td style="padding:12px 16px;background:#0A0A0A;border-left:3px solid #C8102E">
+      <div style="font-size:12px;color:#D4D4D8;line-height:1.8">
         <strong style="color:#C8102E">1.</strong> Descarga el archivo adjunto<br>
         <strong style="color:#C8102E">2.</strong> Abrelo en tu navegador (Chrome, Safari, etc.)<br>
         <strong style="color:#C8102E">3.</strong> Guardalo en favoritos para acceso rapido en el gym
@@ -148,25 +148,25 @@ $emailHtml = <<<HTML
 </td></tr>
 
 <!-- Divider -->
-<tr><td style="padding:0 32px"><div style="border-top:1px solid #eee"></div></td></tr>
+<tr><td style="padding:0 32px;background:#111114"><div style="border-top:1px solid #2A2A2E"></div></td></tr>
 
 <!-- CTA -->
-<tr><td style="padding:24px 32px" align="center">
-  <div style="font-size:13px;color:#777;margin-bottom:14px">Tambien puedes ver tu plan en el dashboard:</div>
+<tr><td style="padding:24px 32px;background:#111114" align="center">
+  <div style="font-size:13px;color:#71717A;margin-bottom:14px">Tambien puedes ver tu plan en el dashboard:</div>
   <a href="{$dashboardUrl}" target="_blank" style="display:inline-block;background:#C8102E;color:#ffffff;text-decoration:none;padding:14px 36px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase">
     IR A MI DASHBOARD &rarr;
   </a>
 </td></tr>
 
 <!-- Footer -->
-<tr><td style="padding:18px 32px 14px;text-align:center;border-top:1px solid #eee;background:#fafafa">
-  <div style="font-size:11px;color:#999;line-height:1.8">
-    <strong style="color:#666">WellCore Fitness</strong><br>
-    <a href="https://wellcorefitness.com" style="color:#999;text-decoration:none">wellcorefitness.com</a> &nbsp;|&nbsp;
-    <a href="mailto:info@wellcorefitness.com" style="color:#999;text-decoration:none">info@wellcorefitness.com</a><br>
-    <a href="https://wa.me/573124904720" style="color:#999;text-decoration:none">WhatsApp: +57 312 490 4720</a>
+<tr><td style="padding:18px 32px 14px;text-align:center;border-top:1px solid #2A2A2E;background:#0A0A0A">
+  <div style="font-size:11px;color:#71717A;line-height:1.8">
+    <strong style="color:#D4D4D8">WellCore Fitness</strong><br>
+    <a href="https://wellcorefitness.com" style="color:#71717A;text-decoration:none">wellcorefitness.com</a> &nbsp;|&nbsp;
+    <a href="mailto:info@wellcorefitness.com" style="color:#71717A;text-decoration:none">info@wellcorefitness.com</a><br>
+    <a href="https://wa.me/573124904720" style="color:#71717A;text-decoration:none">WhatsApp: +57 312 490 4720</a>
   </div>
-  <div style="font-size:10px;color:#bbb;margin-top:8px;letter-spacing:1px">
+  <div style="font-size:10px;color:#52525B;margin-top:8px;letter-spacing:1px">
     &copy; {$year} WellCore Fitness. Todos los derechos reservados.
   </div>
 </td></tr>
