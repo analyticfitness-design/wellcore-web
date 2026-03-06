@@ -97,6 +97,10 @@ if (file_put_contents($filepath, $html) === false) {
     respondError('No se pudo escribir el archivo HTML', 500);
 }
 
+// ── Guardar HTML en columna content para que el portal cliente lo sirva ──
+$db->prepare("UPDATE assigned_plans SET content = ? WHERE id = ?")
+   ->execute([$html, $plan['id']]);
+
 // ── Activar el plan en DB (desactivar anteriores, activar este) ──
 $db->prepare("UPDATE assigned_plans SET active = 0 WHERE client_id = ? AND plan_type = ?")
    ->execute([$plan['client_id'], $plan['plan_type']]);
