@@ -58,28 +58,15 @@ if (!$clientEmail || !filter_var($clientEmail, FILTER_VALIDATE_EMAIL)) {
 }
 
 $planLabel = $type === 'training' ? 'Entrenamiento' : 'Nutricion';
-$planHtml  = $plan['content'];
 
-// ── Limpiar el plan HTML para email ──────────────────────────
-// 1. Remover scripts, botones, style blocks
-$planHtml = preg_replace('/<script[^>]*>.*?<\/script>/is', '', $planHtml);
-$planHtml = preg_replace('/<button[^>]*>.*?<\/button>/is', '', $planHtml);
-$planHtml = preg_replace('/<style[^>]*>.*?<\/style>/is', '', $planHtml);
-// 2. Extraer solo el body content
-if (preg_match('/<body[^>]*>(.*)<\/body>/is', $planHtml, $m)) {
-    $planHtml = $m[1];
-}
-// 3. Strip ALL inline styles — email clients mangle them anyway
-$planHtml = preg_replace('/\s*style="[^"]*"/i', '', $planHtml);
-$planHtml = preg_replace('/\s*class="[^"]*"/i', '', $planHtml);
-// 4. Make tables email-friendly with borders
-$planHtml = str_replace('<table', '<table cellpadding="8" cellspacing="0" border="1" style="border-collapse:collapse;border-color:#ddd;width:100%;font-size:13px;margin:16px 0"', $planHtml);
-$planHtml = str_replace('<th', '<th style="background:#C8102E;color:#fff;padding:8px 10px;text-align:left;font-size:12px"', $planHtml);
-$planHtml = str_replace('<td', '<td style="padding:8px 10px;border:1px solid #e0e0e0;font-size:13px;color:#333;vertical-align:top"', $planHtml);
-// 5. Make headings visible
-$planHtml = preg_replace('/<h([1-3])/', '<h$1 style="color:#C8102E;font-family:Arial,sans-serif;margin:20px 0 8px"', $planHtml);
-// 6. Make strong/bold red for emphasis
-$planHtml = str_replace('<strong', '<strong style="color:#222"', $planHtml);
+// ── Preparar el HTML adjunto (plan completo, idéntico a la plataforma) ──
+$attachmentHtml = $plan['content'];
+// Remover botón de PDF y scripts de descarga (no necesarios offline)
+$attachmentHtml = preg_replace('/<button[^>]*class="print-btn"[^>]*>.*?<\/button>/is', '', $attachmentHtml);
+// Remover script de iframe-detection (no aplica en archivo standalone)
+$attachmentHtml = preg_replace('/<script>\s*if\s*\(\s*window\s*!==\s*window\.top\s*\).*?<\/script>/is', '', $attachmentHtml);
+
+$attachFilename = "Plan-RISE-{$planLabel}-{$firstName}.html";
 
 $dashboardUrl = 'https://wellcorefitness.com/rise-dashboard.html';
 $year = date('Y');
@@ -96,7 +83,7 @@ $emailHtml = <<<HTML
 
 <!-- Preheader -->
 <div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;overflow:hidden">
-{$firstName}, aqui tienes tu plan de {$planLabel} RISE para acceder sin conexion.
+{$firstName}, tu plan de {$planLabel} RISE esta adjunto — abrelo en tu navegador para verlo completo.
 </div>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:20px 10px">
@@ -122,33 +109,42 @@ $emailHtml = <<<HTML
 <tr><td style="padding:0 32px"><div style="border-top:1px solid #eee"></div></td></tr>
 
 <!-- Greeting -->
-<tr><td style="padding:24px 32px 12px">
+<tr><td style="padding:24px 32px 16px">
   <div style="font-size:11px;color:#C8102E;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px">TU PLAN DE {$planLabel}</div>
-  <div style="font-size:20px;font-weight:700;color:#222;line-height:1.3;margin-bottom:14px">
-    {$firstName}, aqui esta tu programa
+  <div style="font-size:22px;font-weight:700;color:#222;line-height:1.3;margin-bottom:16px">
+    {$firstName}, tu programa esta listo
   </div>
-  <div style="font-size:14px;color:#555;line-height:1.7;margin-bottom:8px">
-    Guarda este correo para acceder a tu plan de <strong style="color:#222">{$planLabel}</strong> en cualquier momento, incluso sin conexion a internet.
+  <div style="font-size:14px;color:#555;line-height:1.7;margin-bottom:12px">
+    Tu plan completo de <strong style="color:#222">{$planLabel}</strong> va adjunto como archivo HTML. Abrelo en cualquier navegador para verlo exactamente como en la plataforma &mdash; <strong style="color:#222">funciona sin conexion a internet.</strong>
   </div>
 </td></tr>
 
-<!-- Tip box -->
+<!-- Attachment instruction -->
 <tr><td style="padding:0 32px 20px">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fef2f2;border-left:3px solid #C8102E">
-  <tr><td style="padding:12px 16px">
-    <div style="font-size:12px;color:#555;line-height:1.5">
-      <strong style="color:#C8102E">TIP:</strong> Marca este email como favorito para encontrarlo rapidamente cuando lo necesites en el gym.
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#111;border:1px solid #333">
+  <tr><td style="padding:20px 24px;text-align:center">
+    <div style="font-size:28px;margin-bottom:10px">&#128206;</div>
+    <div style="font-family:Arial,sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:6px">{$attachFilename}</div>
+    <div style="font-size:12px;color:#999;line-height:1.5">
+      Descarga el archivo adjunto y abrelo en Chrome, Safari o cualquier navegador
     </div>
   </td></tr>
   </table>
 </td></tr>
 
-<!-- Divider -->
-<tr><td style="padding:0 32px"><div style="border-top:1px solid #eee"></div></td></tr>
-
-<!-- PLAN CONTENT -->
-<tr><td style="padding:20px 24px;font-size:14px;color:#333;line-height:1.7">
-{$planHtml}
+<!-- Steps -->
+<tr><td style="padding:0 32px 20px">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="padding:10px 14px;background:#fafafa;border-left:3px solid #C8102E;margin-bottom:6px">
+      <div style="font-size:12px;color:#555;line-height:1.6">
+        <strong style="color:#C8102E">1.</strong> Descarga el archivo adjunto<br>
+        <strong style="color:#C8102E">2.</strong> Abrelo en tu navegador (Chrome, Safari, etc.)<br>
+        <strong style="color:#C8102E">3.</strong> Guardalo en favoritos para acceso rapido en el gym
+      </div>
+    </td>
+  </tr>
+  </table>
 </td></tr>
 
 <!-- Divider -->
@@ -156,7 +152,7 @@ $emailHtml = <<<HTML
 
 <!-- CTA -->
 <tr><td style="padding:24px 32px" align="center">
-  <div style="font-size:13px;color:#777;margin-bottom:14px">Tambien puedes ver tu plan completo en el dashboard:</div>
+  <div style="font-size:13px;color:#777;margin-bottom:14px">Tambien puedes ver tu plan en el dashboard:</div>
   <a href="{$dashboardUrl}" target="_blank" style="display:inline-block;background:#C8102E;color:#ffffff;text-decoration:none;padding:14px 36px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase">
     IR A MI DASHBOARD &rarr;
   </a>
@@ -183,7 +179,13 @@ $emailHtml = <<<HTML
 HTML;
 
 $subject = "Tu Plan RISE de {$planLabel} — WellCore Fitness";
-$result  = sendEmail($clientEmail, $subject, $emailHtml);
+$result  = sendEmail($clientEmail, $subject, $emailHtml, '', [
+    [
+        'filename' => $attachFilename,
+        'content'  => $attachmentHtml,
+        'mime'     => 'text/html',
+    ],
+]);
 
 if (!$result['ok']) {
     respondError('Error al enviar email: ' . ($result['error'] ?? 'desconocido'), 500);
