@@ -2027,8 +2027,11 @@
     var token = localStorage.getItem('wc_token');
     var headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = 'Bearer ' + token;
-    var ext = path.endsWith('.php') ? '' : '.php';
-    return fetch('/api' + path + ext, Object.assign({ method: 'GET', headers: headers }, opts || {}));
+    var qIdx = path.indexOf('?');
+    var basePath = qIdx >= 0 ? path.slice(0, qIdx) : path;
+    var qs = qIdx >= 0 ? path.slice(qIdx) : '';
+    var ext = basePath.endsWith('.php') ? '' : '.php';
+    return fetch('/api' + basePath + ext + qs, Object.assign({ method: 'GET', headers: headers }, opts || {}));
   }
 
   /* ─── LOAD FROM API ─── */
@@ -2323,7 +2326,7 @@
     var tbody = document.getElementById('planesTableBody');
     if (!tbody) return;
 
-    apiFetch('/admin/ai-generations.php?status=completed&type=rise')
+    apiFetch('/admin/ai-generations?status=completed&type=rise')
       .then(function(r) { return r.json(); })
       .then(function(d) {
         tbody.textContent = '';
