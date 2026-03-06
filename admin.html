@@ -2360,7 +2360,7 @@
     var tbody = document.getElementById('planesTableBody');
     if (!tbody) return;
 
-    apiFetch('/admin/ai-generations?status=completed,generating&type=rise')
+    apiFetch('/admin/ai-generations?status=completed,generating,approved&type=rise')
       .then(function(r) { return r.json(); })
       .then(function(d) {
         tbody.textContent = '';
@@ -2621,20 +2621,11 @@
 
   /* ─── PLANES IA: APROBAR ─── */
   function approvePlan(genId, planId, estadoTdEl) {
-    // 1. Marcar generación como approved
-    apiFetch('/admin/ai-generation?id=' + genId, {
-      method: 'PUT',
+    // render-plan.php hace todo: genera HTML, activa plan, marca generación approved
+    apiFetch('/ai/render-plan', {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'approved' })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function() {
-      // 2. Renderizar y activar el plan HTML
-      return apiFetch('/ai/render-plan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan_id: planId })
-      });
+      body: JSON.stringify({ plan_id: planId })
     })
     .then(function(r) { return r.json(); })
     .then(function(d) {
@@ -2646,7 +2637,7 @@
           sp.textContent = 'Activo';
           estadoTdEl.appendChild(sp);
         }
-        // Recargar lista
+        showToast('Plan aprobado y activado', 'success');
         setTimeout(loadPendingPlans, 500);
       } else {
         showToast('Error al renderizar plan: ' + (d.error || 'desconocido'), 'error');

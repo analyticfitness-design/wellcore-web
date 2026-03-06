@@ -84,7 +84,10 @@ $html = match($plan['plan_type']) {
 // ── Guardar archivo HTML ──────────────────────────────────────
 $planesDir = __DIR__ . '/../../planes/';
 if (!is_dir($planesDir)) {
-    respondError('Directorio planes/ no encontrado', 500);
+    @mkdir($planesDir, 0755, true);
+    if (!is_dir($planesDir)) {
+        respondError('No se pudo crear directorio planes/', 500);
+    }
 }
 
 $filename = $plan['client_code'] . '-' . $plan['plan_type'] . '.html';
