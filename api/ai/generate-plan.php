@@ -1,5 +1,7 @@
 <?php
 declare(strict_types=1);
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 /**
  * WellCore Fitness — F4: Generador de Planes con Pipeline IA
  * ============================================================
@@ -97,9 +99,11 @@ try {
 }
 
 // ── ETAPA 2: Generacion del plan (Router decide) ─────────────
+// ENUM in ai_generations doesn't include 'rise' — map to 'entrenamiento'
+$genType = ($planType === 'rise') ? 'entrenamiento' : $planType;
 $genId = ai_save_generation([
     'client_id' => $clientId,
-    'type'      => $planType,
+    'type'      => $genType,
     'status'    => 'pending',
 ]);
 
