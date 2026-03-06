@@ -857,6 +857,10 @@
       transform: translateY(0);
       opacity: 1;
     }
+    .toast.toast-error {
+      border-color: #EF4444;
+      color: #EF4444;
+    }
 
     /* ─── ACTIVITY LIST ─── */
     .activity-list { padding: 4px 0; }
@@ -1676,11 +1680,13 @@
   }
 
   /* ─── TOAST ─── */
-  function showToast(msg) {
+  function showToast(msg, type) {
     const t = document.getElementById('toast');
     document.getElementById('toastMsg').textContent = msg;
+    t.classList.remove('toast-error');
+    if (type === 'error') t.classList.add('toast-error');
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3200);
+    setTimeout(() => { t.classList.remove('show'); t.classList.remove('toast-error'); }, 3200);
   }
 
   /* ─── HELPERS ─── */
@@ -2147,7 +2153,7 @@
         async function submitTicketReply(){
             if(!_rtkId) return;
             var text=(document.getElementById('ticketReplyText').value||'').trim();
-            if(text.length<5){alert('Escribe una respuesta');return;}
+            if(text.length<5){showToast('Escribe una respuesta','error');return;}
             var token=localStorage.getItem('wc_token')||'';
             try{
                 var r=await fetch('/api/admin/rise-tickets.php',{
@@ -2156,8 +2162,8 @@
                 });
                 var d=await r.json();
                 if(d.ok){document.getElementById('ticketReplyModal').style.display='none';loadRiseTickets();}
-                else alert(d.error||'Error');
-            }catch(e){alert('Error de red');}
+                else showToast(d.error||'Error','error');
+            }catch(e){showToast('Error de red','error');}
         }
         async function updateTicketStatus(tid,status){
             var token=localStorage.getItem('wc_token')||'';
@@ -2313,13 +2319,13 @@
         loadPendingPlans();
       } else {
         btn.textContent = origText;
-        alert('Error: ' + (d.error || 'No se pudo generar el plan'));
+        showToast('Error: ' + (d.error || 'No se pudo generar el plan'), 'error');
       }
     })
     .catch(function(err) {
       btn.textContent = origText;
       btn.disabled = false;
-      alert('Error de red al generar plan: ' + err.message);
+      showToast('Error de red al generar plan: ' + err.message, 'error');
     });
   }
 
@@ -2482,11 +2488,11 @@
         // Recargar lista
         setTimeout(loadPendingPlans, 500);
       } else {
-        alert('Error al renderizar plan: ' + (d.error || 'desconocido'));
+        showToast('Error al renderizar plan: ' + (d.error || 'desconocido'), 'error');
       }
     })
     .catch(function(err) {
-      alert('Error aprobando plan: ' + err.message);
+      showToast('Error aprobando plan: ' + err.message, 'error');
     });
   }
 
@@ -2506,7 +2512,7 @@
       setTimeout(loadPendingPlans, 500);
     })
     .catch(function(err) {
-      alert('Error rechazando plan: ' + err.message);
+      showToast('Error rechazando plan: ' + err.message, 'error');
     });
   }
 
