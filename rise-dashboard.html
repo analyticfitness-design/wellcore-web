@@ -1429,41 +1429,77 @@
                                 <li>Usa un <strong style="color:#fff;">temporizador o espejo</strong> para consistencia</li>
                             </ul>
                         </div>
-                        <div style="display:flex;gap:16px;flex-wrap:wrap;">
-                            <div style="flex:0 0 120px;display:flex;flex-direction:column;align-items:center;gap:10px;">
-                                <svg width="120" height="200" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="60" cy="18" r="12" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <rect x="54" y="29" width="12" height="8" rx="3" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <path d="M30,42 C30,38 48,36 60,36 C72,36 90,38 90,42 L87,58 L83,74 Q80,82 78,88 L75,100 L45,100 L42,88 Q40,82 37,74 L33,58Z" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <path d="M30,42 C25,45 22,56 20,68 C18,80 20,92 23,102 L28,102 C26,92 24,80 26,68 C28,56 31,47 35,42Z" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <path d="M90,42 C95,45 98,56 100,68 C102,80 100,92 97,102 L92,102 C94,92 96,80 94,68 C92,56 89,47 85,42Z" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <path d="M45,100 C44,112 42,126 41,138 C40,148 40,156 42,164 L50,164 C50,156 52,148 53,138 C54,126 56,112 58,100Z" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <path d="M75,100 C76,112 78,126 79,138 C80,148 80,156 78,164 L70,164 C70,156 68,148 67,138 C66,126 64,112 62,100Z" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <path d="M42,164 C40,174 39,184 39,192 L49,192 C49,184 50,174 50,164Z" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <path d="M78,164 C80,174 81,184 81,192 L71,192 C71,184 70,174 70,164Z" fill="#222" stroke="#555" stroke-width="0.8"/>
-                                    <line x1="10" y1="70" x2="110" y2="70" stroke="#E31E24" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.5"/>
-                                    <text x="60" y="15" fill="#E31E24" font-size="8" text-anchor="middle" font-family="monospace" font-weight="bold">FRENTE</text>
-                                    <path d="M5,35 L5,165" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" stroke-dasharray="2,2"/>
-                                    <path d="M115,35 L115,165" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" stroke-dasharray="2,2"/>
-                                </svg>
-                            </div>
-                            <div style="flex:1;min-width:160px;display:flex;flex-direction:column;gap:10px;">
-                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #E31E24;">
+                        <!-- 3 figuras: Frente, Perfil, Espalda — cada una con su card -->
+                        <div style="display:flex;flex-direction:column;gap:12px;">
+                            <!-- FRENTE -->
+                            <div style="display:flex;gap:16px;align-items:center;background:#1a1a1d;border-radius:8px;padding:14px;border-left:3px solid #E31E24;">
+                                <div style="flex-shrink:0;width:60px;height:104px;background:#1a0a0c;border:1.5px solid #E31E24;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                                    <svg width="46" height="90" viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="30" cy="12" r="8" fill="none" stroke="#fff" stroke-width="2" opacity="0.7"/>
+                                        <rect x="26" y="19" width="8" height="5" rx="3" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M16,28 C16,25 22,22 30,22 C38,22 44,25 44,28 L42,38 L40,46 Q38,50 37,54 L36,60 L24,60 L23,54 Q22,50 20,46 L18,38Z" fill="none" stroke="#fff" stroke-width="2" opacity="0.7"/>
+                                        <path d="M16,28 C12,31 10,38 9,44 C8,50 9,54 11,58 L15,58" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M44,28 C48,31 50,38 51,44 C52,50 51,54 49,58 L45,58" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M24,60 L23,72 L22,82 L21,92 L27,92 L28,82 L29,72 L30,60" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M36,60 L37,72 L38,82 L39,92 L33,92 L32,82 L31,72 L30,60" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <ellipse cx="24" cy="96" rx="5" ry="3" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.4"/>
+                                        <ellipse cx="36" cy="96" rx="5" ry="3" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.4"/>
+                                        <text x="30" y="108" fill="#E31E24" font-size="8" text-anchor="middle" font-family="monospace" font-weight="bold">FRENTE</text>
+                                    </svg>
+                                </div>
+                                <div style="flex:1;">
                                     <span style="background:#E31E24;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">1 · FRENTE</span>
                                     <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">De frente a la camara, <strong style="color:#fff;">brazos relajados a los lados</strong>. Pies separados al ancho de los hombros. Mirada al frente.</p>
                                 </div>
-                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #FF6B35;">
+                            </div>
+                            <!-- PERFIL -->
+                            <div style="display:flex;gap:16px;align-items:center;background:#1a1a1d;border-radius:8px;padding:14px;border-left:3px solid #FF6B35;">
+                                <div style="flex-shrink:0;width:60px;height:104px;background:#1a1008;border:1.5px solid #FF6B35;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                                    <svg width="46" height="90" viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="32" cy="12" r="8" fill="none" stroke="#fff" stroke-width="2" opacity="0.7"/>
+                                        <path d="M36,12 L42,11" stroke="#fff" stroke-width="1.2" opacity="0.4"/>
+                                        <rect x="29" y="19" width="6" height="5" rx="3" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M24,28 C24,25 27,22 32,22 C37,22 38,25 38,28 L37,38 L36,46 Q35,50 35,54 L35,60 L27,60 L27,54 Q27,50 26,46 L25,38Z" fill="none" stroke="#fff" stroke-width="2" opacity="0.7"/>
+                                        <path d="M24,28 C20,31 18,38 17,44 C16,50 17,54 19,58 L23,58" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M38,28 C40,30 41,34 41,38 L40,46 L39,54 L39,58 L37,58" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.35"/>
+                                        <path d="M27,60 L26,72 L26,82 L26,92 L30,92 L30,82 L30,72 L30,60" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M35,60 L36,72 L36,82 L36,92 L32,92 L32,82 L32,72 L32,60" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <ellipse cx="28" cy="96" rx="5" ry="3" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.4"/>
+                                        <ellipse cx="34" cy="96" rx="4" ry="2.5" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.4"/>
+                                        <text x="30" y="108" fill="#FF6B35" font-size="8" text-anchor="middle" font-family="monospace" font-weight="bold">PERFIL</text>
+                                    </svg>
+                                </div>
+                                <div style="flex:1;">
                                     <span style="background:#FF6B35;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">2 · PERFIL</span>
                                     <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Gira 90 grados, <strong style="color:#fff;">lado izquierdo hacia la camara</strong>. Brazos relajados. Postura natural sin sacar pecho ni abdomen.</p>
                                 </div>
-                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #A855F7;">
+                            </div>
+                            <!-- ESPALDA -->
+                            <div style="display:flex;gap:16px;align-items:center;background:#1a1a1d;border-radius:8px;padding:14px;border-left:3px solid #A855F7;">
+                                <div style="flex-shrink:0;width:60px;height:104px;background:#120e1a;border:1.5px solid #A855F7;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                                    <svg width="46" height="90" viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="30" cy="12" r="8" fill="none" stroke="#fff" stroke-width="2" opacity="0.7"/>
+                                        <rect x="26" y="19" width="8" height="5" rx="3" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M16,28 C16,25 22,22 30,22 C38,22 44,25 44,28 L42,38 L40,46 Q38,50 37,54 L36,60 L24,60 L23,54 Q22,50 20,46 L18,38Z" fill="none" stroke="#fff" stroke-width="2" opacity="0.7"/>
+                                        <line x1="30" y1="24" x2="30" y2="58" stroke="#fff" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+                                        <path d="M16,28 C12,31 10,38 9,44 C8,50 9,54 11,58 L15,58" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M44,28 C48,31 50,38 51,44 C52,50 51,54 49,58 L45,58" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M24,60 L23,72 L22,82 L21,92 L27,92 L28,82 L29,72 L30,60" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <path d="M36,60 L37,72 L38,82 L39,92 L33,92 L32,82 L31,72 L30,60" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+                                        <ellipse cx="24" cy="96" rx="5" ry="3" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.4"/>
+                                        <ellipse cx="36" cy="96" rx="5" ry="3" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.4"/>
+                                        <text x="30" y="108" fill="#A855F7" font-size="8" text-anchor="middle" font-family="monospace" font-weight="bold">ESPALDA</text>
+                                    </svg>
+                                </div>
+                                <div style="flex:1;">
                                     <span style="background:#A855F7;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">3 · ESPALDA</span>
                                     <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">De espaldas a la camara, <strong style="color:#fff;">misma posicion que la frontal</strong>. Permite evaluar desarrollo de espalda y gluteos.</p>
                                 </div>
-                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #00D9FF;">
-                                    <span style="background:#00D9FF;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">TIP</span>
-                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Toma las fotos <strong style="color:#fff;">cada 7-10 dias</strong> para notar cambios reales. La consistencia en condiciones es mas importante que la frecuencia.</p>
-                                </div>
+                            </div>
+                            <!-- TIP -->
+                            <div style="background:#1a1a1d;border-radius:8px;padding:11px 14px;border-left:3px solid #00D9FF;">
+                                <span style="background:#00D9FF;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">TIP</span>
+                                <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Toma las fotos <strong style="color:#fff;">cada 7-10 dias</strong> para notar cambios reales. La consistencia en condiciones es mas importante que la frecuencia.</p>
                             </div>
                         </div>
                     </div>
@@ -1798,7 +1834,7 @@
                     'letter-spacing:.06em;color:#ffffff',
                     'white-space:nowrap;user-select:none'
                 ].join(';');
-                span.textContent = name.toUpperCase() + '  ·  ' + (email || 'WELLCORE')  + '  ·  WWW.WELLCOREFITNESS.COM';
+                span.textContent = name.toUpperCase() + '  ·  WWW.WELLCOREFITNESS.COM';
                 inner.appendChild(span);
             }
 
