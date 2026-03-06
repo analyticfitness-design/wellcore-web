@@ -1194,6 +1194,168 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   @keyframes preloaderFill{0%{width:0}100%{width:100%}}
   .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#C8102E;transform:scaleX(0);transition:transform .3s;transform-origin:left}
   .stat-card:hover::before{transform:scaleX(1)}
+
+  /* ============================================================
+     INTERACTIVE TRAINING INTERFACE — WellCore App Mode
+     Technologies: CSS :has(), Container Queries, View Transitions,
+     Web Animations API, Popover API, CSS Nesting
+  ============================================================ */
+
+  /* --- View Toggle --- */
+  .trn-toggle{background:var(--surface);border:1px solid var(--border);color:var(--gray);padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+  .trn-toggle:hover{border-color:rgba(255,255,255,.15);color:var(--white)}
+  .trn-toggle.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+
+  /* --- Global Progress --- */
+  .trn-progress-wrap{background:var(--surface);border:1px solid var(--border);padding:18px 22px;margin-bottom:20px}
+  .trn-progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .trn-progress-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
+  .trn-progress-pct{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--white)}
+  .trn-progress-bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+  .trn-progress-fill{height:100%;background:linear-gradient(90deg,var(--red),#ff4d5a);border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+  .trn-progress-sub{font-size:11px;color:var(--gray);margin-top:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.03em}
+
+  /* --- Loading Skeleton --- */
+  .trn-loading{display:flex;flex-direction:column;align-items:center;gap:14px;padding:60px 0;color:var(--gray);font-size:13px}
+  .trn-loading-pulse{width:40px;height:40px;border-radius:50%;background:var(--red-dim);animation:trnPulse 1.2s ease-in-out infinite}
+  @keyframes trnPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.3);opacity:1}}
+
+  /* --- Day Card (Accordion) --- */
+  .trn-day{background:var(--surface);border:1px solid var(--border);margin-bottom:12px;transition:all .3s;container-type:inline-size}
+  .trn-day:hover{border-color:rgba(255,255,255,.12)}
+  .trn-day.expanded{border-color:rgba(200,16,46,.3);box-shadow:0 4px 24px rgba(200,16,46,.08)}
+  .trn-day:has(.trn-ex-check:checked){border-left:3px solid var(--green)}
+
+  .trn-day-header{display:flex;align-items:center;padding:18px 22px;cursor:pointer;gap:16px;user-select:none;transition:background .2s}
+  .trn-day-header:hover{background:rgba(255,255,255,.02)}
+  .trn-day-header:active{transform:scale(.995)}
+
+  .trn-day-color{width:4px;height:48px;border-radius:2px;flex-shrink:0}
+  .trn-day-color.push{background:var(--red)}
+  .trn-day-color.pull{background:var(--accent)}
+  .trn-day-color.legs{background:var(--green)}
+  .trn-day-color.full{background:var(--gold)}
+
+  .trn-day-info{flex:1;min-width:0}
+  .trn-day-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;margin-bottom:4px}
+  .trn-day-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.08em;color:var(--white);line-height:1}
+  .trn-day-subtitle{font-size:12px;color:var(--gray);margin-top:4px}
+
+  .trn-day-badge{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;padding:8px 14px;background:var(--surface-2);border:1px solid var(--border)}
+  .trn-day-badge-day{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.1em;color:var(--white)}
+  .trn-day-badge-meta{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--gray);letter-spacing:.05em}
+
+  .trn-day-chevron{color:var(--gray);font-size:14px;transition:transform .3s;flex-shrink:0}
+  .trn-day.expanded .trn-day-chevron{transform:rotate(180deg);color:var(--red)}
+
+  /* --- Day Stats Pills --- */
+  .trn-day-stats{display:flex;gap:8px;padding:0 22px 16px;flex-wrap:wrap}
+  .trn-stat-pill{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--surface-2);border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;color:var(--gray)}
+  .trn-stat-pill .val{color:var(--white);font-weight:600}
+  .trn-stat-pill .val.red{color:var(--red)}
+
+  /* --- Day Body (Exercises) --- */
+  .trn-day-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}
+  .trn-day.expanded .trn-day-body{max-height:4000px}
+
+  .trn-day-exercises{padding:0 22px 22px}
+
+  /* --- Warmup Block --- */
+  .trn-warmup{display:flex;gap:12px;padding:14px 18px;background:rgba(0,217,255,.04);border:1px solid rgba(0,217,255,.1);border-left:3px solid var(--accent);margin-bottom:16px}
+  .trn-warmup-icon{color:var(--accent);font-size:16px;flex-shrink:0;margin-top:2px}
+  .trn-warmup-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;margin-bottom:4px}
+  .trn-warmup-text{font-size:13px;color:var(--gray);line-height:1.7}
+
+  /* --- Exercise Card --- */
+  .trn-ex{background:var(--card);border:1px solid var(--border);margin-bottom:10px;transition:all .25s;position:relative;overflow:hidden}
+  .trn-ex::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+  .trn-ex:hover::before{transform:scaleX(1)}
+  .trn-ex:has(.trn-ex-check:checked){background:rgba(34,197,94,.04);border-color:rgba(34,197,94,.15)}
+  .trn-ex:has(.trn-ex-check:checked)::before{background:var(--green);transform:scaleX(1)}
+
+  .trn-ex-row{display:flex;align-items:center;padding:14px 16px;gap:14px}
+  .trn-ex-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--red);width:28px;text-align:center;flex-shrink:0}
+  .trn-ex:has(.trn-ex-check:checked) .trn-ex-num{color:var(--green)}
+
+  /* Custom Checkbox */
+  .trn-ex-check-wrap{flex-shrink:0}
+  .trn-ex-check{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid var(--border);background:transparent;cursor:pointer;transition:all .2s;display:grid;place-content:center}
+  .trn-ex-check::after{content:'\\f00c';font-family:'Font Awesome 6 Free';font-weight:900;font-size:12px;color:#fff;opacity:0;transform:scale(0);transition:all .2s}
+  .trn-ex-check:checked{background:var(--green);border-color:var(--green)}
+  .trn-ex-check:checked::after{opacity:1;transform:scale(1)}
+
+  .trn-ex-info{flex:1;min-width:0}
+  .trn-ex-name{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;color:var(--white);margin-bottom:4px}
+  .trn-ex:has(.trn-ex-check:checked) .trn-ex-name{text-decoration:line-through;opacity:.5}
+  .trn-ex-meta{display:flex;gap:10px;flex-wrap:wrap}
+  .trn-ex-meta span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:.04em}
+  .trn-ex-meta .rpe{color:var(--red);font-weight:600}
+
+  /* Exercise Actions */
+  .trn-ex-actions{display:flex;gap:6px;flex-shrink:0}
+  .trn-ex-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--gray);padding:6px 10px;font-size:10px;font-family:'JetBrains Mono',monospace;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;letter-spacing:.04em}
+  .trn-ex-btn:hover{border-color:rgba(255,255,255,.2);color:var(--white)}
+  .trn-ex-btn.ai{border-color:rgba(0,217,255,.2);color:var(--accent)}
+  .trn-ex-btn.ai:hover{background:rgba(0,217,255,.08);border-color:rgba(0,217,255,.4)}
+  .trn-ex-btn.timer{border-color:rgba(212,168,83,.2);color:var(--gold)}
+  .trn-ex-btn.timer:hover{background:rgba(212,168,83,.08)}
+
+  /* Exercise Notes (expandable) */
+  .trn-ex-notes{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s}
+  .trn-ex.notes-open .trn-ex-notes{max-height:300px}
+  .trn-ex-notes-inner{padding:0 0 14px 42px;border-top:1px solid var(--border)}
+  .trn-ex-notes-text{font-size:13px;color:var(--gray);line-height:1.7;padding-top:12px}
+
+  /* AI Tip bubble */
+  .trn-ai-bubble{margin:0 16px 14px 42px;padding:12px 16px;background:rgba(0,217,255,.05);border:1px solid rgba(0,217,255,.12);border-left:3px solid var(--accent);display:none}
+  .trn-ai-bubble.visible{display:block;animation:trnSlideIn .3s}
+  .trn-ai-bubble-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
+  .trn-ai-bubble-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.7}
+  .trn-ai-bubble-loading{display:flex;align-items:center;gap:8px;color:var(--accent);font-size:12px}
+  .trn-ai-bubble-loading i{animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes trnSlideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+  /* --- Rest Timer Dialog --- */
+  .trn-timer-dialog{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;width:320px;background:var(--surface);border:1px solid var(--border);box-shadow:0 24px 80px rgba(0,0,0,.6);padding:0;display:none}
+  .trn-timer-dialog.open{display:block;animation:trnSlideIn .3s}
+  .trn-timer-dialog-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;display:none}
+  .trn-timer-dialog-backdrop.open{display:block}
+  .trn-timer-top{background:var(--red);padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+  .trn-timer-top-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.1em;color:#fff}
+  .trn-timer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer}
+  .trn-timer-body{padding:30px 20px;text-align:center}
+  .trn-timer-display{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--white);letter-spacing:.05em;line-height:1}
+  .trn-timer-exercise{font-size:12px;color:var(--gray);margin-top:8px;font-family:'JetBrains Mono',monospace}
+  .trn-timer-controls{display:flex;gap:10px;justify-content:center;margin-top:24px}
+  .trn-timer-btn{padding:10px 24px;border:1px solid var(--border);background:var(--surface-2);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.06em;transition:all .2s}
+  .trn-timer-btn:hover{background:var(--red);border-color:var(--red)}
+  .trn-timer-btn.active{background:var(--red);border-color:var(--red)}
+
+  /* --- Cooldown Block --- */
+  .trn-cooldown{display:flex;gap:12px;padding:14px 18px;background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.1);border-left:3px solid var(--green);margin-top:16px}
+  .trn-cooldown-icon{color:var(--green);font-size:16px;flex-shrink:0;margin-top:2px}
+
+  /* --- AI Hint Banner --- */
+  #trn-ai-hint{display:flex;align-items:center;gap:14px;padding:14px 20px;background:rgba(0,217,255,.04);border:1px solid rgba(0,217,255,.1);margin-top:20px}
+  .trn-ai-hint-icon{color:var(--accent);font-size:18px;flex-shrink:0}
+  .trn-ai-hint-text{font-size:12px;color:var(--gray);line-height:1.6;flex:1}
+  .trn-ai-hint-text strong{color:var(--accent)}
+  .trn-ai-hint-close{background:none;border:none;color:var(--gray);font-size:18px;cursor:pointer;flex-shrink:0}
+
+  /* --- Responsive (container query) --- */
+  @container (max-width: 500px){
+    .trn-ex-actions{flex-direction:column}
+    .trn-day-stats{flex-direction:column}
+    .trn-ex-row{flex-wrap:wrap}
+  }
+  @media(max-width:640px){
+    .trn-day-header{padding:14px 16px;gap:10px}
+    .trn-day-title{font-size:20px}
+    .trn-day-badge{padding:6px 10px}
+    .trn-ex-row{padding:12px 14px;gap:10px}
+    .trn-ex-actions{gap:4px}
+  }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="css/wellcore-v5.css">
@@ -1366,9 +1528,55 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
 
       <div id="tab-content-entrenamiento" class="tab-content active">
-        <div class="iframe-wrap" id="wrap-entrenamiento">
-          <iframe id="iframe-entrenamiento" src="about:blank" title="Plan de Entrenamiento"></iframe>
+
+        <!-- ===== VIEW TOGGLE: Interactiva vs PDF ===== -->
+        <div id="trn-view-toggle" style="display:flex;gap:8px;margin-bottom:18px">
+          <button class="trn-toggle active" id="trn-tog-app" onclick="setTrainingView('app')">
+            <i class="fas fa-th-large"></i> Vista Interactiva
+          </button>
+          <button class="trn-toggle" id="trn-tog-pdf" onclick="setTrainingView('pdf')">
+            <i class="fas fa-file-alt"></i> Documento PDF
+          </button>
         </div>
+
+        <!-- ===== INTERACTIVE APP VIEW ===== -->
+        <div id="trn-app-view">
+
+          <!-- Progress Bar Global -->
+          <div class="trn-progress-wrap">
+            <div class="trn-progress-header">
+              <span class="trn-progress-label">Progreso de la semana</span>
+              <span class="trn-progress-pct" id="trn-pct">0%</span>
+            </div>
+            <div class="trn-progress-bar">
+              <div class="trn-progress-fill" id="trn-fill" style="width:0%"></div>
+            </div>
+            <div class="trn-progress-sub" id="trn-progress-sub">0 / 0 ejercicios completados</div>
+          </div>
+
+          <!-- Day Cards Container -->
+          <div id="trn-days-container">
+            <div class="trn-loading">
+              <div class="trn-loading-pulse"></div>
+              <span>Cargando tu programa...</span>
+            </div>
+          </div>
+
+          <!-- AI Coach floating hint -->
+          <div id="trn-ai-hint" style="display:none">
+            <div class="trn-ai-hint-icon"><i class="fas fa-brain"></i></div>
+            <div class="trn-ai-hint-text">Toca <strong>AI Tip</strong> en cualquier ejercicio para recibir coaching personalizado en tiempo real.</div>
+            <button onclick="this.parentElement.style.display='none'" class="trn-ai-hint-close">&times;</button>
+          </div>
+        </div>
+
+        <!-- ===== PDF VIEW (hidden by default) ===== -->
+        <div id="trn-pdf-view" style="display:none">
+          <div class="iframe-wrap" id="wrap-entrenamiento">
+            <iframe id="iframe-entrenamiento" src="about:blank" title="Plan de Entrenamiento"></iframe>
+          </div>
+        </div>
+
         <button class="btn-send-plan" id="sendBtn-entrenamiento" onclick="sendPlanEmail('entrenamiento')" style="display:none">
           <i class="fas fa-envelope"></i> Enviar programa a mi correo
         </button>
@@ -2255,18 +2463,36 @@ function loadPlanTab(tab) {
     const lock = document.getElementById('lock-' + tab);
     if (lock) lock.style.display = 'none';
     if (!planTabLoaded[tab]) {
-      const iframe = document.getElementById('iframe-' + tab);
-      if (iframe) {
-        const personalSrc = 'planes/' + clientId + '-' + tab + '.html';
-        const demoSrc = 'planes/demo-' + tab + '.html';
-        fetch(personalSrc, { method: 'HEAD' }).then(function(r) {
-          iframe.src = r.ok ? personalSrc : demoSrc;
-          // Show send button only if personal plan exists
-          var sendBtn = document.getElementById('sendBtn-' + tab);
-          if (sendBtn && r.ok) sendBtn.style.display = 'flex';
-        }).catch(function() {
-          iframe.src = demoSrc;
-        });
+      // Skip iframe load for entrenamiento — interactive view handles its own init
+      if (tab !== 'entrenamiento') {
+        const iframe = document.getElementById('iframe-' + tab);
+        if (iframe) {
+          const personalSrc = 'planes/' + clientId + '-' + tab + '.html';
+          const demoSrc = 'planes/demo-' + tab + '.html';
+          // Verify personal plan content (Herd returns 200 for missing files)
+          fetch(personalSrc).then(function(r) {
+            if (!r.ok) throw new Error('not found');
+            return r.text();
+          }).then(function(html) {
+            var isReal = html.indexOf('exercise-table') >= 0 || html.indexOf('plan-cover') >= 0 || html.indexOf('nutricion-plan') >= 0 || html.indexOf('habitos-plan') >= 0;
+            iframe.src = isReal ? personalSrc : demoSrc;
+            var sendBtn = document.getElementById('sendBtn-' + tab);
+            if (sendBtn && isReal) sendBtn.style.display = 'flex';
+          }).catch(function() {
+            iframe.src = demoSrc;
+          });
+        }
+      } else {
+        // Check for personal entrenamiento plan (for send button)
+        fetch('planes/' + clientId + '-entrenamiento.html').then(function(r) {
+          if (!r.ok) throw new Error('not found');
+          return r.text();
+        }).then(function(html) {
+          if (html.indexOf('exercise-table') >= 0 || html.indexOf('plan-cover') >= 0) {
+            var sendBtn = document.getElementById('sendBtn-entrenamiento');
+            if (sendBtn) sendBtn.style.display = 'flex';
+          }
+        }).catch(function() {});
       }
       planTabLoaded[tab] = true;
     }
@@ -3976,6 +4202,482 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closePhotoLightbox();
 });
 </script>
+<!-- ===== INTERACTIVE TRAINING ENGINE ===== -->
+<div class="trn-timer-dialog-backdrop" id="trn-timer-backdrop"></div>
+<div class="trn-timer-dialog" id="trn-timer-dialog">
+  <div class="trn-timer-top">
+    <span class="trn-timer-top-title">DESCANSO</span>
+    <button class="trn-timer-close" onclick="closeRestTimer()">&times;</button>
+  </div>
+  <div class="trn-timer-body">
+    <div class="trn-timer-display" id="trn-timer-display">02:00</div>
+    <div class="trn-timer-exercise" id="trn-timer-exercise">—</div>
+    <div class="trn-timer-controls">
+      <button class="trn-timer-btn" onclick="startRestTimer(60)">60s</button>
+      <button class="trn-timer-btn active" onclick="startRestTimer(90)">90s</button>
+      <button class="trn-timer-btn" onclick="startRestTimer(120)">120s</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   INTERACTIVE TRAINING ENGINE — WellCore Fitness
+   Tech: Vanilla JS, CSS :has(), Web Animations API, Container Queries
+============================================================ */
+(function() {
+  'use strict';
+
+  // Demo training data — replaced when real plan loads from API
+  var TRAINING_DATA = {
+    title: 'Mesociclo de Fuerza e Hipertrofia',
+    subtitle: '4 Semanas',
+    days: [
+      {
+        id: 'dia-a', day: 'LUNES', label: '// sesion 01 de 03',
+        title: 'DIA A', subtitle: 'Tren Superior — Fuerza', group: 'push',
+        stats: { volume: '22 series', rpe: '7.5', focus: 'FUERZA', muscles: 'PUSH + PULL' },
+        warmup: 'Protocolo RAMP: movilidad de hombros (circles, dislocations), activacion de rotadores externos, face pulls con banda, 2 series de press de banca al 40% con excentrico lento.',
+        warmupTime: '10 min',
+        exercises: [
+          { name: 'Press de Banca con Barra', sets: 4, reps: 5, rpe: '8/10', rest: '120s', notes: 'Agarre a anchura de hombros. Excentrico 3s. Omoplatos retraidos y deprimidos.' },
+          { name: 'Remo con Barra Pendlay', sets: 4, reps: 6, rpe: '8/10', rest: '90s', notes: 'Torso paralelo al suelo. Tirar hacia ombligo. Barra parte del suelo cada rep.' },
+          { name: 'Press Militar con Barra', sets: 3, reps: 8, rpe: '7/10', rest: '90s', notes: 'Core activado. Sin impulso lumbar. Codos ligeramente al frente.' },
+          { name: 'Dominadas Lastradas', sets: 3, reps: 5, rpe: '8/10', rest: '120s', notes: 'Rango completo obligatorio. Escapulas activas en punto muerto inferior.' },
+          { name: 'Curl de Biceps con Barra', sets: 3, reps: 10, rpe: '7/10', rest: '60s', notes: 'Sin balanceo de torso. Supinar completamente en contraccion maxima.' },
+          { name: 'Extension de Triceps en Polea', sets: 3, reps: 12, rpe: '6/10', rest: '60s', notes: 'Codos fijos al cuerpo. Extension completa. Contraccion 1s en punto final.' }
+        ],
+        cooldown: 'Estiramiento estatico de pectorales, dorsales y hombros. 30s por grupo. Respiracion diafragmatica 2 min.'
+      },
+      {
+        id: 'dia-b', day: 'MIERCOLES', label: '// sesion 02 de 03',
+        title: 'DIA B', subtitle: 'Tren Inferior — Hipertrofia', group: 'legs',
+        stats: { volume: '24 series', rpe: '7.8', focus: 'HIPERTROFIA', muscles: 'QUADS + GLUTES' },
+        warmup: 'Activacion gluten con hip thrust con banda, sentadilla goblet al 30%, movilidad de cadera y tobillos.',
+        warmupTime: '8 min',
+        exercises: [
+          { name: 'Sentadilla con Barra', sets: 4, reps: 8, rpe: '8/10', rest: '120s', notes: 'Profundidad minima: paralelo. Core braced. Rodillas siguen la linea del pie.' },
+          { name: 'Peso Muerto Rumano', sets: 4, reps: 8, rpe: '8/10', rest: '90s', notes: 'Bisagra de cadera pura. Barra pegada a los muslos. Estiramiento en isquios.' },
+          { name: 'Prensa de Piernas 45', sets: 3, reps: 12, rpe: '7/10', rest: '90s', notes: 'Pies a la anchura de hombros. Descenso controlado. No bloquear rodillas.' },
+          { name: 'Zancadas Caminando', sets: 3, reps: '10/pierna', rpe: '7/10', rest: '60s', notes: 'Paso largo. Rodilla trasera casi toca el suelo. Torso erguido.' },
+          { name: 'Curl Femoral Acostado', sets: 3, reps: 12, rpe: '7/10', rest: '60s', notes: 'Contraccion pico 2s. Excentrico lento. Caderas pegadas al banco.' },
+          { name: 'Elevacion de Pantorrillas', sets: 4, reps: 15, rpe: '7/10', rest: '45s', notes: 'Rango completo. Pausa 2s abajo (estiramiento). Contraccion 1s arriba.' }
+        ],
+        cooldown: 'Foam rolling en cuadriceps, isquios y gluten. Estiramiento de flexores de cadera. 5 min total.'
+      },
+      {
+        id: 'dia-c', day: 'VIERNES', label: '// sesion 03 de 03',
+        title: 'DIA C', subtitle: 'Full Body — Potencia', group: 'full',
+        stats: { volume: '20 series', rpe: '7.2', focus: 'POTENCIA', muscles: 'FULL BODY' },
+        warmup: 'Movilidad articular completa. 3 series de saltos al cajon. Swings con kettlebell ligero.',
+        warmupTime: '10 min',
+        exercises: [
+          { name: 'Clean and Press con Barra', sets: 4, reps: 5, rpe: '8/10', rest: '120s', notes: 'Movimiento explosivo. Triple extension. Recepcion limpia en rack position.' },
+          { name: 'Sentadilla Frontal', sets: 3, reps: 6, rpe: '8/10', rest: '120s', notes: 'Codos altos. Core rigido. Profundidad completa manteniendo torso vertical.' },
+          { name: 'Remo con Mancuerna', sets: 3, reps: '8/lado', rpe: '7/10', rest: '60s', notes: 'Tirar con el codo. Contraccion en escapula. Evitar rotacion de torso.' },
+          { name: 'Push Press', sets: 3, reps: 6, rpe: '7/10', rest: '90s', notes: 'Impulso con piernas, finish con hombros. Lockout completo arriba.' },
+          { name: 'Face Pull con Banda', sets: 3, reps: 15, rpe: '6/10', rest: '45s', notes: 'Rotacion externa al final. Codos por encima de hombros. Salud de hombro.' },
+          { name: 'Plancha con Peso', sets: 3, reps: '45s', rpe: '7/10', rest: '60s', notes: 'Pelvis en retroversion. Sin hundir lumbar. Apretar gluten.' }
+        ],
+        cooldown: 'Movilidad de columna. Estiramiento de cadena posterior completa. Respiracion box breathing 3 min.'
+      }
+    ]
+  };
+
+  // State
+  var completedExercises = {};
+  var timerInterval = null;
+  var timerSeconds = 0;
+
+  // Load saved state
+  try {
+    var saved = localStorage.getItem('wc_trn_completed');
+    if (saved) completedExercises = JSON.parse(saved);
+  } catch(e) {}
+
+  // ── RENDER ──────────────────────────────────────────────────
+
+  function renderTraining() {
+    var container = document.getElementById('trn-days-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    var totalEx = 0, doneEx = 0;
+
+    TRAINING_DATA.days.forEach(function(day, di) {
+      var dayEl = document.createElement('div');
+      dayEl.className = 'trn-day';
+      dayEl.id = 'trn-' + day.id;
+      if (di === 0) dayEl.classList.add('expanded');
+
+      // Count exercises
+      totalEx += day.exercises.length;
+      day.exercises.forEach(function(ex, ei) {
+        var key = day.id + '-' + ei;
+        if (completedExercises[key]) doneEx++;
+      });
+
+      // Header
+      var header = document.createElement('div');
+      header.className = 'trn-day-header';
+      header.onclick = function() { toggleDay(dayEl); };
+      header.innerHTML =
+        '<div class="trn-day-color ' + day.group + '"></div>' +
+        '<div class="trn-day-info">' +
+          '<div class="trn-day-tag">' + esc(day.label) + '</div>' +
+          '<div class="trn-day-title">' + esc(day.title) + '</div>' +
+          '<div class="trn-day-subtitle">' + esc(day.subtitle) + '</div>' +
+        '</div>' +
+        '<div class="trn-day-badge">' +
+          '<div class="trn-day-badge-day">' + esc(day.day) + '</div>' +
+          '<div class="trn-day-badge-meta">' + day.exercises.length + ' ejercicios</div>' +
+        '</div>' +
+        '<div class="trn-day-chevron"><i class="fas fa-chevron-down"></i></div>';
+      dayEl.appendChild(header);
+
+      // Stats
+      var stats = document.createElement('div');
+      stats.className = 'trn-day-stats';
+      stats.innerHTML =
+        '<div class="trn-stat-pill"><span>Volumen</span> <span class="val">' + esc(day.stats.volume) + '</span></div>' +
+        '<div class="trn-stat-pill"><span>RPE Prom.</span> <span class="val red">' + esc(day.stats.rpe) + '</span></div>' +
+        '<div class="trn-stat-pill"><span>Enfasis</span> <span class="val">' + esc(day.stats.focus) + '</span></div>' +
+        '<div class="trn-stat-pill"><span>Musculos</span> <span class="val">' + esc(day.stats.muscles) + '</span></div>';
+      dayEl.appendChild(stats);
+
+      // Body
+      var body = document.createElement('div');
+      body.className = 'trn-day-body';
+
+      var exContainer = document.createElement('div');
+      exContainer.className = 'trn-day-exercises';
+
+      // Warmup
+      exContainer.innerHTML =
+        '<div class="trn-warmup">' +
+          '<div class="trn-warmup-icon"><i class="fas fa-fire"></i></div>' +
+          '<div><div class="trn-warmup-label">Calentamiento — ' + esc(day.warmupTime) + '</div>' +
+          '<div class="trn-warmup-text">' + esc(day.warmup) + '</div></div>' +
+        '</div>';
+
+      // Exercises
+      day.exercises.forEach(function(ex, ei) {
+        var key = day.id + '-' + ei;
+        var checked = completedExercises[key] ? ' checked' : '';
+        var num = String(ei + 1).padStart(2, '0');
+        var restSec = parseInt(ex.rest) || 90;
+
+        var exEl = document.createElement('div');
+        exEl.className = 'trn-ex' + (completedExercises[key] ? '' : '');
+        exEl.id = 'trn-ex-' + key;
+
+        exEl.innerHTML =
+          '<div class="trn-ex-row">' +
+            '<div class="trn-ex-num">' + num + '</div>' +
+            '<div class="trn-ex-check-wrap"><input type="checkbox" class="trn-ex-check" data-key="' + key + '"' + checked + '></div>' +
+            '<div class="trn-ex-info">' +
+              '<div class="trn-ex-name">' + esc(ex.name) + '</div>' +
+              '<div class="trn-ex-meta">' +
+                '<span>' + ex.sets + '&times;' + ex.reps + '</span>' +
+                '<span class="rpe">RPE ' + esc(ex.rpe) + '</span>' +
+                '<span><i class="fas fa-clock" style="font-size:9px"></i> ' + esc(ex.rest) + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="trn-ex-actions">' +
+              '<button class="trn-ex-btn" onclick="toggleExNotes(\'' + key + '\')" title="Notas tecnicas"><i class="fas fa-sticky-note"></i></button>' +
+              '<button class="trn-ex-btn ai" onclick="getAiTip(\'' + key + '\',\'' + esc(ex.name).replace(/'/g, "\\'") + '\')" title="AI Coaching Tip"><i class="fas fa-brain"></i> AI</button>' +
+              '<button class="trn-ex-btn timer" onclick="openRestTimer(' + restSec + ',\'' + esc(ex.name).replace(/'/g, "\\'") + '\')" title="Timer descanso"><i class="fas fa-stopwatch"></i></button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="trn-ex-notes"><div class="trn-ex-notes-inner"><div class="trn-ex-notes-text"><i class="fas fa-lightbulb" style="color:var(--gold);margin-right:6px"></i> ' + esc(ex.notes) + '</div></div></div>' +
+          '<div class="trn-ai-bubble" id="trn-ai-' + key + '"></div>';
+
+        exContainer.appendChild(exEl);
+      });
+
+      // Cooldown
+      if (day.cooldown) {
+        var cd = document.createElement('div');
+        cd.className = 'trn-cooldown';
+        cd.innerHTML = '<div class="trn-cooldown-icon"><i class="fas fa-snowflake"></i></div><div><div class="trn-warmup-label" style="color:var(--green)">Vuelta a la Calma</div><div class="trn-warmup-text">' + esc(day.cooldown) + '</div></div>';
+        exContainer.appendChild(cd);
+      }
+
+      body.appendChild(exContainer);
+      dayEl.appendChild(body);
+      container.appendChild(dayEl);
+    });
+
+    // Attach checkbox listeners
+    container.querySelectorAll('.trn-ex-check').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        var key = this.dataset.key;
+        if (this.checked) {
+          completedExercises[key] = true;
+          // Animate
+          this.animate([{ transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 200 });
+        } else {
+          delete completedExercises[key];
+        }
+        localStorage.setItem('wc_trn_completed', JSON.stringify(completedExercises));
+        updateProgress();
+      });
+    });
+
+    updateProgress();
+
+    // Show AI hint on first visit
+    if (!localStorage.getItem('wc_trn_ai_hint_seen')) {
+      var hint = document.getElementById('trn-ai-hint');
+      if (hint) hint.style.display = 'flex';
+      localStorage.setItem('wc_trn_ai_hint_seen', '1');
+    }
+  }
+
+  function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+
+  // ── INTERACTIONS ────────────────────────────────────────────
+
+  window.toggleDay = function(el) {
+    if (typeof el === 'string') el = document.getElementById(el);
+    if (!el) return;
+    el.classList.toggle('expanded');
+  };
+
+  window.toggleExNotes = function(key) {
+    var exEl = document.getElementById('trn-ex-' + key);
+    if (exEl) exEl.classList.toggle('notes-open');
+  };
+
+  window.setTrainingView = function(view) {
+    var appView = document.getElementById('trn-app-view');
+    var pdfView = document.getElementById('trn-pdf-view');
+    var togApp = document.getElementById('trn-tog-app');
+    var togPdf = document.getElementById('trn-tog-pdf');
+    if (view === 'pdf') {
+      if (appView) appView.style.display = 'none';
+      if (pdfView) pdfView.style.display = 'block';
+      if (togApp) togApp.classList.remove('active');
+      if (togPdf) togPdf.classList.add('active');
+      // Trigger iframe load if not loaded
+      var iframe = document.getElementById('iframe-entrenamiento');
+      if (iframe && (!iframe.src || iframe.src === 'about:blank' || iframe.src.indexOf('about:blank') >= 0)) {
+        var personalSrc = 'planes/' + clientId + '-entrenamiento.html';
+        var demoSrc = 'planes/demo-entrenamiento.html';
+        // Verify personal plan actually exists (check content has plan marker)
+        fetch(personalSrc).then(function(r) {
+          if (!r.ok) throw new Error('not found');
+          return r.text();
+        }).then(function(html) {
+          if (html.indexOf('exercise-table') >= 0 || html.indexOf('plan-cover') >= 0) {
+            iframe.src = personalSrc;
+          } else {
+            iframe.src = demoSrc;
+          }
+        }).catch(function() { iframe.src = demoSrc; });
+      }
+    } else {
+      if (appView) appView.style.display = 'block';
+      if (pdfView) pdfView.style.display = 'none';
+      if (togApp) togApp.classList.add('active');
+      if (togPdf) togPdf.classList.remove('active');
+    }
+  };
+
+  function updateProgress() {
+    var total = 0, done = 0;
+    TRAINING_DATA.days.forEach(function(day) {
+      day.exercises.forEach(function(ex, ei) {
+        total++;
+        if (completedExercises[day.id + '-' + ei]) done++;
+      });
+    });
+    var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    var pctEl = document.getElementById('trn-pct');
+    var fillEl = document.getElementById('trn-fill');
+    var subEl = document.getElementById('trn-progress-sub');
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (subEl) subEl.textContent = done + ' / ' + total + ' ejercicios completados';
+  }
+
+  // ── AI TIP ──────────────────────────────────────────────────
+
+  window.getAiTip = function(key, exerciseName) {
+    var bubble = document.getElementById('trn-ai-' + key);
+    if (!bubble) return;
+
+    // Toggle off if already showing
+    if (bubble.classList.contains('visible') && !bubble.querySelector('.trn-ai-bubble-loading')) {
+      bubble.classList.remove('visible');
+      return;
+    }
+
+    bubble.classList.add('visible');
+    bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore AI Coach</div><div class="trn-ai-bubble-loading"><i class="fas fa-spinner"></i> Generando tip personalizado...</div>';
+
+    var token = localStorage.getItem('wc_token');
+    fetch('/api/ai/exercise-tip.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (token || '') },
+      body: JSON.stringify({ exercise: exerciseName })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok && data.tip) {
+        bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore AI Coach</div><div class="trn-ai-bubble-text">' + esc(data.tip) + '</div>';
+      } else {
+        bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore AI Coach</div><div class="trn-ai-bubble-text" style="color:var(--gray)">No se pudo generar el tip. Intenta de nuevo.</div>';
+      }
+    })
+    .catch(function() {
+      bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore AI Coach</div><div class="trn-ai-bubble-text" style="color:var(--gray)">Error de conexion. Verifica tu internet.</div>';
+    });
+  };
+
+  // ── REST TIMER ──────────────────────────────────────────────
+
+  window.openRestTimer = function(seconds, exerciseName) {
+    var dialog = document.getElementById('trn-timer-dialog');
+    var backdrop = document.getElementById('trn-timer-backdrop');
+    var exLabel = document.getElementById('trn-timer-exercise');
+    if (dialog) dialog.classList.add('open');
+    if (backdrop) backdrop.classList.add('open');
+    if (exLabel) exLabel.textContent = exerciseName || '—';
+    startRestTimer(seconds);
+  };
+
+  window.closeRestTimer = function() {
+    var dialog = document.getElementById('trn-timer-dialog');
+    var backdrop = document.getElementById('trn-timer-backdrop');
+    if (dialog) dialog.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('open');
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  };
+
+  window.startRestTimer = function(seconds) {
+    if (timerInterval) clearInterval(timerInterval);
+    timerSeconds = seconds;
+    updateTimerDisplay();
+
+    // Highlight active button
+    document.querySelectorAll('.trn-timer-btn').forEach(function(b) {
+      b.classList.toggle('active', parseInt(b.textContent) === seconds);
+    });
+
+    timerInterval = setInterval(function() {
+      timerSeconds--;
+      if (timerSeconds <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerSeconds = 0;
+        updateTimerDisplay();
+        // Visual + audio notification
+        var display = document.getElementById('trn-timer-display');
+        if (display) {
+          display.style.color = 'var(--green)';
+          display.textContent = 'LISTO';
+          display.animate([{ transform: 'scale(1.15)' }, { transform: 'scale(1)' }], { duration: 300 });
+          setTimeout(function() { display.style.color = ''; }, 3000);
+        }
+        // Try audio beep
+        try {
+          var ctx = new (window.AudioContext || window.webkitAudioContext)();
+          var osc = ctx.createOscillator();
+          osc.frequency.value = 880;
+          osc.connect(ctx.destination);
+          osc.start();
+          setTimeout(function() { osc.stop(); ctx.close(); }, 200);
+        } catch(e) {}
+      } else {
+        updateTimerDisplay();
+      }
+    }, 1000);
+  };
+
+  function updateTimerDisplay() {
+    var display = document.getElementById('trn-timer-display');
+    if (!display) return;
+    var m = Math.floor(timerSeconds / 60);
+    var s = timerSeconds % 60;
+    display.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  // Close timer on backdrop click
+  document.getElementById('trn-timer-backdrop')?.addEventListener('click', closeRestTimer);
+
+  // ── TRY LOAD REAL PLAN FROM API ─────────────────────────────
+
+  function tryLoadRealPlan() {
+    var token = localStorage.getItem('wc_token');
+    if (!token) { renderTraining(); return; }
+
+    // Try to fetch assigned plan
+    fetch('/api/ai/render-plan.php?type=entrenamiento', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (data && data.plan && data.plan.days && data.plan.days.length > 0) {
+        // Map API plan to our format
+        TRAINING_DATA.title = data.plan.titulo || data.plan.title || TRAINING_DATA.title;
+        TRAINING_DATA.subtitle = data.plan.subtitulo || data.plan.subtitle || TRAINING_DATA.subtitle;
+        TRAINING_DATA.days = data.plan.days.map(function(d, i) {
+          var group = 'full';
+          var sub = (d.subtitle || d.subtitulo || '').toLowerCase();
+          if (sub.indexOf('superior') >= 0 || sub.indexOf('push') >= 0 || sub.indexOf('pecho') >= 0) group = 'push';
+          else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('leg') >= 0) group = 'legs';
+          else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0) group = 'pull';
+
+          var dayNames = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
+          return {
+            id: 'dia-' + String.fromCharCode(97 + i),
+            day: d.day || dayNames[i] || ('DIA ' + (i+1)),
+            label: '// sesion ' + String(i+1).padStart(2,'0') + ' de ' + String(data.plan.days.length).padStart(2,'0'),
+            title: d.title || d.titulo || ('DIA ' + String.fromCharCode(65 + i)),
+            subtitle: d.subtitle || d.subtitulo || '',
+            group: group,
+            stats: d.stats || { volume: (d.exercises || []).reduce(function(a,e){ return a + (e.sets||0); }, 0) + ' series', rpe: '7.5', focus: group.toUpperCase(), muscles: sub.toUpperCase() || 'FULL BODY' },
+            warmup: d.warmup || d.calentamiento || 'Movilidad articular general + activacion especifica. 8-10 min.',
+            warmupTime: d.warmupTime || '10 min',
+            exercises: (d.exercises || d.ejercicios || []).map(function(e) {
+              return {
+                name: e.name || e.nombre || 'Ejercicio',
+                sets: e.sets || e.series || 3,
+                reps: e.reps || e.repeticiones || 10,
+                rpe: e.rpe || '7/10',
+                rest: e.rest || e.descanso || '90s',
+                notes: e.notes || e.notas || ''
+              };
+            }),
+            cooldown: d.cooldown || d.vueltaCalma || 'Estiramiento estatico 5 min. Respiracion diafragmatica.'
+          };
+        });
+      }
+      renderTraining();
+    })
+    .catch(function() {
+      renderTraining();
+    });
+  }
+
+  // ── INIT ────────────────────────────────────────────────────
+  // Wait for main app to set clientId
+  var initCheck = setInterval(function() {
+    if (typeof clientId !== 'undefined' && clientId) {
+      clearInterval(initCheck);
+      tryLoadRealPlan();
+    }
+  }, 200);
+
+  // Fallback: render demo after 3s
+  setTimeout(function() {
+    if (!document.querySelector('.trn-day')) renderTraining();
+  }, 3000);
+
+})();
+</script>
+
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
 </body>
