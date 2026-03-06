@@ -3322,7 +3322,7 @@ function checkUploadReady() {
 }
 
 function uploadPhotos() {
-  var MAX_SIZE = 10 * 1024 * 1024; // 10MB
+  var MAX_SIZE = 25 * 1024 * 1024; // 25MB
   var dateInput = document.getElementById('photo-date');
   var date = dateInput.value || new Date().toISOString().split('T')[0];
   var status = document.getElementById('photo-upload-status');
@@ -3333,7 +3333,7 @@ function uploadPhotos() {
   tipos.forEach(function(tipo) {
     if (photoFiles[tipo]) {
       if (photoFiles[tipo].size > MAX_SIZE) {
-        status.textContent = 'La foto "' + tipo + '" supera 10 MB. Reduce el tamano e intenta de nuevo.';
+        status.textContent = 'La foto "' + tipo + '" pesa m\u00e1s de 25 MB. Reduce el tama\u00f1o o usa otra foto.';
         status.style.color = 'var(--red)';
         return;
       }

@@ -213,7 +213,7 @@ tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 </style>
 </head>
 <body>
-<button class="print-btn" onclick="window.print()">Imprimir PDF</button>
+<button class="print-btn" onclick="window.print()">Descargar PDF</button>
 <div class="cover">
   <div class="cover-eyebrow">// WellCore Fitness — Plan Personalizado</div>
   <h1 class="cover-title">{$titulo}<br><span>{$subtitulo}</span></h1>
@@ -501,7 +501,7 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
     $h .= ".doc-footer-info{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;text-align:right;line-height:1.6;}\n";
     $h .= "@media(max-width:600px){.page{padding:16px}.cover-content{padding:24px 20px}.cover-title{font-size:46px}.cover-meta,.overview-grid,.prog-grid{grid-template-columns:1fr 1fr}.nutr-grid{grid-template-columns:1fr}}\n";
     $h .= "</style></head><body>\n";
-    $h .= "<button class=\"print-btn\" onclick=\"window.print()\">Imprimir / PDF</button>\n";
+    $h .= "<button class=\"print-btn\" onclick=\"window.print()\">Descargar PDF</button>\n";
     $h .= "<div class=\"page\">\n";
 
     // ── COVER ──────────────────────────────────────────────────

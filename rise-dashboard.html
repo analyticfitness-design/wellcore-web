@@ -2472,6 +2472,23 @@
             spinIcon.style.color = 'var(--red)';
             statusText.textContent = 'Subiendo fotos...';
 
+            var maxMB = 25;
+            var allInputs = [
+                {el: inputFr, name: 'frente'},
+                {el: inputSi, name: 'perfil'},
+                {el: inputBk, name: 'espalda'}
+            ];
+            for (var i = 0; i < allInputs.length; i++) {
+                var inp = allInputs[i];
+                if (inp.el.files && inp.el.files[0] && inp.el.files[0].size > maxMB * 1024 * 1024) {
+                    spinIcon.className = 'fas fa-exclamation-triangle';
+                    spinIcon.style.color = 'var(--red)';
+                    statusText.textContent = 'La foto "' + inp.name + '" pesa m\u00e1s de ' + maxMB + ' MB. Reduce el tama\u00f1o o usa otra foto.';
+                    showToast('Foto demasiado grande (m\u00e1x ' + maxMB + ' MB)', '#E31E24');
+                    setTimeout(function() { statusCard.style.display = 'none'; }, 4000);
+                    return;
+                }
+            }
             const fd = new FormData();
             fd.append('photo_date', date);
             if (inputFr.files && inputFr.files[0]) fd.append('frente',  inputFr.files[0]);

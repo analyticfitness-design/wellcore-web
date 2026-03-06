@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 declare(strict_types=1);
 /**
  * RISE Fotos de Progreso
@@ -57,7 +59,7 @@ if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $photoDate)) {
 $tipos   = ['frente', 'perfil', 'espalda'];
 $saved   = [];
 $errors  = [];
-$maxSize = 10 * 1024 * 1024;
+$maxSize = 25 * 1024 * 1024; // 25 MB — fotos de iPhone pueden pesar hasta 25 MB
 $allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
 
 foreach ($tipos as $tipo) {
@@ -70,7 +72,7 @@ foreach ($tipos as $tipo) {
         continue;
     }
     if ($file['size'] > $maxSize) {
-        $errors[] = $tipo . ': archivo muy grande (máx 10 MB)';
+        $errors[] = $tipo . ': el archivo pesa más de 25 MB. Reduce el tamaño o usa otra foto.';
         continue;
     }
     $finfo    = finfo_open(FILEINFO_MIME_TYPE);
