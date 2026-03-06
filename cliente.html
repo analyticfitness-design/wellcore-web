@@ -439,6 +439,15 @@ input,textarea,select{font-family:'Inter',sans-serif}
   box-shadow:0 6px 20px rgba(200,16,46,0.45);
   transform:translateY(-1px);
 }
+.btn-send-plan{
+  width:100%;margin-top:12px;padding:12px 24px;
+  background:var(--surface);border:1px solid var(--border);color:var(--text-sec);
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;
+  letter-spacing:.05em;cursor:pointer;transition:all .2s;display:flex;
+  align-items:center;justify-content:center;gap:8px;
+}
+.btn-send-plan:hover{background:var(--red);color:#fff;border-color:var(--red);
+}
 
 /* ===== TRACKING ===== */
 .week-grid{
@@ -1358,6 +1367,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="iframe-wrap" id="wrap-entrenamiento">
           <iframe id="iframe-entrenamiento" src="about:blank" title="Plan de Entrenamiento"></iframe>
         </div>
+        <button class="btn-send-plan" id="sendBtn-entrenamiento" onclick="sendPlanEmail('entrenamiento')" style="display:none">
+          <i class="fas fa-envelope"></i> Enviar programa a mi correo
+        </button>
       </div>
       <div id="tab-content-nutricion" class="tab-content">
         <div class="iframe-wrap" id="wrap-nutricion">
@@ -1369,6 +1381,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <a href="pagar.html" class="btn-upgrade">&rarr; Mejorar Plan</a>
           </div>
         </div>
+        <button class="btn-send-plan" id="sendBtn-nutricion" onclick="sendPlanEmail('nutricion')" style="display:none">
+          <i class="fas fa-envelope"></i> Enviar programa a mi correo
+        </button>
       </div>
       <div id="tab-content-habitos" class="tab-content">
         <div class="iframe-wrap" id="wrap-habitos">
@@ -1380,6 +1395,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <a href="pagar.html" class="btn-upgrade">&rarr; Mejorar Plan</a>
           </div>
         </div>
+        <button class="btn-send-plan" id="sendBtn-habitos" onclick="sendPlanEmail('habitos')" style="display:none">
+          <i class="fas fa-envelope"></i> Enviar programa a mi correo
+        </button>
       </div>
     </section>
 
@@ -2236,6 +2254,9 @@ function loadPlanTab(tab) {
         const demoSrc = 'planes/demo-' + tab + '.html';
         fetch(personalSrc, { method: 'HEAD' }).then(function(r) {
           iframe.src = r.ok ? personalSrc : demoSrc;
+          // Show send button only if personal plan exists
+          var sendBtn = document.getElementById('sendBtn-' + tab);
+          if (sendBtn && r.ok) sendBtn.style.display = 'flex';
         }).catch(function() {
           iframe.src = demoSrc;
         });
@@ -2246,6 +2267,44 @@ function loadPlanTab(tab) {
     // Show lock
     const lock = document.getElementById('lock-' + tab);
     if (lock) lock.style.display = 'flex';
+  }
+}
+
+// ===== SEND PLAN EMAIL =====
+function setSendBtnState(btn, icon, text, disabled) {
+  btn.disabled = disabled;
+  btn.textContent = '';
+  var i = document.createElement('i');
+  i.className = 'fas fa-' + icon;
+  btn.appendChild(i);
+  btn.appendChild(document.createTextNode(' ' + text));
+}
+async function sendPlanEmail(type) {
+  var btn = document.getElementById('sendBtn-' + type);
+  if (!btn) return;
+  var token = localStorage.getItem('wc_token');
+  if (!token) return;
+  setSendBtnState(btn, 'spinner fa-spin', 'Enviando...', true);
+  try {
+    var res = await fetch('/api/rise/send-plan-email.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ type: type })
+    });
+    var data = await res.json();
+    if (data && data.ok) {
+      showToast('Plan enviado a ' + (data.email || 'tu correo'), '#22C55E');
+      setSendBtnState(btn, 'check', 'Enviado!', true);
+      setTimeout(function() {
+        setSendBtnState(btn, 'envelope', 'Enviar programa a mi correo', false);
+      }, 5000);
+    } else {
+      showToast(data.error || 'Error al enviar', 'var(--red)');
+      setSendBtnState(btn, 'envelope', 'Enviar programa a mi correo', false);
+    }
+  } catch(e) {
+    showToast('Error de conexion', 'var(--red)');
+    setSendBtnState(btn, 'envelope', 'Enviar programa a mi correo', false);
   }
 }
 

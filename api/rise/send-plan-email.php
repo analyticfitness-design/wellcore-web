@@ -29,10 +29,17 @@ $body = getJsonBody();
 $type = trim($body['type'] ?? '');
 
 // Mapear tipo del frontend al tipo en DB
-$typeMap = ['training' => 'rise', 'nutrition' => 'nutrition'];
+// RISE dashboard envía training/nutrition; cliente.html envía entrenamiento/nutricion/habitos
+$typeMap = [
+    'training'       => 'rise',
+    'nutrition'      => 'nutrition',
+    'entrenamiento'  => 'entrenamiento',
+    'nutricion'      => 'nutricion',
+    'habitos'        => 'habitos',
+];
 $dbType  = $typeMap[$type] ?? '';
 if (!$dbType) {
-    respondError('Tipo de plan invalido. Usa "training" o "nutrition".', 400);
+    respondError('Tipo de plan invalido.', 400);
 }
 
 // Obtener el plan activo
@@ -57,7 +64,11 @@ if (!$clientEmail || !filter_var($clientEmail, FILTER_VALIDATE_EMAIL)) {
     respondError('No se encontro un email valido en tu cuenta.', 400);
 }
 
-$planLabel = $type === 'training' ? 'Entrenamiento' : 'Nutricion';
+$labelMap = [
+    'training' => 'Entrenamiento', 'nutrition' => 'Nutricion',
+    'entrenamiento' => 'Entrenamiento', 'nutricion' => 'Nutricion', 'habitos' => 'Habitos',
+];
+$planLabel = $labelMap[$type] ?? 'Plan';
 
 // ── Preparar el HTML adjunto (plan completo, idéntico a la plataforma) ──
 $attachmentHtml = $plan['content'];
