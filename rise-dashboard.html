@@ -1712,9 +1712,17 @@
         // ─── DESCARGAR PDF ───────────────────────
         function printPlan(type) {
             const frame = document.querySelector('#' + type + 'PlanContainer iframe.plan-frame');
-            if (!frame || !frame.src) { showToast('No hay plan disponible para descargar', 'var(--red)'); return; }
-            window.open(frame.src, '_blank');
-            showToast('Plan abierto — usa el botón Descargar PDF', '#22C55E');
+            if (!frame) { showToast('No hay plan disponible para descargar', 'var(--red)'); return; }
+            // El iframe usa srcdoc, no src — extraer el HTML y abrirlo en nueva pestaña
+            var html = frame.srcdoc || '';
+            if (!html && frame.contentDocument) {
+                html = frame.contentDocument.documentElement.outerHTML;
+            }
+            if (!html) { showToast('No hay plan disponible para descargar', 'var(--red)'); return; }
+            var blob = new Blob([html], { type: 'text/html' });
+            var url = URL.createObjectURL(blob);
+            window.open(url, '_blank');
+            showToast('Plan abierto — presiona Descargar PDF arriba', '#22C55E');
         }
 
         // ─── GUARDAR TRACKING VÍA API ─────────────
