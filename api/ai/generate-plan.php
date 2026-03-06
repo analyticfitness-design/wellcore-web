@@ -101,7 +101,7 @@ if ($planType === 'rise') {
 
     // ── Generar plan en background ──────────────────────────────
     try {
-        $response = claude_call(get_rise_system_prompt(), $userPrompt, CLAUDE_MODEL, 8192);
+        $response = claude_call(get_rise_system_prompt(), $userPrompt, CLAUDE_MODEL, CLAUDE_MAX_TOKENS);
         $parsed   = extract_json_from_response($response['text']);
 
         if ($parsed) {
