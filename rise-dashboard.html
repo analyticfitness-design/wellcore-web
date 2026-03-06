@@ -1624,14 +1624,37 @@
             if (old) old.remove();
             var frame = document.createElement('iframe');
             frame.className    = 'plan-frame';
-            frame.style.cssText = 'width:100%;border:none;min-height:600px;background:transparent;';
+            frame.style.cssText = 'width:100%;border:none;min-height:600px;background:transparent;overflow:hidden;';
             frame.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups');
             container.appendChild(frame);
             // srcdoc renders HTML without requiring a network URL
             frame.srcdoc = htmlContent;
-            // Auto-resize once content loads
+            // Auto-resize: measure actual content height accurately
+            function resizeFrame() {
+                try {
+                    var doc = frame.contentDocument;
+                    if (!doc || !doc.body) return;
+                    // Use scrollHeight of documentElement for accurate measurement
+                    var h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+                    // Cap at actual content — avoid inflated values from fixed elements
+                    var lastEl = doc.body.lastElementChild;
+                    if (lastEl) {
+                        var bottom = lastEl.getBoundingClientRect().bottom + (doc.defaultView.scrollY || 0);
+                        if (bottom > 0 && bottom < h) h = Math.ceil(bottom) + 40;
+                    }
+                    frame.style.height = h + 'px';
+                } catch(e) {}
+            }
             frame.addEventListener('load', function() {
-                try { frame.style.height = frame.contentDocument.body.scrollHeight + 'px'; } catch(e) {}
+                resizeFrame();
+                // Re-check after fonts load (Google Fonts are async)
+                setTimeout(resizeFrame, 500);
+                setTimeout(resizeFrame, 1500);
+                // ResizeObserver for dynamic content changes
+                try {
+                    var ro = new ResizeObserver(resizeFrame);
+                    ro.observe(frame.contentDocument.body);
+                } catch(e) {}
             });
         }
 

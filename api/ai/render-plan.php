@@ -181,6 +181,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .print-btn{position:fixed;top:16px;right:16px;z-index:9999;background:var(--red);color:#fff;border:none;padding:8px 18px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;letter-spacing:.05em;cursor:pointer}
 .print-btn:hover{background:#B01519}
 @media print{.print-btn{display:none}}
+</style><script>if(window!==window.top){document.addEventListener('DOMContentLoaded',function(){var b=document.querySelector('.print-btn');if(b)b.style.display='none';document.body.style.overflow='hidden';});}</script><style>
 .cover{padding:48px 40px 36px;border-bottom:4px solid var(--red);background:linear-gradient(135deg,#0a0000 0%,#000 100%)}
 .cover-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
 .cover-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,72px);letter-spacing:2px;line-height:.95;margin-bottom:12px}
@@ -414,6 +415,8 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
     $h .= ".page{width:100%;max-width:860px;margin:0 auto;padding:40px 32px;}\n";
     $h .= ".print-btn{position:fixed;top:16px;right:16px;z-index:9999;background:var(--red);color:#fff;border:none;padding:10px 20px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;}\n";
     $h .= "@media print{.print-btn{display:none}.page{padding:12px}}\n";
+    // Hide print-btn and prevent overflow when embedded in iframe
+    $h .= "</style><script>if(window!==window.top){document.addEventListener('DOMContentLoaded',function(){var b=document.querySelector('.print-btn');if(b)b.style.display='none';document.body.style.overflow='hidden';});}</script><style>\n";
     // Cover
     $h .= ".cover{position:relative;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border:1px solid var(--border);margin-bottom:32px;background:{$coverBg};}\n";
     $h .= ".cover-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,0.05) 0%,rgba(10,10,10,0.97) 65%);}\n";
