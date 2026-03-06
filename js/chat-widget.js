@@ -11,7 +11,7 @@
 
   /* ─── CONFIG ─────────────────────────────────────────────── */
   var WC = {
-    brand:       'WellCore AI',
+    brand:       'WellCore',
     subhead:     'Asistente de Fitness',
     color:       '#E31E24',
     bg:          '#0a0a0a',
@@ -263,7 +263,7 @@
     /* Powered */
     var poweredA = el('a', { href: 'mailto:' + WC.coachEmail, text: WC.coachEmail });
     var powered = el('div', { id: 'wc-powered' });
-    powered.appendChild(document.createTextNode('Powered by WellCore AI · '));
+    powered.appendChild(document.createTextNode('Powered by WellCore · '));
     powered.appendChild(poweredA);
 
     /* Window */

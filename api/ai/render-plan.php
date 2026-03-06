@@ -219,8 +219,7 @@ tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   <div class="cover-meta">
     <div class="cover-meta-item"><strong>{$clientName}</strong>Cliente</div>
     <div class="cover-meta-item"><strong>{$plan}</strong>Plan</div>
-    <div class="cover-meta-item"><strong>{$fecha}</strong>Generado</div>
-    <div class="cover-meta-item"><strong>Claude Opus 4.6</strong>Motor IA</div>
+    <div class="cover-meta-item"><strong>{$fecha}</strong>Fecha</div>
   </div>
 </div>
 <div class="content">
@@ -236,7 +235,7 @@ function footer_html(): string {
   <div class="footer-meta">
     <div>wellcorefitness.com</div>
     <div>info@wellcorefitness.com</div>
-    <div>Plan generado con Claude AI</div>
+    <div>Plan personalizado</div>
   </div>
 </div>
 </body></html>
@@ -512,7 +511,7 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
     $h .= "<div><div class=\"cover-meta-label\">Cliente</div><div class=\"cover-meta-value\">{$name}</div></div>";
     $h .= "<div><div class=\"cover-meta-label\">Frecuencia</div><div class=\"cover-meta-value\">{$diasSem} d&iacute;as/sem</div></div>";
     $h .= "<div><div class=\"cover-meta-label\">Duraci&oacute;n</div><div class=\"cover-meta-value\">30 d&iacute;as</div></div>";
-    $h .= "<div><div class=\"cover-meta-label\">Generado</div><div class=\"cover-meta-value\">{$fecha}</div></div>";
+    $h .= "<div><div class=\"cover-meta-label\">Fecha</div><div class=\"cover-meta-value\">{$fecha}</div></div>";
     $h .= "</div></div>";
     $h .= "<div class=\"cover-footer\"><div class=\"cover-footer-brand\">WELLCORE FITNESS</div><div class=\"cover-footer-coach\">@wellcore.fitness</div></div>";
     $h .= "</div>\n";
