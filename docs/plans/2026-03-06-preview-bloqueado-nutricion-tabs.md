@@ -308,6 +308,46 @@ Deploy via Easypanel console: `cd /code && git pull origin main`
 
 ---
 
+## Task 12: Full Audit — Console Errors, Visual QA, Edge Cases
+
+**Files:**
+- Modify: `cliente.html` (bug fixes as needed)
+
+**Step 1: Console error audit**
+
+Open each plan level (esencial, metodo, elite) in Playwright, navigate to ALL 6 tabs, capture console errors. Fix any JS errors (undefined functions, missing elements, null references).
+
+**Step 2: Visual audit with screenshots**
+
+Take screenshots of:
+- Each locked preview (verify blur + demo content visible behind)
+- Each unlocked interactive tab (verify cards render, data displays)
+- Mobile viewport (verify tab scroll, no overflow)
+- Overlay buttons (verify "Mejorar Plan" links work)
+
+**Step 3: Edge case testing**
+
+- Switch tabs rapidly (no duplicate renders)
+- Refresh page on each tab (state persists correctly)
+- Verify habits checkboxes save/load from localStorage
+- Verify coach tip buttons only show for metodo/elite
+- Verify training tab still works (no regression)
+- Verify nutricion IA section (sidebar) still works (no regression)
+
+**Step 4: Fix all issues found**
+
+**Step 5: Final commit + push + deploy**
+
+```bash
+git add cliente.html
+git commit -m "fix: audit — resolve all errors and edge cases from task 8 implementation"
+git push origin main
+```
+
+Deploy via Easypanel: `cd /code && git pull origin main`
+
+---
+
 ## Execution Order
 
 Tasks 1-3 are foundational (CSS, HTML structure, JS routing).
@@ -315,5 +355,6 @@ Task 4 is the locked overlay system.
 Tasks 5-9 are independent feature tasks (can be done sequentially).
 Task 10 is cleanup of old code.
 Task 11 is integration testing.
+Task 12 is full audit + bug fixing.
 
 Estimated: ~800-1000 lines of new JS/HTML added to cliente.html.
