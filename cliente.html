@@ -1130,13 +1130,25 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 }
 .bnav-item:active{ transform:scale(0.88);opacity:0.8; }
 
+
+/* ── topbar center badge (section name, mobile only) ── */
+.topbar-center-badge{
+  flex:1;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;
+  color:var(--gray);text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  display:none;text-transform:uppercase;
+}
+@media(max-width:768px){
+  .topbar-center-badge{display:block}
+}
 /* ===== MOBILE ===== */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
   .sidebar-overlay.open{display:block}
   .main-wrap{margin-left:0}
-  .hamburger{display:none}
+  .hamburger{display:flex;align-items:center;justify-content:center}
   .bottom-nav{display:flex}
   .content-area{padding:16px 14px 74px}
   .logout-label{display:none}
@@ -1193,33 +1205,33 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
   <nav class="sidebar-nav">
     <a class="nav-item active" onclick="showSection('dashboard')" id="nav-dashboard">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9670;</span> Dashboard
+      <i class="fas fa-home"></i> Dashboard
     </a>
     <a class="nav-item" onclick="showSection('plan')" id="nav-plan">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9672;</span> Mi Plan
+      <i class="fas fa-dumbbell"></i> Mi Plan
     </a>
     <a class="nav-item" onclick="showSection('seguimiento')" id="nav-seguimiento">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9650;</span> Seguimiento
+      <i class="fas fa-chart-line"></i> Seguimiento
     </a>
     <a class="nav-item" onclick="showSection('checkin')" id="nav-checkin">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#10003;</span> Check-in
+      <i class="fas fa-clipboard-check"></i> Check-in
       <span class="badge-elite">ELITE</span>
     </a>
     <a class="nav-item" onclick="showSection('fotos')" id="nav-fotos">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9673;</span> Fotos
+      <i class="fas fa-camera"></i> Fotos Progreso
     </a>
     <a class="nav-item" onclick="showSection('biblioteca')" id="nav-biblioteca">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9671;</span> Biblioteca
+      <i class="fas fa-book-open"></i> Biblioteca
     </a>
     <a class="nav-item" onclick="showSection('nutricion')" id="nav-nutricion">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9733;</span> Nutricion IA
+      <i class="fas fa-robot"></i> Nutricion IA
       <span class="badge-elite" style="background:var(--accent);color:#000">IA</span>
     </a>
     <a class="nav-item" onclick="showSection('soporte')" id="nav-soporte">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9678;</span> Soporte
+      <i class="fas fa-headset"></i> Soporte
     </a>
     <a class="nav-item" onclick="showSection('perfil')" id="nav-perfil">
-      <span style="color:#00D9FF;font-weight:700;width:18px;text-align:center;flex-shrink:0">&#9655;</span> Mi Perfil
+      <i class="fas fa-user"></i> Mi Perfil
     </a>
   </nav>
 
@@ -1234,9 +1246,13 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
   <!-- TOPBAR -->
   <header class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
     <a href="/" class="topbar-logo-link">
       <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" class="topbar-logo-img">
     </a>
+    <div class="topbar-center-badge" id="topbar-breadcrumb">Dashboard</div>
     <div class="topbar-right">
       <div class="topbar-plan-badge" id="topbar-plan-badge">ESENCIAL</div>
       <button class="btn-logout-top" onclick="doLogout()">
@@ -2015,7 +2031,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
 (function(){
   const token = localStorage.getItem('wc_token');
   if (!token) { window.location.replace('login.html'); return; }
-  fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+  fetch('/api/auth/me.php', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (!data || data.error || data.type !== 'client') {
@@ -2071,7 +2087,6 @@ function apiFetch(path, opts) {
   if (token) headers['Authorization'] = 'Bearer ' + token;
   return fetch(API_BASE + path, Object.assign({}, opts, { headers: headers }));
 }
-
 // ===== INIT =====
 function init() {
   // Topbar
@@ -2177,7 +2192,7 @@ function showSection(id) {
   if (sec) sec.classList.add('active');
   const nav = document.getElementById('nav-' + id);
   if (nav) nav.classList.add('active');
-  document.getElementById('topbar-breadcrumb').textContent = SECTION_LABELS[id] || id;
+  var bc = document.getElementById('topbar-breadcrumb'); if (bc) bc.textContent = SECTION_LABELS[id] || id;
   closeSidebar();
   if (id === 'seguimiento') loadWeeklyInsight(false);
 }
@@ -2455,7 +2470,7 @@ function wlSaveAll() {
 
   // Sync with backend (offline-first)
   rows.forEach(function(r) {
-    apiFetch('/weights', { method: 'POST', body: JSON.stringify(r) })
+    apiFetch('/weights.php', { method: 'POST', body: JSON.stringify(r) })
       .catch(function() { /* Offline mode: saved to localStorage */ });
   });
 
@@ -3150,7 +3165,7 @@ function highlightCurrentPlan() {
 
 // ===== PROFILE =====
 function loadProfileForm() {
-  apiFetch('/clients/profile')
+  apiFetch('/clients/profile.php')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var p = data.profile || {};
@@ -3504,7 +3519,7 @@ function submitNutriAnalysis() {
   }
 
   var token = localStorage.getItem('wc_token');
-  fetch(API_BASE + '/nutrition/analyze', {
+  fetch(API_BASE + '/nutrition/analyze.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -3649,7 +3664,7 @@ function showNutriResult(analysis, mealType, route) {
 function loadNutriHistory() {
   var days = document.getElementById('nutri-days-filter').value;
   var token = localStorage.getItem('wc_token');
-  fetch(API_BASE + '/nutrition/history?days=' + days, {
+  fetch(API_BASE + '/nutrition/history.php?days=' + days, {
     headers: { 'Authorization': 'Bearer ' + (token || '') }
   })
   .then(function(r) { return r.json(); })
@@ -3731,7 +3746,7 @@ function loadWeeklyInsight(force) {
     + 'Dame un insight breve y motivador sobre mi progreso, con 1-2 recomendaciones concretas. '
     + 'Maximo 3 oraciones. Se directo y cientifico.';
 
-  fetch(API_BASE + '/ai/chat', {
+  fetch(API_BASE + '/ai/chat.php', {
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + (token || ''), 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: prompt, session_id: 'insight-' + clientId })
