@@ -2323,7 +2323,7 @@
     var tbody = document.getElementById('planesTableBody');
     if (!tbody) return;
 
-    apiFetch('/admin/ai-generations?status=completed&type=rise')
+    apiFetch('/admin/ai-generations.php?status=completed&type=rise')
       .then(function(r) { return r.json(); })
       .then(function(d) {
         tbody.textContent = '';
