@@ -3152,153 +3152,222 @@ document.addEventListener('keydown', function(e) {
 
   function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
 
-  // ── PARSE HTML PLAN ──────────────────────────────────────
-  window.parseAndRenderInteractive = function(htmlContent) {
-    // Parse the HTML content into a DOM
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(htmlContent, 'text/html');
+  // ── PARSE TABLE ROWS INTO EXERCISES ────────────────────────
+  function parseTableExercises(table) {
+    var exercises = [];
+    var rows = table.querySelectorAll('tbody tr');
+    if (rows.length === 0) rows = table.querySelectorAll('tr');
+    rows.forEach(function(row) {
+      var cells = row.querySelectorAll('td');
+      if (cells.length < 4) return; // Skip header rows (th)
 
-    // Find all day sections (each has a table with exercises)
-    var daySections = doc.querySelectorAll('.exercise-table, table');
-    if (daySections.length === 0) { return; } // No tables found
-
-    // Find day headers — look for elements before each table
-    var days = [];
-    var dayNames = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
-    var allTables = Array.from(doc.querySelectorAll('table'));
-
-    allTables.forEach(function(table, ti) {
-      // Find the closest preceding header with day info
-      var dayTitle = '';
-      var daySubtitle = '';
-      var warmupText = '';
-      var cooldownText = '';
-
-      // Look backwards for day header
-      var prev = table.previousElementSibling;
-      while (prev) {
-        var text = prev.textContent || '';
-        if (text.indexOf('Calentamiento') >= 0) {
-          // Found warmup section
-          var warmupContent = prev.querySelectorAll('div, p, span');
-          warmupContent.forEach(function(el) {
-            var t = el.textContent.trim();
-            if (t.length > 20 && t.indexOf('Calentamiento') < 0) warmupText = t;
-          });
-          if (!warmupText) {
-            warmupText = text.replace(/Calentamiento/gi, '').trim();
-          }
-        }
-        // Check for day title pattern like "LUNES — Tren Inferior"
-        for (var dn = 0; dn < dayNames.length; dn++) {
-          if (text.toUpperCase().indexOf(dayNames[dn]) >= 0) {
-            dayTitle = text.trim();
-            break;
-          }
-        }
-        if (dayTitle) break;
-        // Also check for numbered day headers like "01"
-        if (prev.querySelector && prev.querySelector('[class*="day"]')) {
-          dayTitle = text.trim();
-          break;
-        }
-        prev = prev.previousElementSibling;
+      // Detect column layout: if first cell is a number (#), name is col 1
+      var nameIdx = 1, setsIdx = 2, repsIdx = 3, restIdx = 4, rirIdx = -1, notesIdx = -1;
+      var firstCell = (cells[0].textContent || '').trim();
+      if (isNaN(parseInt(firstCell))) {
+        nameIdx = 0; setsIdx = 1; repsIdx = 2; restIdx = 3;
       }
 
-      // Look after table for cooldown
-      var next = table.nextElementSibling;
-      while (next) {
-        var nextText = next.textContent || '';
-        if (nextText.indexOf('Vuelta a la calma') >= 0 || nextText.indexOf('calma') >= 0) {
-          var cooldownContent = next.querySelectorAll('div, p, span');
-          cooldownContent.forEach(function(el) {
-            var t = el.textContent.trim();
-            if (t.length > 15 && t.indexOf('Vuelta') < 0 && t.indexOf('calma') < 0) cooldownText = t;
-          });
-          if (!cooldownText) cooldownText = nextText.replace(/Vuelta a la calma/gi, '').trim();
-          break;
-        }
-        if (next.querySelector && next.querySelector('table')) break; // Hit next day
-        next = next.nextElementSibling;
-      }
+      // RIR and notes depend on total columns
+      var extra = cells.length - (restIdx + 1); // columns after rest
+      if (extra >= 2) { rirIdx = restIdx + 1; notesIdx = restIdx + 2; }
+      else if (extra === 1) { rirIdx = restIdx + 1; }
 
-      // Parse exercises from table rows
-      var exercises = [];
-      var rows = table.querySelectorAll('tbody tr, tr');
-      rows.forEach(function(row) {
-        var cells = row.querySelectorAll('td');
-        if (cells.length < 4) return; // Skip header rows
-
-        var nameIdx = 1; // Usually column 2 is exercise name
-        var setsIdx = 2;
-        var repsIdx = 3;
-        var restIdx = 4;
-        var rirIdx = cells.length > 5 ? 5 : -1;
-        var notesIdx = cells.length > 6 ? 6 : (cells.length > 5 ? 5 : -1);
-
-        // If first cell looks like a number, it's the # column
-        var firstCell = (cells[0].textContent || '').trim();
-        if (isNaN(parseInt(firstCell))) {
-          nameIdx = 0; setsIdx = 1; repsIdx = 2; restIdx = 3;
-          rirIdx = cells.length > 4 ? 4 : -1;
-          notesIdx = cells.length > 5 ? 5 : (cells.length > 4 ? 4 : -1);
-        }
-
-        var name = (cells[nameIdx] ? cells[nameIdx].textContent : '').trim();
-        if (!name || name.length < 3) return;
-
-        exercises.push({
-          name: name,
-          sets: (cells[setsIdx] ? cells[setsIdx].textContent : '3').trim(),
-          reps: (cells[repsIdx] ? cells[repsIdx].textContent : '10').trim(),
-          rest: (cells[restIdx] ? cells[restIdx].textContent : '90s').trim(),
-          rpe: rirIdx >= 0 && cells[rirIdx] ? 'RIR ' + cells[rirIdx].textContent.trim() : '',
-          notes: notesIdx >= 0 && cells[notesIdx] ? cells[notesIdx].textContent.trim() : ''
-        });
-      });
-
-      if (exercises.length === 0) return;
-
-      // Extract day name from title
-      var parsedDay = dayNames[ti] || ('DIA ' + (ti + 1));
-      var parsedSubtitle = '';
-      if (dayTitle) {
-        for (var d = 0; d < dayNames.length; d++) {
-          if (dayTitle.toUpperCase().indexOf(dayNames[d]) >= 0) {
-            parsedDay = dayNames[d];
-            var parts = dayTitle.split(/[—–-]/);
-            if (parts.length > 1) parsedSubtitle = parts.slice(1).join(' — ').trim();
-            break;
-          }
+      // Extract exercise name (may include .muscle-tag child)
+      var nameCell = cells[nameIdx];
+      var name = '';
+      if (nameCell) {
+        var muscleTag = nameCell.querySelector('.muscle-tag');
+        if (muscleTag) {
+          name = nameCell.textContent.replace(muscleTag.textContent, '').trim();
+        } else {
+          name = nameCell.textContent.trim();
         }
       }
+      if (!name || name.length < 3) return;
 
-      // Determine group
-      var sub = parsedSubtitle.toLowerCase();
-      var group = 'full';
-      if (sub.indexOf('superior') >= 0 || sub.indexOf('push') >= 0 || sub.indexOf('pecho') >= 0 || sub.indexOf('empuje') >= 0) group = 'push';
-      else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('glute') >= 0) group = 'legs';
-      else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0 || sub.indexOf('jale') >= 0) group = 'pull';
-
-      days.push({
-        id: 'rise-dia-' + String.fromCharCode(97 + ti),
-        day: parsedDay,
-        label: '// sesion ' + String(ti + 1).padStart(2, '0') + ' de ' + String(allTables.length).padStart(2, '0'),
-        title: 'DIA ' + String.fromCharCode(65 + ti),
-        subtitle: parsedSubtitle || parsedDay,
-        group: group,
-        stats: {
-          volume: exercises.reduce(function(a, e) { return a + (parseInt(e.sets) || 3); }, 0) + ' series',
-          rpe: exercises[0].rpe || '—',
-          focus: group.toUpperCase(),
-          muscles: (parsedSubtitle || parsedDay).toUpperCase()
-        },
-        warmup: warmupText || 'Movilidad articular general + activacion especifica. 8-10 min.',
-        warmupTime: '8 min',
-        exercises: exercises,
-        cooldown: cooldownText || 'Estiramiento estatico 5 min. Respiracion diafragmatica.'
+      exercises.push({
+        name: name,
+        sets: (cells[setsIdx] ? cells[setsIdx].textContent : '3').trim(),
+        reps: (cells[repsIdx] ? cells[repsIdx].textContent : '10').trim(),
+        rest: (cells[restIdx] ? cells[restIdx].textContent : '90s').trim(),
+        rpe: rirIdx >= 0 && cells[rirIdx] ? 'RIR ' + cells[rirIdx].textContent.trim() : '',
+        notes: notesIdx >= 0 && cells[notesIdx] ? cells[notesIdx].textContent.trim() : ''
       });
     });
+    return exercises;
+  }
+
+  // ── PARSE HTML PLAN ──────────────────────────────────────
+  window.parseAndRenderInteractive = function(htmlContent) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(htmlContent, 'text/html');
+    var days = [];
+    var dayNames = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
+
+    // ── Strategy 1: Structured parsing via .day-section containers
+    var daySections = doc.querySelectorAll('.day-section');
+    if (daySections.length > 0) {
+      daySections.forEach(function(section, si) {
+        // Extract day name and subtitle from .day-name (e.g. "LUNES — Tren Inferior")
+        var dayNameEl = section.querySelector('.day-name');
+        var dayTitle = dayNameEl ? dayNameEl.textContent.trim() : '';
+        var parsedDay = dayNames[si] || ('DIA ' + (si + 1));
+        var parsedSubtitle = '';
+        if (dayTitle) {
+          var parts = dayTitle.split(/\s*[—–]\s*/);
+          if (parts.length >= 1) {
+            var firstPart = parts[0].trim().toUpperCase();
+            for (var dn = 0; dn < dayNames.length; dn++) {
+              if (firstPart.indexOf(dayNames[dn]) >= 0) { parsedDay = dayNames[dn]; break; }
+            }
+          }
+          if (parts.length > 1) parsedSubtitle = parts.slice(1).join(' — ').trim();
+        }
+
+        // Extract warmup from .warmup-block
+        var warmupBlock = section.querySelector('.warmup-block');
+        var warmupText = '';
+        if (warmupBlock) {
+          var warmupTextEl = warmupBlock.querySelector('.warmup-text');
+          warmupText = warmupTextEl ? warmupTextEl.textContent.trim() : warmupBlock.textContent.replace(/Calentamiento/gi, '').trim();
+        }
+
+        // Extract cooldown — look for vuelta_calma block after table
+        var cooldownText = '';
+        var cooldownEl = section.querySelector('.cooldown-block');
+        if (!cooldownEl) {
+          // Fallback: search all children after the table for text containing "calma"
+          var allChildren = Array.from(section.children);
+          var pastTable = false;
+          for (var ci = 0; ci < allChildren.length; ci++) {
+            if (allChildren[ci].querySelector('table') || allChildren[ci].tagName === 'TABLE') { pastTable = true; continue; }
+            if (pastTable) {
+              var txt = allChildren[ci].textContent || '';
+              if (txt.toLowerCase().indexOf('calma') >= 0 || txt.toLowerCase().indexOf('estiramiento') >= 0) {
+                cooldownText = txt.replace(/Vuelta a la calma/gi, '').replace(/Cool\s*Down/gi, '').trim();
+                break;
+              }
+            }
+          }
+        } else {
+          cooldownText = cooldownEl.textContent.replace(/Vuelta a la calma/gi, '').trim();
+        }
+
+        // Extract duration from .day-duration-value
+        var durationEl = section.querySelector('.day-duration-value');
+        var durationText = durationEl ? durationEl.textContent.trim() : '';
+
+        // Parse exercises from table
+        var table = section.querySelector('table');
+        if (!table) return;
+        var exercises = parseTableExercises(table);
+        if (exercises.length === 0) return;
+
+        // Determine muscle group
+        var sub = parsedSubtitle.toLowerCase();
+        var group = 'full';
+        if (sub.indexOf('superior') >= 0 || sub.indexOf('push') >= 0 || sub.indexOf('pecho') >= 0 || sub.indexOf('empuje') >= 0) group = 'push';
+        else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('glute') >= 0 || sub.indexOf('glut') >= 0) group = 'legs';
+        else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0 || sub.indexOf('jale') >= 0) group = 'pull';
+
+        days.push({
+          id: 'rise-dia-' + String.fromCharCode(97 + si),
+          day: parsedDay,
+          label: '// sesion ' + String(si + 1).padStart(2, '0') + ' de ' + String(daySections.length).padStart(2, '0'),
+          title: 'DIA ' + String.fromCharCode(65 + si),
+          subtitle: parsedSubtitle || parsedDay,
+          group: group,
+          stats: {
+            volume: exercises.reduce(function(a, e) { return a + (parseInt(e.sets) || 3); }, 0) + ' series',
+            rpe: exercises[0].rpe || '—',
+            focus: group.toUpperCase(),
+            muscles: (parsedSubtitle || parsedDay).toUpperCase()
+          },
+          warmup: warmupText || 'Movilidad articular general + activacion especifica. 8-10 min.',
+          warmupTime: durationText || '8 min',
+          exercises: exercises,
+          cooldown: cooldownText || 'Estiramiento estatico 5 min. Respiracion diafragmatica.'
+        });
+      });
+    }
+
+    // ── Strategy 2: Fallback — walk tables directly (legacy HTML without .day-section)
+    if (days.length === 0) {
+      var allTables = Array.from(doc.querySelectorAll('table'));
+      if (allTables.length === 0) return;
+
+      allTables.forEach(function(table, ti) {
+        // Walk up to the parent container, then walk siblings
+        var container = table.closest('.table-wrap') || table.parentElement;
+        var warmupText = '', cooldownText = '', dayTitle = '';
+
+        // Walk backwards from container for header and warmup
+        var prev = container ? container.previousElementSibling : null;
+        while (prev) {
+          var text = prev.textContent || '';
+          if (text.indexOf('Calentamiento') >= 0) {
+            var wt = prev.querySelector('.warmup-text');
+            warmupText = wt ? wt.textContent.trim() : text.replace(/Calentamiento/gi, '').trim();
+          }
+          for (var dn = 0; dn < dayNames.length; dn++) {
+            if (text.toUpperCase().indexOf(dayNames[dn]) >= 0) { dayTitle = text.trim(); break; }
+          }
+          if (dayTitle) break;
+          prev = prev.previousElementSibling;
+        }
+
+        // Walk forward for cooldown
+        var next = container ? container.nextElementSibling : null;
+        while (next) {
+          var nextText = next.textContent || '';
+          if (nextText.toLowerCase().indexOf('calma') >= 0 || nextText.toLowerCase().indexOf('estiramiento') >= 0) {
+            cooldownText = nextText.replace(/Vuelta a la calma/gi, '').trim();
+            break;
+          }
+          if (next.querySelector && next.querySelector('table')) break;
+          next = next.nextElementSibling;
+        }
+
+        var exercises = parseTableExercises(table);
+        if (exercises.length === 0) return;
+
+        var parsedDay = dayNames[ti] || ('DIA ' + (ti + 1));
+        var parsedSubtitle = '';
+        if (dayTitle) {
+          var parts = dayTitle.split(/\s*[—–-]\s*/);
+          for (var d = 0; d < dayNames.length; d++) {
+            if (dayTitle.toUpperCase().indexOf(dayNames[d]) >= 0) { parsedDay = dayNames[d]; break; }
+          }
+          if (parts.length > 1) parsedSubtitle = parts.slice(1).join(' — ').trim();
+        }
+
+        var sub = parsedSubtitle.toLowerCase();
+        var group = 'full';
+        if (sub.indexOf('superior') >= 0 || sub.indexOf('push') >= 0 || sub.indexOf('pecho') >= 0) group = 'push';
+        else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('glute') >= 0) group = 'legs';
+        else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0 || sub.indexOf('jale') >= 0) group = 'pull';
+
+        days.push({
+          id: 'rise-dia-' + String.fromCharCode(97 + ti),
+          day: parsedDay,
+          label: '// sesion ' + String(ti + 1).padStart(2, '0') + ' de ' + String(allTables.length).padStart(2, '0'),
+          title: 'DIA ' + String.fromCharCode(65 + ti),
+          subtitle: parsedSubtitle || parsedDay,
+          group: group,
+          stats: {
+            volume: exercises.reduce(function(a, e) { return a + (parseInt(e.sets) || 3); }, 0) + ' series',
+            rpe: exercises[0].rpe || '—',
+            focus: group.toUpperCase(),
+            muscles: (parsedSubtitle || parsedDay).toUpperCase()
+          },
+          warmup: warmupText || 'Movilidad articular general + activacion especifica. 8-10 min.',
+          warmupTime: '8 min',
+          exercises: exercises,
+          cooldown: cooldownText || 'Estiramiento estatico 5 min. Respiracion diafragmatica.'
+        });
+      });
+    }
 
     if (days.length === 0) return;
 
