@@ -70,7 +70,17 @@ if ($plan['plan_type'] === 'rise') {
 }
 
 // ── Parsear contenido JSON ────────────────────────────────────
+// content puede ser JSON (original de ai_save_plan) o HTML (ya renderizado).
+// Si no es JSON, intentar obtener el JSON de ai_generations.parsed_json.
 $content = json_decode($plan['content'] ?? '{}', true);
+if (!$content && !empty($plan['ai_generation_id'])) {
+    $genStmt = $db->prepare("SELECT parsed_json FROM ai_generations WHERE id = ?");
+    $genStmt->execute([$plan['ai_generation_id']]);
+    $genRow = $genStmt->fetch(PDO::FETCH_ASSOC);
+    if ($genRow && $genRow['parsed_json']) {
+        $content = json_decode($genRow['parsed_json'], true);
+    }
+}
 if (!$content) respondError('Contenido del plan inválido (no es JSON)', 422);
 
 // ── Generar HTML según tipo ───────────────────────────────────
