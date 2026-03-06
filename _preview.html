@@ -16,17 +16,22 @@
   <p style="color:rgba(255,255,255,0.5);font-size:14px">Abriendo portal del cliente...</p>
 </div>
 <script>
-// Lee el token del hash de la URL (nunca enviado al servidor)
-var hash = location.hash.slice(1);
-if (!hash) {
+// Lee el token y plan del hash de la URL (nunca enviado al servidor)
+// Formato: #TOKEN o #TOKEN|plan
+var raw = location.hash.slice(1);
+if (!raw) {
   document.querySelector('p').textContent = 'Error: token no encontrado.';
 } else {
+  var parts = raw.split('|');
+  var token = parts[0];
+  var plan  = parts[1] || '';
   // Guarda en sessionStorage (aislado por tab, no afecta al admin)
-  sessionStorage.setItem('wc_preview_token', hash);
+  sessionStorage.setItem('wc_preview_token', token);
   // Limpia el hash antes de redirigir
   history.replaceState(null, '', location.pathname);
-  // Redirige al portal del cliente en el mismo tab
-  window.location.replace('/cliente.html');
+  // Redirige al portal correcto según el plan
+  var dest = (plan === 'rise') ? '/rise-dashboard.html' : '/cliente.html';
+  window.location.replace(dest);
 }
 </script>
 </body>

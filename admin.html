@@ -1870,9 +1870,10 @@
       .then(function(r) { return r.json(); })
       .then(function(d) {
         if (!d.token) { showToast('Error al obtener acceso al portal'); return; }
-        // Abre _preview.html con el token en el hash (nunca enviado al servidor)
-        // _preview.html guarda el token en sessionStorage y redirige a cliente.html
-        window.open('/_preview.html#' + d.token, '_blank');
+        // Abre _preview.html con token|plan en el hash (nunca enviado al servidor)
+        // _preview.html guarda el token en sessionStorage y redirige al portal correcto
+        var plan = client.plan || '';
+        window.open('/_preview.html#' + d.token + '|' + plan, '_blank');
       })
       .catch(function() { showToast('Error de conexión al abrir portal'); });
   }

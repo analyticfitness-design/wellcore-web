@@ -87,7 +87,7 @@ if ($planType === 'rise') {
     $stage2Start = microtime(true);
     try {
         // Sonnet para RISE: soporta hasta 64K tokens de output (Haiku solo 8K)
-        $riseModel = defined('CLAUDE_SONNET_MODEL') ? CLAUDE_SONNET_MODEL : 'claude-sonnet-4-5-20251015';
+        $riseModel = defined('CLAUDE_SONNET_MODEL') ? CLAUDE_SONNET_MODEL : 'claude-sonnet-4-6';
         $response = claude_call(get_rise_system_prompt(), $userPrompt, $riseModel, 16000);
         $parsed   = extract_json_from_response($response['text']);
         $result   = ['content' => $response['text']];
