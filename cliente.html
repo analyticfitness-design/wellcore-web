@@ -4522,7 +4522,7 @@ document.addEventListener('keydown', function(e) {
   // ── COACH TIP ──────────────────────────────────────────────
 
   // Limits per plan: esencial=3, metodo=5, elite=unlimited
-  var COACH_TIP_LIMITS = { esencial: 3, metodo: 5, elite: Infinity };
+  var COACH_TIP_LIMITS = { esencial: 3, metodo: 5, elite: 10 };
   var coachTipsUsedToday = {};
   try {
     var savedTips = localStorage.getItem('wc_coach_tips_used');
@@ -4555,8 +4555,8 @@ document.addEventListener('keydown', function(e) {
     msg.appendChild(icon);
     msg.appendChild(document.createTextNode('Alcanzaste el limite de ' + limit + ' tips para esta sesion. '));
     var upgradeText = clientPlan === 'esencial'
-      ? 'Actualiza a Metodo para 5 tips o Elite para tips ilimitados.'
-      : 'Actualiza a Elite para tips ilimitados del coach.';
+      ? 'Actualiza a Metodo para 5 tips o Elite para 10 tips por sesion.'
+      : clientPlan === 'metodo' ? 'Actualiza a Elite para 10 tips por sesion.' : 'Los tips se reinician cada dia.';
     msg.appendChild(document.createTextNode(upgradeText));
     bubble.textContent = '';
     bubble.appendChild(label);
