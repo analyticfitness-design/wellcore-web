@@ -2122,12 +2122,17 @@ function init() {
     document.getElementById('topbar-name').parentNode.appendChild(coachTag);
   }
   if (window._coachLogo) {
-    var logoImg = document.createElement('img');
-    logoImg.src = window._coachLogo;
-    logoImg.alt = 'Coach';
-    logoImg.style.cssText = 'height:28px;margin-right:10px;object-fit:contain';
-    var topbar = document.querySelector('.topbar');
-    if (topbar) topbar.insertBefore(logoImg, topbar.firstChild);
+    try {
+      var logoUrl = new URL(window._coachLogo, location.origin);
+      if (['http:', 'https:'].indexOf(logoUrl.protocol) !== -1) {
+        var logoImg = document.createElement('img');
+        logoImg.src = logoUrl.toString();
+        logoImg.alt = 'Coach';
+        logoImg.style.cssText = 'height:28px;margin-right:10px;object-fit:contain';
+        var topbar = document.querySelector('.topbar');
+        if (topbar) topbar.insertBefore(logoImg, topbar.firstChild);
+      }
+    } catch(e) { /* invalid URL, skip logo */ }
   }
 
   // Sidebar plan badge

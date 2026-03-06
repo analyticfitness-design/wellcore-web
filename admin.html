@@ -2176,7 +2176,7 @@
 
       // Status
       var tdStatus = document.createElement('td');
-      tdStatus.insertAdjacentHTML('beforeend', '<span class="badge badge-green">' + (c.status || 'activo') + '</span>');
+      tdStatus.insertAdjacentHTML('beforeend', '<span class="badge badge-green">' + esc(c.status || 'activo') + '</span>');
 
       // Last check-in + pending indicator
       var tdCI = document.createElement('td'); tdCI.style.cssText = 'font-family:\'JetBrains Mono\',monospace;font-size:11px;color:var(--gray);';
@@ -2879,7 +2879,7 @@
         body.innerHTML = renderPlanPreview(gen.parsed_json);
       })
       .catch(function(err) {
-        body.innerHTML = '<div style="text-align:center;padding:40px;color:#EF4444">Error: ' + err.message + '</div>';
+        body.innerHTML = '<div style="text-align:center;padding:40px;color:#EF4444">Error: ' + esc(err.message) + '</div>';
       });
   }
 
@@ -2953,8 +2953,8 @@
       if (tips.hidratacion) h += '<p><strong>Hidratacion:</strong> ' + esc(tips.hidratacion) + '</p>';
       if (tips.pre_entreno) h += '<p><strong>Pre-entreno:</strong> ' + esc(tips.pre_entreno) + '</p>';
       if (tips.post_entreno) h += '<p><strong>Post-entreno:</strong> ' + esc(tips.post_entreno) + '</p>';
-      if (tips.alimentos_aliados) h += '<p><strong>Aliados:</strong> ' + tips.alimentos_aliados.join(', ') + '</p>';
-      if (tips.alimentos_reducir) h += '<p><strong>Reducir:</strong> ' + tips.alimentos_reducir.join(', ') + '</p>';
+      if (tips.alimentos_aliados) h += '<p><strong>Aliados:</strong> ' + tips.alimentos_aliados.map(esc).join(', ') + '</p>';
+      if (tips.alimentos_reducir) h += '<p><strong>Reducir:</strong> ' + tips.alimentos_reducir.map(esc).join(', ') + '</p>';
       h += '</div>';
     }
 

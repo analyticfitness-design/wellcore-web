@@ -189,9 +189,10 @@ $integrityHash = wompi_integrity_hash($reference, $amountInCents, 'COP');
 // -------------------------------------------------------
 // GUARDAR ORDEN PENDIENTE EN JSON
 // -------------------------------------------------------
-$ordersFile = __DIR__ . '/data/orders.json';
+// Usar /tmp/ para archivos transitorios (siempre writable en contenedores Docker)
+$ordersFile = sys_get_temp_dir() . '/wc_orders.json';
 $dir        = dirname($ordersFile);
-if (!is_dir($dir)) mkdir($dir, 0755, true);
+if (!is_dir($dir)) @mkdir($dir, 0755, true);
 
 $orders = [];
 if (file_exists($ordersFile)) {
@@ -221,7 +222,7 @@ $newOrder = [
 ];
 
 $orders[] = $newOrder;
-file_put_contents($ordersFile, json_encode($orders, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+@file_put_contents($ordersFile, json_encode($orders, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
 
 // -------------------------------------------------------
 // RESPUESTA AL FRONTEND

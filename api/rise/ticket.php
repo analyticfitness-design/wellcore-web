@@ -35,7 +35,7 @@ if ($method !== 'POST') { respondError('Método no permitido', 405); }
 $body = getJsonBody();
 
 $ticketType  = trim($body['ticket_type']  ?? '');
-$description = trim($body['description']  ?? '');
+$description = htmlspecialchars(trim($body['description']  ?? ''), ENT_QUOTES, 'UTF-8');
 $priority    = trim($body['priority']     ?? 'normal');
 
 $validTypes = ['ajuste_entrenamiento','consulta_nutricion','problema_acceso','solicitud_especial','otro'];
@@ -48,7 +48,9 @@ if (strlen($description) < 20) {
 if (!in_array($priority, ['normal','alta'], true)) $priority = 'normal';
 
 // Rate limit: max 3 tickets abiertos al mismo tiempo
-$openCount = (int) $db->prepare("SELECT COUNT(*) FROM tickets WHERE client_id = ? AND source = 'rise' AND status != 'closed'")->execute([$client['id']]) ? $db->query("SELECT COUNT(*) FROM tickets WHERE client_id = {$client['id']} AND source = 'rise' AND status != 'closed'")->fetchColumn() : 0;
+$countStmt = $db->prepare("SELECT COUNT(*) FROM tickets WHERE client_id = ? AND source = 'rise' AND status != 'closed'");
+$countStmt->execute([$client['id']]);
+$openCount = (int) $countStmt->fetchColumn();
 if ($openCount >= 3) {
     respondError('Tienes 3 tickets abiertos. Espera respuesta antes de enviar otro.', 429);
 }

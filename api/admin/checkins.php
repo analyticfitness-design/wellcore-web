@@ -34,7 +34,7 @@ $id = (int)($_GET['id'] ?? 0);
 if (!$id) respondError('ID requerido', 422);
 
 $body  = getJsonBody();
-$reply = trim($body['reply'] ?? '');
+$reply = htmlspecialchars(trim($body['reply'] ?? ''), ENT_QUOTES, 'UTF-8');
 if (!$reply) respondError('Respuesta requerida', 422);
 
 $stmt = $db->prepare("UPDATE checkins SET coach_reply = ?, replied_at = NOW() WHERE id = ?");

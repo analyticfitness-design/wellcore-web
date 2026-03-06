@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 /**
  * ============================================================
  * WELLCORE FITNESS — WEBHOOK DE CONFIRMACION WOMPI
@@ -63,8 +65,9 @@ require_once __DIR__ . '/transactions.php';
 // -------------------------------------------------------
 // LOGS
 // -------------------------------------------------------
-$logDir     = __DIR__ . '/logs';
-if (!is_dir($logDir)) mkdir($logDir, 0755, true);
+// Usar /tmp/ para logs transitorios (siempre writable en contenedores Docker)
+$logDir     = sys_get_temp_dir() . '/wc_wompi_logs';
+if (!is_dir($logDir)) @mkdir($logDir, 0755, true);
 $errorLog   = $logDir . '/errors.log';
 $webhookLog = $logDir . '/webhooks.log';
 

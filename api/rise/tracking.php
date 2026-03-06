@@ -30,11 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 // POST — guardar
 $body = getJsonBody();
 $date          = $body['date']           ?? date('Y-m-d');
+if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) $date = date('Y-m-d');
 $trainingDone  = (int)(bool)($body['training_done']  ?? false);
 $nutritionDone = (int)(bool)($body['nutrition_done'] ?? false);
 $water         = (float)($body['water_liters'] ?? 0);
 $sleep         = (float)($body['sleep_hours']  ?? 0);
-$note          = substr(trim($body['note'] ?? ''), 0, 500);
+$note          = htmlspecialchars(substr(trim($body['note'] ?? ''), 0, 500), ENT_QUOTES, 'UTF-8');
 
 $stmt = $db->prepare("
     INSERT INTO rise_tracking (client_id, log_date, training_done, nutrition_done, water_liters, sleep_hours, note)

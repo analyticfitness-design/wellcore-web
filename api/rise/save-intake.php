@@ -6,8 +6,14 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../includes/rate-limit.php';
 
 requireMethod('POST');
+
+// Rate limit: 10 intentos por IP cada hora
+if (!rate_limit_check('rise_intake', 10, 3600)) {
+    respondError('Demasiadas solicitudes. Intenta en unos minutos.', 429);
+}
 
 $input = getJsonBody();
 
@@ -92,6 +98,6 @@ try {
 } catch (PDOException $e) {
     // Log the actual error
     error_log('save-intake.php error: ' . $e->getMessage());
-    respondError('Error al guardar datos de intake: ' . $e->getMessage(), 500);
+    respondError('Error interno al guardar datos', 500);
 }
 ?>

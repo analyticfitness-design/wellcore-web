@@ -6,8 +6,14 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../includes/rate-limit.php';
 
 requireMethod('POST');
+
+// Rate limit: 5 intentos por IP cada 30 minutos
+if (!rate_limit_check('rise_payment', 5, 1800)) {
+    respondError('Demasiadas solicitudes. Intenta en unos minutos.', 429);
+}
 
 $input = getJsonBody();
 
@@ -114,6 +120,7 @@ try {
     if ($db->inTransaction()) {
         $db->rollBack();
     }
-    respondError('Error al procesar pago: ' . $e->getMessage(), 500);
+    error_log('rise/payment.php error: ' . $e->getMessage());
+    respondError('Error interno al procesar pago', 500);
 }
 ?>

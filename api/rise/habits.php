@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 // POST
 $body     = getJsonBody();
 $date     = $body['date']        ?? date('Y-m-d');
+if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) $date = date('Y-m-d');
 $habits   = $body['habits_json'] ?? (object)[];
 $completed = (int)($body['completed'] ?? 0);
 

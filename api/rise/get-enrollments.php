@@ -9,16 +9,8 @@ require_once __DIR__ . '/../includes/response.php';
 require_once __DIR__ . '/../includes/auth.php';
 
 requireMethod('GET');
-
-// Verificar token admin
-$token = getTokenFromHeader();
-if (!$token) respondError('No autenticado', 401);
-
+$admin = authenticateAdmin();
 $db = getDB();
-$stmt = $db->prepare("SELECT user_type FROM auth_tokens WHERE token = ? AND expires_at > NOW()");
-$stmt->execute([$token]);
-$tok = $stmt->fetch();
-if (!$tok || $tok['user_type'] !== 'admin') respondError('Acceso denegado', 403);
 
 // Traer inscritos RISE con datos del cliente
 $stmt = $db->prepare("

@@ -25,13 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 // POST
 $body     = getJsonBody();
 $date     = $body['date']      ?? date('Y-m-d');
+if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) $date = date('Y-m-d');
 $weight   = isset($body['weight_kg']) ? (float)$body['weight_kg'] : null;
 $chest    = isset($body['chest_cm'])  ? (float)$body['chest_cm']  : null;
 $waist    = isset($body['waist_cm'])  ? (float)$body['waist_cm']  : null;
 $hips     = isset($body['hips_cm'])   ? (float)$body['hips_cm']   : null;
 $thigh    = isset($body['thigh_cm'])  ? (float)$body['thigh_cm']  : null;
 $arm      = isset($body['arm_cm'])    ? (float)$body['arm_cm']    : null;
-$notes    = substr(trim($body['notes'] ?? ''), 0, 500);
+$notes    = htmlspecialchars(substr(trim($body['notes'] ?? ''), 0, 500), ENT_QUOTES, 'UTF-8');
 
 $stmt = $db->prepare("
     INSERT INTO rise_measurements (client_id, log_date, weight_kg, chest_cm, waist_cm, hips_cm, thigh_cm, arm_cm, notes)
