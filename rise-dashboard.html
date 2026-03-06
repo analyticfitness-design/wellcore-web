@@ -3515,7 +3515,23 @@ document.addEventListener('keydown', function(e) {
     if (subEl) subEl.textContent = done + ' / ' + total + ' ejercicios completados';
   }
 
-  // ── COACH TIP ──────────────────────────────────────────
+  // ── COACH TIP (RISE = 5 tips per training day) ──────────
+  var RISE_TIP_LIMIT = 3;
+  var riseTipsUsedToday = {};
+  try {
+    var savedRiseTips = localStorage.getItem('wc_rise_coach_tips_used');
+    if (savedRiseTips) {
+      var parsedRT = JSON.parse(savedRiseTips);
+      if (parsedRT.date === new Date().toDateString()) riseTipsUsedToday = parsedRT.counts || {};
+    }
+  } catch(e) {}
+
+  function getRiseTipCount(dayId) { return riseTipsUsedToday[dayId] || 0; }
+  function incrementRiseTip(dayId) {
+    riseTipsUsedToday[dayId] = (riseTipsUsedToday[dayId] || 0) + 1;
+    localStorage.setItem('wc_rise_coach_tips_used', JSON.stringify({ date: new Date().toDateString(), counts: riseTipsUsedToday }));
+  }
+
   window.getRiseCoachTip = function(key, exerciseName) {
     var bubble = document.getElementById('rise-trn-ai-' + key);
     if (!bubble) return;
@@ -3523,8 +3539,44 @@ document.addEventListener('keydown', function(e) {
       bubble.classList.remove('visible');
       return;
     }
+
+    // Check tip limit per training day
+    var dayId = key.split('-').slice(0, 3).join('-'); // e.g. "rise-dia-a"
+    var used = getRiseTipCount(dayId);
+    if (used >= RISE_TIP_LIMIT) {
+      bubble.classList.add('visible');
+      var label = document.createElement('div');
+      label.className = 'trn-ai-bubble-label';
+      label.textContent = '// WellCore Coach';
+      var msg = document.createElement('div');
+      msg.className = 'trn-ai-bubble-text';
+      msg.style.color = 'var(--muted)';
+      var icon = document.createElement('i');
+      icon.className = 'fas fa-lock';
+      icon.style.marginRight = '6px';
+      icon.style.color = 'var(--red)';
+      msg.appendChild(icon);
+      msg.appendChild(document.createTextNode('Alcanzaste el limite de ' + RISE_TIP_LIMIT + ' tips para esta sesion. Los tips se reinician cada dia.'));
+      bubble.textContent = '';
+      bubble.appendChild(label);
+      bubble.appendChild(msg);
+      return;
+    }
+
+    incrementRiseTip(dayId);
     bubble.classList.add('visible');
-    bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-loading"><i class="fas fa-spinner"></i> Tu coach esta preparando un tip...</div>';
+    var loadLabel = document.createElement('div');
+    loadLabel.className = 'trn-ai-bubble-label';
+    loadLabel.textContent = '// WellCore Coach';
+    var loadMsg = document.createElement('div');
+    loadMsg.className = 'trn-ai-bubble-loading';
+    var spinner = document.createElement('i');
+    spinner.className = 'fas fa-spinner';
+    loadMsg.appendChild(spinner);
+    loadMsg.appendChild(document.createTextNode(' Tu coach esta preparando un tip...'));
+    bubble.textContent = '';
+    bubble.appendChild(loadLabel);
+    bubble.appendChild(loadMsg);
 
     var token = localStorage.getItem('wc_token');
     fetch('/api/ai/exercise-tip.php', {
