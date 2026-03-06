@@ -3440,10 +3440,10 @@ function loadPhotosGallery() {
       grouped[date].forEach(function(photo) {
         var thumb = document.createElement('div');
         thumb.className = 'photo-thumb';
-        thumb.style.cursor = 'pointer';
-        thumb.addEventListener('click', (function(url, tipo, d) {
-          return function() { openPhotoLightbox(url, tipo + ' — ' + d); };
-        })(photo.url, photo.tipo, date));
+        thumb.style.cssText += 'cursor:pointer;-webkit-tap-highlight-color:transparent;';
+        thumb.onclick = (function(url, tipo, d) {
+          return function(e) { e.stopPropagation(); openPhotoLightbox(url, tipo + ' — ' + d); };
+        })(photo.url, photo.tipo, date);
         var img = document.createElement('img');
         img.src = photo.url;
         img.alt = photo.tipo + ' - ' + photo.photo_date;
