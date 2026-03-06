@@ -447,37 +447,161 @@ function send_welcome_email(
 
     $subject  = 'Bienvenido a WellCore Fitness — Tu pago fue confirmado';
     $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $firstName = explode(' ', trim($safeName))[0];
+    $loginUrl  = 'https://wellcorefitness.com/login.html';
+    $year      = date('Y');
 
-    $html  = "<h2>Hola {$safeName},</h2>";
-    $html .= "<p>Tu pago ha sido confirmado exitosamente a traves de Wompi.</p>";
-    $html .= "<h3>DETALLES DE TU SUSCRIPCION</h3>";
-    $html .= "<ul>";
-    $html .= "<li>Plan: {$planDisplay}</li>";
-    $html .= "<li>Monto: {$amount}</li>";
-    $html .= "<li>Metodo de pago: {$methodLabel}</li>";
-    $html .= "<li>Referencia: {$reference}</li>";
-    $html .= "</ul>";
+    $planColors = ['esencial' => '#60a5fa', 'metodo' => '#F5C842', 'elite' => '#E31E24', 'rise' => '#E31E24'];
+    $planColor  = $planColors[$plan] ?? '#E31E24';
 
+    // Credentials section (only for new accounts)
+    $credentialsHtml = '';
     if ($tempPassword !== null) {
-        $html .= "<h3>TUS CREDENCIALES DE ACCESO</h3>";
-        $html .= "<ul>";
-        $html .= "<li>URL: https://wellcorefitness.com/login.html</li>";
-        $html .= "<li>Email: {$email}</li>";
-        $html .= "<li>Contrasena temporal: {$tempPassword}</li>";
-        $html .= "</ul>";
-        $html .= "<p><strong>IMPORTANTE:</strong> Cambia tu contrasena al ingresar por primera vez.</p>";
+        $credentialsHtml = <<<CRED
+<tr><td style="padding:0 32px 20px;background:#111114">
+  <div style="font-size:11px;color:#E31E24;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px">TUS CREDENCIALES</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;border:1px solid #2A2A2E;border-top:3px solid #E31E24">
+  <tr><td style="padding:10px 16px;border-bottom:1px solid #2A2A2E">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Email</div>
+    <div style="font-size:14px;color:#00D9FF;font-family:monospace;margin-top:2px">{$email}</div>
+  </td></tr>
+  <tr><td style="padding:10px 16px">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Contrasena temporal</div>
+    <div style="font-size:16px;color:#00D9FF;font-family:monospace;font-weight:700;letter-spacing:2px;margin-top:2px">{$tempPassword}</div>
+  </td></tr>
+  </table>
+  <div style="margin-top:10px;padding:10px 14px;background:rgba(227,30,36,.08);border-left:2px solid #E31E24">
+    <div style="font-size:11px;color:#a1a1aa;line-height:1.5">Cambia tu contrasena al ingresar por primera vez.</div>
+  </div>
+</td></tr>
+CRED;
     } else {
-        $html .= "<p>Tu cuenta ya estaba activa. Ingresa con tus credenciales habituales en <a href='https://wellcorefitness.com/login.html'>wellcorefitness.com</a>.</p>";
+        $credentialsHtml = <<<CRED
+<tr><td style="padding:0 32px 20px;background:#111114">
+  <div style="font-size:14px;color:#D4D4D8;line-height:1.7;padding:16px 20px;background:#0A0A0A;border:1px solid #2A2A2E;border-left:3px solid {$planColor}">
+    Tu cuenta ya estaba activa. Ingresa con tus credenciales habituales en <a href="{$loginUrl}" style="color:#00D9FF;text-decoration:underline">wellcorefitness.com</a>
+  </div>
+</td></tr>
+CRED;
     }
 
-    $html .= "<h3>Proximos pasos</h3>";
-    $html .= "<ol>";
-    $html .= "<li>Ingresa al portal con las credenciales de arriba</li>";
-    $html .= "<li>Completa tu perfil (peso, objetivo, disponibilidad)</li>";
-    $html .= "<li>Tu coach personalizara tu programa en 24-48 horas</li>";
-    $html .= "</ol>";
-    $html .= "<p>Cualquier duda: info@wellcorefitness.com | WhatsApp: +57 312 4904720</p>";
-    $html .= "<p>Equipo WellCore Fitness<br>https://wellcorefitness.com</p>";
+    $html = <<<HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pago Confirmado | WellCore Fitness</title>
+</head>
+<body style="margin:0;padding:0;background:#0A0A0A;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%">
+
+<div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;overflow:hidden">
+{$firstName}, tu pago fue confirmado. Plan {$planDisplay} activado.
+</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;padding:20px 10px">
+<tr><td align="center">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#111114;border:1px solid #2A2A2E">
+
+<!-- Red top bar -->
+<tr><td style="background:#E31E24;padding:3px 0;font-size:0;line-height:0">&nbsp;</td></tr>
+
+<!-- Logo -->
+<tr><td style="padding:32px 32px 20px;text-align:center;background:#111114">
+  <table role="presentation" cellpadding="0" cellspacing="0" align="center">
+  <tr>
+    <td style="font-size:28px;font-weight:700;color:#FFFFFF;letter-spacing:3px">WELL</td>
+    <td style="font-size:28px;font-weight:700;color:#E31E24;letter-spacing:3px">[CORE]</td>
+  </tr>
+  </table>
+  <div style="font-size:9px;color:#71717A;letter-spacing:3px;margin-top:4px;text-transform:uppercase">PAGO CONFIRMADO</div>
+</td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="border-top:1px solid #2A2A2E"></div></td></tr>
+
+<!-- Welcome -->
+<tr><td style="padding:28px 32px 20px;background:#111114">
+  <div style="font-size:11px;color:#22C55E;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px">&#10003; PAGO EXITOSO</div>
+  <div style="font-size:22px;font-weight:700;color:#FFFFFF;line-height:1.3;margin-bottom:16px">
+    Bienvenido, {$firstName}
+  </div>
+  <div style="font-size:14px;color:#A1A1AA;line-height:1.7">
+    Tu pago ha sido confirmado exitosamente. Ya tienes acceso completo a tu plan.
+  </div>
+</td></tr>
+
+<!-- Payment details -->
+<tr><td style="padding:0 32px 20px;background:#111114">
+  <div style="font-size:11px;color:{$planColor};letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px">DETALLES DE TU SUSCRIPCION</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;border:1px solid #2A2A2E;border-top:3px solid {$planColor}">
+  <tr><td style="padding:10px 16px;border-bottom:1px solid #2A2A2E">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Plan</div>
+    <div style="font-size:16px;color:{$planColor};font-weight:700;margin-top:2px">{$planDisplay}</div>
+  </td></tr>
+  <tr><td style="padding:10px 16px;border-bottom:1px solid #2A2A2E">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Monto</div>
+    <div style="font-size:14px;color:#D4D4D8;margin-top:2px">{$amount}</div>
+  </td></tr>
+  <tr><td style="padding:10px 16px;border-bottom:1px solid #2A2A2E">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Metodo de pago</div>
+    <div style="font-size:14px;color:#D4D4D8;margin-top:2px">{$methodLabel}</div>
+  </td></tr>
+  <tr><td style="padding:10px 16px">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Referencia</div>
+    <div style="font-size:14px;color:#D4D4D8;font-family:monospace;margin-top:2px">{$reference}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<!-- Credentials -->
+{$credentialsHtml}
+
+<!-- CTA -->
+<tr><td style="padding:0 32px 24px;background:#111114" align="center">
+  <a href="{$loginUrl}" target="_blank" style="display:inline-block;background:#E31E24;color:#ffffff;text-decoration:none;padding:16px 48px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase">
+    INGRESAR A MI CUENTA &rarr;
+  </a>
+</td></tr>
+
+<!-- Steps -->
+<tr><td style="padding:0 32px 24px;background:#111114">
+  <div style="font-size:10px;color:#52525B;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">PROXIMOS PASOS</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+  <tr><td style="padding:6px 0;font-size:13px;color:#A1A1AA;line-height:1.5">
+    <span style="color:#E31E24;font-weight:700;margin-right:6px">01</span> Ingresa con tus credenciales
+  </td></tr>
+  <tr><td style="padding:6px 0;font-size:13px;color:#A1A1AA;line-height:1.5">
+    <span style="color:#E31E24;font-weight:700;margin-right:6px">02</span> Completa tu perfil (peso, objetivo, disponibilidad)
+  </td></tr>
+  <tr><td style="padding:6px 0;font-size:13px;color:#A1A1AA;line-height:1.5">
+    <span style="color:#E31E24;font-weight:700;margin-right:6px">03</span> Tu coach personalizara tu programa en 24-48h
+  </td></tr>
+  </table>
+</td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="border-top:1px solid #2A2A2E"></div></td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:20px 32px;text-align:center;background:#0A0A0A">
+  <div style="font-size:11px;color:#3F3F46;line-height:1.8">
+    <strong style="color:#52525B">WellCore Fitness</strong><br>
+    <a href="https://wellcorefitness.com" style="color:#3F3F46;text-decoration:none">wellcorefitness.com</a> &nbsp;|&nbsp;
+    <a href="mailto:info@wellcorefitness.com" style="color:#3F3F46;text-decoration:none">info@wellcorefitness.com</a><br>
+    <a href="https://wa.me/573124904720" style="color:#3F3F46;text-decoration:none">WhatsApp: +57 312 490 4720</a>
+  </div>
+  <div style="font-size:10px;color:#27272A;margin-top:10px;letter-spacing:1px">
+    &copy; {$year} WellCore Fitness. Todos los derechos reservados.
+  </div>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>
+HTML;
 
     $result = sendEmail($email, $subject, $html);
     return $result['ok'] ?? false;

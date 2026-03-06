@@ -72,13 +72,87 @@ if ($expired) {
             $clientEmail->execute([$cid]);
             $cEmail = ($clientEmail->fetch())['email'] ?? '';
 
-            $html = "<!DOCTYPE html><html><body style='font-family:Arial;background:#0a0a0a;color:#fff;padding:32px'>"
-                . "<h2 style='color:#E31E24;'>RISE Expirado — " . htmlspecialchars($row['name']) . "</h2>"
-                . "<p>El cliente <strong>" . htmlspecialchars($row['name']) . "</strong> ({$cEmail}) completó los 30 días del RETO RISE.</p>"
-                . "<p>Inicio: <strong>" . date('d/m/Y', $startTs) . "</strong> &nbsp; Fin: <strong>" . date('d/m/Y', $endTs) . "</strong></p>"
-                . "<p style='margin-top:24px;'><a href='https://wa.me/?text=Hola+" . urlencode($row['name']) . "' style='background:#E31E24;color:#fff;padding:12px 24px;text-decoration:none;font-weight:bold;'>Contactar por WhatsApp</a></p>"
-                . "<p style='color:#666;font-size:12px;margin-top:32px;'>WellCore Fitness — Notificación automática</p>"
-                . "</body></html>";
+            $clientNameSafe = htmlspecialchars($row['name']);
+            $startFmt = date('d/m/Y', $startTs);
+            $endFmt   = date('d/m/Y', $endTs);
+            $waLink   = 'https://wa.me/?text=Hola+' . urlencode($row['name']);
+            $adminUrl = 'https://wellcorefitness.com/admin.html';
+            $yearExp  = date('Y');
+
+            $html = <<<EXPHTML
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>RISE Expirado</title></head>
+<body style="margin:0;padding:0;background:#0A0A0A;font-family:Arial,Helvetica,sans-serif">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;padding:20px 10px">
+<tr><td align="center">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#111114;border:1px solid #2A2A2E">
+
+<tr><td style="background:#E31E24;padding:3px 0;font-size:0;line-height:0">&nbsp;</td></tr>
+
+<tr><td style="padding:28px 32px 16px;text-align:center;background:#111114">
+  <table role="presentation" cellpadding="0" cellspacing="0" align="center">
+  <tr>
+    <td style="font-size:24px;font-weight:700;color:#FFFFFF;letter-spacing:3px">WELL</td>
+    <td style="font-size:24px;font-weight:700;color:#E31E24;letter-spacing:3px">[CORE]</td>
+  </tr>
+  </table>
+  <div style="font-size:9px;color:#71717A;letter-spacing:3px;margin-top:4px;text-transform:uppercase">NOTIFICACION AUTOMATICA</div>
+</td></tr>
+
+<tr><td style="padding:0 32px"><div style="border-top:1px solid #2A2A2E"></div></td></tr>
+
+<tr><td style="padding:24px 32px 16px;background:#111114">
+  <div style="font-size:11px;color:#F59E0B;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px">&#9888; RETO RISE EXPIRADO</div>
+  <div style="font-size:20px;font-weight:700;color:#FFFFFF;line-height:1.3;margin-bottom:16px">{$clientNameSafe}</div>
+  <div style="font-size:14px;color:#A1A1AA;line-height:1.7">
+    Este cliente completo los 30 dias del Reto RISE. Su acceso ha expirado y debe renovar para continuar.
+  </div>
+</td></tr>
+
+<tr><td style="padding:0 32px 20px;background:#111114">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;border:1px solid #2A2A2E;border-top:3px solid #F59E0B">
+  <tr><td style="padding:10px 16px;border-bottom:1px solid #2A2A2E">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Cliente</div>
+    <div style="font-size:14px;color:#D4D4D8;font-weight:700;margin-top:2px">{$clientNameSafe}</div>
+  </td></tr>
+  <tr><td style="padding:10px 16px;border-bottom:1px solid #2A2A2E">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Email</div>
+    <div style="font-size:14px;color:#D4D4D8;margin-top:2px">{$cEmail}</div>
+  </td></tr>
+  <tr><td style="padding:10px 16px;border-bottom:1px solid #2A2A2E">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Inicio</div>
+    <div style="font-size:14px;color:#D4D4D8;margin-top:2px">{$startFmt}</div>
+  </td></tr>
+  <tr><td style="padding:10px 16px">
+    <div style="font-size:10px;color:#71717A;text-transform:uppercase;letter-spacing:1px">Fin</div>
+    <div style="font-size:14px;color:#E31E24;font-weight:700;margin-top:2px">{$endFmt}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<tr><td style="padding:0 32px 24px;background:#111114" align="center">
+  <a href="{$waLink}" target="_blank" style="display:inline-block;background:#25D366;color:#ffffff;text-decoration:none;padding:14px 36px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-right:8px">
+    CONTACTAR POR WHATSAPP
+  </a>
+  <br><br>
+  <a href="{$adminUrl}" target="_blank" style="display:inline-block;background:#E31E24;color:#ffffff;text-decoration:none;padding:14px 36px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase">
+    VER EN PANEL ADMIN &rarr;
+  </a>
+</td></tr>
+
+<tr><td style="padding:16px 32px;text-align:center;border-top:1px solid #2A2A2E;background:#0A0A0A">
+  <div style="font-size:10px;color:#52525B;letter-spacing:1px">
+    &copy; {$yearExp} WellCore Fitness &middot; Notificacion automatica
+  </div>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>
+EXPHTML;
 
             sendEmail('info@wellcorefitness.com', '🏁 RISE Expirado — ' . $row['name'], $html);
             $db->prepare("INSERT INTO email_logs (sent_by, to_email, to_name, template, plan, sent_at) VALUES (0, 'info@wellcorefitness.com', ?, 'rise_expiry', ?, NOW())")

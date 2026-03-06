@@ -1,190 +1,82 @@
 <?php
 declare(strict_types=1);
 /**
- * WellCore Fitness — Minimal SMTP email sender
- * Uses native PHP sockets with STARTTLS (no PHPMailer needed).
+ * WellCore Fitness — Email sender via Mailjet API v3.1
+ * Uses cURL to send transactional emails through Mailjet.
  */
 
 require_once __DIR__ . '/../config/email.php';
 
 /**
- * Send an email via SMTP with STARTTLS authentication.
+ * Send an email via Mailjet API v3.1.
  *
- * @param string $to          Recipient email
- * @param string $subject     Email subject
- * @param string $html        HTML body
- * @param string $text        Plain text fallback (optional)
- * @param array  $attachments Optional attachments [['filename'=>'...','content'=>'...','mime'=>'...']]
+ * @param string $to      Recipient email
+ * @param string $subject Email subject
+ * @param string $html    HTML body
+ * @param string $text    Plain text fallback (optional, auto-generated from HTML if empty)
  * @return array ['ok' => bool, 'error' => string|null]
  */
 function sendEmail(string $to, string $subject, string $html, string $text = '', array $attachments = []): array {
-    $host    = SMTP_HOST;
-    $port    = SMTP_PORT;
-    $user    = SMTP_USER;
-    $pass    = SMTP_PASS;
-    $from    = SMTP_FROM;
-    $name    = SMTP_FROM_NAME;
-    $timeout = SMTP_TIMEOUT;
-
     if (!$text) {
         $text = strip_tags(str_replace(['<br>', '<br/>', '<br />', '</p>'], "\n", $html));
     }
 
-    $messageId = '<' . bin2hex(random_bytes(12)) . '@wellcorefitness.com>';
+    $payload = [
+        'Messages' => [
+            [
+                'From' => [
+                    'Email' => MAIL_FROM_EMAIL,
+                    'Name'  => MAIL_FROM_NAME,
+                ],
+                'To' => [
+                    [
+                        'Email' => $to,
+                    ],
+                ],
+                'Subject'  => $subject,
+                'TextPart' => $text,
+                'HTMLPart' => $html,
+            ],
+        ],
+    ];
 
-    if (empty($attachments)) {
-        // Simple multipart/alternative (text + html)
-        $boundary = '----=_WellCore_' . bin2hex(random_bytes(8));
-
-        $headers  = "From: {$name} <{$from}>\r\n";
-        $headers .= "To: {$to}\r\n";
-        $headers .= "Subject: {$subject}\r\n";
-        $headers .= "Message-ID: {$messageId}\r\n";
-        $headers .= "Date: " . date('r') . "\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: multipart/alternative; boundary=\"{$boundary}\"\r\n";
-        $headers .= "\r\n";
-
-        $body  = "--{$boundary}\r\n";
-        $body .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $body .= "Content-Transfer-Encoding: quoted-printable\r\n\r\n";
-        $body .= quoted_printable_encode($text) . "\r\n\r\n";
-        $body .= "--{$boundary}\r\n";
-        $body .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $body .= "Content-Transfer-Encoding: quoted-printable\r\n\r\n";
-        $body .= quoted_printable_encode($html) . "\r\n\r\n";
-        $body .= "--{$boundary}--\r\n";
-    } else {
-        // multipart/mixed → multipart/alternative (body) + attachments
-        $mixedBoundary = '----=_WC_Mixed_' . bin2hex(random_bytes(8));
-        $altBoundary   = '----=_WC_Alt_'   . bin2hex(random_bytes(8));
-
-        $headers  = "From: {$name} <{$from}>\r\n";
-        $headers .= "To: {$to}\r\n";
-        $headers .= "Subject: {$subject}\r\n";
-        $headers .= "Message-ID: {$messageId}\r\n";
-        $headers .= "Date: " . date('r') . "\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: multipart/mixed; boundary=\"{$mixedBoundary}\"\r\n";
-        $headers .= "\r\n";
-
-        // Body part (alternative: text + html)
-        $body  = "--{$mixedBoundary}\r\n";
-        $body .= "Content-Type: multipart/alternative; boundary=\"{$altBoundary}\"\r\n\r\n";
-        $body .= "--{$altBoundary}\r\n";
-        $body .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $body .= "Content-Transfer-Encoding: quoted-printable\r\n\r\n";
-        $body .= quoted_printable_encode($text) . "\r\n\r\n";
-        $body .= "--{$altBoundary}\r\n";
-        $body .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $body .= "Content-Transfer-Encoding: quoted-printable\r\n\r\n";
-        $body .= quoted_printable_encode($html) . "\r\n\r\n";
-        $body .= "--{$altBoundary}--\r\n\r\n";
-
-        // Attachment parts
+    // Add attachments if provided
+    if (!empty($attachments)) {
+        $mjAttachments = [];
         foreach ($attachments as $att) {
-            $fname = $att['filename'] ?? 'attachment';
-            $mime  = $att['mime'] ?? 'application/octet-stream';
-            $raw   = $att['content'] ?? '';
-            $body .= "--{$mixedBoundary}\r\n";
-            $body .= "Content-Type: {$mime}; name=\"{$fname}\"\r\n";
-            $body .= "Content-Disposition: attachment; filename=\"{$fname}\"\r\n";
-            $body .= "Content-Transfer-Encoding: base64\r\n\r\n";
-            $body .= chunk_split(base64_encode($raw), 76, "\r\n");
-            $body .= "\r\n";
+            $mjAttachments[] = [
+                'ContentType'   => $att['mime'] ?? 'application/octet-stream',
+                'Filename'      => $att['filename'] ?? 'attachment',
+                'Base64Content' => base64_encode($att['content'] ?? ''),
+            ];
         }
-        $body .= "--{$mixedBoundary}--\r\n";
+        $payload['Messages'][0]['Attachments'] = $mjAttachments;
     }
 
-    $data = $headers . $body;
+    $ch = curl_init(MAILJET_ENDPOINT);
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($payload),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+        CURLOPT_USERPWD        => MAILJET_API_KEY . ':' . MAILJET_SECRET_KEY,
+        CURLOPT_TIMEOUT        => 30,
+    ]);
 
-    // Connect
-    $errno  = 0;
-    $errstr = '';
-    $socket = @stream_socket_client(
-        "tcp://{$host}:{$port}",
-        $errno,
-        $errstr,
-        $timeout
-    );
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr  = curl_error($ch);
+    curl_close($ch);
 
-    if (!$socket) {
-        return ['ok' => false, 'error' => "Connection failed: {$errstr} ({$errno})"];
+    if ($curlErr) {
+        error_log("[WellCore][Mailjet] cURL error: {$curlErr}");
+        return ['ok' => false, 'error' => "cURL error: {$curlErr}"];
     }
 
-    stream_set_timeout($socket, $timeout);
-
-    try {
-        $greeting = smtpRead($socket);
-        if (!str_starts_with($greeting, '220')) {
-            throw new RuntimeException("Bad greeting: {$greeting}");
-        }
-
-        // EHLO
-        smtpCmd($socket, "EHLO wellcorefitness.com", '250');
-
-        // STARTTLS
-        smtpCmd($socket, "STARTTLS", '220');
-        $crypto = stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT);
-        if (!$crypto) {
-            throw new RuntimeException("STARTTLS handshake failed");
-        }
-
-        // EHLO again after TLS
-        smtpCmd($socket, "EHLO wellcorefitness.com", '250');
-
-        // AUTH LOGIN
-        smtpCmd($socket, "AUTH LOGIN", '334');
-        smtpCmd($socket, base64_encode($user), '334');
-        smtpCmd($socket, base64_encode($pass), '235');
-
-        // MAIL FROM
-        smtpCmd($socket, "MAIL FROM:<{$from}>", '250');
-
-        // RCPT TO
-        smtpCmd($socket, "RCPT TO:<{$to}>", '250');
-
-        // DATA
-        smtpCmd($socket, "DATA", '354');
-
-        // Send message body (dot-stuffing)
-        $lines = explode("\r\n", $data);
-        foreach ($lines as $line) {
-            if (str_starts_with($line, '.')) {
-                $line = '.' . $line;
-            }
-            fwrite($socket, $line . "\r\n");
-        }
-        smtpCmd($socket, ".", '250');
-
-        // QUIT
-        fwrite($socket, "QUIT\r\n");
-
+    if ($httpCode >= 200 && $httpCode < 300) {
         return ['ok' => true, 'error' => null];
-
-    } catch (RuntimeException $e) {
-        return ['ok' => false, 'error' => $e->getMessage()];
-    } finally {
-        @fclose($socket);
     }
-}
 
-function smtpRead($socket): string {
-    $response = '';
-    while ($line = fgets($socket, 515)) {
-        $response .= $line;
-        // Multi-line responses have a dash after the code, last line has space
-        if (isset($line[3]) && $line[3] === ' ') break;
-        if (strlen($line) < 4) break;
-    }
-    return trim($response);
-}
-
-function smtpCmd($socket, string $cmd, string $expectedCode): string {
-    fwrite($socket, $cmd . "\r\n");
-    $response = smtpRead($socket);
-    if (!str_starts_with($response, $expectedCode)) {
-        throw new RuntimeException("SMTP error on '{$cmd}': {$response}");
-    }
-    return $response;
+    error_log("[WellCore][Mailjet] HTTP {$httpCode}: {$response}");
+    return ['ok' => false, 'error' => "Mailjet HTTP {$httpCode}"];
 }
