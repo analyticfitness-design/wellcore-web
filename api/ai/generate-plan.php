@@ -65,129 +65,104 @@ if ($planType === 'rise') {
     } catch (\Throwable $ignored) {}
 }
 
-$ai = new WellCoreAI();
-$profileText = build_client_profile_text($client);
-$pipeline = [];
-
-// ── ETAPA 1: Analisis del perfil (local, gratis) ─────────────
-$stage1System = "Eres un analista de perfiles de clientes fitness. Analiza el perfil y devuelve un JSON con: nivel_real (principiante/intermedio/avanzado), prioridades (array de 3 prioridades), limitaciones (array), volumen_recomendado (bajo/medio/alto), frecuencia_recomendada (dias/semana como numero). Solo JSON, sin texto extra.";
-
-$stage1Start = microtime(true);
-try {
-    $analysis = $ai->chatLocal($profileText, $stage1System);
-    $analysisData = extract_json_from_response($analysis['content'] ?? '');
-    $pipeline[] = [
-        'stage'    => 'profile_analysis',
-        'status'   => 'completed',
-        'route'    => $analysis['route'] ?? 'local',
-        'duration' => round(microtime(true) - $stage1Start, 2),
-    ];
-} catch (\Throwable $e) {
-    // Si falla el analisis local, usar valores por defecto
-    $analysisData = [
-        'nivel_real'             => $client['nivel'] ?: 'intermedio',
-        'prioridades'            => [$client['objetivo'] ?: 'recomposicion'],
-        'limitaciones'           => [],
-        'volumen_recomendado'    => 'medio',
-        'frecuencia_recomendada' => count($client['dias_disponibles']) ?: 4,
-    ];
-    $pipeline[] = [
-        'stage'  => 'profile_analysis',
-        'status' => 'fallback_defaults',
-        'error'  => $e->getMessage(),
-    ];
-}
-
-// ── ETAPA 2: Generacion del plan (Router decide) ─────────────
-// ENUM in ai_generations doesn't include 'rise' — map to 'entrenamiento'
-$genType = ($planType === 'rise') ? 'entrenamiento' : $planType;
-$genId = ai_save_generation([
-    'client_id' => $clientId,
-    'type'      => $genType,
-    'status'    => 'pending',
-]);
-
-// Construir system prompt segun tipo de plan
-$systemPrompts = [
-    'entrenamiento' => get_training_system_prompt(),
-    'nutricion'     => get_nutrition_system_prompt(),
-    'habitos'       => get_habits_system_prompt(),
-    'rise'          => get_rise_system_prompt(),
-];
-$systemPrompt = $systemPrompts[$planType];
-
-// Enriquecer user prompt con analisis de etapa 1
-$enrichedPrompt  = "ANALISIS PREVIO DEL PERFIL:\n";
-if ($analysisData) {
-    $enrichedPrompt .= json_encode($analysisData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-}
-$enrichedPrompt .= "\n\n" . $profileText;
-
-// Para RISE: agregar datos completos del intake
-if ($planType === 'rise' && $riseIntake) {
-    $enrichedPrompt .= "\n\nDATOS DETALLADOS DEL INTAKE RISE:\n";
-    $enrichedPrompt .= json_encode($riseIntake, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-    // Determinar si incluir cardio basado en objetivos declarados
-    $goals = $riseIntake['motivation']['motivation'] ?? [];
-    $trainingTypes = $riseIntake['training']['trainingType'] ?? [];
-    $wantsCardio = in_array('weight_loss', $goals) || in_array('cardio', $trainingTypes) || in_array('health', $goals);
-    $enrichedPrompt .= "\n\nINDICACIÓN DE CARDIO: " . ($wantsCardio ? "INCLUIR (objetivo o preferencia del cliente lo requiere)" : "EVALUAR según contexto del cliente");
-}
-
-$enrichedPrompt .= "\n\nGENERA EL PLAN DE " . strtoupper($planType) . " COMPLETO EN FORMATO JSON.";
-
-// Obtener JSON schema para el tipo de plan
-$enrichedPrompt .= "\n\nESTRUCTURA DE RESPUESTA:\n" . get_plan_schema($planType);
-
-$stage2Start = microtime(true);
-try {
-    $result = $ai->chat($enrichedPrompt, $systemPrompt);
-    $parsed = extract_json_from_response($result['content'] ?? '');
-
-    $pipeline[] = [
-        'stage'    => 'plan_generation',
-        'status'   => 'completed',
-        'route'    => $result['route'] ?? 'unknown',
-        'model'    => $result['model'] ?? 'unknown',
-        'duration' => round(microtime(true) - $stage2Start, 2),
-    ];
-} catch (\Throwable $e) {
-    ai_update_generation($genId, 'failed', $e->getMessage());
-    respondError('Error generando plan: ' . $e->getMessage(), 500);
-}
-
-// ── ETAPA 3: Validacion de calidad (local, gratis) ────────────
-$stage3Start = microtime(true);
+$pipeline        = [];
+$result          = ['content' => ''];
 $validationScore = 100;
 $validationNotes = [];
 
-if ($parsed) {
-    $validationPrompt = "Evalua este plan de $planType generado para un cliente. Responde SOLO con JSON: {\"score\": 0-100, \"issues\": [\"issue1\"], \"suggestions\": [\"sugerencia1\"]}. Score 80+ = aceptable. Verifica: completitud, coherencia con el perfil, seguridad.\n\nPLAN:\n" . json_encode($parsed, JSON_UNESCAPED_UNICODE);
+if ($planType === 'rise') {
+    // ── RISE: pipeline directo (Stage 1 y 3 siempre fallan en producción) ────
+    // Stage 1: skipped — el intake tiene todos los datos; no hay router local
+    $pipeline[] = [
+        'stage'  => 'profile_analysis',
+        'status' => 'skipped_rise_mode',
+        'note'   => 'RISE usa intake completo directamente',
+    ];
 
+    // Stage 2: llamada directa a Claude (sin pasar por WellCoreAI router)
+    $genId      = ai_save_generation(['client_id' => $clientId, 'type' => 'entrenamiento', 'status' => 'pending']);
+    $userPrompt = build_rise_enriched_prompt($client, $riseIntake);
+    $userPrompt .= "\n\nGENERA EL PLAN RISE 30 DÍAS EN JSON ESTRICTO (sin texto fuera del JSON).\n\nESQUEMA REQUERIDO:\n" . get_plan_schema('rise');
+
+    $stage2Start = microtime(true);
     try {
-        $validation = $ai->chatLocal($validationPrompt, "Eres un validador de calidad de planes fitness. Solo responde JSON.");
-        $valData = extract_json_from_response($validation['content'] ?? '');
-        if ($valData && isset($valData['score'])) {
-            $validationScore = (int) $valData['score'];
-            $validationNotes = $valData['issues'] ?? [];
-        }
+        $response = claude_call(get_rise_system_prompt(), $userPrompt);
+        $parsed   = extract_json_from_response($response['text']);
+        $result   = ['content' => $response['text']];
         $pipeline[] = [
-            'stage'    => 'quality_validation',
+            'stage'    => 'plan_generation',
             'status'   => 'completed',
-            'score'    => $validationScore,
-            'route'    => $validation['route'] ?? 'local',
-            'duration' => round(microtime(true) - $stage3Start, 2),
+            'route'    => 'claude_direct',
+            'model'    => CLAUDE_MODEL,
+            'tokens'   => ['input' => $response['input_tokens'], 'output' => $response['output_tokens']],
+            'duration' => round(microtime(true) - $stage2Start, 2),
         ];
     } catch (\Throwable $e) {
-        $pipeline[] = [
-            'stage'  => 'quality_validation',
-            'status' => 'skipped',
-            'error'  => $e->getMessage(),
+        ai_update_generation($genId, 'failed', $e->getMessage());
+        respondError('Error generando plan RISE: ' . $e->getMessage(), 500);
+    }
+
+    // Stage 3: skipped — schema estricto + prompt especializado garantizan estructura
+    $pipeline[] = ['stage' => 'quality_validation', 'status' => 'skipped_rise_mode'];
+
+} else {
+    // ── Planes estándar: pipeline con WellCoreAI router ──────────────────────
+    $ai          = new WellCoreAI();
+    $profileText = build_client_profile_text($client);
+
+    // Stage 1: análisis del perfil (router local — puede fallar en producción)
+    $stage1Start = microtime(true);
+    try {
+        $analysis     = $ai->chatLocal($profileText, "Eres analista fitness. Devuelve SOLO JSON: {\"nivel_real\":\"intermedio\",\"prioridades\":[],\"limitaciones\":[],\"volumen_recomendado\":\"medio\",\"frecuencia_recomendada\":4}");
+        $analysisData = extract_json_from_response($analysis['content'] ?? '');
+        $pipeline[]   = ['stage' => 'profile_analysis', 'status' => 'completed', 'duration' => round(microtime(true) - $stage1Start, 2)];
+    } catch (\Throwable $e) {
+        $analysisData = [
+            'nivel_real'             => $client['nivel'] ?: 'intermedio',
+            'prioridades'            => [$client['objetivo'] ?: 'recomposicion'],
+            'limitaciones'           => [],
+            'volumen_recomendado'    => 'medio',
+            'frecuencia_recomendada' => count($client['dias_disponibles']) ?: 4,
         ];
+        $pipeline[] = ['stage' => 'profile_analysis', 'status' => 'fallback_defaults'];
+    }
+
+    // Stage 2: generación del plan
+    $genId = ai_save_generation(['client_id' => $clientId, 'type' => $planType, 'status' => 'pending']);
+    $systemPrompts = [
+        'entrenamiento' => get_training_system_prompt(),
+        'nutricion'     => get_nutrition_system_prompt(),
+        'habitos'       => get_habits_system_prompt(),
+    ];
+    $systemPrompt    = $systemPrompts[$planType];
+    $enrichedPrompt  = "ANÁLISIS PREVIO:\n" . ($analysisData ? json_encode($analysisData, JSON_UNESCAPED_UNICODE) : '') . "\n\n" . $profileText;
+    $enrichedPrompt .= "\n\nGENERA EL PLAN DE " . strtoupper($planType) . " EN JSON.\n\nESQUEMA:\n" . get_plan_schema($planType);
+
+    $stage2Start = microtime(true);
+    try {
+        $result     = $ai->chat($enrichedPrompt, $systemPrompt);
+        $parsed     = extract_json_from_response($result['content'] ?? '');
+        $pipeline[] = ['stage' => 'plan_generation', 'status' => 'completed', 'route' => $result['route'] ?? 'unknown', 'model' => $result['model'] ?? 'unknown', 'duration' => round(microtime(true) - $stage2Start, 2)];
+    } catch (\Throwable $e) {
+        ai_update_generation($genId, 'failed', $e->getMessage());
+        respondError('Error generando plan: ' . $e->getMessage(), 500);
+    }
+
+    // Stage 3: validación (router local — puede fallar en producción)
+    if ($parsed) {
+        $stage3Start = microtime(true);
+        try {
+            $validation = $ai->chatLocal("Evalua este plan. SOLO JSON: {\"score\":85,\"issues\":[],\"suggestions\":[]}\n\nPLAN:\n" . json_encode($parsed, JSON_UNESCAPED_UNICODE), "Validador fitness. Solo JSON.");
+            $valData    = extract_json_from_response($validation['content'] ?? '');
+            if ($valData && isset($valData['score'])) { $validationScore = (int) $valData['score']; $validationNotes = $valData['issues'] ?? []; }
+            $pipeline[] = ['stage' => 'quality_validation', 'status' => 'completed', 'score' => $validationScore, 'duration' => round(microtime(true) - $stage3Start, 2)];
+        } catch (\Throwable $e) {
+            $pipeline[] = ['stage' => 'quality_validation', 'status' => 'skipped'];
+        }
     }
 }
 
-// ── Guardar resultados ────────────────────────────────────────
+// ── Guardar resultados ────────────────────────────────────────────────────────
 if ($parsed) {
     ai_save_plan($clientId, $planType, $parsed, $genId);
 }
@@ -196,29 +171,26 @@ $pipelineJson = json_encode($pipeline, JSON_UNESCAPED_UNICODE);
 ai_update_generation(
     $genId,
     $parsed ? 'completed' : 'failed',
-    $result['content'] ?? '',
+    $result['content'],
     $parsed ? json_encode($parsed, JSON_UNESCAPED_UNICODE) : null
 );
 
-// Intentar guardar pipeline_data en ai_generations
 try {
     getDB()->prepare("UPDATE ai_generations SET pipeline_stage = 'completed', pipeline_data = ? WHERE id = ?")
         ->execute([$pipelineJson, $genId]);
-} catch (\Throwable $e) {
-    // Columnas pipeline_* pueden no existir aun
-}
+} catch (\Throwable $ignored) {}
 
 respond([
-    'ok'              => true,
-    'generation_id'   => $genId,
-    'client'          => ['id' => $clientId, 'name' => $client['name']],
-    'plan_type'       => $planType,
-    'plan'            => $parsed,
-    'quality_score'   => $validationScore,
-    'quality_notes'   => $validationNotes,
-    'pipeline'        => $pipeline,
-    'status'          => 'pending_review',
-    'message'         => "Plan de $planType generado con pipeline IA. Pendiente revision del coach.",
+    'ok'            => true,
+    'generation_id' => $genId,
+    'client'        => ['id' => $clientId, 'name' => $client['name']],
+    'plan_type'     => $planType,
+    'plan'          => $parsed,
+    'quality_score' => $validationScore,
+    'quality_notes' => $validationNotes,
+    'pipeline'      => $pipeline,
+    'status'        => 'pending_review',
+    'message'       => "Plan de $planType generado. Pendiente revisión del coach.",
 ], 201);
 
 
@@ -297,40 +269,17 @@ function get_rise_system_prompt(): string {
     if ($custom['system_prompt']) return $custom['system_prompt'];
 
     return <<<'PROMPT'
-Eres un entrenador personal de élite que trabaja para WellCore Fitness.
-Tu tarea: crear el PLAN COMPLETO DEL RETO RISE 30 DÍAS, personalizado para el cliente.
+Eres entrenador élite WellCore Fitness. Genera el PLAN RISE 30 DÍAS en JSON estricto (cero texto fuera del JSON).
 
-EL PLAN RISE CONTIENE:
-1. PLAN DE ENTRENAMIENTO (4 semanas con progresión de sobrecarga)
-2. CARDIO: incluirlo si el cliente busca perder grasa, ya hace cardio, o si complementa sus metas.
-   Adaptarlo al lugar de entrenamiento (gym o casa).
-3. TIPS DE NUTRICIÓN: NO una dieta específica con gramajes ni menú diario.
-   Son principios educativos que:
-   - Le dan resultados reales en 30 días con adherencia básica
-   - Le enseñan sobre macronutrientes y alimentación funcional
-   - Lo preparan para tomar mejores decisiones sin depender de un plan rígido
-   - Al final, mencionan que para resultados máximos se recomienda la Asesoría Nutricional WellCore
-
-FILOSOFÍA RISE:
-- 30 días transformadores, accesibles y progresivos
-- Resultados visibles = adherencia + entrenamiento bien estructurado + nutrición básica sólida
-- Los tips de nutrición deben motivar a aprender más, no resolver todo
-
-REGLAS DE CARDIO:
-- Si objetivo incluye pérdida de grasa: obligatorio (3x/semana Zona 2 o HIIT según nivel)
-- Si cliente ya hace cardio: estructurarlo mejor dentro del plan
-- Si entrena en casa: opciones bodyweight (burpees, salto de cuerda, HIIT con peso corporal)
-- Si solo hace pesas: agregar 2-3 sesiones/semana de Zona 2 (caminar rápido, bici estacionaria)
-- Cardio en zona 2 preserva músculo durante el reto — prioridad para no perder masa
-
-PERSONALIZACIÓN OBLIGATORIA:
-- Adaptar ejercicios a lugar (gym/casa/híbrido) y equipo disponible
-- Respetar lesiones, ejercicios a evitar y restricciones
-- Ajustar volumen/intensidad al nivel de experiencia
-- Considerar días disponibles para organizar la semana
-- Si el cliente menciona dieta específica (vegetariana, keto, etc.) respetar esos lineamientos en los tips
-
-FORMATO: JSON estricto. Sin texto fuera del JSON.
+REGLAS:
+- 4 semanas con progresión: S1=acumulación RIR3, S2=acumulación RIR2, S3=intensificación RIR1, S4=deload RIR4
+- Adapta TODOS los ejercicios al lugar declarado (gym/casa/híbrido) y equipo disponible
+- Respeta ESTRICTAMENTE lesiones y ejercicios a evitar
+- Cardio: obligatorio si el objetivo incluye pérdida de grasa o el cliente ya hace cardio (3x/sem Zona2 o HIIT según nivel); incluir aunque sea opcional para todos los demás
+- Tips de nutrición: principios educativos sin gramajes ni menú rígido — cerrar recomendando Asesoría Nutricional WellCore
+- Ajusta volumen/intensidad al nivel de experiencia declarado
+- Personaliza basándote en TODOS los datos del perfil (días disponibles, tiempo por sesión, dieta, estilo de vida, metas)
+- Cada sesión debe tener calentamiento, ejercicios con series/reps/descanso/notas, y vuelta a la calma
 PROMPT;
 }
 

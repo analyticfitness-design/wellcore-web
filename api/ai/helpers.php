@@ -366,6 +366,90 @@ function ai_save_plan(int $clientId, string $type, array $content, int $genId): 
 }
 
 /**
+ * Construye prompt enriquecido para planes RISE usando TODOS los datos del intake.
+ * Formato texto estructurado (más eficiente que raw JSON para Haiku).
+ */
+function build_rise_enriched_prompt(array $c, ?array $intake): string {
+    $text  = "CLIENTE RISE — DATOS COMPLETOS:\n";
+    $text .= "Nombre: " . ($c['name'] ?: '?') . "\n";
+    $text .= "Edad: " . ($c['edad'] ?: '?') . " | Peso: " . ($c['peso'] ?: '?') . "kg | Altura: " . ($c['altura'] ?: '?') . "cm\n";
+    if ($c['gender'] ?? null) $text .= "Género: " . $c['gender'] . "\n";
+    $text .= "Objetivo: " . ($c['objetivo'] ?: 'mejorar composición corporal') . "\n";
+    $text .= "Nivel experiencia: " . ($c['nivel'] ?: 'intermedio') . "\n";
+    $text .= "Restricciones físicas: " . ($c['restricciones'] ?: 'ninguna') . "\n";
+
+    if (!$intake) {
+        $text .= "\n[Sin datos de intake disponibles — usar perfil base]\n";
+        return $text;
+    }
+
+    // Mediciones
+    $m = $intake['measurements'] ?? [];
+    if (array_filter($m)) {
+        $text .= "\nMEDIDAS CORPORALES:\n";
+        $labels = ['waist' => 'Cintura', 'hips' => 'Cadera', 'chest' => 'Pecho', 'arms' => 'Brazos', 'thighs' => 'Muslos', 'bodyFat' => '% Grasa estimado'];
+        foreach ($labels as $key => $label) {
+            if (!empty($m[$key])) $text .= "- $label: {$m[$key]}\n";
+        }
+    }
+
+    // Entrenamiento
+    $t = $intake['training'] ?? [];
+    if ($t) {
+        $text .= "\nHISTORIAL DE ENTRENAMIENTO:\n";
+        $text .= "- Años de experiencia: " . ($t['years'] ?? '?') . "\n";
+        $types = $t['trainingType'] ?? [];
+        if ($types) $text .= "- Tipo de entrenamiento actual: " . (is_array($types) ? implode(', ', $types) : $types) . "\n";
+        $avoid = $t['exercisesToAvoid'] ?? [];
+        if ($avoid) $text .= "- ⚠️ EVITAR: " . (is_array($avoid) ? implode(', ', $avoid) : $avoid) . "\n";
+    }
+
+    // Disponibilidad
+    $a = $intake['availability'] ?? [];
+    if ($a) {
+        $text .= "\nDISPONIBILIDAD:\n";
+        $text .= "- Lugar de entrenamiento: " . ($a['place'] ?? '?') . "\n";
+        $days = $a['days'] ?? [];
+        if ($days) $text .= "- Días disponibles: " . (is_array($days) ? implode(', ', $days) : $days) . " (" . (is_array($days) ? count($days) : '?') . " días/semana)\n";
+        if (!empty($a['time'])) $text .= "- Tiempo por sesión: " . $a['time'] . " minutos\n";
+        $eq = $a['equipment'] ?? [];
+        if ($eq) $text .= "- Equipo disponible: " . (is_array($eq) ? implode(', ', $eq) : $eq) . "\n";
+    }
+
+    // Nutrición
+    $n = $intake['nutrition'] ?? [];
+    if ($n) {
+        $text .= "\nNUTRICIÓN:\n";
+        $text .= "- Tipo de dieta: " . ($n['dietType'] ?? 'sin restricción') . "\n";
+        $allergies = $n['allergies'] ?? [];
+        if ($allergies) $text .= "- ⚠️ Alergias/intolerancias: " . (is_array($allergies) ? implode(', ', $allergies) : $allergies) . "\n";
+        $supps = $n['supplements'] ?? [];
+        if ($supps) $text .= "- Suplementos actuales: " . (is_array($supps) ? implode(', ', $supps) : $supps) . "\n";
+    }
+
+    // Estilo de vida
+    $l = $intake['lifestyle'] ?? [];
+    if ($l) {
+        $text .= "\nESTILO DE VIDA:\n";
+        if (!empty($l['sleep']))    $text .= "- Sueño: " . $l['sleep'] . "h/noche\n";
+        if (!empty($l['activity'])) $text .= "- Actividad diaria: " . $l['activity'] . "\n";
+        if (!empty($l['stress']))   $text .= "- Nivel de estrés: " . $l['stress'] . "/10\n";
+    }
+
+    // Motivación y metas
+    $mv = $intake['motivation'] ?? [];
+    if ($mv) {
+        $text .= "\nMETAS Y MOTIVACIÓN:\n";
+        $goals = $mv['goals'] ?? ($mv['motivation'] ?? []);
+        if ($goals) $text .= "- Metas declaradas: " . (is_array($goals) ? implode(', ', $goals) : $goals) . "\n";
+        if (!empty($mv['expectedResult'])) $text .= "- Resultado esperado en 30 días: " . $mv['expectedResult'] . "\n";
+        if (!empty($mv['commitment']))     $text .= "- Nivel de compromiso: " . $mv['commitment'] . "/10\n";
+    }
+
+    return $text;
+}
+
+/**
  * Construye un texto-resumen del perfil de un cliente para incluir en prompts.
  */
 function build_client_profile_text(array $c): string {
