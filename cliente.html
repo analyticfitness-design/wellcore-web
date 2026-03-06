@@ -1836,6 +1836,60 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <section id="sec-fotos" class="section">
       <h1 class="section-title">Fotos de <span>Avance</span></h1>
 
+      <!-- GUIA DE FOTOS -->
+      <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="togglePhotoGuide()">
+          <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin:0;display:flex;align-items:center;gap:8px">
+            <i class="fas fa-camera-retro" style="color:var(--red)"></i> Como tomar las fotos correctamente
+          </h3>
+          <span id="photoGuideArrow" style="color:var(--gray);font-size:18px;transition:transform .3s;display:inline-block">&#8964;</span>
+        </div>
+        <div id="photoGuideContent" style="display:none;margin-top:18px;">
+          <div style="background:rgba(200,16,46,0.06);border:1px solid rgba(200,16,46,0.15);border-radius:8px;padding:14px;margin-bottom:18px;font-size:12px;color:var(--gray);line-height:1.7;">
+            <div style="color:var(--white);font-weight:700;margin-bottom:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase">Condiciones ideales</div>
+            <ul style="margin:0;padding-left:18px;">
+              <li>Siempre <strong style="color:var(--white)">en ayunas</strong>, primera hora de la manana</li>
+              <li>Misma <strong style="color:var(--white)">ropa interior o ropa ajustada</strong> en cada sesion</li>
+              <li>Misma <strong style="color:var(--white)">ubicacion y luz</strong> — luz natural frontal es ideal</li>
+              <li>Postura <strong style="color:var(--white)">erguida y relajada</strong>, brazos a los lados</li>
+              <li>Usa un <strong style="color:var(--white)">temporizador o espejo</strong> para consistencia</li>
+            </ul>
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;">
+            <div style="flex:0 0 100px;display:flex;flex-direction:column;align-items:center;">
+              <svg width="100" height="170" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="18" r="12" fill="#222" stroke="#555" stroke-width="0.8"/>
+                <rect x="54" y="29" width="12" height="8" rx="3" fill="#222" stroke="#555" stroke-width="0.8"/>
+                <path d="M30,42 C30,38 48,36 60,36 C72,36 90,38 90,42 L87,58 L83,74 Q80,82 78,88 L75,100 L45,100 L42,88 Q40,82 37,74 L33,58Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                <path d="M30,42 C25,45 22,56 20,68 C18,80 20,92 23,102 L28,102 C26,92 24,80 26,68 C28,56 31,47 35,42Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                <path d="M90,42 C95,45 98,56 100,68 C102,80 100,92 97,102 L92,102 C94,92 96,80 94,68 C92,56 89,47 85,42Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                <path d="M45,100 C44,112 42,126 41,138 C40,148 40,156 42,164 L50,164 C50,156 52,148 53,138 C54,126 56,112 58,100Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                <path d="M75,100 C76,112 78,126 79,138 C80,148 80,156 78,164 L70,164 C70,156 68,148 67,138 C66,126 64,112 62,100Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                <line x1="10" y1="70" x2="110" y2="70" stroke="#C8102E" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+              </svg>
+            </div>
+            <div style="flex:1;min-width:140px;display:flex;flex-direction:column;gap:8px;">
+              <div style="background:var(--card);border-radius:6px;padding:10px;border-left:3px solid #C8102E;">
+                <span style="background:#C8102E;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">1 · FRENTE</span>
+                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">De frente, <strong style="color:var(--white)">brazos relajados a los lados</strong>. Pies al ancho de hombros.</p>
+              </div>
+              <div style="background:var(--card);border-radius:6px;padding:10px;border-left:3px solid #FF6B35;">
+                <span style="background:#FF6B35;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">2 · PERFIL</span>
+                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">Gira 90 grados, <strong style="color:var(--white)">lado izquierdo hacia la camara</strong>. Postura natural.</p>
+              </div>
+              <div style="background:var(--card);border-radius:6px;padding:10px;border-left:3px solid #A855F7;">
+                <span style="background:#A855F7;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">3 · ESPALDA</span>
+                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">De espaldas, <strong style="color:var(--white)">misma posicion que la frontal</strong>. Evalua espalda y gluteos.</p>
+              </div>
+              <div style="background:var(--card);border-radius:6px;padding:10px;border-left:3px solid #00D9FF;">
+                <span style="background:#00D9FF;color:#000;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">TIP</span>
+                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">Toma fotos <strong style="color:var(--white)">cada 7-10 dias</strong>. La consistencia es mas importante que la frecuencia.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Upload Area -->
       <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:24px">
         <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">Subir Fotos</h3>
@@ -1876,13 +1930,63 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
 
       <!-- Photo Gallery -->
-      <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px">
+      <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:24px">
         <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:16px">Historial de Fotos</h3>
         <div id="photos-gallery">
           <div class="empty-state">
             <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9673;</span>
             <p>Aun no has subido fotos de progreso. Sube tu primera sesion arriba.</p>
           </div>
+        </div>
+      </div>
+
+      <!-- Comparativa -->
+      <div id="photoComparativaCard" style="display:none;background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:24px">
+        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">
+          <i class="fas fa-not-equal" style="color:var(--red);margin-right:6px"></i>Comparativa de tus Cambios
+        </h3>
+        <p style="font-size:.75rem;color:var(--gray);margin-bottom:16px">Primer registro vs. ultimo registro por posicion</p>
+        <div id="photoComparativaGrid"></div>
+      </div>
+
+      <!-- Review del Coach -->
+      <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px">
+        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">
+          <i class="fas fa-user-md" style="color:var(--red);margin-right:6px"></i>Review del Coach
+        </h3>
+        <p style="font-size:.75rem;color:var(--gray);margin-bottom:16px">Retroalimentacion profesional sobre tus fotos de progreso.</p>
+
+        <!-- Plan restriction block - will be shown/hidden by JS -->
+        <div id="reviewPlanBlock"></div>
+
+        <!-- Review request button - will be shown/hidden by JS -->
+        <div id="reviewRequestBlock" style="display:none;margin-bottom:16px;">
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+            <select id="reviewDateSelect" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;color:var(--white);font-size:.8rem;outline:none;min-width:160px;">
+              <option value="">Selecciona fecha de fotos</option>
+            </select>
+            <button class="btn-primary" id="btn-request-review" onclick="requestPhotoReview()" disabled>
+              <i class="fas fa-paper-plane"></i> Solicitar Review
+            </button>
+          </div>
+          <div id="reviewUsageInfo" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:.5px;"></div>
+        </div>
+
+        <!-- Pending review indicator -->
+        <div id="reviewPendingBlock" style="display:none;background:rgba(255,182,0,0.06);border:1px solid rgba(255,182,0,0.2);border-radius:8px;padding:14px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <i class="fas fa-clock" style="color:#FFB800;font-size:14px;"></i>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--white);letter-spacing:.5px;">Review en proceso</div>
+              <div id="reviewPendingText" style="font-size:11px;color:var(--gray);margin-top:2px;">Tu coach esta revisando tus fotos. Recibiras la retroalimentacion en las proximas horas.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review history -->
+        <div id="reviewHistoryContainer" style="display:none;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Historial de Reviews</div>
+          <div id="reviewHistoryList"></div>
         </div>
       </div>
     </section>
@@ -3712,6 +3816,8 @@ function loadPhotosGallery() {
       p.textContent = 'Aun no has subido fotos de progreso. Sube tu primera sesion arriba.';
       empty.appendChild(p);
       container.appendChild(empty);
+      renderPhotoComparativa([]);
+      populateReviewDates([]);
       return;
     }
 
@@ -3723,7 +3829,8 @@ function loadPhotosGallery() {
     });
 
     container.textContent = '';
-    Object.keys(grouped).sort().reverse().forEach(function(date) {
+    var dates = Object.keys(grouped).sort();
+    dates.slice().reverse().forEach(function(date) {
       var group = document.createElement('div');
       group.className = 'photo-date-group';
 
@@ -3756,9 +3863,324 @@ function loadPhotosGallery() {
       group.appendChild(row);
       container.appendChild(group);
     });
+
+    // Build sets for comparativa (same structure as RISE)
+    var sets = dates.map(function(d) {
+      var photos = {};
+      grouped[d].forEach(function(p) { photos[p.tipo] = { url: p.url }; });
+      return { date: d, photos: photos };
+    });
+    renderPhotoComparativa(sets);
+    populateReviewDates(dates);
   }).catch(function(err) {
     console.warn('Error loading photos:', err);
   });
+}
+
+// ===== COMPARATIVA DE FOTOS =====
+function renderPhotoComparativa(sets) {
+  var card = document.getElementById('photoComparativaCard');
+  var grid = document.getElementById('photoComparativaGrid');
+  if (!card || !grid) return;
+  if (!sets || sets.length < 2) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  grid.textContent = '';
+
+  var first  = sets[0];
+  var latest = sets[sets.length - 1];
+  var tiposLabel = { frente:'Frente', perfil:'Perfil', espalda:'Espalda' };
+
+  ['frente','perfil','espalda'].forEach(function(tipo) {
+    var firstUrl  = first.photos  && first.photos[tipo]  ? first.photos[tipo].url  : null;
+    var latestUrl = latest.photos && latest.photos[tipo] ? latest.photos[tipo].url : null;
+    if (!firstUrl && !latestUrl) return;
+
+    var section = document.createElement('div');
+    section.style.cssText = 'margin-bottom:20px;';
+
+    var heading = document.createElement('div');
+    heading.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:10px;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,0.06);';
+    var icon = document.createElement('i');
+    icon.className = 'fas fa-camera';
+    icon.style.cssText = 'color:var(--red);margin-right:6px;';
+    heading.appendChild(icon);
+    heading.appendChild(document.createTextNode(tiposLabel[tipo].toUpperCase()));
+    section.appendChild(heading);
+
+    var pair = document.createElement('div');
+    pair.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:10px;';
+
+    function makeCol(url, dateLabel, tagText, isFirst) {
+      var col = document.createElement('div');
+      if (url) {
+        var img = document.createElement('img');
+        img.src = url;
+        img.alt = tagText;
+        img.style.cssText = 'width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(255,255,255,0.08);display:block;cursor:pointer;';
+        col.style.cursor = 'pointer';
+        col.onclick = (function(u, t) {
+          return function(e) { e.stopPropagation(); openPhotoLightbox(u, t); };
+        })(url, tagText + ' — ' + dateLabel);
+        col.appendChild(img);
+      } else {
+        col.style.cssText = 'background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.07);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;';
+        var noFoto = document.createElement('span');
+        noFoto.style.cssText = 'color:rgba(255,255,255,0.15);font-size:11px;';
+        noFoto.textContent = 'Sin foto';
+        col.appendChild(noFoto);
+      }
+      var tagEl = document.createElement('div');
+      tagEl.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-top:4px;';
+      var badge = document.createElement('span');
+      badge.style.cssText = 'font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;border-radius:3px;' +
+        (isFirst ? 'background:rgba(200,16,46,0.15);color:var(--red);' : 'background:rgba(34,197,94,0.12);color:#22C55E;');
+      badge.textContent = tagText;
+      var dateEl = document.createElement('span');
+      dateEl.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:8px;color:var(--gray);';
+      dateEl.textContent = dateLabel;
+      tagEl.appendChild(badge);
+      tagEl.appendChild(dateEl);
+      col.appendChild(tagEl);
+      return col;
+    }
+    pair.appendChild(makeCol(firstUrl,  first.date,  'INICIO', true));
+    pair.appendChild(makeCol(latestUrl, latest.date, 'HOY',    false));
+    section.appendChild(pair);
+    grid.appendChild(section);
+  });
+}
+
+// ===== GUIA DE FOTOS TOGGLE =====
+function togglePhotoGuide() {
+  var content = document.getElementById('photoGuideContent');
+  var arrow   = document.getElementById('photoGuideArrow');
+  var open    = content.style.display !== 'none';
+  content.style.display = open ? 'none' : 'block';
+  arrow.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+// ===== REVIEW DEL COACH — FOTOS =====
+var pendingReviews = {};
+
+function populateReviewDates(dates) {
+  var select = document.getElementById('reviewDateSelect');
+  if (!select) return;
+  select.textContent = '';
+  var opt = document.createElement('option');
+  opt.value = '';
+  opt.textContent = 'Selecciona fecha de fotos';
+  select.appendChild(opt);
+  dates.slice().reverse().forEach(function(d) {
+    var o = document.createElement('option');
+    o.value = d;
+    o.textContent = d;
+    select.appendChild(o);
+  });
+  select.onchange = function() {
+    var btn = document.getElementById('btn-request-review');
+    if (btn) btn.disabled = !select.value;
+  };
+}
+
+function initPhotoReviewUI() {
+  var planBlock = document.getElementById('reviewPlanBlock');
+  var requestBlock = document.getElementById('reviewRequestBlock');
+  var usageInfo = document.getElementById('reviewUsageInfo');
+  if (!planBlock) return;
+
+  if (clientPlan === 'esencial' || clientPlan === 'rise') {
+    planBlock.style.display = 'block';
+    planBlock.innerHTML = '';
+    var div = document.createElement('div');
+    div.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px;';
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+    var lockIcon = document.createElement('i');
+    lockIcon.className = 'fas fa-lock';
+    lockIcon.style.cssText = 'color:var(--gray);font-size:14px;';
+    row.appendChild(lockIcon);
+    var label = document.createElement('span');
+    label.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:10px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;';
+    label.textContent = 'No disponible en tu plan';
+    row.appendChild(label);
+    div.appendChild(row);
+    var msg = document.createElement('p');
+    msg.style.cssText = 'color:var(--gray);font-size:11px;margin:0;';
+    msg.textContent = 'Actualiza a Metodo (2 reviews/mes) o Elite (1 review/semana) para acceder al review de fotos.';
+    div.appendChild(msg);
+    planBlock.appendChild(div);
+    if (requestBlock) requestBlock.style.display = 'none';
+    return;
+  }
+
+  planBlock.style.display = 'none';
+  if (requestBlock) requestBlock.style.display = 'block';
+
+  if (clientPlan === 'metodo') {
+    if (usageInfo) usageInfo.textContent = 'PLAN METODO: 2 reviews por mes, cada 10-15 dias minimo.';
+  } else if (clientPlan === 'elite') {
+    if (usageInfo) usageInfo.textContent = 'PLAN ELITE: 1 review por semana, disponible fines de semana.';
+  }
+
+  // Load existing reviews
+  loadPhotoReviews();
+  // Check for pending reviews
+  checkPendingReviews();
+}
+
+function loadPhotoReviews() {
+  apiFetch('/ai/photo-reviews-list.php').then(function(r) { return r.json(); }).then(function(data) {
+    if (!data || !data.reviews) return;
+    var container = document.getElementById('reviewHistoryContainer');
+    var list = document.getElementById('reviewHistoryList');
+    if (!container || !list) return;
+
+    if (data.reviews.length > 0) {
+      container.style.display = 'block';
+      list.textContent = '';
+      data.reviews.forEach(function(review) {
+        var item = document.createElement('div');
+        item.style.cssText = 'background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:14px;margin-bottom:10px;';
+        var header = document.createElement('div');
+        header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;';
+        var dateEl = document.createElement('span');
+        dateEl.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:10px;color:var(--red);letter-spacing:1px;';
+        dateEl.textContent = 'FOTOS: ' + review.photo_date;
+        var createdEl = document.createElement('span');
+        createdEl.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:9px;color:var(--gray);';
+        createdEl.textContent = review.created_at.split(' ')[0];
+        header.appendChild(dateEl);
+        header.appendChild(createdEl);
+        item.appendChild(header);
+        var text = document.createElement('div');
+        text.style.cssText = 'font-size:12px;color:var(--gray);line-height:1.6;white-space:pre-wrap;';
+        text.textContent = review.review_text;
+        item.appendChild(text);
+        list.appendChild(item);
+      });
+    }
+
+    // Update usage info
+    if (data.usage && clientPlan === 'metodo') {
+      var info = document.getElementById('reviewUsageInfo');
+      if (info) info.textContent = 'PLAN METODO: ' + data.usage.month_count + '/2 reviews usados este mes.';
+    }
+  }).catch(function(err) {
+    console.warn('Error loading photo reviews:', err);
+  });
+}
+
+function requestPhotoReview() {
+  var select = document.getElementById('reviewDateSelect');
+  var btn = document.getElementById('btn-request-review');
+  if (!select || !select.value) return;
+
+  var photoDate = select.value;
+  btn.disabled = true;
+  btn.textContent = 'Solicitando...';
+
+  var token = localStorage.getItem('wc_token');
+  fetch(API_BASE + '/ai/photo-review.php', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + (token || ''),
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ photo_date: photoDate })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data && data.ok) {
+      // Store pending review with random delay (30-120 min)
+      var delayMin = Math.floor(Math.random() * 91) + 30; // 30-120 minutes
+      var revealAt = Date.now() + (delayMin * 60 * 1000);
+      var pending = {
+        review_id: data.review_id,
+        review: data.review,
+        photo_date: photoDate,
+        reveal_at: revealAt,
+        delay_min: delayMin
+      };
+      pendingReviews[data.review_id] = pending;
+      savePendingReviews();
+
+      // Show pending indicator
+      showPendingReview(delayMin);
+
+      // Determine priority hours message
+      var hours = delayMin < 60 ? '1-2' : '4-8';
+      showToastCliente('Review solicitado. Recibiras la retroalimentacion de tu coach en ' + hours + ' horas.', 'var(--green)');
+    } else {
+      showToastCliente((data && data.error) || 'Error al solicitar review', 'var(--red)');
+    }
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Solicitar Review';
+  }).catch(function(err) {
+    console.warn('Review request error:', err);
+    showToastCliente('Error de conexion. Intenta de nuevo.', 'var(--red)');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Solicitar Review';
+  });
+}
+
+function showPendingReview(delayMin) {
+  var block = document.getElementById('reviewPendingBlock');
+  var text = document.getElementById('reviewPendingText');
+  if (!block || !text) return;
+  var hours = delayMin < 60 ? '1-2' : (delayMin < 90 ? '2-4' : '4-8');
+  text.textContent = 'Tu coach esta revisando tus fotos. Dependiendo de la prioridad, recibiras la retroalimentacion en aproximadamente ' + hours + ' horas.';
+  block.style.display = 'block';
+}
+
+function savePendingReviews() {
+  try {
+    localStorage.setItem('wc_pending_photo_reviews', JSON.stringify(pendingReviews));
+  } catch(e) {}
+}
+
+function checkPendingReviews() {
+  try {
+    var stored = localStorage.getItem('wc_pending_photo_reviews');
+    if (stored) pendingReviews = JSON.parse(stored) || {};
+  } catch(e) { pendingReviews = {}; }
+
+  var now = Date.now();
+  var hasRevealed = false;
+  var hasPending = false;
+
+  Object.keys(pendingReviews).forEach(function(id) {
+    var p = pendingReviews[id];
+    if (now >= p.reveal_at) {
+      // Time to reveal — remove from pending and reload reviews
+      delete pendingReviews[id];
+      hasRevealed = true;
+    } else {
+      hasPending = true;
+      var remaining = Math.ceil((p.reveal_at - now) / 60000);
+      showPendingReview(remaining);
+    }
+  });
+
+  if (hasRevealed) {
+    savePendingReviews();
+    loadPhotoReviews();
+    if (!hasPending) {
+      var block = document.getElementById('reviewPendingBlock');
+      if (block) block.style.display = 'none';
+    }
+  }
+
+  // Re-check every 2 minutes
+  if (hasPending) {
+    setTimeout(checkPendingReviews, 120000);
+  }
+}
+
+function showToastCliente(msg, color) {
+  // Use existing toast if available
+  if (typeof showToast === 'function') {
+    showToast(msg, color);
+  } else {
+    console.log('[WC]', msg);
+  }
 }
 
 // Set default date for photo upload
@@ -3772,6 +4194,8 @@ function loadPhotosGallery() {
   });
   // Load gallery on init
   loadPhotosGallery();
+  // Init review UI after short delay (wait for clientPlan to be set)
+  setTimeout(initPhotoReviewUI, 500);
 })();
 
 // ===== NUTRICION =====

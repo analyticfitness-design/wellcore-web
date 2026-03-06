@@ -1409,6 +1409,66 @@
                 </h1>
                 <p style="color: var(--gray); margin-bottom: 30px;">Documenta tu transformación con fotos de frente, perfil y espalda</p>
 
+                <!-- GUIA DE FOTOS -->
+                <div class="card" style="margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="togglePhotoGuide(this)">
+                        <div class="card-title" style="margin:0;display:flex;align-items:center;gap:10px;">
+                            <i class="fas fa-camera-retro" style="color:var(--red);"></i>
+                            Como tomar las fotos correctamente
+                        </div>
+                        <span id="photoGuideArrow" style="color:var(--gray);font-size:20px;transition:transform .3s;display:inline-block;">&#8964;</span>
+                    </div>
+                    <div id="photoGuideContent" style="display:none;margin-top:20px;">
+                        <div style="background:rgba(227,30,36,0.07);border:1px solid rgba(227,30,36,0.2);border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;color:var(--gray);line-height:1.7;">
+                            <div style="color:#fff;font-weight:700;margin-bottom:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">Condiciones ideales</div>
+                            <ul style="margin:0;padding-left:18px;">
+                                <li>Siempre <strong style="color:#fff;">en ayunas</strong>, primera hora de la manana</li>
+                                <li>Misma <strong style="color:#fff;">ropa interior o ropa ajustada</strong> en cada sesion</li>
+                                <li>Misma <strong style="color:#fff;">ubicacion y luz</strong> — luz natural frontal es ideal</li>
+                                <li>Postura <strong style="color:#fff;">erguida y relajada</strong>, brazos a los lados</li>
+                                <li>Usa un <strong style="color:#fff;">temporizador o espejo</strong> para consistencia</li>
+                            </ul>
+                        </div>
+                        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                            <div style="flex:0 0 120px;display:flex;flex-direction:column;align-items:center;gap:10px;">
+                                <svg width="120" height="200" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="60" cy="18" r="12" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <rect x="54" y="29" width="12" height="8" rx="3" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <path d="M30,42 C30,38 48,36 60,36 C72,36 90,38 90,42 L87,58 L83,74 Q80,82 78,88 L75,100 L45,100 L42,88 Q40,82 37,74 L33,58Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <path d="M30,42 C25,45 22,56 20,68 C18,80 20,92 23,102 L28,102 C26,92 24,80 26,68 C28,56 31,47 35,42Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <path d="M90,42 C95,45 98,56 100,68 C102,80 100,92 97,102 L92,102 C94,92 96,80 94,68 C92,56 89,47 85,42Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <path d="M45,100 C44,112 42,126 41,138 C40,148 40,156 42,164 L50,164 C50,156 52,148 53,138 C54,126 56,112 58,100Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <path d="M75,100 C76,112 78,126 79,138 C80,148 80,156 78,164 L70,164 C70,156 68,148 67,138 C66,126 64,112 62,100Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <path d="M42,164 C40,174 39,184 39,192 L49,192 C49,184 50,174 50,164Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <path d="M78,164 C80,174 81,184 81,192 L71,192 C71,184 70,174 70,164Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                                    <line x1="10" y1="70" x2="110" y2="70" stroke="#E31E24" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.5"/>
+                                    <text x="60" y="15" fill="#E31E24" font-size="8" text-anchor="middle" font-family="monospace" font-weight="bold">FRENTE</text>
+                                    <path d="M5,35 L5,165" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                                    <path d="M115,35 L115,165" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                                </svg>
+                            </div>
+                            <div style="flex:1;min-width:160px;display:flex;flex-direction:column;gap:10px;">
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #E31E24;">
+                                    <span style="background:#E31E24;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">1 · FRENTE</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">De frente a la camara, <strong style="color:#fff;">brazos relajados a los lados</strong>. Pies separados al ancho de los hombros. Mirada al frente.</p>
+                                </div>
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #FF6B35;">
+                                    <span style="background:#FF6B35;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">2 · PERFIL</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Gira 90 grados, <strong style="color:#fff;">lado izquierdo hacia la camara</strong>. Brazos relajados. Postura natural sin sacar pecho ni abdomen.</p>
+                                </div>
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #A855F7;">
+                                    <span style="background:#A855F7;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">3 · ESPALDA</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">De espaldas a la camara, <strong style="color:#fff;">misma posicion que la frontal</strong>. Permite evaluar desarrollo de espalda y gluteos.</p>
+                                </div>
+                                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #00D9FF;">
+                                    <span style="background:#00D9FF;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">TIP</span>
+                                    <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Toma las fotos <strong style="color:#fff;">cada 7-10 dias</strong> para notar cambios reales. La consistencia en condiciones es mas importante que la frecuencia.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-title">Subir Fotos</div>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px;">
@@ -1469,6 +1529,24 @@
                     <div class="card-title"><i class="fas fa-not-equal"></i> Comparativa de tus Cambios</div>
                     <p style="color:var(--gray);font-size:12px;margin-bottom:18px;">Primer registro vs. último registro por posición</p>
                     <div id="photoComparativaGrid"></div>
+                </div>
+
+                <!-- REVIEW DEL COACH -->
+                <div class="card" id="photoReviewCard">
+                    <div class="card-title"><i class="fas fa-user-md"></i> Review del Coach</div>
+                    <p style="color:var(--gray);font-size:12px;margin-bottom:16px;">Solicita retroalimentacion profesional de tu coach sobre tus fotos de progreso.</p>
+                    <div id="reviewPlanBlock" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:16px;margin-bottom:16px;">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                            <i class="fas fa-lock" style="color:var(--gray);font-size:14px;"></i>
+                            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;">Plan RISE / Esencial</span>
+                        </div>
+                        <p style="color:var(--gray);font-size:12px;margin:0 0 10px;">El review de fotos no esta disponible en tu plan actual.</p>
+                        <span style="font-size:11px;color:var(--red);">Actualiza a Metodo (2 reviews/mes) o Elite (1 review/semana) para acceder.</span>
+                    </div>
+                    <div id="reviewHistoryContainer" style="display:none;margin-top:16px;">
+                        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Historial de Reviews</div>
+                        <div id="reviewHistoryList"></div>
+                    </div>
                 </div>
             </section>
 
@@ -2031,6 +2109,14 @@
         function toggleMeasGuide(header) {
             var content = document.getElementById('measGuideContent');
             var arrow   = document.getElementById('measGuideArrow');
+            var open    = content.style.display !== 'none';
+            content.style.display = open ? 'none' : 'block';
+            arrow.style.transform  = open ? '' : 'rotate(180deg)';
+        }
+
+        function togglePhotoGuide() {
+            var content = document.getElementById('photoGuideContent');
+            var arrow   = document.getElementById('photoGuideArrow');
             var open    = content.style.display !== 'none';
             content.style.display = open ? 'none' : 'block';
             arrow.style.transform  = open ? '' : 'rotate(180deg)';
