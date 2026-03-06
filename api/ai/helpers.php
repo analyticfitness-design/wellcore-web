@@ -28,7 +28,7 @@ if (!isset($GLOBALS['__wc_log'])) {
  * @return array   ['text', 'input_tokens', 'output_tokens']
  * @throws RuntimeException si falla la llamada
  */
-function claude_call(string $systemPrompt, string $userPrompt): array {
+function claude_call(string $systemPrompt, string $userPrompt, ?string $model = null, int $maxTokens = 0): array {
     if (!AI_ENABLED) {
         throw new \RuntimeException('AI deshabilitada en configuración.');
     }
@@ -37,8 +37,8 @@ function claude_call(string $systemPrompt, string $userPrompt): array {
     }
 
     $payload = json_encode([
-        'model'      => CLAUDE_MODEL,
-        'max_tokens' => CLAUDE_MAX_TOKENS,
+        'model'      => $model ?: CLAUDE_MODEL,
+        'max_tokens' => $maxTokens ?: CLAUDE_MAX_TOKENS,
         'system'     => $systemPrompt,
         'messages'   => [
             ['role' => 'user', 'content' => $userPrompt],
