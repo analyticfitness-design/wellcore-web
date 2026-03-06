@@ -20,14 +20,19 @@ requireMethod('GET');
 authenticateAdmin();
 $db = getDB();
 
-$status   = in_array($_GET['status'] ?? '', ['pending','completed','approved','rejected','failed'], true)
-            ? $_GET['status'] : 'completed';
+$validStatuses = ['pending','completed','approved','rejected','failed','generating'];
+$rawStatus = $_GET['status'] ?? 'completed';
+$statusList = array_filter(array_map('trim', explode(',', $rawStatus)), function($s) use ($validStatuses) {
+    return in_array($s, $validStatuses, true);
+});
+if (empty($statusList)) $statusList = ['completed'];
 $type     = trim($_GET['type']      ?? '');
 $clientId = (int) ($_GET['client_id'] ?? 0);
 $limit    = min((int) ($_GET['limit'] ?? 50), 200);
 
-$where  = ['g.status = ?'];
-$params = [$status];
+$placeholders = implode(',', array_fill(0, count($statusList), '?'));
+$where  = ["g.status IN ($placeholders)"];
+$params = $statusList;
 
 if ($type !== '') {
     $where[]  = 'g.type = ?';

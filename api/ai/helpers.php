@@ -56,7 +56,7 @@ function claude_call(string $systemPrompt, string $userPrompt, ?string $model = 
             'method'        => 'POST',
             'header'        => $headers,
             'content'       => $payload,
-            'timeout'       => 120,
+            'timeout'       => 180,
             'ignore_errors' => true,
         ],
         'ssl' => [

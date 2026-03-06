@@ -71,41 +71,60 @@ $validationScore = 100;
 $validationNotes = [];
 
 if ($planType === 'rise') {
-    // ── RISE: pipeline directo (Stage 1 y 3 siempre fallan en producción) ────
-    // Stage 1: skipped — el intake tiene todos los datos; no hay router local
-    $pipeline[] = [
-        'stage'  => 'profile_analysis',
-        'status' => 'skipped_rise_mode',
-        'note'   => 'RISE usa intake completo directamente',
-    ];
-
-    // Stage 2: llamada directa a Claude (sin pasar por WellCoreAI router)
-    $genId      = ai_save_generation(['client_id' => $clientId, 'type' => 'rise', 'status' => 'pending']);
+    // ── RISE: generación ASÍNCRONA ──────────────────────────────────
+    // Crear registro en DB como "generating", responder inmediato al browser,
+    // luego procesar en background con fastcgi_finish_request().
+    $genId      = ai_save_generation(['client_id' => $clientId, 'type' => 'rise', 'status' => 'generating']);
     $userPrompt = build_rise_enriched_prompt($client, $riseIntake);
     $userPrompt .= "\n\nGENERA EL PLAN RISE 30 DÍAS EN JSON ESTRICTO (sin texto fuera del JSON).\n\nESQUEMA REQUERIDO:\n" . get_plan_schema('rise');
 
-    $stage2Start = microtime(true);
+    // Responder inmediatamente al browser — sin esperar a Claude
+    http_response_code(202);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'ok'            => true,
+        'generation_id' => $genId,
+        'status'        => 'generating',
+        'message'       => 'Plan RISE en generación. Aparecerá en "Planes por Validar" en 30-90 segundos.',
+    ], JSON_UNESCAPED_UNICODE);
+
+    // Cerrar conexión HTTP — el browser recibe la respuesta, PHP sigue ejecutando
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    } else {
+        ob_end_flush();
+        flush();
+    }
+    // Permitir ejecución larga en background
+    set_time_limit(300);
+    ignore_user_abort(true);
+
+    // ── Generar plan en background ──────────────────────────────
     try {
-        // Sonnet para RISE: soporta hasta 64K tokens de output (Haiku solo 8K)
-        $riseModel = defined('CLAUDE_SONNET_MODEL') ? CLAUDE_SONNET_MODEL : 'claude-sonnet-4-6';
-        $response = claude_call(get_rise_system_prompt(), $userPrompt, $riseModel, 16000);
+        $response = claude_call(get_rise_system_prompt(), $userPrompt, CLAUDE_MODEL, 8192);
         $parsed   = extract_json_from_response($response['text']);
-        $result   = ['content' => $response['text']];
-        $pipeline[] = [
-            'stage'    => 'plan_generation',
-            'status'   => 'completed',
-            'route'    => 'claude_direct',
-            'model'    => CLAUDE_MODEL,
-            'tokens'   => ['input' => $response['input_tokens'], 'output' => $response['output_tokens']],
-            'duration' => round(microtime(true) - $stage2Start, 2),
-        ];
+
+        if ($parsed) {
+            ai_save_plan($clientId, 'rise', $parsed, $genId);
+        }
+        ai_update_generation(
+            $genId,
+            $parsed ? 'completed' : 'failed',
+            $response['text'],
+            $parsed ? json_encode($parsed, JSON_UNESCAPED_UNICODE) : null
+        );
+        $pipelineJson = json_encode([
+            ['stage' => 'profile_analysis', 'status' => 'skipped_rise_mode'],
+            ['stage' => 'plan_generation', 'status' => 'completed', 'route' => 'claude_direct', 'model' => CLAUDE_MODEL,
+             'tokens' => ['input' => $response['input_tokens'], 'output' => $response['output_tokens']]],
+            ['stage' => 'quality_validation', 'status' => 'skipped_rise_mode'],
+        ], JSON_UNESCAPED_UNICODE);
+        getDB()->prepare("UPDATE ai_generations SET pipeline_stage = 'completed', pipeline_data = ? WHERE id = ?")
+            ->execute([$pipelineJson, $genId]);
     } catch (\Throwable $e) {
         ai_update_generation($genId, 'failed', $e->getMessage());
-        respondError('Error generando plan RISE: ' . $e->getMessage(), 500);
     }
-
-    // Stage 3: skipped — schema estricto + prompt especializado garantizan estructura
-    $pipeline[] = ['stage' => 'quality_validation', 'status' => 'skipped_rise_mode'];
+    exit; // Background processing done
 
 } else {
     // ── Planes estándar: pipeline con WellCoreAI router ──────────────────────

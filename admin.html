@@ -2304,21 +2304,29 @@
 
     apiFetch('/ai/generate-plan', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ client_id: clientId, plan_type: 'rise', triggered_by: 'admin' })
     })
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      btn.textContent = origText;
-      btn.disabled = false;
       if (d.ok || d.generation_id) {
-        btn.textContent = '✓ Generado';
-        btn.style.color = '#22C55E';
-        btn.style.borderColor = '#22C55E';
-        // Recargar tabla de planes pendientes
-        loadPendingPlans();
+        btn.textContent = '⏳ En cola...';
+        btn.style.color = '#F59E0B';
+        btn.style.borderColor = '#F59E0B';
+        showToast('Plan en generación para ' + clientName + '. Aparecerá en 30-90 seg.');
+        // Recargar planes pendientes cada 15s hasta que aparezca
+        var pollCount = 0;
+        var pollId = setInterval(function() {
+          pollCount++;
+          loadPendingPlans();
+          if (pollCount >= 8) { // max 2 min
+            clearInterval(pollId);
+            btn.textContent = origText;
+            btn.disabled = false;
+          }
+        }, 15000);
       } else {
         btn.textContent = origText;
+        btn.disabled = false;
         showToast('Error: ' + (d.error || 'No se pudo generar el plan'), 'error');
       }
     })
@@ -2334,7 +2342,7 @@
     var tbody = document.getElementById('planesTableBody');
     if (!tbody) return;
 
-    apiFetch('/admin/ai-generations?status=completed&type=rise')
+    apiFetch('/admin/ai-generations?status=completed,generating&type=rise')
       .then(function(r) { return r.json(); })
       .then(function(d) {
         tbody.textContent = '';
@@ -2390,7 +2398,10 @@
           // Estado plan
           var estadoTd = document.createElement('td');
           var estadoSpan = document.createElement('span');
-          if (g.plan_active === true) {
+          if (g.status === 'generating') {
+            estadoSpan.className = 'badge badge-yellow';
+            estadoSpan.textContent = '⏳ Generando...';
+          } else if (g.plan_active === true) {
             estadoSpan.className = 'badge badge-green';
             estadoSpan.textContent = 'Activo';
           } else if (g.assigned_plan_id) {
@@ -2406,7 +2417,12 @@
           var accionesTd = document.createElement('td');
           accionesTd.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap';
 
-          if (g.assigned_plan_id && !g.plan_active) {
+          if (g.status === 'generating') {
+            var genLabel = document.createElement('span');
+            genLabel.style.cssText = 'color:#F59E0B;font-size:12px';
+            genLabel.textContent = '⏳ Procesando...';
+            accionesTd.appendChild(genLabel);
+          } else if (g.assigned_plan_id && !g.plan_active) {
             var aprobarBtn = document.createElement('button');
             aprobarBtn.className = 'btn btn-sm';
             aprobarBtn.style.cssText = 'background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.35);color:#22C55E;font-size:11px;';
