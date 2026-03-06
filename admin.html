@@ -2286,8 +2286,6 @@
 
   /* ─── PLANES IA: GENERAR ─── */
   function generateRisePlan(clientId, clientName) {
-    if (!confirm('¿Generar Plan RISE con IA para ' + clientName + '?\n\nEsto llamará a Claude y puede tardar 20-40 segundos.')) return;
-
     // Mostrar feedback inmediato en el botón
     var btn = event.target;
     var origText = btn.textContent;
@@ -2465,8 +2463,6 @@
 
   /* ─── PLANES IA: APROBAR ─── */
   function approvePlan(genId, planId, estadoTdEl) {
-    if (!confirm('¿Aprobar y activar este plan? El cliente lo verá en su dashboard inmediatamente.')) return;
-
     // 1. Marcar generación como approved
     apiFetch('/admin/ai-generation?id=' + genId, {
       method: 'PUT',
