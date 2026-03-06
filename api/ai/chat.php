@@ -16,7 +16,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/response.php';
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../includes/ai-client.php';
 
 requireMethod('POST');
 $body = getJsonBody();
@@ -103,55 +102,50 @@ if (file_exists($kbPath)) {
     }
 }
 
-// ── Construir prompt con contexto RAG ────────────────────────
+// ── Respuesta basada en Knowledge Base (sin LLM externo) ─────
+// El chatbot usa SOLO la KB local. La API de Claude/Anthropic está
+// reservada exclusivamente para el generador de planes (api/ai/generate-plan.php).
 
-$systemPrompt = "Eres el asistente virtual de WellCore Fitness, plataforma de coaching online "
-    . "especializada en entrenamiento de fuerza e hipertrofia basado en ciencia.\n\n"
-    . "REGLAS:\n"
-    . "- Responde SIEMPRE en espanol\n"
-    . "- Se conciso (maximo 3 parrafos)\n"
-    . "- Basa respuestas en ciencia del ejercicio\n"
-    . "- Si no sabes algo, di 'Te recomiendo consultar con tu coach'\n"
-    . "- NO des consejos medicos\n"
-    . "- Menciona RPE, RIR, periodizacion cuando sea relevante\n"
-    . "- Si preguntan por precios: Esencial $399.000 COP, Metodo $504.000 COP, Elite $630.000 COP\n";
+if ($topMatches) {
+    // Hay contexto relevante: devolver el contenido de la mejor entrada
+    $best = $topMatches[0]['content'];
 
-if ($plan !== 'visitor' && $clientId) {
-    $systemPrompt .= "\nEl cliente tiene plan " . strtoupper($plan) . ".\n";
+    // Si hay más de una entrada relevante, agregar información adicional
+    $extra = '';
+    if (count($topMatches) > 1) {
+        $extra = "\n\n" . $topMatches[1]['content'];
+    }
+
+    $aiContent = $best . $extra;
+} else {
+    // Sin coincidencia en KB: respuesta genérica orientando al coach
+    $aiContent = "¡Hola! Soy el asistente de WellCore Fitness 💪\n\n"
+        . "No tengo información exacta sobre eso en mi base de conocimientos. "
+        . "Te recomiendo:\n\n"
+        . "• **Preguntarle directamente a tu coach** desde tu portal de cliente\n"
+        . "• Revisar nuestra sección de **FAQ** en la página\n"
+        . "• Escribirnos por **WhatsApp** para una respuesta personalizada\n\n"
+        . "¿Hay algo más en lo que pueda ayudarte sobre nuestros planes, entrenamiento o nutrición?";
 }
 
-$fullPrompt = $context . "PREGUNTA DEL USUARIO:\n" . $message;
+$route = 'kb_local';
+$model = 'knowledge_base';
 
-// ── Llamar al Router IA ──────────────────────────────────────
-
-$ai = new WellCoreAI();
-
+// Guardar mensajes en DB
 try {
-    $result = $ai->chat($fullPrompt, $systemPrompt);
-
-    $aiContent  = $result['content'] ?? '';
-    $route      = $result['route'] ?? 'unknown';
-    $model      = $result['model'] ?? 'unknown';
-    $tokensUsed = $result['tokens_used'] ?? 0;
-
-    // Guardar mensajes en DB
     $insertMsg = $db->prepare("
         INSERT INTO chat_messages
             (client_id, session_id, role, content, route, model, tokens_used, created_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
     ");
     $insertMsg->execute([$clientId, $sessionId, 'user', $message, null, null, 0]);
-    $insertMsg->execute([$clientId, $sessionId, 'assistant', $aiContent, $route, $model, $tokensUsed]);
+    $insertMsg->execute([$clientId, $sessionId, 'assistant', $aiContent, $route, $model, 0]);
+} catch (\Throwable $ignored) {}
 
-    respond([
-        'ok'         => true,
-        'response'   => $aiContent,
-        'session_id' => $sessionId,
-        'route'      => $route,
-        'model'      => $model,
-    ]);
-
-} catch (\Throwable $e) {
-    error_log('[WellCore AI] chat error: ' . $e->getMessage());
-    respondError('Error del chatbot. Intenta de nuevo.', 500);
-}
+respond([
+    'ok'         => true,
+    'response'   => $aiContent,
+    'session_id' => $sessionId,
+    'route'      => $route,
+    'model'      => $model,
+]);
