@@ -238,7 +238,7 @@ function get_client_for_ai(int $clientId): array {
             c.id, c.client_code, c.name, c.email, c.plan, c.status, c.fecha_inicio,
             p.edad, p.peso, p.altura, p.objetivo, p.ciudad, p.whatsapp,
             p.nivel, p.lugar_entreno, p.dias_disponibles, p.restricciones,
-            p.macros, p.alergias, p.dieta, p.notas
+            p.macros, p.dieta, p.notas
         FROM clients c
         LEFT JOIN client_profiles p ON p.client_id = c.id
         WHERE c.id = ?
