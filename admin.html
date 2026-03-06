@@ -2025,13 +2025,15 @@
   /* ─── API FETCH HELPER ─── */
   function apiFetch(path, opts) {
     var token = localStorage.getItem('wc_token');
-    var headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = 'Bearer ' + token;
+    var baseHeaders = { 'Content-Type': 'application/json' };
+    if (token) baseHeaders['Authorization'] = 'Bearer ' + token;
     var qIdx = path.indexOf('?');
     var basePath = qIdx >= 0 ? path.slice(0, qIdx) : path;
     var qs = qIdx >= 0 ? path.slice(qIdx) : '';
     var ext = basePath.endsWith('.php') ? '' : '.php';
-    return fetch('/api' + basePath + ext + qs, Object.assign({ method: 'GET', headers: headers }, opts || {}));
+    var o = Object.assign({ method: 'GET' }, opts || {});
+    o.headers = Object.assign(baseHeaders, o.headers || {});
+    return fetch('/api' + basePath + ext + qs, o);
   }
 
   /* ─── LOAD FROM API ─── */
