@@ -13,9 +13,6 @@
     <!-- Font Awesome 6.4 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- html2pdf.js for PDF download -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
-
     <style>
         :root {
             --bg:           #080809;
@@ -952,8 +949,8 @@
                 </div>
 
                 <div class="card" style="margin-top: 20px;">
-                    <button class="btn-primary" style="width: 100%;" onclick="printPlan('training')">
-                        <i class="fas fa-download"></i> Descargar PDF
+                    <button class="btn-primary" style="width: 100%;" id="sendTrainingBtn" onclick="sendPlanEmail('training')">
+                        <i class="fas fa-envelope"></i> Enviar programa a mi correo
                     </button>
                 </div>
                 <div class="card" style="margin-top:10px;border:1px solid rgba(227,30,36,0.2);">
@@ -997,8 +994,8 @@
                 </div>
 
                 <div class="card">
-                    <button class="btn-primary" style="width: 100%;" onclick="printPlan('nutrition')">
-                        <i class="fas fa-download"></i> Descargar PDF
+                    <button class="btn-primary" style="width: 100%;" id="sendNutritionBtn" onclick="sendPlanEmail('nutrition')">
+                        <i class="fas fa-envelope"></i> Enviar programa a mi correo
                     </button>
                 </div>
                 <div class="card" style="margin-top:10px;border:1px solid rgba(227,30,36,0.2);">
@@ -1712,58 +1709,29 @@
             }
         }
 
-        // ─── DESCARGAR PDF ───────────────────────
-        function printPlan(type) {
-            const frame = document.querySelector('#' + type + 'PlanContainer iframe.plan-frame');
-            if (!frame) { showToast('No hay plan disponible para descargar', 'var(--red)'); return; }
+        // ─── ENVIAR PLAN POR EMAIL ───────────────────────
+        async function sendPlanEmail(type) {
+            var btnId = type === 'training' ? 'sendTrainingBtn' : 'sendNutritionBtn';
+            var btn = document.getElementById(btnId);
+            if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
 
-            // Acceder al contenido del iframe via contentDocument (mismo origen, srcdoc)
-            var doc = frame.contentDocument || frame.contentWindow.document;
-            if (!doc || !doc.body || !doc.body.textContent.trim()) {
-                showToast('No hay plan disponible para descargar', 'var(--red)'); return;
+            try {
+                var data = await api('POST', '/rise/send-plan-email.php', { type: type });
+                if (data && data.ok) {
+                    showToast('Plan enviado a ' + (data.email || 'tu correo'), '#22C55E');
+                    if (btn) btn.textContent = 'Enviado!';
+                    setTimeout(function() {
+                        if (btn) { btn.disabled = false; btn.textContent = ''; }
+                        if (btn) btn.insertAdjacentHTML('afterbegin', '<i class="fas fa-envelope"></i> Enviar programa a mi correo');
+                    }, 5000);
+                } else {
+                    showToast(data.error || 'Error al enviar', 'var(--red)');
+                    if (btn) { btn.disabled = false; btn.textContent = ''; btn.insertAdjacentHTML('afterbegin', '<i class="fas fa-envelope"></i> Enviar programa a mi correo'); }
+                }
+            } catch(e) {
+                showToast('Error de conexion', 'var(--red)');
+                if (btn) { btn.disabled = false; btn.textContent = ''; btn.insertAdjacentHTML('afterbegin', '<i class="fas fa-envelope"></i> Enviar programa a mi correo'); }
             }
-
-            showToast('Generando PDF...', 'var(--gold)');
-
-            // Clonar el body del iframe para no alterar el original
-            var cloned = doc.body.cloneNode(true);
-            // Remover botones de descarga/impresión del PDF
-            cloned.querySelectorAll('.print-btn, [onclick]').forEach(function(b) {
-                if (b.tagName === 'BUTTON' || b.tagName === 'A') b.remove();
-            });
-
-            // Crear contenedor temporal con estilos del iframe
-            var container = document.createElement('div');
-            container.style.cssText = 'position:fixed;left:-9999px;top:0;width:210mm;background:#fff;color:#000;';
-            // Copiar estilos del iframe
-            var styles = doc.querySelectorAll('style');
-            styles.forEach(function(s) {
-                container.appendChild(s.cloneNode(true));
-            });
-            // Agregar nodos clonados
-            while (cloned.firstChild) {
-                container.appendChild(cloned.firstChild);
-            }
-            document.body.appendChild(container);
-
-            var planLabel = type === 'training' ? 'Entrenamiento' : 'Nutricion';
-            var clientName = (document.querySelector('.welcome-name') || {}).textContent || 'WellCore';
-            var filename = 'RISE_' + planLabel + '_' + clientName.trim().replace(/[^a-zA-Z0-9]/g, '_') + '.pdf';
-
-            html2pdf().set({
-                margin: [6, 4, 6, 4],
-                filename: filename,
-                image: { type: 'jpeg', quality: 0.92 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['css', 'legacy'] }
-            }).from(container).save().then(function() {
-                document.body.removeChild(container);
-                showToast('PDF descargado', '#22C55E');
-            }).catch(function(err) {
-                document.body.removeChild(container);
-                showToast('Error al generar PDF', 'var(--red)');
-            });
         }
 
         // ─── GUARDAR TRACKING VÍA API ─────────────
