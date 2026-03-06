@@ -2629,7 +2629,7 @@
     })
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      if (d.ok || d.html_path) {
+      if (d.ok || d.rendered || d.html_path) {
         if (estadoTdEl) {
           estadoTdEl.textContent = '';
           var sp = document.createElement('span');
