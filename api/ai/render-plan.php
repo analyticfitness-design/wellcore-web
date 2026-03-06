@@ -574,7 +574,8 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
         $ejercicios = $sesion['ejercicios'] ?? [];
         if (!empty($ejercicios)) {
             $h .= "<div class=\"table-wrap\"><table>";
-            $h .= "<thead><tr><th>#</th><th>Ejercicio</th><th>Series</th><th>Reps</th><th>Descanso</th><th>RIR</th><th>Nota del Coach</th><th>Ver</th></tr></thead><tbody>";
+            $showVideo = ($gender !== 'female');
+            $h .= "<thead><tr><th>#</th><th>Ejercicio</th><th>Series</th><th>Reps</th><th>Descanso</th><th>RIR</th><th>Nota del Coach</th>" . ($showVideo ? "<th>Ver</th>" : "") . "</tr></thead><tbody>";
             foreach ($ejercicios as $ei => $ej) {
                 $eNum    = $ei + 1;
                 $eNombre = htmlspecialchars($ej['nombre'] ?? '');
@@ -597,8 +598,10 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
                 $h .= "<td class=\"rest-col\">{$eDesc}</td>";
                 $h .= "<td class=\"rir-col\">{$eRir}</td>";
                 $h .= "<td class=\"notes-col\">{$eNotas}</td>";
-                // Botón Ver — placeholder hasta vincular videos
-                $h .= "<td class=\"ver-col\"><span class=\"ver-btn\">Ver</span></td>";
+                // Botón Ver — solo para hombres (videos de mujeres aún no subidos)
+                if ($showVideo) {
+                    $h .= "<td class=\"ver-col\"><span class=\"ver-btn\">Ver</span></td>";
+                }
                 $h .= "</tr>";
             }
             $h .= "</tbody></table></div>\n";
