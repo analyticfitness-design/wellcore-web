@@ -7,6 +7,7 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/response.php';
 require_once __DIR__ . '/../includes/rate-limit.php';
+require_once __DIR__ . '/../includes/notify-admin.php';
 
 requireMethod('POST');
 
@@ -70,6 +71,9 @@ try {
     $program_id = $db->lastInsertId();
 
     $db->commit();
+
+    // Notificar al admin
+    notifyAdminNewClient(['name' => $name, 'email' => $email, 'plan' => 'rise', 'code' => $client_code], 'rise_enroll');
 
     respond([
         'success'  => true,

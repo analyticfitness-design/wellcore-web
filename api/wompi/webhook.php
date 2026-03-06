@@ -389,6 +389,14 @@ if ($status === 'approved') {
             'reference' => $referenceCode,
         ]);
     }
+
+    // Notificar al admin del nuevo registro/pago
+    try {
+        require_once __DIR__ . '/../includes/notify-admin.php';
+        notifyAdminNewClient(['name' => $buyerName, 'email' => $buyerEmail, 'plan' => $plan, 'code' => $referenceCode], 'wompi');
+    } catch (\Throwable $notifyErr) {
+        wc_log($errorLog, 'WARNING', 'Error notificacion admin (no critico)', ['error' => $notifyErr->getMessage()]);
+    }
 }
 
 // -------------------------------------------------------

@@ -177,6 +177,10 @@ try {
 
     $db->commit();
 
+    // Notificar al admin
+    require_once __DIR__ . '/../includes/notify-admin.php';
+    notifyAdminNewClient(['name' => $nombre, 'email' => $email, 'plan' => $plan, 'code' => $clientCode], 'invitation');
+
     ok([
         'message'     => 'Cuenta creada exitosamente',
         'client_id'   => $clientId,
