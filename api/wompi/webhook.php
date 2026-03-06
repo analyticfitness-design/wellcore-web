@@ -390,10 +390,19 @@ if ($status === 'approved') {
         ]);
     }
 
-    // Notificar al admin del nuevo registro/pago
+    // Notificar al admin del nuevo registro/pago (con datos contables)
     try {
         require_once __DIR__ . '/../includes/notify-admin.php';
-        notifyAdminNewClient(['name' => $buyerName, 'email' => $buyerEmail, 'plan' => $plan, 'code' => $referenceCode], 'wompi');
+        notifyAdminNewClient([
+            'name' => $buyerName, 'email' => $buyerEmail, 'plan' => $plan,
+            'code' => $referenceCode, 'phone' => $buyerPhone,
+        ], 'wompi', [
+            'amount'    => $amountCents,
+            'currency'  => $currency,
+            'method'    => $paymentMethod,
+            'reference' => $referenceCode,
+            'wompi_id'  => $wompiTxId,
+        ]);
     } catch (\Throwable $notifyErr) {
         wc_log($errorLog, 'WARNING', 'Error notificacion admin (no critico)', ['error' => $notifyErr->getMessage()]);
     }

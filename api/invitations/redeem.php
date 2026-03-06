@@ -179,7 +179,10 @@ try {
 
     // Notificar al admin
     require_once __DIR__ . '/../includes/notify-admin.php';
-    notifyAdminNewClient(['name' => $nombre, 'email' => $email, 'plan' => $plan, 'code' => $clientCode], 'invitation');
+    notifyAdminNewClient([
+        'name' => $nombre, 'email' => $email, 'plan' => $plan, 'code' => $clientCode,
+        'phone' => $telefono,
+    ], 'invitation');
 
     ok([
         'message'     => 'Cuenta creada exitosamente',

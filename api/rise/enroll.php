@@ -73,7 +73,10 @@ try {
     $db->commit();
 
     // Notificar al admin
-    notifyAdminNewClient(['name' => $name, 'email' => $email, 'plan' => 'rise', 'code' => $client_code], 'rise_enroll');
+    notifyAdminNewClient([
+        'name' => $name, 'email' => $email, 'plan' => 'rise', 'code' => $client_code,
+        'gender' => $gender, 'experience_level' => $experience_level, 'training_location' => $training_location,
+    ], 'rise_enroll');
 
     respond([
         'success'  => true,
