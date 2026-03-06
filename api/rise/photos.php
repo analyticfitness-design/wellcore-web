@@ -60,7 +60,7 @@ $tipos   = ['frente', 'perfil', 'espalda'];
 $saved   = [];
 $errors  = [];
 $maxSize = 25 * 1024 * 1024; // 25 MB — fotos de iPhone pueden pesar hasta 25 MB
-$allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
+$allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'image/bmp', 'image/tiff', 'image/gif', 'image/avif'];
 
 foreach ($tipos as $tipo) {
     if (!isset($_FILES[$tipo]) || $_FILES[$tipo]['error'] === UPLOAD_ERR_NO_FILE) {
@@ -79,10 +79,18 @@ foreach ($tipos as $tipo) {
     $mimeType = finfo_file($finfo, $file['tmp_name']);
     finfo_close($finfo);
     if (!in_array($mimeType, $allowed)) {
-        $errors[] = $tipo . ': tipo no permitido';
+        $errors[] = $tipo . ': formato no soportado. Usa JPG, PNG, WebP o HEIC.';
         continue;
     }
-    $ext      = match($mimeType) { 'image/png' => 'png', 'image/webp' => 'webp', default => 'jpg' };
+    $ext = match($mimeType) {
+        'image/png'  => 'png',
+        'image/webp' => 'webp',
+        'image/gif'  => 'gif',
+        'image/bmp'  => 'bmp',
+        'image/tiff' => 'tiff',
+        'image/avif' => 'avif',
+        default      => 'jpg',
+    };
     $filename = $cid . '_' . $tipo . '_' . $photoDate . '.' . $ext;
     $dest     = $uploadBase . $filename;
 
