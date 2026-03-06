@@ -2913,10 +2913,13 @@ function loadActivityFeed() {
   if (!feedList) return;
   var ICON_STYLE = 'width:32px;height:32px;border-radius:0;background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.2);display:flex;align-items:center;justify-content:center;color:#00D9FF;font-weight:700;font-size:.8rem;flex-shrink:0';
 
-  Promise.all([
+  var requests = [
     apiFetch('/metrics/?limit=3').then(function(r) { return r.json(); }).catch(function() { return { metrics: [] }; }),
-    apiFetch('/checkins/?limit=2').then(function(r) { return r.json(); }).catch(function() { return { checkins: [] }; })
-  ]).then(function(results) {
+    PLAN_LEVEL[clientPlan] >= 3
+      ? apiFetch('/checkins/?limit=2').then(function(r) { return r.json(); }).catch(function() { return { checkins: [] }; })
+      : Promise.resolve({ checkins: [] })
+  ];
+  Promise.all(requests).then(function(results) {
     var events = [];
     var metrics = results[0].metrics || [];
     var checkins = results[1].checkins || [];
