@@ -1149,56 +1149,59 @@
                         <!-- Diagrama + leyenda -->
                         <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
 
-                            <!-- SVG cuerpo humano con puntos de medición -->
-                            <div style="flex:0 0 130px;display:flex;justify-content:center;">
-                                <svg width="130" height="310" viewBox="0 0 130 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- SVG cuerpo humano anatómico con puntos de medición -->
+                            <div style="flex:0 0 140px;display:flex;justify-content:center;">
+                                <svg width="140" height="310" viewBox="0 0 140 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Silueta completa — cuerpo anatómico proporcional -->
                                     <!-- Cabeza -->
-                                    <circle cx="65" cy="20" r="14" fill="#222226" stroke="#444" stroke-width="1.2"/>
+                                    <ellipse cx="70" cy="18" rx="12" ry="14" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
                                     <!-- Cuello -->
-                                    <rect x="60" y="33" width="10" height="10" rx="2" fill="#222226" stroke="#444" stroke-width="1.2"/>
-                                    <!-- Torso — fit: hombros anchos, cintura marcada, cadera media -->
-                                    <path d="M30 46 L38 44 L65 42 L92 44 L100 46 L100 52 Q98 68 94 78 Q90 88 86 96 L82 108 Q78 116 76 126 L74 134 L56 134 L54 126 Q52 116 48 108 L44 96 Q40 88 36 78 Q32 68 30 52Z" fill="#222226" stroke="#444" stroke-width="1.2"/>
-                                    <!-- Brazo izq -->
-                                    <path d="M30 48 Q22 60 18 76 Q15 90 16 104 Q17 112 19 120" stroke="#444" stroke-width="8" stroke-linecap="round" fill="none"/>
+                                    <path d="M64 31 Q64 36 62 40 L78 40 Q76 36 76 31" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <!-- Torso — silueta anatómica: deltoides, pecho, cintura, cadera -->
+                                    <path d="M62 40 Q50 40 38 44 Q28 48 24 54 L22 62 Q22 68 24 74 Q28 82 32 88 Q36 94 38 100 Q40 108 42 114 Q43 120 44 126 L46 132 Q50 138 54 142 L56 144 L84 144 L86 142 Q90 138 94 132 L96 126 Q97 120 98 114 Q100 108 102 100 Q104 94 108 88 Q112 82 116 74 Q118 68 118 62 L116 54 Q112 48 102 44 Q90 40 78 40Z" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <!-- Brazo izq — deltoides + bícep + antebrazo -->
+                                    <path d="M24 54 Q18 58 16 66 Q14 76 13 86 Q12 96 14 106 Q15 114 17 120 Q18 126 20 130" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <path d="M22 62 Q20 58 18 66 Q16 76 15 86 Q14 96 16 106 Q17 114 19 120 Q20 126 22 130" fill="#1a1a1e"/>
                                     <!-- Brazo der -->
-                                    <path d="M100 48 Q108 60 112 76 Q115 90 114 104 Q113 112 111 120" stroke="#444" stroke-width="8" stroke-linecap="round" fill="none"/>
+                                    <path d="M116 54 Q122 58 124 66 Q126 76 127 86 Q128 96 126 106 Q125 114 123 120 Q122 126 120 130" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <path d="M118 62 Q120 58 122 66 Q124 76 125 86 Q126 96 124 106 Q123 114 121 120 Q120 126 118 130" fill="#1a1a1e"/>
                                     <!-- Manos -->
-                                    <ellipse cx="19" cy="123" rx="5" ry="6" fill="#222226" stroke="#444" stroke-width="1.2"/>
-                                    <ellipse cx="111" cy="123" rx="5" ry="6" fill="#222226" stroke="#444" stroke-width="1.2"/>
-                                    <!-- Pierna izq — larga, con forma de muslo y pantorrilla -->
-                                    <path d="M56 134 Q52 148 49 164 Q46 182 46 198" stroke="#444" stroke-width="14" stroke-linecap="round" fill="none"/>
-                                    <path d="M46 198 Q45 218 44 238 Q43 258 44 276" stroke="#444" stroke-width="10" stroke-linecap="round" fill="none"/>
+                                    <ellipse cx="21" cy="134" rx="5" ry="6" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <ellipse cx="119" cy="134" rx="5" ry="6" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <!-- Pierna izq — muslo, rodilla, pantorrilla, tobillo -->
+                                    <path d="M56 144 Q52 150 50 160 Q47 174 46 186 Q45 198 45 206 Q45 210 46 214 Q46 216 46 220 Q45 232 44 244 Q43 256 42 266 Q42 272 42 278" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <path d="M70 144 Q66 150 62 160 Q58 174 56 186 Q55 198 55 206 Q55 210 55 214 Q56 216 56 220 Q56 232 55 244 Q54 256 52 266 Q50 272 48 278" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
                                     <!-- Pierna der -->
-                                    <path d="M74 134 Q78 148 81 164 Q84 182 84 198" stroke="#444" stroke-width="14" stroke-linecap="round" fill="none"/>
-                                    <path d="M84 198 Q85 218 86 238 Q87 258 86 276" stroke="#444" stroke-width="10" stroke-linecap="round" fill="none"/>
+                                    <path d="M84 144 Q88 150 90 160 Q93 174 94 186 Q95 198 95 206 Q95 210 94 214 Q94 216 94 220 Q95 232 96 244 Q97 256 98 266 Q98 272 98 278" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <path d="M70 144 Q74 150 78 160 Q82 174 84 186 Q85 198 85 206 Q85 210 85 214 Q84 216 84 220 Q84 232 85 244 Q86 256 88 266 Q90 272 92 278" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
                                     <!-- Pies -->
-                                    <ellipse cx="44" cy="280" rx="9" ry="4" fill="#222226" stroke="#444" stroke-width="1.2"/>
-                                    <ellipse cx="86" cy="280" rx="9" ry="4" fill="#222226" stroke="#444" stroke-width="1.2"/>
+                                    <ellipse cx="45" cy="282" rx="8" ry="4" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
+                                    <ellipse cx="95" cy="282" rx="8" ry="4" fill="#1a1a1e" stroke="#555" stroke-width="1"/>
 
                                     <!-- PECHO — línea roja -->
-                                    <line x1="20" y1="62" x2="110" y2="62" stroke="#E31E24" stroke-width="1.8" stroke-dasharray="4,3"/>
-                                    <circle cx="12" cy="62" r="8" fill="#E31E24"/>
-                                    <text x="12" y="66" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">P</text>
+                                    <line x1="16" y1="72" x2="124" y2="72" stroke="#E31E24" stroke-width="1.5" stroke-dasharray="4,3"/>
+                                    <circle cx="10" cy="72" r="8" fill="#E31E24"/>
+                                    <text x="10" y="76" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">P</text>
 
                                     <!-- BRAZO — morado -->
-                                    <line x1="106" y1="78" x2="122" y2="78" stroke="#A855F7" stroke-width="1.8" stroke-dasharray="4,3"/>
-                                    <circle cx="12" cy="78" r="8" fill="#A855F7"/>
-                                    <text x="12" y="82" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">B</text>
+                                    <line x1="120" y1="88" x2="134" y2="88" stroke="#A855F7" stroke-width="1.5" stroke-dasharray="4,3"/>
+                                    <circle cx="10" cy="88" r="8" fill="#A855F7"/>
+                                    <text x="10" y="92" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">B</text>
 
                                     <!-- CINTURA — naranja -->
-                                    <line x1="38" y1="96" x2="92" y2="96" stroke="#FF6B35" stroke-width="1.8" stroke-dasharray="4,3"/>
-                                    <circle cx="118" cy="96" r="8" fill="#FF6B35"/>
-                                    <text x="118" y="100" fill="#fff" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">C</text>
+                                    <line x1="36" y1="104" x2="104" y2="104" stroke="#FF6B35" stroke-width="1.5" stroke-dasharray="4,3"/>
+                                    <circle cx="130" cy="104" r="8" fill="#FF6B35"/>
+                                    <text x="130" y="108" fill="#fff" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">C</text>
 
                                     <!-- CADERA — amarillo -->
-                                    <line x1="48" y1="134" x2="82" y2="134" stroke="#FFB800" stroke-width="1.8" stroke-dasharray="4,3"/>
-                                    <circle cx="12" cy="134" r="8" fill="#FFB800"/>
-                                    <text x="12" y="138" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">Ca</text>
+                                    <line x1="44" y1="138" x2="96" y2="138" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="4,3"/>
+                                    <circle cx="10" cy="138" r="8" fill="#FFB800"/>
+                                    <text x="10" y="142" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">Ca</text>
 
                                     <!-- MUSLO — cian -->
-                                    <line x1="40" y1="168" x2="60" y2="168" stroke="#00D9FF" stroke-width="1.8" stroke-dasharray="4,3"/>
-                                    <circle cx="118" cy="168" r="8" fill="#00D9FF"/>
-                                    <text x="118" y="172" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">M</text>
+                                    <line x1="42" y1="178" x2="62" y2="178" stroke="#00D9FF" stroke-width="1.5" stroke-dasharray="4,3"/>
+                                    <circle cx="130" cy="178" r="8" fill="#00D9FF"/>
+                                    <text x="130" y="182" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">M</text>
                                 </svg>
                             </div>
 
