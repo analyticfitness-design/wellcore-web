@@ -384,15 +384,15 @@ function build_client_profile_text(array $c): string {
     $text .= "- Lugar:        " . ($c['lugar_entreno']?: 'Gimnasio completo') . "\n";
     $text .= "- Días disp.:   $dias\n";
     $text .= "- Restricciones:" . ($c['restricciones'] ?: 'Ninguna conocida') . "\n";
-    $text .= "- Dieta actual: " . ($c['dieta']        ?: 'No especificada') . "\n";
-    $text .= "- Alergias:     " . ($c['alergias']     ?: 'Ninguna') . "\n";
+    $text .= "- Dieta actual: " . (($c['dieta']    ?? '') ?: 'No especificada') . "\n";
+    $text .= "- Alergias:     " . (($c['alergias'] ?? '') ?: 'Ninguna') . "\n";
     if ($c['macros']) {
         $m     = $c['macros'];
         $text .= "- Macros actuales: Proteína " . ($m['protein'] ?? '?') . "g"
                . " | Carbs " . ($m['carbs'] ?? '?') . "g"
                . " | Grasas " . ($m['fats'] ?? '?') . "g\n";
     }
-    if ($c['notas']) {
+    if ($c['notas'] ?? null) {
         $text .= "- Notas adicionales: " . $c['notas'] . "\n";
     }
     return $text;
