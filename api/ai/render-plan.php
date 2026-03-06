@@ -686,7 +686,7 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
 
     // ── FOOTER ────────────────────────────────────────────────
     $h .= "<div class=\"doc-footer\"><div class=\"doc-footer-brand\">WELL<span>CORE</span></div>";
-    $h .= "<div class=\"doc-footer-info\"><div>wellcorefitness.com</div><div>@wellcore.fitness</div><div>Plan generado con IA &middot; {$fecha}</div></div></div>\n";
+    $h .= "<div class=\"doc-footer-info\"><div>wellcorefitness.com</div><div>@wellcore.fitness</div><div>{$fecha}</div></div></div>\n";
     $h .= "</div></body></html>";
     return $h;
 }
