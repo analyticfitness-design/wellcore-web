@@ -13,6 +13,9 @@
     <!-- Font Awesome 6.4 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- html2pdf.js for PDF download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+
     <style>
         :root {
             --bg:           #080809;
@@ -1713,16 +1716,54 @@
         function printPlan(type) {
             const frame = document.querySelector('#' + type + 'PlanContainer iframe.plan-frame');
             if (!frame) { showToast('No hay plan disponible para descargar', 'var(--red)'); return; }
-            // El iframe usa srcdoc, no src — extraer el HTML y abrirlo en nueva pestaña
-            var html = frame.srcdoc || '';
-            if (!html && frame.contentDocument) {
-                html = frame.contentDocument.documentElement.outerHTML;
+
+            // Acceder al contenido del iframe via contentDocument (mismo origen, srcdoc)
+            var doc = frame.contentDocument || frame.contentWindow.document;
+            if (!doc || !doc.body || !doc.body.textContent.trim()) {
+                showToast('No hay plan disponible para descargar', 'var(--red)'); return;
             }
-            if (!html) { showToast('No hay plan disponible para descargar', 'var(--red)'); return; }
-            var blob = new Blob([html], { type: 'text/html' });
-            var url = URL.createObjectURL(blob);
-            window.open(url, '_blank');
-            showToast('Plan abierto — presiona Descargar PDF arriba', '#22C55E');
+
+            showToast('Generando PDF...', 'var(--gold)');
+
+            // Clonar el body del iframe para no alterar el original
+            var cloned = doc.body.cloneNode(true);
+            // Remover botones de descarga/impresión del PDF
+            cloned.querySelectorAll('.print-btn, [onclick]').forEach(function(b) {
+                if (b.tagName === 'BUTTON' || b.tagName === 'A') b.remove();
+            });
+
+            // Crear contenedor temporal con estilos del iframe
+            var container = document.createElement('div');
+            container.style.cssText = 'position:fixed;left:-9999px;top:0;width:210mm;background:#fff;color:#000;';
+            // Copiar estilos del iframe
+            var styles = doc.querySelectorAll('style');
+            styles.forEach(function(s) {
+                container.appendChild(s.cloneNode(true));
+            });
+            // Agregar nodos clonados
+            while (cloned.firstChild) {
+                container.appendChild(cloned.firstChild);
+            }
+            document.body.appendChild(container);
+
+            var planLabel = type === 'training' ? 'Entrenamiento' : 'Nutricion';
+            var clientName = (document.querySelector('.welcome-name') || {}).textContent || 'WellCore';
+            var filename = 'RISE_' + planLabel + '_' + clientName.trim().replace(/[^a-zA-Z0-9]/g, '_') + '.pdf';
+
+            html2pdf().set({
+                margin: [6, 4, 6, 4],
+                filename: filename,
+                image: { type: 'jpeg', quality: 0.92 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['css', 'legacy'] }
+            }).from(container).save().then(function() {
+                document.body.removeChild(container);
+                showToast('PDF descargado', '#22C55E');
+            }).catch(function(err) {
+                document.body.removeChild(container);
+                showToast('Error al generar PDF', 'var(--red)');
+            });
         }
 
         // ─── GUARDAR TRACKING VÍA API ─────────────
