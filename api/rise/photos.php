@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
-declare(strict_types=1);
 /**
  * RISE Fotos de Progreso
  * GET  /api/rise/photos.php         → lista de fotos del cliente agrupadas por fecha
