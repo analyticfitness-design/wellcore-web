@@ -1262,7 +1262,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .week-grid{grid-template-columns:repeat(7,1fr);gap:4px}
   .day-toggle{padding:10px 2px}
-  .compare-grid{grid-template-columns:1fr}
+  .compare-grid{grid-template-columns:1fr;min-width:unset}
+  .compare-card{padding:14px}
+  .plan-compare{padding:16px 14px}
   .timeline-phases{gap:0;padding:16px;overflow-x:auto}
   .progress-ring-section{width:100%}
   .form-row{flex-direction:column}
@@ -5332,9 +5334,77 @@ function toggleIntakeForm() {
   }
 }
 
+function mapRiseIntake(ri) {
+  var meta = ri._meta || {};
+  var tr = ri.training || {};
+  var av = ri.availability || {};
+  var nu = ri.nutrition || {};
+  var li = ri.lifestyle || {};
+  var go = ri.goals || {};
+
+  var expMap = { principiante:'Soy principiante (menos de 6 meses)', intermedio:'Intermedio (6 meses - 2 años)', avanzado:'Avanzado (más de 2 años)' };
+  var daysN = Array.isArray(av.days) ? av.days.length : 0;
+  var diasMap = {2:'2 días',3:'3 días',4:'4 días',5:'5 días',6:'6+ días',7:'6+ días'};
+  var equipMap = { gym:'Gimnasio completo', home:'Home gym con pesas', bodyweight:'Solo peso corporal', hybrid:'Mancuernas + bandas' };
+  var tipos = Array.isArray(tr.trainingType) ? tr.trainingType : [];
+  var tipoStr = tipos.includes('pesas') && tipos.includes('funcional') ? 'Cardio + pesas'
+    : tipos.includes('pesas') ? 'Pesas / Musculación'
+    : tipos.includes('funcional') ? 'Funcional'
+    : tipos.includes('calistenia') ? 'Calistenia' : 'Sin preferencia';
+  var durMap = {'45':'45 minutos','60':'60 minutos','75':'75-90 minutos','90':'75-90 minutos'};
+  var dietMap = { omnivora:'No, como de todo', flexible:'Dieta flexible / IIFYM', vegana:'Vegana', vegetariana:'Vegetariana', sin_gluten:'Sin gluten', keto:'Keto / Low carb' };
+  var mealsMap = {1:'1-2 comidas',2:'1-2 comidas',3:'3 comidas',4:'4-5 comidas',5:'4-5 comidas'};
+  var stressMap = { bajo:'Bajo — vida tranquila', moderado:'Moderado — trabajo normal', alto:'Alto — muy ocupado', muy_alto:'Muy alto — me afecta el sueño' };
+  var sleepH = parseInt(li.sleep) || 0;
+  var sleepStr = sleepH < 5 ? 'Menos de 5 horas' : sleepH <= 6 ? '5-6 horas' : sleepH <= 8 ? '7-8 horas' : 'Más de 8 horas';
+  var avoid = Array.isArray(tr.exercisesToAvoid) ? tr.exercisesToAvoid.join('\n') : '';
+  var hasInj = avoid.toLowerCase().includes('lesion') ? 'si' : 'no';
+  var goalsArr = []; if(go.primary) goalsArr.push(go.primary); if(go.secondary) goalsArr.push(go.secondary);
+
+  return {
+    experiencia: expMap[meta.experience_level] || '',
+    dias_entrenamiento: diasMap[daysN] || '',
+    equipamiento: equipMap[av.place] || '',
+    coach_previo: '',
+    rutina_actual: goalsArr.join('. '),
+    tipo_entrenamiento: tipoStr,
+    duracion_sesion: durMap[av.time] || '',
+    horario: Array.isArray(av.days) ? av.days.join(', ') : '',
+    ejercicios_evitar: avoid,
+    tiene_lesion: hasInj,
+    lesion_detalle: hasInj === 'si' ? avoid : '',
+    condicion_medica: '',
+    medicamentos: '',
+    dieta_actual: dietMap[nu.diet] || '',
+    num_comidas: mealsMap[nu.meals] || '',
+    exp_macros: '',
+    alergias: nu.allergies || '',
+    alimentos_no: '',
+    horario_trabajo: li.job || '',
+    come_fuera: '',
+    estres: stressMap[li.stress] || '',
+    sueno: sleepStr
+  };
+}
+
+function setBestOption(sel, val) {
+  if (!val) return;
+  for (var i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].value === val || sel.options[i].text === val) { sel.value = sel.options[i].value; return; }
+  }
+  var lc = val.toLowerCase();
+  for (var i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].value.toLowerCase().indexOf(lc) !== -1 || sel.options[i].text.toLowerCase().indexOf(lc) !== -1) { sel.value = sel.options[i].value; return; }
+  }
+}
+
 function loadIntakeForm() {
   apiFetch('/clients/intake').then(function(r) { return r.json(); }).then(function(data) {
-    var intake = data.profile_intake || {};
+    var intake = data.profile_intake;
+    if (!intake && data.rise_intake) {
+      intake = mapRiseIntake(data.rise_intake);
+    }
+    if (!intake) return;
     var fields = {
       'ik-experiencia': intake.experiencia,
       'ik-dias': intake.dias_entrenamiento,
@@ -5362,7 +5432,8 @@ function loadIntakeForm() {
     Object.keys(fields).forEach(function(id) {
       var el = document.getElementById(id);
       if (el && fields[id]) {
-        el.value = fields[id];
+        if (el.tagName === 'SELECT') { setBestOption(el, fields[id]); }
+        else { el.value = fields[id]; }
       }
     });
   }).catch(function() {});
