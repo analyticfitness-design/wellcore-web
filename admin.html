@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1371,6 +1372,11 @@
         Invitaciones
       </div>
 
+      <div class="nav-item" data-section="comunidad">
+        <span class="nav-icon" style="color:#E31E24;font-weight:700">&#9830;</span>
+        Comunidad
+      </div>
+
       <div class="nav-item" data-section="configuracion">
         <span class="nav-icon" style="color:#00D9FF;font-weight:700">&#9678;</span>
         Configuracion
@@ -1862,6 +1868,16 @@
         </div>
 
       </div>
+
+      <!-- ═══════════════════════════════════════
+           COMUNIDAD
+      ═══════════════════════════════════════ -->
+      <div class="section" id="section-comunidad">
+        <div class="section-title">COMUNIDAD</div>
+        <div class="section-sub">CHAT GRUPAL Y FEED DE LA COMUNIDAD</div>
+        <div id="adminCommunityContainer" style="max-width:700px;"></div>
+      </div>
+
       <!-- END SECTIONS -->
 
     </div><!-- /content -->
@@ -3232,7 +3248,22 @@
     loadPendingPlans();
     setTimeout(loadRiseTickets, 800);
   }
+
+  /* ─── COMMUNITY LAZY INIT ─── */
+  var _communityLoaded = false;
+  document.addEventListener('click', function(e) {
+    var navItem = e.target.closest('.nav-item');
+    if (navItem && navItem.dataset.section === 'comunidad' && !_communityLoaded) {
+      _communityLoaded = true;
+      setTimeout(function() {
+        if (typeof Community !== 'undefined') {
+          Community.init('adminCommunityContainer', 'all');
+        }
+      }, 100);
+    }
+  });
 </script>
+<script src="js/community.js"></script>
 
 </body>
 </html>
