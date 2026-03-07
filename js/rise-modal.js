@@ -220,7 +220,7 @@
 
                 <div class="rise-modal-price">
                     <div class="rise-modal-price-label">Precio especial</div>
-                    <div class="rise-modal-price-value">$33 USD</div>
+                    <div class="rise-modal-price-value">$27 USD</div>
                 </div>
 
                 <div class="rise-modal-features">

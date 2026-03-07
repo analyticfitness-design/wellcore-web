@@ -30,7 +30,7 @@ $program_id = intval($input['program_id']);
 $payment_method = htmlspecialchars($input['payment_method'], ENT_QUOTES, 'UTF-8');
 $amount = floatval($input['amount']);
 
-// Validar amount (RISE cuesta $33 USD o $99,900 COP)
+// Validar amount (RISE cuesta $27 USD o $99,900 COP)
 if ($amount < 30 || $amount > 105000) {
     respondError('Monto inválido', 400);
 }
