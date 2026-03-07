@@ -8,7 +8,7 @@ require_once __DIR__ . '/env.php';
 
 define('CLAUDE_API_KEY',    env('CLAUDE_API_KEY', ''));
 define('CLAUDE_MODEL',      env('CLAUDE_MODEL', 'claude-sonnet-4-6'));
-define('CLAUDE_MAX_TOKENS', 16384);
+define('CLAUDE_MAX_TOKENS', 32000);
 define('CLAUDE_BASE_URL',   'https://api.anthropic.com');
 define('CLAUDE_API_VERSION','2023-06-01');
 
