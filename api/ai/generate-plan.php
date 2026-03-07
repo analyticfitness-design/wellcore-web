@@ -107,27 +107,57 @@ if ($planType === 'rise') {
     $userPrompt = build_rise_enriched_prompt($client, $riseIntake);
     $userPrompt .= "\n\nGENERA EL PLAN RISE 30 DIAS EN JSON ESTRICTO (sin texto fuera del JSON).\n\nESQUEMA REQUERIDO:\n" . get_plan_schema('rise');
 
-    try {
-        $response = claude_call(get_rise_system_prompt(), $userPrompt, CLAUDE_MODEL, CLAUDE_MAX_TOKENS);
-        $parsed   = extract_json_from_response($response['text']);
+    $maxAttempts = 2;
+    $parsed      = null;
+    $response    = null;
+    $lastError   = '';
 
-        if ($parsed) {
-            ai_save_plan($clientId, 'rise', $parsed, $genId);
+    for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+        try {
+            $response = claude_call(get_rise_system_prompt(), $userPrompt, CLAUDE_MODEL, CLAUDE_MAX_TOKENS);
+
+            // Detectar truncamiento por max_tokens
+            if (($response['stop_reason'] ?? '') === 'max_tokens') {
+                error_log("[RISE gen=$genId] Intento $attempt: truncado (max_tokens={$response['output_tokens']}). Reintentando...");
+                $lastError = "Respuesta truncada en {$response['output_tokens']} tokens";
+                if ($attempt < $maxAttempts) continue;
+            }
+
+            $parsed = extract_json_from_response($response['text']);
+
+            if ($parsed) {
+                break; // Exito
+            }
+
+            // JSON no parseado — reintentar
+            $lastError = 'JSON no válido en respuesta de Claude';
+            error_log("[RISE gen=$genId] Intento $attempt: JSON inválido. " . ($attempt < $maxAttempts ? 'Reintentando...' : 'Sin reintentos.'));
+
+        } catch (\Throwable $e) {
+            $lastError = $e->getMessage();
+            error_log("[RISE gen=$genId] Intento $attempt ERROR: $lastError");
+            if ($attempt >= $maxAttempts) break;
         }
-        ai_update_generation(
-            $genId,
-            $parsed ? 'completed' : 'failed',
-            $response['text'],
-            $parsed ? json_encode($parsed, JSON_UNESCAPED_UNICODE) : null
-        );
-        getDB()->prepare("UPDATE ai_generations SET prompt_tokens = ?, completion_tokens = ? WHERE id = ?")
-            ->execute([$response['input_tokens'], $response['output_tokens'], $genId]);
-
-        error_log("[RISE gen=$genId] " . ($parsed ? 'COMPLETADO' : 'FALLIDO (parseo)'));
-    } catch (\Throwable $e) {
-        ai_update_generation($genId, 'failed', $e->getMessage());
-        error_log("[RISE gen=$genId] ERROR: " . $e->getMessage());
     }
+
+    // Guardar resultado final
+    if ($parsed) {
+        ai_save_plan($clientId, 'rise', $parsed, $genId);
+    }
+    $finalStatus = $parsed ? 'completed' : 'failed';
+    $rawText     = $response['text'] ?? $lastError;
+    ai_update_generation(
+        $genId,
+        $finalStatus,
+        $rawText,
+        $parsed ? json_encode($parsed, JSON_UNESCAPED_UNICODE) : null
+    );
+    if ($response) {
+        getDB()->prepare("UPDATE ai_generations SET prompt_tokens = ?, completion_tokens = ? WHERE id = ?")
+            ->execute([$response['input_tokens'] ?? 0, $response['output_tokens'] ?? 0, $genId]);
+    }
+
+    error_log("[RISE gen=$genId] $finalStatus (intentos: $attempt" . ($lastError && !$parsed ? ", error: $lastError" : '') . ")");
     exit;
 
 } else {

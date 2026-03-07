@@ -92,6 +92,7 @@ function claude_call(string $systemPrompt, string $userPrompt, ?string $model = 
         'text'          => $data['content'][0]['text'],
         'input_tokens'  => (int) ($data['usage']['input_tokens']  ?? 0),
         'output_tokens' => (int) ($data['usage']['output_tokens'] ?? 0),
+        'stop_reason'   => $data['stop_reason'] ?? 'unknown',
     ];
 }
 

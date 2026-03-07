@@ -13,7 +13,7 @@ define('CLAUDE_BASE_URL',   'https://api.anthropic.com');
 define('CLAUDE_API_VERSION','2023-06-01');
 
 define('AI_ENABLED',        true);
-define('AI_RATE_LIMIT_PER_HOUR', 10);
+define('AI_RATE_LIMIT_PER_HOUR', 30);
 
 // Sonnet 4.6: $3.00 input / $15.00 output por millon de tokens
 define('AI_COST_INPUT_PER_MILLION',  3.00);

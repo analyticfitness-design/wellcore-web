@@ -63,6 +63,12 @@ if ($action === 'update_intake') {
     $gens = $db->query("SELECT id, status, prompt_tokens, completion_tokens, created_at FROM ai_generations WHERE client_id=15 ORDER BY id DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode(['intake' => json_decode($r['personalized_program'] ?? '{}', true), 'plans' => $plans, 'generations' => $gens], JSON_UNESCAPED_UNICODE);
 
+} elseif ($action === 'plan') {
+    // Ver plan generado
+    $row = $db->query("SELECT id, content, plan_type, active, ai_generation_id, created_at FROM assigned_plans WHERE client_id=15 ORDER BY id DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+    $content = json_decode($row['content'] ?? '{}', true);
+    echo json_encode(['plan_id' => $row['id'], 'gen_id' => $row['ai_generation_id'], 'created' => $row['created_at'], 'plan' => $content], JSON_UNESCAPED_UNICODE);
+
 } else {
-    echo json_encode(['error' => 'action must be: update_intake, check']);
+    echo json_encode(['error' => 'action must be: update_intake, check, plan']);
 }
