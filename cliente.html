@@ -953,6 +953,95 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   color:var(--gray);margin-bottom:18px;
 }
 
+/* ===== INTAKE FORM PREMIUM ===== */
+.intake-section{
+  position:relative;
+  background:linear-gradient(135deg,rgba(17,17,19,0.95),rgba(26,26,29,0.9));
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:16px;
+  overflow:hidden;
+  transition:border-color .3s,box-shadow .3s;
+}
+.intake-section:hover{
+  border-color:rgba(255,255,255,0.08);
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+}
+.intake-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  border-radius:14px 14px 0 0;
+}
+.intake-section[data-accent="red"]::before{background:linear-gradient(90deg,#E31E24,#ff4d52)}
+.intake-section[data-accent="cyan"]::before{background:linear-gradient(90deg,#00D9FF,#00a0cc)}
+.intake-section[data-accent="amber"]::before{background:linear-gradient(90deg,#FFB800,#ff8c00)}
+.intake-section[data-accent="green"]::before{background:linear-gradient(90deg,#00C853,#00965e)}
+.intake-section[data-accent="purple"]::before{background:linear-gradient(90deg,#A855F7,#7c3aed)}
+.intake-section .intake-header{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;
+}
+.intake-section .intake-header i{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.intake-section[data-accent="red"] .intake-header i{background:rgba(227,30,36,0.15);color:#E31E24}
+.intake-section[data-accent="cyan"] .intake-header i{background:rgba(0,217,255,0.12);color:#00D9FF}
+.intake-section[data-accent="amber"] .intake-header i{background:rgba(255,184,0,0.12);color:#FFB800}
+.intake-section[data-accent="green"] .intake-header i{background:rgba(0,200,83,0.12);color:#00C853}
+.intake-section[data-accent="purple"] .intake-header i{background:rgba(168,85,247,0.12);color:#A855F7}
+.intake-section .intake-header span{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff;
+}
+.intake-section .form-group label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.5px;
+  text-transform:uppercase;color:rgba(255,255,255,0.4);
+  margin-bottom:6px;display:block;
+}
+.intake-section select,
+.intake-section input[type="text"],
+.intake-section input[type="number"],
+.intake-section textarea{
+  width:100%;background:rgba(0,0,0,0.3);
+  border:1px solid rgba(255,255,255,0.06);border-radius:8px;
+  color:#fff;padding:11px 14px;font-size:.85rem;
+  font-family:'Inter',sans-serif;
+  transition:border-color .2s,box-shadow .2s;
+}
+.intake-section select:focus,
+.intake-section input:focus,
+.intake-section textarea:focus{
+  outline:none;border-color:rgba(255,255,255,0.15);
+  box-shadow:0 0 0 3px rgba(255,255,255,0.03);
+}
+.intake-section select{
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  padding-right:32px;cursor:pointer;
+}
+.intake-section textarea{resize:vertical;min-height:56px}
+.btn-intake-save{
+  width:100%;padding:14px 24px;
+  background:linear-gradient(135deg,#E31E24,#c51920);
+  color:#fff;border:none;border-radius:10px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;
+  transition:transform .15s,box-shadow .15s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-intake-save:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(227,30,36,0.35);
+}
+.btn-intake-save:active{transform:translateY(0)}
+
 /* Plan comparison */
 .plan-compare{
   background:var(--surface);
@@ -2824,9 +2913,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div id="intakeFormContent" style="display:none;margin-top:20px;">
 
           <!-- Sec 1: Experiencia -->
-          <div style="background:rgba(227,30,36,0.05);border:1px solid rgba(227,30,36,0.15);border-radius:10px;padding:16px;margin-bottom:16px;">
-            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
-              <i class="fas fa-signal" style="color:var(--red);margin-right:6px"></i> Experiencia de Entrenamiento
+          <div class="intake-section" data-accent="red">
+            <div class="intake-header">
+              <i class="fas fa-signal"></i>
+              <span>Experiencia de Entrenamiento</span>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -2869,14 +2959,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             </div>
             <div class="form-group">
               <label>Rutina actual (si tienes)</label>
-              <textarea id="ik-rutina" rows="2" placeholder="Ej: Chest-Back lunes, pierna miércoles..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+              <textarea id="ik-rutina" rows="2" placeholder="Ej: Chest-Back lunes, pierna miércoles..."></textarea>
             </div>
           </div>
 
           <!-- Sec 2: Preferencias -->
-          <div style="background:rgba(0,217,255,0.04);border:1px solid rgba(0,217,255,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
-            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
-              <i class="fas fa-dumbbell" style="color:#00D9FF;margin-right:6px"></i> Preferencias de Entrenamiento
+          <div class="intake-section" data-accent="cyan">
+            <div class="intake-header">
+              <i class="fas fa-dumbbell"></i>
+              <span>Preferencias de Entrenamiento</span>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -2907,14 +2998,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             </div>
             <div class="form-group">
               <label>Ejercicios que no puedes/quieres hacer</label>
-              <textarea id="ik-ejercicios-evitar" rows="2" placeholder="Ej: No puedo correr por rodilla..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+              <textarea id="ik-ejercicios-evitar" rows="2" placeholder="Ej: No puedo correr por rodilla..."></textarea>
             </div>
           </div>
 
           <!-- Sec 3: Lesiones -->
-          <div style="background:rgba(255,184,0,0.04);border:1px solid rgba(255,184,0,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
-            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
-              <i class="fas fa-heart-pulse" style="color:#FFB800;margin-right:6px"></i> Lesiones y Limitaciones
+          <div class="intake-section" data-accent="amber">
+            <div class="intake-header">
+              <i class="fas fa-heart-pulse"></i>
+              <span>Lesiones y Limitaciones</span>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -2933,18 +3025,19 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             </div>
             <div class="form-group">
               <label>Describe la lesión o condición (si aplica)</label>
-              <textarea id="ik-lesion-detalle" rows="2" placeholder="Zona afectada, diagnóstico..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+              <textarea id="ik-lesion-detalle" rows="2" placeholder="Zona afectada, diagnóstico..."></textarea>
             </div>
             <div class="form-group">
               <label>Condición médica relevante</label>
-              <textarea id="ik-condicion-medica" rows="2" placeholder="Diabetes, hipertensión... o vacío si no tienes" style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+              <textarea id="ik-condicion-medica" rows="2" placeholder="Diabetes, hipertensión... o vacío si no tienes"></textarea>
             </div>
           </div>
 
           <!-- Sec 4: Nutrición -->
-          <div style="background:rgba(0,200,83,0.04);border:1px solid rgba(0,200,83,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
-            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
-              <i class="fas fa-utensils" style="color:#00C853;margin-right:6px"></i> Información Nutricional
+          <div class="intake-section" data-accent="green">
+            <div class="intake-header">
+              <i class="fas fa-utensils"></i>
+              <span>Información Nutricional</span>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -2989,14 +3082,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             </div>
             <div class="form-group">
               <label>Alimentos que NO comerás</label>
-              <textarea id="ik-alimentos-no" rows="2" placeholder="Ej: No como cerdo, no me gustan los mariscos..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+              <textarea id="ik-alimentos-no" rows="2" placeholder="Ej: No como cerdo, no me gustan los mariscos..."></textarea>
             </div>
           </div>
 
           <!-- Sec 5: Hábitos -->
-          <div style="background:rgba(168,85,247,0.04);border:1px solid rgba(168,85,247,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
-            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
-              <i class="fas fa-clock" style="color:#A855F7;margin-right:6px"></i> Horarios y Hábitos
+          <div class="intake-section" data-accent="purple">
+            <div class="intake-header">
+              <i class="fas fa-clock"></i>
+              <span>Horarios y Hábitos</span>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -3037,7 +3131,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             </div>
           </div>
 
-          <button class="btn-primary" onclick="saveIntakeForm()" style="width:100%">
+          <button class="btn-intake-save" onclick="saveIntakeForm()">
             <i class="fas fa-save"></i> Guardar Formulario Inicial
           </button>
         </div>
