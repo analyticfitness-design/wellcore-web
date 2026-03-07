@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fórmulario de Intake | RISE - WellCore Fitness</title>
+    <title>Intake | RISE - WellCore Fitness</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -12,957 +12,890 @@
         :root {
             --bg:       #0a0a0a;
             --surface:  #111113;
-            --surface-2:#1a1a1d;
-            --card:     #18181b;
+            --surface-2:#161618;
+            --surface-3:#1c1c1f;
+            --card:     #131315;
             --border:   rgba(255,255,255,0.06);
+            --border-2: rgba(255,255,255,0.10);
             --red:      #E31E24;
             --red-dark: #B8181D;
             --red-dim:  rgba(227,30,36,0.10);
+            --red-glow: rgba(227,30,36,0.25);
+            --green:    #22c55e;
+            --green-dim:rgba(34,197,94,0.10);
             --white:    #ffffff;
-            --gray:     rgba(255,255,255,0.45);
-            --gray-dim: rgba(255,255,255,0.18);
+            --gray:     rgba(255,255,255,0.50);
+            --gray-dim: rgba(255,255,255,0.20);
+            --gray-light:rgba(255,255,255,0.70);
+            --error:    #ef4444;
+            --error-dim:rgba(239,68,68,0.10);
+            --radius:   8px;
+            --radius-lg:12px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         html, body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--white);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* ── Header ── */
         header {
-            background: var(--surface);
+            background: rgba(17,17,19,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 16px 0;
+            padding: 14px 0;
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
         .header-content {
-            max-width: 800px;
+            max-width: 680px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.05em;
-            color: var(--red);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
-
-        .progress-container {
-            margin-bottom: 40px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: var(--red-dim);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--red);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            font-size: 13px;
-            color: var(--gray);
-            text-align: center;
-        }
-
-        .hero {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 36px;
-            letter-spacing: 0.02em;
-            margin-bottom: 12px;
-            color: var(--white);
-        }
-
-        .hero .subtitle {
-            color: var(--gray);
-            font-size: 15px;
-        }
-
-        .form-container {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 40px;
-        }
-
-        .form-section {
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.02em;
-            color: var(--red);
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
+        .header-logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
-
-        .section-number {
+        .header-logo img {
+            height: 22px;
+            opacity: 0.9;
+        }
+        .header-badge {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
+            gap: 6px;
             background: var(--red-dim);
-            border: 1px solid var(--red);
-            border-radius: 50%;
-            font-size: 12px;
-            font-weight: 600;
+            border: 1px solid rgba(227,30,36,0.2);
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 2px;
             color: var(--red);
+            text-transform: uppercase;
+        }
+        .header-percent {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--gray);
         }
 
-        .section-content {
-            display: none;
-            padding: 25px 0;
+        /* ── Progress ── */
+        .progress-container { max-width: 680px; margin: 0 auto; padding: 24px 20px 0; }
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--surface-2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--red), #ff4d52);
+            width: 0%;
+            transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+            border-radius: 2px;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+        }
+        .progress-dot {
+            flex: 1;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--surface-2);
+            transition: background 0.3s;
+        }
+        .progress-dot.completed { background: var(--red); }
+        .progress-dot.active { background: rgba(227,30,36,0.5); }
+
+        /* ── Container ── */
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 28px 20px 60px;
         }
 
-        .section-content.active {
-            display: block;
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            margin-bottom: 32px;
         }
-
-        .field-group {
-            margin-bottom: 20px;
-        }
-
-        .field-group:last-child {
-            margin-bottom: 0;
-        }
-
-        label {
-            display: block;
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 0.02em;
             margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: 600;
+        }
+        .hero .subtitle {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ── Section Nav ── */
+        .section-nav {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 28px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+        .section-nav::-webkit-scrollbar { display: none; }
+        .section-nav__item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--gray);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .section-nav__item.active {
+            background: var(--red-dim);
+            border-color: rgba(227,30,36,0.3);
             color: var(--white);
         }
+        .section-nav__item.completed {
+            background: var(--green-dim);
+            border-color: rgba(34,197,94,0.2);
+            color: var(--green);
+        }
+        .section-nav__item i { font-size: 10px; }
+
+        /* ── Form Card ── */
+        .form-card {
+            background: var(--card);
+            border: 1px solid var(--border-2);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        /* ── Section ── */
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+
+        .section-header {
+            padding: 24px 28px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header__title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-header__title i {
+            color: var(--red);
+            font-size: 16px;
+        }
+        .section-header__desc {
+            color: var(--gray);
+            font-size: 13px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .section-body { padding: 24px 28px 28px; }
+
+        /* ── Fields ── */
+        .field { margin-bottom: 22px; }
+        .field:last-child { margin-bottom: 0; }
+
+        .field-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-light);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        .field-label .required { color: var(--red); margin-left: 2px; }
 
         .field-hint {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gray-dim);
-            margin-top: 4px;
-            font-weight: 400;
+            margin-top: 5px;
         }
+
+        .field-error {
+            font-size: 11px;
+            color: var(--error);
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+        .field-error.show { display: flex; }
+        .field-error i { font-size: 10px; }
 
         input[type="text"],
         input[type="number"],
         input[type="email"],
         input[type="tel"],
-        input[type="file"],
+        input[type="password"],
         textarea,
         select {
             width: 100%;
-            padding: 10px 12px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            padding: 12px 14px;
+            background: var(--surface-2);
+            border: 1px solid var(--border-2);
+            border-radius: var(--radius);
             color: var(--white);
-            font-size: 13px;
-            transition: all 0.3s;
+            font-size: 14px;
+            transition: all 0.2s;
             font-family: 'Inter', sans-serif;
         }
-
-        input[type="text"]::placeholder,
-        input[type="number"]::placeholder,
-        textarea::placeholder {
-            color: var(--gray-dim);
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
+        input::placeholder, textarea::placeholder { color: var(--gray-dim); }
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--red);
-            background: var(--surface-2);
+            background: var(--surface-3);
+            box-shadow: 0 0 0 3px var(--red-dim);
         }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
+        input.error, textarea.error, select.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px var(--error-dim);
         }
+        input.valid, select.valid { border-color: var(--green); }
 
-        .range-group {
-            margin-bottom: 20px;
-        }
+        textarea { resize: vertical; min-height: 80px; }
 
-        .range-display {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .range-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            color: var(--red);
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
-            background: var(--red-dim);
-            border-radius: 3px;
-            outline: none;
+        select {
+            cursor: pointer;
             -webkit-appearance: none;
             appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='rgba(255,255,255,0.4)' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
         }
 
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--red);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        /* ── Grid ── */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 0 4px var(--red-dim);
-        }
+        /* ── Option cards ── */
+        .option-grid { display: flex; flex-direction: column; gap: 8px; }
+        .option-grid--cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: var(--red);
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-        }
-
-        .checkbox-group,
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .checkbox-item,
-        .radio-item {
+        .option-card {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        input[type="checkbox"],
-        input[type="radio"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: var(--red);
-            flex-shrink: 0;
-        }
-
-        .checkbox-item label,
-        .radio-item label {
-            margin: 0;
-            font-weight: 400;
-            font-size: 14px;
-            color: var(--gray);
-            cursor: pointer;
-        }
-
-        .columns-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .file-upload {
-            position: relative;
-            border: 2px dashed var(--border);
-            border-radius: 4px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: var(--surface);
-        }
-
-        .file-upload:hover {
-            border-color: var(--red);
+            padding: 12px 14px;
             background: var(--surface-2);
+            border: 1px solid var(--border-2);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-card:hover {
+            border-color: rgba(255,255,255,0.15);
+            background: var(--surface-3);
+        }
+        .option-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+        .option-card__check {
+            width: 18px; height: 18px;
+            border: 2px solid var(--gray-dim);
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: all 0.2s;
+            font-size: 10px; color: transparent;
+        }
+        .option-card input[type="radio"] + .option-card__check { border-radius: 50%; }
+        .option-card input:checked + .option-card__check {
+            background: var(--red); border-color: var(--red); color: white;
+        }
+        .option-card input:checked ~ .option-card__text { color: var(--white); }
+        .option-card__text { font-size: 13px; color: var(--gray); transition: color 0.2s; }
+
+        /* ── Range slider ── */
+        .range-field { margin-bottom: 22px; }
+        .range-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+        }
+        .range-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--red); line-height: 1; }
+        .range-unit { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--gray); margin-left: 4px; }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--surface-2);
+            border-radius: 3px; outline: none; -webkit-appearance: none; appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 22px; height: 22px;
+            background: var(--red); border-radius: 50%; cursor: pointer;
+            box-shadow: 0 2px 8px rgba(227,30,36,0.3); transition: transform 0.15s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+        input[type="range"]::-moz-range-thumb {
+            width: 22px; height: 22px; background: var(--red);
+            border-radius: 50%; cursor: pointer; border: none;
         }
 
-        .file-upload input[type="file"] {
-            display: none;
-        }
-
-        .file-upload-text {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        .file-name {
-            color: var(--red);
-            font-weight: 600;
-            margin-top: 8px;
-            font-size: 13px;
-        }
-
+        /* ── Buttons ── */
         .form-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
+            display: flex; gap: 10px; padding: 20px 28px 28px;
             border-top: 1px solid var(--border);
         }
-
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        .btn {
+            padding: 13px 20px; border: none; border-radius: var(--radius);
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
             font-family: 'Inter', sans-serif;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
-
-        .btn-primary {
-            flex: 1;
-            background: var(--red);
-            color: var(--white);
+        .btn-primary { flex: 1; background: var(--red); color: var(--white); }
+        .btn-primary:hover { background: var(--red-dark); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-back {
+            background: var(--surface-2); color: var(--gray-light);
+            border: 1px solid var(--border-2); padding: 13px 16px;
         }
+        .btn-back:hover { background: var(--surface-3); color: var(--white); }
 
-        .btn-primary:hover {
-            background: var(--red-dark);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--red);
-            border: 1px solid var(--red);
-        }
-
-        .btn-secondary:hover {
-            background: var(--red-dim);
-        }
-
+        /* ── Alert ── */
         .alert {
-            padding: 16px 20px;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            font-weight: 500;
-            display: none;
-            animation: slideDown 0.3s ease-out;
+            padding: 14px 16px; border-radius: var(--radius);
+            margin: 0 28px 20px; font-size: 13px; font-weight: 500;
+            display: none; align-items: center; gap: 8px;
         }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        .alert.show { display: flex; }
         .alert.error {
-            background: var(--red-dim);
-            border: 1px solid var(--red);
-            color: #ff8a8a;
+            background: var(--error-dim); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5;
         }
-
         .alert.success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid #22c55e;
-            color: #22c55e;
+            background: var(--green-dim); border: 1px solid rgba(34,197,94,0.3); color: #86efac;
         }
 
-        .alert.show {
-            display: block;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid var(--red-dim);
-            border-top-color: var(--red);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
+        /* ── Responsive ── */
         @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-
-            .form-container {
-                padding: 24px;
-            }
-
-            .columns-2 {
-                grid-template-columns: 1fr;
-            }
-
-            .form-actions {
-                flex-direction: column;
-            }
-
-            .hero h1 {
-                font-size: 28px;
-            }
+            .container { padding: 20px 16px 60px; }
+            .section-header { padding: 20px 20px 16px; }
+            .section-body { padding: 20px; }
+            .form-actions { padding: 16px 20px 24px; }
+            .alert { margin: 0 20px 16px; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .option-grid--cols { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 26px; }
+            .section-header__title { font-size: 20px; }
+            .range-val { font-size: 24px; }
         }
     </style>
-<!-- Premium Visual Redesign -->
-<link rel="stylesheet" href="css/wellcore-premium.css">
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">RISE Intake Form</div>
-            <div style="font-size: 12px; color: #aaa;" id="progressPercent">0%</div>
+            <div class="header-logo">
+                <img src="/images/logo/imagotipo-blanco.png" alt="WellCore">
+                <span class="header-badge"><i class="fas fa-fire"></i> Paso 2 de 3</span>
+            </div>
+            <span class="header-percent" id="progressPercent">0%</span>
         </div>
     </header>
 
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-steps" id="progressSteps">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+    </div>
+
     <div class="container">
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar"></div>
-            </div>
-            <div class="progress-text">
-                <span id="currentSection">1</span> de <span id="totalSections">6</span> secciones
-            </div>
-        </div>
-
         <div class="hero">
-            <div style="margin-bottom:16px;"><span style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#E31E24;text-transform:uppercase;"><i class="fas fa-fire" aria-hidden="true"></i> Paso 2 de 3</span></div>
             <h1>Personalicemos tu Programa</h1>
-            <p class="subtitle">Información clave para diseñar tu reto RISE</p>
+            <p class="subtitle">Informacion clave para disenar tu reto RISE</p>
         </div>
 
-        <form id="intakeForm" class="form-container">
-            <div class="alert error" id="errorAlert"></div>
-            <div class="alert success" id="successAlert">
-                Fórmulario enviado correctamente. Redirigiendo...
-            </div>
+        <!-- Section Nav -->
+        <div class="section-nav" id="sectionNav">
+            <div class="section-nav__item active" data-idx="0"><i class="fas fa-dumbbell"></i> Entrenamiento</div>
+            <div class="section-nav__item" data-idx="1"><i class="fas fa-calendar-check"></i> Disponibilidad</div>
+            <div class="section-nav__item" data-idx="2"><i class="fas fa-utensils"></i> Alimentacion</div>
+            <div class="section-nav__item" data-idx="3"><i class="fas fa-heart-pulse"></i> Estilo de vida</div>
+            <div class="section-nav__item" data-idx="4"><i class="fas fa-bullseye"></i> Motivacion</div>
+        </div>
 
-            <!-- SECTION 1: Body Measurements -->
-            <div class="form-section" id="section1">
-                <div class="section-title">
-                    <span class="section-number">1</span>
-                    <i class="fas fa-user-circle" aria-hidden="true"></i>
-                    Medidas Corporales
-                </div>
-                <div class="section-content active">
-                    <p style="color: #aaa; margin-bottom: 20px; font-size: 13px;">
-                        Estas medidas nos ayudan a diseñar un programa adaptado a ti.
-                    </p>
-                    <div class="columns-2">
-                        <div class="field-group">
-                            <label>Cintura (cm)</label>
-                            <input type="number" name="waist" placeholder="85" min="0" max="200">
-                        </div>
-                        <div class="field-group">
-                            <label>Cadera (cm)</label>
-                            <input type="number" name="hip" placeholder="95" min="0" max="200">
-                        </div>
-                    </div>
-                    <div class="columns-2">
-                        <div class="field-group">
-                            <label>Pecho (cm)</label>
-                            <input type="number" name="chest" placeholder="95" min="0" max="200">
-                        </div>
-                        <div class="field-group">
-                            <label>Grasa Corporal (%)</label>
-                            <input type="number" name="bodyFat" placeholder="25" min="0" max="100" step="0.1">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <label>Fotos de Referencia</label>
-                        <div class="file-upload" onclick="document.getElementById('photoFile').click()">
-                            <input type="file" id="photoFile" name="photos" accept="image/*">
-                            <div class="file-upload-text">Foto o arrastra aqui</div>
-                            <div class="file-name" id="photoName"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <form id="intakeForm" class="form-card" novalidate>
+            <div class="alert error" id="errorAlert"><i class="fas fa-circle-exclamation"></i> <span id="errorText"></span></div>
+            <div class="alert success" id="successAlert"><i class="fas fa-check-circle"></i> <span>Formulario enviado. Redirigiendo al pago...</span></div>
 
-            <!-- SECTION 2: Training History -->
-            <div class="form-section" id="section2">
-                <div class="section-title">
-                    <span class="section-number">2</span>
-                    <i class="fas fa-dumbbell" aria-hidden="true"></i>
-                    Historial de Entrenamiento
+            <!-- SECTION 1: Historial de Entrenamiento -->
+            <div class="form-section active" data-section="0">
+                <div class="section-header">
+                    <div class="section-header__title"><i class="fas fa-dumbbell"></i> Historial de Entrenamiento</div>
+                    <div class="section-header__desc">Necesitamos saber tu experiencia para disenar un programa a tu medida.</div>
                 </div>
-                <div class="section-content">
-                    <div class="field-group">
-                        <label>Cuanto tiempo llevas entrenando</label>
-                        <select name="trainingYears" required>
-                            <option value="">-- Selecciona --</option>
+                <div class="section-body">
+                    <div class="field">
+                        <label class="field-label">Cuanto tiempo llevas entrenando <span class="required">*</span></label>
+                        <select name="trainingYears" required data-validate="required">
+                            <option value="">Selecciona tu experiencia</option>
                             <option value="0">Sin experiencia</option>
-                            <option value="1">Menos de 1 año</option>
-                            <option value="2">1-2 años</option>
-                            <option value="5">2-5 años</option>
-                            <option value="10">Más de 5 años</option>
+                            <option value="1">Menos de 1 ano</option>
+                            <option value="2">1-2 anos</option>
+                            <option value="5">2-5 anos</option>
+                            <option value="10">Mas de 5 anos</option>
                         </select>
+                        <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Selecciona tu nivel de experiencia</div>
                     </div>
-                    <div class="field-group">
-                        <label>Tipo de entrenamiento previo</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="cardio" name="trainingType" value="cardio">
-                                <label for="cardio">Cardio (correr, ciclismo)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="weights" name="trainingType" value="weights">
-                                <label for="weights">Pesas / Musculacion</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="yoga" name="trainingType" value="yoga">
-                                <label for="yoga">Yoga / Flexibilidad</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="sports" name="trainingType" value="sports">
-                                <label for="sports">Deportes</label>
-                            </div>
+                    <div class="field">
+                        <label class="field-label">Tipo de entrenamiento previo</label>
+                        <div class="option-grid--cols">
+                            <label class="option-card"><input type="checkbox" name="trainingType" value="cardio"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Cardio</span></label>
+                            <label class="option-card"><input type="checkbox" name="trainingType" value="weights"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Pesas</span></label>
+                            <label class="option-card"><input type="checkbox" name="trainingType" value="yoga"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Yoga / Flexibilidad</span></label>
+                            <label class="option-card"><input type="checkbox" name="trainingType" value="sports"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Deportes</span></label>
+                            <label class="option-card"><input type="checkbox" name="trainingType" value="crossfit"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">CrossFit / Funcional</span></label>
+                            <label class="option-card"><input type="checkbox" name="trainingType" value="none"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Ninguno</span></label>
                         </div>
                     </div>
-                    <div class="field-group">
-                        <label>Ejercicios a evitar (limitaciones)</label>
-                        <textarea name="exercisesToAvoid" placeholder="Ej: sin impacto en rodillas..."></textarea>
+                    <div class="field">
+                        <label class="field-label">Lesiones o ejercicios a evitar</label>
+                        <textarea name="exercisesToAvoid" placeholder="Ej: Tengo una lesion en la rodilla izquierda, evitar sentadillas profundas..."></textarea>
+                        <div class="field-hint">Deja vacio si no aplica</div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 3: Availability -->
-            <div class="form-section" id="section3">
-                <div class="section-title">
-                    <span class="section-number">3</span>
-                    <i class="fas fa-calendar-check" aria-hidden="true"></i>
-                    Disponibilidad y Equipamiento
+            <!-- SECTION 2: Disponibilidad y Equipamiento -->
+            <div class="form-section" data-section="1">
+                <div class="section-header">
+                    <div class="section-header__title"><i class="fas fa-calendar-check"></i> Disponibilidad y Equipamiento</div>
+                    <div class="section-header__desc">Tu horario y el lugar donde entrenaras definen tu programa.</div>
                 </div>
-                <div class="section-content">
-                    <div class="field-group">
-                        <label>Hora preferida para entrenar</label>
-                        <select name="trainingTime" required>
-                            <option value="">-- Selecciona --</option>
-                            <option value="morning">Mañana (5-9am)</option>
-                            <option value="midday">Mediodia (12-2pm)</option>
-                            <option value="afternoon">Tarde (3-6pm)</option>
-                            <option value="evening">Noche (7-10pm)</option>
-                            <option value="flexible">Flexible</option>
-                        </select>
-                    </div>
-                    <div class="field-group">
-                        <label>Minutos por sesión de entrenamiento</label>
-                        <select name="sessionDuration" required>
-                            <option value="">-- Selecciona --</option>
-                            <option value="30">30 minutos</option>
-                            <option value="45">45 minutos</option>
-                            <option value="60">60 minutos</option>
-                            <option value="90">90 minutos</option>
-                        </select>
-                    </div>
-                    <div class="field-group">
-                        <label>Donde entrenarás</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="gym" name="trainingPlace" value="gym" required>
-                                <label for="gym">En el gimnasio</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="home" name="trainingPlace" value="home">
-                                <label for="home">En casa</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="both" name="trainingPlace" value="hybrid">
-                                <label for="both">Ambos lugares</label>
-                            </div>
+                <div class="section-body">
+                    <div class="grid-2">
+                        <div class="field">
+                            <label class="field-label">Hora preferida <span class="required">*</span></label>
+                            <select name="trainingTime" required data-validate="required">
+                                <option value="">Selecciona horario</option>
+                                <option value="morning">Manana (5-9am)</option>
+                                <option value="midday">Mediodia (12-2pm)</option>
+                                <option value="afternoon">Tarde (3-6pm)</option>
+                                <option value="evening">Noche (7-10pm)</option>
+                                <option value="flexible">Flexible</option>
+                            </select>
+                            <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Selecciona un horario</div>
+                        </div>
+                        <div class="field">
+                            <label class="field-label">Duracion por sesion <span class="required">*</span></label>
+                            <select name="sessionDuration" required data-validate="required">
+                                <option value="">Selecciona duracion</option>
+                                <option value="30">30 minutos</option>
+                                <option value="45">45 minutos</option>
+                                <option value="60">60 minutos</option>
+                                <option value="90">90 minutos</option>
+                            </select>
+                            <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Selecciona la duracion</div>
                         </div>
                     </div>
-                    <div class="field-group">
-                        <label>Equipamiento disponible</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="dumbbells" name="equipment" value="dumbbells">
-                                <label for="dumbbells">Mancuernas</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="bands" name="equipment" value="bands">
-                                <label for="bands">Bandas de resistencia</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="treadmill" name="equipment" value="treadmill">
-                                <label for="treadmill">Cinta de correr</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="yoga_mat" name="equipment" value="yoga_mat">
-                                <label for="yoga_mat">Colchoneta</label>
-                            </div>
+                    <div class="field">
+                        <label class="field-label">Donde entrenaras <span class="required">*</span></label>
+                        <div class="option-grid--cols">
+                            <label class="option-card"><input type="radio" name="trainingPlace" value="gym" required><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text"><i class="fas fa-building" style="margin-right:4px;opacity:0.5"></i> Gimnasio</span></label>
+                            <label class="option-card"><input type="radio" name="trainingPlace" value="home"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text"><i class="fas fa-house" style="margin-right:4px;opacity:0.5"></i> En casa</span></label>
+                            <label class="option-card"><input type="radio" name="trainingPlace" value="hybrid"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text"><i class="fas fa-arrows-rotate" style="margin-right:4px;opacity:0.5"></i> Ambos</span></label>
+                        </div>
+                        <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Selecciona donde entrenaras</div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Equipamiento disponible</label>
+                        <div class="option-grid--cols">
+                            <label class="option-card"><input type="checkbox" name="equipment" value="dumbbells"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Mancuernas</span></label>
+                            <label class="option-card"><input type="checkbox" name="equipment" value="bands"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Bandas elasticas</span></label>
+                            <label class="option-card"><input type="checkbox" name="equipment" value="barbell"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Barra y discos</span></label>
+                            <label class="option-card"><input type="checkbox" name="equipment" value="machines"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Maquinas de gym</span></label>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 4: Nutrition -->
-            <div class="form-section" id="section4">
-                <div class="section-title">
-                    <span class="section-number">4</span>
-                    <i class="fas fa-utensils" aria-hidden="true"></i>
-                    Alimentacion
+            <!-- SECTION 3: Alimentacion -->
+            <div class="form-section" data-section="2">
+                <div class="section-header">
+                    <div class="section-header__title"><i class="fas fa-utensils"></i> Alimentacion</div>
+                    <div class="section-header__desc">Tu dieta actual y preferencias nos ayudan a darte mejores habitos.</div>
                 </div>
-                <div class="section-content">
-                    <div class="field-group">
-                        <label>Tipo de dieta</label>
-                        <select name="dietType" required>
-                            <option value="">-- Selecciona --</option>
-                            <option value="balanced">Balanceada</option>
+                <div class="section-body">
+                    <div class="field">
+                        <label class="field-label">Tipo de dieta <span class="required">*</span></label>
+                        <select name="dietType" required data-validate="required">
+                            <option value="">Selecciona tu dieta</option>
+                            <option value="balanced">Balanceada / Sin restricciones</option>
                             <option value="vegetarian">Vegetariana</option>
                             <option value="vegan">Vegana</option>
-                            <option value="keto">Keto / Baja carbohidratos</option>
+                            <option value="keto">Keto / Baja en carbohidratos</option>
                             <option value="paleo">Paleo</option>
                             <option value="other">Otra</option>
                         </select>
+                        <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Selecciona tu tipo de dieta</div>
                     </div>
-                    <div class="field-group">
-                        <label>Tomas suplementos</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="supYes" name="supplements" value="yes" required>
-                                <label for="supYes">Si</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="supNo" name="supplements" value="no">
-                                <label for="supNo">No</label>
-                            </div>
+                    <div class="field">
+                        <label class="field-label">Tomas suplementos actualmente <span class="required">*</span></label>
+                        <div class="option-grid--cols">
+                            <label class="option-card"><input type="radio" name="supplements" value="yes" required><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Si, tomo suplementos</span></label>
+                            <label class="option-card"><input type="radio" name="supplements" value="no"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">No tomo suplementos</span></label>
                         </div>
+                        <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Indica si tomas suplementos</div>
                     </div>
-                    <div class="field-group" id="supplementDetails" style="display: none;">
-                        <label>Cuales son tus suplementos</label>
-                        <textarea name="supplementList" placeholder="Proteína, Creatina, Vitaminas..."></textarea>
+                    <div class="field" id="supplementDetails" style="display:none;">
+                        <label class="field-label">Cuales suplementos tomas</label>
+                        <textarea name="supplementList" placeholder="Ej: Proteina whey, creatina monohidratada, vitamina D..."></textarea>
                     </div>
-                    <div class="field-group">
-                        <label>Alergias o intolerancias</label>
-                        <textarea name="allergies" placeholder="Gluten, Lacteos, Frutos secos..."></textarea>
+                    <div class="field">
+                        <label class="field-label">Alergias o intolerancias</label>
+                        <textarea name="allergies" placeholder="Ej: Intolerancia a la lactosa, alergia al mani..."></textarea>
+                        <div class="field-hint">Deja vacio si no aplica</div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 5: Lifestyle -->
-            <div class="form-section" id="section5">
-                <div class="section-title">
-                    <span class="section-number">5</span>
-                    <i class="fas fa-heart-pulse" aria-hidden="true"></i>
-                    Estilo de Vida
+            <!-- SECTION 4: Estilo de Vida -->
+            <div class="form-section" data-section="3">
+                <div class="section-header">
+                    <div class="section-header__title"><i class="fas fa-heart-pulse"></i> Estilo de Vida</div>
+                    <div class="section-header__desc">Estos datos nos ayudan a ajustar la intensidad y la recuperacion.</div>
                 </div>
-                <div class="section-content">
-                    <div class="range-group">
-                        <div class="range-display">
-                            <label>Horas de sueño por noche</label>
-                            <span class="range-value" id="sleepValue">7</span> h
+                <div class="section-body">
+                    <div class="range-field">
+                        <div class="range-header">
+                            <label class="field-label" style="margin:0">Horas de sueno por noche</label>
+                            <div><span class="range-val" id="sleepValue">7</span><span class="range-unit">hrs</span></div>
                         </div>
                         <input type="range" name="sleep" min="3" max="12" value="7" id="sleepRange">
+                        <div class="field-hint" style="display:flex;justify-content:space-between;margin-top:6px;"><span>3 hrs</span><span>12 hrs</span></div>
                     </div>
-                    <div class="range-group">
-                        <div class="range-display">
-                            <label>Nivel de actividad diaria (0-10)</label>
-                            <span class="range-value" id="activityValue">5</span>
+                    <div class="range-field">
+                        <div class="range-header">
+                            <label class="field-label" style="margin:0">Nivel de actividad diaria</label>
+                            <div><span class="range-val" id="activityValue">5</span><span class="range-unit">/10</span></div>
                         </div>
                         <input type="range" name="activity" min="0" max="10" value="5" id="activityRange">
-                        <div class="field-hint">0 = Sedentario, 10 = Muy activo</div>
+                        <div class="field-hint" style="display:flex;justify-content:space-between;margin-top:6px;"><span>Sedentario</span><span>Muy activo</span></div>
                     </div>
-                    <div class="range-group">
-                        <div class="range-display">
-                            <label>Nivel de estrés (0-10)</label>
-                            <span class="range-value" id="stressValue">5</span>
+                    <div class="range-field">
+                        <div class="range-header">
+                            <label class="field-label" style="margin:0">Nivel de estres</label>
+                            <div><span class="range-val" id="stressValue">5</span><span class="range-unit">/10</span></div>
                         </div>
                         <input type="range" name="stress" min="0" max="10" value="5" id="stressRange">
-                        <div class="field-hint">0 = Bajo, 10 = Muy alto</div>
+                        <div class="field-hint" style="display:flex;justify-content:space-between;margin-top:6px;"><span>Bajo</span><span>Muy alto</span></div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 6: Motivation -->
-            <div class="form-section" id="section6">
-                <div class="section-title">
-                    <span class="section-number">6</span>
-                    <i class="fas fa-bullseye" aria-hidden="true"></i>
-                    Motivacion y Compromisos
+            <!-- SECTION 5: Motivacion -->
+            <div class="form-section" data-section="4">
+                <div class="section-header">
+                    <div class="section-header__title"><i class="fas fa-bullseye"></i> Motivacion y Compromiso</div>
+                    <div class="section-header__desc">Ultima seccion. Cuentanos que te motiva y que esperas lograr.</div>
                 </div>
-                <div class="section-content">
-                    <div class="field-group">
-                        <label>Por que te inscribiste en RISE</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="goal1" name="motivation" value="weight_loss">
-                                <label for="goal1">Perder peso / grasa</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="goal2" name="motivation" value="gain_muscle">
-                                <label for="goal2">Ganar músculo / fuerza</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="goal3" name="motivation" value="health">
-                                <label for="goal3">Mejorar salud general</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="goal4" name="motivation" value="confidence">
-                                <label for="goal4">Mejorar autoconfianza</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="goal5" name="motivation" value="challenge">
-                                <label for="goal5">Aceptar un desafio</label>
-                            </div>
+                <div class="section-body">
+                    <div class="field">
+                        <label class="field-label">Por que te inscribiste en RISE <span class="required">*</span></label>
+                        <div class="option-grid">
+                            <label class="option-card"><input type="checkbox" name="motivation" value="weight_loss"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Perder peso / grasa</span></label>
+                            <label class="option-card"><input type="checkbox" name="motivation" value="gain_muscle"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Ganar musculo / fuerza</span></label>
+                            <label class="option-card"><input type="checkbox" name="motivation" value="health"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Mejorar salud general</span></label>
+                            <label class="option-card"><input type="checkbox" name="motivation" value="confidence"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Mejorar autoconfianza</span></label>
+                            <label class="option-card"><input type="checkbox" name="motivation" value="challenge"><span class="option-card__check"><i class="fas fa-check"></i></span><span class="option-card__text">Aceptar un desafio</span></label>
                         </div>
+                        <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Selecciona al menos una motivacion</div>
                     </div>
-                    <div class="field-group">
-                        <label>Resultado esperado en 30 días</label>
-                        <textarea name="expectedResult" placeholder="Perder 5kg, ganar definicion..." required></textarea>
+                    <div class="field">
+                        <label class="field-label">Resultado esperado en 30 dias <span class="required">*</span></label>
+                        <textarea name="expectedResult" placeholder="Ej: Quiero bajar 4kg de grasa, sentirme con mas energia y crear el habito de entrenar 5 dias a la semana..." required data-validate="required"></textarea>
+                        <div class="field-error"><i class="fas fa-triangle-exclamation"></i> Cuentanos que esperas lograr</div>
                     </div>
-                    <div class="range-group">
-                        <div class="range-display">
-                            <label>Mi compromiso con este reto (0-10)</label>
-                            <span class="range-value" id="commitmentValue">8</span>
+                    <div class="range-field">
+                        <div class="range-header">
+                            <label class="field-label" style="margin:0">Mi compromiso con este reto</label>
+                            <div><span class="range-val" id="commitmentValue">8</span><span class="range-unit">/10</span></div>
                         </div>
                         <input type="range" name="commitment" min="0" max="10" value="8" id="commitmentRange">
-                        <div class="field-hint">0 = Bajo, 10 = Totalmente comprometido</div>
+                        <div class="field-hint" style="display:flex;justify-content:space-between;margin-top:6px;"><span>Bajo</span><span>Totalmente comprometido</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- Actions -->
             <div class="form-actions">
-                <button type="button" class="btn-secondary" id="prevBtn" style="display: none;">
-                    <i class="fas fa-arrow-left" aria-hidden="true" style="margin-right:6px;"></i>Anterior
+                <button type="button" class="btn btn-back" id="prevBtn" style="display:none;">
+                    <i class="fas fa-arrow-left"></i> Anterior
                 </button>
-                <button type="button" class="btn-primary" id="nextBtn">
-                    Siguiente <i class="fas fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i>
+                <button type="button" class="btn btn-primary" id="nextBtn">
+                    Siguiente <i class="fas fa-arrow-right"></i>
                 </button>
-                <button type="submit" class="btn-primary" id="submitBtn" style="display: none;">
-                    <i class="fas fa-paper-plane" aria-hidden="true" style="margin-right:6px;"></i>Enviar Fórmulario
+                <button type="submit" class="btn btn-primary" id="submitBtn" style="display:none;">
+                    <i class="fas fa-paper-plane"></i> Enviar y Continuar al Pago
                 </button>
             </div>
         </form>
     </div>
 
     <script>
-        const form = document.getElementById('intakeForm');
-        const sections = document.querySelectorAll('.form-section');
-        const sectionContents = document.querySelectorAll('.section-content');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const submitBtn = document.getElementById('submitBtn');
-        const progressBar = document.getElementById('progressBar');
-        const progressPercent = document.getElementById('progressPercent');
-        const currentSectionSpan = document.getElementById('currentSection');
-        const totalSectionsSpan = document.getElementById('totalSections');
-        const errorAlert = document.getElementById('errorAlert');
-        const successAlert = document.getElementById('successAlert');
-        const photoFile = document.getElementById('photoFile');
-        const photoName = document.getElementById('photoName');
+    (function() {
+        var form = document.getElementById('intakeForm');
+        var sections = document.querySelectorAll('.form-section');
+        var prevBtn = document.getElementById('prevBtn');
+        var nextBtn = document.getElementById('nextBtn');
+        var submitBtn = document.getElementById('submitBtn');
+        var progressBar = document.getElementById('progressBar');
+        var progressPercent = document.getElementById('progressPercent');
+        var errorAlert = document.getElementById('errorAlert');
+        var errorText = document.getElementById('errorText');
+        var successAlert = document.getElementById('successAlert');
+        var navItems = document.querySelectorAll('.section-nav__item');
+        var dots = document.querySelectorAll('.progress-dot');
 
-        let currentSection = 0;
-        const totalSections = sections.length;
-        totalSectionsSpan.textContent = totalSections;
+        var current = 0;
+        var total = sections.length;
+        var completedSet = {};
 
-        const sleepRange = document.getElementById('sleepRange');
-        const sleepValue = document.getElementById('sleepValue');
-        const activityRange = document.getElementById('activityRange');
-        const activityValue = document.getElementById('activityValue');
-        const stressRange = document.getElementById('stressRange');
-        const stressValue = document.getElementById('stressValue');
-        const commitmentRange = document.getElementById('commitmentRange');
-        const commitmentValue = document.getElementById('commitmentValue');
-
-        sleepRange.addEventListener('input', () => {
-            sleepValue.textContent = sleepRange.value;
-        });
-        activityRange.addEventListener('input', () => {
-            activityValue.textContent = activityRange.value;
-        });
-        stressRange.addEventListener('input', () => {
-            stressValue.textContent = stressRange.value;
-        });
-        commitmentRange.addEventListener('input', () => {
-            commitmentValue.textContent = commitmentRange.value;
+        // Range sliders
+        var rangeIds = [
+            ['sleepRange', 'sleepValue'],
+            ['activityRange', 'activityValue'],
+            ['stressRange', 'stressValue'],
+            ['commitmentRange', 'commitmentValue']
+        ];
+        rangeIds.forEach(function(pair) {
+            var r = document.getElementById(pair[0]);
+            var v = document.getElementById(pair[1]);
+            if (r && v) r.addEventListener('input', function() { v.textContent = r.value; });
         });
 
-        document.querySelectorAll('input[name="supplements"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                const supplementDetails = document.getElementById('supplementDetails');
-                if (document.getElementById('supYes').checked) {
-                    supplementDetails.style.display = 'block';
-                } else {
-                    supplementDetails.style.display = 'none';
-                }
+        // Supplements toggle
+        document.querySelectorAll('input[name="supplements"]').forEach(function(r) {
+            r.addEventListener('change', function() {
+                var det = document.getElementById('supplementDetails');
+                det.style.display = document.querySelector('input[name="supplements"][value="yes"]').checked ? 'block' : 'none';
             });
         });
 
-        photoFile.addEventListener('change', () => {
-            if (photoFile.files.length > 0) {
-                photoName.textContent = photoFile.files[0].name;
+        // Inline validation on blur
+        form.addEventListener('focusout', function(e) {
+            if (e.target.dataset && e.target.dataset.validate === 'required') {
+                validateField(e.target);
+            }
+        });
+        form.addEventListener('change', function(e) {
+            if (e.target.tagName === 'SELECT' && e.target.dataset && e.target.dataset.validate === 'required') {
+                validateField(e.target);
             }
         });
 
-        function updateProgress() {
-            const percent = ((currentSection + 1) / totalSections) * 100;
-            progressBar.style.width = percent + '%';
-            progressPercent.textContent = Math.round(percent) + '%';
-            currentSectionSpan.textContent = currentSection + 1;
-
-            prevBtn.style.display = currentSection > 0 ? 'block' : 'none';
-            nextBtn.style.display = currentSection < totalSections - 1 ? 'block' : 'none';
-            submitBtn.style.display = currentSection === totalSections - 1 ? 'block' : 'none';
+        function validateField(el) {
+            var field = el.closest('.field');
+            if (!field) return true;
+            var errEl = field.querySelector('.field-error');
+            var val = el.value ? el.value.trim() : '';
+            if (!val) {
+                el.classList.add('error');
+                el.classList.remove('valid');
+                if (errEl) errEl.classList.add('show');
+                return false;
+            } else {
+                el.classList.remove('error');
+                el.classList.add('valid');
+                if (errEl) errEl.classList.remove('show');
+                return true;
+            }
         }
 
-        function showSection(index) {
-            sectionContents.forEach((content, i) => {
-                content.classList.remove('active');
-                if (i === index) {
-                    content.classList.add('active');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+        function validateSection(idx) {
+            var section = sections[idx];
+            var valid = true;
+
+            // Required selects
+            section.querySelectorAll('select[required]').forEach(function(sel) {
+                if (!sel.value) {
+                    valid = false;
+                    sel.classList.add('error');
+                    var f = sel.closest('.field');
+                    var err = f ? f.querySelector('.field-error') : null;
+                    if (err) err.classList.add('show');
                 }
             });
-            updateProgress();
+
+            // Required radios
+            var radioNames = {};
+            section.querySelectorAll('input[type="radio"][required]').forEach(function(r) {
+                radioNames[r.name] = true;
+            });
+            Object.keys(radioNames).forEach(function(name) {
+                var checked = section.querySelector('input[name="' + name + '"]:checked');
+                if (!checked) {
+                    valid = false;
+                    var first = section.querySelector('input[name="' + name + '"]');
+                    var f = first ? first.closest('.field') : null;
+                    var err = f ? f.querySelector('.field-error') : null;
+                    if (err) err.classList.add('show');
+                }
+            });
+
+            // Required textareas
+            section.querySelectorAll('textarea[required]').forEach(function(ta) {
+                if (!ta.value.trim()) {
+                    valid = false;
+                    ta.classList.add('error');
+                    var f = ta.closest('.field');
+                    var err = f ? f.querySelector('.field-error') : null;
+                    if (err) err.classList.add('show');
+                }
+            });
+
+            // Section 4 (Motivacion, idx=4): at least one motivation checkbox
+            if (idx === 4) {
+                var motivChecked = section.querySelectorAll('input[name="motivation"]:checked');
+                if (motivChecked.length === 0) {
+                    valid = false;
+                    var first = section.querySelector('input[name="motivation"]');
+                    var f = first ? first.closest('.field') : null;
+                    var err = f ? f.querySelector('.field-error') : null;
+                    if (err) err.classList.add('show');
+                }
+            }
+
+            if (!valid) {
+                showError('Completa los campos requeridos antes de continuar');
+            }
+            return valid;
         }
 
-        prevBtn.addEventListener('click', () => {
-            if (currentSection > 0) {
-                currentSection--;
-                showSection(currentSection);
-            }
+        function showError(msg) {
+            errorText.textContent = msg;
+            errorAlert.classList.add('show');
+            setTimeout(function() { errorAlert.classList.remove('show'); }, 4000);
+        }
+
+        function goTo(idx) {
+            errorAlert.classList.remove('show');
+            sections.forEach(function(s) { s.classList.remove('active'); });
+            sections[idx].classList.add('active');
+            current = idx;
+            updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateUI() {
+            var pct = ((current + 1) / total) * 100;
+            progressBar.style.width = pct + '%';
+            progressPercent.textContent = Math.round(pct) + '%';
+
+            navItems.forEach(function(item, i) {
+                item.classList.remove('active', 'completed');
+                if (i === current) item.classList.add('active');
+                else if (completedSet[i]) item.classList.add('completed');
+            });
+            dots.forEach(function(dot, i) {
+                dot.classList.remove('active', 'completed');
+                if (i === current) dot.classList.add('active');
+                else if (completedSet[i]) dot.classList.add('completed');
+            });
+
+            var activeNav = document.querySelector('.section-nav__item.active');
+            if (activeNav) activeNav.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+            prevBtn.style.display = current > 0 ? 'inline-flex' : 'none';
+            nextBtn.style.display = current < total - 1 ? 'inline-flex' : 'none';
+            submitBtn.style.display = current === total - 1 ? 'inline-flex' : 'none';
+        }
+
+        // Nav click
+        navItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                var idx = parseInt(item.dataset.idx);
+                if (idx <= current || completedSet[idx]) goTo(idx);
+            });
         });
 
-        nextBtn.addEventListener('click', () => {
-            if (currentSection < totalSections - 1) {
-                currentSection++;
-                showSection(currentSection);
-            }
+        prevBtn.addEventListener('click', function() {
+            if (current > 0) goTo(current - 1);
         });
 
-        form.addEventListener('submit', async (e) => {
+        nextBtn.addEventListener('click', function() {
+            if (!validateSection(current)) return;
+            completedSet[current] = true;
+            if (current < total - 1) goTo(current + 1);
+        });
+
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
+            if (!validateSection(current)) return;
+            completedSet[current] = true;
 
             errorAlert.classList.remove('show');
             successAlert.classList.remove('show');
 
-            const formData = new FormData(form);
-            const data = {
+            var fd = new FormData(form);
+            var trainingTypes = fd.getAll('trainingType');
+            var equipmentList = fd.getAll('equipment');
+            var motivations = fd.getAll('motivation');
+
+            var data = {
                 enrollment: JSON.parse(localStorage.getItem('rise_enrollment') || '{}'),
-                measurements: {
-                    waist: formData.get('waist'),
-                    hip: formData.get('hip'),
-                    chest: formData.get('chest'),
-                    bodyFat: formData.get('bodyFat')
-                },
                 training: {
-                    years: formData.get('trainingYears'),
-                    avoidExercises: formData.get('exercisesToAvoid')
+                    years: fd.get('trainingYears'),
+                    types: trainingTypes,
+                    avoidExercises: fd.get('exercisesToAvoid')
                 },
                 availability: {
-                    time: formData.get('trainingTime'),
-                    duration: formData.get('sessionDuration'),
-                    place: formData.get('trainingPlace')
+                    time: fd.get('trainingTime'),
+                    duration: fd.get('sessionDuration'),
+                    place: fd.get('trainingPlace'),
+                    equipment: equipmentList
                 },
                 nutrition: {
-                    dietType: formData.get('dietType'),
-                    supplements: formData.get('supplements')
+                    dietType: fd.get('dietType'),
+                    supplements: fd.get('supplements'),
+                    supplementList: fd.get('supplementList'),
+                    allergies: fd.get('allergies')
                 },
                 lifestyle: {
-                    sleep: formData.get('sleep'),
-                    activity: formData.get('activity'),
-                    stress: formData.get('stress')
+                    sleep: fd.get('sleep'),
+                    activity: fd.get('activity'),
+                    stress: fd.get('stress')
                 },
                 motivation: {
-                    expectedResult: formData.get('expectedResult'),
-                    commitment: formData.get('commitment')
+                    reasons: motivations,
+                    expectedResult: fd.get('expectedResult'),
+                    commitment: fd.get('commitment')
                 }
             };
 
-            // Validar campos específicos
             if (!data.enrollment.email) {
-                errorAlert.textContent = '❌ Correo electrónico no encontrado. Vuelve a la inscripción.';
-                errorAlert.classList.add('show');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
-
-            if (!data.training.years) {
-                errorAlert.textContent = '⚠️ Debes seleccionar tu experiencia en entrenamiento (Años de experiencia)';
-                errorAlert.classList.add('show');
-                document.querySelector('[name="trainingYears"]').focus();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
-
-            if (!data.availability.time) {
-                errorAlert.textContent = '⚠️ Debes seleccionar tu disponibilidad de horario';
-                errorAlert.classList.add('show');
-                document.querySelector('[name="trainingTime"]').focus();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
-
-            if (!data.availability.duration) {
-                errorAlert.textContent = '⚠️ Debes seleccionar la duración de tus sesiones';
-                errorAlert.classList.add('show');
-                document.querySelector('[name="sessionDuration"]').focus();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
-
-            if (!data.availability.place) {
-                errorAlert.textContent = '⚠️ Debes seleccionar dónde vas a entrenar';
-                errorAlert.classList.add('show');
-                document.querySelector('[name="trainingPlace"]').focus();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showError('Correo no encontrado. Vuelve a la inscripcion.');
                 return;
             }
 
@@ -970,47 +903,33 @@
             submitBtn.textContent = 'Enviando...';
 
             try {
-                // Call backend API to save intake data
-                const response = await fetch('/api/rise/save-intake.php', {
+                var res = await fetch('/api/rise/save-intake.php', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
+                var result = await res.json();
 
-                const result = await response.json();
-
-                if (!response.ok) {
-                    errorAlert.textContent = result.error || 'Error al enviar. Intenta de nuevo.';
-                    errorAlert.classList.add('show');
+                if (!res.ok) {
+                    showError(result.error || 'Error al enviar. Intenta de nuevo.');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar Fórmulario';
+                    submitBtn.textContent = 'Enviar y Continuar al Pago';
                     return;
                 }
 
-                // Success - save to localStorage as backup and redirect to payment/dashboard
                 localStorage.setItem('rise_intake', JSON.stringify(data));
                 successAlert.classList.add('show');
-
-                // Redirect to payment or dashboard after 3 seconds
-                setTimeout(() => {
-                    // If payment endpoint exists, redirect to payment
-                    // Otherwise redirect to dashboard
-                    window.location.href = '/rise-payment.html';
-                }, 3000);
-            } catch (error) {
-                errorAlert.textContent = 'Error al enviar. Intenta de nuevo.';
-                errorAlert.classList.add('show');
+                setTimeout(function() { window.location.href = '/rise-payment.html'; }, 2500);
+            } catch (err) {
+                showError('Error de conexion. Intenta de nuevo.');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Enviar Fórmulario';
-                console.error('Intake submission error:', error);
+                submitBtn.textContent = 'Enviar y Continuar al Pago';
+                console.error('Intake error:', err);
             }
         });
 
-        window.addEventListener('load', () => {
-            showSection(0);
-        });
+        updateUI();
+    })();
     </script>
 </body>
 </html>

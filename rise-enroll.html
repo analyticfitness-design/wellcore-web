@@ -135,6 +135,7 @@
         input[type="text"],
         input[type="email"],
         input[type="tel"],
+        input[type="password"],
         select {
             width: 100%;
             padding: 10px 12px;
@@ -149,13 +150,15 @@
 
         input[type="text"]::placeholder,
         input[type="email"]::placeholder,
-        input[type="tel"]::placeholder {
+        input[type="tel"]::placeholder,
+        input[type="password"]::placeholder {
             color: var(--gray-dim);
         }
 
         input[type="text"]:focus,
         input[type="email"]:focus,
         input[type="tel"]:focus,
+        input[type="password"]:focus,
         select:focus {
             outline: none;
             border-color: var(--red);
@@ -433,8 +436,44 @@
                     <label for="plan"><i class="fas fa-bolt" aria-hidden="true" style="color:#E31E24;margin-right:6px;"></i>Plan RISE <span class="required">*</span></label>
                     <select id="plan" name="plan" required>
                         <option value="">-- Selecciona un plan --</option>
-                        <option value="rise">RISE 30 Días - $27 USD</option>
+                        <option value="rise">RISE 30 Dias - $27 USD</option>
                     </select>
+                </div>
+
+                <div class="form-section">
+                    <label for="password">
+                        <i class="fas fa-lock" aria-hidden="true" style="color:#E31E24;margin-right:6px;"></i>Crea tu contrasena <span class="required">*</span>
+                    </label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Minimo 8 caracteres"
+                        minlength="8"
+                        required
+                        autocomplete="new-password"
+                    >
+                    <div id="passwordReqs" style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.35);line-height:1.8;">
+                        <div id="reqLen"><i class="fas fa-circle" style="font-size:6px;margin-right:6px;"></i>Minimo 8 caracteres</div>
+                        <div id="reqNum"><i class="fas fa-circle" style="font-size:6px;margin-right:6px;"></i>Al menos un numero</div>
+                        <div id="reqUpper"><i class="fas fa-circle" style="font-size:6px;margin-right:6px;"></i>Al menos una mayuscula</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <label for="passwordConfirm">
+                        <i class="fas fa-shield-halved" aria-hidden="true" style="color:#E31E24;margin-right:6px;"></i>Confirma tu contrasena <span class="required">*</span>
+                    </label>
+                    <input
+                        type="password"
+                        id="passwordConfirm"
+                        name="passwordConfirm"
+                        placeholder="Repite tu contrasena"
+                        minlength="8"
+                        required
+                        autocomplete="new-password"
+                    >
+                    <div id="passwordMatch" style="margin-top:6px;font-size:11px;display:none;"></div>
                 </div>
 
                 <div class="form-section">
@@ -480,6 +519,41 @@
         const successAlert = document.getElementById('successAlert');
         const loading = document.getElementById('loading');
 
+        // Password validation UI
+        var pwInput = document.getElementById('password');
+        var pwConfirm = document.getElementById('passwordConfirm');
+        var reqLen = document.getElementById('reqLen');
+        var reqNum = document.getElementById('reqNum');
+        var reqUpper = document.getElementById('reqUpper');
+        var matchEl = document.getElementById('passwordMatch');
+
+        function markReq(el, ok) {
+            el.style.color = ok ? '#22c55e' : 'rgba(255,255,255,0.35)';
+        }
+
+        pwInput.addEventListener('input', function() {
+            var v = pwInput.value;
+            markReq(reqLen, v.length >= 8);
+            markReq(reqNum, /\d/.test(v));
+            markReq(reqUpper, /[A-Z]/.test(v));
+            if (pwConfirm.value) checkMatch();
+        });
+
+        pwConfirm.addEventListener('input', checkMatch);
+
+        function checkMatch() {
+            matchEl.style.display = 'block';
+            if (pwConfirm.value === pwInput.value && pwInput.value.length >= 8) {
+                matchEl.style.color = '#22c55e';
+                matchEl.textContent = 'Las contrasenas coinciden';
+                pwConfirm.classList.remove('error');
+            } else {
+                matchEl.style.color = '#ef4444';
+                matchEl.textContent = 'Las contrasenas no coinciden';
+                pwConfirm.classList.add('error');
+            }
+        }
+
         enrollForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -487,6 +561,9 @@
             successAlert.classList.remove('show');
 
             const formData = new FormData(enrollForm);
+            const pw = formData.get('password') || '';
+            const pwC = formData.get('passwordConfirm') || '';
+
             const data = {
                 fullName: formData.get('fullName').trim(),
                 email: formData.get('email').trim().toLowerCase(),
@@ -497,6 +574,27 @@
 
             if (!data.fullName || !data.email || !data.phone || !data.gender || !data.plan) {
                 showError('Por favor completa todos los campos requeridos');
+                return;
+            }
+
+            if (pw.length < 8) {
+                showError('La contrasena debe tener al menos 8 caracteres');
+                pwInput.focus();
+                return;
+            }
+            if (!/\d/.test(pw)) {
+                showError('La contrasena debe tener al menos un numero');
+                pwInput.focus();
+                return;
+            }
+            if (!/[A-Z]/.test(pw)) {
+                showError('La contrasena debe tener al menos una mayuscula');
+                pwInput.focus();
+                return;
+            }
+            if (pw !== pwC) {
+                showError('Las contrasenas no coinciden');
+                pwConfirm.focus();
                 return;
             }
 
@@ -516,7 +614,7 @@
                         gender: data.gender,
                         experience_level: 'intermedio',
                         training_location: 'gym',
-                        password: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+                        password: pw
                     })
                 });
 
