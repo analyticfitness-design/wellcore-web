@@ -73,19 +73,29 @@ $validationNotes = [];
 
 if ($planType === 'rise') {
     // ── RISE: generacion ASINCRONA via CLI worker ────────────────────
-    // Crear registro en DB como "generating", lanzar worker CLI en background,
-    // responder inmediato al browser. El worker es un proceso PHP CLI
-    // independiente que NO depende de PHP-FPM (sobrevive restarts).
+    // Auto-reset generaciones atascadas en "generating" por mas de 5 min
+    getDB()->prepare("
+        UPDATE ai_generations SET status = 'failed', raw_response = 'Worker timeout - auto-reset'
+        WHERE client_id = ? AND type = 'rise' AND status = 'generating'
+          AND created_at < DATE_SUB(NOW(), INTERVAL 5 MINUTE)
+    ")->execute([$clientId]);
+
     $genId = ai_save_generation(['client_id' => $clientId, 'type' => 'rise', 'status' => 'generating']);
 
-    // Lanzar worker como proceso CLI en background
+    // Lanzar worker como proceso CLI en background (cross-platform)
     // Nota: $genId y $clientId son (int), no hay riesgo de inyeccion
     $workerPath = __DIR__ . '/worker-rise.php';
-    $logPath    = '/tmp/rise-worker.log';
+    $logPath    = sys_get_temp_dir() . '/rise-worker.log';
     $phpBin     = PHP_BINARY ?: 'php';
     $safeWorker = escapeshellarg($workerPath);
-    $bgCmd      = "$phpBin $safeWorker $genId $clientId >> " . escapeshellarg($logPath) . " 2>&1 &";
-    exec($bgCmd); // @codingStandardsIgnoreLine — safe: int-only args
+    $safeLog    = escapeshellarg($logPath);
+
+    if (PHP_OS_FAMILY === 'Windows') {
+        $bgCmd = "start /B $phpBin $safeWorker $genId $clientId >> $safeLog 2>&1";
+    } else {
+        $bgCmd = "$phpBin $safeWorker $genId $clientId >> $safeLog 2>&1 &";
+    }
+    pclose(popen($bgCmd, 'r')); // popen+pclose = fire-and-forget cross-platform
 
     respond([
         'ok'            => true,
