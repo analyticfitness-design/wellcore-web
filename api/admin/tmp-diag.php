@@ -15,6 +15,7 @@ if ($a === 'prompts') {
 } elseif ($a === 'plans') {
     $r = $db->query("
         SELECT ap.id, ap.client_id, ap.plan_type, ap.version, ap.active, ap.created_at,
+               ap.ai_generation_id,
                c.name, c.email, c.plan,
                LENGTH(ap.content) as json_len,
                LEFT(ap.content, 300) as json_head
