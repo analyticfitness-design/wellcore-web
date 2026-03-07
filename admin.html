@@ -2758,7 +2758,6 @@
 
   /* ─── PLANES IA: GENERAR ─── */
   function generateRisePlan(clientId, clientName) {
-    // Mostrar feedback inmediato en el botón
     var btn = event.target;
     var origText = btn.textContent;
     btn.textContent = '⏳ Generando...';
@@ -2770,22 +2769,18 @@
     })
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      if (d.ok || d.generation_id) {
-        btn.textContent = '⏳ En cola...';
-        btn.style.color = '#F59E0B';
-        btn.style.borderColor = '#F59E0B';
-        showToast('Plan en generación para ' + clientName + '. Aparecerá en 30-90 seg.');
-        // Recargar planes pendientes cada 15s hasta que aparezca
-        var pollCount = 0;
-        var pollId = setInterval(function() {
-          pollCount++;
-          loadPendingPlans();
-          if (pollCount >= 8) { // max 2 min
-            clearInterval(pollId);
-            btn.textContent = origText;
-            btn.disabled = false;
-          }
-        }, 15000);
+      if (d.ok && d.status === 'completed') {
+        btn.textContent = '✓ Generado';
+        btn.style.color = '#10B981';
+        btn.style.borderColor = '#10B981';
+        showToast('Plan RISE generado para ' + clientName + '. Revísalo en Planes por Validar.');
+        loadPendingPlans();
+        setTimeout(function() { btn.textContent = origText; btn.disabled = false; }, 5000);
+      } else if (d.ok) {
+        btn.textContent = origText;
+        btn.disabled = false;
+        showToast('Plan generado pero con errores de parseo. Intenta de nuevo.', 'error');
+        loadPendingPlans();
       } else {
         btn.textContent = origText;
         btn.disabled = false;

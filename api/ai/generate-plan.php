@@ -72,7 +72,9 @@ $validationScore = 100;
 $validationNotes = [];
 
 if ($planType === 'rise') {
-    // ── RISE: generacion ASINCRONA via CLI worker ────────────────────
+    // ── RISE: generacion SINCRONA (inline, sin worker) ────────────────
+    set_time_limit(600); // 10 min max para llamada Claude
+
     // Auto-reset generaciones atascadas en "generating" por mas de 5 min
     getDB()->prepare("
         UPDATE ai_generations SET status = 'failed', raw_response = 'Worker timeout - auto-reset'
@@ -82,27 +84,41 @@ if ($planType === 'rise') {
 
     $genId = ai_save_generation(['client_id' => $clientId, 'type' => 'rise', 'status' => 'generating']);
 
-    // Lanzar worker como proceso CLI en background (cross-platform)
-    // Nota: $genId y $clientId son (int), no hay riesgo de inyeccion
-    $workerPath = __DIR__ . '/worker-rise.php';
-    $logPath    = sys_get_temp_dir() . '/rise-worker.log';
-    $phpBin     = PHP_BINARY ?: 'php';
-    $safeWorker = escapeshellarg($workerPath);
-    $safeLog    = escapeshellarg($logPath);
+    $userPrompt = build_rise_enriched_prompt($client, $riseIntake);
+    $userPrompt .= "\n\nGENERA EL PLAN RISE 30 DIAS EN JSON ESTRICTO (sin texto fuera del JSON).\n\nESQUEMA REQUERIDO:\n" . get_plan_schema('rise');
 
-    if (PHP_OS_FAMILY === 'Windows') {
-        $bgCmd = "start /B $phpBin $safeWorker $genId $clientId >> $safeLog 2>&1";
-    } else {
-        $bgCmd = "$phpBin $safeWorker $genId $clientId >> $safeLog 2>&1 &";
+    try {
+        $response = claude_call(get_rise_system_prompt(), $userPrompt, CLAUDE_MODEL, CLAUDE_MAX_TOKENS);
+        $parsed   = extract_json_from_response($response['text']);
+
+        if ($parsed) {
+            ai_save_plan($clientId, 'rise', $parsed, $genId);
+        }
+        ai_update_generation(
+            $genId,
+            $parsed ? 'completed' : 'failed',
+            $response['text'],
+            $parsed ? json_encode($parsed, JSON_UNESCAPED_UNICODE) : null
+        );
+
+        // Guardar tokens
+        getDB()->prepare("UPDATE ai_generations SET prompt_tokens = ?, completion_tokens = ? WHERE id = ?")
+            ->execute([$response['input_tokens'], $response['output_tokens'], $genId]);
+
+        respond([
+            'ok'            => true,
+            'generation_id' => $genId,
+            'status'        => $parsed ? 'completed' : 'failed',
+            'plan'          => $parsed,
+            'message'       => $parsed
+                ? 'Plan RISE generado. Aparecerá en "Planes por Validar".'
+                : 'Error: no se pudo parsear respuesta de IA.',
+        ], $parsed ? 201 : 500);
+
+    } catch (\Throwable $e) {
+        ai_update_generation($genId, 'failed', $e->getMessage());
+        respondError('Error generando plan RISE: ' . $e->getMessage(), 500);
     }
-    pclose(popen($bgCmd, 'r')); // popen+pclose = fire-and-forget cross-platform
-
-    respond([
-        'ok'            => true,
-        'generation_id' => $genId,
-        'status'        => 'generating',
-        'message'       => 'Plan RISE en generacion. Aparecera en "Planes por Validar" en 60-120 segundos.',
-    ], 202);
 
 } else {
     // ── Planes estándar: pipeline con WellCoreAI router ──────────────────────
