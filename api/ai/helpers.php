@@ -446,6 +446,20 @@ function build_rise_enriched_prompt(array $c, ?array $intake): string {
         if (!empty($mv['commitment']))     $text .= "- Nivel de compromiso: " . $mv['commitment'] . "/10\n";
     }
 
+    // Goals (formato alternativo)
+    $g = $intake['goals'] ?? [];
+    if ($g && !$mv) {
+        $text .= "\nMETAS:\n";
+        if (!empty($g['primary']))   $text .= "- Objetivo principal: " . $g['primary'] . "\n";
+        if (!empty($g['secondary'])) $text .= "- Objetivo secundario: " . $g['secondary'] . "\n";
+    }
+
+    // Instrucciones del coach (override directo)
+    if (!empty($intake['coach_instructions'])) {
+        $text .= "\n⚠️ INSTRUCCIONES OBLIGATORIAS DEL COACH (seguir al pie de la letra):\n";
+        $text .= $intake['coach_instructions'] . "\n";
+    }
+
     return $text;
 }
 
