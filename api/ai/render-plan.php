@@ -396,10 +396,111 @@ function render_nutricion(array $plan, array $c): string {
     return $html . footer_html();
 }
 
+// ── VIDEO DB (hombre) ────────────────────────────────────────────
+function get_video_db_hombre(): array {
+    return [
+        ['t' => 'Aperturas inclinado con mancuernas', 'id' => 'OU9b_aRjz0Y'],
+        ['t' => 'Aperturas inclinado en maquina', 'id' => 'HDPKH1BBhhE'],
+        ['t' => 'Copa de triceps', 'id' => 'CjqtisT2B2Y'],
+        ['t' => 'Copa de triceps variante', 'id' => 'QvburrzD-7Q'],
+        ['t' => 'Cruce en polea', 'id' => 'ZGUsf_jioSk'],
+        ['t' => 'Cruce inferior poleas', 'id' => 'GyZKQvsGaeM'],
+        ['t' => 'Cruce invertido con polea', 'id' => 'T4__GSGtnoU'],
+        ['t' => 'Cruce polea baja', 'id' => 'BvuFsc_Co2E'],
+        ['t' => 'Elevaciones con mancuernas dropset', 'id' => 'uiYMBTuXhf0'],
+        ['t' => 'Elevaciones laterales con mancuerna', 'id' => 'Oj3T6YBfRCE'],
+        ['t' => 'Elevaciones laterales en maquina', 'id' => 'a_ltR5M_itA'],
+        ['t' => 'Elevaciones laterales en polea', 'id' => 'ADOXpWcHsZ4'],
+        ['t' => 'Elevacion frontal con barra sentado', 'id' => 'zlbmI4BthLk'],
+        ['t' => 'Elevacion frontal con disco', 'id' => '10e8v6Lna4k'],
+        ['t' => 'Elevacion frontal con mancuernas', 'id' => 'vV5bQObGHRE'],
+        ['t' => 'Elevacion frontal con polea', 'id' => '6yoOlcgHvhA'],
+        ['t' => 'Elevacion lateral a una mano', 'id' => '6vRVVU9AzgE'],
+        ['t' => 'Elevacion lateral con banco inclinado', 'id' => 'dCimwp911N0'],
+        ['t' => 'Extension de triceps a una mano', 'id' => 'p3qIwP5ablo'],
+        ['t' => 'Extension de triceps con barra', 'id' => 'JQa9YeIzF44'],
+        ['t' => 'Extension de triceps con barra variante', 'id' => 'hDpQ6jcrT18'],
+        ['t' => 'Extension de triceps con soga', 'id' => 'q052hSZWh0M'],
+        ['t' => 'Extension de triceps en banco inclinado', 'id' => 'OAJXHoY2_2I'],
+        ['t' => 'Extension de triceps por encima cabeza', 'id' => 'bX4zOCT_Na8'],
+        ['t' => 'Extension de triceps sentado en maquina', 'id' => 'YeCM-Vl98gE'],
+        ['t' => 'Extension de triceps sobre la cabeza', 'id' => '_j18KAzEKmI'],
+        ['t' => 'Extension de triceps variacion poleas altas', 'id' => 'oTRVf2y4kEA'],
+        ['t' => 'Facepull', 'id' => 'iLnhqZ_oLsQ'],
+        ['t' => 'Facepull variante jalon', 'id' => 'x6cgN0bTFRo'],
+        ['t' => 'Fondos en banco', 'id' => 'SswE_mcoZLA'],
+        ['t' => 'Fondos en banco variante', 'id' => 'AJWUCcTZvwY'],
+        ['t' => 'Fondos en banco variante 2', 'id' => 'ueQ-QSMueXQ'],
+        ['t' => 'Fondos en maquina', 'id' => 'rRw-yiVkE3M'],
+        ['t' => 'Fondos en maquina variante', 'id' => '7U5J8j0m850'],
+        ['t' => 'Jalon al pecho', 'id' => 'MHhvz5IBFXk'],
+        ['t' => 'Jalon al pecho estrecho', 'id' => 'sH7p91ExA0c'],
+        ['t' => 'Levantamiento de hombros', 'id' => 'glX87IEgh6M'],
+        ['t' => 'Patada de triceps con mancuerna', 'id' => 'qwtikDRLKN4'],
+        ['t' => 'Press con barra', 'id' => 'AANwuvNPPSU'],
+        ['t' => 'Press arbol con mancuernas', 'id' => 'zAXy_By--o0'],
+        ['t' => 'Press banca plano con barra', 'id' => 'dSKZeei9KJ4'],
+        ['t' => 'Press banca plano barra variante', 'id' => 'FPJS6TTZWL8'],
+        ['t' => 'Press de agarre cerrado en banco', 'id' => 'Q0n0Q4hxRLA'],
+        ['t' => 'Press en maquina', 'id' => 'ojlEhV37FkU'],
+        ['t' => 'Press en smith', 'id' => 'jYrcwuseZaM'],
+        ['t' => 'Press inclinado con barra', 'id' => 'X2WPUgFQbWk'],
+        ['t' => 'Press inclinado con mancuernas', 'id' => '1iL_WlAYBAs'],
+        ['t' => 'Press inclinado con maquina', 'id' => 'jGDYhsGlMCs'],
+        ['t' => 'Press inclinado en smith', 'id' => 'LXYKjob0KMo'],
+        ['t' => 'Press militar con mancuernas', 'id' => 'RhPWH-D6SRc'],
+        ['t' => 'Press plano con mancuernas', 'id' => 'cma9jYjBRIw'],
+        ['t' => 'Press plano en maquina', 'id' => 'D7wyM1rwbNE'],
+        ['t' => 'Press plano en smith', 'id' => 'uPP6AJp1sT0'],
+        ['t' => 'Pullover', 'id' => 'SANzF6jptFs'],
+        ['t' => 'Remo con polea baja a una mano', 'id' => 'Gp-pRgcqWCE'],
+        ['t' => 'Remo en maquina', 'id' => 'tfbBm9tWAWo'],
+        ['t' => 'Remo unilateral', 'id' => '1UL6Sb17RRI'],
+        ['t' => 'Rompecraneos con mancuerna', 'id' => 'Sxlw9N3qACs'],
+        ['t' => 'Rompecraneos con barra', 'id' => 'vVf4jueIBHo'],
+        ['t' => 'Smith close grip triceps', 'id' => 'Rf9Bx5coELg'],
+        ['t' => 'Vuelos posteriores con mancuerna', 'id' => 'ow-y0-3HSKs'],
+    ];
+}
+
+function find_video_for_exercise(string $exerciseName): ?array {
+    static $db = null;
+    if ($db === null) $db = get_video_db_hombre();
+    $stop = ['con','en','de','del','al','a','la','el','los','las','una','uno','y','o','por','para','un','su','variante'];
+    $norm = function(string $s) use ($stop): array {
+        $s = mb_strtolower($s);
+        $s = strtr($s, ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n','ü'=>'u']);
+        $s = preg_replace('/[^a-z0-9\s]/', ' ', $s);
+        $words = array_filter(explode(' ', trim(preg_replace('/\s+/', ' ', $s))), fn($w) => mb_strlen($w) > 1 && !in_array($w, $stop));
+        return array_values($words);
+    };
+    $qt = $norm($exerciseName);
+    if (empty($qt)) return null;
+    $best = null;
+    $bestScore = 0;
+    foreach ($db as $entry) {
+        $tt = $norm($entry['t']);
+        $score = 0;
+        foreach ($qt as $q) {
+            foreach ($tt as $t) {
+                if ($t === $q) $score += 3;
+                elseif (str_starts_with($t, $q)) $score += 2;
+                elseif (str_contains($t, $q)) $score += 1;
+                elseif (str_contains($q, $t) && mb_strlen($t) > 3) $score += 1;
+            }
+        }
+        if ($score > $bestScore) {
+            $bestScore = $score;
+            $best = $entry;
+        }
+    }
+    if ($bestScore >= 3 && $best) {
+        return ['id' => $best['id'], 'title' => $best['t'], 'url' => 'https://www.youtube.com/watch?v=' . $best['id']];
+    }
+    return null;
+}
+
 // ── RISE ─────────────────────────────────────────────────────────
-// Renderer de plan RISE 30 días — usa el CSS/identidad de la plantilla
-// RISE_V2_MUJER_AVANZADO_CASA.html
-// Columna "Ver" por ejercicio es placeholder — se linkeará a videos futura versión
 function render_rise(array $plan, array $c, string $gender = 'male'): string {
     $name    = htmlspecialchars($plan['client_name'] ?? 'Cliente');
     $fecha   = date('d/m/Y');
@@ -493,7 +594,8 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
     $h .= "td.rir-col{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--red);text-align:center;white-space:nowrap;min-width:38px;vertical-align:middle;}\n";
     $h .= "td.notes-col{font-size:10px;color:var(--muted);white-space:normal;min-width:120px;max-width:170px;line-height:1.4;vertical-align:top;}\n";
     $h .= "td.ver-col{text-align:center;vertical-align:middle;min-width:40px;}\n";
-    $h .= ".ver-btn{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.5px;padding:3px 7px;background:rgba(0,217,255,0.08);border:1px solid rgba(0,217,255,0.18);color:var(--accent);text-decoration:none;cursor:default;white-space:nowrap;}\n";
+    $h .= ".ver-btn{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.5px;padding:3px 7px;background:rgba(0,217,255,0.08);border:1px solid rgba(0,217,255,0.18);color:var(--accent);text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s;}\n";
+    $h .= ".ver-btn:hover{background:rgba(0,217,255,0.18);border-color:var(--accent);}\n";
     // Cardio
     $h .= ".cardio-block{background:var(--surface);border-left:3px solid #22C55E;padding:10px 16px;margin-top:10px;margin-bottom:8px;}\n";
     $h .= ".cardio-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:#22C55E;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}\n";
@@ -614,9 +716,15 @@ function render_rise(array $plan, array $c, string $gender = 'male'): string {
                 $h .= "<td class=\"rest-col\">{$eDesc}</td>";
                 $h .= "<td class=\"rir-col\">{$eRir}</td>";
                 $h .= "<td class=\"notes-col\">{$eNotas}</td>";
-                // Botón Ver — solo para hombres (videos de mujeres aún no subidos)
                 if ($showVideo) {
-                    $h .= "<td class=\"ver-col\"><span class=\"ver-btn\">Ver</span></td>";
+                    $video = find_video_for_exercise($ej['nombre'] ?? '');
+                    if ($video) {
+                        $vUrl = htmlspecialchars($video['url']);
+                        $vTitle = htmlspecialchars($video['title']);
+                        $h .= "<td class=\"ver-col\"><a class=\"ver-btn\" href=\"{$vUrl}\" target=\"_blank\" rel=\"noopener\" title=\"{$vTitle}\" style=\"text-decoration:none;cursor:pointer\">&#9654; Ver</a></td>";
+                    } else {
+                        $h .= "<td class=\"ver-col\"><span class=\"ver-btn\" style=\"opacity:.3\">—</span></td>";
+                    }
                 }
                 $h .= "</tr>";
             }
