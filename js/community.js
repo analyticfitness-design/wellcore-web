@@ -312,7 +312,11 @@ var Community = (function() {
             counter.textContent = '0/500';
             var feed = _container.querySelector('#communityFeedList');
             if (feed) feed.insertBefore(renderPost(data.post), feed.firstChild);
-            apiCall('POST', '/api/community/check-achievements.php', { trigger: 'community_post' });
+            apiCall('POST', '/api/community/check-achievements.php', { trigger: 'community_post' }).then(function(ach) {
+                if (ach && ach.awarded && ach.awarded.length > 0 && typeof showToast === 'function') {
+                    ach.awarded.forEach(function(a) { showToast('Logro desbloqueado: ' + a.title, 'success'); });
+                }
+            });
         });
     }
 

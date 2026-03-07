@@ -3350,6 +3350,21 @@ function apiFetch(path, opts) {
   if (token) headers['Authorization'] = 'Bearer ' + token;
   return fetch(API_BASE + path, Object.assign({}, opts, { headers: headers }));
 }
+// ===== ACHIEVEMENT TRIGGER =====
+function checkAchievements(trigger) {
+  apiFetch('/community/check-achievements.php', {
+    method: 'POST',
+    body: JSON.stringify({ trigger: trigger })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data && data.awarded && data.awarded.length > 0) {
+      data.awarded.forEach(function(a) {
+        showToast('Logro desbloqueado: ' + a.title, 'success');
+      });
+      if (typeof Community !== 'undefined' && Community.refresh) Community.refresh();
+    }
+  }).catch(function() {});
+}
+
 // ===== INIT =====
 function init() {
   // Topbar
@@ -4978,6 +4993,7 @@ function submitCheckin() {
       document.getElementById('inp-comentarios').value = '';
       loadCheckins();
       showToast('Check-in enviado al coach!', 'success');
+      checkAchievements('checkin');
     })
     .catch(function() {
       // Fallback localStorage
@@ -5630,6 +5646,7 @@ function onUploadComplete(done, errors) {
   if (errors === 0) {
     status.textContent = done + ' foto(s) subida(s) correctamente.';
     status.style.color = 'var(--green)';
+    checkAchievements('photo');
   } else {
     status.textContent = done + ' subida(s), ' + errors + ' error(es).';
     status.style.color = 'var(--red)';

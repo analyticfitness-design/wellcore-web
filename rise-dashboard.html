@@ -2097,6 +2097,18 @@
             } catch(e) { return null; }
         }
 
+        // ─── ACHIEVEMENT TRIGGER ────────────────
+        function checkAchievements(trigger) {
+            api('POST', '/community/check-achievements.php', { trigger: trigger }).then(function(data) {
+                if (data && data.awarded && data.awarded.length > 0) {
+                    data.awarded.forEach(function(a) {
+                        showToast('Logro desbloqueado: ' + a.title);
+                    });
+                    if (typeof Community !== 'undefined' && Community.refresh) Community.refresh();
+                }
+            });
+        }
+
         // ─── CARGAR PLAN PERSONALIZADO ───────────
         var programStartDate = null; // Se establece cuando el plan de entrenamiento es cargado
 
@@ -2377,6 +2389,7 @@
             if (TOKEN) {
                 const result = await api('POST', '/rise/measurements.php', m);
                 showToast(result ? '¡Medición guardada!' : '¡Guardada localmente!');
+                checkAchievements('measurement');
             } else {
                 showToast('¡Medición guardada localmente!');
             }
@@ -3171,6 +3184,7 @@
                     spinIcon.style.color = 'var(--green)';
                     statusText.textContent = data.message + ' \u2014 ' + date;
                     showToast('\u00a1Fotos guardadas en tu perfil!');
+                    checkAchievements('photo');
                     ['photoFront','photoSide','photoBack'].forEach(function(id) {
                         document.getElementById(id).value = '';
                     });
