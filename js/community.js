@@ -9,6 +9,11 @@ var Community = (function() {
     var _page = 1;
     var _loading = false;
     var _totalPages = 1;
+    var _chatMode = false;
+    var _pollTimer = null;
+    var _lastMsgId = 0;
+    var _clientId = 0;
+    var _chatInitialized = false;
 
     var EMOJI_MAP = {
         fire:   'fa-fire',
@@ -391,30 +396,346 @@ var Community = (function() {
         return el;
     }
 
+    /* ── Tab Switcher ─────────────────────────────────────── */
+
+    function renderTabSwitcher() {
+        var wrap = document.createElement('div');
+        wrap.style.cssText = 'display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid rgba(255,255,255,0.06);';
+
+        var tabStyle = 'background:none;border:none;padding:12px 24px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;position:relative;';
+
+        var feedTab = document.createElement('button');
+        feedTab.style.cssText = tabStyle + 'color:#E31E24;border-bottom:2px solid #E31E24;margin-bottom:-2px;';
+        feedTab.appendChild(fa('fa-stream'));
+        var feedLabel = document.createElement('span');
+        feedLabel.textContent = ' Feed';
+        feedTab.appendChild(feedLabel);
+
+        var chatTab = document.createElement('button');
+        chatTab.style.cssText = tabStyle + 'color:rgba(255,255,255,0.35);';
+        chatTab.appendChild(fa('fa-comments'));
+        var chatLabel = document.createElement('span');
+        chatLabel.textContent = ' Chat';
+        chatTab.appendChild(chatLabel);
+
+        feedTab.onclick = function() {
+            _chatMode = false;
+            var fw = _container.querySelector('#communityFeedWrap');
+            var cw = _container.querySelector('#communityChatWrap');
+            if (fw) fw.style.display = '';
+            if (cw) cw.style.display = 'none';
+            stopPolling();
+            feedTab.style.color = '#E31E24';
+            feedTab.style.borderBottom = '2px solid #E31E24';
+            feedTab.style.marginBottom = '-2px';
+            chatTab.style.color = 'rgba(255,255,255,0.35)';
+            chatTab.style.borderBottom = 'none';
+            chatTab.style.marginBottom = '0';
+        };
+
+        chatTab.onclick = function() {
+            _chatMode = true;
+            var fw = _container.querySelector('#communityFeedWrap');
+            var cw = _container.querySelector('#communityChatWrap');
+            if (fw) fw.style.display = 'none';
+            if (cw) cw.style.display = '';
+            if (!_chatInitialized) initChat();
+            startPolling();
+            chatTab.style.color = '#E31E24';
+            chatTab.style.borderBottom = '2px solid #E31E24';
+            chatTab.style.marginBottom = '-2px';
+            feedTab.style.color = 'rgba(255,255,255,0.35)';
+            feedTab.style.borderBottom = 'none';
+            feedTab.style.marginBottom = '0';
+        };
+
+        wrap.appendChild(feedTab);
+        wrap.appendChild(chatTab);
+        return wrap;
+    }
+
+    /* ── Chat UI ──────────────────────────────────────────── */
+
+    function renderChatUI() {
+        var outer = document.createElement('div');
+        outer.style.cssText = 'background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;';
+
+        // Load older button
+        var loadOlder = document.createElement('button');
+        loadOlder.id = 'chatLoadOlder';
+        loadOlder.style.cssText = 'width:100%;padding:8px;background:rgba(255,255,255,0.03);border:none;border-bottom:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.35);font-size:11px;cursor:pointer;display:none;';
+        loadOlder.textContent = 'Cargar anteriores';
+        loadOlder.onclick = function() { loadChatMessages('older'); };
+        outer.appendChild(loadOlder);
+
+        // Messages container
+        var msgBox = document.createElement('div');
+        msgBox.id = 'chatMessages';
+        msgBox.style.cssText = 'height:400px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth;';
+        outer.appendChild(msgBox);
+
+        // Input bar
+        var inputBar = document.createElement('div');
+        inputBar.style.cssText = 'display:flex;padding:10px;border-top:1px solid rgba(255,255,255,0.08);gap:8px;background:rgba(0,0,0,0.15);';
+
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Escribe un mensaje...';
+        input.maxLength = 500;
+        input.style.cssText = 'flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:10px 16px;color:#fff;font-size:13px;outline:none;';
+
+        var sendBtn = document.createElement('button');
+        sendBtn.style.cssText = 'width:36px;height:36px;border-radius:50%;background:#E31E24;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;';
+        sendBtn.appendChild(fa('fa-paper-plane'));
+
+        var doSend = function() {
+            var text = input.value.trim();
+            if (!text) return;
+            sendChatMessage(text, input);
+        };
+
+        sendBtn.onclick = doSend;
+        input.addEventListener('keypress', function(e) { if (e.key === 'Enter') doSend(); });
+
+        inputBar.appendChild(input);
+        inputBar.appendChild(sendBtn);
+        outer.appendChild(inputBar);
+
+        return outer;
+    }
+
+    function renderChatMessage(msg) {
+        var wrap = document.createElement('div');
+        wrap.style.cssText = 'display:flex;gap:8px;max-width:85%;';
+        wrap.setAttribute('data-msg-id', msg.id);
+
+        if (msg.is_mine) {
+            wrap.style.alignSelf = 'flex-end';
+            wrap.style.flexDirection = 'row-reverse';
+        } else {
+            wrap.style.alignSelf = 'flex-start';
+        }
+
+        wrap.appendChild(createAvatar(msg.author_initial, 28));
+
+        var bubble = document.createElement('div');
+        if (msg.is_mine) {
+            bubble.style.cssText = 'background:rgba(227,30,36,0.12);border:1px solid rgba(227,30,36,0.25);border-radius:12px 12px 2px 12px;padding:8px 12px;';
+        } else {
+            bubble.style.cssText = 'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px 12px 12px 2px;padding:8px 12px;';
+        }
+
+        // Header
+        var hdr = document.createElement('div');
+        hdr.style.cssText = 'display:flex;align-items:center;gap:6px;margin-bottom:4px;';
+
+        var nameEl = document.createElement('span');
+        nameEl.style.cssText = 'font-weight:600;font-size:11px;color:#fff;';
+        nameEl.textContent = msg.author_name;
+        hdr.appendChild(nameEl);
+
+        if (msg.author_plan) {
+            var planBadge = document.createElement('span');
+            planBadge.style.cssText = 'text-transform:uppercase;font-size:9px;color:rgba(227,30,36,0.7);';
+            planBadge.textContent = msg.author_plan;
+            hdr.appendChild(planBadge);
+        }
+
+        var timeEl = document.createElement('span');
+        timeEl.style.cssText = "font-size:9px;color:rgba(255,255,255,0.25);font-family:'JetBrains Mono',monospace;";
+        timeEl.textContent = timeAgo(msg.created_at);
+        hdr.appendChild(timeEl);
+
+        bubble.appendChild(hdr);
+
+        // Message text
+        var body = document.createElement('p');
+        body.style.cssText = 'font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);margin:0;';
+        body.textContent = msg.message;
+        bubble.appendChild(body);
+
+        // Report button (only for others' messages)
+        if (!msg.is_mine) {
+            var reportBtn = document.createElement('button');
+            reportBtn.style.cssText = 'background:none;border:none;color:rgba(255,255,255,0.15);font-size:9px;cursor:pointer;padding:2px;float:right;';
+            reportBtn.appendChild(fa('fa-flag'));
+            reportBtn.onmouseenter = function() { reportBtn.style.color = 'rgba(227,30,36,0.5)'; };
+            reportBtn.onmouseleave = function() { reportBtn.style.color = 'rgba(255,255,255,0.15)'; };
+            reportBtn.onclick = function() { reportMessage(msg.id, wrap); };
+            bubble.appendChild(reportBtn);
+        }
+
+        wrap.appendChild(bubble);
+        return wrap;
+    }
+
+    function initChat() {
+        var cw = _container.querySelector('#communityChatWrap');
+        if (!cw) return;
+        while (cw.firstChild) cw.removeChild(cw.firstChild);
+        cw.appendChild(renderChatUI());
+        loadChatMessages('init');
+    }
+
+    function loadChatMessages(mode) {
+        var url = '/api/community/chat.php';
+        if (mode === 'poll' && _lastMsgId) {
+            url += '?after_id=' + _lastMsgId;
+        } else if (mode === 'older') {
+            var msgBox = document.getElementById('chatMessages');
+            var first = msgBox ? msgBox.querySelector('[data-msg-id]') : null;
+            if (first) {
+                url += '?before_id=' + first.getAttribute('data-msg-id');
+            }
+        }
+
+        apiCall('GET', url).then(function(data) {
+            if (!data.ok) return;
+            var msgBox = document.getElementById('chatMessages');
+            if (!msgBox) return;
+
+            if (mode === 'init') {
+                while (msgBox.firstChild) msgBox.removeChild(msgBox.firstChild);
+                (data.messages || []).forEach(function(msg) {
+                    msgBox.appendChild(renderChatMessage(msg));
+                });
+                if (data.messages && data.messages.length > 0) {
+                    _lastMsgId = data.messages[data.messages.length - 1].id;
+                }
+                msgBox.scrollTop = msgBox.scrollHeight;
+                var loadOlderBtn = document.getElementById('chatLoadOlder');
+                if (loadOlderBtn) loadOlderBtn.style.display = (data.messages && data.messages.length >= 50) ? 'block' : 'none';
+                _chatInitialized = true;
+
+            } else if (mode === 'poll') {
+                if (data.messages && data.messages.length > 0) {
+                    var wasAtBottom = (msgBox.scrollTop + msgBox.clientHeight >= msgBox.scrollHeight - 50);
+                    data.messages.forEach(function(msg) {
+                        msgBox.appendChild(renderChatMessage(msg));
+                    });
+                    _lastMsgId = data.messages[data.messages.length - 1].id;
+                    if (wasAtBottom) msgBox.scrollTop = msgBox.scrollHeight;
+                }
+
+            } else if (mode === 'older') {
+                var prevHeight = msgBox.scrollHeight;
+                var prevScroll = msgBox.scrollTop;
+                var msgs = data.messages || [];
+                for (var i = msgs.length - 1; i >= 0; i--) {
+                    msgBox.insertBefore(renderChatMessage(msgs[i]), msgBox.firstChild);
+                }
+                msgBox.scrollTop = prevScroll + (msgBox.scrollHeight - prevHeight);
+                var loadOlderBtn2 = document.getElementById('chatLoadOlder');
+                if (loadOlderBtn2) loadOlderBtn2.style.display = (msgs.length >= 50) ? 'block' : 'none';
+            }
+        });
+    }
+
+    function sendChatMessage(text, input) {
+        apiCall('POST', '/api/community/chat.php', { message: text })
+            .then(function(data) {
+                if (data.ok) {
+                    var msgBox = document.getElementById('chatMessages');
+                    if (msgBox) {
+                        msgBox.appendChild(renderChatMessage(data.message));
+                        msgBox.scrollTop = msgBox.scrollHeight;
+                    }
+                    input.value = '';
+                    if (data.message && data.message.id) _lastMsgId = data.message.id;
+                } else {
+                    if (data.code === 403 && typeof showToast === 'function') {
+                        showToast('Tu cuenta ha sido suspendida del chat', 'error');
+                    } else if (data.code === 429 && typeof showToast === 'function') {
+                        showToast('Espera un momento', 'warning');
+                    }
+                }
+            })
+            .catch(function() {
+                if (typeof showToast === 'function') showToast('Error de red', 'error');
+            });
+    }
+
+    function reportMessage(msgId, bubbleEl) {
+        apiCall('POST', '/api/community/report-chat.php', { chat_message_id: msgId })
+            .then(function(data) {
+                if (data.ok) {
+                    if (typeof showToast === 'function') showToast('Mensaje reportado');
+                    if (data.action === 'hidden_and_banned' && bubbleEl) {
+                        bubbleEl.style.transition = 'opacity 0.3s';
+                        bubbleEl.style.opacity = '0';
+                        setTimeout(function() {
+                            if (bubbleEl.parentNode) bubbleEl.parentNode.removeChild(bubbleEl);
+                        }, 300);
+                    }
+                } else if (data.code === 409) {
+                    if (typeof showToast === 'function') showToast('Ya reportaste este mensaje');
+                }
+            })
+            .catch(function() {
+                if (typeof showToast === 'function') showToast('Error de red', 'error');
+            });
+    }
+
+    function startPolling() {
+        stopPolling();
+        _pollTimer = setInterval(function() {
+            if (!document.hidden && _chatMode) loadChatMessages('poll');
+        }, 5000);
+    }
+
+    function stopPolling() {
+        if (_pollTimer) { clearInterval(_pollTimer); _pollTimer = null; }
+    }
+
     return {
         init: function(containerId, audience) {
             _container = document.getElementById(containerId);
             if (!_container) return;
             _audience = audience || 'all';
             _page = 1;
-            _container.innerHTML = '';
+            _chatMode = false;
+            _chatInitialized = false;
+            while (_container.firstChild) _container.removeChild(_container.firstChild);
+
+            // Tab switcher
+            _container.appendChild(renderTabSwitcher());
+
+            // Feed wrap
+            var feedWrap = document.createElement('div');
+            feedWrap.id = 'communityFeedWrap';
+
             var achievementsEl = document.createElement('div');
             achievementsEl.style.cssText = 'padding:16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:16px;';
             achievementsEl.id = 'communityAchievements';
-            _container.appendChild(achievementsEl);
+            feedWrap.appendChild(achievementsEl);
             loadAchievements(achievementsEl);
-            _container.appendChild(renderComposer());
+            feedWrap.appendChild(renderComposer());
             var feedList = document.createElement('div');
             feedList.id = 'communityFeedList';
-            _container.appendChild(feedList);
+            feedWrap.appendChild(feedList);
             var loadMore = document.createElement('button');
             loadMore.id = 'communityLoadMore';
             loadMore.style.cssText = 'width:100%;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;margin-top:8px;display:none;';
             loadMore.textContent = 'Cargar mas publicaciones';
             loadMore.onclick = function() { _page++; loadPosts(true); };
-            _container.appendChild(loadMore);
+            feedWrap.appendChild(loadMore);
+            _container.appendChild(feedWrap);
+
+            // Chat wrap (hidden by default)
+            var chatWrap = document.createElement('div');
+            chatWrap.id = 'communityChatWrap';
+            chatWrap.style.display = 'none';
+            _container.appendChild(chatWrap);
+
             loadPosts(false);
         },
-        refresh: function() { _page = 1; loadPosts(false); }
+        refresh: function() {
+            if (_chatMode) {
+                loadChatMessages('init');
+            } else {
+                _page = 1; loadPosts(false);
+            }
+        },
+        stopChat: function() { stopPolling(); }
     };
 })();
