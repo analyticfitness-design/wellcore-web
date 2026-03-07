@@ -34,14 +34,15 @@ $stmt = $db->query("
         c.name,
         c.email,
         c.plan,
-        COALESCE(c.fecha_inicio, rp.created_at, c.created_at) AS start_date
+        COALESCE(c.fecha_inicio, (
+            SELECT rp.created_at FROM rise_programs rp
+            WHERE rp.client_id = c.id AND rp.status = 'active'
+            ORDER BY rp.created_at DESC LIMIT 1
+        ), c.created_at) AS start_date
     FROM clients c
-    LEFT JOIN rise_programs rp
-        ON rp.client_id = c.id AND rp.status = 'active'
     WHERE c.status = 'activo'
       AND c.email IS NOT NULL
       AND c.email != ''
-    GROUP BY c.id
 ");
 
 $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
