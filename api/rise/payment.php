@@ -59,14 +59,16 @@ if ($stmt->rowCount() === 0) {
 try {
     $db->beginTransaction();
 
-    // 1. Registrar pago en tabla payments (usar columnas que existen)
+    // 1. Registrar pago en tabla payments
     $reference = 'RISE-' . strtoupper(bin2hex(random_bytes(6)));
+    // Almacenar siempre en COP — si llega en USD, convertir a COP
+    $amountCOP = ($amount < 1000) ? 99900 : $amount;
     $stmt = $db->prepare("
         INSERT INTO payments
-        (client_id, amount, currency, plan, payu_reference, status, created_at)
-        VALUES (?, ?, 'USD', 'rise', ?, 'approved', NOW())
+        (client_id, email, amount, currency, plan, wompi_reference, payment_method, status, buyer_name, created_at)
+        VALUES (?, ?, ?, 'COP', 'rise', ?, ?, 'approved', ?, NOW())
     ");
-    $stmt->execute([$client_id, $amount, $reference]);
+    $stmt->execute([$client_id, $client['email'], $amountCOP, $reference, $payment_method, $client['name']]);
     $payment_id = $db->lastInsertId();
 
     // 2. Crear auth token para el cliente
