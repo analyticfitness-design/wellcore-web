@@ -850,28 +850,50 @@
         }
         .photo-upload-box.has-image .photo-remove-btn { display: flex; }
 
-        /* ── PLAN TABS ─── */
+        /* ── PLAN TABS — Premium Glass Pills ─── */
         .tab-nav{
-          display:flex;gap:0;border-bottom:1px solid var(--border);
-          margin-bottom:22px;
+          display:flex;gap:6px;
+          margin-bottom:24px;padding:6px;
+          background:rgba(255,255,255,0.03);
+          border:1px solid rgba(255,255,255,0.06);
+          border-radius:14px;
           overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+          backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
         }
         .tab-nav::-webkit-scrollbar{display:none}
         .tab-btn{
-          background:none;border:none;
-          font-size:.82rem;font-weight:500;
-          color:rgba(255,255,255,0.38);
-          padding:10px 14px;
-          border-bottom:2px solid transparent;
-          margin-bottom:-1px;
-          transition:all 0.18s ease;
-          display:flex;align-items:center;gap:6px;
+          position:relative;overflow:hidden;
+          background:transparent;border:1px solid transparent;
+          font-family:'Inter',system-ui,sans-serif;
+          font-size:.78rem;font-weight:500;letter-spacing:0.03em;
+          color:rgba(255,255,255,0.4);
+          padding:9px 16px;border-radius:10px;
+          transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
+          display:flex;align-items:center;gap:7px;
           white-space:nowrap;flex-shrink:0;
           cursor:pointer;
-          font-family:'Inter',sans-serif;
         }
-        .tab-btn:hover{color:var(--white)}
-        .tab-btn.active{color:var(--white);border-bottom-color:var(--red)}
+        .tab-btn i{font-size:.72rem;transition:transform 0.25s cubic-bezier(0.16,1,0.3,1)}
+        .tab-btn:hover{
+          color:rgba(255,255,255,0.85);
+          background:rgba(255,255,255,0.06);
+          border-color:rgba(255,255,255,0.08);
+        }
+        .tab-btn:hover i{transform:scale(1.15)}
+        .tab-btn.active{
+          color:#fff;font-weight:600;
+          background:rgba(227,30,36,0.12);
+          border-color:rgba(227,30,36,0.3);
+          box-shadow:0 0 20px rgba(227,30,36,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .tab-btn.active i{color:var(--red)}
+        .tab-btn.active::after{
+          content:'';position:absolute;top:0;left:-100%;
+          width:100%;height:100%;
+          background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);
+          animation:tab-shimmer 2s ease-in-out infinite;
+        }
+        @keyframes tab-shimmer{0%{left:-100%}50%{left:100%}100%{left:100%}}
         .tab-content{display:none}
         .tab-content.active{display:block}
 
@@ -1243,22 +1265,22 @@
 
                 <div class="tab-nav">
                     <button class="tab-btn active" id="rise-tab-btn-entrenamiento" onclick="loadRisePlanTab('entrenamiento')">
-                        <span style="color:var(--red);font-weight:700">//</span> Entrenamiento
+                        <i class="fas fa-dumbbell"></i> Entrenamiento
                     </button>
                     <button class="tab-btn" id="rise-tab-btn-nutricion" onclick="loadRisePlanTab('nutricion')">
-                        <span style="color:var(--red);font-weight:700">//</span> Nutrición
+                        <i class="fas fa-utensils"></i> Nutrición
                     </button>
                     <button class="tab-btn" id="rise-tab-btn-habitos" onclick="loadRisePlanTab('habitos')">
-                        <span style="color:var(--red);font-weight:700">//</span> Hábitos
+                        <i class="fas fa-leaf"></i> Hábitos
                     </button>
                     <button class="tab-btn" id="rise-tab-btn-suplementacion" onclick="loadRisePlanTab('suplementacion')">
-                        <span style="color:var(--red);font-weight:700">//</span> Suplementación
+                        <i class="fas fa-capsules"></i> Suplementación
                     </button>
                     <button class="tab-btn" id="rise-tab-btn-ciclo" onclick="loadRisePlanTab('ciclo')">
-                        <span style="color:var(--red);font-weight:700">//</span> Ciclo Hormonal
+                        <i class="fas fa-venus"></i> Ciclo Hormonal
                     </button>
                     <button class="tab-btn" id="rise-tab-btn-bloodwork" onclick="loadRisePlanTab('bloodwork')">
-                        <span style="color:var(--red);font-weight:700">//</span> Bloodwork
+                        <i class="fas fa-vial"></i> Bloodwork
                     </button>
                 </div>
 
