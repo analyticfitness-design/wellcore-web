@@ -1,0 +1,991 @@
+/* ============================================================
+   WELLCORE FITNESS v6 — Design System 2026
+   Extends v5. Purely additive — never overrides existing classes.
+   CSS 2026 features: OKLCH, scroll-driven animations,
+   @starting-style, text-wrap, container queries, view transitions.
+   ============================================================ */
+
+/* ── OKLCH Design Tokens ──
+   P3 gamut colors — more vibrant than HEX.
+   v6- prefix avoids collision with v3/v5 variables.
+   ──────────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --v6-brand-hue: 24;
+  --v6-brand: oklch(52% 0.24 var(--v6-brand-hue));
+  --v6-brand-light: oklch(62% 0.20 var(--v6-brand-hue));
+  --v6-brand-dark: oklch(42% 0.22 var(--v6-brand-hue));
+  --v6-brand-glow: oklch(52% 0.24 var(--v6-brand-hue) / 25%);
+  --v6-brand-dim: oklch(52% 0.24 var(--v6-brand-hue) / 10%);
+
+  /* Surfaces (dark theme) */
+  --v6-surface-0: oklch(8% 0.01 260);
+  --v6-surface-1: oklch(12% 0.01 260);
+  --v6-surface-2: oklch(16% 0.01 260);
+  --v6-surface-3: oklch(20% 0.01 260);
+
+  /* Text */
+  --v6-text-1: oklch(95% 0.005 260);
+  --v6-text-2: oklch(70% 0.01 260);
+  --v6-text-3: oklch(50% 0.01 260);
+
+  /* Semantic */
+  --v6-success: oklch(65% 0.20 145);
+  --v6-warning: oklch(75% 0.18 85);
+  --v6-info: oklch(70% 0.15 230);
+  --v6-danger: oklch(52% 0.24 24);
+
+  /* Borders */
+  --v6-border-subtle: oklch(30% 0.01 260 / 40%);
+  --v6-border-medium: oklch(40% 0.01 260 / 50%);
+
+  /* Spacing scale */
+  --v6-space-xs: 4px;
+  --v6-space-sm: 8px;
+  --v6-space-md: 16px;
+  --v6-space-lg: 24px;
+  --v6-space-xl: 32px;
+  --v6-space-2xl: 48px;
+  --v6-space-3xl: 64px;
+
+  /* Radius */
+  --v6-radius-sm: 6px;
+  --v6-radius-md: 10px;
+  --v6-radius-lg: 16px;
+  --v6-radius-xl: 24px;
+  --v6-radius-full: 9999px;
+
+  /* Transitions */
+  --v6-ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --v6-ease-spring: cubic-bezier(0.2, 1, 0.2, 1);
+  --v6-duration-fast: 150ms;
+  --v6-duration-normal: 250ms;
+  --v6-duration-slow: 400ms;
+}
+
+
+/* ── Typography Enhancements ──
+   text-wrap: balance for headings, pretty for paragraphs.
+   Progressive — browsers that don't support it just ignore it.
+   ──────────────────────────────────────────────── */
+h1, h2, h3, h4 { text-wrap: balance; }
+p { text-wrap: pretty; }
+.v6-text-balance { text-wrap: balance; }
+.v6-text-pretty  { text-wrap: pretty; }
+
+
+/* ── Scroll-Driven Animations ──
+   CSS-only reveal animations triggered by scroll.
+   Replaces AOS for v6 elements — zero JavaScript.
+   ──────────────────────────────────────────────── */
+@keyframes v6-fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes v6-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes v6-slide-left {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes v6-slide-right {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes v6-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@supports (animation-timeline: view()) {
+  .v6-reveal {
+    animation: v6-fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+  .v6-reveal-fade {
+    animation: v6-fade-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 25%;
+  }
+  .v6-reveal-left {
+    animation: v6-slide-left linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+  .v6-reveal-right {
+    animation: v6-slide-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+  .v6-reveal-scale {
+    animation: v6-scale-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  /* Stagger delays for children */
+  .v6-stagger > :nth-child(1) { animation-delay: 0ms; }
+  .v6-stagger > :nth-child(2) { animation-delay: 80ms; }
+  .v6-stagger > :nth-child(3) { animation-delay: 160ms; }
+  .v6-stagger > :nth-child(4) { animation-delay: 240ms; }
+  .v6-stagger > :nth-child(5) { animation-delay: 320ms; }
+  .v6-stagger > :nth-child(6) { animation-delay: 400ms; }
+}
+
+/* Fallback for browsers without scroll-driven animations */
+@supports not (animation-timeline: view()) {
+  .v6-reveal,
+  .v6-reveal-fade,
+  .v6-reveal-left,
+  .v6-reveal-right,
+  .v6-reveal-scale {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s var(--v6-ease-out), transform 0.6s var(--v6-ease-out);
+  }
+  .v6-reveal.v6-visible,
+  .v6-reveal-fade.v6-visible,
+  .v6-reveal-left.v6-visible,
+  .v6-reveal-right.v6-visible,
+  .v6-reveal-scale.v6-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* ── Scroll Progress Bar ──
+   Reading progress bar — CSS only, no JS.
+   ──────────────────────────────────────────────── */
+@keyframes v6-scroll-progress {
+  to { transform: scaleX(1); }
+}
+
+.v6-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--red, #E31E24);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 10001;
+}
+
+@supports (animation-timeline: scroll()) {
+  .v6-scroll-progress {
+    animation: v6-scroll-progress linear;
+    animation-timeline: scroll(root);
+  }
+}
+
+
+/* ── @starting-style for Modals ──
+   Animate from display:none without JS timing hacks.
+   ──────────────────────────────────────────────── */
+.v6-modal {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+  transition:
+    opacity var(--v6-duration-normal) var(--v6-ease-out),
+    transform var(--v6-duration-normal) var(--v6-ease-out),
+    display var(--v6-duration-normal) allow-discrete;
+}
+
+.v6-modal.open {
+  display: flex;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+@starting-style {
+  .v6-modal.open {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+}
+
+.v6-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: oklch(0% 0 0 / 60%);
+  backdrop-filter: blur(8px);
+  z-index: 9998;
+  display: none;
+  opacity: 0;
+  transition: opacity var(--v6-duration-normal) var(--v6-ease-out),
+              display var(--v6-duration-normal) allow-discrete;
+}
+
+.v6-modal-backdrop.open {
+  display: block;
+  opacity: 1;
+}
+
+@starting-style {
+  .v6-modal-backdrop.open { opacity: 0; }
+}
+
+
+/* ── Container Queries ──
+   Cards that adapt to their container, not the viewport.
+   ──────────────────────────────────────────────── */
+.v6-container {
+  container-type: inline-size;
+}
+
+.v6-container-card {
+  container-type: inline-size;
+  container-name: card;
+}
+
+@container card (min-width: 320px) {
+  .v6-card-adaptive .v6-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--v6-space-md);
+  }
+}
+
+@container card (min-width: 480px) {
+  .v6-card-adaptive .v6-card-body {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+
+/* ── Skeleton Loading ──
+   Premium loading state — replaces spinners.
+   ──────────────────────────────────────────────── */
+@keyframes v6-shimmer {
+  0%   { background-position: 200% 50%; }
+  100% { background-position: -200% 50%; }
+}
+
+.v6-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-2, #1a1a1d) 25%,
+    oklch(22% 0.01 260) 37%,
+    var(--surface-2, #1a1a1d) 63%
+  );
+  background-size: 400% 100%;
+  animation: v6-shimmer 1.6s ease infinite;
+  border-radius: var(--v6-radius-sm);
+  color: transparent !important;
+  user-select: none;
+  pointer-events: none;
+}
+
+.v6-skeleton-text {
+  height: 14px;
+  margin-bottom: 8px;
+  width: 80%;
+}
+
+.v6-skeleton-title {
+  height: 22px;
+  margin-bottom: 12px;
+  width: 60%;
+}
+
+.v6-skeleton-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--v6-radius-full);
+}
+
+.v6-skeleton-card {
+  height: 120px;
+  border-radius: var(--v6-radius-md);
+}
+
+
+/* ── Toast Notifications ──
+   CSS for the toast system (JS in wellcore-v6.js).
+   ──────────────────────────────────────────────── */
+.v6-toast-container {
+  position: fixed;
+  top: var(--v6-space-lg);
+  right: var(--v6-space-lg);
+  z-index: 11000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--v6-space-sm);
+  pointer-events: none;
+}
+
+.v6-toast {
+  pointer-events: auto;
+  padding: 14px 20px;
+  border-radius: var(--v6-radius-md);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v6-text-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--v6-border-subtle);
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 40%);
+  max-width: 360px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity var(--v6-duration-normal) var(--v6-ease-out),
+              transform var(--v6-duration-normal) var(--v6-ease-out);
+}
+
+.v6-toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.v6-toast-success {
+  background: oklch(15% 0.04 145 / 90%);
+  border-color: oklch(50% 0.15 145 / 30%);
+}
+
+.v6-toast-error {
+  background: oklch(15% 0.04 24 / 90%);
+  border-color: oklch(50% 0.15 24 / 30%);
+}
+
+.v6-toast-info {
+  background: oklch(15% 0.04 230 / 90%);
+  border-color: oklch(50% 0.15 230 / 30%);
+}
+
+.v6-toast-warning {
+  background: oklch(15% 0.04 85 / 90%);
+  border-color: oklch(50% 0.15 85 / 30%);
+}
+
+
+/* ── CSS View Transitions ──
+   Smooth page-to-page transitions (Chrome 126+).
+   Progressive — no effect on unsupported browsers.
+   ──────────────────────────────────────────────── */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: 200ms ease-out both v6-vt-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 300ms ease-in both v6-vt-fade-in;
+}
+
+@keyframes v6-vt-fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes v6-vt-fade-in {
+  from { opacity: 0; }
+}
+
+
+/* ── Performance: content-visibility ──
+   Sections below the fold skip rendering until scrolled near.
+   ──────────────────────────────────────────────── */
+.v6-lazy-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+
+/* ── CSS Containment ──
+   Isolate card reflows — changes in one card don't affect siblings.
+   ──────────────────────────────────────────────── */
+.v6-contain {
+  contain: layout style paint;
+}
+
+
+/* ── Magnetic Button Target ──
+   CSS for the magnetic effect (JS in wellcore-v6.js).
+   ──────────────────────────────────────────────── */
+.v6-magnetic {
+  transition: transform var(--v6-duration-fast) var(--v6-ease-spring);
+  will-change: transform;
+}
+
+
+/* ── Glassmorphism Card ──
+   Reusable glass-effect card for premium sections.
+   ──────────────────────────────────────────────── */
+.v6-glass {
+  background: oklch(14% 0.01 260 / 60%);
+  backdrop-filter: blur(20px);
+  border: 1px solid oklch(100% 0 0 / 6%);
+  border-radius: var(--v6-radius-lg);
+}
+
+
+/* ── Glow Effect ──
+   Subtle brand-colored glow for emphasis elements.
+   ──────────────────────────────────────────────── */
+.v6-glow {
+  box-shadow: 0 0 20px oklch(52% 0.24 24 / 15%),
+              0 0 60px oklch(52% 0.24 24 / 5%);
+}
+
+.v6-glow-text {
+  text-shadow: 0 0 20px oklch(52% 0.24 24 / 40%);
+}
+
+
+/* ── Gradient Text ──
+   Brand gradient for headlines.
+   ──────────────────────────────────────────────── */
+.v6-gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #E31E24 50%, #ff6b6b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* ── Progress Ring ──
+   SVG-based circular progress indicator.
+   ──────────────────────────────────────────────── */
+.v6-progress-ring {
+  transform: rotate(-90deg);
+}
+
+.v6-progress-ring__circle {
+  transition: stroke-dashoffset 1s var(--v6-ease-out);
+  stroke-linecap: round;
+}
+
+
+/* ── Badge ──
+   Small status badges for plans, levels, etc.
+   ──────────────────────────────────────────────── */
+.v6-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: var(--v6-radius-full);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+}
+
+.v6-badge-red {
+  background: oklch(52% 0.24 24 / 15%);
+  color: #E31E24;
+  border: 1px solid oklch(52% 0.24 24 / 25%);
+}
+
+.v6-badge-green {
+  background: oklch(65% 0.20 145 / 15%);
+  color: #22C55E;
+  border: 1px solid oklch(65% 0.20 145 / 25%);
+}
+
+.v6-badge-blue {
+  background: oklch(70% 0.15 230 / 15%);
+  color: #00D9FF;
+  border: 1px solid oklch(70% 0.15 230 / 25%);
+}
+
+.v6-badge-gold {
+  background: oklch(75% 0.18 85 / 15%);
+  color: #F59E0B;
+  border: 1px solid oklch(75% 0.18 85 / 25%);
+}
+
+
+/* ── Before/After Comparison Slider ──
+   Drag to compare transformation photos.
+   Pure CSS clip-path driven by CSS custom property.
+   ──────────────────────────────────────────────── */
+.v6-compare {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--v6-radius-lg);
+  cursor: col-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  aspect-ratio: 3 / 4;
+}
+
+.v6-compare img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.v6-compare-after {
+  clip-path: inset(0 0 0 var(--v6-compare-pos, 50%));
+}
+
+.v6-compare-slider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--v6-compare-pos, 50%);
+  transform: translateX(-50%);
+  width: 3px;
+  background: #fff;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.v6-compare-slider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: oklch(100% 0 0 / 90%);
+  border: 2px solid oklch(100% 0 0 / 60%);
+  box-shadow: 0 2px 12px oklch(0% 0 0 / 40%);
+}
+
+.v6-compare-slider::after {
+  content: '\2194';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #111;
+  z-index: 3;
+  line-height: 1;
+}
+
+.v6-compare-label {
+  position: absolute;
+  top: 12px;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: var(--v6-radius-full);
+  z-index: 3;
+  pointer-events: none;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+}
+
+.v6-compare-label-before {
+  left: 12px;
+  background: oklch(0% 0 0 / 60%);
+  color: #fff;
+  backdrop-filter: blur(4px);
+}
+
+.v6-compare-label-after {
+  right: 12px;
+  background: oklch(52% 0.24 24 / 80%);
+  color: #fff;
+  backdrop-filter: blur(4px);
+}
+
+
+/* ── XP / Progress Bar ──
+   Horizontal progress for gamification.
+   ──────────────────────────────────────────────── */
+.v6-xp-bar {
+  position: relative;
+  height: 8px;
+  background: var(--v6-surface-2);
+  border-radius: var(--v6-radius-full);
+  overflow: hidden;
+}
+
+.v6-xp-fill {
+  height: 100%;
+  border-radius: var(--v6-radius-full);
+  background: linear-gradient(90deg, var(--red, #E31E24), #ff6b6b);
+  width: 0;
+  transition: width 1s var(--v6-ease-out);
+}
+
+.v6-xp-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v6-text-2);
+  margin-top: 6px;
+}
+
+
+/* ── SVG Path Draw Animation ──
+   Icons that "draw" themselves on scroll.
+   ──────────────────────────────────────────────── */
+@keyframes v6-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@supports (animation-timeline: view()) {
+  .v6-draw-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: v6-draw 1.2s ease forwards;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+  }
+}
+
+
+/* ── Responsive Utilities ──
+   Mobile-first helpers.
+   ──────────────────────────────────────────────── */
+/* ── Social Proof Ticker ──
+   Rotating proof messages at the top of landing pages.
+   ──────────────────────────────────────────────── */
+.v6-social-proof {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9990;
+  background: oklch(10% 0.02 260 / 92%);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid oklch(100% 0 0 / 6%);
+  padding: 10px 20px;
+  text-align: center;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 13px;
+  color: oklch(80% 0.01 260);
+  overflow: hidden;
+}
+
+.v6-social-proof-item {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.4s var(--v6-ease-out);
+}
+
+.v6-social-proof-item.active {
+  display: flex;
+  opacity: 1;
+}
+
+.v6-social-proof-item i {
+  color: var(--red, #E31E24);
+  font-size: 14px;
+}
+
+.v6-social-proof-item strong {
+  color: var(--v6-text-1, #fff);
+}
+
+.v6-social-proof-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: oklch(60% 0.01 260);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  line-height: 1;
+}
+
+.v6-social-proof-close:hover {
+  color: var(--v6-text-1, #fff);
+}
+
+
+/* ── Promo Bar ──
+   Sticky urgency bar for RISE enrollment.
+   ──────────────────────────────────────────────── */
+.v6-promo-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10002;
+  background: linear-gradient(90deg, oklch(12% 0.02 260) 0%, oklch(20% 0.08 24) 100%);
+  border-bottom: 1px solid oklch(52% 0.24 24 / 30%);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 13px;
+  color: oklch(85% 0.01 260);
+  transform: translateY(-100%);
+  transition: transform 0.4s var(--v6-ease-out);
+}
+
+.v6-promo-bar.show {
+  transform: translateY(0);
+}
+
+.v6-promo-bar strong {
+  color: #fff;
+}
+
+.v6-promo-bar-countdown {
+  color: var(--red, #E31E24);
+  font-weight: 700;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.v6-promo-bar-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red, #E31E24);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: var(--v6-radius-full);
+  text-decoration: none;
+  transition: background var(--v6-duration-fast) var(--v6-ease-out);
+  white-space: nowrap;
+}
+
+.v6-promo-bar-cta:hover {
+  background: oklch(45% 0.22 24);
+  color: #fff;
+}
+
+.v6-promo-bar-close {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: oklch(60% 0.01 260);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  line-height: 1;
+}
+
+.v6-promo-bar-close:hover {
+  color: #fff;
+}
+
+.v6-promo-bar + #navbar,
+.v6-promo-bar.show + #navbar {
+  top: 42px;
+}
+
+
+/* ── Responsive Utilities ──
+   Mobile-first helpers.
+   ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .v6-toast-container {
+    top: auto;
+    bottom: var(--v6-space-lg);
+    right: var(--v6-space-md);
+    left: var(--v6-space-md);
+  }
+
+  .v6-toast {
+    max-width: 100%;
+  }
+
+  .v6-promo-bar {
+    font-size: 11px;
+    gap: 8px;
+    padding: 8px 40px 8px 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .v6-promo-bar-cta {
+    font-size: 9px;
+    padding: 5px 12px;
+  }
+
+  .v6-promo-bar.show + #navbar {
+    top: 56px;
+  }
+
+  .v6-social-proof {
+    font-size: 11px;
+    padding: 8px 40px 8px 12px;
+  }
+}
+
+
+/* ── Custom Cursor (desktop only) ── */
+@media (pointer: fine) {
+  .v6-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(227, 30, 36, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, border-color 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+
+  .v6-cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 5px; height: 5px;
+    background: #E31E24;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+  }
+
+  .v6-cursor-hover {
+    width: 52px; height: 52px;
+    border-color: rgba(227, 30, 36, 0.8);
+    background: rgba(227, 30, 36, 0.06);
+  }
+
+  .v6-cursor-click {
+    width: 28px; height: 28px;
+    border-color: #E31E24;
+    background: rgba(227, 30, 36, 0.15);
+  }
+
+  /* Hide default cursor on desktop when custom cursor is active */
+  html { cursor: none !important; }
+  a, button, [role="button"], input[type="submit"], .v6-magnetic {
+    cursor: none !important;
+  }
+}
+
+
+/* ── Lenis Smooth Scroll (required CSS) ── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+
+/* ── Global v6 Micro-interactions ── */
+.plan-card,
+.feature-card,
+.coach-card,
+.blog-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+.plan-card:hover,
+.feature-card:hover,
+.coach-card:hover,
+.blog-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(227, 30, 36, 0.1) !important;
+}
+
+/* Focus visible for accessibility */
+.v6-magnetic:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #E31E24;
+  outline-offset: 3px;
+}
+
+/* Smooth image hover zoom */
+.plan-card img,
+.blog-card img,
+.feature-card img {
+  transition: transform 0.4s ease !important;
+}
+.plan-card:hover img,
+.blog-card:hover img,
+.feature-card:hover img {
+  transform: scale(1.03) !important;
+}
+
+
+/* ── Footer v6 Enhancements ── */
+.footer-logo {
+  text-shadow: 0 0 20px rgba(227, 30, 36, 0.3), 0 0 40px rgba(227, 30, 36, 0.1);
+}
+
+.footer-social {
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+.footer-social:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 4px 12px rgba(227, 30, 36, 0.25) !important;
+}
+
+.footer-links a {
+  transition: color 0.15s, padding-left 0.2s !important;
+}
+.footer-links a:hover {
+  color: #E31E24 !important;
+  padding-left: 4px !important;
+}
+
+/* Footer top border glow */
+footer, #footer {
+  border-top: 1px solid rgba(227, 30, 36, 0.15) !important;
+  position: relative;
+}
+footer::before, #footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(227, 30, 36, 0.4), transparent);
+  pointer-events: none;
+}
+
+
+/* ── Prefers Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .v6-scroll-progress,
+  .v6-reveal, .v6-reveal-fade, .v6-reveal-left, .v6-reveal-right, .v6-reveal-scale {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .v6-cursor, .v6-cursor-dot {
+    display: none !important;
+  }
+  .v6-skeleton {
+    animation: none !important;
+  }
+}

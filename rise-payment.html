@@ -307,8 +307,12 @@
     </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<!-- v6 Scroll Progress -->
+<div class="v6-scroll-progress" aria-hidden="true"></div>
+
     <!-- Header -->
     <header>
         <div class="header-content">
@@ -327,7 +331,7 @@
             <p class="subtitle">Completa tu inscripción al Reto RISE</p>
         </div>
 
-        <div class="payment-container">
+        <div class="payment-container v6-glass">
             <!-- Alert messages -->
             <div class="alert error" id="errorAlert"></div>
             <div class="alert success" id="successAlert">
@@ -394,7 +398,7 @@
                 </div>
 
                 <!-- Botón de pago -->
-                <button id="risePayBtn" onclick="startRisePayment()" style="width:100%;background:#E31E24;border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;padding:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;">
+                <button id="risePayBtn" class="v6-magnetic" onclick="startRisePayment()" style="width:100%;background:#E31E24;border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;padding:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;">
                     <i class="fas fa-lock" aria-hidden="true"></i>
                     PAGAR $99.900 COP (~$25 USD)
                 </button>
@@ -507,5 +511,6 @@
             container.appendChild(script);
         }
     </script>
+<script src="js/wellcore-v6.js" defer></script>
 </body>
 </html>

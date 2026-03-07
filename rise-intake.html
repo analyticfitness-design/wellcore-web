@@ -405,8 +405,11 @@
             .range-val { font-size: 24px; }
         }
     </style>
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<!-- v6 Scroll Progress -->
+<div class="v6-scroll-progress" aria-hidden="true"></div>
     <header>
         <div class="header-content">
             <div class="header-logo">
@@ -445,7 +448,7 @@
             <div class="section-nav__item" data-idx="4"><i class="fas fa-bullseye"></i> Motivacion</div>
         </div>
 
-        <form id="intakeForm" class="form-card" novalidate>
+        <form id="intakeForm" class="form-card v6-glass" novalidate>
             <div class="alert error" id="errorAlert"><i class="fas fa-circle-exclamation"></i> <span id="errorText"></span></div>
             <div class="alert success" id="successAlert"><i class="fas fa-check-circle"></i> <span>Formulario enviado. Redirigiendo al pago...</span></div>
 
@@ -653,10 +656,10 @@
                 <button type="button" class="btn btn-back" id="prevBtn" style="display:none;">
                     <i class="fas fa-arrow-left"></i> Anterior
                 </button>
-                <button type="button" class="btn btn-primary" id="nextBtn">
+                <button type="button" class="btn btn-primary v6-magnetic" id="nextBtn">
                     Siguiente <i class="fas fa-arrow-right"></i>
                 </button>
-                <button type="submit" class="btn btn-primary" id="submitBtn" style="display:none;">
+                <button type="submit" class="btn btn-primary v6-magnetic" id="submitBtn" style="display:none;">
                     <i class="fas fa-paper-plane"></i> Enviar y Continuar al Pago
                 </button>
             </div>
@@ -931,5 +934,6 @@
         updateUI();
     })();
     </script>
+<script src="js/wellcore-v6.js" defer></script>
 </body>
 </html>

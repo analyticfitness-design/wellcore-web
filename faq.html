@@ -571,8 +571,12 @@
 <link rel="stylesheet" href="css/wellcore-v5.css">
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<!-- v6 Scroll Progress -->
+<div class="v6-scroll-progress" aria-hidden="true"></div>
+
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
 
 <!-- NAVBAR -->
@@ -1559,10 +1563,10 @@
     <h2>NO ENCONTRASTE<br>TU RESPUESTA</h2>
     <p>Habla directamente con nuestro equipo. Respondemos en menos de 24 horas. Sin bots, sin formularios eternos.</p>
     <div class="faq-cta-btns">
-      <a href="https://wa.me/573124904720" class="btn-cta-primary">
+      <a href="https://wa.me/573124904720" class="btn-cta-primary v6-magnetic">
         <span style="color:#25d366;font-weight:700;">WA</span> Escribir por WhatsApp
       </a>
-      <a href="mailto:info@wellcorefitness.com" class="btn-cta-secondary">
+      <a href="mailto:info@wellcorefitness.com" class="btn-cta-secondary v6-magnetic">
         <i class="fas fa-envelope" aria-hidden="true" style="color:var(--red);"></i> Enviar email
       </a>
     </div>
@@ -1758,7 +1762,7 @@
 <!-- ============================================================
      PREGUNTAS ADICIONALES EN TEXTO
 ============================================================ -->
-<section style="padding:80px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+<section class="v6-lazy-section" style="padding:80px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;padding:0 32px;">
     <div style="text-align:center;margin-bottom:48px;" data-aos="fade-up">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;"><i class="fas fa-circle-question" aria-hidden="true"></i> PREGUNTAS FRECUENTES ADICIONALES</span>
@@ -2050,5 +2054,6 @@
 </script>
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
+<script src="js/wellcore-v6.js" defer></script>
 </body>
 </html>

@@ -1045,6 +1045,91 @@
     </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
+
+    <!-- ──────── v6 GAMIFICATION STYLES ──────── -->
+    <style>
+        /* Week Tracker — day circles */
+        .v6-day-circle {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+            color: rgba(255,255,255,0.3); transition: all 0.3s; cursor: default;
+        }
+        .v6-day-circle.completed {
+            background: rgba(227,30,36,0.15); border-color: rgba(227,30,36,0.4);
+            color: #E31E24;
+        }
+        .v6-day-circle.active {
+            background: #E31E24; border-color: #E31E24;
+            color: #fff; box-shadow: 0 0 12px rgba(227,30,36,0.4);
+            animation: v6-pulse-day 2s infinite;
+        }
+        @keyframes v6-pulse-day {
+            0%, 100% { box-shadow: 0 0 12px rgba(227,30,36,0.4); }
+            50% { box-shadow: 0 0 20px rgba(227,30,36,0.6); }
+        }
+
+        /* XP Bar */
+        .v6-xp-bar {
+            position: relative;
+            height: 28px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .v6-xp-fill {
+            position: absolute; top: 0; left: 0; height: 100%;
+            width: var(--v6-xp-percent, 0%);
+            background: linear-gradient(90deg, #E31E24 0%, #ff4466 60%, #d4a853 100%);
+            border-radius: 14px;
+            transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .v6-xp-label {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+            color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            letter-spacing: 0.04em; z-index: 1;
+        }
+
+        /* Badges */
+        .v6-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+            letter-spacing: 0.03em; cursor: default;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .v6-badge:hover {
+            transform: translateY(-2px);
+        }
+        .v6-badge i { font-size: 13px; }
+        .v6-badge-red {
+            background: rgba(227,30,36,0.12); border: 1px solid rgba(227,30,36,0.3);
+            color: #E31E24;
+        }
+        .v6-badge-red:hover { box-shadow: 0 4px 16px rgba(227,30,36,0.2); }
+        .v6-badge-gold {
+            background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.3);
+            color: #d4a853;
+        }
+        .v6-badge-gold:hover { box-shadow: 0 4px 16px rgba(212,168,83,0.2); }
+        .v6-badge-blue {
+            background: rgba(0,217,255,0.10); border: 1px solid rgba(0,217,255,0.25);
+            color: #00D9FF;
+        }
+        .v6-badge-blue:hover { box-shadow: 0 4px 16px rgba(0,217,255,0.2); }
+
+        /* Week Tracker label */
+        .v6-week-tracker-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+            color: rgba(255,255,255,0.35); text-align: center; margin-bottom: 8px;
+        }
+    </style>
 </head>
 <body>
     <!-- Topbar -->
@@ -1198,6 +1283,34 @@
                             <div id="dashCountdownBar" style="height: 100%; background: linear-gradient(90deg, var(--red), #ff2040); width: 0%; transition: width 0.5s ease;"></div>
                         </div>
                         <div style="color: var(--gray); font-size: 13px; font-family: 'JetBrains Mono'; text-transform: uppercase; letter-spacing: 0.05em;" id="dashCountdownLabel">Días completados de tu reto</div>
+                    </div>
+                </div>
+
+                <!-- ──────── v6 GAMIFICATION: Week Tracker + XP + Badges ──────── -->
+                <div class="card" style="padding: 24px; margin-bottom: 20px; text-align: center; background: linear-gradient(135deg, var(--surface) 0%, rgba(227,30,36,0.03) 100%); border: 1px solid rgba(255,255,255,0.06);">
+                    <!-- Week Tracker -->
+                    <div class="v6-week-tracker-label">Semana Actual</div>
+                    <div class="v6-week-tracker" style="display:flex;gap:8px;justify-content:center;margin:0 0 20px;">
+                        <div class="v6-day-circle completed" title="Lunes"><span>L</span></div>
+                        <div class="v6-day-circle completed" title="Martes"><span>M</span></div>
+                        <div class="v6-day-circle active" title="Miércoles"><span>X</span></div>
+                        <div class="v6-day-circle" title="Jueves"><span>J</span></div>
+                        <div class="v6-day-circle" title="Viernes"><span>V</span></div>
+                        <div class="v6-day-circle" title="Sábado"><span>S</span></div>
+                        <div class="v6-day-circle" title="Domingo"><span>D</span></div>
+                    </div>
+
+                    <!-- XP Bar -->
+                    <div class="v6-xp-bar" style="margin:0 auto 18px;max-width:400px;">
+                        <div class="v6-xp-fill" style="--v6-xp-percent:73%;"></div>
+                        <span class="v6-xp-label">Nivel 4 &middot; 730/1000 XP</span>
+                    </div>
+
+                    <!-- Badges -->
+                    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0;">
+                        <span class="v6-badge v6-badge-red" title="Primera Semana"><i class="fas fa-fire"></i> Semana 1</span>
+                        <span class="v6-badge v6-badge-gold" title="Racha 7 días"><i class="fas fa-trophy"></i> Racha 7</span>
+                        <span class="v6-badge v6-badge-blue" title="Hidratación"><i class="fas fa-droplet"></i> Hidratado</span>
                     </div>
                 </div>
 
@@ -4770,6 +4883,42 @@ function renderRiseSupplementsInteractive(container) {
             Community.init('communityContainer', 'all');
         }
     });
+})();
+</script>
+<script src="js/wellcore-v6.js" defer></script>
+<script>
+// v6 Skeleton loading — shimmers countdown & stat values while data loads
+(function(){
+  var targets = document.querySelectorAll('#countdownDays, #streakCount, #userName');
+  targets.forEach(function(el){
+    var txt = el.textContent.trim();
+    if (txt === '--' || txt === '0' || txt === 'Cliente') {
+      el.classList.add('v6-skeleton');
+      el.style.minWidth = '40px';
+      el.style.minHeight = '20px';
+      el.style.display = 'inline-block';
+    }
+  });
+  var obs = new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      var t = m.target;
+      if (t.classList && t.classList.contains('v6-skeleton')) {
+        t.classList.remove('v6-skeleton');
+        t.style.minWidth = '';
+        t.style.minHeight = '';
+      }
+    });
+  });
+  targets.forEach(function(el){
+    obs.observe(el, { childList: true, characterData: true, subtree: true });
+  });
+  setTimeout(function(){
+    document.querySelectorAll('.v6-skeleton').forEach(function(el){
+      el.classList.remove('v6-skeleton');
+      el.style.minWidth = '';
+      el.style.minHeight = '';
+    });
+  }, 5000);
 })();
 </script>
 </body>

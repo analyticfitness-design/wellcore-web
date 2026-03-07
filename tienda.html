@@ -1340,8 +1340,11 @@
   </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<!-- v6 Scroll Progress -->
+<div class="v6-scroll-progress" aria-hidden="true"></div>
 
 <!-- V5 PRELOADER -->
 <div id="v5-preloader" class="v5-preloader">
@@ -1514,7 +1517,7 @@
             <p class="hero-stock"><strong>SOLO COLOMBIA</strong></p>
           </div>
         </div>
-        <button class="hero-cta btn-v5 btn-v5-primary" onclick="heroAddToCart()">
+        <button class="hero-cta btn-v5 btn-v5-primary v6-magnetic" onclick="heroAddToCart()">
           <div class="btn-bg"></div>
           <span class="btn-text">AGREGAR AL CARRITO &rarr;</span>
         </button>
@@ -1576,7 +1579,7 @@
       <span class="cart-total-label">TOTAL ESTIMADO</span>
       <span class="cart-total-value" id="cart-total">$0</span>
     </div>
-    <button class="checkout-btn" onclick="proceedCheckout()">
+    <button class="checkout-btn v6-magnetic" onclick="proceedCheckout()">
       PROCEDER AL CHECKOUT
       &rarr;
     </button>
@@ -2157,6 +2160,7 @@ updateCartUI();
 <!-- AOS + V5 Effects -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="js/v5-effects.js" defer></script>
+<script src="js/wellcore-v6.js" defer></script>
 <script>
   AOS.init({ duration: 500, easing: 'linear', once: true, offset: 60 });
 </script>

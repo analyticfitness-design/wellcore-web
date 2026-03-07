@@ -354,8 +354,12 @@
     </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<!-- v6 Scroll Progress -->
+<div class="v6-scroll-progress" aria-hidden="true"></div>
+
     <header>
         <div class="header-content">
             <div class="logo">WELLCORE</div>
@@ -368,11 +372,11 @@
     <div class="container">
         <div class="hero">
             <div class="hero-tag"><span style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#E31E24;text-transform:uppercase;"><i class="fas fa-fire" aria-hidden="true"></i> Inscripción Abierta</span></div>
-            <h1>Reto RISE 30 Días</h1>
+            <h1 class="v6-glow-text">Reto RISE 30 Días</h1>
             <p class="subtitle">Comienza tu transformación hoy mismo</p>
         </div>
 
-        <div class="form-container">
+        <div class="form-container v6-glass">
             <div class="alert error" id="errorAlert"></div>
             <div class="alert success" id="successAlert">
                 ¡Inscripción exitosa! Redirigiendo al siguiente paso...
@@ -487,7 +491,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn-primary">
+                    <button type="submit" class="btn-primary v6-magnetic">
                         Continuar <i class="fas fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i>
                     </button>
                     <button type="reset" class="btn-secondary">
@@ -675,5 +679,6 @@
             }
         });
     </script>
+<script src="js/wellcore-v6.js" defer></script>
 </body>
 </html>

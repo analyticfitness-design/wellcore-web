@@ -355,6 +355,181 @@
             font-size: 13px;
         }
 
+        /* ══════ PLATFORM PREVIEW SECTION ══════ */
+        .platform-section{
+          position:relative;overflow:hidden;
+          padding:100px 20px 80px;
+          background:linear-gradient(180deg, var(--bg) 0%, #0d0d10 50%, var(--bg) 100%);
+        }
+        .platform-glow-orb{
+          position:absolute;border-radius:50%;filter:blur(120px);
+          pointer-events:none;opacity:0.4;
+        }
+        .platform-glow-orb--1{
+          width:600px;height:600px;top:-200px;left:-200px;
+          background:radial-gradient(circle,rgba(227,30,36,0.25),transparent 70%);
+          animation:orb-drift 12s ease-in-out infinite alternate;
+        }
+        .platform-glow-orb--2{
+          width:500px;height:500px;bottom:-150px;right:-150px;
+          background:radial-gradient(circle,rgba(0,217,255,0.12),transparent 70%);
+          animation:orb-drift 15s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes orb-drift{
+          0%{transform:translate(0,0) scale(1)}
+          100%{transform:translate(60px,40px) scale(1.15)}
+        }
+
+        .platform-header{
+          text-align:center;max-width:700px;margin:0 auto 64px;position:relative;z-index:2;
+        }
+        .platform-title{
+          font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,64px);
+          letter-spacing:0.02em;line-height:1.05;margin-bottom:20px;
+        }
+        .platform-title-accent{
+          background:linear-gradient(90deg,var(--red),#ff4d52,var(--red));
+          background-size:200% 100%;
+          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+          background-clip:text;
+          animation:gradient-shift 4s ease infinite;
+        }
+        @keyframes gradient-shift{
+          0%,100%{background-position:0% 50%}
+          50%{background-position:100% 50%}
+        }
+        .platform-subtitle{
+          font-size:17px;color:var(--gray);line-height:1.7;max-width:550px;margin:0 auto;
+        }
+
+        /* ── Showcase Layout ── */
+        .mockup-showcase{
+          position:relative;max-width:1100px;margin:0 auto 24px;
+          display:flex;align-items:center;justify-content:center;
+          perspective:1200px;z-index:2;
+        }
+        .mockup-showcase--reverse{ flex-direction:row-reverse; }
+
+        /* ── Laptop Mockup ── */
+        .mockup-laptop{
+          width:min(780px,72vw);border-radius:16px;overflow:hidden;
+          background:#1a1a1d;
+          border:1px solid rgba(255,255,255,0.08);
+          box-shadow:
+            0 25px 60px rgba(0,0,0,0.5),
+            0 0 80px rgba(227,30,36,0.06),
+            inset 0 1px 0 rgba(255,255,255,0.05);
+          transition:transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.6s ease;
+          transform:rotateY(0deg) rotateX(2deg);
+        }
+        .mockup-showcase:hover .mockup-laptop{
+          transform:rotateY(-2deg) rotateX(0deg) scale(1.01);
+          box-shadow:
+            0 35px 80px rgba(0,0,0,0.6),
+            0 0 120px rgba(227,30,36,0.1),
+            inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+        .mockup-showcase--reverse:hover .mockup-laptop{
+          transform:rotateY(2deg) rotateX(0deg) scale(1.01);
+        }
+        .mockup-laptop__bezel{
+          display:flex;align-items:center;gap:10px;
+          padding:10px 16px;
+          background:rgba(255,255,255,0.03);
+          border-bottom:1px solid rgba(255,255,255,0.06);
+        }
+        .mockup-laptop__dots{display:flex;gap:6px;}
+        .mockup-laptop__dots span{
+          width:10px;height:10px;border-radius:50%;
+          background:rgba(255,255,255,0.1);
+        }
+        .mockup-laptop__dots span:first-child{background:#ff5f57}
+        .mockup-laptop__dots span:nth-child(2){background:#febc2e}
+        .mockup-laptop__dots span:last-child{background:#28c840}
+        .mockup-laptop__url{
+          flex:1;text-align:center;
+          font-family:'JetBrains Mono',monospace;font-size:11px;
+          color:rgba(255,255,255,0.3);
+          background:rgba(255,255,255,0.04);
+          padding:4px 12px;border-radius:6px;
+        }
+        .mockup-laptop__screen{line-height:0;}
+        .mockup-laptop__screen img{width:100%;height:auto;display:block;}
+
+        /* ── Phone Mockup ── */
+        .mockup-phone{
+          position:absolute;z-index:10;
+          width:min(200px,22vw);
+          background:#0a0a0a;
+          border-radius:28px;overflow:hidden;
+          border:3px solid rgba(255,255,255,0.12);
+          box-shadow:
+            0 20px 50px rgba(0,0,0,0.6),
+            0 0 60px rgba(227,30,36,0.08),
+            inset 0 1px 0 rgba(255,255,255,0.1);
+          transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
+        .mockup-phone--float-right{
+          right:-3%;bottom:-8%;
+          animation:phone-float 6s ease-in-out infinite;
+        }
+        .mockup-phone--float-left{
+          left:-3%;bottom:-8%;
+          animation:phone-float 6s ease-in-out infinite 1s;
+        }
+        @keyframes phone-float{
+          0%,100%{transform:translateY(0)}
+          50%{transform:translateY(-14px)}
+        }
+        .mockup-showcase:hover .mockup-phone{
+          transform:translateY(-8px) scale(1.03);
+        }
+        .mockup-phone__notch{
+          width:100px;height:22px;
+          background:#0a0a0a;
+          border-radius:0 0 16px 16px;
+          margin:0 auto;position:relative;z-index:2;
+        }
+        .mockup-phone__screen{line-height:0;margin-top:-6px;}
+        .mockup-phone__screen img{width:100%;height:auto;display:block;}
+
+        /* ── Captions ── */
+        .mockup-caption{
+          display:flex;align-items:flex-start;gap:16px;
+          max-width:560px;margin:0 auto 72px;
+          padding:20px 24px;
+          background:rgba(255,255,255,0.03);
+          border:1px solid rgba(255,255,255,0.06);
+          border-radius:14px;
+          backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+        }
+        .mockup-caption__icon{
+          width:40px;height:40px;flex-shrink:0;
+          display:flex;align-items:center;justify-content:center;
+          background:rgba(227,30,36,0.1);border:1px solid rgba(227,30,36,0.25);
+          border-radius:10px;color:var(--red);font-size:16px;
+        }
+        .mockup-caption strong{
+          display:block;font-size:15px;margin-bottom:4px;
+          font-family:'Inter',sans-serif;font-weight:600;
+        }
+        .mockup-caption span{
+          font-size:13px;color:var(--gray);line-height:1.5;
+        }
+
+        .platform-cta{
+          text-align:center;padding-top:24px;position:relative;z-index:2;
+        }
+
+        /* ── Reveal Animation ── */
+        .reveal-on-scroll{
+          opacity:0;transform:translateY(40px);
+          transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal-on-scroll.revealed{
+          opacity:1;transform:translateY(0);
+        }
+
         /* ──────── RESPONSIVE ──────── */
         @media (max-width: 768px) {
             .countdown-timer {
@@ -373,12 +548,29 @@
             button, .btn {
                 width: 100%;
             }
+            .mockup-showcase{perspective:none;}
+            .mockup-phone{width:min(140px,30vw);}
+            .mockup-phone--float-right{right:-2%;bottom:-4%;}
+            .mockup-phone--float-left{left:-2%;bottom:-4%;}
+            .mockup-laptop{width:min(700px,82vw);}
+            .mockup-caption{margin-left:12px;margin-right:12px;}
+            .platform-section{padding:60px 12px 48px;}
         }
     </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<div class="v6-scroll-progress"></div>
+<!-- v6 RISE Promo Bar -->
+<div class="v6-promo-bar" id="v6PromoBar">
+  <i class="fas fa-bolt" style="color:#E31E24;"></i>
+  <span><strong>Cupos limitados</strong> para el proximo reto</span>
+  <span class="v6-promo-bar-countdown" id="v6PromoCountdown"></span>
+  <a href="/rise-enroll.html" class="v6-promo-bar-cta">Inscribirme <i class="fas fa-arrow-right"></i></a>
+  <button class="v6-promo-bar-close" aria-label="Cerrar">&times;</button>
+</div>
     <!-- Header -->
     <header>
         <div class="header-content">
@@ -399,7 +591,7 @@
             <p>30 días. Un plan personalizado. Resultados reales.</p>
 
             <div class="cta-buttons">
-                <a href="/rise-enroll.html" class="btn btn-primary">Inscribirse Ahora</a>
+                <a href="/rise-enroll.html" class="btn btn-primary v6-magnetic">Inscribirse Ahora</a>
                 <a href="#features" class="btn btn-secondary">Ver Detalles</a>
             </div>
 
@@ -439,25 +631,25 @@
         </div>
 
         <div class="features" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-            <div class="feature-card">
+            <div class="feature-card v6-contain">
                 <div class="feature-icon"><i class="fas fa-dumbbell" aria-hidden="true"></i></div>
                 <h3>Entrenamiento Personalizado</h3>
                 <p>Programa 1:1 diseñado para tu nivel, tu cuerpo y tus objetivos. Gym o casa &mdash; tú eliges.</p>
             </div>
 
-            <div class="feature-card">
+            <div class="feature-card v6-contain">
                 <div class="feature-icon"><i class="fas fa-utensils" aria-hidden="true"></i></div>
                 <h3>Guía de Nutrición</h3>
                 <p>Cómo alimentarte correctamente durante el reto. Principios claros, sin dietas extremas.</p>
             </div>
 
-            <div class="feature-card">
+            <div class="feature-card v6-contain">
                 <div class="feature-icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
                 <h3>Guía de Hábitos</h3>
                 <p>Sistema de hábitos diarios para garantizar consistencia. Pequeños cambios, gran impacto.</p>
             </div>
 
-            <div class="feature-card">
+            <div class="feature-card v6-contain">
                 <div class="feature-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
                 <h3>Seguimiento del Reto</h3>
                 <p>Revisión de tu progreso durante los 30 días. No estarás solo en este proceso.</p>
@@ -465,25 +657,127 @@
         </div>
     </section>
 
+    <!-- ══════ PLATFORM PREVIEW — Premium Mockups ══════ -->
+    <section class="platform-section" id="platform">
+        <div class="platform-glow-orb platform-glow-orb--1"></div>
+        <div class="platform-glow-orb platform-glow-orb--2"></div>
+
+        <div class="platform-header">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;margin-bottom:16px;">
+                <i class="fas fa-mobile-screen-button" aria-hidden="true" style="color:var(--red);font-size:11px;"></i>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">TU PLATAFORMA</span>
+            </div>
+            <h2 class="platform-title">Tecnologia que<br><span class="platform-title-accent">Impulsa tu Cambio</span></h2>
+            <p class="platform-subtitle">Dashboard personalizado, tracking en tiempo real y programa completo &mdash; todo desde tu celular o computadora.</p>
+        </div>
+
+        <!-- ── Desktop + Mobile Showcase Row 1 ── -->
+        <div class="mockup-showcase reveal-on-scroll">
+            <div class="mockup-laptop">
+                <div class="mockup-laptop__bezel">
+                    <div class="mockup-laptop__dots"><span></span><span></span><span></span></div>
+                    <div class="mockup-laptop__url">wellcorefitness.com/rise-dashboard</div>
+                </div>
+                <div class="mockup-laptop__screen">
+                    <img src="/images/mockups/dashboard-desktop.png" alt="RISE Dashboard — Vista Desktop" fetchpriority="high" decoding="async" width="1922" height="893">
+                </div>
+            </div>
+            <div class="mockup-phone mockup-phone--float-right">
+                <div class="mockup-phone__notch"></div>
+                <div class="mockup-phone__screen">
+                    <img src="/images/mockups/dashboard-mobile.png" alt="RISE Dashboard — Vista Mobile" loading="lazy" decoding="async" width="1170" height="2532">
+                </div>
+            </div>
+        </div>
+
+        <div class="mockup-caption reveal-on-scroll">
+            <div class="mockup-caption__icon"><i class="fas fa-chart-pie"></i></div>
+            <div>
+                <strong>Dashboard Inteligente</strong>
+                <span>KPIs en tiempo real, progreso del reto y acceso rapido a todas tus herramientas.</span>
+            </div>
+        </div>
+
+        <!-- ── Desktop + Mobile Showcase Row 2 ── -->
+        <div class="mockup-showcase mockup-showcase--reverse reveal-on-scroll">
+            <div class="mockup-laptop">
+                <div class="mockup-laptop__bezel">
+                    <div class="mockup-laptop__dots"><span></span><span></span><span></span></div>
+                    <div class="mockup-laptop__url">wellcorefitness.com/mi-programa</div>
+                </div>
+                <div class="mockup-laptop__screen">
+                    <img src="/images/mockups/training-desktop.png" alt="Programa de Entrenamiento — Vista Desktop" loading="lazy" decoding="async" width="1440" height="900">
+                </div>
+            </div>
+            <div class="mockup-phone mockup-phone--float-left">
+                <div class="mockup-phone__notch"></div>
+                <div class="mockup-phone__screen">
+                    <img src="/images/mockups/training-mobile.png" alt="Programa de Entrenamiento — Vista Mobile" loading="lazy" decoding="async" width="1170" height="2532">
+                </div>
+            </div>
+        </div>
+
+        <div class="mockup-caption reveal-on-scroll">
+            <div class="mockup-caption__icon"><i class="fas fa-dumbbell"></i></div>
+            <div>
+                <strong>Programa Personalizado</strong>
+                <span>Entrenamiento, nutricion, habitos y suplementacion &mdash; 6 pestanas interactivas en tu bolsillo.</span>
+            </div>
+        </div>
+
+        <!-- ── Desktop + Mobile Showcase Row 3 ── -->
+        <div class="mockup-showcase reveal-on-scroll">
+            <div class="mockup-laptop">
+                <div class="mockup-laptop__bezel">
+                    <div class="mockup-laptop__dots"><span></span><span></span><span></span></div>
+                    <div class="mockup-laptop__url">wellcorefitness.com/tracking</div>
+                </div>
+                <div class="mockup-laptop__screen">
+                    <img src="/images/mockups/tracking-desktop.png" alt="Tracking Diario — Vista Desktop" loading="lazy" decoding="async" width="1922" height="893">
+                </div>
+            </div>
+            <div class="mockup-phone mockup-phone--float-right">
+                <div class="mockup-phone__notch"></div>
+                <div class="mockup-phone__screen">
+                    <img src="/images/mockups/tracking-mobile.png" alt="Tracking Diario — Vista Mobile" loading="lazy" decoding="async" width="1170" height="2532">
+                </div>
+            </div>
+        </div>
+
+        <div class="mockup-caption reveal-on-scroll">
+            <div class="mockup-caption__icon"><i class="fas fa-bullseye"></i></div>
+            <div>
+                <strong>Tracking y Mediciones</strong>
+                <span>Registra tu progreso diario, medidas corporales y fotos de progreso con analisis automatico.</span>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="platform-cta reveal-on-scroll">
+            <a href="/rise-enroll.html" class="btn btn-primary v6-magnetic" style="font-size:16px;padding:16px 48px;border-radius:8px;">Quiero Acceso Ahora</a>
+            <p style="color:var(--gray);font-size:13px;margin-top:12px;">Acceso inmediato al dashboard tras tu inscripcion</p>
+        </div>
+    </section>
+
     <!-- Pricing -->
-    <section class="pricing-section">
+    <section class="pricing-section v6-lazy-section">
         <div class="pricing-content">
             <div class="pricing-label">Precio Especial Marzo</div>
             <h2 class="pricing-title">Una Inversión Accesible</h2>
             <p class="pricing-description">Acceso de 30 días con garantía de satisfacción</p>
 
-            <div class="price-display">
+            <div class="price-display v6-contain">
                 <div class="price-amount">$99.900</div>
                 <div class="price-currency">COP &middot; Pago único &middot; 30 días</div>
                 <div class="price-currency" style="margin-top:6px;font-size:12px;color:#888;">Pagos internacionales: ~$27 USD</div>
             </div>
 
-            <a href="/rise-enroll.html" class="btn btn-primary">Comenzar Ahora</a>
+            <a href="/rise-enroll.html" class="btn btn-primary v6-magnetic">Comenzar Ahora</a>
         </div>
     </section>
 
     <!-- Info Section -->
-    <section class="container">
+    <section class="container v6-lazy-section">
         <div style="text-align:center;margin-bottom:48px;">
             <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;margin-bottom:16px;">
                 <i class="fas fa-circle-question" aria-hidden="true" style="color:var(--red);font-size:11px;"></i>
@@ -515,7 +809,7 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="v6-lazy-section">
         <p>&copy; 2026 WellCore Fitness. Todos los derechos reservados. | <a href="/privacy.html" style="color: var(--red);">Privacidad</a> | <a href="/terms.html" style="color: var(--red);">Términos</a></p>
     </footer>
 
@@ -542,6 +836,81 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // ── Intersection Observer — reveal on scroll (#35 Tesis Visual) ──
+        const revealObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('revealed');
+                    revealObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal-on-scroll').forEach(function(el) {
+            revealObs.observe(el);
+        });
     </script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script src="js/wellcore-v6.js" defer></script>
+<script>
+(function(){
+  var bar = document.getElementById('v6PromoBar');
+  if (!bar || sessionStorage.getItem('v6_promo_closed')) { if(bar) bar.remove(); return; }
+  var now = new Date();
+  var closeDate = new Date(now.getFullYear(), now.getMonth(), 15);
+  if (now > closeDate) closeDate.setMonth(closeDate.getMonth() + 1);
+  var countdownEl = document.getElementById('v6PromoCountdown');
+  function updateCountdown() {
+    var diff = closeDate - new Date();
+    if (diff <= 0) { countdownEl.textContent = 'Ultima oportunidad'; return; }
+    var days = Math.floor(diff / 86400000);
+    var hrs = Math.floor((diff % 86400000) / 3600000);
+    countdownEl.textContent = days + 'd ' + hrs + 'h restantes';
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+  setTimeout(function(){ bar.classList.add('show'); }, 1000);
+  bar.querySelector('.v6-promo-bar-close').addEventListener('click', function(){
+    bar.classList.remove('show');
+    sessionStorage.setItem('v6_promo_closed', '1');
+    setTimeout(function(){ bar.remove(); }, 400);
+  });
+})();
+</script>
+
+<!-- GSAP v6 Premium Animations -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Feature cards — stagger cascade */
+  gsap.from('.feature-card', {
+    opacity: 0, y: 50, scale: 0.95, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.feature-card', start: 'top 85%' }
+  });
+
+  /* Mockup showcase — slide in from sides */
+  gsap.from('.mockup-laptop', {
+    opacity: 0, x: -60, duration: 1, ease: 'power2.out',
+    scrollTrigger: { trigger: '.mockup-showcase', start: 'top 80%' }
+  });
+  gsap.from('.mockup-phone', {
+    opacity: 0, x: 60, duration: 1, delay: 0.2, ease: 'power2.out',
+    scrollTrigger: { trigger: '.mockup-showcase', start: 'top 80%' }
+  });
+
+  /* Pricing section — scale up */
+  var pricingCards = document.querySelectorAll('.pricing-card, .plan-card');
+  if (pricingCards.length) {
+    gsap.from(pricingCards, {
+      opacity: 0, scale: 0.9, y: 30, stagger: 0.15, duration: 0.8, ease: 'back.out(1.4)',
+      scrollTrigger: { trigger: pricingCards[0], start: 'top 85%' }
+    });
+  }
+});
+</script>
 </body>
 </html>

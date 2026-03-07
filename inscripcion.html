@@ -446,8 +446,10 @@
 </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<div class="v6-scroll-progress"></div>
 
   <!-- V5 PRELOADER -->
   <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
@@ -501,7 +503,7 @@
     <!-- Page Header -->
     <div style="padding:80px 24px 48px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06);">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E31E24;display:block;margin-bottom:16px;"><i class="fas fa-bolt" aria-hidden="true" style="margin-right:6px;"></i>COMIENZA TU TRANSFORMACION</span>
-      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);color:#fff;letter-spacing:2px;line-height:0.95;margin-bottom:16px;">INSCRIPCION</h1>
+      <h1 class="v6-glow-text" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);color:#fff;letter-spacing:2px;line-height:0.95;margin-bottom:16px;">INSCRIPCION</h1>
       <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;max-width:600px;margin:0 auto;">Una vez que completes el formulario, tu coach se pondra en contacto contigo directamente por WhatsApp para coordinar el inicio.</p>
     </div>
 
@@ -940,7 +942,7 @@
 
           <!-- Submit Button -->
           <div style="margin-top:32px;text-align:center;">
-            <button type="submit" id="submitBtn" class="btn-red btn-v5 btn-v5-primary" style="display:none;background:#E31E24;color:#fff;border:4px solid #E31E24;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:16px 48px;border-radius:0;cursor:pointer;transition:background 0.1s linear;">
+            <button type="submit" id="submitBtn" class="btn-red btn-v5 btn-v5-primary v6-magnetic" style="display:none;background:#E31E24;color:#fff;border:4px solid #E31E24;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:16px 48px;border-radius:0;cursor:pointer;transition:background 0.1s linear;">
               <span class="btn-v5-text">Enviar Fórmulario</span><span class="btn-v5-arrow">&rarr;</span>
             </button>
           </div>
@@ -1102,6 +1104,7 @@
   </script>
 
   <script src="js/v5-effects.js" defer></script>
+  <script src="js/wellcore-v6.js" defer></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init({duration:700,once:true});</script>
 </body>

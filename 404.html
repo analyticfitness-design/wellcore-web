@@ -7,11 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg: #0a0a0a;
       --surface: #111113;
       --red: #E31E24;
+      --red-dark: #B8181D;
       --white: #ffffff;
       --gray: rgba(255,255,255,0.45);
       --font-head: 'Bebas Neue', sans-serif;
@@ -19,6 +21,7 @@
       --font-body: 'Inter', sans-serif;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       background: var(--bg);
       color: var(--white);
@@ -30,72 +33,244 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
+      overflow: hidden;
+      position: relative;
     }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 80%);
+      z-index: 0;
+    }
+
+    /* Red radial glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 30%; left: 50%;
+      width: 600px; height: 600px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(227,30,36,0.08) 0%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .error-content {
+      position: relative;
+      z-index: 1;
+    }
+
     .logo {
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.7;
     }
     .logo img {
-      height: 38px;
+      height: 32px;
     }
+
+    /* Glitch 404 */
     .error-code {
       font-family: var(--font-head);
-      font-size: clamp(6rem, 15vw, 10rem);
+      font-size: clamp(8rem, 20vw, 14rem);
       line-height: 1;
       color: var(--red);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
+      position: relative;
+      animation: glitch-skew 4s infinite linear alternate-reverse;
     }
+    .error-code::before,
+    .error-code::after {
+      content: '404';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+    .error-code::before {
+      color: #00D9FF;
+      animation: glitch-1 2s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    }
+    .error-code::after {
+      color: #FFD700;
+      animation: glitch-2 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    }
+
+    @keyframes glitch-1 {
+      0%, 80% { transform: translate(0); }
+      85% { transform: translate(-3px, 1px); }
+      90% { transform: translate(2px, -1px); }
+      95% { transform: translate(-1px, 2px); }
+      100% { transform: translate(0); }
+    }
+    @keyframes glitch-2 {
+      0%, 75% { transform: translate(0); }
+      80% { transform: translate(2px, -1px); }
+      85% { transform: translate(-3px, 1px); }
+      92% { transform: translate(1px, -2px); }
+      100% { transform: translate(0); }
+    }
+    @keyframes glitch-skew {
+      0%, 90% { transform: skew(0deg); }
+      92% { transform: skew(0.5deg); }
+      94% { transform: skew(-0.3deg); }
+      96% { transform: skew(0.2deg); }
+      100% { transform: skew(0deg); }
+    }
+
     .error-label {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       color: var(--gray);
-      margin-top: 0.5rem;
-      margin-bottom: 1.5rem;
+      margin-top: 12px;
+      margin-bottom: 32px;
     }
-    .error-msg {
-      font-size: 1.125rem;
-      color: var(--white);
-      margin-bottom: 2rem;
-      max-width: 400px;
-      line-height: 1.6;
+    .error-label .blink {
+      animation: blink 1s steps(1) infinite;
     }
-    .back-link {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 0.8125rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--white);
-      background: var(--red);
-      padding: 0.75rem 2rem;
-      text-decoration: none;
-      border: none;
-      border-radius: 0;
-      transition: background 0.1s linear;
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
     }
-    .back-link:hover {
-      background: #B8181D;
-    }
+
     .divider {
       width: 60px;
       height: 2px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+      margin: 0 auto 32px;
+    }
+
+    .error-msg {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+      max-width: 420px;
+      line-height: 1.7;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--white);
       background: var(--red);
-      margin: 1.5rem auto;
+      padding: 14px 28px;
+      text-decoration: none;
+      border: none;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .back-link:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+    }
+
+    .back-link-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 14px 28px;
+      text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .back-link-outline:hover {
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
+    }
+
+    .error-terminal {
+      margin-top: 48px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.15);
+      text-transform: uppercase;
+    }
+
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      width: 2px; height: 2px;
+      background: var(--red);
+      border-radius: 50%;
+      opacity: 0.3;
+      z-index: 0;
+      animation: float-up linear infinite;
+    }
+    @keyframes float-up {
+      0% { transform: translateY(100vh) scale(1); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .error-code, .error-code::before, .error-code::after { animation: none !important; }
+      .error-label .blink { animation: none !important; }
+      .particle { animation: none !important; display: none; }
     }
   </style>
-<!-- Premium Visual Redesign -->
-<link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
-  <div class="logo">
-    <a href="/"><img src="/images/logo/imagotipo-blanco.png" alt="WellCore Fitness" /></a>
+  <!-- Floating particles -->
+  <div class="particle" style="left:10%;animation-duration:8s;animation-delay:0s;width:3px;height:3px;"></div>
+  <div class="particle" style="left:25%;animation-duration:12s;animation-delay:2s;"></div>
+  <div class="particle" style="left:40%;animation-duration:10s;animation-delay:1s;width:2.5px;height:2.5px;"></div>
+  <div class="particle" style="left:55%;animation-duration:9s;animation-delay:3s;"></div>
+  <div class="particle" style="left:70%;animation-duration:11s;animation-delay:0.5s;width:3px;height:3px;"></div>
+  <div class="particle" style="left:85%;animation-duration:7s;animation-delay:4s;"></div>
+  <div class="particle" style="left:15%;animation-duration:13s;animation-delay:1.5s;"></div>
+  <div class="particle" style="left:60%;animation-duration:10s;animation-delay:2.5s;width:2px;height:2px;"></div>
+
+  <div class="error-content">
+    <div class="logo">
+      <a href="/"><img src="/images/logo/imagotipo-blanco.png" alt="WellCore Fitness" /></a>
+    </div>
+    <div class="error-code">404</div>
+    <div class="error-label">// page_not_found <span class="blink">_</span></div>
+    <div class="divider"></div>
+    <p class="error-msg">La ruta solicitada no existe o fue movida. Verifica la URL o vuelve al inicio para encontrar lo que buscas.</p>
+    <div class="error-actions">
+      <a href="/" class="back-link v6-magnetic"><i class="fas fa-arrow-left"></i> Volver al inicio</a>
+      <a href="/rise.html" class="back-link-outline v6-magnetic"><i class="fas fa-fire" style="color:#E31E24;"></i> Ver RISE</a>
+    </div>
+    <div class="error-terminal">
+      <i class="fas fa-terminal" style="margin-right:6px;"></i> wellcore.system &mdash; error 404 &mdash; <span id="errorTime"></span>
+    </div>
   </div>
-  <div class="error-code">404</div>
-  <div class="error-label">// not found</div>
-  <div class="divider"></div>
-  <p class="error-msg">P&aacute;gina no encontrada. La ruta solicitada no existe o fue movida.</p>
-  <a href="/" class="back-link">Volver al inicio</a>
+
+<script>
+  document.getElementById('errorTime').textContent = new Date().toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+</script>
+<script src="js/wellcore-v6.js" defer></script>
 </body>
 </html>

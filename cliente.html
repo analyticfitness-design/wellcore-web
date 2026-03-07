@@ -1686,6 +1686,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <link rel="stylesheet" href="css/wellcore-v5.css">
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
@@ -7142,5 +7143,43 @@ document.addEventListener('keydown', function(e) {
 </script>
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
+<script src="js/wellcore-v6.js" defer></script>
+<script>
+// v6 Skeleton loading — shimmers KPI values while data loads
+(function(){
+  var kpis = document.querySelectorAll('.kpi-value');
+  kpis.forEach(function(el){
+    if (el.textContent.trim() === '\u2014' || el.textContent.trim() === '') {
+      el.classList.add('v6-skeleton');
+      el.style.minWidth = '60px';
+      el.style.minHeight = '28px';
+      el.style.display = 'inline-block';
+    }
+  });
+  // Observer: remove skeleton when content changes
+  var obs = new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      var t = m.target;
+      if (t.classList && t.classList.contains('v6-skeleton') &&
+          t.textContent.trim() !== '\u2014' && t.textContent.trim() !== '') {
+        t.classList.remove('v6-skeleton');
+        t.style.minWidth = '';
+        t.style.minHeight = '';
+      }
+    });
+  });
+  kpis.forEach(function(el){
+    obs.observe(el, { childList: true, characterData: true, subtree: true });
+  });
+  // Safety: remove all skeletons after 5s
+  setTimeout(function(){
+    document.querySelectorAll('.kpi-value.v6-skeleton').forEach(function(el){
+      el.classList.remove('v6-skeleton');
+      el.style.minWidth = '';
+      el.style.minHeight = '';
+    });
+  }, 5000);
+})();
+</script>
 </body>
 </html>

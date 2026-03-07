@@ -2488,8 +2488,20 @@
 <link rel="stylesheet" href="css/wellcore-v5.css">
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
+<!-- WellCore v6 Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v6.css">
 </head>
 <body>
+<!-- v6 Scroll Progress -->
+<div class="v6-scroll-progress"></div>
+<!-- v6 RISE Promo Bar -->
+<div class="v6-promo-bar" id="v6PromoBar">
+  <i class="fas fa-bolt" style="color:#E31E24;"></i>
+  <span>El <strong>Reto RISE 30 Dias</strong> esta abierto</span>
+  <span class="v6-promo-bar-countdown" id="v6PromoCountdown"></span>
+  <a href="/rise-enroll.html" class="v6-promo-bar-cta">Unete Ahora <i class="fas fa-arrow-right"></i></a>
+  <button class="v6-promo-bar-close" aria-label="Cerrar">&times;</button>
+</div>
 <!-- v5 Preloader -->
 <div id="v5-preloader" class="v5-preloader">
   <div class="v5-preloader-logo">WELL<span>CORE</span></div>
@@ -2574,7 +2586,7 @@
 ============================================================ -->
 <section id="hero">
   <div class="hero-side-photo">
-    <img src="images/coach/IMG_7580.png" alt="WellCore Fitness Coach" />
+    <img src="images/coach/IMG_7580.png" alt="WellCore Fitness Coach" fetchpriority="high" decoding="async" width="600" height="800" />
   </div>
   <div class="hero-inner">
 
@@ -2625,7 +2637,7 @@
 
     <!-- CTA buttons -->
     <div class="hero-ctas">
-      <a href="/inscripcion.html" class="btn-red"><div class="btn-bg"></div><span class="btn-text">Comenzar Ahora &rarr;</span></a>
+      <a href="/inscripcion.html" class="btn-red v6-magnetic"><div class="btn-bg"></div><span class="btn-text">Comenzar Ahora &rarr;</span></a>
       <a href="planes.html" class="btn-outline">Ver Planes</a>
     </div>
 
@@ -2661,7 +2673,7 @@
         </div>
 
         <div class="rise-ctas">
-          <a href="/rise-enroll.html" class="btn-red"><div class="btn-bg"></div><span class="btn-text">Unirme al Reto &rarr;</span></a>
+          <a href="/rise-enroll.html" class="btn-red v6-magnetic"><div class="btn-bg"></div><span class="btn-text">Unirme al Reto &rarr;</span></a>
           <a href="/rise.html" class="rise-cta-secondary">Ver Detalles</a>
         </div>
 
@@ -2805,7 +2817,7 @@
 
     <!-- Photo cell -->
     <div class="about-photo-cell" data-aos="fade-right">
-      <img src="images/coach/studio-54.jpg" alt="WellCore Fitness Studio" />
+      <img src="images/coach/studio-54.jpg" alt="WellCore Fitness Studio" loading="lazy" decoding="async" width="600" height="400" />
       <div class="about-photo-overlay"></div>
     </div>
 
@@ -2894,7 +2906,7 @@
 
       <!-- Plan Esencial -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="0">
-        <div class="plan-card">
+        <div class="plan-card v6-contain">
           <div class="plan-name">ESENCIAL</div>
           <div class="plan-price">$399.000</div>
           <div class="plan-price-period">COP / mes</div>
@@ -2913,7 +2925,7 @@
 
       <!-- Plan Metodo (featured) -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="plan-card featured">
+        <div class="plan-card featured v6-contain">
           <div class="popular-badge">M&Aacute;S POPULAR</div>
           <div class="plan-name">M&Eacute;TODO</div>
           <div class="plan-price">$504.000</div>
@@ -2934,7 +2946,7 @@
 
       <!-- Plan Elite -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="plan-card">
+        <div class="plan-card v6-contain">
           <div class="plan-name">&Eacute;LITE</div>
           <div class="plan-price">$630.000</div>
           <div class="plan-price-period">COP / mes</div>
@@ -2971,18 +2983,15 @@
     </div>
     <div class="row g-4 justify-content-center">
 
-      <!-- Case 1 -->
+      <!-- Case 1 — v6 Before/After Slider -->
       <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="0">
         <div class="transf-card">
-          <div class="transf-photos">
-            <div class="transf-photo">
-              <img src="images/transformaciones/antes-01.jpg" alt="Antes - Maria L." loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
-              <div class="transf-photo-label">Antes</div>
-            </div>
-            <div class="transf-photo">
-              <img src="images/transformaciones/despues-01.jpg" alt="Despues - Maria L." loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
-              <div class="transf-photo-label">Despu&eacute;s</div>
-            </div>
+          <div class="v6-compare" style="aspect-ratio:3/4;">
+            <img src="images/transformaciones/antes-01.jpg" alt="Antes - Maria L." loading="lazy" class="v6-compare-before">
+            <img src="images/transformaciones/despues-01.jpg" alt="Despues - Maria L." loading="lazy" class="v6-compare-after">
+            <div class="v6-compare-slider"></div>
+            <span class="v6-compare-label v6-compare-label-before">Antes</span>
+            <span class="v6-compare-label v6-compare-label-after">Despu&eacute;s</span>
           </div>
           <div class="transf-info">
             <div class="transf-name">MAR&Iacute;A L.</div>
@@ -3070,7 +3079,7 @@
      NEW SECTION: #coaches
      INSERT between #transformaciones and #blog
 ============================================================ -->
-<section id="coaches">
+<section id="coaches" class="v6-lazy-section">
   <div style="max-width:1280px;margin:0 auto;padding:100px 32px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="coaches-grid" data-aos="fade-up">
     <!-- LEFT: Manifesto -->
     <div>
@@ -3127,7 +3136,7 @@
 <!-- ============================================================
      8. BLOG V2
 ============================================================ -->
-<section id="blog">
+<section id="blog" class="v6-lazy-section">
   <div class="blog-header" data-aos="fade-up">
     <div>
       <span class="label-tag" style="color:var(--red);"><i class="fas fa-book-open" aria-hidden="true" style="margin-right:5px;"></i>CONOCIMIENTO</span>
@@ -3144,7 +3153,7 @@
     <!-- Blog Card 1: Deficit Calorico -->
     <a href="blog/deficit-calorico.html" class="blog-card" data-aos="fade-up" data-aos-delay="0">
       <div class="blog-img">
-        <img src="images/blog/deficit-calorico.jpg" alt="D&eacute;ficit Cal&oacute;rico" />
+        <img src="images/blog/deficit-calorico.jpg" alt="D&eacute;ficit Cal&oacute;rico" loading="lazy" decoding="async" width="400" height="240" />
       </div>
       <div class="blog-body">
         <span class="blog-cat">Nutrici&oacute;n</span>
@@ -3160,7 +3169,7 @@
     <!-- Blog Card 2: Hipertrofia -->
     <a href="blog/hipertrofia.html" class="blog-card" data-aos="fade-up" data-aos-delay="100">
       <div class="blog-img">
-        <img src="images/blog/hipertrofia.jpg" alt="Hipertrofia" />
+        <img src="images/blog/hipertrofia.jpg" alt="Hipertrofia" loading="lazy" decoding="async" width="400" height="240" />
       </div>
       <div class="blog-body">
         <span class="blog-cat">Entrenamiento</span>
@@ -3176,7 +3185,7 @@
     <!-- Blog Card 3: Rebote de Peso -->
     <a href="blog/rebote-peso.html" class="blog-card" data-aos="fade-up" data-aos-delay="200">
       <div class="blog-img">
-        <img src="images/blog/rebote-peso.jpg" alt="Rebote de Peso" />
+        <img src="images/blog/rebote-peso.jpg" alt="Rebote de Peso" loading="lazy" decoding="async" width="400" height="240" />
       </div>
       <div class="blog-body">
         <span class="blog-cat">Fisiolog&iacute;a</span>
@@ -3197,7 +3206,7 @@
 <!-- ============================================================
      9. FAQ
 ============================================================ -->
-<section id="faq">
+<section id="faq" class="v6-lazy-section">
   <div class="container">
     <div class="faq-header" data-aos="fade-up">
       <span class="label-tag"><i class="fas fa-circle-question" aria-hidden="true" style="margin-right:5px;"></i>PREGUNTAS</span>
@@ -3320,7 +3329,7 @@
       <p class="cta-sub">Sin compromiso. Sin contratos. Solo resultados.</p>
       <div class="cta-beta-badge">&#9670; Cupos limitados en fase beta</div>
       <div class="cta-buttons">
-        <a href="/inscripcion.html" class="btn-dark">Ver Planes &rarr;</a>
+        <a href="/inscripcion.html" class="btn-dark v6-magnetic">Ver Planes &rarr;</a>
         <a href="https://wa.me/573124904720" class="btn-white-outline">Consulta Gratuita</a>
       </div>
       <div class="cta-trust-row">
@@ -3415,6 +3424,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="js/v5-effects.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script src="js/wellcore-v6.js" defer></script>
 <script>
   /* --- AOS Init --- */
   AOS.init({
@@ -3835,5 +3848,157 @@
   if (dEl) { tickSection(); setInterval(tickSection, 1000); }
 })();
 </script>
+
+<!-- v6 Exit Intent Modal -->
+<div class="v6-modal-backdrop" id="v6ExitBackdrop"></div>
+<div class="v6-modal" id="v6ExitModal" style="position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:var(--surface,#111113);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px 32px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.6);">
+    <button onclick="document.getElementById('v6ExitModal').classList.remove('open');document.getElementById('v6ExitBackdrop').classList.remove('open');" style="position:absolute;top:12px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;line-height:1;">&times;</button>
+    <div style="font-size:40px;margin-bottom:12px;">&#128170;</div>
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;color:#fff;margin-bottom:8px;">ESPERA — NO TE VAYAS</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;margin-bottom:24px;">El <strong style="color:#E31E24;">Reto RISE 30 Dias</strong> tiene cupos limitados. Transforma tu cuerpo con ciencia, no con milagros.</p>
+    <a href="/rise-enroll.html" style="display:inline-block;background:#E31E24;color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 32px;border-radius:8px;text-decoration:none;margin-bottom:16px;transition:background 0.15s;">Quiero Inscribirme &rarr;</a>
+    <p style="font-size:11px;color:rgba(255,255,255,0.3);">Sin compromiso. Cancela cuando quieras.</p>
+  </div>
+</div>
+<script>
+(function(){
+  if (sessionStorage.getItem('v6_exit_shown') || !window.matchMedia('(pointer: fine)').matches) return;
+  document.addEventListener('mouseleave', function(e){
+    if (e.clientY > 0) return;
+    if (sessionStorage.getItem('v6_exit_shown')) return;
+    sessionStorage.setItem('v6_exit_shown', '1');
+    document.getElementById('v6ExitModal').classList.add('open');
+    document.getElementById('v6ExitBackdrop').classList.add('open');
+  });
+  document.getElementById('v6ExitBackdrop').addEventListener('click', function(){
+    document.getElementById('v6ExitModal').classList.remove('open');
+    this.classList.remove('open');
+  });
+})();
+</script>
+
+<!-- v6 Social Proof Ticker -->
+<div class="v6-social-proof" id="v6SocialProof">
+  <div class="v6-social-proof-item active">
+    <i class="fas fa-fire"></i>
+    <span><strong>47 personas</strong> completaron el Reto RISE este mes</span>
+  </div>
+  <div class="v6-social-proof-item">
+    <i class="fas fa-chart-line"></i>
+    <span><strong>94%</strong> de adherencia promedio en RISE 2026</span>
+  </div>
+  <div class="v6-social-proof-item">
+    <i class="fas fa-weight-scale"></i>
+    <span>Carlos P. perdio <strong>8kg</strong> en 30 dias con RISE</span>
+  </div>
+  <div class="v6-social-proof-item">
+    <i class="fas fa-ruler"></i>
+    <span>Sofia M. redujo <strong>6cm de cintura</strong> en un mes</span>
+  </div>
+  <div class="v6-social-proof-item">
+    <i class="fas fa-users"></i>
+    <span><strong>+120 clientes</strong> activos en la plataforma</span>
+  </div>
+  <button class="v6-social-proof-close" aria-label="Cerrar">&times;</button>
+</div>
+<script>
+(function(){
+  var bar = document.getElementById('v6SocialProof');
+  if (!bar || sessionStorage.getItem('v6_sp_closed')) { if(bar) bar.remove(); return; }
+  var items = bar.querySelectorAll('.v6-social-proof-item');
+  var idx = 0;
+  setInterval(function(){
+    items[idx].classList.remove('active');
+    idx = (idx + 1) % items.length;
+    items[idx].classList.add('active');
+  }, 4000);
+  bar.querySelector('.v6-social-proof-close').addEventListener('click', function(){
+    bar.remove();
+    sessionStorage.setItem('v6_sp_closed', '1');
+  });
+})();
+</script>
+
+<!-- v6 Promo Bar Script -->
+<script>
+(function(){
+  var bar = document.getElementById('v6PromoBar');
+  if (!bar || sessionStorage.getItem('v6_promo_closed')) { if(bar) bar.remove(); return; }
+
+  // Countdown: RISE closes on the 15th of each month (or next month if past)
+  var now = new Date();
+  var closeDate = new Date(now.getFullYear(), now.getMonth(), 15);
+  if (now > closeDate) closeDate.setMonth(closeDate.getMonth() + 1);
+
+  var countdownEl = document.getElementById('v6PromoCountdown');
+  function updateCountdown() {
+    var diff = closeDate - new Date();
+    if (diff <= 0) { countdownEl.textContent = 'Ultima oportunidad'; return; }
+    var days = Math.floor(diff / 86400000);
+    var hrs = Math.floor((diff % 86400000) / 3600000);
+    countdownEl.textContent = days + 'd ' + hrs + 'h restantes';
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  // Show with delay
+  setTimeout(function(){ bar.classList.add('show'); }, 1500);
+
+  // Dismiss
+  bar.querySelector('.v6-promo-bar-close').addEventListener('click', function(){
+    bar.classList.remove('show');
+    sessionStorage.setItem('v6_promo_closed', '1');
+    setTimeout(function(){ bar.remove(); }, 400);
+    // Reset navbar position
+    var nav = document.getElementById('navbar');
+    if (nav) nav.style.top = '';
+  });
+})();
+</script>
+
+<!-- GSAP v6 Premium Animations -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Hero stats — stagger reveal */
+  gsap.from('.hero-stat', {
+    opacity: 0, y: 30, stagger: 0.15, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: '.hero-stats', start: 'top 85%' }
+  });
+
+  /* Process steps — stagger from left */
+  gsap.from('.proceso-step-v2', {
+    opacity: 0, x: -40, stagger: 0.12, duration: 0.7, ease: 'power2.out',
+    scrollTrigger: { trigger: '.proceso-steps-v2', start: 'top 80%' }
+  });
+
+  /* Plan cards — scale + stagger */
+  gsap.from('.plan-card', {
+    opacity: 0, scale: 0.92, y: 40, stagger: 0.15, duration: 0.8, ease: 'back.out(1.4)',
+    scrollTrigger: { trigger: '.plan-card', start: 'top 85%' }
+  });
+
+  /* Parallax on hero background — subtle */
+  var heroBg = document.querySelector('.hero-bg-image, .hero-visual img');
+  if (heroBg) {
+    gsap.to(heroBg, {
+      y: 80,
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+    });
+  }
+
+  /* Counter animation on scroll for hero stat numbers */
+  document.querySelectorAll('.hero-stat-num').forEach(function(el) {
+    gsap.from(el, {
+      textContent: 0, duration: 1.5, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%' }
+    });
+  });
+});
+</script>
+
 </body>
 </html>
