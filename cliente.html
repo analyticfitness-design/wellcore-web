@@ -378,16 +378,19 @@ input,textarea,select{font-family:'Inter',sans-serif}
   display:flex;gap:4px;
   border-bottom:1px solid var(--border);
   margin-bottom:22px;
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
 }
+.tab-nav::-webkit-scrollbar{display:none}
 .tab-btn{
   background:none;border:none;
-  font-size:.855rem;font-weight:500;
+  font-size:.82rem;font-weight:500;
   color:var(--gray);
-  padding:10px 18px;
+  padding:10px 14px;
   border-bottom:2px solid transparent;
   margin-bottom:-1px;
   transition:all var(--transition);
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;gap:6px;
+  white-space:nowrap;flex-shrink:0;
 }
 .tab-btn:hover{color:var(--white)}
 .tab-btn.active{color:var(--white);border-bottom-color:var(--red)}
@@ -412,19 +415,23 @@ input,textarea,select{font-family:'Inter',sans-serif}
 /* ===== LOCKED OVERLAY ===== */
 .locked-overlay{
   position:absolute;inset:0;
-  background:rgba(10,10,10,.92);
-  backdrop-filter:blur(4px);
+  background:rgba(10,10,10,0.65);
+  backdrop-filter:blur(3px);
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   gap:14px;text-align:center;
   border-radius:var(--radius);
+  z-index:5;padding:24px;
 }
-.locked-overlay i{font-size:2.5rem;color:var(--gray)}
+.locked-overlay .lock-icon{font-size:2.5rem;color:var(--red);margin-bottom:4px}
 .locked-overlay h3{
   font-family:'Bebas Neue',sans-serif;
   font-size:1.6rem;letter-spacing:.06em;
 }
 .locked-overlay p{font-size:.875rem;color:var(--gray)}
+.lock-features{list-style:none;padding:0;margin:12px 0 16px;text-align:left;max-width:280px}
+.lock-features li{font-size:.82rem;color:var(--text-sec);padding:4px 0;display:flex;align-items:center;gap:8px}
+.lock-features li::before{content:'\2713';color:var(--red);font-weight:700;font-size:.9rem}
 .btn-upgrade{
   background:linear-gradient(135deg,var(--red),var(--red-dark));
   color:#fff;border:none;border-radius:var(--radius-sm);
@@ -1530,6 +1537,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <button class="tab-btn" id="tab-btn-habitos" onclick="loadPlanTab('habitos')">
           <span style="color:#00D9FF;font-weight:700">//</span> Habitos
         </button>
+        <button class="tab-btn" id="tab-btn-suplementacion" onclick="loadPlanTab('suplementacion')">
+          <span style="color:#00D9FF;font-weight:700">//</span> Suplementacion
+        </button>
+        <button class="tab-btn" id="tab-btn-ciclo" onclick="loadPlanTab('ciclo')">
+          <span style="color:#00D9FF;font-weight:700">//</span> Ciclo Hormonal
+        </button>
+        <button class="tab-btn" id="tab-btn-bloodwork" onclick="loadPlanTab('bloodwork')">
+          <span style="color:#00D9FF;font-weight:700">//</span> Bloodwork
+        </button>
       </div>
 
       <div id="tab-content-entrenamiento" class="tab-content active">
@@ -1586,34 +1602,16 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <i class="fas fa-envelope"></i> Enviar programa a mi correo
         </button>
       </div>
-      <div id="tab-content-nutricion" class="tab-content">
-        <div class="iframe-wrap" id="wrap-nutricion">
-          <iframe id="iframe-nutricion" src="about:blank" title="Plan de Nutricion"></iframe>
-          <div class="locked-overlay" id="lock-nutricion" style="display:none">
-            <span style="font-size:2.5rem;color:var(--gray)">//</span>
-            <h3>Contenido Bloqueado</h3>
-            <p>Disponible en Plan METODO o ELITE</p>
-            <a href="pagar.html" class="btn-upgrade">&rarr; Mejorar Plan</a>
-          </div>
-        </div>
-        <button class="btn-send-plan" id="sendBtn-nutricion" onclick="sendPlanEmail('nutricion')" style="display:none">
-          <i class="fas fa-envelope"></i> Enviar programa a mi correo
-        </button>
-      </div>
-      <div id="tab-content-habitos" class="tab-content">
-        <div class="iframe-wrap" id="wrap-habitos">
-          <iframe id="iframe-habitos" src="about:blank" title="Plan de Habitos"></iframe>
-          <div class="locked-overlay" id="lock-habitos" style="display:none">
-            <span style="font-size:2.5rem;color:var(--gray)">//</span>
-            <h3>Contenido Bloqueado</h3>
-            <p>Disponible en Plan ELITE</p>
-            <a href="pagar.html" class="btn-upgrade">&rarr; Mejorar Plan</a>
-          </div>
-        </div>
+      <div id="tab-content-nutricion" class="tab-content"></div>
+      <div id="tab-content-habitos" class="tab-content"></div>
+      <div id="tab-content-habitos-legacy" style="display:none">
         <button class="btn-send-plan" id="sendBtn-habitos" onclick="sendPlanEmail('habitos')" style="display:none">
           <i class="fas fa-envelope"></i> Enviar programa a mi correo
         </button>
       </div>
+      <div id="tab-content-suplementacion" class="tab-content"></div>
+      <div id="tab-content-ciclo" class="tab-content"></div>
+      <div id="tab-content-bloodwork" class="tab-content"></div>
     </section>
 
     <!-- ===== SECTION 3: SEGUIMIENTO ===== -->
@@ -2605,52 +2603,536 @@ function loadPlanTab(tab) {
   if (content) content.classList.add('active');
 
   const planLevel = PLAN_LEVEL[clientPlan] || 1;
-  const tabLevel = { entrenamiento: 1, nutricion: 2, habitos: 3 };
-  const required = tabLevel[tab];
+  const tabLevel = { entrenamiento: 1, nutricion: 2, habitos: 1, suplementacion: 1, ciclo: 3, bloodwork: 3 };
+  const required = tabLevel[tab] || 1;
+  const interactiveTabs = ['nutricion','habitos','suplementacion','ciclo','bloodwork'];
 
   if (planLevel >= required) {
-    // Unlock
-    const lock = document.getElementById('lock-' + tab);
-    if (lock) lock.style.display = 'none';
-    if (!planTabLoaded[tab]) {
-      // Skip iframe load for entrenamiento — interactive view handles its own init
-      if (tab !== 'entrenamiento') {
-        const iframe = document.getElementById('iframe-' + tab);
-        if (iframe) {
-          const personalSrc = 'planes/' + clientId + '-' + tab + '.html';
-          const demoSrc = 'planes/demo-' + tab + '.html';
-          // Verify personal plan content (Herd returns 200 for missing files)
-          fetch(personalSrc).then(function(r) {
-            if (!r.ok) throw new Error('not found');
-            return r.text();
-          }).then(function(html) {
-            var isReal = html.indexOf('exercise-table') >= 0 || html.indexOf('plan-cover') >= 0 || html.indexOf('nutricion-plan') >= 0 || html.indexOf('habitos-plan') >= 0;
-            iframe.src = isReal ? personalSrc : demoSrc;
-            var sendBtn = document.getElementById('sendBtn-' + tab);
-            if (sendBtn && isReal) sendBtn.style.display = 'flex';
-          }).catch(function() {
-            iframe.src = demoSrc;
-          });
+    // Unlocked — render interactive content
+    if (!planTabLoaded[tab] && interactiveTabs.indexOf(tab) >= 0) {
+      content.innerHTML = '';
+      if (tab === 'nutricion') renderNutritionInteractive(content);
+      else if (tab === 'habitos') renderHabitsInteractive(content);
+      else if (tab === 'suplementacion') renderSupplementsInteractive(content);
+      else if (tab === 'ciclo') renderCycleInteractive(content);
+      else if (tab === 'bloodwork') renderBloodworkInteractive(content);
+      planTabLoaded[tab] = true;
+    } else if (tab === 'entrenamiento' && !planTabLoaded[tab]) {
+      // Check for personal entrenamiento plan (for send button)
+      fetch('planes/' + clientId + '-entrenamiento.html').then(function(r) {
+        if (!r.ok) throw new Error('not found');
+        return r.text();
+      }).then(function(html) {
+        if (html.indexOf('exercise-table') >= 0 || html.indexOf('plan-cover') >= 0) {
+          var sendBtn = document.getElementById('sendBtn-entrenamiento');
+          if (sendBtn) sendBtn.style.display = 'flex';
         }
-      } else {
-        // Check for personal entrenamiento plan (for send button)
-        fetch('planes/' + clientId + '-entrenamiento.html').then(function(r) {
-          if (!r.ok) throw new Error('not found');
-          return r.text();
-        }).then(function(html) {
-          if (html.indexOf('exercise-table') >= 0 || html.indexOf('plan-cover') >= 0) {
-            var sendBtn = document.getElementById('sendBtn-entrenamiento');
-            if (sendBtn) sendBtn.style.display = 'flex';
-          }
-        }).catch(function() {});
-      }
+      }).catch(function() {});
       planTabLoaded[tab] = true;
     }
   } else {
-    // Show lock
-    const lock = document.getElementById('lock-' + tab);
-    if (lock) lock.style.display = 'flex';
+    // Locked — show demo content + blur overlay
+    if (!planTabLoaded[tab]) {
+      content.innerHTML = '';
+      content.style.position = 'relative';
+      content.style.minHeight = '400px';
+      var demoWrap = document.createElement('div');
+      demoWrap.style.cssText = 'filter:blur(1px);pointer-events:none;opacity:0.7';
+      demoWrap.appendChild(getDemoContent(tab));
+      content.appendChild(demoWrap);
+      content.appendChild(buildLockedOverlay(tab));
+      planTabLoaded[tab] = true;
+    }
   }
+}
+
+// ===== TAB HELPERS: LOCKED OVERLAY + DEMO CONTENT =====
+function getTabDisplayName(tab) {
+  var names = { nutricion:'Nutricion', habitos:'Habitos', suplementacion:'Suplementacion', ciclo:'Ciclo Hormonal', bloodwork:'Bloodwork / Labs' };
+  return names[tab] || tab;
+}
+function getTabFeatures(tab) {
+  var f = {
+    nutricion: ['Plan de comidas personalizado','Macros por alimento','Tips del coach IA','Historial nutricional'],
+    habitos: ['Tracker diario interactivo','4 categorias de habitos','Progreso visual y racha','Tips personalizados'],
+    suplementacion: ['Protocolo de suplementos','Timing y dosis optimas','3 categorias especializadas','Notas del coach'],
+    ciclo: ['Timeline visual de fases','Tabla de compuestos y dosis','Protocolo PCT completo','Calendario de laboratorios'],
+    bloodwork: ['Marcadores con rangos visuales','5 categorias de analisis','Historial de resultados','Alertas automaticas']
+  };
+  return f[tab] || [];
+}
+function buildLockedOverlay(tab) {
+  var ov = document.createElement('div');
+  ov.className = 'locked-overlay';
+  ov.style.display = 'flex';
+  var icon = document.createElement('div');
+  icon.className = 'lock-icon';
+  icon.innerHTML = '<i class="fas fa-lock"></i>';
+  ov.appendChild(icon);
+  var h3 = document.createElement('h3');
+  h3.textContent = getTabDisplayName(tab);
+  ov.appendChild(h3);
+  var p = document.createElement('p');
+  var tabLevel = { nutricion: 2, habitos: 1, suplementacion: 1, ciclo: 3, bloodwork: 3 };
+  var lvl = tabLevel[tab] || 3;
+  p.textContent = lvl >= 3 ? 'Disponible en Plan ELITE' : 'Disponible en Plan METODO o ELITE';
+  ov.appendChild(p);
+  var ul = document.createElement('ul');
+  ul.className = 'lock-features';
+  getTabFeatures(tab).forEach(function(feat) {
+    var li = document.createElement('li');
+    li.textContent = feat;
+    ul.appendChild(li);
+  });
+  ov.appendChild(ul);
+  var a = document.createElement('a');
+  a.href = 'inscripcion.html';
+  a.className = 'btn-upgrade';
+  a.innerHTML = '&rarr; Mejorar Plan';
+  ov.appendChild(a);
+  return ov;
+}
+function getDemoContent(tab) {
+  if (tab === 'nutricion') return getNutriDemoContent();
+  if (tab === 'habitos') return getHabitsDemoContent();
+  if (tab === 'suplementacion') return getSupplementsDemoContent();
+  if (tab === 'ciclo') return getCycleDemoContent();
+  if (tab === 'bloodwork') return getBloodworkDemoContent();
+  var d = document.createElement('div');
+  d.textContent = 'Contenido no disponible';
+  return d;
+}
+
+// ===== NUTRITION DATA + INTERACTIVE VIEW =====
+var NUTRITION_DATA = {
+  targets: { cal: 2800, prot: 180, carbs: 320, fat: 85 },
+  meals: [
+    { name:'Desayuno', foods:[{name:'Avena con leche',qty:'80g',cal:320,prot:12,carbs:52,fat:8},{name:'Huevos revueltos',qty:'3 uds',cal:210,prot:18,carbs:2,fat:14},{name:'Banana',qty:'1 ud',cal:105,prot:1,carbs:27,fat:0}]},
+    { name:'Media Manana', foods:[{name:'Yogurt griego',qty:'200g',cal:130,prot:20,carbs:8,fat:2},{name:'Almendras',qty:'30g',cal:175,prot:6,carbs:6,fat:15},{name:'Arandanos',qty:'80g',cal:46,prot:1,carbs:12,fat:0}]},
+    { name:'Almuerzo', foods:[{name:'Pechuga de pollo',qty:'200g',cal:330,prot:62,carbs:0,fat:7},{name:'Arroz integral',qty:'150g',cal:170,prot:4,carbs:36,fat:1},{name:'Ensalada mixta',qty:'150g',cal:45,prot:2,carbs:8,fat:1},{name:'Aceite de oliva',qty:'15ml',cal:120,prot:0,carbs:0,fat:14}]},
+    { name:'Merienda', foods:[{name:'Batido proteina',qty:'1 scoop',cal:120,prot:24,carbs:3,fat:1},{name:'Pan integral',qty:'2 rebanadas',cal:160,prot:6,carbs:28,fat:2}]},
+    { name:'Cena', foods:[{name:'Salmon',qty:'180g',cal:350,prot:40,carbs:0,fat:20},{name:'Papa al horno',qty:'200g',cal:160,prot:4,carbs:36,fat:0},{name:'Brocoli',qty:'150g',cal:50,prot:4,carbs:10,fat:1}]},
+    { name:'Pre-Entreno', foods:[{name:'Banana',qty:'1 ud',cal:105,prot:1,carbs:27,fat:0},{name:'Cafe negro',qty:'1 taza',cal:5,prot:0,carbs:1,fat:0}]},
+    { name:'Post-Entreno', foods:[{name:'Batido proteina + avena',qty:'1 porcion',cal:280,prot:30,carbs:35,fat:4}]}
+  ]
+};
+function renderNutritionInteractive(container) {
+  var data = NUTRITION_DATA;
+  var totals = {cal:0,prot:0,carbs:0,fat:0};
+  data.meals.forEach(function(m){m.foods.forEach(function(f){totals.cal+=f.cal;totals.prot+=f.prot;totals.carbs+=f.carbs;totals.fat+=f.fat})});
+
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu plan personalizado aparecera cuando tu coach lo asigne.</div>';
+
+  // KPI Bar
+  html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">';
+  var kpis = [
+    {label:'Calorias',val:totals.cal,target:data.targets.cal,color:'#FF6B35'},
+    {label:'Proteina',val:totals.prot,target:data.targets.prot,color:'#00D9FF'},
+    {label:'Carbos',val:totals.carbs,target:data.targets.carbs,color:'#FFD700'},
+    {label:'Grasas',val:totals.fat,target:data.targets.fat,color:'#FF4D6D'}
+  ];
+  kpis.forEach(function(k){
+    var pct = Math.min(100,Math.round(k.val/k.target*100));
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center">';
+    html += '<div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em">'+k.label+'</div>';
+    html += '<div style="font-size:1.3rem;font-weight:700;color:var(--white);margin:4px 0">'+k.val+'<span style="font-size:.7rem;color:var(--gray)"> / '+k.target+'</span></div>';
+    html += '<div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+k.color+';border-radius:2px"></div></div>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // Meal cards
+  data.meals.forEach(function(meal,idx){
+    var mealCal=0,mealProt=0,mealCarbs=0,mealFat=0;
+    meal.foods.forEach(function(f){mealCal+=f.cal;mealProt+=f.prot;mealCarbs+=f.carbs;mealFat+=f.fat});
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden">';
+    html += '<div onclick="this.parentElement.classList.toggle(\'nutri-open\')" style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer">';
+    html += '<div style="display:flex;align-items:center;gap:10px"><span style="color:var(--red);font-weight:700;font-size:.75rem">0'+(idx+1)+'</span><span style="font-weight:600;font-size:.9rem">'+meal.name+'</span></div>';
+    html += '<div style="display:flex;gap:12px;font-size:.72rem;color:var(--gray)"><span>'+mealCal+' cal</span><span>'+mealProt+'g P</span><span>'+mealCarbs+'g C</span><span>'+mealFat+'g G</span><span style="color:var(--text-sec)"><i class="fas fa-chevron-down"></i></span></div>';
+    html += '</div>';
+    html += '<div class="nutri-detail" style="display:none;padding:0 16px 14px;border-top:1px solid var(--border)">';
+    meal.foods.forEach(function(f){
+      html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)">';
+      html += '<div><span style="font-size:.85rem">'+f.name+'</span><span style="font-size:.72rem;color:var(--gray);margin-left:8px">'+f.qty+'</span></div>';
+      html += '<div style="display:flex;gap:10px;font-size:.72rem;color:var(--text-sec)"><span>'+f.cal+'</span><span>'+f.prot+'g</span><span>'+f.carbs+'g</span><span>'+f.fat+'g</span></div>';
+      html += '</div>';
+    });
+    // Coach tip button (Metodo/Elite only)
+    var pl = PLAN_LEVEL[clientPlan] || 1;
+    if (pl >= 2) {
+      html += '<button onclick="event.stopPropagation();getCoachTip(\'nutricion\',\''+meal.name+'\')" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--text-sec);padding:6px 12px;border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip</button>';
+    }
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+  // Add CSS for collapsible
+  var style = document.createElement('style');
+  style.textContent = '.nutri-open .nutri-detail{display:block!important}.nutri-open .fa-chevron-down{transform:rotate(180deg)}';
+  container.appendChild(style);
+}
+function getNutriDemoContent() {
+  var d = document.createElement('div');
+  d.style.cssText = 'padding:16px';
+  var meals = ['Desayuno — 635 cal','Media Manana — 351 cal','Almuerzo — 665 cal','Merienda — 280 cal','Cena — 560 cal'];
+  // KPI preview
+  d.innerHTML = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">CALORIAS</div><div style="font-size:1.1rem;font-weight:700">2800</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">PROTEINA</div><div style="font-size:1.1rem;font-weight:700">180g</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">CARBOS</div><div style="font-size:1.1rem;font-weight:700">320g</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">GRASAS</div><div style="font-size:1.1rem;font-weight:700">85g</div></div>' +
+    '</div>';
+  meals.forEach(function(m){
+    d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.85rem">'+m.split(' — ')[0]+'</span><span style="font-size:.75rem;color:var(--gray)">'+m.split(' — ')[1]+'</span></div>';
+  });
+  return d;
+}
+
+// ===== HABITS DATA + INTERACTIVE VIEW =====
+var HABITS_DATA = {
+  categories: [
+    { name:'Entrenamiento', icon:'fa-dumbbell', habits:[
+      {id:'h1',name:'Completar sesion de entrenamiento',points:10},
+      {id:'h2',name:'Calentar minimo 10 minutos',points:5},
+      {id:'h3',name:'Registrar pesos y repeticiones',points:5}
+    ]},
+    { name:'Nutricion', icon:'fa-utensils', habits:[
+      {id:'h4',name:'Comer 4+ comidas planificadas',points:10},
+      {id:'h5',name:'Consumir meta de proteina',points:10},
+      {id:'h6',name:'Beber 3+ litros de agua',points:5}
+    ]},
+    { name:'Recuperacion', icon:'fa-bed', habits:[
+      {id:'h7',name:'Dormir 7-8 horas',points:10},
+      {id:'h8',name:'Estirar o foam roller 10 min',points:5}
+    ]},
+    { name:'Mindset', icon:'fa-brain', habits:[
+      {id:'h9',name:'Meditar o respiracion 5 min',points:5},
+      {id:'h10',name:'Visualizar tu meta del dia',points:5}
+    ]}
+  ]
+};
+function renderHabitsInteractive(container) {
+  var data = HABITS_DATA;
+  var today = new Date().toISOString().slice(0,10);
+  var storageKey = 'wc_habits_' + today;
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch(e){}
+
+  // Streak calculation
+  var streak = 0;
+  var checkDate = new Date();
+  checkDate.setDate(checkDate.getDate() - 1);
+  for (var s = 0; s < 365; s++) {
+    var dk = 'wc_habits_' + checkDate.toISOString().slice(0,10);
+    var ds = {};
+    try { ds = JSON.parse(localStorage.getItem(dk) || '{}'); } catch(e){}
+    var totalH = 0, doneH = 0;
+    data.categories.forEach(function(c){c.habits.forEach(function(h){totalH++;if(ds[h.id])doneH++})});
+    if (totalH > 0 && doneH / totalH >= 0.7) { streak++; checkDate.setDate(checkDate.getDate() - 1); } else break;
+  }
+
+  var totalHabits = 0, doneCount = 0;
+  data.categories.forEach(function(c){c.habits.forEach(function(h){totalHabits++;if(saved[h.id])doneCount++})});
+  var pct = totalHabits > 0 ? Math.round(doneCount / totalHabits * 100) : 0;
+
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu coach personalizara tus habitos.</div>';
+
+  // Streak + Progress
+  html += '<div style="display:flex;gap:12px;margin-bottom:18px">';
+  html += '<div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center"><div style="font-size:2rem;font-weight:700;color:var(--red)">'+streak+'</div><div style="font-size:.72rem;color:var(--gray);text-transform:uppercase">Dias de racha</div></div>';
+  html += '<div style="flex:2;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:.8rem;font-weight:600">Progreso del dia</span><span style="font-size:.85rem;font-weight:700;color:var(--red)">'+pct+'%</span></div>';
+  html += '<div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden"><div id="habits-progress-fill" style="width:'+pct+'%;height:100%;background:var(--red);border-radius:3px;transition:width .3s"></div></div>';
+  html += '<div style="font-size:.72rem;color:var(--gray);margin-top:4px">'+doneCount+' / '+totalHabits+' habitos completados</div></div>';
+  html += '</div>';
+
+  // Category cards
+  data.categories.forEach(function(cat) {
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden">';
+    html += '<div style="padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)"><i class="fas '+cat.icon+'" style="color:var(--red)"></i><span style="font-weight:600;font-size:.9rem">'+cat.name+'</span></div>';
+    html += '<div style="padding:8px 16px">';
+    cat.habits.forEach(function(h) {
+      var checked = saved[h.id] ? 'checked' : '';
+      html += '<label style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer">';
+      html += '<input type="checkbox" '+checked+' onchange="toggleHabit(\''+h.id+'\')" style="accent-color:var(--red);width:18px;height:18px">';
+      html += '<span style="font-size:.85rem;flex:1">'+h.name+'</span>';
+      html += '<span style="font-size:.65rem;color:var(--gray);background:var(--bg);padding:2px 8px;border-radius:10px">+'+h.points+' pts</span>';
+      html += '</label>';
+    });
+    // Coach tip (Metodo/Elite)
+    var pl = PLAN_LEVEL[clientPlan] || 1;
+    if (pl >= 2) {
+      html += '<button onclick="getCoachTip(\'habitos\',\''+cat.name+'\')" style="margin:8px 0;background:none;border:1px solid var(--border);color:var(--text-sec);padding:6px 12px;border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip</button>';
+    }
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+}
+function toggleHabit(habitId) {
+  var today = new Date().toISOString().slice(0,10);
+  var storageKey = 'wc_habits_' + today;
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch(e){}
+  saved[habitId] = !saved[habitId];
+  if (!saved[habitId]) delete saved[habitId];
+  localStorage.setItem(storageKey, JSON.stringify(saved));
+  // Re-render
+  var container = document.getElementById('tab-content-habitos');
+  if (container) { planTabLoaded['habitos'] = false; loadPlanTab('habitos'); }
+}
+function getHabitsDemoContent() {
+  var d = document.createElement('div');
+  d.style.cssText = 'padding:16px';
+  d.innerHTML = '<div style="display:flex;gap:12px;margin-bottom:16px">' +
+    '<div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center"><div style="font-size:1.8rem;font-weight:700;color:var(--red)">7</div><div style="font-size:.7rem;color:var(--gray)">DIAS RACHA</div></div>' +
+    '<div style="flex:2;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px"><div style="font-size:.8rem;font-weight:600;margin-bottom:6px">Progreso del dia — 80%</div><div style="height:6px;background:var(--border);border-radius:3px"><div style="width:80%;height:100%;background:var(--red);border-radius:3px"></div></div></div></div>';
+  var cats = ['Entrenamiento (3)','Nutricion (3)','Recuperacion (2)','Mindset (2)'];
+  cats.forEach(function(c){
+    d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:8px"><span style="font-size:.85rem">'+c+'</span></div>';
+  });
+  return d;
+}
+
+// ===== SUPPLEMENTS DATA + INTERACTIVE VIEW =====
+var SUPPLEMENTS_DATA = {
+  categories: [
+    { name:'Rendimiento', icon:'fa-bolt', supplements:[
+      {name:'Creatina Monohidrato',dose:'5g',timing:'Post-entreno',notes:'Con agua o batido'},
+      {name:'Beta-Alanina',dose:'3.2g',timing:'Pre-entreno',notes:'Puede causar hormigueo'},
+      {name:'Cafeina',dose:'200mg',timing:'30 min pre-entreno',notes:'No despues de 4pm'},
+      {name:'Citrulina Malato',dose:'6g',timing:'Pre-entreno',notes:'Mejora flujo sanguineo'}
+    ]},
+    { name:'Salud General', icon:'fa-heart', supplements:[
+      {name:'Vitamina D3',dose:'4000 UI',timing:'Manana con grasa',notes:'Importante si poca exposicion solar'},
+      {name:'Omega 3 (EPA/DHA)',dose:'2g',timing:'Con comida',notes:'Antiinflamatorio'},
+      {name:'Magnesio Bisglicinato',dose:'400mg',timing:'Antes de dormir',notes:'Mejora sueno'}
+    ]},
+    { name:'Recuperacion', icon:'fa-sync-alt', supplements:[
+      {name:'Whey Protein',dose:'30g',timing:'Post-entreno',notes:'Dentro de 1h post-sesion'},
+      {name:'Glutamina',dose:'5g',timing:'Post-entreno',notes:'Recuperacion muscular'},
+      {name:'ZMA',dose:'1 capsula',timing:'Antes de dormir',notes:'Zinc + Magnesio + B6'}
+    ]}
+  ]
+};
+function renderSupplementsInteractive(container) {
+  var data = SUPPLEMENTS_DATA;
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Protocolo demo — tu coach ajustara suplementos a tu caso.</div>';
+
+  data.categories.forEach(function(cat) {
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:12px;overflow:hidden">';
+    html += '<div onclick="this.parentElement.classList.toggle(\'supp-open\')" style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer"><div style="display:flex;align-items:center;gap:10px"><i class="fas '+cat.icon+'" style="color:var(--red)"></i><span style="font-weight:600;font-size:.9rem">'+cat.name+'</span><span style="font-size:.7rem;color:var(--gray)">('+cat.supplements.length+')</span></div><i class="fas fa-chevron-down" style="color:var(--text-sec);font-size:.75rem;transition:transform .2s"></i></div>';
+    html += '<div class="supp-detail" style="display:none;border-top:1px solid var(--border)">';
+    cat.supplements.forEach(function(s) {
+      html += '<div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.04);display:grid;grid-template-columns:1fr auto;gap:8px">';
+      html += '<div><div style="font-size:.88rem;font-weight:600">'+s.name+'</div><div style="font-size:.72rem;color:var(--gray);margin-top:2px"><i class="fas fa-clock" style="margin-right:4px"></i>'+s.timing+'</div>';
+      if (s.notes) html += '<div style="font-size:.7rem;color:var(--text-sec);margin-top:2px;font-style:italic">'+s.notes+'</div>';
+      html += '</div>';
+      html += '<div style="text-align:right"><span style="background:var(--red);color:#fff;padding:3px 10px;border-radius:10px;font-size:.72rem;font-weight:600">'+s.dose+'</span></div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+  var style = document.createElement('style');
+  style.textContent = '.supp-open .supp-detail{display:block!important}.supp-open .fa-chevron-down{transform:rotate(180deg)}';
+  container.appendChild(style);
+}
+function getSupplementsDemoContent() {
+  var d = document.createElement('div');
+  d.style.cssText = 'padding:16px';
+  var supps = ['Creatina — 5g post-entreno','Vitamina D3 — 4000 UI','Omega 3 — 2g','Whey Protein — 30g','Cafeina — 200mg pre-entreno'];
+  supps.forEach(function(s){
+    d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.85rem">'+s.split(' — ')[0]+'</span><span style="font-size:.72rem;color:var(--red);background:rgba(200,16,46,0.15);padding:2px 8px;border-radius:10px">'+s.split(' — ')[1]+'</span></div>';
+  });
+  return d;
+}
+
+// ===== CYCLE HORMONAL DATA + INTERACTIVE VIEW =====
+var CYCLE_DATA = {
+  name: 'Ciclo Basico Testosterona',
+  duration: '16 semanas',
+  warning: 'ADVERTENCIA MEDICA: Este contenido es informativo. El uso de sustancias hormonales requiere supervision medica obligatoria. WellCore no promueve ni recomienda el uso sin prescripcion.',
+  phases: [
+    {name:'Carga',weeks:'Sem 1-4',color:'#FF6B35'},
+    {name:'Mantenimiento',weeks:'Sem 5-12',color:'#00D9FF'},
+    {name:'PCT',weeks:'Sem 13-16',color:'#FFD700'},
+    {name:'Descanso',weeks:'Sem 17+',color:'#4CAF50'}
+  ],
+  compounds: [
+    {name:'Testosterona Enantato',dose:'500mg/sem',freq:'2x semana',weeks:'1-12',notes:'Base del ciclo'},
+    {name:'Anastrozol',dose:'0.5mg',freq:'EOD si necesario',weeks:'1-12',notes:'Control estrogeno'},
+    {name:'HCG',dose:'500 UI',freq:'2x semana',weeks:'1-12',notes:'Preservar fertilidad'}
+  ],
+  pct: [
+    {name:'Clomifeno',dose:'50/50/25/25 mg',weeks:'Sem 14-17'},
+    {name:'Tamoxifeno',dose:'20/20/10/10 mg',weeks:'Sem 14-17'}
+  ],
+  labs: [
+    {name:'Linea Base',when:'2 semanas antes',markers:'Hemograma, Perfil hormonal, Hepatico, Lipidos'},
+    {name:'Mid-Cycle',when:'Semana 6',markers:'Estradiol, Hematocrito, Hepatico'},
+    {name:'Post-PCT',when:'Semana 20',markers:'Perfil hormonal completo, Hepatico, Lipidos'}
+  ]
+};
+function renderCycleInteractive(container) {
+  var data = CYCLE_DATA;
+  var html = '';
+  // Warning banner
+  html += '<div style="background:rgba(200,16,46,0.1);border:2px solid var(--red);border-radius:var(--radius-sm);padding:16px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px"><i class="fas fa-exclamation-triangle" style="color:var(--red);font-size:1.5rem;flex-shrink:0;margin-top:2px"></i><div style="font-size:.82rem;color:var(--text-sec);line-height:1.5">'+data.warning+'</div></div>';
+
+  html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Protocolo demo — '+data.name+' ('+data.duration+')</div>';
+
+  // Timeline
+  html += '<div style="margin-bottom:20px"><div style="font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Timeline de Fases</div>';
+  html += '<div style="display:flex;gap:4px;height:40px;border-radius:var(--radius-sm);overflow:hidden">';
+  data.phases.forEach(function(p){
+    html += '<div style="flex:1;background:'+p.color+';display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font-size:.7rem;font-weight:700;color:#000">'+p.name+'</span><span style="font-size:.6rem;color:rgba(0,0,0,0.6)">'+p.weeks+'</span></div>';
+  });
+  html += '</div></div>';
+
+  // Compounds table
+  html += '<div style="margin-bottom:20px"><div style="font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Compuestos</div>';
+  html += '<div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden">';
+  html += '<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:8px 12px;background:var(--surface);font-size:.7rem;color:var(--gray);text-transform:uppercase;border-bottom:1px solid var(--border)"><span>Compuesto</span><span>Dosis</span><span>Frecuencia</span><span>Semanas</span></div>';
+  data.compounds.forEach(function(c){
+    html += '<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.82rem"><span style="font-weight:600">'+c.name+'</span><span style="color:var(--red)">'+c.dose+'</span><span style="color:var(--text-sec)">'+c.freq+'</span><span style="color:var(--text-sec)">'+c.weeks+'</span></div>';
+  });
+  html += '</div></div>';
+
+  // PCT
+  html += '<div style="margin-bottom:20px"><div style="font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Protocolo PCT</div>';
+  data.pct.forEach(function(p){
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-weight:600;font-size:.88rem">'+p.name+'</span><div style="font-size:.72rem;color:var(--gray);margin-top:2px">'+p.weeks+'</div></div><span style="color:var(--red);font-size:.82rem;font-weight:600">'+p.dose+'</span></div>';
+  });
+  html += '</div>';
+
+  // Labs
+  html += '<div><div style="font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Calendario de Labs</div>';
+  data.labs.forEach(function(l){
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:6px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span style="font-weight:600;font-size:.88rem">'+l.name+'</span><span style="font-size:.72rem;color:#00D9FF"><i class="fas fa-calendar-alt"></i> '+l.when+'</span></div><div style="font-size:.75rem;color:var(--text-sec)">'+l.markers+'</div></div>';
+  });
+  html += '</div>';
+
+  container.innerHTML = html;
+}
+function getCycleDemoContent() {
+  var d = document.createElement('div');
+  d.style.cssText = 'padding:16px';
+  d.innerHTML = '<div style="background:rgba(200,16,46,0.1);border:2px solid var(--red);border-radius:6px;padding:12px;margin-bottom:12px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Advertencia medica...</div>';
+  d.innerHTML += '<div style="display:flex;gap:4px;height:32px;border-radius:6px;overflow:hidden;margin-bottom:12px"><div style="flex:1;background:#FF6B35;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">Carga</div><div style="flex:2;background:#00D9FF;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">Mantenimiento</div><div style="flex:1;background:#FFD700;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">PCT</div></div>';
+  var items = ['Testosterona Enantato — 500mg/sem','Anastrozol — 0.5mg EOD','HCG — 500 UI 2x/sem'];
+  items.forEach(function(i){
+    d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:6px;font-size:.82rem">'+i+'</div>';
+  });
+  return d;
+}
+
+// ===== BLOODWORK DATA + INTERACTIVE VIEW =====
+var BLOODWORK_DATA = {
+  categories: [
+    { name:'Hormonal', icon:'fa-venus-mars', markers:[
+      {name:'Testosterona Total',value:650,unit:'ng/dL',low:300,high:1000,optimal_low:500,optimal_high:900},
+      {name:'Estradiol (E2)',value:32,unit:'pg/mL',low:10,high:60,optimal_low:20,optimal_high:40},
+      {name:'LH',value:5.2,unit:'mUI/mL',low:1.5,high:9.3,optimal_low:3,optimal_high:8},
+      {name:'FSH',value:4.8,unit:'mUI/mL',low:1.4,high:18,optimal_low:2,optimal_high:12}
+    ]},
+    { name:'Hepatico', icon:'fa-liver', markers:[
+      {name:'AST (GOT)',value:28,unit:'U/L',low:0,high:40,optimal_low:10,optimal_high:30},
+      {name:'ALT (GPT)',value:24,unit:'U/L',low:0,high:41,optimal_low:7,optimal_high:30},
+      {name:'GGT',value:22,unit:'U/L',low:0,high:60,optimal_low:5,optimal_high:40}
+    ]},
+    { name:'Lipidico', icon:'fa-heart', markers:[
+      {name:'Colesterol Total',value:195,unit:'mg/dL',low:0,high:240,optimal_low:125,optimal_high:200},
+      {name:'HDL',value:55,unit:'mg/dL',low:40,high:100,optimal_low:50,optimal_high:80},
+      {name:'LDL',value:110,unit:'mg/dL',low:0,high:160,optimal_low:50,optimal_high:130},
+      {name:'Trigliceridos',value:120,unit:'mg/dL',low:0,high:200,optimal_low:40,optimal_high:150}
+    ]},
+    { name:'Hematologico', icon:'fa-tint', markers:[
+      {name:'Hemoglobina',value:15.2,unit:'g/dL',low:13,high:18,optimal_low:14,optimal_high:17},
+      {name:'Hematocrito',value:45,unit:'%',low:38,high:54,optimal_low:40,optimal_high:50}
+    ]},
+    { name:'Renal', icon:'fa-kidneys', markers:[
+      {name:'Creatinina',value:1.0,unit:'mg/dL',low:0.6,high:1.3,optimal_low:0.7,optimal_high:1.2},
+      {name:'BUN',value:18,unit:'mg/dL',low:7,high:25,optimal_low:10,optimal_high:22}
+    ]}
+  ]
+};
+function renderBloodworkInteractive(container) {
+  var data = BLOODWORK_DATA;
+  var totalMarkers = 0, optimalCount = 0;
+  data.categories.forEach(function(c){c.markers.forEach(function(m){
+    totalMarkers++;
+    if (m.value >= m.optimal_low && m.value <= m.optimal_high) optimalCount++;
+  })});
+
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — sube tus labs reales para analisis personalizado.</div>';
+
+  // Summary
+  html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.88rem;font-weight:600"><i class="fas fa-chart-bar" style="color:var(--red);margin-right:8px"></i>'+optimalCount+' de '+totalMarkers+' marcadores en rango optimo</span><span style="font-size:1.2rem;font-weight:700;color:'+(optimalCount>=totalMarkers*0.8?'#4CAF50':optimalCount>=totalMarkers*0.6?'#FFD700':'var(--red)')+'">'+Math.round(optimalCount/totalMarkers*100)+'%</span></div>';
+
+  data.categories.forEach(function(cat) {
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:12px;overflow:hidden">';
+    html += '<div onclick="this.parentElement.classList.toggle(\'bw-open\')" style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer"><div style="display:flex;align-items:center;gap:10px"><i class="fas '+cat.icon+'" style="color:var(--red)"></i><span style="font-weight:600;font-size:.9rem">'+cat.name+'</span><span style="font-size:.7rem;color:var(--gray)">('+cat.markers.length+' marcadores)</span></div><i class="fas fa-chevron-down" style="color:var(--text-sec);font-size:.75rem;transition:transform .2s"></i></div>';
+    html += '<div class="bw-detail" style="display:none;border-top:1px solid var(--border)">';
+    cat.markers.forEach(function(m) {
+      var range = m.high - m.low;
+      var pos = range > 0 ? Math.max(0, Math.min(100, (m.value - m.low) / range * 100)) : 50;
+      var optStart = range > 0 ? (m.optimal_low - m.low) / range * 100 : 30;
+      var optEnd = range > 0 ? (m.optimal_high - m.low) / range * 100 : 70;
+      var color = (m.value >= m.optimal_low && m.value <= m.optimal_high) ? '#4CAF50' : (m.value >= m.low && m.value <= m.high) ? '#FFD700' : 'var(--red)';
+
+      html += '<div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.04)">';
+      html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:.85rem;font-weight:500">'+m.name+'</span><span style="font-size:.9rem;font-weight:700;color:'+color+'">'+m.value+' <span style="font-size:.7rem;font-weight:400;color:var(--gray)">'+m.unit+'</span></span></div>';
+      html += '<div style="position:relative;height:8px;background:var(--border);border-radius:4px;overflow:visible">';
+      html += '<div style="position:absolute;left:'+optStart+'%;width:'+(optEnd-optStart)+'%;height:100%;background:rgba(76,175,80,0.25);border-radius:4px"></div>';
+      html += '<div style="position:absolute;left:calc('+pos+'% - 4px);top:-1px;width:10px;height:10px;background:'+color+';border-radius:50%;border:2px solid var(--bg)"></div>';
+      html += '</div>';
+      html += '<div style="display:flex;justify-content:space-between;font-size:.62rem;color:var(--gray);margin-top:3px"><span>'+m.low+'</span><span style="color:rgba(76,175,80,0.6)">'+m.optimal_low+' - '+m.optimal_high+'</span><span>'+m.high+'</span></div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+  var style = document.createElement('style');
+  style.textContent = '.bw-open .bw-detail{display:block!important}.bw-open .fa-chevron-down{transform:rotate(180deg)}';
+  container.appendChild(style);
+}
+function getBloodworkDemoContent() {
+  var d = document.createElement('div');
+  d.style.cssText = 'padding:16px';
+  d.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px;text-align:center"><span style="font-size:.88rem;font-weight:600">14 de 17 marcadores en rango optimo</span></div>';
+  var cats = ['Hormonal (4 marcadores)','Hepatico (3 marcadores)','Lipidico (4 marcadores)','Hematologico (2 marcadores)','Renal (2 marcadores)'];
+  cats.forEach(function(c){
+    d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.85rem">'+c+'</span><span style="font-size:.7rem;color:#4CAF50"><i class="fas fa-check-circle"></i></span></div>';
+  });
+  return d;
+}
+
+// ===== COACH TIP (for new tabs — uses existing exercise-tip endpoint) =====
+function getCoachTip(section, topic) {
+  var token = localStorage.getItem('wc_token');
+  if (!token) return;
+  var btn = event.target.closest('button');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Pensando...'; }
+  fetch('/api/ai/exercise-tip.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ exercise: topic, context: section })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip';
+    }
+    if (data.tip) {
+      var tipDiv = document.createElement('div');
+      tipDiv.style.cssText = 'background:rgba(0,217,255,0.08);border:1px solid rgba(0,217,255,0.2);border-radius:6px;padding:12px;margin-top:8px;font-size:.82rem;color:var(--text-sec);line-height:1.5';
+      tipDiv.innerHTML = '<i class="fas fa-user-md" style="color:#00D9FF;margin-right:6px"></i>' + data.tip;
+      if (btn && btn.parentElement) btn.parentElement.insertBefore(tipDiv, btn.nextSibling);
+    }
+  }).catch(function() {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip'; }
+  });
 }
 
 // ===== SEND PLAN EMAIL =====
