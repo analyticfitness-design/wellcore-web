@@ -86,15 +86,17 @@ if ($action === 'update_intake') {
 
 } elseif ($action === 'pull') {
     // Git pull inside container (hardcoded commands, no user input)
-    $cmd = 'git config --global --add safe.directory /code 2>&1; cd /code && git pull origin main 2>&1';
+    $cmd = 'HOME=/tmp GIT_CONFIG_GLOBAL=/dev/null git -C /code -c safe.directory=/code pull origin main 2>&1';
     $output = [];
     $code = 0;
     exec($cmd, $output, $code);
+    // Clear opcache after pull
+    if (function_exists('opcache_reset')) opcache_reset();
     echo json_encode(['pull' => implode("\n", $output), 'exit_code' => $code]);
 
 } elseif ($action === 'commit') {
     // Show current git commit (hardcoded, no user input)
-    $cmd = 'git config --global --add safe.directory /code 2>&1; cd /code && git log --oneline -5 2>&1';
+    $cmd = 'HOME=/tmp GIT_CONFIG_GLOBAL=/dev/null git -C /code -c safe.directory=/code log --oneline -5 2>&1';
     $output = [];
     exec($cmd, $output);
     echo json_encode(['commits' => implode("\n", $output)]);
