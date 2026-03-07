@@ -86,7 +86,7 @@ if ($action === 'update_intake') {
 
 } elseif ($action === 'pull') {
     // Git pull inside container (hardcoded commands, no user input)
-    $cmd = 'cd /code && git pull origin main 2>&1';
+    $cmd = 'git config --global --add safe.directory /code 2>&1; cd /code && git pull origin main 2>&1';
     $output = [];
     $code = 0;
     exec($cmd, $output, $code);
@@ -94,11 +94,32 @@ if ($action === 'update_intake') {
 
 } elseif ($action === 'commit') {
     // Show current git commit (hardcoded, no user input)
-    $cmd = 'cd /code && git log --oneline -3 2>&1';
+    $cmd = 'git config --global --add safe.directory /code 2>&1; cd /code && git log --oneline -5 2>&1';
     $output = [];
     exec($cmd, $output);
     echo json_encode(['commits' => implode("\n", $output)]);
 
+} elseif ($action === 'query') {
+    // Query any client's RISE data
+    $cid = (int) ($_GET['client_id'] ?? 0);
+    if (!$cid) { echo json_encode(['error' => 'client_id required']); exit; }
+    $client = $db->prepare("SELECT id, name, email, plan, objetivo, lugar_entreno, dias_disponibles, nivel FROM clients WHERE id = ?");
+    $client->execute([$cid]);
+    $c = $client->fetch(PDO::FETCH_ASSOC);
+    $rise = $db->prepare("SELECT id, personalized_program, experience_level, training_location, gender, status FROM rise_programs WHERE client_id = ? ORDER BY id DESC LIMIT 1");
+    $rise->execute([$cid]);
+    $r = $rise->fetch(PDO::FETCH_ASSOC);
+    $plans = $db->prepare("SELECT id, plan_type, active, ai_generation_id, created_at FROM assigned_plans WHERE client_id = ? ORDER BY id DESC LIMIT 5");
+    $plans->execute([$cid]);
+    $gens = $db->prepare("SELECT id, type, status, prompt_tokens, completion_tokens, created_at FROM ai_generations WHERE client_id = ? ORDER BY id DESC LIMIT 5");
+    $gens->execute([$cid]);
+    echo json_encode([
+        'client' => $c,
+        'rise_program' => $r ? array_merge($r, ['intake' => json_decode($r['personalized_program'] ?? '{}', true)]) : null,
+        'plans' => $plans->fetchAll(PDO::FETCH_ASSOC),
+        'generations' => $gens->fetchAll(PDO::FETCH_ASSOC),
+    ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
 } else {
-    echo json_encode(['error' => 'action: update_intake, check, plan, migrate, pull, commit']);
+    echo json_encode(['error' => 'action: update_intake, check, plan, migrate, pull, commit, query']);
 }
