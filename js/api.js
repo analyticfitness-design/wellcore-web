@@ -66,9 +66,11 @@ const WC_API = (() => {
      * @param {string} identity  email (client) or username (admin)
      * @param {string} password
      */
-    async login(type, identity, password) {
+    async login(type, identity, password, remember) {
       const key  = type === 'admin' ? 'username' : 'email';
-      const data = await post('/auth/login', { type, [key]: identity, password });
+      const body = { type, [key]: identity, password };
+      if (remember) body.remember_me = true;
+      const data = await post('/auth/login', body);
 
       if (data?.token) {
         setToken(data.token);

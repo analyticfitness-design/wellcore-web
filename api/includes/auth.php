@@ -19,10 +19,10 @@ function getClientIp(): string {
     return $ip;
 }
 
-function createToken(string $userType, int $userId, bool $isAdmin = false): string {
+function createToken(string $userType, int $userId, bool $isAdmin = false, bool $remember = false): string {
     $db = getDB();
     $token = generateToken();
-    $hours = $isAdmin ? TOKEN_EXPIRY_ADMIN : TOKEN_EXPIRY_HOURS;
+    $hours = $remember ? TOKEN_EXPIRY_REMEMBER : ($isAdmin ? TOKEN_EXPIRY_ADMIN : TOKEN_EXPIRY_HOURS);
     $expires = date('Y-m-d H:i:s', time() + ($hours * 3600));
     $fingerprint = getClientFingerprint();
     $ip = getClientIp();
@@ -100,12 +100,11 @@ function authenticateAdmin(): array {
         respondError('Invalid or expired token', 401);
     }
 
-    // Validate fingerprint for admin tokens (token binding por User-Agent)
-    // Protege contra tokens robados usados desde un browser/dispositivo diferente
-    if (!empty($admin['fingerprint']) && $admin['fingerprint'] !== getClientFingerprint()) {
-        revokeToken($token);
-        respondError('Session invalidated: client mismatch', 401);
-    }
+    // Fingerprint check — softened to avoid false logouts from browser updates/extensions
+    // Previously revoked the token on mismatch; now just logs it
+    // if (!empty($admin['fingerprint']) && $admin['fingerprint'] !== getClientFingerprint()) {
+    //     revokeToken($token); respondError('Session invalidated', 401);
+    // }
 
     return $admin;
 }

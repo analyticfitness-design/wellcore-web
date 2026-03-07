@@ -16,6 +16,7 @@ $body     = getJsonBody();
 $type     = $body['type'] ?? 'client';
 $identity = trim($body['email'] ?? $body['username'] ?? '');
 $password = $body['password'] ?? '';
+$remember = !empty($body['remember_me']);
 
 if (!$identity || !$password) {
     respondError('Email/usuario y contrasena son requeridos', 422);
@@ -46,11 +47,11 @@ if ($type === 'admin') {
     // Login exitoso — limpiar rate limit
     rate_limit_clear('login');
     logSetUser($user['id'], 'admin');
-    $token = createToken('admin', $user['id'], true);
+    $token = createToken('admin', $user['id'], true, $remember);
 
     respond([
         'token'      => $token,
-        'expires_in' => TOKEN_EXPIRY_ADMIN * 3600,
+        'expires_in' => ($remember ? TOKEN_EXPIRY_REMEMBER : TOKEN_EXPIRY_ADMIN) * 3600,
         'user'       => [
             'id'       => $user['id'],
             'username' => $user['username'],
@@ -88,7 +89,7 @@ $stmt2 = $db->prepare("SELECT * FROM client_profiles WHERE client_id = ?");
 $stmt2->execute([$client['id']]);
 $profile = $stmt2->fetch();
 
-$token = createToken('client', $client['id']);
+$token = createToken('client', $client['id'], false, $remember);
 
 // Coach theme for client dashboard personalization
 $coachTheme = null;
@@ -113,7 +114,7 @@ if (!empty($client['coach_id'])) {
 
 respond([
     'token'       => $token,
-    'expires_in'  => TOKEN_EXPIRY_HOURS * 3600,
+    'expires_in'  => ($remember ? TOKEN_EXPIRY_REMEMBER : TOKEN_EXPIRY_HOURS) * 3600,
     'client'      => [
         'id'          => $client['id'],
         'client_code' => $client['client_code'],

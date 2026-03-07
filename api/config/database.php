@@ -41,8 +41,9 @@ if ($isDocker) {
 }
 
 define('DB_CHARSET', 'utf8mb4');
-define('TOKEN_EXPIRY_HOURS', 168);      // 7 days
-define('TOKEN_EXPIRY_ADMIN', 8);        // 8 hours for admin
+define('TOKEN_EXPIRY_HOURS', 168);      // 7 days for clients
+define('TOKEN_EXPIRY_ADMIN', 72);       // 3 days for admin (was 8h — too short)
+define('TOKEN_EXPIRY_REMEMBER', 720);   // 30 days when "remember me" is checked
 define('UPLOAD_URL', '/uploads/');
 define('MAX_PHOTO_SIZE', 10 * 1024 * 1024);  // 10MB
 
