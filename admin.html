@@ -2769,18 +2769,24 @@
     })
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      if (d.ok && d.status === 'completed') {
-        btn.textContent = '✓ Generado';
-        btn.style.color = '#10B981';
-        btn.style.borderColor = '#10B981';
-        showToast('Plan RISE generado para ' + clientName + '. Revísalo en Planes por Validar.');
-        loadPendingPlans();
-        setTimeout(function() { btn.textContent = origText; btn.disabled = false; }, 5000);
-      } else if (d.ok) {
-        btn.textContent = origText;
-        btn.disabled = false;
-        showToast('Plan generado pero con errores de parseo. Intenta de nuevo.', 'error');
-        loadPendingPlans();
+      if (d.ok || d.generation_id) {
+        btn.textContent = '⏳ En cola...';
+        btn.style.color = '#F59E0B';
+        btn.style.borderColor = '#F59E0B';
+        showToast('Plan en generacion para ' + clientName + '. Aparecera en 2-5 min.');
+        // Poll cada 20s hasta que aparezca (max 8 min)
+        var pollCount = 0;
+        var pollId = setInterval(function() {
+          pollCount++;
+          loadPendingPlans();
+          if (pollCount >= 24) {
+            clearInterval(pollId);
+            btn.textContent = origText;
+            btn.disabled = false;
+            btn.style.color = '';
+            btn.style.borderColor = '';
+          }
+        }, 20000);
       } else {
         btn.textContent = origText;
         btn.disabled = false;

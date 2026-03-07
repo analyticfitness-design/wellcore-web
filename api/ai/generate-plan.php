@@ -72,18 +72,38 @@ $validationScore = 100;
 $validationNotes = [];
 
 if ($planType === 'rise') {
-    // ── RISE: generacion SINCRONA (inline, sin worker) ────────────────
-    set_time_limit(600); // 10 min max para llamada Claude
+    // ── RISE: generacion BACKGROUND via ignore_user_abort ─────────────
+    // Cierra la conexion HTTP inmediatamente y continua procesando.
+    // No requiere workers de CLI ni cron.
 
     // Auto-reset generaciones atascadas en "generating" por mas de 5 min
     getDB()->prepare("
-        UPDATE ai_generations SET status = 'failed', raw_response = 'Worker timeout - auto-reset'
+        UPDATE ai_generations SET status = 'failed', raw_response = 'Timeout - auto-reset'
         WHERE client_id = ? AND type = 'rise' AND status = 'generating'
           AND created_at < DATE_SUB(NOW(), INTERVAL 5 MINUTE)
     ")->execute([$clientId]);
 
     $genId = ai_save_generation(['client_id' => $clientId, 'type' => 'rise', 'status' => 'generating']);
 
+    // Responder inmediato al browser y cerrar la conexion
+    ignore_user_abort(true);
+    set_time_limit(600);
+    $earlyResponse = json_encode([
+        'ok'            => true,
+        'generation_id' => $genId,
+        'status'        => 'generating',
+        'message'       => 'Plan RISE en generacion. Aparecera en "Planes por Validar" en 2-5 minutos.',
+    ]);
+    header('Content-Type: application/json');
+    header('Content-Length: ' . strlen($earlyResponse));
+    header('Connection: close');
+    http_response_code(202);
+    echo $earlyResponse;
+    if (ob_get_level()) ob_end_flush();
+    flush();
+    if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
+
+    // ── Ahora PHP sigue corriendo en background ──────────────────────
     $userPrompt = build_rise_enriched_prompt($client, $riseIntake);
     $userPrompt .= "\n\nGENERA EL PLAN RISE 30 DIAS EN JSON ESTRICTO (sin texto fuera del JSON).\n\nESQUEMA REQUERIDO:\n" . get_plan_schema('rise');
 
@@ -100,25 +120,15 @@ if ($planType === 'rise') {
             $response['text'],
             $parsed ? json_encode($parsed, JSON_UNESCAPED_UNICODE) : null
         );
-
-        // Guardar tokens
         getDB()->prepare("UPDATE ai_generations SET prompt_tokens = ?, completion_tokens = ? WHERE id = ?")
             ->execute([$response['input_tokens'], $response['output_tokens'], $genId]);
 
-        respond([
-            'ok'            => true,
-            'generation_id' => $genId,
-            'status'        => $parsed ? 'completed' : 'failed',
-            'plan'          => $parsed,
-            'message'       => $parsed
-                ? 'Plan RISE generado. Aparecerá en "Planes por Validar".'
-                : 'Error: no se pudo parsear respuesta de IA.',
-        ], $parsed ? 201 : 500);
-
+        error_log("[RISE gen=$genId] " . ($parsed ? 'COMPLETADO' : 'FALLIDO (parseo)'));
     } catch (\Throwable $e) {
         ai_update_generation($genId, 'failed', $e->getMessage());
-        respondError('Error generando plan RISE: ' . $e->getMessage(), 500);
+        error_log("[RISE gen=$genId] ERROR: " . $e->getMessage());
     }
+    exit;
 
 } else {
     // ── Planes estándar: pipeline con WellCoreAI router ──────────────────────
