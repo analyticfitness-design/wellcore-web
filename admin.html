@@ -2026,7 +2026,7 @@
   var LIVE_CLIENTS  = null;
   var LIVE_CHECKINS = null;
 
-  const DEMO_TRANSACTIONS = [];
+  /* DEMO_TRANSACTIONS removed — payments loaded from API via loadPagos() */
 
   /* ─── NAV ─── */
   document.querySelectorAll('.nav-item').forEach(item => {
@@ -2088,21 +2088,48 @@
 
   /* ─── RENDER: DASHBOARD - RECENT TRANSACTIONS ─── */
   function renderRecentTransactions() {
-    const last3 = DEMO_TRANSACTIONS.slice(-3).reverse();
-    const el = document.getElementById('recentTransactions');
-    el.innerHTML = last3.map(t => {
-      const isPending = t.status === 'pendiente';
-      return `
-        <div class="activity-row">
-          <div class="activity-dot ${isPending ? 'pending' : ''}"></div>
-          <div class="activity-info">
-            <div class="activity-client">${t.client}</div>
-            <div class="activity-detail">${t.plan} &mdash; ${fmtDate(t.date)}</div>
-          </div>
-          <div class="activity-amount ${isPending ? 'yellow' : 'green'}">$${t.amount}</div>
-          <span class="badge ${isPending ? 'badge-yellow' : 'badge-green'}">${t.status}</span>
-        </div>`;
-    }).join('');
+    var payments = (LIVE_PAYMENTS || []).slice(0, 3);
+    var el = document.getElementById('recentTransactions');
+    el.textContent = '';
+    if (!payments.length) {
+      var empty = document.createElement('div');
+      empty.style.cssText = 'color:var(--gray);font-size:13px;padding:12px 0;';
+      empty.textContent = 'Sin transacciones recientes';
+      el.appendChild(empty);
+      return;
+    }
+    payments.forEach(function(t) {
+      var isApproved = t.status === 'approved';
+      var isPending  = t.status === 'pending';
+      var fmtAmount = new Intl.NumberFormat('es-CO', { style: 'currency', currency: t.currency || 'COP', maximumFractionDigits: 0 }).format(t.amount || 0);
+
+      var row = document.createElement('div');
+      row.className = 'activity-row';
+
+      var dot = document.createElement('div');
+      dot.className = 'activity-dot' + (isPending ? ' pending' : '');
+
+      var info = document.createElement('div');
+      info.className = 'activity-info';
+      var clientDiv = document.createElement('div');
+      clientDiv.className = 'activity-client';
+      clientDiv.textContent = t.client_name || t.buyer_name || t.email || '-';
+      var detailDiv = document.createElement('div');
+      detailDiv.className = 'activity-detail';
+      detailDiv.textContent = (t.plan || '').toUpperCase() + ' — ' + (t.created_at ? t.created_at.split(' ')[0].split('-').reverse().join('/') : '-');
+      info.append(clientDiv, detailDiv);
+
+      var amountDiv = document.createElement('div');
+      amountDiv.className = 'activity-amount ' + (isApproved ? 'green' : isPending ? 'yellow' : 'red');
+      amountDiv.textContent = fmtAmount;
+
+      var badge = document.createElement('span');
+      badge.className = 'badge ' + (isApproved ? 'badge-green' : isPending ? 'badge-yellow' : 'badge-red');
+      badge.textContent = t.status || '-';
+
+      row.append(dot, info, amountDiv, badge);
+      el.appendChild(row);
+    });
   }
 
   /* ─── RENDER: DASHBOARD - PENDING CHECKINS ─── */
@@ -2380,20 +2407,87 @@
   }
 
   /* ─── RENDER: PAGOS ─── */
+  /* ─── PAGOS: Load from API ─── */
+  var LIVE_PAYMENTS = null;
+
+  async function loadPagos() {
+    try {
+      const res = await apiFetch('/admin/payments?limit=500');
+      if (!res.ok) return;
+      const data = await res.json();
+      LIVE_PAYMENTS = data.payments || [];
+      const kpis = data.kpis || {};
+
+      var fmtCOP = function(n) {
+        return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+      };
+
+      document.getElementById('pagos-mrr').textContent = fmtCOP(kpis.mrr || 0);
+      document.getElementById('pagos-mrr-sub').textContent = (kpis.active_clients || 0) + ' clientes activos';
+      document.getElementById('pagos-arr').textContent = fmtCOP(kpis.arr || 0);
+      document.getElementById('pagos-total').textContent = fmtCOP(kpis.total_approved || 0);
+      document.getElementById('pagos-total-sub').textContent = (kpis.total_approved_count || 0) + ' pagos confirmados';
+
+      var cardCount = document.querySelector('#section-pagos .card-count');
+      if (cardCount) cardCount.textContent = (data.total || 0) + ' registros';
+
+      renderPagos();
+      renderRecentTransactions();
+    } catch (e) {
+      console.error('loadPagos error:', e);
+    }
+  }
+
+  function makePlanBadgeEl(plan) {
+    var cls = { esencial: 'plan-esencial badge', metodo: 'plan-metodo badge', elite: 'plan-elite badge', rise: 'badge badge-red' };
+    var labels = { esencial: 'ESENCIAL', metodo: 'METODO', elite: 'ELITE', rise: 'RISE' };
+    var span = document.createElement('span');
+    span.className = cls[plan] || 'badge badge-gray';
+    span.textContent = labels[plan] || (plan || '').toUpperCase();
+    return span;
+  }
+
   function renderPagos() {
-    const tbody = document.getElementById('pagosTable');
-    tbody.innerHTML = DEMO_TRANSACTIONS.map(t => {
-      const isPending = t.status === 'pendiente';
-      return `
-        <tr>
-          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);">${t.id}</td>
-          <td style="font-weight:500;">${t.client}</td>
-          <td>${planBadge(t.plan.toLowerCase())}</td>
-          <td style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:${isPending ? 'var(--gold)' : 'var(--green)'};">$${t.amount}</td>
-          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);">${fmtDate(t.date)}</td>
-          <td><span class="badge ${isPending ? 'badge-yellow' : 'badge-green'}">${t.status}</span></td>
-        </tr>`;
-    }).join('');
+    var tbody = document.getElementById('pagosTable');
+    tbody.textContent = '';
+    var payments = LIVE_PAYMENTS || [];
+    payments.forEach(function(t) {
+      var isApproved = t.status === 'approved';
+      var isPending  = t.status === 'pending';
+      var badgeClass = isApproved ? 'badge-green' : isPending ? 'badge-yellow' : 'badge-red';
+      var amountColor = isApproved ? 'var(--green)' : isPending ? 'var(--gold)' : 'var(--gray)';
+      var fmtAmount = new Intl.NumberFormat('es-CO', { style: 'currency', currency: t.currency || 'COP', maximumFractionDigits: 0 }).format(t.amount || 0);
+
+      var tr = document.createElement('tr');
+
+      var tdId = document.createElement('td');
+      tdId.style.cssText = "font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);";
+      tdId.textContent = t.wompi_reference || t.id;
+
+      var tdClient = document.createElement('td');
+      tdClient.style.fontWeight = '500';
+      tdClient.textContent = t.client_name || t.buyer_name || t.email || '-';
+
+      var tdPlan = document.createElement('td');
+      tdPlan.appendChild(makePlanBadgeEl(t.plan || 'esencial'));
+
+      var tdAmount = document.createElement('td');
+      tdAmount.style.cssText = "font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:" + amountColor + ";";
+      tdAmount.textContent = fmtAmount;
+
+      var tdDate = document.createElement('td');
+      tdDate.style.cssText = "font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);";
+      tdDate.textContent = t.created_at ? t.created_at.split(' ')[0].split('-').reverse().join('/') : '-';
+
+      var tdStatus = document.createElement('td');
+      var badge = document.createElement('span');
+      badge.className = 'badge ' + badgeClass;
+      badge.textContent = t.status || '-';
+      tdStatus.appendChild(badge);
+
+      tr.append(tdId, tdClient, tdPlan, tdAmount, tdDate, tdStatus);
+      tbody.appendChild(tr);
+    });
   }
 
   /* ─── API FETCH HELPER ─── */
@@ -3131,8 +3225,7 @@
 
   /* ─── INIT (called after auth verification) ─── */
   function initApp() {
-    renderRecentTransactions();
-    renderPagos();
+    loadPagos();
     loadAdminData();
     loadRiseData();
     loadPendingPlans();

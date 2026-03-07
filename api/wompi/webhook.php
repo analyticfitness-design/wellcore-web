@@ -393,6 +393,54 @@ if ($status === 'approved') {
         ]);
     }
 
+    // Insertar/actualizar pago en MySQL (tabla payments)
+    try {
+        require_once __DIR__ . '/../config/database.php';
+        $dbPay = getDB();
+
+        // Obtener client_id
+        $payClientStmt = $dbPay->prepare("SELECT id FROM clients WHERE email = ? LIMIT 1");
+        $payClientStmt->execute([$buyerEmail]);
+        $payClientId = $payClientStmt->fetchColumn() ?: null;
+
+        $dbPay->prepare("
+            INSERT INTO payments (client_id, email, wompi_reference, wompi_transaction_id,
+                                  payment_method, plan, amount, currency, status,
+                                  buyer_name, buyer_phone)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                status = VALUES(status),
+                wompi_transaction_id = VALUES(wompi_transaction_id),
+                payment_method = VALUES(payment_method),
+                buyer_name = VALUES(buyer_name),
+                buyer_phone = VALUES(buyer_phone),
+                client_id = COALESCE(VALUES(client_id), client_id),
+                updated_at = NOW()
+        ")->execute([
+            $payClientId,
+            $buyerEmail,
+            $referenceCode,
+            $wompiTxId,
+            $paymentMethod,
+            $plan,
+            $amountCents / 100,
+            $currency,
+            $status,
+            $buyerName,
+            $buyerPhone,
+        ]);
+
+        wc_log($webhookLog, 'INFO', 'Pago registrado en MySQL payments', [
+            'reference' => $referenceCode,
+            'amount'    => $amountCents / 100,
+            'status'    => $status,
+        ]);
+    } catch (\Throwable $payErr) {
+        wc_log($errorLog, 'WARNING', 'Error insertando en payments MySQL (no critico)', [
+            'error' => $payErr->getMessage(),
+        ]);
+    }
+
     // Notificar al admin del nuevo registro/pago (con datos contables)
     try {
         require_once __DIR__ . '/../includes/notify-admin.php';
