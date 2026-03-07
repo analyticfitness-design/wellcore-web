@@ -32,12 +32,14 @@ $waist    = isset($body['waist_cm'])  ? (float)$body['waist_cm']  : null;
 $hips     = isset($body['hips_cm'])   ? (float)$body['hips_cm']   : null;
 $thigh    = isset($body['thigh_cm'])  ? (float)$body['thigh_cm']  : null;
 $arm      = isset($body['arm_cm'])    ? (float)$body['arm_cm']    : null;
+$muscle   = isset($body['muscle_pct']) ? (float)$body['muscle_pct'] : null;
+$fat      = isset($body['fat_pct'])    ? (float)$body['fat_pct']    : null;
 $notes    = htmlspecialchars(substr(trim($body['notes'] ?? ''), 0, 500), ENT_QUOTES, 'UTF-8');
 
 $stmt = $db->prepare("
-    INSERT INTO rise_measurements (client_id, log_date, weight_kg, chest_cm, waist_cm, hips_cm, thigh_cm, arm_cm, notes)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO rise_measurements (client_id, log_date, weight_kg, chest_cm, waist_cm, hips_cm, thigh_cm, arm_cm, muscle_pct, fat_pct, notes)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
-$stmt->execute([$cid, $date, $weight, $chest, $waist, $hips, $thigh, $arm, $notes]);
+$stmt->execute([$cid, $date, $weight, $chest, $waist, $hips, $thigh, $arm, $muscle, $fat, $notes]);
 
 respond(['ok' => true, 'id' => (int)$db->lastInsertId(), 'message' => 'Medición guardada']);
