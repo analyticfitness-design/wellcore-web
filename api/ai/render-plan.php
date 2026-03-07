@@ -666,7 +666,7 @@ function find_video_for_exercise(string $exerciseName): ?array {
                 elseif (str_contains($q, $t) && mb_strlen($t) > 3) $score += 1;
             }
         }
-        if ($score > $bestScore) {
+        if ($score > $bestScore || ($score === $bestScore && $score > 0 && mb_strlen($entry['t']) < mb_strlen($best['t'] ?? ''))) {
             $bestScore = $score;
             $best = $entry;
         }
