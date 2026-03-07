@@ -1870,31 +1870,31 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px"><i class="fas fa-calendar-week" style="color:#00D9FF;margin-right:8px"></i>Registro Semanal de Entrenamiento</h3>
         <p style="font-size:.92rem;color:var(--gray);margin-bottom:16px;line-height:1.6">Marca los días que entrenaste esta semana. Cada día cuenta.</p>
         <div class="week-grid" id="week-grid">
-          <div class="day-toggle" data-day="0" onclick="toggleDay(0)">
+          <div class="day-toggle" data-day="0" onclick="toggleTrainingDay(0)">
             <span class="day-label">LUN</span>
             <span class="day-icon">&#x25CB;</span>
           </div>
-          <div class="day-toggle" data-day="1" onclick="toggleDay(1)">
+          <div class="day-toggle" data-day="1" onclick="toggleTrainingDay(1)">
             <span class="day-label">MAR</span>
             <span class="day-icon">&#x25CB;</span>
           </div>
-          <div class="day-toggle" data-day="2" onclick="toggleDay(2)">
+          <div class="day-toggle" data-day="2" onclick="toggleTrainingDay(2)">
             <span class="day-label">MIE</span>
             <span class="day-icon">&#x25CB;</span>
           </div>
-          <div class="day-toggle" data-day="3" onclick="toggleDay(3)">
+          <div class="day-toggle" data-day="3" onclick="toggleTrainingDay(3)">
             <span class="day-label">JUE</span>
             <span class="day-icon">&#x25CB;</span>
           </div>
-          <div class="day-toggle" data-day="4" onclick="toggleDay(4)">
+          <div class="day-toggle" data-day="4" onclick="toggleTrainingDay(4)">
             <span class="day-label">VIE</span>
             <span class="day-icon">&#x25CB;</span>
           </div>
-          <div class="day-toggle" data-day="5" onclick="toggleDay(5)">
+          <div class="day-toggle" data-day="5" onclick="toggleTrainingDay(5)">
             <span class="day-label">SAB</span>
             <span class="day-icon">&#x25CB;</span>
           </div>
-          <div class="day-toggle" data-day="6" onclick="toggleDay(6)">
+          <div class="day-toggle" data-day="6" onclick="toggleTrainingDay(6)">
             <span class="day-label">DOM</span>
             <span class="day-icon">&#x25CB;</span>
           </div>
@@ -1986,6 +1986,66 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid var(--red);">
               <span style="background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">GRASA</span>
               <p style="margin:6px 0 0;font-size:11px;color:var(--gray);line-height:1.5;">Menor % = más definición. Hombres 10-18%, Mujeres 18-25%.</p>
+            </div>
+          </div>
+
+          <!-- Guía de medidas corporales con cinta métrica -->
+          <div style="margin-top:18px;border-top:1px solid var(--border);padding-top:16px;">
+            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">Cómo tomar medidas con cinta</div>
+            <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+              <div style="flex:0 0 140px;display:flex;justify-content:center;">
+                <svg width="140" height="300" viewBox="0 0 140 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="70" cy="18" r="13" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <rect x="64" y="30" width="12" height="10" rx="3" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <path d="M28,48 C28,42 50,40 70,40 C90,40 112,42 112,48 L108,68 L102,88 Q98,100 96,108 L92,124 L48,124 L44,108 Q42,100 38,88 L32,68Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <path d="M28,48 C22,52 18,66 16,82 C14,98 16,112 20,126 L26,126 C24,112 22,98 24,82 C26,66 30,54 34,48Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <path d="M112,48 C118,52 122,66 124,82 C126,98 124,112 120,126 L114,126 C116,112 118,98 116,82 C114,66 110,54 106,48Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <ellipse cx="23" cy="130" rx="5" ry="6" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <ellipse cx="117" cy="130" rx="5" ry="6" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <path d="M48,124 C48,138 44,156 42,172 C40,188 40,198 42,208 L52,208 C52,198 54,188 56,172 C58,156 60,138 64,124Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <path d="M42,208 C40,222 38,240 38,256 C38,266 40,274 42,278 L50,278 C50,274 50,266 50,256 C50,240 52,222 52,208Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <path d="M92,124 C92,138 96,156 98,172 C100,188 100,198 98,208 L88,208 C88,198 86,188 84,172 C82,156 80,138 76,124Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <path d="M98,208 C100,222 102,240 102,256 C102,266 100,274 98,278 L90,278 C90,274 90,266 90,256 C90,240 88,222 88,208Z" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <ellipse cx="46" cy="282" rx="8" ry="4" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <ellipse cx="94" cy="282" rx="8" ry="4" fill="#222" stroke="#555" stroke-width="0.8"/>
+                  <line x1="18" y1="62" x2="122" y2="62" stroke="#E31E24" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <circle cx="10" cy="62" r="8" fill="#E31E24"/><text x="10" y="66" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">P</text>
+                  <line x1="120" y1="80" x2="134" y2="80" stroke="#A855F7" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <circle cx="10" cy="80" r="8" fill="#A855F7"/><text x="10" y="84" fill="#fff" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">B</text>
+                  <line x1="36" y1="100" x2="104" y2="100" stroke="#FF6B35" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <circle cx="130" cy="100" r="8" fill="#FF6B35"/><text x="130" y="104" fill="#fff" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">C</text>
+                  <line x1="44" y1="124" x2="96" y2="124" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <circle cx="10" cy="124" r="8" fill="#FFB800"/><text x="10" y="128" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">Ca</text>
+                  <line x1="38" y1="164" x2="62" y2="164" stroke="#00D9FF" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <circle cx="130" cy="164" r="8" fill="#00D9FF"/><text x="130" y="168" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">M</text>
+                </svg>
+              </div>
+              <div style="flex:1;min-width:160px;display:flex;flex-direction:column;gap:10px;">
+                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #E31E24;">
+                  <span style="background:#E31E24;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">P · PECHO</span>
+                  <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Rodea el pecho en la <strong style="color:#fff;">parte más ancha del torso</strong>. Brazos relajados, exhala antes de medir.</p>
+                </div>
+                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #FF6B35;">
+                  <span style="background:#FF6B35;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">C · CINTURA</span>
+                  <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Punto más estrecho, <strong style="color:#fff;">2-3 cm sobre el ombligo</strong>. No metas la barriga — mide relajado.</p>
+                </div>
+                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #FFB800;">
+                  <span style="background:#FFB800;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">Ca · CADERA</span>
+                  <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Punto más ancho de los glúteos, <strong style="color:#fff;">pies juntos</strong>. La cinta debe quedar horizontal.</p>
+                </div>
+                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #00D9FF;">
+                  <span style="background:#00D9FF;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">M · MUSLO</span>
+                  <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Parte más gruesa, <strong style="color:#fff;">justo debajo del glúteo</strong>. Pierna ligeramente separada.</p>
+                </div>
+                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #A855F7;">
+                  <span style="background:#A855F7;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">B · BRAZO</span>
+                  <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Bícep <strong style="color:#fff;">contraído y flexionado a 90°</strong>. Mide en el punto más alto del músculo.</p>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding:12px;background:#111113;border-radius:8px;font-size:12px;color:var(--gray);text-align:center;line-height:1.6;">
+              <i class="fas fa-lightbulb" style="color:#FFB800;margin-right:6px;"></i>
+              <strong style="color:#fff;">Tip:</strong> Pídele a alguien que te ayude para mayor precisión, especialmente en espalda y cadera.
             </div>
           </div>
         </div>
@@ -3669,7 +3729,7 @@ function loadWeekGrid() {
     });
 }
 
-function toggleDay(dayIndex) {
+function toggleTrainingDay(dayIndex) {
   var toggles = document.querySelectorAll('.day-toggle');
   var el = toggles[dayIndex];
   var wasOn = el.classList.contains('done');
