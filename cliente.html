@@ -1955,6 +1955,48 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <svg id="ex-weight-chart" viewBox="0 0 700 200" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
 
+      <!-- ═══ MEASUREMENT GUIDE ═══ -->
+      <div class="metrics-form" style="margin-bottom:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'; this.querySelector('.mguide-arrow').style.transform=this.nextElementSibling.style.display==='none'?'':'rotate(180deg)';">
+          <h3 style="margin:0;display:flex;align-items:center;gap:10px;">
+            <i class="fas fa-book-open" style="color:var(--red)"></i>
+            Guía de Medición
+          </h3>
+          <span class="mguide-arrow" style="color:var(--gray);font-size:20px;transition:transform .3s;display:inline-block;">&#9660;</span>
+        </div>
+        <div style="display:none;margin-top:16px;">
+          <div style="background:rgba(227,30,36,0.07);border:1px solid rgba(227,30,36,0.2);border-radius:10px;padding:14px;margin-bottom:14px;font-size:13px;color:var(--gray);line-height:1.7;">
+            <div style="color:#fff;font-weight:700;margin-bottom:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">Reglas generales</div>
+            <ul style="margin:0;padding-left:18px;">
+              <li>Mídete siempre a la <strong style="color:#fff;">misma hora</strong> (mañana, en ayunas)</li>
+              <li>Usa una <strong style="color:#fff;">báscula digital</strong> que mida composición corporal</li>
+              <li>Registra cada <strong style="color:#fff;">7-10 días</strong> para ver tendencias reales</li>
+              <li>No te preocupes por cambios diarios — sigue la <strong style="color:#fff;">tendencia</strong></li>
+            </ul>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+            <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid var(--gold);">
+              <span style="background:var(--gold);color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">PESO</span>
+              <p style="margin:6px 0 0;font-size:11px;color:var(--gray);line-height:1.5;">En ayunas, después de ir al baño, con ropa mínima.</p>
+            </div>
+            <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid var(--green);">
+              <span style="background:var(--green);color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">MUSCULO</span>
+              <p style="margin:6px 0 0;font-size:11px;color:var(--gray);line-height:1.5;">Usa una báscula de bioimpedancia. Mayor % = mejor.</p>
+            </div>
+            <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid var(--red);">
+              <span style="background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">GRASA</span>
+              <p style="margin:6px 0 0;font-size:11px;color:var(--gray);line-height:1.5;">Menor % = más definición. Hombres 10-18%, Mujeres 18-25%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PROGRESS BARS ═══ -->
+      <div class="metrics-form" id="metrics-progress-bars" style="display:none;margin-bottom:20px;">
+        <h3><i class="fas fa-chart-bar" style="color:#00D9FF;margin-right:8px"></i>Tu Progreso Actual</h3>
+        <div id="progress-bars-container"></div>
+      </div>
+
       <!-- Metrics Form -->
       <div class="metrics-form">
         <h3><i class="fas fa-ruler" style="color:var(--gold);margin-right:8px"></i>Registrar Medidas Corporales</h3>
@@ -1974,19 +2016,19 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           </div>
         </div>
         <button class="btn-primary" onclick="saveMetrics()">
-          Guardar Medidas
+          <i class="fas fa-save"></i> Guardar Medidas
         </button>
       </div>
 
       <!-- Chart body weight -->
       <div class="chart-wrap">
-        <h3>Evolución de Peso Corporal</h3>
+        <h3><i class="fas fa-chart-area" style="color:var(--green);margin-right:8px"></i>Evolución de Peso Corporal</h3>
         <svg id="weight-chart" viewBox="0 0 700 180" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
 
       <!-- Metrics Table -->
       <div class="metrics-table-wrap">
-        <h3>Historial de Medidas Corporales</h3>
+        <h3><i class="fas fa-table" style="color:#00D9FF;margin-right:8px"></i>Historial de Medidas Corporales</h3>
         <div id="metrics-table-body">
           <div class="empty-state">
             <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span>
@@ -3977,7 +4019,7 @@ function loadMetrics() {
 
 function renderMetricsTable(metrics) {
   metrics = metrics || [];
-  const container = document.getElementById('metrics-table-body');
+  var container = document.getElementById('metrics-table-body');
 
   if (metrics.length === 0) {
     container.textContent = '';
@@ -3985,29 +4027,127 @@ function renderMetricsTable(metrics) {
     var emptyIc = document.createElement('span'); emptyIc.textContent = '//'; emptyIc.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
     var emptyP = document.createElement('p'); emptyP.textContent = 'Aún no hay medidas registradas.';
     emptyDiv.appendChild(emptyIc); emptyDiv.appendChild(emptyP); container.appendChild(emptyDiv);
+    document.getElementById('metrics-progress-bars').style.display = 'none';
     return;
   }
 
-  const recent = metrics.slice(0, 8);
+  // Progress bars
+  renderProgressBars(metrics);
+
+  var recent = metrics.slice(0, 8);
   container.textContent = '';
   var tbl = document.createElement('table');
   var thd = document.createElement('thead');
   var hdr = document.createElement('tr');
-  ['Fecha','Peso (kg)','% Músculo','% Grasa'].forEach(function(t){ var th = document.createElement('th'); th.textContent = t; hdr.appendChild(th); });
+  ['Fecha','Peso (kg)','','% Músculo','','% Grasa',''].forEach(function(t){ var th = document.createElement('th'); th.textContent = t; if(t==='') th.style.width='30px'; hdr.appendChild(th); });
   thd.appendChild(hdr); tbl.appendChild(thd);
   var tbd = document.createElement('tbody');
-  recent.forEach(function(m) {
+  recent.forEach(function(m, i) {
     var d = new Date(m.date);
     var dateStr = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+    var prev = (i < recent.length - 1) ? recent[i+1] : null;
     var tr = document.createElement('tr');
+
     var td1 = document.createElement('td'); td1.textContent = dateStr;
     var td2 = document.createElement('td'); td2.textContent = m.peso;
+    var td2c = makeChangeCell(m.peso, prev ? prev.peso : null, 'down');
     var td3 = document.createElement('td'); td3.textContent = (m.musculo != null ? m.musculo + '%' : '\u2014');
+    var td3c = makeChangeCell(m.musculo, prev ? prev.musculo : null, 'up');
     var td4 = document.createElement('td'); td4.textContent = (m.grasa != null ? m.grasa + '%' : '\u2014');
-    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
+    var td4c = makeChangeCell(m.grasa, prev ? prev.grasa : null, 'down');
+
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td2c);
+    tr.appendChild(td3); tr.appendChild(td3c); tr.appendChild(td4); tr.appendChild(td4c);
     tbd.appendChild(tr);
   });
   tbl.appendChild(tbd); container.appendChild(tbl);
+}
+
+function makeChangeCell(curr, prev, goodDir) {
+  var td = document.createElement('td');
+  td.style.cssText = 'font-size:11px;font-family:monospace;width:30px;text-align:center;';
+  if (curr == null || prev == null) return td;
+  var diff = curr - prev;
+  if (Math.abs(diff) < 0.05) { td.textContent = '='; td.style.color = 'var(--gray)'; return td; }
+  var isUp = diff > 0;
+  var isGood = (goodDir === 'up' && isUp) || (goodDir === 'down' && !isUp);
+  td.textContent = isUp ? '\u25B2' : '\u25BC';
+  td.style.color = isGood ? '#22C55E' : '#EF4444';
+  td.title = (isUp ? '+' : '') + diff.toFixed(1);
+  return td;
+}
+
+function renderProgressBars(metrics) {
+  var latest = metrics[0];
+  var first = metrics[metrics.length - 1];
+  var barsEl = document.getElementById('metrics-progress-bars');
+  var container = document.getElementById('progress-bars-container');
+  if (!latest || !latest.peso) { barsEl.style.display = 'none'; return; }
+
+  barsEl.style.display = 'block';
+  container.textContent = '';
+
+  var bars = [
+    { label: 'Peso', value: latest.peso, unit: 'kg', start: first.peso, color: 'var(--gold)', icon: 'fa-weight-scale' },
+    { label: 'Músculo', value: latest.musculo, unit: '%', start: first.musculo, color: '#22C55E', icon: 'fa-dumbbell' },
+    { label: 'Grasa', value: latest.grasa, unit: '%', start: first.grasa, color: '#EF4444', icon: 'fa-fire' }
+  ];
+
+  bars.forEach(function(b) {
+    if (b.value == null) return;
+    var row = document.createElement('div');
+    row.style.cssText = 'margin-bottom:16px;';
+
+    var header = document.createElement('div');
+    header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;';
+
+    var labelEl = document.createElement('span');
+    labelEl.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;';
+    var labelIcon = document.createElement('i');
+    labelIcon.className = 'fas ' + b.icon;
+    labelIcon.style.cssText = 'color:' + b.color + ';margin-right:6px;';
+    labelEl.appendChild(labelIcon);
+    labelEl.appendChild(document.createTextNode(b.label));
+
+    var valueWrap = document.createElement('span');
+    var valueEl = document.createElement('span');
+    valueEl.style.cssText = 'font-family:"Bebas Neue",sans-serif;font-size:1.4rem;color:#fff;';
+    valueEl.textContent = b.value + ' ' + b.unit;
+    valueWrap.appendChild(valueEl);
+
+    var change = (b.start != null && b.start !== b.value) ? (b.value - b.start) : null;
+    if (change !== null) {
+      var changeEl = document.createElement('span');
+      changeEl.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.65rem;margin-left:8px;padding:2px 6px;border-radius:4px;';
+      var sign = change > 0 ? '+' : '';
+      changeEl.textContent = sign + change.toFixed(1) + ' ' + b.unit;
+      if (b.label === 'Músculo') {
+        changeEl.style.background = change > 0 ? 'rgba(34,197,94,.12)' : 'rgba(239,68,68,.12)';
+        changeEl.style.color = change > 0 ? '#22C55E' : '#EF4444';
+      } else if (b.label === 'Grasa') {
+        changeEl.style.background = change < 0 ? 'rgba(34,197,94,.12)' : 'rgba(239,68,68,.12)';
+        changeEl.style.color = change < 0 ? '#22C55E' : '#EF4444';
+      } else {
+        changeEl.style.background = 'rgba(255,255,255,.06)';
+        changeEl.style.color = 'var(--gray)';
+      }
+      valueWrap.appendChild(changeEl);
+    }
+
+    header.appendChild(labelEl);
+    header.appendChild(valueWrap);
+
+    var barBg = document.createElement('div');
+    barBg.style.cssText = 'height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;';
+    var barFill = document.createElement('div');
+    var pct = b.label === 'Peso' ? Math.min(100, (b.value / 120) * 100) : Math.min(100, b.value * 1.5);
+    barFill.style.cssText = 'height:100%;border-radius:3px;transition:width .6s;width:' + pct + '%;background:' + b.color + ';';
+    barBg.appendChild(barFill);
+
+    row.appendChild(header);
+    row.appendChild(barBg);
+    container.appendChild(row);
+  });
 }
 
 function renderChart(metrics) {
