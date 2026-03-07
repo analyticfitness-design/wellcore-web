@@ -2757,10 +2757,10 @@ function renderNutritionInteractive(container) {
       html += '<div style="display:flex;gap:10px;font-size:.72rem;color:var(--text-sec)"><span>'+f.cal+'</span><span>'+f.prot+'g</span><span>'+f.carbs+'g</span><span>'+f.fat+'g</span></div>';
       html += '</div>';
     });
-    // Coach tip button (Metodo/Elite only)
+    // Coach tip button (Metodo/Elite only, with daily limits)
     var pl = PLAN_LEVEL[clientPlan] || 1;
     if (pl >= 2) {
-      html += '<button onclick="event.stopPropagation();getCoachTip(\'nutricion\',\''+meal.name+'\')" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--text-sec);padding:6px 12px;border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip</button>';
+      html += '<button onclick="event.stopPropagation();getNutriCoachTip(this,\''+meal.name+'\')" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--text-sec);padding:6px 12px;border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip</button>';
     }
     html += '</div></div>';
   });
@@ -2858,11 +2858,6 @@ function renderHabitsInteractive(container) {
       html += '<span style="font-size:.65rem;color:var(--gray);background:var(--bg);padding:2px 8px;border-radius:10px">+'+h.points+' pts</span>';
       html += '</label>';
     });
-    // Coach tip (Metodo/Elite)
-    var pl = PLAN_LEVEL[clientPlan] || 1;
-    if (pl >= 2) {
-      html += '<button onclick="getCoachTip(\'habitos\',\''+cat.name+'\')" style="margin:8px 0;background:none;border:1px solid var(--border);color:var(--text-sec);padding:6px 12px;border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip</button>';
-    }
     html += '</div></div>';
   });
 
@@ -3066,6 +3061,15 @@ function renderBloodworkInteractive(container) {
   })});
 
   var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — sube tus labs reales para analisis personalizado.</div>';
+  // CTA para subir resultados de laboratorio
+  html += '<div style="background:linear-gradient(135deg,rgba(200,16,46,0.12),rgba(0,217,255,0.08));border:1px solid rgba(200,16,46,0.25);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;text-align:center">';
+  html += '<i class="fas fa-flask" style="color:var(--red);font-size:1.5rem;margin-bottom:10px;display:block"></i>';
+  html += '<div style="font-weight:600;font-size:.95rem;margin-bottom:6px">Sube tus Resultados de Laboratorio</div>';
+  html += '<div style="font-size:.78rem;color:var(--gray);margin-bottom:14px;line-height:1.5">Envia tus examenes de sangre (PDF o foto) por WhatsApp o en tu Check-in semanal.<br>Tu coach los analizara y actualizara esta seccion con tus valores reales.</div>';
+  html += '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">';
+  html += '<a href="https://wa.me/573001234567?text=Hola%2C%20quiero%20enviar%20mis%20resultados%20de%20laboratorio" target="_blank" style="background:#25D366;color:#fff;padding:10px 20px;border-radius:var(--radius-sm);font-size:.82rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px"><i class="fab fa-whatsapp"></i> Enviar por WhatsApp</a>';
+  html += '<button onclick="showSection(\'checkin\')" style="background:var(--surface-2);color:var(--white);border:1px solid var(--border);padding:10px 20px;border-radius:var(--radius-sm);font-size:.82rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px"><i class="fas fa-clipboard-check"></i> Adjuntar en Check-in</button>';
+  html += '</div></div>';
 
   // Summary
   html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.88rem;font-weight:600"><i class="fas fa-chart-bar" style="color:var(--red);margin-right:8px"></i>'+optimalCount+' de '+totalMarkers+' marcadores en rango optimo</span><span style="font-size:1.2rem;font-weight:700;color:'+(optimalCount>=totalMarkers*0.8?'#4CAF50':optimalCount>=totalMarkers*0.6?'#FFD700':'var(--red)')+'">'+Math.round(optimalCount/totalMarkers*100)+'%</span></div>';
@@ -3133,6 +3137,37 @@ function getCoachTip(section, topic) {
   }).catch(function() {
     if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip'; }
   });
+}
+
+// ===== NUTRICION COACH TIP WITH LIMITS =====
+var nutriCoachTipsUsed = 0;
+var nutriCoachTipsDate = '';
+(function(){
+  try {
+    var saved = localStorage.getItem('wc_nutri_tips_used');
+    if (saved) {
+      var p = JSON.parse(saved);
+      if (p.date === new Date().toDateString()) nutriCoachTipsUsed = p.count || 0;
+    }
+  } catch(e){}
+})();
+var NUTRI_TIP_LIMITS = { metodo: 3, elite: 8 };
+function getNutriCoachTip(btn, mealName) {
+  var limit = NUTRI_TIP_LIMITS[clientPlan] || 3;
+  if (nutriCoachTipsUsed >= limit) {
+    var existing = btn.parentElement.querySelector('.nutri-tip-limit-msg');
+    if (existing) { existing.remove(); return; }
+    var msg = document.createElement('div');
+    msg.className = 'nutri-tip-limit-msg';
+    msg.style.cssText = 'background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:10px 12px;margin-top:8px;font-size:.78rem;color:var(--gray);line-height:1.5';
+    var upgradeHint = clientPlan === 'metodo' ? ' Actualiza a Elite para 8 tips diarios.' : ' Los tips se reinician cada dia.';
+    msg.innerHTML = '<i class="fas fa-lock" style="color:var(--red);margin-right:6px"></i>Alcanzaste el limite de '+limit+' tips de nutricion por dia.'+upgradeHint;
+    btn.parentElement.insertBefore(msg, btn.nextSibling);
+    return;
+  }
+  nutriCoachTipsUsed++;
+  localStorage.setItem('wc_nutri_tips_used', JSON.stringify({ date: new Date().toDateString(), count: nutriCoachTipsUsed }));
+  getCoachTip('nutricion', mealName);
 }
 
 // ===== SEND PLAN EMAIL =====
