@@ -2000,7 +2000,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <!-- Metrics Form -->
       <div class="metrics-form">
         <h3><i class="fas fa-ruler" style="color:var(--gold);margin-right:8px"></i>Registrar Medidas Corporales</h3>
-        <p style="font-size:.92rem;color:var(--gray);margin-bottom:18px;line-height:1.6">Registra tu peso, porcentaje de músculo y grasa para seguir tu composición corporal.</p>
+        <p style="font-size:.92rem;color:var(--gray);margin-bottom:18px;line-height:1.6">Registra tu peso, composición corporal y medidas para seguir tu progreso completo.</p>
         <div class="form-row">
           <div class="form-group">
             <label>Peso corporal (kg)</label>
@@ -2013,6 +2013,33 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <div class="form-group">
             <label>% Grasa</label>
             <input type="number" id="inp-grasa" placeholder="18.5" step="0.1" min="0" max="60">
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--border);margin:16px 0 14px;padding-top:14px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)">Medidas Corporales (cm)</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Pecho (cm)</label>
+            <input type="number" id="inp-pecho" placeholder="95" step="0.5" min="0" max="200">
+          </div>
+          <div class="form-group">
+            <label>Cintura (cm)</label>
+            <input type="number" id="inp-cintura" placeholder="80" step="0.5" min="0" max="200">
+          </div>
+          <div class="form-group">
+            <label>Cadera (cm)</label>
+            <input type="number" id="inp-cadera" placeholder="95" step="0.5" min="0" max="200">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Muslo (cm)</label>
+            <input type="number" id="inp-muslo" placeholder="55" step="0.5" min="0" max="200">
+          </div>
+          <div class="form-group">
+            <label>Brazo (cm)</label>
+            <input type="number" id="inp-brazo" placeholder="35" step="0.5" min="0" max="200">
           </div>
         </div>
         <button class="btn-primary" onclick="saveMetrics()">
@@ -3593,32 +3620,76 @@ async function sendPlanEmail(type) {
 
 // ===== WEEKLY TRAINING LOG =====
 function getWeekKey() {
-  const now = new Date();
-  const startOfYear = new Date(now.getFullYear(), 0, 1);
-  const week = Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
-  return 'wc_training_' + now.getFullYear() + '_w' + week;
+  var now = new Date();
+  var startOfYear = new Date(now.getFullYear(), 0, 1);
+  var week = Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+  return { key: 'wc_training_' + now.getFullYear() + '_w' + week, year: now.getFullYear(), week: week };
 }
 
+function getDateForDayIndex(dayIndex) {
+  // Get the Monday of the current ISO week, then add dayIndex
+  var now = new Date();
+  var day = now.getDay(); // 0=Sun
+  var diffToMon = (day === 0 ? -6 : 1 - day);
+  var mon = new Date(now);
+  mon.setDate(now.getDate() + diffToMon + dayIndex);
+  var y = mon.getFullYear();
+  var m = String(mon.getMonth() + 1).padStart(2, '0');
+  var d = String(mon.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+var _weekGridData = []; // cache for current week
+
 function loadWeekGrid() {
-  const key = getWeekKey();
-  const data = JSON.parse(localStorage.getItem(key) || '[]');
-  const toggles = document.querySelectorAll('.day-toggle');
-  toggles.forEach((el, i) => {
-    const done = data.includes(i);
-    el.classList.toggle('done', done);
-    el.querySelector('.day-icon').textContent = done ? '\u2713' : '\u25CB';
-  });
-  document.getElementById('days-count').textContent = data.length;
+  var wk = getWeekKey();
+  apiFetch('/training/?year=' + wk.year + '&week=' + wk.week)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var log = data.log || [];
+      _weekGridData = [];
+      var count = 0;
+      var toggles = document.querySelectorAll('.day-toggle');
+      toggles.forEach(function(el, i) {
+        var done = !!log[i];
+        if (done) { _weekGridData.push(i); count++; }
+        el.classList.toggle('done', done);
+        el.querySelector('.day-icon').textContent = done ? '\u2713' : '\u25CB';
+      });
+      document.getElementById('days-count').textContent = count;
+    })
+    .catch(function() {
+      // fallback: show empty
+      var toggles = document.querySelectorAll('.day-toggle');
+      toggles.forEach(function(el) {
+        el.classList.remove('done');
+        el.querySelector('.day-icon').textContent = '\u25CB';
+      });
+      document.getElementById('days-count').textContent = '0';
+    });
 }
 
 function toggleDay(dayIndex) {
-  const key = getWeekKey();
-  const data = JSON.parse(localStorage.getItem(key) || '[]');
-  const idx = data.indexOf(dayIndex);
-  if (idx > -1) data.splice(idx, 1);
-  else data.push(dayIndex);
-  localStorage.setItem(key, JSON.stringify(data));
-  loadWeekGrid();
+  var toggles = document.querySelectorAll('.day-toggle');
+  var el = toggles[dayIndex];
+  var wasOn = el.classList.contains('done');
+  var completed = !wasOn;
+  var dateStr = getDateForDayIndex(dayIndex);
+
+  // Optimistic UI update
+  el.classList.toggle('done', completed);
+  el.querySelector('.day-icon').textContent = completed ? '\u2713' : '\u25CB';
+  if (completed && _weekGridData.indexOf(dayIndex) === -1) _weekGridData.push(dayIndex);
+  if (!completed) { var idx = _weekGridData.indexOf(dayIndex); if (idx > -1) _weekGridData.splice(idx, 1); }
+  document.getElementById('days-count').textContent = _weekGridData.length;
+
+  apiFetch('/training/', { method: 'POST', body: JSON.stringify({ date: dateStr, completed: completed }) })
+    .catch(function() {
+      // Revert on error
+      el.classList.toggle('done', wasOn);
+      el.querySelector('.day-icon').textContent = wasOn ? '\u2713' : '\u25CB';
+      showToast('Error guardando entrenamiento', 'error');
+    });
 }
 
 // ===== WEIGHT LOG (Log de Pesos por Ejercicio) =====
@@ -3642,13 +3713,14 @@ function wlStorageKey(week, year) {
 }
 
 function wlLoadCurrentWeek() {
-  const { week, year } = wlGetCurrentWeek();
-  const raw = localStorage.getItem(wlStorageKey(week, year));
+  var { week, year } = wlGetCurrentWeek();
+  // Try localStorage first for instant display, then API overwrites
+  var raw = localStorage.getItem(wlStorageKey(week, year));
   return raw ? JSON.parse(raw) : [];
 }
 
 function wlSaveCurrentWeek(rows) {
-  const { week, year } = wlGetCurrentWeek();
+  var { week, year } = wlGetCurrentWeek();
   localStorage.setItem(wlStorageKey(week, year), JSON.stringify(rows));
 }
 
@@ -3771,52 +3843,83 @@ function wlAddRow(data) {
 }
 
 function wlInitForm() {
-  const { week, year } = wlGetCurrentWeek();
-  const lbl = document.getElementById('wl-week-label');
+  var wk = wlGetCurrentWeek();
+  var week = wk.week, year = wk.year;
+  var lbl = document.getElementById('wl-week-label');
   if (lbl) lbl.textContent = 'Semana ' + week + ' / ' + year;
-  const container = document.getElementById('wl-rows-container');
+  var container = document.getElementById('wl-rows-container');
   if (!container) return;
   container.textContent = '';
-  const saved = wlLoadCurrentWeek();
+
+  // Load from localStorage first for instant display
+  var saved = wlLoadCurrentWeek();
   if (saved.length > 0) {
     saved.forEach(function(r) { wlAddRow(r); });
   } else {
     wlAddRow();
   }
   wlPopulateExerciseSelects();
+
+  // Then load from API and overwrite if data exists
+  apiFetch('/weights.php?client_id=' + clientId)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var entries = data.entries || [];
+      // Filter for current week
+      var weekEntries = entries.filter(function(e) {
+        return (parseInt(e.week_number) === week || parseInt(e.week) === week) &&
+               (parseInt(e.year) === year);
+      });
+      if (weekEntries.length > 0) {
+        // Map to local format and update localStorage
+        var mapped = weekEntries.map(function(e) {
+          return { exercise: e.exercise, weight_kg: parseFloat(e.weight_kg), sets: parseInt(e.sets), reps: parseInt(e.reps), rpe: e.rpe ? parseFloat(e.rpe) : null, notes: e.notes || '' };
+        });
+        wlSaveCurrentWeek(mapped);
+        container.textContent = '';
+        mapped.forEach(function(r) { wlAddRow(r); });
+        wlPopulateExerciseSelects();
+      }
+    })
+    .catch(function() { /* Use localStorage data */ });
 }
 
 function wlSaveAll() {
-  const { week, year } = wlGetCurrentWeek();
-  const rows = [];
+  var wk = wlGetCurrentWeek();
+  var week = wk.week, year = wk.year;
+  var rows = [];
   document.querySelectorAll('#wl-rows-container .wl-form-grid').forEach(function(rowEl) {
-    const exSel = rowEl.querySelector('.wl-ex');
-    const exercise = exSel ? exSel.value : '';
-    const weight_kg = parseFloat(rowEl.querySelector('.wl-weight').value) || 0;
-    const sets = parseInt(rowEl.querySelector('.wl-sets').value) || 0;
-    const reps = parseInt(rowEl.querySelector('.wl-reps').value) || 0;
-    const rpeVal = rowEl.querySelector('.wl-rpe').value;
-    const rpe = rpeVal !== '' ? parseFloat(rpeVal) : null;
-    const notes = rowEl.querySelector('.wl-notes').value.trim();
+    var exSel = rowEl.querySelector('.wl-ex');
+    var exercise = exSel ? exSel.value : '';
+    var weight_kg = parseFloat(rowEl.querySelector('.wl-weight').value) || 0;
+    var sets = parseInt(rowEl.querySelector('.wl-sets').value) || 0;
+    var reps = parseInt(rowEl.querySelector('.wl-reps').value) || 0;
+    var rpeVal = rowEl.querySelector('.wl-rpe').value;
+    var rpe = rpeVal !== '' ? parseFloat(rpeVal) : null;
+    var notes = rowEl.querySelector('.wl-notes').value.trim();
     if (exercise && weight_kg > 0) {
-      rows.push({ exercise, weight_kg, sets, reps, rpe, notes, week, year, date: new Date().toISOString() });
+      rows.push({ exercise: exercise, weight_kg: weight_kg, sets: sets, reps: reps, rpe: rpe, notes: notes, week: week, year: year, date: new Date().toISOString() });
     }
   });
 
   if (rows.length === 0) { showToast('Agrega al menos un ejercicio con peso', 'error'); return; }
 
+  // Save to localStorage as cache
   wlSaveCurrentWeek(rows);
   wlPopulateExerciseSelects();
   wlRenderHistory();
   wlRenderExChart();
 
-  // Sync with backend (offline-first)
+  // Save each row to backend DB
+  var saved = 0, errors = 0;
   rows.forEach(function(r) {
     apiFetch('/weights.php', { method: 'POST', body: JSON.stringify(r) })
-      .catch(function() { /* Offline mode: saved to localStorage */ });
+      .then(function(res) { return res.json(); })
+      .then(function() { saved++; if (saved + errors === rows.length && errors === 0) showToast('Registros guardados en base de datos', 'success'); })
+      .catch(function() { errors++; if (saved + errors === rows.length) showToast('Guardado local (sin conexión a DB)', 'warning'); });
   });
 
-  showToast('Registros guardados correctamente', 'success');
+  if (rows.length > 0) showToast('Guardando registros...', 'success');
 }
 
 function wlGetHistoryForExercise(exerciseName) {
@@ -3997,37 +4100,41 @@ function wlRenderExChart() {
 
 // ===== METRICS =====
 function saveMetrics() {
-  const peso = parseFloat(document.getElementById('inp-peso').value);
-  const musculo = parseFloat(document.getElementById('inp-musculo').value);
-  const grasa = parseFloat(document.getElementById('inp-grasa').value);
+  var peso = parseFloat(document.getElementById('inp-peso').value);
+  var musculo = parseFloat(document.getElementById('inp-musculo').value);
+  var grasa = parseFloat(document.getElementById('inp-grasa').value);
+  var pecho = parseFloat(document.getElementById('inp-pecho').value);
+  var cintura = parseFloat(document.getElementById('inp-cintura').value);
+  var cadera = parseFloat(document.getElementById('inp-cadera').value);
+  var muslo = parseFloat(document.getElementById('inp-muslo').value);
+  var brazo = parseFloat(document.getElementById('inp-brazo').value);
 
-  if (!peso || isNaN(peso)) { showToast('Ingresa un peso válido', 'error'); return; }
+  var hasAny = (!isNaN(peso) && peso) || (!isNaN(pecho) && pecho) || (!isNaN(cintura) && cintura) ||
+               (!isNaN(cadera) && cadera) || (!isNaN(muslo) && muslo) || (!isNaN(brazo) && brazo) ||
+               (!isNaN(musculo) && musculo) || (!isNaN(grasa) && grasa);
+  if (!hasAny) { showToast('Ingresa al menos un valor', 'error'); return; }
 
-  const payload = { peso: peso };
+  var payload = {};
+  if (!isNaN(peso) && peso) payload.peso = peso;
   if (!isNaN(musculo) && musculo) payload.musculo = musculo;
   if (!isNaN(grasa) && grasa) payload.grasa = grasa;
+  if (!isNaN(pecho) && pecho) payload.pecho = pecho;
+  if (!isNaN(cintura) && cintura) payload.cintura = cintura;
+  if (!isNaN(cadera) && cadera) payload.cadera = cadera;
+  if (!isNaN(muslo) && muslo) payload.muslo = muslo;
+  if (!isNaN(brazo) && brazo) payload.brazo = brazo;
+
+  var fields = ['inp-peso','inp-musculo','inp-grasa','inp-pecho','inp-cintura','inp-cadera','inp-muslo','inp-brazo'];
 
   apiFetch('/metrics', { method: 'POST', body: JSON.stringify(payload) })
     .then(function(r) { return r.json(); })
     .then(function() {
-      document.getElementById('inp-peso').value = '';
-      document.getElementById('inp-musculo').value = '';
-      document.getElementById('inp-grasa').value = '';
+      fields.forEach(function(id) { document.getElementById(id).value = ''; });
       loadMetrics();
       showToast('Medidas guardadas correctamente', 'success');
     })
     .catch(function() {
-      // Fallback localStorage
-      const metrics = JSON.parse(localStorage.getItem('wc_metrics') || '[]');
-      metrics.push({ date: new Date().toISOString(), peso: peso, musculo: musculo || null, grasa: grasa || null });
-      if (metrics.length > 30) metrics.splice(0, metrics.length - 30);
-      localStorage.setItem('wc_metrics', JSON.stringify(metrics));
-      document.getElementById('inp-peso').value = '';
-      document.getElementById('inp-musculo').value = '';
-      document.getElementById('inp-grasa').value = '';
-      renderMetricsTable(metrics);
-      renderChart(metrics);
-      showToast('Medidas guardadas (offline)', 'success');
+      showToast('Error guardando medidas. Intenta de nuevo.', 'error');
     });
 }
 
@@ -4036,15 +4143,17 @@ function loadMetrics() {
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var metrics = (data.metrics || []).map(function(m) {
-        return { date: m.log_date, peso: m.peso, musculo: m.porcentaje_musculo, grasa: m.porcentaje_grasa };
+        return {
+          date: m.log_date, peso: m.peso, musculo: m.porcentaje_musculo, grasa: m.porcentaje_grasa,
+          pecho: m.pecho, cintura: m.cintura, cadera: m.cadera, muslo: m.muslo, brazo: m.brazo
+        };
       });
       renderMetricsTable(metrics);
       renderChart(metrics);
     })
     .catch(function() {
-      var metrics = JSON.parse(localStorage.getItem('wc_metrics') || '[]');
-      renderMetricsTable(metrics);
-      renderChart(metrics);
+      renderMetricsTable([]);
+      renderChart([]);
     });
 }
 
@@ -4067,31 +4176,49 @@ function renderMetricsTable(metrics) {
 
   var recent = metrics.slice(0, 8);
   container.textContent = '';
+
+  // Wrap table for horizontal scroll on mobile
+  var scrollWrap = document.createElement('div');
+  scrollWrap.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;';
+
   var tbl = document.createElement('table');
+  tbl.style.minWidth = '700px';
   var thd = document.createElement('thead');
   var hdr = document.createElement('tr');
-  ['Fecha','Peso (kg)','','% Músculo','','% Grasa',''].forEach(function(t){ var th = document.createElement('th'); th.textContent = t; if(t==='') th.style.width='30px'; hdr.appendChild(th); });
+  ['Fecha','Peso','','%Musc','','%Grasa','','Pecho','Cintura','Cadera','Muslo','Brazo'].forEach(function(t){
+    var th = document.createElement('th'); th.textContent = t;
+    if(t==='') th.style.width='24px';
+    th.style.fontSize='11px'; th.style.whiteSpace='nowrap';
+    hdr.appendChild(th);
+  });
   thd.appendChild(hdr); tbl.appendChild(thd);
   var tbd = document.createElement('tbody');
   recent.forEach(function(m, i) {
     var d = new Date(m.date);
-    var dateStr = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+    var dateStr = d.getDate() + '/' + (d.getMonth()+1);
     var prev = (i < recent.length - 1) ? recent[i+1] : null;
     var tr = document.createElement('tr');
 
     var td1 = document.createElement('td'); td1.textContent = dateStr;
-    var td2 = document.createElement('td'); td2.textContent = m.peso;
+    var td2 = document.createElement('td'); td2.textContent = m.peso || '\u2014';
     var td2c = makeChangeCell(m.peso, prev ? prev.peso : null, 'down');
     var td3 = document.createElement('td'); td3.textContent = (m.musculo != null ? m.musculo + '%' : '\u2014');
     var td3c = makeChangeCell(m.musculo, prev ? prev.musculo : null, 'up');
     var td4 = document.createElement('td'); td4.textContent = (m.grasa != null ? m.grasa + '%' : '\u2014');
     var td4c = makeChangeCell(m.grasa, prev ? prev.grasa : null, 'down');
+    var tdPecho = document.createElement('td'); tdPecho.textContent = m.pecho || '\u2014';
+    var tdCintura = document.createElement('td'); tdCintura.textContent = m.cintura || '\u2014';
+    var tdCadera = document.createElement('td'); tdCadera.textContent = m.cadera || '\u2014';
+    var tdMuslo = document.createElement('td'); tdMuslo.textContent = m.muslo || '\u2014';
+    var tdBrazo = document.createElement('td'); tdBrazo.textContent = m.brazo || '\u2014';
 
     tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td2c);
     tr.appendChild(td3); tr.appendChild(td3c); tr.appendChild(td4); tr.appendChild(td4c);
+    tr.appendChild(tdPecho); tr.appendChild(tdCintura); tr.appendChild(tdCadera);
+    tr.appendChild(tdMuslo); tr.appendChild(tdBrazo);
     tbd.appendChild(tr);
   });
-  tbl.appendChild(tbd); container.appendChild(tbl);
+  tbl.appendChild(tbd); scrollWrap.appendChild(tbl); container.appendChild(scrollWrap);
 }
 
 function makeChangeCell(curr, prev, goodDir) {
