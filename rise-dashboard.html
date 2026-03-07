@@ -1931,6 +1931,27 @@
                 </button>
               </div>
 
+              <!-- ═══ FORMULARIO INICIAL RISE (INTAKE) ═══ -->
+              <div class="profile-form" style="margin-top:24px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRiseIntakeForm()">
+                  <h3 style="margin:0;display:flex;align-items:center;gap:8px">
+                    <i class="fas fa-clipboard-list" style="color:var(--red)"></i>
+                    Mi Formulario Inicial
+                  </h3>
+                  <span id="riseIntakeArrow" style="color:var(--gray);font-size:20px;transition:transform .3s;display:inline-block;">&#8964;</span>
+                </div>
+                <p style="font-size:.82rem;color:var(--gray);margin-top:8px;line-height:1.5">La información que llenaste al inscribirte. Estos datos se usan para personalizar tu programa RISE.</p>
+                <div id="riseIntakeContent" style="display:none;margin-top:20px;">
+                  <div id="riseIntakeCards">
+                    <div style="text-align:center;padding:30px;color:var(--gray);font-size:13px;">
+                      <i class="fas fa-spinner fa-spin" style="font-size:20px;margin-bottom:10px;display:block;"></i>
+                      Cargando datos del formulario...
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ═══ FIN FORMULARIO RISE ═══ -->
+
               <!-- Plan comparison — encourage upgrade -->
               <div class="plan-compare">
                 <h3>Nuestros Planes</h3>
@@ -2585,6 +2606,146 @@
             }
             localStorage.setItem('wc_profile_data', JSON.stringify({ nombre: nombre, whatsapp: whatsapp, edad: edad, objetivo: objetivo, ciudad: ciudad }));
             showToast(result ? 'Perfil actualizado correctamente' : 'Perfil guardado (offline)', 'var(--green)');
+        }
+
+        // ─── RISE INTAKE FORM ─────────────────────
+        function toggleRiseIntakeForm() {
+            var content = document.getElementById('riseIntakeContent');
+            var arrow = document.getElementById('riseIntakeArrow');
+            if (!content) return;
+            var open = content.style.display !== 'none';
+            content.style.display = open ? 'none' : 'block';
+            arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+            if (!open && !content.dataset.loaded) {
+                loadRiseIntakeForm();
+                content.dataset.loaded = '1';
+            }
+        }
+
+        function loadRiseIntakeForm() {
+            var container = document.getElementById('riseIntakeCards');
+            var token = localStorage.getItem('wc_token') || sessionStorage.getItem('wc_preview_token');
+            fetch('/api/clients/intake.php', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var ri = data.rise_intake;
+                var pi = data.profile_intake;
+                if (!ri && !pi) {
+                    container.textContent = '';
+                    var emptyDiv = document.createElement('div');
+                    emptyDiv.style.cssText = 'text-align:center;padding:20px;color:var(--gray);font-size:13px;';
+                    var emptyIcon = document.createElement('i');
+                    emptyIcon.className = 'fas fa-info-circle';
+                    emptyIcon.style.cssText = 'color:var(--red);font-size:18px;margin-bottom:8px;display:block;';
+                    emptyDiv.appendChild(emptyIcon);
+                    emptyDiv.appendChild(document.createTextNode('No hay datos de formulario inicial registrados.'));
+                    container.appendChild(emptyDiv);
+                    return;
+                }
+                // Build cards using DOM methods
+                container.textContent = '';
+                if (ri) {
+                    var meta = ri._meta || {};
+                    container.appendChild(buildIntakeSection('fas fa-user-circle', '#E31E24', 'Datos Generales', [
+                        ['Nivel de experiencia', meta.experience_level || '\u2014'],
+                        ['Lugar de entrenamiento', formatLocation(meta.training_location)],
+                        ['Género', formatGender(meta.gender)]
+                    ]));
+                    var m = ri.measurements || {};
+                    container.appendChild(buildIntakeSection('fas fa-ruler', '#00D9FF', 'Medidas Corporales', [
+                        ['Cintura', m.waist ? m.waist + ' cm' : '\u2014'],
+                        ['Cadera', m.hip ? m.hip + ' cm' : '\u2014'],
+                        ['Pecho', m.chest ? m.chest + ' cm' : '\u2014'],
+                        ['Grasa corporal', m.bodyFat ? m.bodyFat + '%' : '\u2014']
+                    ]));
+                    var t = ri.training || {};
+                    container.appendChild(buildIntakeSection('fas fa-dumbbell', '#FF6B35', 'Historial de Entrenamiento', [
+                        ['Años entrenando', t.years || '\u2014'],
+                        ['Tipos de entrenamiento', Array.isArray(t.types) ? t.types.join(', ') : (t.types || '\u2014')],
+                        ['Ejercicios a evitar', t.exercisesToAvoid || '\u2014']
+                    ]));
+                    var a = ri.availability || {};
+                    container.appendChild(buildIntakeSection('fas fa-calendar-check', '#FFB800', 'Disponibilidad y Equipamiento', [
+                        ['Hora preferida', formatTime(a.time)],
+                        ['Duración por sesión', a.duration ? a.duration + ' min' : '\u2014'],
+                        ['Lugar', formatLocation(a.place)],
+                        ['Equipamiento', Array.isArray(a.equipment) ? a.equipment.join(', ') : (a.equipment || '\u2014')]
+                    ]));
+                    var n = ri.nutrition || {};
+                    container.appendChild(buildIntakeSection('fas fa-utensils', '#00C853', 'Alimentación', [
+                        ['Tipo de dieta', n.diet || '\u2014'],
+                        ['Suplementos', n.supplements || '\u2014'],
+                        ['Lista suplementos', n.supplementList || '\u2014'],
+                        ['Alergias', n.allergies || '\u2014']
+                    ]));
+                    var l = ri.lifestyle || {};
+                    container.appendChild(buildIntakeSection('fas fa-heart-pulse', '#A855F7', 'Estilo de Vida', [
+                        ['Horas de sueño', l.sleep || '\u2014'],
+                        ['Nivel actividad', l.activity ? l.activity + '/10' : '\u2014'],
+                        ['Nivel estrés', l.stress ? l.stress + '/10' : '\u2014']
+                    ]));
+                    var mo = ri.motivation || {};
+                    container.appendChild(buildIntakeSection('fas fa-bullseye', '#E31E24', 'Motivación y Compromiso', [
+                        ['Razones', Array.isArray(mo.goals) ? mo.goals.join(', ') : (mo.goals || '\u2014')],
+                        ['Resultado esperado', mo.expectedResult || '\u2014'],
+                        ['Compromiso', mo.commitment ? mo.commitment + '/10' : '\u2014']
+                    ]));
+                }
+                if (pi) {
+                    var piRows = Object.keys(pi).filter(function(k){return k!=='updated_at';}).map(function(k){
+                        return [k.replace(/_/g,' '), String(pi[k] || '\u2014')];
+                    });
+                    container.appendChild(buildIntakeSection('fas fa-clipboard-list', '#00D9FF', 'Datos Adicionales', piRows));
+                }
+            })
+            .catch(function() {
+                container.textContent = 'Error al cargar datos.';
+            });
+        }
+
+        function buildIntakeSection(iconClass, color, title, rows) {
+            var section = document.createElement('div');
+            section.style.cssText = 'background:' + color + '08;border:1px solid ' + color + '25;border-radius:10px;padding:16px;margin-bottom:14px;';
+            var header = document.createElement('div');
+            header.style.cssText = 'color:#fff;font-weight:700;margin-bottom:10px;font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;';
+            var icon = document.createElement('i');
+            icon.className = iconClass;
+            icon.style.cssText = 'color:' + color + ';margin-right:6px';
+            header.appendChild(icon);
+            header.appendChild(document.createTextNode(' ' + title));
+            section.appendChild(header);
+            var grid = document.createElement('div');
+            grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;';
+            rows.forEach(function(r) {
+                var cell = document.createElement('div');
+                cell.style.cssText = 'background:rgba(0,0,0,0.2);border-radius:6px;padding:10px;';
+                var label = document.createElement('div');
+                label.style.cssText = 'font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;';
+                label.textContent = r[0];
+                var val = document.createElement('div');
+                val.style.cssText = 'font-size:13px;color:#fff;font-weight:500;';
+                val.textContent = r[1];
+                cell.appendChild(label);
+                cell.appendChild(val);
+                grid.appendChild(cell);
+            });
+            section.appendChild(grid);
+            return section;
+        }
+
+        function formatLocation(v) {
+            var m = { gym: 'Gimnasio', home: 'Casa', hybrid: 'Ambos', ambos: 'Ambos' };
+            return m[v] || v || '\u2014';
+        }
+        function formatGender(v) {
+            var m = { male: 'Masculino', female: 'Femenino', other: 'Otro' };
+            return m[v] || v || '\u2014';
+        }
+        function formatTime(v) {
+            var m = { morning: 'Mañana', midday: 'Mediodía', afternoon: 'Tarde', evening: 'Noche', flexible: 'Flexible' };
+            return m[v] || v || '\u2014';
         }
 
         // ─── PHASE 5: SEARCH ─────────────────────

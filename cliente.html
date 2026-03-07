@@ -2811,6 +2811,239 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         </button>
       </div>
 
+      <!-- ═══ FORMULARIO INICIAL (INTAKE) ═══ -->
+      <div class="profile-form" style="margin-top:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleIntakeForm()">
+          <h3 style="margin:0;display:flex;align-items:center;gap:8px">
+            <i class="fas fa-clipboard-list" style="color:var(--red)"></i>
+            Formulario Inicial
+          </h3>
+          <span id="intakeFormArrow" style="color:var(--gray);font-size:20px;transition:transform .3s;display:inline-block;">&#8964;</span>
+        </div>
+        <p style="font-size:.82rem;color:var(--gray);margin-top:8px;line-height:1.5">Tu información de intake inicial. Estos datos se usan para personalizar tu plan de entrenamiento y nutrición.</p>
+        <div id="intakeFormContent" style="display:none;margin-top:20px;">
+
+          <!-- Sec 1: Experiencia -->
+          <div style="background:rgba(227,30,36,0.05);border:1px solid rgba(227,30,36,0.15);border-radius:10px;padding:16px;margin-bottom:16px;">
+            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
+              <i class="fas fa-signal" style="color:var(--red);margin-right:6px"></i> Experiencia de Entrenamiento
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Tiempo entrenando</label>
+                <select id="ik-experiencia">
+                  <option value="">Seleccionar</option>
+                  <option value="Soy principiante (menos de 6 meses)">Principiante (&lt;6 meses)</option>
+                  <option value="Intermedio (6 meses - 2 años)">Intermedio (6m-2a)</option>
+                  <option value="Avanzado (más de 2 años)">Avanzado (&gt;2a)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Días por semana</label>
+                <select id="ik-dias">
+                  <option value="">Seleccionar</option>
+                  <option>2 días</option><option>3 días</option><option>4 días</option><option>5 días</option><option>6+ días</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Equipamiento disponible</label>
+                <select id="ik-equipamiento">
+                  <option value="">Seleccionar</option>
+                  <option>Gimnasio completo</option>
+                  <option>Home gym con pesas</option>
+                  <option>Solo peso corporal</option>
+                  <option>Mancuernas + bandas</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Coach o programa previo</label>
+                <select id="ik-coach-previo">
+                  <option value="">Seleccionar</option>
+                  <option>No, nunca</option>
+                  <option>Sí, tuve buenos resultados</option>
+                  <option>Sí, pero sin buenos resultados</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Rutina actual (si tienes)</label>
+              <textarea id="ik-rutina" rows="2" placeholder="Ej: Chest-Back lunes, pierna miércoles..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+            </div>
+          </div>
+
+          <!-- Sec 2: Preferencias -->
+          <div style="background:rgba(0,217,255,0.04);border:1px solid rgba(0,217,255,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
+            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
+              <i class="fas fa-dumbbell" style="color:#00D9FF;margin-right:6px"></i> Preferencias de Entrenamiento
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Tipo de entrenamiento</label>
+                <select id="ik-tipo">
+                  <option value="">Seleccionar</option>
+                  <option>Pesas / Musculación</option>
+                  <option>Funcional</option>
+                  <option>Cardio + pesas</option>
+                  <option>Calistenia</option>
+                  <option>Sin preferencia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Duración por sesión</label>
+                <select id="ik-duracion">
+                  <option value="">Seleccionar</option>
+                  <option>45 minutos</option>
+                  <option>60 minutos</option>
+                  <option>75-90 minutos</option>
+                  <option>Más de 90 minutos</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Horario preferido</label>
+              <input type="text" id="ik-horario" placeholder="Ej: Solo puedo entrenar por las mañanas">
+            </div>
+            <div class="form-group">
+              <label>Ejercicios que no puedes/quieres hacer</label>
+              <textarea id="ik-ejercicios-evitar" rows="2" placeholder="Ej: No puedo correr por rodilla..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+            </div>
+          </div>
+
+          <!-- Sec 3: Lesiones -->
+          <div style="background:rgba(255,184,0,0.04);border:1px solid rgba(255,184,0,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
+            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
+              <i class="fas fa-heart-pulse" style="color:#FFB800;margin-right:6px"></i> Lesiones y Limitaciones
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Lesión actual o reciente</label>
+                <select id="ik-lesion">
+                  <option value="">Seleccionar</option>
+                  <option value="no">No, estoy bien</option>
+                  <option value="si">Sí, tengo una lesión</option>
+                  <option value="cronica">Condición crónica</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Medicamentos relevantes</label>
+                <input type="text" id="ik-medicamentos" placeholder="Ej: Metformina... o ninguno">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Describe la lesión o condición (si aplica)</label>
+              <textarea id="ik-lesion-detalle" rows="2" placeholder="Zona afectada, diagnóstico..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Condición médica relevante</label>
+              <textarea id="ik-condicion-medica" rows="2" placeholder="Diabetes, hipertensión... o vacío si no tienes" style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+            </div>
+          </div>
+
+          <!-- Sec 4: Nutrición -->
+          <div style="background:rgba(0,200,83,0.04);border:1px solid rgba(0,200,83,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
+            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
+              <i class="fas fa-utensils" style="color:#00C853;margin-right:6px"></i> Información Nutricional
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Dieta actual</label>
+                <select id="ik-dieta">
+                  <option value="">Seleccionar</option>
+                  <option>No, como de todo</option>
+                  <option>Dieta flexible / IIFYM</option>
+                  <option>Vegana</option>
+                  <option>Vegetariana</option>
+                  <option>Sin gluten</option>
+                  <option>Keto / Low carb</option>
+                  <option>Otra</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Comidas al día</label>
+                <select id="ik-comidas">
+                  <option value="">Seleccionar</option>
+                  <option>1-2 comidas</option>
+                  <option>3 comidas</option>
+                  <option>4-5 comidas</option>
+                  <option>Varía mucho</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Experiencia con macros</label>
+                <select id="ik-macros">
+                  <option value="">Seleccionar</option>
+                  <option>Nunca lo he hecho</option>
+                  <option>Lo intenté pero lo dejé</option>
+                  <option>Sí, tengo experiencia</option>
+                  <option>Lo hago actualmente</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Alergias o intolerancias</label>
+                <input type="text" id="ik-alergias" placeholder="Lactosa, mariscos...">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Alimentos que NO comerás</label>
+              <textarea id="ik-alimentos-no" rows="2" placeholder="Ej: No como cerdo, no me gustan los mariscos..." style="width:100%;background:var(--surface);color:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:.85rem;resize:vertical;font-family:inherit;"></textarea>
+            </div>
+          </div>
+
+          <!-- Sec 5: Hábitos -->
+          <div style="background:rgba(168,85,247,0.04);border:1px solid rgba(168,85,247,0.12);border-radius:10px;padding:16px;margin-bottom:16px;">
+            <div style="color:#fff;font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">
+              <i class="fas fa-clock" style="color:#A855F7;margin-right:6px"></i> Horarios y Hábitos
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Horario de trabajo/estudio</label>
+                <input type="text" id="ik-horario-trabajo" placeholder="Ej: 9am-6pm lunes a viernes">
+              </div>
+              <div class="form-group">
+                <label>Comes fuera de casa</label>
+                <select id="ik-come-fuera">
+                  <option value="">Seleccionar</option>
+                  <option>Casi nunca, cocino en casa</option>
+                  <option>Algunas veces a la semana</option>
+                  <option>La mayoría son fuera</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nivel de estrés</label>
+                <select id="ik-estres">
+                  <option value="">Seleccionar</option>
+                  <option>Bajo — vida tranquila</option>
+                  <option>Moderado — trabajo normal</option>
+                  <option>Alto — muy ocupado</option>
+                  <option>Muy alto — me afecta el sueño</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Horas de sueño por noche</label>
+                <select id="ik-sueno">
+                  <option value="">Seleccionar</option>
+                  <option>Menos de 5 horas</option>
+                  <option>5-6 horas</option>
+                  <option>7-8 horas</option>
+                  <option>Más de 8 horas</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="saveIntakeForm()" style="width:100%">
+            <i class="fas fa-save"></i> Guardar Formulario Inicial
+          </button>
+        </div>
+      </div>
+      <!-- ═══ FIN FORMULARIO INICIAL ═══ -->
+
       <!-- Plan comparison -->
       <div class="plan-compare">
         <h3>Comparación de Planes</h3>
@@ -4989,6 +5222,97 @@ function saveProfile() {
       }
       showToast('Perfil guardado (offline)', 'success');
     });
+}
+
+// ===== INTAKE FORM =====
+function toggleIntakeForm() {
+  var content = document.getElementById('intakeFormContent');
+  var arrow = document.getElementById('intakeFormArrow');
+  if (!content) return;
+  var open = content.style.display !== 'none';
+  content.style.display = open ? 'none' : 'block';
+  arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+  if (!open && !content.dataset.loaded) {
+    loadIntakeForm();
+    content.dataset.loaded = '1';
+  }
+}
+
+function loadIntakeForm() {
+  apiFetch('/clients/intake').then(function(r) { return r.json(); }).then(function(data) {
+    var intake = data.profile_intake || {};
+    var fields = {
+      'ik-experiencia': intake.experiencia,
+      'ik-dias': intake.dias_entrenamiento,
+      'ik-equipamiento': intake.equipamiento,
+      'ik-coach-previo': intake.coach_previo,
+      'ik-rutina': intake.rutina_actual,
+      'ik-tipo': intake.tipo_entrenamiento,
+      'ik-duracion': intake.duracion_sesion,
+      'ik-horario': intake.horario,
+      'ik-ejercicios-evitar': intake.ejercicios_evitar,
+      'ik-lesion': intake.tiene_lesion,
+      'ik-lesion-detalle': intake.lesion_detalle,
+      'ik-condicion-medica': intake.condicion_medica,
+      'ik-medicamentos': intake.medicamentos,
+      'ik-dieta': intake.dieta_actual,
+      'ik-comidas': intake.num_comidas,
+      'ik-macros': intake.exp_macros,
+      'ik-alergias': intake.alergias,
+      'ik-alimentos-no': intake.alimentos_no,
+      'ik-horario-trabajo': intake.horario_trabajo,
+      'ik-come-fuera': intake.come_fuera,
+      'ik-estres': intake.estres,
+      'ik-sueno': intake.sueno
+    };
+    Object.keys(fields).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && fields[id]) {
+        el.value = fields[id];
+      }
+    });
+  }).catch(function() {});
+}
+
+function saveIntakeForm() {
+  var payload = {
+    experiencia: document.getElementById('ik-experiencia').value,
+    dias_entrenamiento: document.getElementById('ik-dias').value,
+    equipamiento: document.getElementById('ik-equipamiento').value,
+    coach_previo: document.getElementById('ik-coach-previo').value,
+    rutina_actual: document.getElementById('ik-rutina').value,
+    tipo_entrenamiento: document.getElementById('ik-tipo').value,
+    duracion_sesion: document.getElementById('ik-duracion').value,
+    horario: document.getElementById('ik-horario').value,
+    ejercicios_evitar: document.getElementById('ik-ejercicios-evitar').value,
+    tiene_lesion: document.getElementById('ik-lesion').value,
+    lesion_detalle: document.getElementById('ik-lesion-detalle').value,
+    condicion_medica: document.getElementById('ik-condicion-medica').value,
+    medicamentos: document.getElementById('ik-medicamentos').value,
+    dieta_actual: document.getElementById('ik-dieta').value,
+    num_comidas: document.getElementById('ik-comidas').value,
+    exp_macros: document.getElementById('ik-macros').value,
+    alergias: document.getElementById('ik-alergias').value,
+    alimentos_no: document.getElementById('ik-alimentos-no').value,
+    horario_trabajo: document.getElementById('ik-horario-trabajo').value,
+    come_fuera: document.getElementById('ik-come-fuera').value,
+    estres: document.getElementById('ik-estres').value,
+    sueno: document.getElementById('ik-sueno').value
+  };
+
+  apiFetch('/clients/intake', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function(r) {
+    if (r.ok) {
+      showToast('Formulario inicial guardado', 'success');
+    } else {
+      showToast('Error al guardar formulario', 'error');
+    }
+  }).catch(function() {
+    showToast('Error de conexión', 'error');
+  });
 }
 
 // ===== FAQ ACCORDION =====
