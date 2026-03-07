@@ -1368,6 +1368,193 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     .trn-ex-row{padding:12px 14px;gap:10px}
     .trn-ex-actions{gap:4px}
   }
+
+  /* =============================================================
+     DASHBOARD UPGRADE — Global Utilities + Readability
+     Large readable descriptions, premium info frames,
+     accent borders, welcome card, quick actions
+     ============================================================= */
+
+  /* Section description — large readable text after titles
+     Pensado para personas con gafas o sin ellas en el gym */
+  .section-desc {
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.62);
+    margin-top: -14px;
+    margin-bottom: 28px;
+    max-width: 660px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  /* Premium info frame — colored semi-transparent background */
+  .info-frame {
+    background: rgba(0,217,255,0.035);
+    border: 1px solid rgba(0,217,255,0.10);
+    border-left: 3px solid #00D9FF;
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.7);
+  }
+  .info-frame p { font-size: 1rem; line-height: 1.8 }
+  .info-frame.frame-red {
+    background: rgba(200,16,46,0.035);
+    border-color: rgba(200,16,46,0.10);
+    border-left-color: var(--red);
+  }
+  .info-frame.frame-gold {
+    background: rgba(212,168,83,0.035);
+    border-color: rgba(212,168,83,0.10);
+    border-left-color: var(--gold);
+  }
+  .info-frame.frame-green {
+    background: rgba(34,197,94,0.035);
+    border-color: rgba(34,197,94,0.10);
+    border-left-color: var(--green);
+  }
+
+  /* Accent left borders */
+  .accent-left-red { border-left: 3px solid var(--red) !important }
+  .accent-left-cyan { border-left: 3px solid #00D9FF !important }
+  .accent-left-green { border-left: 3px solid var(--green) !important }
+  .accent-left-gold { border-left: 3px solid var(--gold) !important }
+
+  /* Card hover standardized */
+  .card-hover { transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease }
+  .card-hover:hover { border-color: var(--red); box-shadow: 0 4px 24px rgba(0,0,0,0.25); transform: translateY(-2px) }
+
+  /* Pulse subtle animation */
+  @keyframes pulse-subtle { 0%,100%{opacity:1} 50%{opacity:.7} }
+  .pulse-subtle { animation: pulse-subtle 2s ease-in-out infinite }
+
+  /* Welcome card */
+  .welcome-card {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(200,16,46,0.04) 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .welcome-greeting {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: .05em;
+    color: var(--white);
+    line-height: 1.1;
+  }
+  .welcome-greeting span { color: var(--red) }
+  .welcome-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem;
+    color: var(--gray);
+    margin-top: 6px;
+    letter-spacing: .04em;
+  }
+  .welcome-right {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .welcome-plan-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    padding: 6px 14px;
+    border-radius: 40px;
+    text-transform: uppercase;
+  }
+  .welcome-plan-badge.elite { background: linear-gradient(135deg,rgba(184,134,11,0.15),rgba(255,215,0,0.1)); color: #ffd700; border: 1px solid rgba(255,215,0,0.25) }
+  .welcome-plan-badge.metodo { background: rgba(200,16,46,0.1); color: var(--red); border: 1px solid rgba(200,16,46,0.25) }
+  .welcome-plan-badge.esencial { background: rgba(255,255,255,0.06); color: var(--gray); border: 1px solid var(--border) }
+
+  /* KPI card with icon */
+  .kpi-icon {
+    width: 36px; height: 36px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .kpi-icon.red { background: var(--red-dim); color: var(--red) }
+  .kpi-icon.cyan { background: rgba(0,217,255,0.1); color: #00D9FF }
+  .kpi-icon.green { background: rgba(34,197,94,0.1); color: var(--green) }
+  .kpi-icon.gold { background: rgba(212,168,83,0.1); color: var(--gold) }
+  .kpi-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* Quick actions grid */
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .quick-action-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .quick-action-card:hover {
+    border-color: var(--red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+  .quick-action-card .qa-icon {
+    font-size: 1.1rem;
+    color: var(--red);
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--red-dim);
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  .quick-action-card .qa-label {
+    font-size: .88rem;
+    font-weight: 500;
+    color: var(--white);
+  }
+  .quick-action-card .qa-arrow {
+    margin-left: auto;
+    color: var(--gray);
+    font-size: .75rem;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .quick-action-card:hover .qa-arrow { transform: translateX(3px); color: var(--red) }
+
+  /* Day card enhanced (seguimiento) */
+  .day-toggle.today { border-color: var(--accent); background: rgba(0,217,255,0.06) }
+  .day-toggle.today .day-label { color: var(--accent) }
+
+  /* Responsive for new utilities */
+  @media(max-width:768px){
+    .welcome-card { flex-direction: column; text-align: center; gap: 12px; padding: 20px }
+    .welcome-right { margin-left: 0 }
+    .welcome-greeting { font-size: 1.6rem }
+    .quick-actions { grid-template-columns: 1fr }
+    .section-desc { font-size: 1rem; margin-bottom: 22px }
+  }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="css/wellcore-v5.css">
@@ -1409,7 +1596,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <i class="fas fa-book-open"></i> Biblioteca
     </a>
     <a class="nav-item" onclick="showSection('nutricion')" id="nav-nutricion">
-      <i class="fas fa-utensils"></i> Nutricion
+      <i class="fas fa-utensils"></i> Nutrición
       <span class="badge-elite" style="background:var(--accent);color:#000">PRO</span>
     </a>
     <a class="nav-item" onclick="showSection('soporte')" id="nav-soporte">
@@ -1451,25 +1638,43 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
     <!-- ===== SECTION 1: DASHBOARD ===== -->
     <section id="sec-dashboard" class="section active">
-      <h1 class="section-title">Dashboard</h1>
+
+      <!-- Welcome Card -->
+      <div class="welcome-card">
+        <div>
+          <div class="welcome-greeting" id="welcome-greeting">Bienvenido</div>
+          <div class="welcome-meta" id="welcome-date"></div>
+        </div>
+        <div class="welcome-right">
+          <span class="welcome-plan-badge" id="welcome-plan-badge">ESENCIAL</span>
+        </div>
+      </div>
+
+      <p class="section-desc">Tu resumen de progreso y actividad. Aquí puedes ver cómo vas avanzando en tu programa de entrenamiento personalizado.</p>
 
       <div class="kpi-grid">
-        <div class="kpi-card">
+        <div class="kpi-card accent-left-red card-hover">
+          <div class="kpi-icon red"><i class="fas fa-crown" id="kpi-plan-icon"></i></div>
           <div class="kpi-label">Plan Activo</div>
           <div class="kpi-value" id="kpi-plan">—</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card accent-left-cyan card-hover">
+          <div class="kpi-icon cyan"><i class="fas fa-calendar-check"></i></div>
           <div class="kpi-label">Semanas Activo</div>
           <div class="kpi-value" id="kpi-semanas">—</div>
+          <div class="kpi-sub" id="kpi-semanas-sub"></div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card accent-left-green card-hover">
+          <div class="kpi-icon green"><i class="fas fa-fire"></i></div>
           <div class="kpi-label">Adherencia</div>
           <div class="kpi-value" id="kpi-adherencia">—</div>
           <div class="progress-bar"><div class="progress-fill" id="kpi-adherencia-bar" style="width:0%"></div></div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Proxima Entrega</div>
+        <div class="kpi-card accent-left-gold card-hover">
+          <div class="kpi-icon gold"><i class="fas fa-clock"></i></div>
+          <div class="kpi-label">Próxima Entrega</div>
           <div class="kpi-value" id="kpi-entrega">—</div>
+          <div class="kpi-sub" id="kpi-entrega-sub"></div>
         </div>
       </div>
 
@@ -1487,38 +1692,57 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         </div>
         <div style="margin-left:16px">
           <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Estado Programa</div>
-          <div style="font-size:.855rem;color:var(--white)" id="ring-fase-label">Fase de Ejecucion</div>
+          <div style="font-size:.855rem;color:var(--white)" id="ring-fase-label">Fase de Ejecución</div>
           <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray);margin-top:4px" id="ring-semana-label">—</div>
         </div>
       </div>
 
       <div class="timeline-phases">
         <div class="phase done">
+          <i class="fas fa-stethoscope"></i>
           <span>F01</span>
-          <p>Diagnostico</p>
-          <span style="color:#00D9FF;font-weight:700;">//</span>
+          <p>Diagnóstico</p>
         </div>
         <div class="phase done">
+          <i class="fas fa-file-alt"></i>
           <span>F02</span>
           <p>Programa</p>
-          <span style="color:#00D9FF;font-weight:700;">//</span>
         </div>
         <div class="phase active">
+          <i class="fas fa-running pulse-subtle"></i>
           <span>F03</span>
-          <p>Ejecucion</p>
-          <span style="color:var(--red);font-weight:700;">...</span>
+          <p>Ejecución</p>
         </div>
         <div class="phase pending">
+          <i class="fas fa-trophy"></i>
           <span>F04</span>
           <p>Resultados</p>
-          <span style="color:var(--gray);">&#9675;</span>
         </div>
       </div>
 
       <div class="activity-feed">
-        <h3>Actividad Reciente</h3>
+        <h3><i class="fas fa-stream" style="margin-right:8px;color:var(--red)"></i>Actividad Reciente</h3>
         <div id="activity-feed-list">
           <p style="color:var(--gray);font-size:.855rem;padding:10px 0">Cargando actividad...</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="quick-action-card" onclick="showSection('seguimiento')">
+          <div class="qa-icon"><i class="fas fa-dumbbell"></i></div>
+          <span class="qa-label">Registrar Entrenamiento</span>
+          <i class="fas fa-chevron-right qa-arrow"></i>
+        </div>
+        <div class="quick-action-card" onclick="showSection('fotos')">
+          <div class="qa-icon"><i class="fas fa-camera"></i></div>
+          <span class="qa-label">Subir Fotos</span>
+          <i class="fas fa-chevron-right qa-arrow"></i>
+        </div>
+        <div class="quick-action-card" onclick="showSection('plan')">
+          <div class="qa-icon"><i class="fas fa-clipboard-list"></i></div>
+          <span class="qa-label">Ver Mi Plan</span>
+          <i class="fas fa-chevron-right qa-arrow"></i>
         </div>
       </div>
     </section>
@@ -1532,13 +1756,13 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <span style="color:#00D9FF;font-weight:700">//</span> Entrenamiento
         </button>
         <button class="tab-btn" id="tab-btn-nutricion" onclick="loadPlanTab('nutricion')">
-          <span style="color:#00D9FF;font-weight:700">//</span> Nutricion
+          <span style="color:#00D9FF;font-weight:700">//</span> Nutrición
         </button>
         <button class="tab-btn" id="tab-btn-habitos" onclick="loadPlanTab('habitos')">
-          <span style="color:#00D9FF;font-weight:700">//</span> Habitos
+          <span style="color:#00D9FF;font-weight:700">//</span> Hábitos
         </button>
         <button class="tab-btn" id="tab-btn-suplementacion" onclick="loadPlanTab('suplementacion')">
-          <span style="color:#00D9FF;font-weight:700">//</span> Suplementacion
+          <span style="color:#00D9FF;font-weight:700">//</span> Suplementación
         </button>
         <button class="tab-btn" id="tab-btn-ciclo" onclick="loadPlanTab('ciclo')">
           <span style="color:#00D9FF;font-weight:700">//</span> Ciclo Hormonal
@@ -1617,6 +1841,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <!-- ===== SECTION 3: SEGUIMIENTO ===== -->
     <section id="sec-seguimiento" class="section">
       <h1 class="section-title">Seguimiento</h1>
+      <p class="section-desc">Registra tu entrenamiento semanal, pesos por ejercicio y medidas corporales. Tu progreso te motiva a seguir adelante.</p>
 
       <!-- Weekly Insight -->
       <div id="ai-insight-box" style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:18px 22px;margin-bottom:24px;display:none">
@@ -1630,8 +1855,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
 
       <!-- Weekly training log -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:0;padding:22px 24px;margin-bottom:24px">
-        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:16px">Registro Semanal de Entrenamiento</h3>
+      <div class="accent-left-cyan" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:24px">
+        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px"><i class="fas fa-calendar-week" style="color:#00D9FF;margin-right:8px"></i>Registro Semanal de Entrenamiento</h3>
+        <p style="font-size:.92rem;color:var(--gray);margin-bottom:16px;line-height:1.6">Marca los días que entrenaste esta semana. Cada día cuenta.</p>
         <div class="week-grid" id="week-grid">
           <div class="day-toggle" data-day="0" onclick="toggleDay(0)">
             <span class="day-label">LUN</span>
@@ -1662,17 +1888,18 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <span class="day-icon">&#x25CB;</span>
           </div>
         </div>
-        <div class="week-stats" id="week-stats"><span id="days-count">0</span>/7 dias completados esta semana</div>
+        <div class="week-stats" id="week-stats"><span id="days-count">0</span>/7 días completados esta semana</div>
       </div>
 
       <!-- ===== LOG DE PESOS POR EJERCICIO ===== -->
 
       <!-- 1. FORMULARIO DE ENTRADA -->
-      <div class="wl-card">
+      <div class="wl-card accent-left-red">
         <div class="wl-section-title">
-          <span><span style="color:#00D9FF;font-weight:700;margin-right:8px">//</span>Log de Pesos por Ejercicio</span>
+          <span><i class="fas fa-weight-hanging" style="color:var(--red);margin-right:8px"></i>Log de Pesos por Ejercicio</span>
           <button class="btn-icon" onclick="wlAddRow()">+ Agregar ejercicio</button>
         </div>
+        <p style="font-size:.92rem;color:var(--gray);margin-bottom:16px;line-height:1.6">Registra los pesos que usas en cada ejercicio para visualizar tu progresión.</p>
 
         <div id="wl-rows-container">
           <!-- rows injected by JS -->
@@ -1687,10 +1914,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
 
       <!-- 2. HISTORIAL SEMANAL POR EJERCICIO -->
-      <div class="wl-card">
+      <div class="wl-card accent-left-cyan">
         <div class="wl-section-title">
-          <span><span style="color:#00D9FF;font-weight:700;margin-right:8px">//</span>Progresion Semana a Semana</span>
+          <span><i class="fas fa-chart-line" style="color:#00D9FF;margin-right:8px"></i>Progresión Semana a Semana</span>
         </div>
+        <p style="font-size:.92rem;color:var(--gray);margin-bottom:14px;line-height:1.6">Compara cómo evolucionan tus pesos semana a semana en cada ejercicio.</p>
         <div style="margin-bottom:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray)">Ejercicio:</span>
           <select id="wl-history-ex" style="background:var(--surface-2);border:1px solid var(--border);border-radius:0;padding:6px 12px;color:var(--white);font-size:.8rem;outline:none" onchange="wlRenderHistory()">
@@ -1703,9 +1931,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
 
       <!-- 3. CHART DE PROGRESO (SVG sin librerias) -->
-      <div class="wl-card">
+      <div class="wl-card accent-left-green">
         <div class="wl-section-title">
-          <span><span style="color:#00D9FF;font-weight:700;margin-right:8px">//</span>Grafico de Progreso</span>
+          <span><i class="fas fa-chart-area" style="color:var(--green);margin-right:8px"></i>Gráfico de Progreso</span>
         </div>
         <div class="wl-chart-controls">
           <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray);line-height:2">Ejercicio:</span>
@@ -1718,14 +1946,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Metrics Form -->
       <div class="metrics-form">
-        <h3>Registrar Medidas Corporales</h3>
+        <h3><i class="fas fa-ruler" style="color:var(--gold);margin-right:8px"></i>Registrar Medidas Corporales</h3>
+        <p style="font-size:.92rem;color:var(--gray);margin-bottom:18px;line-height:1.6">Registra tu peso, porcentaje de músculo y grasa para seguir tu composición corporal.</p>
         <div class="form-row">
           <div class="form-group">
             <label>Peso corporal (kg)</label>
             <input type="number" id="inp-peso" placeholder="78.5" step="0.1" min="30" max="250">
           </div>
           <div class="form-group">
-            <label>% Musculo</label>
+            <label>% Músculo</label>
             <input type="number" id="inp-musculo" placeholder="38.2" step="0.1" min="0" max="70">
           </div>
           <div class="form-group">
@@ -1740,7 +1969,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Chart body weight -->
       <div class="chart-wrap">
-        <h3>Evolucion de Peso Corporal</h3>
+        <h3>Evolución de Peso Corporal</h3>
         <svg id="weight-chart" viewBox="0 0 700 180" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
 
@@ -1750,7 +1979,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div id="metrics-table-body">
           <div class="empty-state">
             <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span>
-            <p>Aun no hay medidas registradas. Registra tu primera medida arriba.</p>
+            <p>Aún no hay medidas registradas. Registra tu primera medida arriba.</p>
           </div>
         </div>
       </div>
@@ -1759,14 +1988,31 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <!-- ===== SECTION 4: CHECK-IN ===== -->
     <section id="sec-checkin" class="section">
       <h1 class="section-title">Check-in <span>Semanal</span></h1>
+      <p class="section-desc">Reporta tu bienestar semanal para que tu coach ajuste tu programa. Cuanta más información compartas, mejores resultados obtendrás.</p>
 
       <!-- Locked for non-elite -->
-      <div id="checkin-locked" class="iframe-wrap" style="height:320px;display:none">
-        <div class="locked-overlay" style="position:relative;border-radius:var(--radius)">
-          <span style="font-size:2.5rem;color:var(--gray)">//</span>
-          <h3>Solo Plan ELITE</h3>
-          <p>El check-in semanal personalizado es exclusivo para clientes Elite</p>
-          <a href="pagar.html" class="btn-upgrade">&rarr; Upgrade a Elite</a>
+      <div id="checkin-locked" class="iframe-wrap" style="height:380px;display:none">
+        <div style="padding:30px;filter:blur(2px);opacity:0.3;pointer-events:none">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px">
+            <div style="height:14px;background:var(--border);border-radius:4px;width:60%;margin-bottom:12px"></div>
+            <div style="height:8px;background:var(--border);border-radius:4px;width:90%"></div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+            <div style="height:14px;background:var(--border);border-radius:4px;width:45%;margin-bottom:12px"></div>
+            <div style="height:32px;background:var(--border);border-radius:4px;width:100%"></div>
+          </div>
+        </div>
+        <div class="locked-overlay" style="position:absolute;border-radius:var(--radius)">
+          <i class="fas fa-lock" style="font-size:2.2rem;color:var(--red);margin-bottom:8px"></i>
+          <h3>Check-in Semanal Personalizado</h3>
+          <p style="font-size:1rem;line-height:1.7;max-width:340px">Reporta bienestar, recibe feedback del coach, ajustes automáticos al plan y más.</p>
+          <ul class="lock-features">
+            <li>Reporta bienestar semanal</li>
+            <li>Feedback personalizado del coach</li>
+            <li>Ajustes automáticos a tu plan</li>
+            <li>Historial de progreso detallado</li>
+          </ul>
+          <a href="pagar.html" class="btn-upgrade"><i class="fas fa-arrow-up"></i> Mejorar a Elite</a>
         </div>
       </div>
 
@@ -1785,13 +2031,13 @@ tr:hover td{background:rgba(255,255,255,0.02)}
               </div>
             </div>
             <div class="form-group">
-              <label>Dias entrenados</label>
+              <label>Días entrenados</label>
               <input type="number" id="inp-dias-entrenados" min="0" max="7" value="5" placeholder="5">
             </div>
           </div>
 
           <div class="form-group" style="margin-bottom:14px">
-            <label>Nutricion seguida</label>
+            <label>Nutrición seguida</label>
             <div class="radio-group" id="radio-nutricion">
               <label class="radio-label selected" onclick="selectRadio('radio-nutricion',this)">
                 <input type="radio" name="nutricion" value="si" checked><span>Si</span>
@@ -1823,7 +2069,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <div id="checkins-history">
             <div class="empty-state">
               <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span>
-              <p>Aun no has enviado check-ins. Envia el primero arriba.</p>
+              <p>Aún no has enviado check-ins. Envía el primero arriba.</p>
             </div>
           </div>
         </div>
@@ -1833,12 +2079,13 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <!-- ===== SECTION: FOTOS DE PROGRESO ===== -->
     <section id="sec-fotos" class="section">
       <h1 class="section-title">Fotos de <span>Avance</span></h1>
+      <p class="section-desc">Documenta tu transformación con fotos consistentes. Las fotos son la mejor evidencia de tu progreso real, más allá de la báscula.</p>
 
       <!-- GUIA DE FOTOS -->
       <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:24px">
         <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="togglePhotoGuide()">
           <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin:0;display:flex;align-items:center;gap:8px">
-            <i class="fas fa-camera-retro" style="color:var(--red)"></i> Como tomar las fotos correctamente
+            <i class="fas fa-camera-retro" style="color:var(--red)"></i> Cómo tomar las fotos correctamente
           </h3>
           <span id="photoGuideArrow" style="color:var(--gray);font-size:18px;transition:transform .3s;display:inline-block">&#8964;</span>
         </div>
@@ -1846,9 +2093,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <div style="background:rgba(200,16,46,0.06);border:1px solid rgba(200,16,46,0.15);border-radius:8px;padding:14px;margin-bottom:18px;font-size:12px;color:var(--gray);line-height:1.7;">
             <div style="color:var(--white);font-weight:700;margin-bottom:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase">Condiciones ideales</div>
             <ul style="margin:0;padding-left:18px;">
-              <li>Siempre <strong style="color:var(--white)">en ayunas</strong>, primera hora de la manana</li>
-              <li>Misma <strong style="color:var(--white)">ropa interior o ropa ajustada</strong> en cada sesion</li>
-              <li>Misma <strong style="color:var(--white)">ubicacion y luz</strong> — luz natural frontal es ideal</li>
+              <li>Siempre <strong style="color:var(--white)">en ayunas</strong>, primera hora de la mañana</li>
+              <li>Misma <strong style="color:var(--white)">ropa interior o ropa ajustada</strong> en cada sesión</li>
+              <li>Misma <strong style="color:var(--white)">ubicación y luz</strong> — luz natural frontal es ideal</li>
               <li>Postura <strong style="color:var(--white)">erguida y relajada</strong>, brazos a los lados</li>
               <li>Usa un <strong style="color:var(--white)">temporizador o espejo</strong> para consistencia</li>
             </ul>
@@ -1873,7 +2120,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
               </div>
               <div style="flex:1;">
                 <span style="background:#C8102E;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">1 · FRENTE</span>
-                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">De frente a la camara, <strong style="color:var(--white)">brazos relajados a los lados</strong>. Pies separados al ancho de los hombros. Mirada al frente.</p>
+                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">De frente a la cámara, <strong style="color:var(--white)">brazos relajados a los lados</strong>. Pies separados al ancho de los hombros. Mirada al frente.</p>
               </div>
             </div>
             <!-- PERFIL -->
@@ -1895,7 +2142,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
               </div>
               <div style="flex:1;">
                 <span style="background:#FF6B35;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">2 · PERFIL</span>
-                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">Gira 90 grados, <strong style="color:var(--white)">lado izquierdo hacia la camara</strong>. Brazos relajados. Postura natural sin sacar pecho ni abdomen.</p>
+                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">Gira 90 grados, <strong style="color:var(--white)">lado izquierdo hacia la cámara</strong>. Brazos relajados. Postura natural sin sacar pecho ni abdomen.</p>
               </div>
             </div>
             <!-- ESPALDA -->
@@ -1917,13 +2164,13 @@ tr:hover td{background:rgba(255,255,255,0.02)}
               </div>
               <div style="flex:1;">
                 <span style="background:#A855F7;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">3 · ESPALDA</span>
-                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">De espaldas a la camara, <strong style="color:var(--white)">misma posicion que la frontal</strong>. Permite evaluar desarrollo de espalda y gluteos.</p>
+                <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">De espaldas a la cámara, <strong style="color:var(--white)">misma posición que la frontal</strong>. Permite evaluar desarrollo de espalda y glúteos.</p>
               </div>
             </div>
             <!-- TIP -->
             <div style="background:var(--card);border-radius:8px;padding:11px 14px;border-left:3px solid #00D9FF;">
               <span style="background:#00D9FF;color:#000;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">TIP</span>
-              <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">Toma fotos <strong style="color:var(--white)">cada 7-10 dias</strong> para notar cambios reales. La consistencia en condiciones es mas importante que la frecuencia.</p>
+              <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">Toma fotos <strong style="color:var(--white)">cada 7-10 días</strong> para notar cambios reales. La consistencia en condiciones es más importante que la frecuencia.</p>
             </div>
           </div>
         </div>
@@ -1932,7 +2179,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <!-- Upload Area -->
       <div style="background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:24px">
         <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">Subir Fotos</h3>
-        <p style="font-size:.8rem;color:var(--gray);margin-bottom:18px">Mismas condiciones: en ayunas, misma hora, misma ropa, mismos angulos.</p>
+        <p style="font-size:.8rem;color:var(--gray);margin-bottom:18px">Mismas condiciones: en ayunas, misma hora, misma ropa, mismos ángulos.</p>
 
         <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
           <!-- Frente -->
@@ -1974,7 +2221,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div id="photos-gallery">
           <div class="empty-state">
             <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9673;</span>
-            <p>Aun no has subido fotos de progreso. Sube tu primera sesion arriba.</p>
+            <p>Aún no has subido fotos de progreso. Sube tu primera sesión arriba.</p>
           </div>
         </div>
       </div>
@@ -1984,7 +2231,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">
           <i class="fas fa-not-equal" style="color:var(--red);margin-right:6px"></i>Comparativa de tus Cambios
         </h3>
-        <p style="font-size:.75rem;color:var(--gray);margin-bottom:16px">Primer registro vs. ultimo registro por posicion</p>
+        <p style="font-size:.75rem;color:var(--gray);margin-bottom:16px">Primer registro vs. último registro por posición</p>
         <div id="photoComparativaGrid"></div>
       </div>
 
@@ -1993,7 +2240,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">
           <i class="fas fa-user-md" style="color:var(--red);margin-right:6px"></i>Review del Coach
         </h3>
-        <p style="font-size:.75rem;color:var(--gray);margin-bottom:16px">Retroalimentacion profesional sobre tus fotos de progreso.</p>
+        <p style="font-size:.75rem;color:var(--gray);margin-bottom:16px">Retroalimentación profesional sobre tus fotos de progreso.</p>
 
         <!-- Plan restriction block - will be shown/hidden by JS -->
         <div id="reviewPlanBlock"></div>
@@ -2017,7 +2264,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <i class="fas fa-clock" style="color:#FFB800;font-size:14px;"></i>
             <div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--white);letter-spacing:.5px;">Review en proceso</div>
-              <div id="reviewPendingText" style="font-size:11px;color:var(--gray);margin-top:2px;">Tu coach esta revisando tus fotos. Recibiras la retroalimentacion en las proximas horas.</div>
+              <div id="reviewPendingText" style="font-size:11px;color:var(--gray);margin-top:2px;">Tu coach está revisando tus fotos. Recibirás la retroalimentación en las próximas horas.</div>
             </div>
           </div>
         </div>
@@ -2033,45 +2280,54 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <!-- ===== SECTION 5: BIBLIOTECA ===== -->
     <section id="sec-biblioteca" class="section">
       <h1 class="section-title">Biblioteca</h1>
+      <p class="section-desc">Todos tus documentos, planes y recursos en un solo lugar. Tu coach los sube aquí cuando están listos.</p>
 
       <div class="files-grid" id="files-grid">
         <!-- Populated by JS -->
+      </div>
+      <div id="biblioteca-empty" style="display:none">
+        <div class="empty-state">
+          <i class="fas fa-folder-open" style="font-size:3rem;color:var(--gray);opacity:.35;margin-bottom:14px;display:block"></i>
+          <p style="font-size:1.05rem;line-height:1.7;max-width:400px;margin:0 auto">Tu coach subirá aquí tus documentos y planes personalizados. Los archivos aparecen automáticamente cuando están preparados.</p>
+        </div>
       </div>
     </section>
 
     <!-- ===== SECTION 6: SOPORTE ===== -->
     <section id="sec-soporte" class="section">
       <h1 class="section-title">Soporte</h1>
+      <p class="section-desc">Estamos aquí para ayudarte. Contacta a tu coach directamente por WhatsApp o email. Tu plan incluye soporte prioritario.</p>
 
       <!-- SLA Card -->
-      <div class="sla-card" id="sla-card">
+      <div class="sla-card accent-left-green" id="sla-card" style="border-radius:var(--radius)">
         <div class="sla-icon" id="sla-icon">
-          <span style="font-weight:700;font-size:1.3rem">&#10003;</span>
+          <i class="fas fa-bolt" style="font-size:1.3rem"></i>
         </div>
         <div class="sla-content">
           <div class="sla-label">Tu Tiempo de Respuesta</div>
           <div class="sla-value" id="sla-value">48 horas</div>
+          <div style="font-size:.82rem;color:var(--gray);margin-top:4px">Respuesta promedio de tu coach</div>
         </div>
       </div>
 
       <!-- Contact grid -->
       <div class="contact-grid">
-        <div class="contact-card">
-          <span style="color:#25D366;font-size:1.5rem;font-weight:700">WA</span>
+        <div class="contact-card card-hover" style="border-left:3px solid #25D366">
+          <i class="fab fa-whatsapp" style="color:#25D366;font-size:1.5rem"></i>
           <h4>WhatsApp Directo</h4>
-          <p>Escribe directamente a tu coach para dudas rapidas</p>
+          <p style="font-size:.92rem;line-height:1.6">Escribe directamente a tu coach para dudas rápidas</p>
           <a href="https://wa.me/573124904720?text=Hola!%20Soy%20cliente%20WellCore%20y%20necesito%20ayuda"
              target="_blank" class="btn-contact btn-whatsapp">
-            WA Abrir WhatsApp
+            <i class="fab fa-whatsapp"></i> Abrir WhatsApp
           </a>
         </div>
-        <div class="contact-card">
-          <span style="color:var(--red);font-size:1.5rem;font-weight:700">@</span>
-          <h4>Correo Electronico</h4>
-          <p>Para consultas detalladas o envio de documentos</p>
+        <div class="contact-card card-hover" style="border-left:3px solid #00D9FF">
+          <i class="fas fa-envelope" style="color:#00D9FF;font-size:1.5rem"></i>
+          <h4>Correo Electrónico</h4>
+          <p style="font-size:.92rem;line-height:1.6">Para consultas detalladas o envío de documentos</p>
           <a href="mailto:info@wellcorefitness.com?subject=Consulta%20Portal%20Cliente"
              class="btn-contact btn-email">
-            @ Enviar Email
+            <i class="fas fa-envelope"></i> Enviar Email
           </a>
         </div>
       </div>
@@ -2081,7 +2337,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <h3>Preguntas Frecuentes</h3>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span>Cada cuanto se actualiza mi plan?</span>
+            <span>Cada cuánto se actualiza mi plan?</span>
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
@@ -2090,11 +2346,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span>Como envio fotos de progreso?</span>
+            <span>Cómo envío fotos de progreso?</span>
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            Puedes enviar tus fotos de progreso directamente por WhatsApp a tu coach o por email a info@wellcorefitness.com. Las fotos deben ser tomadas en las mismas condiciones: misma hora (preferiblemente en ayunas), mismo angulo y ropa similar para comparacion objetiva.
+            Puedes enviar tus fotos de progreso directamente por WhatsApp a tu coach o por email a info@wellcorefitness.com. Las fotos deben ser tomadas en las mismas condiciones: misma hora (preferiblemente en ayunas), mismo ángulo y ropa similar para comparación objetiva.
           </div>
         </div>
         <div class="faq-item">
@@ -2103,16 +2359,16 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            Si, puedes hacer upgrade a un plan superior en cualquier momento. El cambio se aplica de forma inmediata y solo pagas la diferencia proporcional del periodo restante. Para downgrades, el cambio aplica al siguiente periodo de facturacion. Contacta a tu coach o visita la seccion de pagos.
+            Si, puedes hacer upgrade a un plan superior en cualquier momento. El cambio se aplica de forma inmediata y solo pagas la diferencia proporcional del periodo restante. Para downgrades, el cambio aplica al siguiente periodo de facturación. Contacta a tu coach o visita la sección de pagos.
           </div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span>El plan incluye suplementacion?</span>
+            <span>El plan incluye suplementación?</span>
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            El plan incluye recomendaciones de suplementacion basadas en tu objetivo y necesidades, pero no incluye los suplementos fisicamente. Las recomendaciones son opcionales y siempre planteadas como herramientas complementarias, no esenciales. La base siempre es la alimentacion real.
+            El plan incluye recomendaciones de suplementación basadas en tu objetivo y necesidades, pero no incluye los suplementos físicamente. Las recomendaciones son opcionales y siempre planteadas como herramientas complementarias, no esenciales. La base siempre es la alimentación real.
           </div>
         </div>
         <div class="faq-item">
@@ -2121,16 +2377,16 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            Si te lesionas, contacta inmediatamente a tu coach. Adaptaremos tu programa de entrenamiento segun el tipo y grado de lesion, enfocando en lo que si puedes trabajar sin comprometer la recuperacion. Dependiendo de la gravedad, podemos pausar temporalmente tu plan sin costo adicional.
+            Si te lesionas, contacta inmediatamente a tu coach. Adaptaremos tu programa de entrenamiento según el tipo y grado de lesión, enfocando en lo que si puedes trabajar sin comprometer la recuperación. Dependiendo de la gravedad, podemos pausar temporalmente tu plan sin costo adicional.
           </div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span>Como funciona el check-in semanal?</span>
+            <span>Cómo funciona el check-in semanal?</span>
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            El check-in semanal es exclusivo del Plan Elite. Cada semana completas un formulario en este portal con tu bienestar general, dias entrenados, adherencia nutricional y comentarios. Tu coach revisa la informacion y ajusta tu programa si es necesario. Es la herramienta mas poderosa para optimizar tus resultados.
+            El check-in semanal es exclusivo del Plan Elite. Cada semana completas un formulario en este portal con tu bienestar general, días entrenados, adherencia nutricional y comentarios. Tu coach revisa la información y ajusta tu programa si es necesario. Es la herramienta más poderosa para optimizar tus resultados.
           </div>
         </div>
       </div>
@@ -2138,26 +2394,31 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
     <!-- ===== SECTION: NUTRICION ===== -->
     <section id="sec-nutricion" class="section">
-      <h1 class="section-title">Nutricion</h1>
+      <h1 class="section-title">Nutrición</h1>
+      <p class="section-desc">Registra tus comidas con una foto o descripción y obtén un análisis nutricional automático. Conoce tus macros diarios para optimizar tu progreso.</p>
 
       <!-- Daily Summary KPIs -->
       <div class="kpi-grid" id="nutri-kpis">
-        <div class="kpi-card">
-          <div class="kpi-label">Calorias Hoy</div>
+        <div class="kpi-card accent-left-red card-hover">
+          <div class="kpi-icon red"><i class="fas fa-fire"></i></div>
+          <div class="kpi-label">Calorías Hoy</div>
           <div class="kpi-value" id="nutri-cal">0</div>
           <div class="progress-bar"><div class="progress-fill" id="nutri-cal-bar" style="width:0%"></div></div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Proteina (g)</div>
+        <div class="kpi-card accent-left-cyan card-hover">
+          <div class="kpi-icon cyan"><i class="fas fa-drumstick-bite"></i></div>
+          <div class="kpi-label">Proteína (g)</div>
           <div class="kpi-value" id="nutri-prot">0</div>
           <div class="progress-bar"><div class="progress-fill" id="nutri-prot-bar" style="width:0%;background:var(--accent)"></div></div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card accent-left-green card-hover">
+          <div class="kpi-icon green"><i class="fas fa-bread-slice"></i></div>
           <div class="kpi-label">Carbohidratos (g)</div>
           <div class="kpi-value" id="nutri-carbs">0</div>
           <div class="progress-bar"><div class="progress-fill" id="nutri-carbs-bar" style="width:0%;background:var(--green)"></div></div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card accent-left-gold card-hover">
+          <div class="kpi-icon gold"><i class="fas fa-utensils"></i></div>
           <div class="kpi-label">Comidas Registradas</div>
           <div class="kpi-value" id="nutri-meals">0</div>
         </div>
@@ -2187,22 +2448,22 @@ tr:hover td{background:rgba(255,255,255,0.02)}
               <option value="pre_entreno">Pre-Entreno</option>
               <option value="post_entreno">Post-Entreno</option>
             </select>
-            <textarea id="nutri-description" placeholder="Describe tu comida con cantidades si puedes (ej: pechuga de pollo grande como mi palma, media taza de arroz, ensalada con aguacate). Cuanto mas detalle, mas preciso el analisis." style="width:100%;background:var(--bg);border:1px solid var(--border);color:#fff;padding:10px 12px;font-size:.82rem;resize:vertical;min-height:60px;font-family:inherit" rows="2"></textarea>
-            <p id="nutri-desc-hint" style="display:none;font-size:.68rem;color:var(--accent);margin-top:4px;font-family:'JetBrains Mono',monospace">TIP: Agrega descripcion junto con la foto para mayor precision</p>
+            <textarea id="nutri-description" placeholder="Describe tu comida con cantidades si puedes (ej: pechuga de pollo grande como mi palma, media taza de arroz, ensalada con aguacate). Cuanto más detalle, más preciso el análisis." style="width:100%;background:var(--bg);border:1px solid var(--border);color:#fff;padding:10px 12px;font-size:.82rem;resize:vertical;min-height:60px;font-family:inherit" rows="2"></textarea>
+            <p id="nutri-desc-hint" style="display:none;font-size:.68rem;color:var(--accent);margin-top:4px;font-family:'JetBrains Mono',monospace">TIP: Agrega descripción junto con la foto para mayor precisión</p>
           </div>
           <!-- Submit -->
           <div style="display:flex;flex-direction:column;gap:8px;min-width:140px">
             <button class="btn-primary" onclick="submitNutriAnalysis()" id="nutri-submit-btn" style="padding:12px 20px">
               Analizar
             </button>
-            <p style="font-size:.7rem;color:var(--gray);text-align:center">Foto o descripcion requerida</p>
+            <p style="font-size:.7rem;color:var(--gray);text-align:center">Foto o descripción requerida</p>
           </div>
         </div>
       </div>
 
       <!-- Analysis Result -->
       <div id="nutri-result" style="display:none;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);padding:20px;margin-bottom:20px">
-        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.1em;color:var(--red);margin-bottom:12px;text-transform:uppercase">Resultado del Analisis</h3>
+        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.1em;color:var(--red);margin-bottom:12px;text-transform:uppercase">Resultado del Análisis</h3>
         <div id="nutri-result-content"></div>
       </div>
 
@@ -2212,8 +2473,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.06em">Historial</h3>
           <select id="nutri-days-filter" onchange="loadNutriHistory()" style="background:var(--bg);border:1px solid var(--border);color:#fff;padding:5px 10px;font-size:.78rem;font-family:inherit">
             <option value="1">Hoy</option>
-            <option value="7" selected>7 dias</option>
-            <option value="30">30 dias</option>
+            <option value="7" selected>7 días</option>
+            <option value="30">30 días</option>
           </select>
         </div>
         <div id="nutri-history-list" style="font-size:.82rem;color:var(--gray)">
@@ -2225,9 +2486,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <!-- ===== SECTION 7: MI PERFIL ===== -->
     <section id="sec-perfil" class="section">
       <h1 class="section-title">Mi <span>Perfil</span></h1>
+      <p class="section-desc">Tu información personal y configuración de cuenta. Mantén tus datos actualizados para que tu coach te conozca mejor.</p>
 
-      <div class="perfil-top">
-        <div class="avatar-xl" id="avatar-xl">C</div>
+      <div class="perfil-top" style="border-left:4px solid var(--red)">
+        <div class="avatar-xl" id="avatar-xl" style="box-shadow:0 0 0 3px var(--red),0 0 0 6px var(--red-dim)">C</div>
         <div class="perfil-info">
           <h2 id="perfil-name">Cliente WellCore</h2>
           <p id="perfil-email">cliente@email.com</p>
@@ -2236,7 +2498,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
 
       <div class="profile-form">
-        <h3>Informacion Personal</h3>
+        <h3>Información Personal</h3>
         <div class="form-row">
           <div class="form-group">
             <label>Nombre completo</label>
@@ -2263,8 +2525,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <select id="pf-objetivo">
               <option value="">Seleccionar...</option>
               <option value="perder-grasa">Perder grasa</option>
-              <option value="ganar-musculo">Ganar musculo</option>
-              <option value="recomposicion">Recomposicion corporal</option>
+              <option value="ganar-musculo">Ganar músculo</option>
+              <option value="recomposicion">Recomposición corporal</option>
               <option value="rendimiento">Mejorar rendimiento</option>
               <option value="salud">Salud general</option>
             </select>
@@ -2281,26 +2543,26 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Plan comparison -->
       <div class="plan-compare">
-        <h3>Comparacion de Planes</h3>
+        <h3>Comparación de Planes</h3>
         <div class="compare-grid" id="compare-grid">
           <div class="compare-card" id="compare-esencial">
             <h4>ESENCIAL</h4>
-            <span class="compare-badge other-badge">BASICO</span>
+            <span class="compare-badge other-badge">BÁSICO</span>
             <ul class="compare-list">
               <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
-              <li class="no">&#10005; Plan de nutricion</li>
-              <li class="no">&#10005; Plan de habitos</li>
+              <li class="no">&#10005; Plan de nutrición</li>
+              <li class="no">&#10005; Plan de hábitos</li>
               <li class="no">&#10005; Check-in semanal</li>
               <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Soporte 48h</li>
             </ul>
           </div>
           <div class="compare-card" id="compare-metodo">
-            <h4>METODO</h4>
+            <h4>MÉTODO</h4>
             <span class="compare-badge other-badge">INTERMEDIO</span>
             <ul class="compare-list">
               <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de nutricion</li>
-              <li class="no">&#10005; Plan de habitos</li>
+              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de nutrición</li>
+              <li class="no">&#10005; Plan de hábitos</li>
               <li class="no">&#10005; Check-in semanal</li>
               <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Soporte 24h</li>
             </ul>
@@ -2310,8 +2572,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <span class="compare-badge other-badge">PREMIUM</span>
             <ul class="compare-list">
               <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de nutricion</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de habitos</li>
+              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de nutrición</li>
+              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de hábitos</li>
               <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Check-in semanal</li>
               <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Soporte prioritario 8h</li>
             </ul>
@@ -2327,11 +2589,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <!-- Danger Zone -->
       <div class="danger-zone">
         <div>
-          <p style="color:var(--white);font-weight:600;margin-bottom:4px">Cerrar Sesion</p>
-          <p>Seras redirigido a la pagina de inicio de sesion</p>
+          <p style="color:var(--white);font-weight:600;margin-bottom:4px">Cerrar Sesión</p>
+          <p>Serás redirigido a la página de inicio de sesión</p>
         </div>
         <button class="btn-danger" onclick="doLogout()">
-          &rarr; Cerrar Sesion
+          &rarr; Cerrar Sesión
         </button>
       </div>
     </section>
@@ -2492,12 +2754,45 @@ function init() {
   }
 
   // Sidebar plan badge
-  const planLabels = { esencial: 'PLAN ESENCIAL', metodo: 'PLAN METODO', elite: 'PLAN ELITE' };
+  const planLabels = { esencial: 'PLAN ESENCIAL', metodo: 'PLAN MÉTODO', elite: 'PLAN ELITE' };
   document.getElementById('sidebar-plan-badge').textContent = planLabels[clientPlan] || 'PLAN ESENCIAL';
 
   // KPI plan
-  const kpiLabels = { esencial: 'ESENCIAL', metodo: 'METODO', elite: 'ELITE' };
+  const kpiLabels = { esencial: 'ESENCIAL', metodo: 'MÉTODO', elite: 'ELITE' };
   document.getElementById('kpi-plan').textContent = kpiLabels[clientPlan] || 'ESENCIAL';
+
+  // Welcome card — greeting based on time of day
+  (function initWelcome() {
+    var h = new Date().getHours();
+    var saludo = h < 12 ? 'Buenos días' : h < 18 ? 'Buenas tardes' : 'Buenas noches';
+    var firstName = (clientName || 'Cliente').split(' ')[0];
+    var el = document.getElementById('welcome-greeting');
+    if (el) {
+      el.textContent = '';
+      el.appendChild(document.createTextNode(saludo + ', '));
+      var nameSpan = document.createElement('span');
+      nameSpan.textContent = firstName;
+      el.appendChild(nameSpan);
+    }
+    var dateEl = document.getElementById('welcome-date');
+    if (dateEl) {
+      var d = new Date();
+      var dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+      var meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      dateEl.textContent = dias[d.getDay()] + ' ' + d.getDate() + ' de ' + meses[d.getMonth()] + ', ' + d.getFullYear();
+    }
+    var badge = document.getElementById('welcome-plan-badge');
+    if (badge) {
+      badge.textContent = (clientPlan || 'esencial').toUpperCase();
+      badge.className = 'welcome-plan-badge ' + (clientPlan || 'esencial');
+    }
+    // KPI plan icon based on plan
+    var iconEl = document.getElementById('kpi-plan-icon');
+    if (iconEl) {
+      var icons = { elite: 'fa-crown', metodo: 'fa-bolt', esencial: 'fa-dumbbell' };
+      iconEl.className = 'fas ' + (icons[clientPlan] || 'fa-dumbbell');
+    }
+  })();
 
   // Avatar initial
   document.getElementById('avatar-xl').textContent = clientName.charAt(0).toUpperCase();
@@ -2561,7 +2856,7 @@ const SECTION_LABELS = {
   checkin: 'Check-in',
   fotos: 'Fotos de Progreso',
   biblioteca: 'Biblioteca',
-  nutricion: 'Nutricion',
+  nutricion: 'Nutrición',
   soporte: 'Soporte',
   perfil: 'Mi Perfil'
 };
@@ -2648,16 +2943,16 @@ function loadPlanTab(tab) {
 
 // ===== TAB HELPERS: LOCKED OVERLAY + DEMO CONTENT =====
 function getTabDisplayName(tab) {
-  var names = { nutricion:'Nutricion', habitos:'Habitos', suplementacion:'Suplementacion', ciclo:'Ciclo Hormonal', bloodwork:'Bloodwork / Labs' };
+  var names = { nutricion:'Nutrición', habitos:'Hábitos', suplementacion:'Suplementación', ciclo:'Ciclo Hormonal', bloodwork:'Bloodwork / Labs' };
   return names[tab] || tab;
 }
 function getTabFeatures(tab) {
   var f = {
     nutricion: ['Plan de comidas personalizado','Macros por alimento','Tips del coach IA','Historial nutricional'],
-    habitos: ['Tracker diario interactivo','4 categorias de habitos','Progreso visual y racha','Tips personalizados'],
-    suplementacion: ['Protocolo de suplementos','Timing y dosis optimas','3 categorias especializadas','Notas del coach'],
+    habitos: ['Tracker diario interactivo','4 categorías de hábitos','Progreso visual y racha','Tips personalizados'],
+    suplementacion: ['Protocolo de suplementos','Timing y dosis óptimas','3 categorías especializadas','Notas del coach'],
     ciclo: ['Timeline visual de fases','Tabla de compuestos y dosis','Protocolo PCT completo','Calendario de laboratorios'],
-    bloodwork: ['Marcadores con rangos visuales','5 categorias de analisis','Historial de resultados','Alertas automaticas']
+    bloodwork: ['Marcadores con rangos visuales','5 categorías de análisis','Historial de resultados','Alertas automáticas']
   };
   return f[tab] || [];
 }
@@ -2675,7 +2970,7 @@ function buildLockedOverlay(tab) {
   var p = document.createElement('p');
   var tabLevel = { nutricion: 2, habitos: 1, suplementacion: 1, ciclo: 3, bloodwork: 3 };
   var lvl = tabLevel[tab] || 3;
-  p.textContent = lvl >= 3 ? 'Disponible en Plan ELITE' : 'Disponible en Plan METODO o ELITE';
+  p.textContent = lvl >= 3 ? 'Disponible en Plan ELITE' : 'Disponible en Plan MÉTODO o ELITE';
   ov.appendChild(p);
   var ul = document.createElement('ul');
   ul.className = 'lock-features';
@@ -2708,12 +3003,12 @@ var NUTRITION_DATA = {
   targets: { cal: 2800, prot: 180, carbs: 320, fat: 85 },
   meals: [
     { name:'Desayuno', foods:[{name:'Avena con leche',qty:'80g',cal:320,prot:12,carbs:52,fat:8},{name:'Huevos revueltos',qty:'3 uds',cal:210,prot:18,carbs:2,fat:14},{name:'Banana',qty:'1 ud',cal:105,prot:1,carbs:27,fat:0}]},
-    { name:'Media Manana', foods:[{name:'Yogurt griego',qty:'200g',cal:130,prot:20,carbs:8,fat:2},{name:'Almendras',qty:'30g',cal:175,prot:6,carbs:6,fat:15},{name:'Arandanos',qty:'80g',cal:46,prot:1,carbs:12,fat:0}]},
+    { name:'Media Mañana', foods:[{name:'Yogurt griego',qty:'200g',cal:130,prot:20,carbs:8,fat:2},{name:'Almendras',qty:'30g',cal:175,prot:6,carbs:6,fat:15},{name:'Arándanos',qty:'80g',cal:46,prot:1,carbs:12,fat:0}]},
     { name:'Almuerzo', foods:[{name:'Pechuga de pollo',qty:'200g',cal:330,prot:62,carbs:0,fat:7},{name:'Arroz integral',qty:'150g',cal:170,prot:4,carbs:36,fat:1},{name:'Ensalada mixta',qty:'150g',cal:45,prot:2,carbs:8,fat:1},{name:'Aceite de oliva',qty:'15ml',cal:120,prot:0,carbs:0,fat:14}]},
     { name:'Merienda', foods:[{name:'Batido proteina',qty:'1 scoop',cal:120,prot:24,carbs:3,fat:1},{name:'Pan integral',qty:'2 rebanadas',cal:160,prot:6,carbs:28,fat:2}]},
-    { name:'Cena', foods:[{name:'Salmon',qty:'180g',cal:350,prot:40,carbs:0,fat:20},{name:'Papa al horno',qty:'200g',cal:160,prot:4,carbs:36,fat:0},{name:'Brocoli',qty:'150g',cal:50,prot:4,carbs:10,fat:1}]},
-    { name:'Pre-Entreno', foods:[{name:'Banana',qty:'1 ud',cal:105,prot:1,carbs:27,fat:0},{name:'Cafe negro',qty:'1 taza',cal:5,prot:0,carbs:1,fat:0}]},
-    { name:'Post-Entreno', foods:[{name:'Batido proteina + avena',qty:'1 porcion',cal:280,prot:30,carbs:35,fat:4}]}
+    { name:'Cena', foods:[{name:'Salmón',qty:'180g',cal:350,prot:40,carbs:0,fat:20},{name:'Papa al horno',qty:'200g',cal:160,prot:4,carbs:36,fat:0},{name:'Brocoli',qty:'150g',cal:50,prot:4,carbs:10,fat:1}]},
+    { name:'Pre-Entreno', foods:[{name:'Banana',qty:'1 ud',cal:105,prot:1,carbs:27,fat:0},{name:'Café negro',qty:'1 taza',cal:5,prot:0,carbs:1,fat:0}]},
+    { name:'Post-Entreno', foods:[{name:'Batido proteína + avena',qty:'1 porcion',cal:280,prot:30,carbs:35,fat:4}]}
   ]
 };
 function renderNutritionInteractive(container) {
@@ -2721,13 +3016,13 @@ function renderNutritionInteractive(container) {
   var totals = {cal:0,prot:0,carbs:0,fat:0};
   data.meals.forEach(function(m){m.foods.forEach(function(f){totals.cal+=f.cal;totals.prot+=f.prot;totals.carbs+=f.carbs;totals.fat+=f.fat})});
 
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu plan personalizado aparecera cuando tu coach lo asigne.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu plan personalizado aparecerá cuando tu coach lo asigne.</div>';
 
   // KPI Bar
   html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">';
   var kpis = [
-    {label:'Calorias',val:totals.cal,target:data.targets.cal,color:'#FF6B35'},
-    {label:'Proteina',val:totals.prot,target:data.targets.prot,color:'#00D9FF'},
+    {label:'Calorías',val:totals.cal,target:data.targets.cal,color:'#FF6B35'},
+    {label:'Proteína',val:totals.prot,target:data.targets.prot,color:'#00D9FF'},
     {label:'Carbos',val:totals.carbs,target:data.targets.carbs,color:'#FFD700'},
     {label:'Grasas',val:totals.fat,target:data.targets.fat,color:'#FF4D6D'}
   ];
@@ -2774,11 +3069,11 @@ function renderNutritionInteractive(container) {
 function getNutriDemoContent() {
   var d = document.createElement('div');
   d.style.cssText = 'padding:16px';
-  var meals = ['Desayuno — 635 cal','Media Manana — 351 cal','Almuerzo — 665 cal','Merienda — 280 cal','Cena — 560 cal'];
+  var meals = ['Desayuno — 635 cal','Media Mañana — 351 cal','Almuerzo — 665 cal','Merienda — 280 cal','Cena — 560 cal'];
   // KPI preview
   d.innerHTML = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">' +
-    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">CALORIAS</div><div style="font-size:1.1rem;font-weight:700">2800</div></div>' +
-    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">PROTEINA</div><div style="font-size:1.1rem;font-weight:700">180g</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">CALORÍAS</div><div style="font-size:1.1rem;font-weight:700">2800</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">PROTEÍNA</div><div style="font-size:1.1rem;font-weight:700">180g</div></div>' +
     '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">CARBOS</div><div style="font-size:1.1rem;font-weight:700">320g</div></div>' +
     '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center"><div style="font-size:.65rem;color:var(--gray)">GRASAS</div><div style="font-size:1.1rem;font-weight:700">85g</div></div>' +
     '</div>';
@@ -2792,22 +3087,22 @@ function getNutriDemoContent() {
 var HABITS_DATA = {
   categories: [
     { name:'Entrenamiento', icon:'fa-dumbbell', habits:[
-      {id:'h1',name:'Completar sesion de entrenamiento',points:10},
-      {id:'h2',name:'Calentar minimo 10 minutos',points:5},
+      {id:'h1',name:'Completar sesión de entrenamiento',points:10},
+      {id:'h2',name:'Calentar mínimo 10 minutos',points:5},
       {id:'h3',name:'Registrar pesos y repeticiones',points:5}
     ]},
-    { name:'Nutricion', icon:'fa-utensils', habits:[
+    { name:'Nutrición', icon:'fa-utensils', habits:[
       {id:'h4',name:'Comer 4+ comidas planificadas',points:10},
-      {id:'h5',name:'Consumir meta de proteina',points:10},
+      {id:'h5',name:'Consumir meta de proteína',points:10},
       {id:'h6',name:'Beber 3+ litros de agua',points:5}
     ]},
-    { name:'Recuperacion', icon:'fa-bed', habits:[
+    { name:'Recuperación', icon:'fa-bed', habits:[
       {id:'h7',name:'Dormir 7-8 horas',points:10},
       {id:'h8',name:'Estirar o foam roller 10 min',points:5}
     ]},
     { name:'Mindset', icon:'fa-brain', habits:[
-      {id:'h9',name:'Meditar o respiracion 5 min',points:5},
-      {id:'h10',name:'Visualizar tu meta del dia',points:5}
+      {id:'h9',name:'Meditar o respiración 5 min',points:5},
+      {id:'h10',name:'Visualizar tu meta del día',points:5}
     ]}
   ]
 };
@@ -2835,14 +3130,14 @@ function renderHabitsInteractive(container) {
   data.categories.forEach(function(c){c.habits.forEach(function(h){totalHabits++;if(saved[h.id])doneCount++})});
   var pct = totalHabits > 0 ? Math.round(doneCount / totalHabits * 100) : 0;
 
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu coach personalizara tus habitos.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu coach personalizará tus hábitos.</div>';
 
   // Streak + Progress
   html += '<div style="display:flex;gap:12px;margin-bottom:18px">';
-  html += '<div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center"><div style="font-size:2rem;font-weight:700;color:var(--red)">'+streak+'</div><div style="font-size:.72rem;color:var(--gray);text-transform:uppercase">Dias de racha</div></div>';
-  html += '<div style="flex:2;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:.8rem;font-weight:600">Progreso del dia</span><span style="font-size:.85rem;font-weight:700;color:var(--red)">'+pct+'%</span></div>';
+  html += '<div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center"><div style="font-size:2rem;font-weight:700;color:var(--red)">'+streak+'</div><div style="font-size:.72rem;color:var(--gray);text-transform:uppercase">Días de racha</div></div>';
+  html += '<div style="flex:2;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:.8rem;font-weight:600">Progreso del día</span><span style="font-size:.85rem;font-weight:700;color:var(--red)">'+pct+'%</span></div>';
   html += '<div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden"><div id="habits-progress-fill" style="width:'+pct+'%;height:100%;background:var(--red);border-radius:3px;transition:width .3s"></div></div>';
-  html += '<div style="font-size:.72rem;color:var(--gray);margin-top:4px">'+doneCount+' / '+totalHabits+' habitos completados</div></div>';
+  html += '<div style="font-size:.72rem;color:var(--gray);margin-top:4px">'+doneCount+' / '+totalHabits+' hábitos completados</div></div>';
   html += '</div>';
 
   // Category cards
@@ -2879,9 +3174,9 @@ function getHabitsDemoContent() {
   var d = document.createElement('div');
   d.style.cssText = 'padding:16px';
   d.innerHTML = '<div style="display:flex;gap:12px;margin-bottom:16px">' +
-    '<div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center"><div style="font-size:1.8rem;font-weight:700;color:var(--red)">7</div><div style="font-size:.7rem;color:var(--gray)">DIAS RACHA</div></div>' +
-    '<div style="flex:2;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px"><div style="font-size:.8rem;font-weight:600;margin-bottom:6px">Progreso del dia — 80%</div><div style="height:6px;background:var(--border);border-radius:3px"><div style="width:80%;height:100%;background:var(--red);border-radius:3px"></div></div></div></div>';
-  var cats = ['Entrenamiento (3)','Nutricion (3)','Recuperacion (2)','Mindset (2)'];
+    '<div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center"><div style="font-size:1.8rem;font-weight:700;color:var(--red)">7</div><div style="font-size:.7rem;color:var(--gray)">DÍAS RACHA</div></div>' +
+    '<div style="flex:2;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px"><div style="font-size:.8rem;font-weight:600;margin-bottom:6px">Progreso del día — 80%</div><div style="height:6px;background:var(--border);border-radius:3px"><div style="width:80%;height:100%;background:var(--red);border-radius:3px"></div></div></div></div>';
+  var cats = ['Entrenamiento (3)','Nutrición (3)','Recuperación (2)','Mindset (2)'];
   cats.forEach(function(c){
     d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:8px"><span style="font-size:.85rem">'+c+'</span></div>';
   });
@@ -2894,24 +3189,24 @@ var SUPPLEMENTS_DATA = {
     { name:'Rendimiento', icon:'fa-bolt', supplements:[
       {name:'Creatina Monohidrato',dose:'5g',timing:'Post-entreno',notes:'Con agua o batido'},
       {name:'Beta-Alanina',dose:'3.2g',timing:'Pre-entreno',notes:'Puede causar hormigueo'},
-      {name:'Cafeina',dose:'200mg',timing:'30 min pre-entreno',notes:'No despues de 4pm'},
-      {name:'Citrulina Malato',dose:'6g',timing:'Pre-entreno',notes:'Mejora flujo sanguineo'}
+      {name:'Cafeína',dose:'200mg',timing:'30 min pre-entreno',notes:'No después de 4pm'},
+      {name:'Citrulina Malato',dose:'6g',timing:'Pre-entreno',notes:'Mejora flujo sanguíneo'}
     ]},
     { name:'Salud General', icon:'fa-heart', supplements:[
-      {name:'Vitamina D3',dose:'4000 UI',timing:'Manana con grasa',notes:'Importante si poca exposicion solar'},
+      {name:'Vitamina D3',dose:'4000 UI',timing:'Mañana con grasa',notes:'Importante si poca exposición solar'},
       {name:'Omega 3 (EPA/DHA)',dose:'2g',timing:'Con comida',notes:'Antiinflamatorio'},
-      {name:'Magnesio Bisglicinato',dose:'400mg',timing:'Antes de dormir',notes:'Mejora sueno'}
+      {name:'Magnesio Bisglicinato',dose:'400mg',timing:'Antes de dormir',notes:'Mejora sueño'}
     ]},
-    { name:'Recuperacion', icon:'fa-sync-alt', supplements:[
-      {name:'Whey Protein',dose:'30g',timing:'Post-entreno',notes:'Dentro de 1h post-sesion'},
-      {name:'Glutamina',dose:'5g',timing:'Post-entreno',notes:'Recuperacion muscular'},
+    { name:'Recuperación', icon:'fa-sync-alt', supplements:[
+      {name:'Whey Protein',dose:'30g',timing:'Post-entreno',notes:'Dentro de 1h post-sesión'},
+      {name:'Glutamina',dose:'5g',timing:'Post-entreno',notes:'Recuperación muscular'},
       {name:'ZMA',dose:'1 capsula',timing:'Antes de dormir',notes:'Zinc + Magnesio + B6'}
     ]}
   ]
 };
 function renderSupplementsInteractive(container) {
   var data = SUPPLEMENTS_DATA;
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Protocolo demo — tu coach ajustara suplementos a tu caso.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Protocolo demo — tu coach ajustará suplementos a tu caso.</div>';
 
   data.categories.forEach(function(cat) {
     html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:12px;overflow:hidden">';
@@ -2936,7 +3231,7 @@ function renderSupplementsInteractive(container) {
 function getSupplementsDemoContent() {
   var d = document.createElement('div');
   d.style.cssText = 'padding:16px';
-  var supps = ['Creatina — 5g post-entreno','Vitamina D3 — 4000 UI','Omega 3 — 2g','Whey Protein — 30g','Cafeina — 200mg pre-entreno'];
+  var supps = ['Creatina — 5g post-entreno','Vitamina D3 — 4000 UI','Omega 3 — 2g','Whey Protein — 30g','Cafeína — 200mg pre-entreno'];
   supps.forEach(function(s){
     d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.85rem">'+s.split(' — ')[0]+'</span><span style="font-size:.72rem;color:var(--red);background:rgba(200,16,46,0.15);padding:2px 8px;border-radius:10px">'+s.split(' — ')[1]+'</span></div>';
   });
@@ -2945,9 +3240,9 @@ function getSupplementsDemoContent() {
 
 // ===== CYCLE HORMONAL DATA + INTERACTIVE VIEW =====
 var CYCLE_DATA = {
-  name: 'Ciclo Basico Testosterona',
+  name: 'Ciclo Básico Testosterona',
   duration: '16 semanas',
-  warning: 'ADVERTENCIA MEDICA: Este contenido es informativo. El uso de sustancias hormonales requiere supervision medica obligatoria. WellCore no promueve ni recomienda el uso sin prescripcion.',
+  warning: 'ADVERTENCIA MÉDICA: Este contenido es informativo. El uso de sustancias hormonales requiere supervisión médica obligatoria. WellCore no promueve ni recomienda el uso sin prescripción.',
   phases: [
     {name:'Carga',weeks:'Sem 1-4',color:'#FF6B35'},
     {name:'Mantenimiento',weeks:'Sem 5-12',color:'#00D9FF'},
@@ -2956,7 +3251,7 @@ var CYCLE_DATA = {
   ],
   compounds: [
     {name:'Testosterona Enantato',dose:'500mg/sem',freq:'2x semana',weeks:'1-12',notes:'Base del ciclo'},
-    {name:'Anastrozol',dose:'0.5mg',freq:'EOD si necesario',weeks:'1-12',notes:'Control estrogeno'},
+    {name:'Anastrozol',dose:'0.5mg',freq:'EOD si necesario',weeks:'1-12',notes:'Control estrógeno'},
     {name:'HCG',dose:'500 UI',freq:'2x semana',weeks:'1-12',notes:'Preservar fertilidad'}
   ],
   pct: [
@@ -2964,9 +3259,9 @@ var CYCLE_DATA = {
     {name:'Tamoxifeno',dose:'20/20/10/10 mg',weeks:'Sem 14-17'}
   ],
   labs: [
-    {name:'Linea Base',when:'2 semanas antes',markers:'Hemograma, Perfil hormonal, Hepatico, Lipidos'},
-    {name:'Mid-Cycle',when:'Semana 6',markers:'Estradiol, Hematocrito, Hepatico'},
-    {name:'Post-PCT',when:'Semana 20',markers:'Perfil hormonal completo, Hepatico, Lipidos'}
+    {name:'Línea Base',when:'2 semanas antes',markers:'Hemograma, Perfil hormonal, Hepático, Lípidos'},
+    {name:'Mid-Cycle',when:'Semana 6',markers:'Estradiol, Hematocrito, Hepático'},
+    {name:'Post-PCT',when:'Semana 20',markers:'Perfil hormonal completo, Hepático, Lípidos'}
   ]
 };
 function renderCycleInteractive(container) {
@@ -3013,7 +3308,7 @@ function renderCycleInteractive(container) {
 function getCycleDemoContent() {
   var d = document.createElement('div');
   d.style.cssText = 'padding:16px';
-  d.innerHTML = '<div style="background:rgba(200,16,46,0.1);border:2px solid var(--red);border-radius:6px;padding:12px;margin-bottom:12px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Advertencia medica...</div>';
+  d.innerHTML = '<div style="background:rgba(200,16,46,0.1);border:2px solid var(--red);border-radius:6px;padding:12px;margin-bottom:12px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Advertencia médica...</div>';
   d.innerHTML += '<div style="display:flex;gap:4px;height:32px;border-radius:6px;overflow:hidden;margin-bottom:12px"><div style="flex:1;background:#FF6B35;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">Carga</div><div style="flex:2;background:#00D9FF;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">Mantenimiento</div><div style="flex:1;background:#FFD700;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">PCT</div></div>';
   var items = ['Testosterona Enantato — 500mg/sem','Anastrozol — 0.5mg EOD','HCG — 500 UI 2x/sem'];
   items.forEach(function(i){
@@ -3031,18 +3326,18 @@ var BLOODWORK_DATA = {
       {name:'LH',value:5.2,unit:'mUI/mL',low:1.5,high:9.3,optimal_low:3,optimal_high:8},
       {name:'FSH',value:4.8,unit:'mUI/mL',low:1.4,high:18,optimal_low:2,optimal_high:12}
     ]},
-    { name:'Hepatico', icon:'fa-liver', markers:[
+    { name:'Hepático', icon:'fa-liver', markers:[
       {name:'AST (GOT)',value:28,unit:'U/L',low:0,high:40,optimal_low:10,optimal_high:30},
       {name:'ALT (GPT)',value:24,unit:'U/L',low:0,high:41,optimal_low:7,optimal_high:30},
       {name:'GGT',value:22,unit:'U/L',low:0,high:60,optimal_low:5,optimal_high:40}
     ]},
-    { name:'Lipidico', icon:'fa-heart', markers:[
+    { name:'Lipídico', icon:'fa-heart', markers:[
       {name:'Colesterol Total',value:195,unit:'mg/dL',low:0,high:240,optimal_low:125,optimal_high:200},
       {name:'HDL',value:55,unit:'mg/dL',low:40,high:100,optimal_low:50,optimal_high:80},
       {name:'LDL',value:110,unit:'mg/dL',low:0,high:160,optimal_low:50,optimal_high:130},
-      {name:'Trigliceridos',value:120,unit:'mg/dL',low:0,high:200,optimal_low:40,optimal_high:150}
+      {name:'Triglicéridos',value:120,unit:'mg/dL',low:0,high:200,optimal_low:40,optimal_high:150}
     ]},
-    { name:'Hematologico', icon:'fa-tint', markers:[
+    { name:'Hematológico', icon:'fa-tint', markers:[
       {name:'Hemoglobina',value:15.2,unit:'g/dL',low:13,high:18,optimal_low:14,optimal_high:17},
       {name:'Hematocrito',value:45,unit:'%',low:38,high:54,optimal_low:40,optimal_high:50}
     ]},
@@ -3060,19 +3355,19 @@ function renderBloodworkInteractive(container) {
     if (m.value >= m.optimal_low && m.value <= m.optimal_high) optimalCount++;
   })});
 
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — sube tus labs reales para analisis personalizado.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — sube tus labs reales para análisis personalizado.</div>';
   // CTA para subir resultados de laboratorio
   html += '<div style="background:linear-gradient(135deg,rgba(200,16,46,0.12),rgba(0,217,255,0.08));border:1px solid rgba(200,16,46,0.25);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;text-align:center">';
   html += '<i class="fas fa-flask" style="color:var(--red);font-size:1.5rem;margin-bottom:10px;display:block"></i>';
   html += '<div style="font-weight:600;font-size:.95rem;margin-bottom:6px">Sube tus Resultados de Laboratorio</div>';
-  html += '<div style="font-size:.78rem;color:var(--gray);margin-bottom:14px;line-height:1.5">Envia tus examenes de sangre (PDF o foto) por WhatsApp o en tu Check-in semanal.<br>Tu coach los analizara y actualizara esta seccion con tus valores reales.</div>';
+  html += '<div style="font-size:.78rem;color:var(--gray);margin-bottom:14px;line-height:1.5">Envía tus exámenes de sangre (PDF o foto) por WhatsApp o en tu Check-in semanal.<br>Tu coach los analizará y actualizará esta sección con tus valores reales.</div>';
   html += '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">';
   html += '<a href="https://wa.me/573001234567?text=Hola%2C%20quiero%20enviar%20mis%20resultados%20de%20laboratorio" target="_blank" style="background:#25D366;color:#fff;padding:10px 20px;border-radius:var(--radius-sm);font-size:.82rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px"><i class="fab fa-whatsapp"></i> Enviar por WhatsApp</a>';
   html += '<button onclick="showSection(\'checkin\')" style="background:var(--surface-2);color:var(--white);border:1px solid var(--border);padding:10px 20px;border-radius:var(--radius-sm);font-size:.82rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px"><i class="fas fa-clipboard-check"></i> Adjuntar en Check-in</button>';
   html += '</div></div>';
 
   // Summary
-  html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.88rem;font-weight:600"><i class="fas fa-chart-bar" style="color:var(--red);margin-right:8px"></i>'+optimalCount+' de '+totalMarkers+' marcadores en rango optimo</span><span style="font-size:1.2rem;font-weight:700;color:'+(optimalCount>=totalMarkers*0.8?'#4CAF50':optimalCount>=totalMarkers*0.6?'#FFD700':'var(--red)')+'">'+Math.round(optimalCount/totalMarkers*100)+'%</span></div>';
+  html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.88rem;font-weight:600"><i class="fas fa-chart-bar" style="color:var(--red);margin-right:8px"></i>'+optimalCount+' de '+totalMarkers+' marcadores en rango óptimo</span><span style="font-size:1.2rem;font-weight:700;color:'+(optimalCount>=totalMarkers*0.8?'#4CAF50':optimalCount>=totalMarkers*0.6?'#FFD700':'var(--red)')+'">'+Math.round(optimalCount/totalMarkers*100)+'%</span></div>';
 
   data.categories.forEach(function(cat) {
     html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:12px;overflow:hidden">';
@@ -3105,8 +3400,8 @@ function renderBloodworkInteractive(container) {
 function getBloodworkDemoContent() {
   var d = document.createElement('div');
   d.style.cssText = 'padding:16px';
-  d.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px;text-align:center"><span style="font-size:.88rem;font-weight:600">14 de 17 marcadores en rango optimo</span></div>';
-  var cats = ['Hormonal (4 marcadores)','Hepatico (3 marcadores)','Lipidico (4 marcadores)','Hematologico (2 marcadores)','Renal (2 marcadores)'];
+  d.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px;text-align:center"><span style="font-size:.88rem;font-weight:600">14 de 17 marcadores en rango óptimo</span></div>';
+  var cats = ['Hormonal (4 marcadores)','Hepático (3 marcadores)','Lipídico (4 marcadores)','Hematológico (2 marcadores)','Renal (2 marcadores)'];
   cats.forEach(function(c){
     d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.85rem">'+c+'</span><span style="font-size:.7rem;color:#4CAF50"><i class="fas fa-check-circle"></i></span></div>';
   });
@@ -3160,8 +3455,8 @@ function getNutriCoachTip(btn, mealName) {
     var msg = document.createElement('div');
     msg.className = 'nutri-tip-limit-msg';
     msg.style.cssText = 'background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:10px 12px;margin-top:8px;font-size:.78rem;color:var(--gray);line-height:1.5';
-    var upgradeHint = clientPlan === 'metodo' ? ' Actualiza a Elite para 8 tips diarios.' : ' Los tips se reinician cada dia.';
-    msg.innerHTML = '<i class="fas fa-lock" style="color:var(--red);margin-right:6px"></i>Alcanzaste el limite de '+limit+' tips de nutricion por dia.'+upgradeHint;
+    var upgradeHint = clientPlan === 'metodo' ? ' Actualiza a Elite para 8 tips diarios.' : ' Los tips se reinician cada día.';
+    msg.innerHTML = '<i class="fas fa-lock" style="color:var(--red);margin-right:6px"></i>Alcanzaste el límite de '+limit+' tips de nutrición por día.'+upgradeHint;
     btn.parentElement.insertBefore(msg, btn.nextSibling);
     return;
   }
@@ -3203,7 +3498,7 @@ async function sendPlanEmail(type) {
       setSendBtnState(btn, 'envelope', 'Enviar programa a mi correo', false);
     }
   } catch(e) {
-    showToast('Error de conexion', 'var(--red)');
+    showToast('Error de conexión', 'var(--red)');
     setSendBtnState(btn, 'envelope', 'Enviar programa a mi correo', false);
   }
 }
@@ -3243,7 +3538,7 @@ function toggleDay(dayIndex) {
 const WL_EXERCISES = [
   'Sentadilla','Sentadilla Frontal','Press Banca','Press Inclinado','Peso Muerto',
   'Peso Muerto Rumano','Hip Thrust','Prensa','Dominadas','Remo con Barra',
-  'Remo con Mancuerna','Press Militar','Elevacion Lateral','Curl Biceps','Triceps Polea',
+  'Remo con Mancuerna','Press Militar','Elevación Lateral','Curl Bíceps','Tríceps Polea',
   'Fondos','Zancadas','Leg Curl','Leg Extension','Face Pull','Otro'
 ];
 
@@ -3476,7 +3771,7 @@ function wlRenderHistory() {
     const emp = document.createElement('div');
     emp.className = 'empty-state';
     const ic = document.createElement('span'); ic.textContent = '//'; ic.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
-    const p = document.createElement('p'); p.textContent = 'Sin registros para ' + ex + ' aun.';
+    const p = document.createElement('p'); p.textContent = 'Sin registros para ' + ex + ' aún.';
     emp.appendChild(ic); emp.appendChild(p);
     container.appendChild(emp);
     return;
@@ -3487,7 +3782,7 @@ function wlRenderHistory() {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const hRow = document.createElement('tr');
-  ['Semana','Peso max (kg)','Series x Reps','RPE','Variacion','Notas'].forEach(function(h) {
+  ['Semana','Peso max (kg)','Series x Reps','RPE','Variación','Notas'].forEach(function(h) {
     const th = document.createElement('th'); th.textContent = h; hRow.appendChild(th);
   });
   thead.appendChild(hRow);
@@ -3565,7 +3860,7 @@ function wlRenderExChart() {
 
   const history = wlGetHistoryForExercise(ex);
   if (history.length < 2) {
-    svg.appendChild(svgEl('text', { x: W/2, y: H/2, 'text-anchor': 'middle', fill: '#52525B', 'font-size': '13' }, 'Registra al menos 2 semanas para ver la grafica'));
+    svg.appendChild(svgEl('text', { x: W/2, y: H/2, 'text-anchor': 'middle', fill: '#52525B', 'font-size': '13' }, 'Registra al menos 2 semanas para ver la gráfica'));
     return;
   }
 
@@ -3618,7 +3913,7 @@ function saveMetrics() {
   const musculo = parseFloat(document.getElementById('inp-musculo').value);
   const grasa = parseFloat(document.getElementById('inp-grasa').value);
 
-  if (!peso || isNaN(peso)) { showToast('Ingresa un peso valido', 'error'); return; }
+  if (!peso || isNaN(peso)) { showToast('Ingresa un peso válido', 'error'); return; }
 
   const payload = { peso: peso };
   if (!isNaN(musculo) && musculo) payload.musculo = musculo;
@@ -3673,7 +3968,7 @@ function renderMetricsTable(metrics) {
     container.textContent = '';
     var emptyDiv = document.createElement('div'); emptyDiv.className = 'empty-state';
     var emptyIc = document.createElement('span'); emptyIc.textContent = '//'; emptyIc.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
-    var emptyP = document.createElement('p'); emptyP.textContent = 'Aun no hay medidas registradas.';
+    var emptyP = document.createElement('p'); emptyP.textContent = 'Aún no hay medidas registradas.';
     emptyDiv.appendChild(emptyIc); emptyDiv.appendChild(emptyP); container.appendChild(emptyDiv);
     return;
   }
@@ -3683,7 +3978,7 @@ function renderMetricsTable(metrics) {
   var tbl = document.createElement('table');
   var thd = document.createElement('thead');
   var hdr = document.createElement('tr');
-  ['Fecha','Peso (kg)','% Musculo','% Grasa'].forEach(function(t){ var th = document.createElement('th'); th.textContent = t; hdr.appendChild(th); });
+  ['Fecha','Peso (kg)','% Músculo','% Grasa'].forEach(function(t){ var th = document.createElement('th'); th.textContent = t; hdr.appendChild(th); });
   thd.appendChild(hdr); tbl.appendChild(thd);
   var tbd = document.createElement('tbody');
   recent.forEach(function(m) {
@@ -3717,7 +4012,7 @@ function renderChart(metrics) {
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('fill', '#52525B');
     txt.setAttribute('font-size', '13');
-    txt.textContent = 'Registra al menos 2 medidas para ver la grafica';
+    txt.textContent = 'Registra al menos 2 medidas para ver la gráfica';
     svg.appendChild(txt);
     return;
   }
@@ -3824,7 +4119,7 @@ function submitCheckin() {
   const nutricion = document.querySelector('input[name="nutricion"]:checked');
   const comentarios = document.getElementById('inp-comentarios').value.trim();
 
-  if (!dias) { showToast('Ingresa los dias entrenados', 'error'); return; }
+  if (!dias) { showToast('Ingresa los días entrenados', 'error'); return; }
 
   const now = new Date();
   const payload = {
@@ -3885,7 +4180,7 @@ function loadActivityFeed() {
 
     metrics.forEach(function(m) {
       var d = new Date(m.metric_date || m.date || 0);
-      var txt = 'Metricas registradas';
+      var txt = 'Métricas registradas';
       if (m.peso) txt += ' — ' + parseFloat(m.peso).toFixed(1) + ' kg';
       events.push({ date: d, text: txt });
     });
@@ -3893,7 +4188,7 @@ function loadActivityFeed() {
     checkins.forEach(function(c) {
       var d = new Date(c.checkin_date || c.date || 0);
       var dias = c.dias_entrenados || c.dias || 0;
-      events.push({ date: d, text: 'Check-in enviado — ' + dias + '/7 dias entrenados' });
+      events.push({ date: d, text: 'Check-in enviado — ' + dias + '/7 días entrenados' });
     });
 
     events.sort(function(a, b) { return b.date - a.date; });
@@ -3903,7 +4198,7 @@ function loadActivityFeed() {
     if (events.length === 0) {
       var p = document.createElement('p');
       p.style.cssText = 'color:var(--gray);font-size:.855rem;padding:10px 0';
-      p.textContent = 'Sin actividad reciente. Registra tus primeras metricas.';
+      p.textContent = 'Sin actividad reciente. Registra tus primeras métricas.';
       feedList.appendChild(p);
       return;
     }
@@ -3911,7 +4206,7 @@ function loadActivityFeed() {
     var now = new Date();
     events.slice(0, 5).forEach(function(ev) {
       var diffDays = Math.floor((now - ev.date) / 86400000);
-      var timeStr = diffDays <= 0 ? 'Hoy' : diffDays === 1 ? 'Hace 1 dia' : 'Hace ' + diffDays + ' dias';
+      var timeStr = diffDays <= 0 ? 'Hoy' : diffDays === 1 ? 'Hace 1 día' : 'Hace ' + diffDays + ' días';
       var item = document.createElement('div'); item.className = 'feed-item';
       var icon = document.createElement('span'); icon.style.cssText = ICON_STYLE; icon.textContent = '//';
       var textSpan = document.createElement('span'); textSpan.textContent = ev.text;
@@ -3950,7 +4245,7 @@ function renderCheckins(checkins) {
     container.textContent = '';
     var empCI = document.createElement('div'); empCI.className = 'empty-state';
     var empIc = document.createElement('span'); empIc.textContent = '//'; empIc.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
-    var empP = document.createElement('p'); empP.textContent = 'Aun no has enviado check-ins.';
+    var empP = document.createElement('p'); empP.textContent = 'Aún no has enviado check-ins.';
     empCI.appendChild(empIc); empCI.appendChild(empP); container.appendChild(empCI);
     return;
   }
@@ -3971,14 +4266,14 @@ function renderCheckins(checkins) {
     summary.addEventListener('click', function(){ toggleCheckinDetail(this); });
     var dateSpan = document.createElement('span'); dateSpan.className = 'checkin-date'; dateSpan.textContent = dateStr;
     var scoreSpan = document.createElement('span'); scoreSpan.className = 'checkin-score'; scoreSpan.textContent = bienestar + '/10';
-    var diasSpan = document.createElement('span'); diasSpan.style.cssText = 'flex:1;font-size:.84rem;color:var(--gray)'; diasSpan.textContent = diasVal + '/7 dias entrenados';
+    var diasSpan = document.createElement('span'); diasSpan.style.cssText = 'flex:1;font-size:.84rem;color:var(--gray)'; diasSpan.textContent = diasVal + '/7 días entrenados';
     var chevron = document.createElement('span'); chevron.textContent = '\u25BE'; chevron.className = 'checkin-chevron'; chevron.style.cssText = 'color:var(--gray);font-size:.75rem';
     summary.appendChild(dateSpan); summary.appendChild(scoreSpan); summary.appendChild(diasSpan); summary.appendChild(chevron);
     var detail = document.createElement('div'); detail.className = 'checkin-detail';
     function addDetailLine(label, value) { var p = document.createElement('p'); var s = document.createElement('strong'); s.textContent = label; p.appendChild(s); p.appendChild(document.createTextNode(' ' + value)); detail.appendChild(p); }
     addDetailLine('Bienestar:', bienestar + '/10');
-    addDetailLine('Dias entrenados:', diasVal);
-    addDetailLine('Nutricion:', nutLabel);
+    addDetailLine('Días entrenados:', diasVal);
+    addDetailLine('Nutrición:', nutLabel);
     if (comentario) addDetailLine('Comentarios:', comentario);
     if (coachReply) {
       var replyP = document.createElement('p');
@@ -4001,9 +4296,9 @@ function toggleCheckinDetail(summaryEl) {
 // ===== BIBLIOTECA =====
 const FILES = [
   { name: 'Plan de Entrenamiento', isPlan: true, planType: 'entrenamiento', minPlan: 'esencial', demoFile: 'planes/demo-entrenamiento.html' },
-  { name: 'Plan de Nutricion',     isPlan: true, planType: 'nutricion',     minPlan: 'metodo',   demoFile: 'planes/demo-nutricion.html' },
-  { name: 'Plan de Habitos',       isPlan: true, planType: 'habitos',       minPlan: 'elite',    demoFile: 'planes/demo-habitos.html' },
-  { name: 'Guia de Calentamiento', isPlan: false, minPlan: 'esencial', file: 'planes/demo-calentamiento.html' },
+  { name: 'Plan de Nutrición',     isPlan: true, planType: 'nutricion',     minPlan: 'metodo',   demoFile: 'planes/demo-nutricion.html' },
+  { name: 'Plan de Hábitos',       isPlan: true, planType: 'habitos',       minPlan: 'elite',    demoFile: 'planes/demo-habitos.html' },
+  { name: 'Guía de Calentamiento', isPlan: false, minPlan: 'esencial', file: 'planes/demo-calentamiento.html' },
   { name: 'Protocolo de Descanso', isPlan: false, minPlan: 'esencial', file: 'planes/demo-descanso.html' },
   { name: 'Registro de Progreso',  isPlan: false, minPlan: 'esencial', file: 'planes/demo-progreso.html' }
 ];
@@ -4012,7 +4307,7 @@ function renderBiblioteca() {
   var grid = document.getElementById('files-grid');
   var planLevel = PLAN_LEVEL[clientPlan] || 1;
   var planLevelMap = { esencial: 1, metodo: 2, elite: 3 };
-  var planLabels  = { esencial: 'ESENCIAL', metodo: 'METODO', elite: 'ELITE' };
+  var planLabels  = { esencial: 'ESENCIAL', metodo: 'MÉTODO', elite: 'ELITE' };
   var planClasses = { esencial: 'req-esencial', metodo: 'req-metodo', elite: 'req-elite' };
   grid.textContent = '';
 
@@ -4171,11 +4466,11 @@ function updateDashboardKPIs(profile) {
 
   // Phase calculation (12 semanas por ciclo)
   var fase = semanas < 2 ? 1 : semanas < 4 ? 2 : semanas < 12 ? 3 : 4;
-  var faseLabels = { 1: 'Diagnostico', 2: 'Programa', 3: 'Ejecucion', 4: 'Resultados' };
+  var faseLabels = { 1: 'Diagnóstico', 2: 'Programa', 3: 'Ejecución', 4: 'Resultados' };
   var semanaLabel = document.getElementById('ring-semana-label');
   if (semanaLabel) semanaLabel.textContent = 'Semana ' + semanas + ' de 12';
   var faseLabel = document.getElementById('ring-fase-label');
-  if (faseLabel) faseLabel.textContent = faseLabels[fase] || 'Ejecucion';
+  if (faseLabel) faseLabel.textContent = faseLabels[fase] || 'Ejecución';
 }
 
 function saveProfile() {
@@ -4371,7 +4666,7 @@ function loadPhotosGallery() {
       icon.textContent = '\u25C9';
       empty.appendChild(icon);
       var p = document.createElement('p');
-      p.textContent = 'Aun no has subido fotos de progreso. Sube tu primera sesion arriba.';
+      p.textContent = 'Aún no has subido fotos de progreso. Sube tu primera sesión arriba.';
       empty.appendChild(p);
       container.appendChild(empty);
       renderPhotoComparativa([]);
@@ -4564,7 +4859,7 @@ function initPhotoReviewUI() {
     div.appendChild(row);
     var msg = document.createElement('p');
     msg.style.cssText = 'color:var(--gray);font-size:11px;margin:0;';
-    msg.textContent = 'Actualiza a Metodo (2 reviews/mes) o Elite (1 review/semana) para acceder al review de fotos.';
+    msg.textContent = 'Actualiza a Método (2 reviews/mes) o Elite (1 review/semana) para acceder al review de fotos.';
     div.appendChild(msg);
     planBlock.appendChild(div);
     if (requestBlock) requestBlock.style.display = 'none';
@@ -4575,7 +4870,7 @@ function initPhotoReviewUI() {
   if (requestBlock) requestBlock.style.display = 'block';
 
   if (clientPlan === 'metodo') {
-    if (usageInfo) usageInfo.textContent = 'PLAN METODO: 2 reviews por mes, cada 10-15 dias minimo.';
+    if (usageInfo) usageInfo.textContent = 'PLAN MÉTODO: 2 reviews por mes, cada 10-15 días mínimo.';
   } else if (clientPlan === 'elite') {
     if (usageInfo) usageInfo.textContent = 'PLAN ELITE: 1 review por semana, disponible fines de semana.';
   }
@@ -4621,7 +4916,7 @@ function loadPhotoReviews() {
     // Update usage info
     if (data.usage && clientPlan === 'metodo') {
       var info = document.getElementById('reviewUsageInfo');
-      if (info) info.textContent = 'PLAN METODO: ' + data.usage.month_count + '/2 reviews usados este mes.';
+      if (info) info.textContent = 'PLAN MÉTODO: ' + data.usage.month_count + '/2 reviews usados este mes.';
     }
   }).catch(function(err) {
     console.warn('Error loading photo reviews:', err);
@@ -4665,7 +4960,7 @@ function requestPhotoReview() {
 
       // Determine priority hours message
       var hours = delayMin < 60 ? '1-2' : '4-8';
-      showToastCliente('Review solicitado. Recibiras la retroalimentacion de tu coach en ' + hours + ' horas.', 'var(--green)');
+      showToastCliente('Review solicitado. Recibirás la retroalimentación de tu coach en ' + hours + ' horas.', 'var(--green)');
     } else {
       showToastCliente((data && data.error) || 'Error al solicitar review', 'var(--red)');
     }
@@ -4673,7 +4968,7 @@ function requestPhotoReview() {
     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Solicitar Review';
   }).catch(function(err) {
     console.warn('Review request error:', err);
-    showToastCliente('Error de conexion. Intenta de nuevo.', 'var(--red)');
+    showToastCliente('Error de conexión. Intenta de nuevo.', 'var(--red)');
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Solicitar Review';
   });
@@ -4684,7 +4979,7 @@ function showPendingReview(delayMin) {
   var text = document.getElementById('reviewPendingText');
   if (!block || !text) return;
   var hours = delayMin < 60 ? '1-2' : (delayMin < 90 ? '2-4' : '4-8');
-  text.textContent = 'Tu coach esta revisando tus fotos. Dependiendo de la prioridad, recibiras la retroalimentacion en aproximadamente ' + hours + ' horas.';
+  text.textContent = 'Tu coach está revisando tus fotos. Dependiendo de la prioridad, recibirás la retroalimentación en aproximadamente ' + hours + ' horas.';
   block.style.display = 'block';
 }
 
@@ -4831,7 +5126,7 @@ function submitNutriAnalysis() {
   .catch(function(err) {
     btn.disabled = false;
     btn.textContent = 'Analizar';
-    alert('Error de conexion. Verifica tu internet.');
+    alert('Error de conexión. Verifica tu internet.');
   });
 }
 
@@ -4936,7 +5231,7 @@ function showNutriResult(analysis, mealType, route) {
   if (analysis.confianza) {
     var conf = document.createElement('p');
     conf.style.cssText = 'font-size:.72rem;color:var(--gray);margin-top:10px;font-family:"JetBrains Mono",monospace';
-    conf.textContent = 'Confianza del analisis: ' + analysis.confianza;
+    conf.textContent = 'Confianza del análisis: ' + analysis.confianza;
     content.appendChild(conf);
   }
   if (analysis.notas) {
@@ -5028,9 +5323,9 @@ function loadWeeklyInsight(force) {
   document.querySelectorAll('.day-toggle.done').forEach(function() { daysCompleted++; });
 
   var prompt = 'Soy un cliente del plan ' + plan + ' de WellCore Fitness. '
-    + 'Esta semana completé ' + daysCompleted + ' dias de entrenamiento. '
+    + 'Esta semana completé ' + daysCompleted + ' días de entrenamiento. '
     + 'Dame un insight breve y motivador sobre mi progreso, con 1-2 recomendaciones concretas. '
-    + 'Maximo 3 oraciones. Se directo y cientifico.';
+    + 'Máximo 3 oraciones. Sé directo y científico.';
 
   fetch(API_BASE + '/ai/chat.php', {
     method: 'POST',
@@ -5044,11 +5339,11 @@ function loadWeeklyInsight(force) {
       meta.textContent = 'Modelo: ' + (d.model || 'local') + ' | ' + new Date().toLocaleString('es-CO');
       insightLoaded = true;
     } else {
-      content.textContent = 'No se pudo generar el insight. Intenta mas tarde.';
+      content.textContent = 'No se pudo generar el insight. Intenta más tarde.';
     }
   })
   .catch(function() {
-    content.textContent = 'No se pudo cargar el insight. Intenta de nuevo mas tarde.';
+    content.textContent = 'No se pudo cargar el insight. Intenta de nuevo más tarde.';
     meta.textContent = '';
   });
 }
@@ -5222,52 +5517,52 @@ document.addEventListener('keydown', function(e) {
     subtitle: '4 Semanas',
     days: [
       {
-        id: 'dia-a', day: 'LUNES', label: '// sesion 01 de 03',
-        title: 'DIA A', subtitle: 'Tren Superior — Fuerza', group: 'push',
+        id: 'dia-a', day: 'LUNES', label: '// sesión 01 de 03',
+        title: 'DÍA A', subtitle: 'Tren Superior — Fuerza', group: 'push',
         stats: { volume: '22 series', rpe: '7.5', focus: 'FUERZA', muscles: 'PUSH + PULL' },
-        warmup: 'Protocolo RAMP: movilidad de hombros (circles, dislocations), activacion de rotadores externos, face pulls con banda, 2 series de press de banca al 40% con excentrico lento.',
+        warmup: 'Protocolo RAMP: movilidad de hombros (circles, dislocations), activación de rotadores externos, face pulls con banda, 2 series de press de banca al 40% con excéntrico lento.',
         warmupTime: '10 min',
         exercises: [
-          { name: 'Press de Banca con Barra', sets: 4, reps: 5, rpe: '8/10', rest: '120s', notes: 'Agarre a anchura de hombros. Excentrico 3s. Omoplatos retraidos y deprimidos.' },
+          { name: 'Press de Banca con Barra', sets: 4, reps: 5, rpe: '8/10', rest: '120s', notes: 'Agarre a anchura de hombros. Excéntrico 3s. Omóplatos retraídos y deprimidos.' },
           { name: 'Remo con Barra Pendlay', sets: 4, reps: 6, rpe: '8/10', rest: '90s', notes: 'Torso paralelo al suelo. Tirar hacia ombligo. Barra parte del suelo cada rep.' },
           { name: 'Press Militar con Barra', sets: 3, reps: 8, rpe: '7/10', rest: '90s', notes: 'Core activado. Sin impulso lumbar. Codos ligeramente al frente.' },
-          { name: 'Dominadas Lastradas', sets: 3, reps: 5, rpe: '8/10', rest: '120s', notes: 'Rango completo obligatorio. Escapulas activas en punto muerto inferior.' },
-          { name: 'Curl de Biceps con Barra', sets: 3, reps: 10, rpe: '7/10', rest: '60s', notes: 'Sin balanceo de torso. Supinar completamente en contraccion maxima.' },
-          { name: 'Extension de Triceps en Polea', sets: 3, reps: 12, rpe: '6/10', rest: '60s', notes: 'Codos fijos al cuerpo. Extension completa. Contraccion 1s en punto final.' }
+          { name: 'Dominadas Lastradas', sets: 3, reps: 5, rpe: '8/10', rest: '120s', notes: 'Rango completo obligatorio. Escápulas activas en punto muerto inferior.' },
+          { name: 'Curl de Bíceps con Barra', sets: 3, reps: 10, rpe: '7/10', rest: '60s', notes: 'Sin balanceo de torso. Supinar completamente en contracción máxima.' },
+          { name: 'Extensión de Tríceps en Polea', sets: 3, reps: 12, rpe: '6/10', rest: '60s', notes: 'Codos fijos al cuerpo. Extensión completa. Contracción 1s en punto final.' }
         ],
-        cooldown: 'Estiramiento estatico de pectorales, dorsales y hombros. 30s por grupo. Respiracion diafragmatica 2 min.'
+        cooldown: 'Estiramiento estático de pectorales, dorsales y hombros. 30s por grupo. Respiración diafragmática 2 min.'
       },
       {
-        id: 'dia-b', day: 'MIERCOLES', label: '// sesion 02 de 03',
-        title: 'DIA B', subtitle: 'Tren Inferior — Hipertrofia', group: 'legs',
+        id: 'dia-b', day: 'MIÉRCOLES', label: '// sesión 02 de 03',
+        title: 'DÍA B', subtitle: 'Tren Inferior — Hipertrofia', group: 'legs',
         stats: { volume: '24 series', rpe: '7.8', focus: 'HIPERTROFIA', muscles: 'QUADS + GLUTES' },
-        warmup: 'Activacion gluten con hip thrust con banda, sentadilla goblet al 30%, movilidad de cadera y tobillos.',
+        warmup: 'Activación glúteos con hip thrust con banda, sentadilla goblet al 30%, movilidad de cadera y tobillos.',
         warmupTime: '8 min',
         exercises: [
-          { name: 'Sentadilla con Barra', sets: 4, reps: 8, rpe: '8/10', rest: '120s', notes: 'Profundidad minima: paralelo. Core braced. Rodillas siguen la linea del pie.' },
+          { name: 'Sentadilla con Barra', sets: 4, reps: 8, rpe: '8/10', rest: '120s', notes: 'Profundidad mínima: paralelo. Core braced. Rodillas siguen la línea del pie.' },
           { name: 'Peso Muerto Rumano', sets: 4, reps: 8, rpe: '8/10', rest: '90s', notes: 'Bisagra de cadera pura. Barra pegada a los muslos. Estiramiento en isquios.' },
           { name: 'Prensa de Piernas 45', sets: 3, reps: 12, rpe: '7/10', rest: '90s', notes: 'Pies a la anchura de hombros. Descenso controlado. No bloquear rodillas.' },
           { name: 'Zancadas Caminando', sets: 3, reps: '10/pierna', rpe: '7/10', rest: '60s', notes: 'Paso largo. Rodilla trasera casi toca el suelo. Torso erguido.' },
-          { name: 'Curl Femoral Acostado', sets: 3, reps: 12, rpe: '7/10', rest: '60s', notes: 'Contraccion pico 2s. Excentrico lento. Caderas pegadas al banco.' },
-          { name: 'Elevacion de Pantorrillas', sets: 4, reps: 15, rpe: '7/10', rest: '45s', notes: 'Rango completo. Pausa 2s abajo (estiramiento). Contraccion 1s arriba.' }
+          { name: 'Curl Femoral Acostado', sets: 3, reps: 12, rpe: '7/10', rest: '60s', notes: 'Contracción pico 2s. Excéntrico lento. Caderas pegadas al banco.' },
+          { name: 'Elevación de Pantorrillas', sets: 4, reps: 15, rpe: '7/10', rest: '45s', notes: 'Rango completo. Pausa 2s abajo (estiramiento). Contracción 1s arriba.' }
         ],
-        cooldown: 'Foam rolling en cuadriceps, isquios y gluten. Estiramiento de flexores de cadera. 5 min total.'
+        cooldown: 'Foam rolling en cuádriceps, isquios y glúteos. Estiramiento de flexores de cadera. 5 min total.'
       },
       {
-        id: 'dia-c', day: 'VIERNES', label: '// sesion 03 de 03',
-        title: 'DIA C', subtitle: 'Full Body — Potencia', group: 'full',
+        id: 'dia-c', day: 'VIERNES', label: '// sesión 03 de 03',
+        title: 'DÍA C', subtitle: 'Full Body — Potencia', group: 'full',
         stats: { volume: '20 series', rpe: '7.2', focus: 'POTENCIA', muscles: 'FULL BODY' },
-        warmup: 'Movilidad articular completa. 3 series de saltos al cajon. Swings con kettlebell ligero.',
+        warmup: 'Movilidad articular completa. 3 series de saltos al cajón. Swings con kettlebell ligero.',
         warmupTime: '10 min',
         exercises: [
-          { name: 'Clean and Press con Barra', sets: 4, reps: 5, rpe: '8/10', rest: '120s', notes: 'Movimiento explosivo. Triple extension. Recepcion limpia en rack position.' },
-          { name: 'Sentadilla Frontal', sets: 3, reps: 6, rpe: '8/10', rest: '120s', notes: 'Codos altos. Core rigido. Profundidad completa manteniendo torso vertical.' },
-          { name: 'Remo con Mancuerna', sets: 3, reps: '8/lado', rpe: '7/10', rest: '60s', notes: 'Tirar con el codo. Contraccion en escapula. Evitar rotacion de torso.' },
+          { name: 'Clean and Press con Barra', sets: 4, reps: 5, rpe: '8/10', rest: '120s', notes: 'Movimiento explosivo. Triple extensión. Recepción limpia en rack position.' },
+          { name: 'Sentadilla Frontal', sets: 3, reps: 6, rpe: '8/10', rest: '120s', notes: 'Codos altos. Core rígido. Profundidad completa manteniendo torso vertical.' },
+          { name: 'Remo con Mancuerna', sets: 3, reps: '8/lado', rpe: '7/10', rest: '60s', notes: 'Tirar con el codo. Contracción en escápula. Evitar rotación de torso.' },
           { name: 'Push Press', sets: 3, reps: 6, rpe: '7/10', rest: '90s', notes: 'Impulso con piernas, finish con hombros. Lockout completo arriba.' },
-          { name: 'Face Pull con Banda', sets: 3, reps: 15, rpe: '6/10', rest: '45s', notes: 'Rotacion externa al final. Codos por encima de hombros. Salud de hombro.' },
-          { name: 'Plancha con Peso', sets: 3, reps: '45s', rpe: '7/10', rest: '60s', notes: 'Pelvis en retroversion. Sin hundir lumbar. Apretar gluten.' }
+          { name: 'Face Pull con Banda', sets: 3, reps: 15, rpe: '6/10', rest: '45s', notes: 'Rotación externa al final. Codos por encima de hombros. Salud de hombro.' },
+          { name: 'Plancha con Peso', sets: 3, reps: '45s', rpe: '7/10', rest: '60s', notes: 'Pelvis en retroversión. Sin hundir lumbar. Apretar glúteos.' }
         ],
-        cooldown: 'Movilidad de columna. Estiramiento de cadena posterior completa. Respiracion box breathing 3 min.'
+        cooldown: 'Movilidad de columna. Estiramiento de cadena posterior completa. Respiración box breathing 3 min.'
       }
     ]
   };
@@ -5296,8 +5591,8 @@ document.addEventListener('keydown', function(e) {
       banner.className = 'trn-demo-banner';
       banner.innerHTML = '<div class="trn-demo-icon"><i class="fas fa-hard-hat"></i></div>' +
         '<div class="trn-demo-text">' +
-        '<strong>Tu plan personalizado esta en preparacion</strong>' +
-        '<span>Tu coach esta diseñando un programa a tu medida. Mientras tanto, aqui tienes un programa demo para que inicies tu entrenamiento y vayas calentando motores.</span>' +
+        '<strong>Tu plan personalizado está en preparación</strong>' +
+        '<span>Tu coach está diseñando un programa a tu medida. Mientras tanto, aquí tienes un programa demo para que inicies tu entrenamiento y vayas calentando motores.</span>' +
         '</div>';
       container.appendChild(banner);
     }
@@ -5341,8 +5636,8 @@ document.addEventListener('keydown', function(e) {
       stats.innerHTML =
         '<div class="trn-stat-pill"><span>Volumen</span> <span class="val">' + esc(day.stats.volume) + '</span></div>' +
         '<div class="trn-stat-pill"><span>RPE Prom.</span> <span class="val red">' + esc(day.stats.rpe) + '</span></div>' +
-        '<div class="trn-stat-pill"><span>Enfasis</span> <span class="val">' + esc(day.stats.focus) + '</span></div>' +
-        '<div class="trn-stat-pill"><span>Musculos</span> <span class="val">' + esc(day.stats.muscles) + '</span></div>';
+        '<div class="trn-stat-pill"><span>Énfasis</span> <span class="val">' + esc(day.stats.focus) + '</span></div>' +
+        '<div class="trn-stat-pill"><span>Músculos</span> <span class="val">' + esc(day.stats.muscles) + '</span></div>';
       dayEl.appendChild(stats);
 
       // Body
@@ -5384,7 +5679,7 @@ document.addEventListener('keydown', function(e) {
               '</div>' +
             '</div>' +
             '<div class="trn-ex-actions">' +
-              '<button class="trn-ex-btn" onclick="toggleExNotes(\'' + key + '\')" title="Notas tecnicas"><i class="fas fa-sticky-note"></i></button>' +
+              '<button class="trn-ex-btn" onclick="toggleExNotes(\'' + key + '\')" title="Notas técnicas"><i class="fas fa-sticky-note"></i></button>' +
               '<button class="trn-ex-btn ai" onclick="getAiTip(\'' + key + '\',\'' + esc(ex.name).replace(/'/g, "\\'") + '\')" title="Tip del Coach"><i class="fas fa-user-md"></i> Coach</button>' +
               '<button class="trn-ex-btn timer" onclick="openRestTimer(' + restSec + ',\'' + esc(ex.name).replace(/'/g, "\\'") + '\')" title="Timer descanso"><i class="fas fa-stopwatch"></i></button>' +
             '</div>' +
@@ -5535,10 +5830,10 @@ document.addEventListener('keydown', function(e) {
     icon.style.marginRight = '6px';
     icon.style.color = 'var(--red)';
     msg.appendChild(icon);
-    msg.appendChild(document.createTextNode('Alcanzaste el limite de ' + limit + ' tips para esta sesion. '));
+    msg.appendChild(document.createTextNode('Alcanzaste el límite de ' + limit + ' tips para esta sesión. '));
     var upgradeText = clientPlan === 'esencial'
-      ? 'Actualiza a Metodo para 5 tips o Elite para 10 tips por sesion.'
-      : clientPlan === 'metodo' ? 'Actualiza a Elite para 10 tips por sesion.' : 'Los tips se reinician cada dia.';
+      ? 'Actualiza a Método para 5 tips o Elite para 10 tips por sesión.'
+      : clientPlan === 'metodo' ? 'Actualiza a Elite para 10 tips por sesión.' : 'Los tips se reinician cada día.';
     msg.appendChild(document.createTextNode(upgradeText));
     bubble.textContent = '';
     bubble.appendChild(label);
@@ -5567,7 +5862,7 @@ document.addEventListener('keydown', function(e) {
 
     incrementCoachTip(dayId);
     bubble.classList.add('visible');
-    bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-loading"><i class="fas fa-spinner"></i> Tu coach esta preparando un tip...</div>';
+    bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-loading"><i class="fas fa-spinner"></i> Tu coach está preparando un tip...</div>';
 
     var token = localStorage.getItem('wc_token');
     fetch('/api/ai/exercise-tip.php', {
@@ -5584,7 +5879,7 @@ document.addEventListener('keydown', function(e) {
       }
     })
     .catch(function() {
-      bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-text" style="color:var(--gray)">Error de conexion. Verifica tu internet.</div>';
+      bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-text" style="color:var(--gray)">Error de conexión. Verifica tu internet.</div>';
     });
   };
 
@@ -5683,16 +5978,16 @@ document.addEventListener('keydown', function(e) {
           else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('leg') >= 0) group = 'legs';
           else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0) group = 'pull';
 
-          var dayNames = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
+          var dayNames = ['LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO'];
           return {
             id: 'dia-' + String.fromCharCode(97 + i),
-            day: d.day || dayNames[i] || ('DIA ' + (i+1)),
-            label: '// sesion ' + String(i+1).padStart(2,'0') + ' de ' + String(data.plan.days.length).padStart(2,'0'),
-            title: d.title || d.titulo || ('DIA ' + String.fromCharCode(65 + i)),
+            day: d.day || dayNames[i] || ('DÍA ' + (i+1)),
+            label: '// sesión ' + String(i+1).padStart(2,'0') + ' de ' + String(data.plan.days.length).padStart(2,'0'),
+            title: d.title || d.titulo || ('DÍA ' + String.fromCharCode(65 + i)),
             subtitle: d.subtitle || d.subtitulo || '',
             group: group,
             stats: d.stats || { volume: (d.exercises || []).reduce(function(a,e){ return a + (e.sets||0); }, 0) + ' series', rpe: '7.5', focus: group.toUpperCase(), muscles: sub.toUpperCase() || 'FULL BODY' },
-            warmup: d.warmup || d.calentamiento || 'Movilidad articular general + activacion especifica. 8-10 min.',
+            warmup: d.warmup || d.calentamiento || 'Movilidad articular general + activación específica. 8-10 min.',
             warmupTime: d.warmupTime || '10 min',
             exercises: (d.exercises || d.ejercicios || []).map(function(e) {
               return {
@@ -5704,7 +5999,7 @@ document.addEventListener('keydown', function(e) {
                 notes: e.notes || e.notas || ''
               };
             }),
-            cooldown: d.cooldown || d.vueltaCalma || 'Estiramiento estatico 5 min. Respiracion diafragmatica.'
+            cooldown: d.cooldown || d.vueltaCalma || 'Estiramiento estático 5 min. Respiración diafragmática.'
           };
         });
       }
