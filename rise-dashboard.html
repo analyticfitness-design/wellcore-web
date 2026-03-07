@@ -1681,44 +1681,9 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-users"></i> Comunidad RISE
                 </h1>
-                <p class="section-desc">Conecta con otros participantes del reto. La comunidad te impulsa a dar lo mejor de ti cada día.</p>
+                <p class="section-desc">Conecta con otros participantes del reto. Comparte tu progreso, reacciona y desbloquea logros.</p>
 
-                <div class="card">
-                    <div class="card-title">Compartir Progreso</div>
-                    <div class="form-group">
-                        <textarea id="communityPost" rows="3" placeholder="¿Cómo va tu reto? Comparte tu progreso..." maxlength="500"></textarea>
-                    </div>
-                    <button class="btn-primary" style="width: 100%;" onclick="postToFeed()">
-                        <i class="fas fa-paper-plane"></i> Publicar
-                    </button>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Feed del Reto</div>
-                    <div id="communityFeed">
-                        <!-- Static example posts (no user data) -->
-                        <div style="padding: 20px; background: var(--surface); margin-bottom: 10px;">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--red-dim); border: 1px solid var(--red); display: flex; align-items: center; justify-content: center; font-size: 14px;">M</div>
-                                <div>
-                                    <div style="font-weight: 600; font-size: 13px;">María G.</div>
-                                    <div style="color: var(--gray); font-size: 11px; font-family: 'JetBrains Mono';">Día 8 · hace 2 horas</div>
-                                </div>
-                            </div>
-                            <p style="color: var(--gray); font-size: 13px;">¡Completé mi primer semana sin fallar un solo día! La consistencia es clave.</p>
-                        </div>
-                        <div style="padding: 20px; background: var(--surface);">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--red-dim); border: 1px solid var(--red); display: flex; align-items: center; justify-content: center; font-size: 14px;">C</div>
-                                <div>
-                                    <div style="font-weight: 600; font-size: 13px;">Carlos M.</div>
-                                    <div style="color: var(--gray); font-size: 11px; font-family: 'JetBrains Mono';">Día 7 · hace 5 horas</div>
-                                </div>
-                            </div>
-                            <p style="color: var(--gray); font-size: 13px;">Bajé 2kg en la primera semana. La nutrición hace toda la diferencia. ¡Vamos RISE!</p>
-                        </div>
-                    </div>
-                </div>
+                <div id="communityContainer"></div>
             </section>
 
             <!-- ═══════════════════ SUPPORT ═══════════════════ -->
@@ -3393,49 +3358,7 @@
             } catch(e) {}
         }
 
-        // ─── COMMUNITY ───────────────────────────
-        function postToFeed() {
-            const textarea = document.getElementById('communityPost');
-            const text = textarea.value.trim().slice(0, 500);
-            if (!text) return;
-
-            const clientInfo = JSON.parse(localStorage.getItem('client_info') || '{}');
-            const name    = (clientInfo.name || 'Usuario').slice(0, 50);
-            const initial = name.charAt(0).toUpperCase();
-
-            const feed = document.getElementById('communityFeed');
-            const post = document.createElement('div');
-            post.style.cssText = 'padding: 20px; background: var(--surface); margin-bottom: 10px;';
-
-            const header = document.createElement('div');
-            header.style.cssText = 'display: flex; align-items: center; gap: 10px; margin-bottom: 10px;';
-
-            const avatar = document.createElement('div');
-            avatar.style.cssText = 'width: 36px; height: 36px; border-radius: 50%; background: var(--red-dim); border: 1px solid var(--red); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;';
-            avatar.textContent = initial;
-
-            const meta = document.createElement('div');
-            const nameEl = document.createElement('div');
-            nameEl.style.cssText = 'font-weight: 600; font-size: 13px;';
-            nameEl.textContent = name;
-            const timeEl = document.createElement('div');
-            timeEl.style.cssText = 'color: var(--gray); font-size: 11px; font-family: JetBrains Mono, monospace;';
-            timeEl.textContent = 'Ahora mismo';
-
-            meta.appendChild(nameEl);
-            meta.appendChild(timeEl);
-            header.appendChild(avatar);
-            header.appendChild(meta);
-
-            const body = document.createElement('p');
-            body.style.cssText = 'color: var(--gray); font-size: 13px;';
-            body.textContent = text;
-
-            post.appendChild(header);
-            post.appendChild(body);
-            feed.insertBefore(post, feed.firstChild);
-            textarea.value = '';
-        }
+        // ─── COMMUNITY (loaded via js/community.js) ───
 
         // ─── INITIALIZE ──────────────────────────
         window.addEventListener('load', () => {
@@ -4240,6 +4163,30 @@ document.addEventListener('keydown', function(e) {
       if (togPdf) togPdf.classList.remove('active');
     }
   };
+})();
+</script>
+<script src="/js/community.js"></script>
+<script>
+// Init community when section becomes visible
+(function() {
+    var communityLoaded = false;
+    var observer = new MutationObserver(function() {
+        var sec = document.getElementById('community');
+        if (sec && sec.style.display !== 'none' && !communityLoaded) {
+            communityLoaded = true;
+            Community.init('communityContainer', 'all');
+        }
+    });
+    var main = document.querySelector('.main-content') || document.body;
+    observer.observe(main, { attributes: true, subtree: true, attributeFilter: ['style'] });
+    // Also try on load in case community is default visible
+    window.addEventListener('load', function() {
+        var sec = document.getElementById('community');
+        if (sec && sec.style.display !== 'none' && !communityLoaded) {
+            communityLoaded = true;
+            Community.init('communityContainer', 'all');
+        }
+    });
 })();
 </script>
 </body>
