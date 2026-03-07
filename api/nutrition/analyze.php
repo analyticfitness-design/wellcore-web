@@ -24,7 +24,45 @@ require_once __DIR__ . '/../config/ai.php';
 
 requireMethod('POST');
 $client = authenticateClient();
-$body   = getJsonBody();
+
+// ─── RATE LIMITING POR PLAN ─────────────────────────────────────────────
+// Elite: 10/día, Método: 3/día, Esencial/RISE: 0 (bloqueado)
+$planLimits = ['elite' => 10, 'metodo' => 3, 'esencial' => 0, 'rise' => 0];
+$clientPlan = strtolower($client['plan'] ?? 'esencial');
+$dailyLimit = $planLimits[$clientPlan] ?? 0;
+
+if ($dailyLimit === 0) {
+    respond([
+        'ok' => false,
+        'blocked' => true,
+        'message' => 'El análisis nutricional con IA está disponible en los planes Método y Elite.',
+        'upgrade_url' => '/inscripcion.html',
+        'limit' => 0,
+        'used' => 0,
+        'remaining' => 0,
+    ], 403);
+}
+
+$db = getDB();
+$usageStmt = $db->prepare("
+    SELECT COUNT(*) FROM nutrition_logs
+    WHERE client_id = ? AND DATE(created_at) = CURDATE()
+");
+$usageStmt->execute([$client['id']]);
+$usedToday = (int) $usageStmt->fetchColumn();
+
+if ($usedToday >= $dailyLimit) {
+    respond([
+        'ok' => false,
+        'blocked' => true,
+        'message' => 'Has alcanzado tu límite de ' . $dailyLimit . ' análisis diarios. Vuelve mañana.',
+        'limit' => $dailyLimit,
+        'used' => $usedToday,
+        'remaining' => 0,
+    ], 429);
+}
+
+$body = getJsonBody();
 
 $imageBase64 = $body['image_base64'] ?? '';
 $mealType    = $body['meal_type'] ?? null;
@@ -38,8 +76,6 @@ $validMeals = ['desayuno', 'almuerzo', 'cena', 'snack', 'pre_entreno', 'post_ent
 if ($mealType && !in_array($mealType, $validMeals, true)) {
     $mealType = null;
 }
-
-$db = getDB();
 
 // ─── SYSTEM PROMPT (experto en estimacion visual) ─────────────────────────
 
@@ -253,11 +289,14 @@ try {
     $logId = (int) $db->lastInsertId();
 
     respond([
-        'ok'       => true,
-        'log_id'   => $logId,
-        'analysis' => $parsed,
-        'route'    => $route,
-        'message'  => 'Analisis completado',
+        'ok'        => true,
+        'log_id'    => $logId,
+        'analysis'  => $parsed,
+        'route'     => $route,
+        'message'   => 'Analisis completado',
+        'limit'     => $dailyLimit,
+        'used'      => $usedToday + 1,
+        'remaining' => max(0, $dailyLimit - $usedToday - 1),
     ], 201);
 
 } catch (\Throwable $e) {

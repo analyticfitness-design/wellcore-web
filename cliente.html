@@ -2447,8 +2447,37 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
     <!-- ===== SECTION: NUTRICION ===== -->
     <section id="sec-nutricion" class="section">
-      <h1 class="section-title">Nutrición</h1>
+      <h1 class="section-title">Nutrición <span>IA</span></h1>
       <p class="section-desc">Registra tus comidas con una foto o descripción y obtén un análisis nutricional automático. Conoce tus macros diarios para optimizar tu progreso.</p>
+
+      <!-- Locked overlay for plans without access -->
+      <div id="nutri-locked" style="display:none;position:relative;margin-bottom:20px;">
+        <div style="padding:30px;filter:blur(2px);opacity:0.3;pointer-events:none">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px">
+            <div style="height:14px;background:var(--border);border-radius:4px;width:60%;margin-bottom:12px"></div>
+            <div style="height:8px;background:var(--border);border-radius:4px;width:90%"></div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+            <div style="height:14px;background:var(--border);border-radius:4px;width:45%;margin-bottom:12px"></div>
+            <div style="height:32px;background:var(--border);border-radius:4px;width:100%"></div>
+          </div>
+        </div>
+        <div class="locked-overlay" style="position:absolute;border-radius:var(--radius)">
+          <i class="fas fa-lock" style="font-size:2.2rem;color:var(--red);margin-bottom:8px"></i>
+          <h3>Análisis Nutricional con IA</h3>
+          <p style="font-size:1rem;line-height:1.7;max-width:340px">Analiza tus comidas con inteligencia artificial, conoce tus macros y optimiza tu alimentación.</p>
+          <ul class="lock-features">
+            <li>Análisis de fotos de comida con IA</li>
+            <li>Desglose de macronutrientes</li>
+            <li>Historial nutricional diario</li>
+            <li>Hasta 10 análisis diarios (Elite)</li>
+          </ul>
+          <a href="inscripcion.html" class="btn-upgrade"><i class="fas fa-arrow-up"></i> Mejorar a Método o Elite</a>
+        </div>
+      </div>
+
+      <!-- Nutrition content (hidden when locked) -->
+      <div id="nutri-content">
 
       <!-- Daily Summary KPIs -->
       <div class="kpi-grid" id="nutri-kpis">
@@ -2507,9 +2536,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <!-- Submit -->
           <div style="display:flex;flex-direction:column;gap:8px;min-width:140px">
             <button class="btn-primary" onclick="submitNutriAnalysis()" id="nutri-submit-btn" style="padding:12px 20px">
-              Analizar
+              <i class="fas fa-wand-magic-sparkles"></i> Analizar
             </button>
-            <p style="font-size:.7rem;color:var(--gray);text-align:center">Foto o descripción requerida</p>
+            <p id="nutri-usage-label" style="font-size:.68rem;color:var(--gray);text-align:center;font-family:'JetBrains Mono',monospace"></p>
           </div>
         </div>
       </div>
@@ -2534,6 +2563,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <p>Cargando historial...</p>
         </div>
       </div>
+
+      </div><!-- /nutri-content -->
     </section>
 
     <!-- ===== SECTION 7: MI PERFIL ===== -->
@@ -5209,6 +5240,36 @@ function showToastCliente(msg, color) {
 // ===== NUTRICION =====
 var nutriPhotoBase64 = null;
 
+function checkNutriUsage() {
+  apiFetch('/nutrition/usage')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var lockedEl = document.getElementById('nutri-locked');
+      var contentEl = document.getElementById('nutri-content');
+      var usageLabel = document.getElementById('nutri-usage-label');
+
+      if (data.blocked) {
+        lockedEl.style.display = 'block';
+        contentEl.style.display = 'none';
+        return;
+      }
+
+      lockedEl.style.display = 'none';
+      contentEl.style.display = 'block';
+
+      if (usageLabel) {
+        usageLabel.textContent = data.used + '/' + data.limit + ' análisis hoy';
+        usageLabel.style.color = data.remaining <= 1 ? '#EF4444' : 'var(--gray)';
+      }
+    })
+    .catch(function() {});
+}
+
+// Check usage on load
+if (localStorage.getItem('wc_token')) {
+  checkNutriUsage();
+}
+
 function handleNutriPhoto(input) {
   var file = input.files[0];
   if (!file) return;
@@ -5274,8 +5335,16 @@ function submitNutriAnalysis() {
       var hint = document.getElementById('nutri-desc-hint');
       if (hint) hint.style.display = 'none';
       loadNutriHistory();
+      // Update usage counter
+      var usageLabel = document.getElementById('nutri-usage-label');
+      if (usageLabel && data.used != null && data.limit != null) {
+        usageLabel.textContent = data.used + '/' + data.limit + ' análisis hoy';
+        usageLabel.style.color = data.remaining <= 1 ? '#EF4444' : 'var(--gray)';
+      }
+    } else if (data.blocked) {
+      alert(data.message || 'Has alcanzado tu límite diario de análisis.');
     } else {
-      alert(data.error || 'Error al analizar. Intenta de nuevo.');
+      alert(data.error || data.message || 'Error al analizar. Intenta de nuevo.');
     }
   })
   .catch(function(err) {
