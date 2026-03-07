@@ -411,7 +411,114 @@ git commit -m "feat: bottom nav — notification badges, active state sync"
 
 ---
 
-## Task 11: Integration Test + Deploy
+## Task 11: Descripciones Grandes + Marcos Premium bajo Títulos
+
+**Files:**
+- Modify: `cliente.html` — todas las secciones del dashboard
+- Modify: `rise-dashboard.html` — todas las pestañas
+
+**Contexto:** Los dashboards deben tener descripciones claras debajo de cada título de sección con fuente más grande y legible (pensando en usuarios que usan gafas o señoras mayores). Agregar marcos con opacidad de colores amigables que mantengan la identidad WellCore premium.
+
+**Step 1: Agregar CSS para section-description**
+
+```css
+.section-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  max-width: 640px;
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+.section-desc-box {
+  background: linear-gradient(135deg, rgba(200,16,46,0.06), rgba(0,217,255,0.04));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.section-desc-box p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+}
+.section-desc-box .desc-highlight {
+  color: var(--white);
+  font-weight: 500;
+}
+```
+
+**Step 2: Agregar descripciones a cada sección de cliente.html**
+
+Después de cada `<h1 class="section-title">`, agregar una descripción dentro de `.section-desc-box`:
+
+- **Dashboard**: "Tu resumen personal. Aquí ves tu plan activo, progreso semanal y actividad reciente."
+- **Mi Plan**: "Tu programa completo de entrenamiento, nutrición, hábitos y más. Cada pestaña está diseñada para ti."
+- **Seguimiento**: "Registra tu entrenamiento diario y visualiza cómo progresas semana a semana."
+- **Check-in**: "Tu reporte semanal para que tu coach pueda ajustar tu programa según tus resultados."
+- **Fotos Progreso**: "Documenta tu transformación con fotos periódicas. Tu coach las usa para evaluar tu avance."
+- **Biblioteca**: "Todos tus documentos, planes y recursos organizados en un solo lugar."
+- **Nutrición IA**: "Analiza tus comidas con inteligencia artificial. Toma una foto o describe tu plato."
+- **Soporte**: "¿Necesitas ayuda? Contacta directamente a tu coach por WhatsApp o email."
+- **Mi Perfil**: "Tus datos personales, objetivos y configuración de cuenta."
+
+**Step 3: Agregar descripciones a rise-dashboard.html**
+
+Mismo patrón para cada pestaña del RISE dashboard:
+- **Mi Progreso**: "Tu avance en el reto de 30 días. Cada día cuenta."
+- **Mi Rutina**: "Tu programa de entrenamiento personalizado para el reto."
+- **Nutrición**: "Tu guía nutricional para maximizar resultados durante el reto."
+- **Hábitos**: "Construye hábitos diarios que transforman tu cuerpo y mente."
+- **Fotos**: "Documenta tu transformación durante los 30 días del reto."
+
+**Step 4: Verificar legibilidad en mobile**
+
+Font-size mínimo de 15px para descripciones en viewport < 768px.
+
+**Step 5: Commit**
+
+```bash
+git add cliente.html rise-dashboard.html
+git commit -m "feat: section descriptions with premium frames — improved readability"
+```
+
+---
+
+## Task 12: Fuente General Más Grande + Accesibilidad Visual
+
+**Files:**
+- Modify: `cliente.html` CSS section
+- Modify: `rise-dashboard.html` CSS section
+
+**Step 1: Aumentar tamaño base de fuente en dashboards**
+
+- Body font-size base: de implícito 16px a 16px (mantener) pero aumentar todos los `.kpi-label`, `.feed-item span`, labels y texto de cards a mínimo `.88rem` (antes muchos eran `.68rem` o `.72rem`)
+- Labels JetBrains Mono: de `.68rem` a `.78rem`
+- Card text: de `.855rem` a `.95rem`
+- KPI values: mantener Bebas Neue grande
+- Subtexto/meta: de `.7rem` a `.78rem`
+
+**Step 2: Mejorar contraste**
+
+- `var(--gray)` opacity actual: 0.48 → mejorar a 0.58 para textos descriptivos
+- Agregar `--text-readable: rgba(255,255,255,0.72)` para texto de contenido (no labels)
+
+**Step 3: Aplicar a rise-dashboard.html**
+
+Mismos cambios de tamaño para mantener consistencia entre los dos dashboards.
+
+**Step 4: Commit**
+
+```bash
+git add cliente.html rise-dashboard.html
+git commit -m "style: increase font sizes and contrast for readability across dashboards"
+```
+
+---
+
+## Task 13: Integration Test + Deploy
 
 **Step 1: Test con Playwright**
 
@@ -429,7 +536,7 @@ Deploy en Easypanel: `cd /code && git pull origin main`
 
 ---
 
-## Task 12: Auditoria Visual + Bug Fixing
+## Task 14: Auditoria Visual + Bug Fixing
 
 **Step 1: Screenshots de cada seccion en desktop y mobile**
 **Step 2: Verificar consistencia de colores, fuentes, spacing**
@@ -444,14 +551,15 @@ git push origin main
 
 ---
 
-## Orden de Ejecucion
+## Orden de Ejecución
 
-- **Task 9** (CSS global) va primero — establece las utilidades que usan las demas tareas
+- **Task 9** (CSS global) va primero — establece las utilidades que usan las demás tareas
 - **Tasks 1-8** son independientes pero se recomiendan en orden
-- **Task 10** despues de las secciones
-- **Tasks 11-12** al final
+- **Task 10** después de las secciones
+- **Tasks 11-12** (descripciones + fuentes) son críticas para accesibilidad
+- **Tasks 13-14** al final (test + audit)
 
-## Estimacion
+## Estimación
 
-~500-700 lineas de cambios en cliente.html (CSS + HTML + JS).
-Scope controlado: solo mejoras visuales, sin nuevas APIs ni endpoints.
+~600-900 líneas de cambios en cliente.html + rise-dashboard.html (CSS + HTML + JS).
+Scope controlado: solo mejoras visuales y de accesibilidad, sin nuevas APIs ni endpoints.

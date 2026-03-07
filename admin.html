@@ -2307,8 +2307,8 @@
         pill.appendChild(sl); pill.appendChild(sp); return pill;
       }
       stats.appendChild(makePill('Bienestar: ' + bienestar + '/10'));
-      stats.appendChild(makePill('Entrenos: ' + dias + ' dias'));
-      var nutPill = makePill('Nutricion: ');
+      stats.appendChild(makePill('Entrenos: ' + dias + ' días'));
+      var nutPill = makePill('Nutrición: ');
       var nutStrong = document.createElement('strong'); nutStrong.style.color = nutColor; nutStrong.textContent = nutricion;
       nutPill.appendChild(nutStrong);
       stats.appendChild(nutPill);
@@ -2447,10 +2447,10 @@
 
         // ─── RISE TICKETS ADMIN ───────────────────────────────────────────
         var TKTYPE = {
-            ajuste_entrenamiento:'Ajuste entrenamiento',consulta_nutricion:'Consulta nutricion',
+            ajuste_entrenamiento:'Ajuste entrenamiento',consulta_nutricion:'Consulta nutrición',
             problema_acceso:'Problema acceso',solicitud_especial:'Solicitud especial',
             rutina_nueva:'Rutina nueva',cambio_rutina:'Cambio rutina',
-            nutricion:'Nutricion',habitos:'Habitos',otro:'Otro'
+            nutricion:'Nutrición',habitos:'Hábitos',otro:'Otro'
         };
         var _rtkId = null;
         function mkEl(tag,styles,txt){var e=document.createElement(tag);if(styles)e.style.cssText=styles;if(txt!==undefined)e.textContent=txt;return e;}

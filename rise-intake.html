@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Intake | RISE - WellCore Fitness</title>
+    <title>Fórmulario de Intake | RISE - WellCore Fitness</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -490,7 +490,7 @@
         <form id="intakeForm" class="form-container">
             <div class="alert error" id="errorAlert"></div>
             <div class="alert success" id="successAlert">
-                Formulario enviado correctamente. Redirigiendo...
+                Fórmulario enviado correctamente. Redirigiendo...
             </div>
 
             <!-- SECTION 1: Body Measurements -->
@@ -594,7 +594,7 @@
                         <label>Hora preferida para entrenar</label>
                         <select name="trainingTime" required>
                             <option value="">-- Selecciona --</option>
-                            <option value="morning">Manana (5-9am)</option>
+                            <option value="morning">Mañana (5-9am)</option>
                             <option value="midday">Mediodia (12-2pm)</option>
                             <option value="afternoon">Tarde (3-6pm)</option>
                             <option value="evening">Noche (7-10pm)</option>
@@ -602,7 +602,7 @@
                         </select>
                     </div>
                     <div class="field-group">
-                        <label>Minutos por sesion de entrenamiento</label>
+                        <label>Minutos por sesión de entrenamiento</label>
                         <select name="sessionDuration" required>
                             <option value="">-- Selecciona --</option>
                             <option value="30">30 minutos</option>
@@ -687,7 +687,7 @@
                     </div>
                     <div class="field-group" id="supplementDetails" style="display: none;">
                         <label>Cuales son tus suplementos</label>
-                        <textarea name="supplementList" placeholder="Proteina, Creatina, Vitaminas..."></textarea>
+                        <textarea name="supplementList" placeholder="Proteína, Creatina, Vitaminas..."></textarea>
                     </div>
                     <div class="field-group">
                         <label>Alergias o intolerancias</label>
@@ -706,7 +706,7 @@
                 <div class="section-content">
                     <div class="range-group">
                         <div class="range-display">
-                            <label>Horas de sueno por noche</label>
+                            <label>Horas de sueño por noche</label>
                             <span class="range-value" id="sleepValue">7</span> h
                         </div>
                         <input type="range" name="sleep" min="3" max="12" value="7" id="sleepRange">
@@ -721,7 +721,7 @@
                     </div>
                     <div class="range-group">
                         <div class="range-display">
-                            <label>Nivel de estres (0-10)</label>
+                            <label>Nivel de estrés (0-10)</label>
                             <span class="range-value" id="stressValue">5</span>
                         </div>
                         <input type="range" name="stress" min="0" max="10" value="5" id="stressRange">
@@ -747,7 +747,7 @@
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="goal2" name="motivation" value="gain_muscle">
-                                <label for="goal2">Ganar musculo / fuerza</label>
+                                <label for="goal2">Ganar músculo / fuerza</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="goal3" name="motivation" value="health">
@@ -764,7 +764,7 @@
                         </div>
                     </div>
                     <div class="field-group">
-                        <label>Resultado esperado en 30 dias</label>
+                        <label>Resultado esperado en 30 días</label>
                         <textarea name="expectedResult" placeholder="Perder 5kg, ganar definicion..." required></textarea>
                     </div>
                     <div class="range-group">
@@ -786,7 +786,7 @@
                     Siguiente <i class="fas fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i>
                 </button>
                 <button type="submit" class="btn-primary" id="submitBtn" style="display: none;">
-                    <i class="fas fa-paper-plane" aria-hidden="true" style="margin-right:6px;"></i>Enviar Formulario
+                    <i class="fas fa-paper-plane" aria-hidden="true" style="margin-right:6px;"></i>Enviar Fórmulario
                 </button>
             </div>
         </form>
@@ -985,7 +985,7 @@
                     errorAlert.textContent = result.error || 'Error al enviar. Intenta de nuevo.';
                     errorAlert.classList.add('show');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar Formulario';
+                    submitBtn.textContent = 'Enviar Fórmulario';
                     return;
                 }
 
@@ -1003,7 +1003,7 @@
                 errorAlert.textContent = 'Error al enviar. Intenta de nuevo.';
                 errorAlert.classList.add('show');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Enviar Formulario';
+                submitBtn.textContent = 'Enviar Fórmulario';
                 console.error('Intake submission error:', error);
             }
         });
