@@ -14,6 +14,8 @@ var Community = (function() {
     var _lastMsgId = 0;
     var _clientId = 0;
     var _chatInitialized = false;
+    var _unreadCount = 0;
+    var _chatBadgeEl = null;
 
     var EMOJI_MAP = {
         fire:   'fa-fire',
@@ -412,11 +414,15 @@ var Community = (function() {
         feedTab.appendChild(feedLabel);
 
         var chatTab = document.createElement('button');
-        chatTab.style.cssText = tabStyle + 'color:rgba(255,255,255,0.35);';
+        chatTab.style.cssText = tabStyle + 'color:rgba(255,255,255,0.35);display:flex;align-items:center;gap:6px;';
         chatTab.appendChild(fa('fa-comments'));
         var chatLabel = document.createElement('span');
         chatLabel.textContent = ' Chat';
         chatTab.appendChild(chatLabel);
+
+        _chatBadgeEl = document.createElement('span');
+        _chatBadgeEl.style.cssText = 'display:none;background:#E31E24;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;padding:0 4px;text-align:center;line-height:16px;font-family:"JetBrains Mono",monospace;';
+        chatTab.appendChild(_chatBadgeEl);
 
         feedTab.onclick = function() {
             _chatMode = false;
@@ -424,7 +430,6 @@ var Community = (function() {
             var cw = _container.querySelector('#communityChatWrap');
             if (fw) fw.style.display = '';
             if (cw) cw.style.display = 'none';
-            stopPolling();
             feedTab.style.color = '#E31E24';
             feedTab.style.borderBottom = '2px solid #E31E24';
             feedTab.style.marginBottom = '-2px';
@@ -435,6 +440,8 @@ var Community = (function() {
 
         chatTab.onclick = function() {
             _chatMode = true;
+            _unreadCount = 0;
+            if (_chatBadgeEl) { _chatBadgeEl.style.display = 'none'; _chatBadgeEl.textContent = ''; }
             var fw = _container.querySelector('#communityFeedWrap');
             var cw = _container.querySelector('#communityChatWrap');
             if (fw) fw.style.display = 'none';
@@ -504,10 +511,22 @@ var Community = (function() {
         return outer;
     }
 
-    function renderChatMessage(msg) {
+    function isStaffRole(plan) {
+        return plan === 'coach' || plan === 'admin' || plan === 'superadmin';
+    }
+
+    function renderChatMessage(msg, animate) {
+        var isStaff = msg.user_type === 'admin' || isStaffRole(msg.author_plan);
+
         var wrap = document.createElement('div');
-        wrap.style.cssText = 'display:flex;gap:8px;max-width:85%;';
+        wrap.style.cssText = 'display:flex;gap:8px;max-width:85%;opacity:1;transition:opacity 0.3s ease,transform 0.3s ease;';
         wrap.setAttribute('data-msg-id', msg.id);
+
+        if (animate) {
+            wrap.style.opacity = '0';
+            wrap.style.transform = 'translateY(8px)';
+            setTimeout(function() { wrap.style.opacity = '1'; wrap.style.transform = 'translateY(0)'; }, 30);
+        }
 
         if (msg.is_mine) {
             wrap.style.alignSelf = 'flex-end';
@@ -516,11 +535,21 @@ var Community = (function() {
             wrap.style.alignSelf = 'flex-start';
         }
 
-        wrap.appendChild(createAvatar(msg.author_initial, 28));
+        // Avatar — golden ring for staff
+        if (isStaff && !msg.is_mine) {
+            var avatar = document.createElement('div');
+            avatar.style.cssText = 'width:28px;height:28px;border-radius:50%;background:rgba(212,175,55,0.18);border:2px solid rgba(212,175,55,0.6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#D4AF37;flex-shrink:0;';
+            avatar.textContent = msg.author_initial || '?';
+            wrap.appendChild(avatar);
+        } else {
+            wrap.appendChild(createAvatar(msg.author_initial, 28));
+        }
 
         var bubble = document.createElement('div');
         if (msg.is_mine) {
             bubble.style.cssText = 'background:rgba(227,30,36,0.12);border:1px solid rgba(227,30,36,0.25);border-radius:12px 12px 2px 12px;padding:8px 12px;';
+        } else if (isStaff) {
+            bubble.style.cssText = 'background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.25);border-radius:12px 12px 12px 2px;padding:8px 12px;';
         } else {
             bubble.style.cssText = 'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px 12px 12px 2px;padding:8px 12px;';
         }
@@ -530,11 +559,21 @@ var Community = (function() {
         hdr.style.cssText = 'display:flex;align-items:center;gap:6px;margin-bottom:4px;';
 
         var nameEl = document.createElement('span');
-        nameEl.style.cssText = 'font-weight:600;font-size:11px;color:#fff;';
+        nameEl.style.cssText = 'font-weight:600;font-size:11px;color:' + (isStaff ? '#D4AF37' : '#fff') + ';';
         nameEl.textContent = msg.author_name;
         hdr.appendChild(nameEl);
 
-        if (msg.author_plan) {
+        if (isStaff) {
+            var staffBadge = document.createElement('span');
+            staffBadge.style.cssText = 'display:inline-flex;align-items:center;gap:3px;font-size:8px;font-weight:700;color:#D4AF37;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);padding:1px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:0.5px;';
+            var crownIcon = fa('fa-crown');
+            crownIcon.style.fontSize = '7px';
+            staffBadge.appendChild(crownIcon);
+            var roleText = document.createElement('span');
+            roleText.textContent = msg.author_plan === 'superadmin' ? 'CEO' : (msg.author_plan === 'coach' ? 'COACH' : 'STAFF');
+            staffBadge.appendChild(roleText);
+            hdr.appendChild(staffBadge);
+        } else if (msg.author_plan) {
             var planBadge = document.createElement('span');
             planBadge.style.cssText = 'text-transform:uppercase;font-size:9px;color:rgba(227,30,36,0.7);';
             planBadge.textContent = msg.author_plan;
@@ -554,6 +593,32 @@ var Community = (function() {
         body.textContent = msg.message;
         bubble.appendChild(body);
 
+        // Chat reactions bar
+        var reactRow = document.createElement('div');
+        reactRow.style.cssText = 'display:flex;gap:4px;margin-top:6px;align-items:center;';
+        reactRow.setAttribute('data-chat-reactions', msg.id);
+
+        var chatEmojis = ['fire', 'muscle', 'heart'];
+        chatEmojis.forEach(function(emoji) {
+            var existing = null;
+            (msg.reactions || []).forEach(function(r) { if (r.emoji === emoji) existing = r; });
+            var rb = document.createElement('button');
+            var active = existing && existing.user_reacted;
+            rb.style.cssText = 'display:flex;align-items:center;gap:2px;padding:2px 6px;border-radius:10px;font-size:10px;cursor:pointer;transition:all 0.2s;border:1px solid ' + (active ? 'rgba(227,30,36,0.4)' : 'rgba(255,255,255,0.06)') + ';background:' + (active ? 'rgba(227,30,36,0.1)' : 'transparent') + ';color:' + (active ? '#E31E24' : 'rgba(255,255,255,0.25)') + ';';
+            rb.setAttribute('data-emoji', emoji);
+            var rIcon = fa(EMOJI_MAP[emoji]);
+            rIcon.style.fontSize = '9px';
+            rb.appendChild(rIcon);
+            var rCount = document.createElement('span');
+            rCount.style.cssText = "font-family:'JetBrains Mono',monospace;font-size:9px;";
+            rCount.textContent = existing && existing.count > 0 ? existing.count : '';
+            rb.appendChild(rCount);
+            rb.onclick = function() { toggleChatReaction(msg.id, emoji); };
+            reactRow.appendChild(rb);
+        });
+
+        bubble.appendChild(reactRow);
+
         // Report button (only for others' messages)
         if (!msg.is_mine) {
             var reportBtn = document.createElement('button');
@@ -567,6 +632,28 @@ var Community = (function() {
 
         wrap.appendChild(bubble);
         return wrap;
+    }
+
+    function toggleChatReaction(msgId, emoji) {
+        apiCall('POST', '/api/community/chat-reactions.php', {
+            chat_message_id: msgId,
+            emoji: emoji
+        }).then(function(data) {
+            if (!data.ok) return;
+            var bar = document.querySelector('[data-chat-reactions="' + msgId + '"]');
+            if (!bar) return;
+            var buttons = bar.querySelectorAll('button');
+            buttons.forEach(function(btn) {
+                var e = btn.getAttribute('data-emoji');
+                var existing = null;
+                (data.reactions || []).forEach(function(r) { if (r.emoji === e) existing = r; });
+                var active = existing && existing.user_reacted;
+                btn.style.borderColor = active ? 'rgba(227,30,36,0.4)' : 'rgba(255,255,255,0.06)';
+                btn.style.background = active ? 'rgba(227,30,36,0.1)' : 'transparent';
+                btn.style.color = active ? '#E31E24' : 'rgba(255,255,255,0.25)';
+                btn.querySelector('span').textContent = existing && existing.count > 0 ? existing.count : '';
+            });
+        });
     }
 
     function initChat() {
@@ -611,7 +698,7 @@ var Community = (function() {
                 if (data.messages && data.messages.length > 0) {
                     var wasAtBottom = (msgBox.scrollTop + msgBox.clientHeight >= msgBox.scrollHeight - 50);
                     data.messages.forEach(function(msg) {
-                        msgBox.appendChild(renderChatMessage(msg));
+                        msgBox.appendChild(renderChatMessage(msg, true));
                     });
                     _lastMsgId = data.messages[data.messages.length - 1].id;
                     if (wasAtBottom) msgBox.scrollTop = msgBox.scrollHeight;
@@ -679,7 +766,22 @@ var Community = (function() {
     function startPolling() {
         stopPolling();
         _pollTimer = setInterval(function() {
-            if (!document.hidden && _chatMode) loadChatMessages('poll');
+            if (document.hidden) return;
+            if (_chatMode) {
+                loadChatMessages('poll');
+            } else if (_lastMsgId) {
+                // Background poll — only check for new messages for badge
+                apiCall('GET', '/api/community/chat.php?after_id=' + _lastMsgId).then(function(data) {
+                    if (data.ok && data.messages && data.messages.length > 0) {
+                        _unreadCount += data.messages.length;
+                        _lastMsgId = data.messages[data.messages.length - 1].id;
+                        if (_chatBadgeEl) {
+                            _chatBadgeEl.textContent = _unreadCount > 99 ? '99+' : _unreadCount;
+                            _chatBadgeEl.style.display = 'inline-flex';
+                        }
+                    }
+                });
+            }
         }, 5000);
     }
 
@@ -728,6 +830,14 @@ var Community = (function() {
             _container.appendChild(chatWrap);
 
             loadPosts(false);
+
+            // Fetch latest chat message ID for unread badge tracking
+            apiCall('GET', '/api/community/chat.php').then(function(data) {
+                if (data.ok && data.messages && data.messages.length > 0) {
+                    _lastMsgId = data.messages[data.messages.length - 1].id;
+                }
+                startPolling();
+            }).catch(function() { startPolling(); });
         },
         refresh: function() {
             if (_chatMode) {

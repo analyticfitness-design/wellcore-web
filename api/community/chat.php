@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     // Map rows to response format
-    $messages = array_map(function ($row) use ($userType, $userId) {
+    $messages = array_map(function ($row) use ($db, $userType, $userId) {
         $isMine = ($row['user_type'] === $userType)
             && (($userType === 'client' && (int)$row['client_id'] === $userId)
                 || ($userType === 'admin' && (int)$row['admin_id'] === $userId));
@@ -124,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'author_plan'    => $row['author_plan'],
             'is_mine'        => $isMine,
             'created_at'     => $row['created_at'],
+            'reactions'      => getChatMsgReactions($db, (int)$row['id'], $userType, $userId),
         ];
     }, $rows);
 
@@ -208,6 +209,39 @@ respond([
         'author_plan'    => $userPlan,
         'is_mine'        => true,
         'created_at'     => date('Y-m-d H:i:s'),
+        'reactions'      => [],
     ],
     'filtered' => $filtered['flagged'],
 ], 201);
+
+function getChatMsgReactions($db, $msgId, $userType, $userId) {
+    try {
+        $stmt = $db->prepare("
+            SELECT emoji, COUNT(*) as count
+            FROM chat_message_reactions
+            WHERE chat_message_id = ?
+            GROUP BY emoji
+        ");
+        $stmt->execute([$msgId]);
+        $counts = $stmt->fetchAll();
+
+        $reactions = [];
+        foreach ($counts as $row) {
+            if ($userType === 'client') {
+                $chk = $db->prepare("SELECT id FROM chat_message_reactions WHERE chat_message_id = ? AND emoji = ? AND user_type = 'client' AND client_id = ?");
+                $chk->execute([$msgId, $row['emoji'], $userId]);
+            } else {
+                $chk = $db->prepare("SELECT id FROM chat_message_reactions WHERE chat_message_id = ? AND emoji = ? AND user_type = 'admin' AND admin_id = ?");
+                $chk->execute([$msgId, $row['emoji'], $userId]);
+            }
+            $reactions[] = [
+                'emoji' => $row['emoji'],
+                'count' => (int)$row['count'],
+                'user_reacted' => (bool)$chk->fetch(),
+            ];
+        }
+        return $reactions;
+    } catch (PDOException $e) {
+        return [];
+    }
+}
