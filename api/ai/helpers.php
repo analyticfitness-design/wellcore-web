@@ -32,8 +32,8 @@ function claude_call(string $systemPrompt, string $userPrompt, ?string $model = 
     if (!AI_ENABLED) {
         throw new \RuntimeException('AI deshabilitada en configuración.');
     }
-    if (CLAUDE_API_KEY === 'sk-ant-REPLACE_WITH_YOUR_KEY') {
-        throw new \RuntimeException('API key de Claude no configurada. Edita api/config/ai.php');
+    if (!CLAUDE_API_KEY || CLAUDE_API_KEY === 'sk-ant-REPLACE_WITH_YOUR_KEY') {
+        throw new \RuntimeException('API key de Claude no configurada.');
     }
 
     $payload = json_encode([
@@ -45,46 +45,46 @@ function claude_call(string $systemPrompt, string $userPrompt, ?string $model = 
         ],
     ], JSON_UNESCAPED_UNICODE);
 
-    $headers = implode("\r\n", [
-        'Content-Type: application/json',
-        'anthropic-version: ' . CLAUDE_API_VERSION,
-        'x-api-key: ' . CLAUDE_API_KEY,
+    $url = CLAUDE_BASE_URL . '/v1/messages';
+    $ch  = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => $payload,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json',
+            'anthropic-version: ' . CLAUDE_API_VERSION,
+            'x-api-key: ' . CLAUDE_API_KEY,
+        ],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT        => 600,
+        CURLOPT_CONNECTTIMEOUT => 15,
     ]);
 
-    $context = stream_context_create([
-        'http' => [
-            'method'        => 'POST',
-            'header'        => $headers,
-            'content'       => $payload,
-            'timeout'       => 600,
-            'ignore_errors' => true,
-        ],
-        'ssl' => [
-            'verify_peer'      => true,
-            'verify_peer_name' => true,
-        ],
-    ]);
+    $raw      = curl_exec($ch);
+    $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr  = curl_error($ch);
+    $curlNo   = curl_errno($ch);
+    curl_close($ch);
 
-    $url      = CLAUDE_BASE_URL . '/v1/messages';
-    $raw      = @file_get_contents($url, false, $context);
-    $httpMeta = $http_response_header ?? [];
-
-    // Extraer código HTTP desde los headers
-    $httpCode = 0;
-    foreach ($httpMeta as $h) {
-        if (preg_match('/^HTTP\/\S+\s+(\d+)/', $h, $m)) {
-            $httpCode = (int) $m[1];
-        }
-    }
-
-    if ($raw === false) {
-        throw new \RuntimeException('No se pudo conectar con la API de Claude. Verifica la conexión del servidor.');
+    if ($raw === false || $curlNo !== 0) {
+        throw new \RuntimeException("Claude API conexión fallida (curl $curlNo): $curlErr");
     }
 
     $data = json_decode($raw, true);
+    if (!$data) {
+        throw new \RuntimeException("Claude API respuesta no-JSON (HTTP $httpCode): " . substr($raw, 0, 300));
+    }
 
+    // Errores de API (rate limit, auth, etc)
+    if ($httpCode === 429) {
+        $retryAfter = $data['error']['message'] ?? 'rate limited';
+        throw new \RuntimeException("Claude API rate limit (429): $retryAfter");
+    }
+    if ($httpCode === 529) {
+        throw new \RuntimeException('Claude API sobrecargada (529). Reintentar en unos minutos.');
+    }
     if ($httpCode !== 200 || empty($data['content'][0]['text'])) {
-        $msg = $data['error']['message'] ?? substr($raw, 0, 200);
+        $msg = $data['error']['message'] ?? substr($raw, 0, 300);
         throw new \RuntimeException("Claude API error ($httpCode): $msg");
     }
 
@@ -184,24 +184,29 @@ function claude_call_vision(string $systemPrompt, string $userPrompt, string $im
  */
 function ai_save_generation(array $p): int {
     $db   = getDB();
-    $stmt = $db->prepare("
-        INSERT INTO ai_generations
-            (client_id, type, ticket_id, prompt_tokens, completion_tokens,
-             model, status, raw_response, parsed_json, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
-    ");
-    $stmt->execute([
-        $p['client_id']         ?? null,
-        $p['type'],
-        $p['ticket_id']         ?? null,
-        $p['prompt_tokens']     ?? 0,
-        $p['completion_tokens'] ?? 0,
-        CLAUDE_MODEL,
-        $p['status']            ?? 'pending',
-        $p['raw_response']      ?? null,
-        $p['parsed_json']       ?? null,
-    ]);
-    return (int) $db->lastInsertId();
+    try {
+        $stmt = $db->prepare("
+            INSERT INTO ai_generations
+                (client_id, type, ticket_id, prompt_tokens, completion_tokens,
+                 model, status, raw_response, parsed_json, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+        ");
+        $stmt->execute([
+            $p['client_id']         ?? null,
+            $p['type'],
+            $p['ticket_id']         ?? null,
+            $p['prompt_tokens']     ?? 0,
+            $p['completion_tokens'] ?? 0,
+            CLAUDE_MODEL,
+            $p['status']            ?? 'pending',
+            $p['raw_response']      ?? null,
+            $p['parsed_json']       ?? null,
+        ]);
+        return (int) $db->lastInsertId();
+    } catch (\Throwable $e) {
+        error_log("[WellCore AI] ERROR ai_generations INSERT type={$p['type']}: " . $e->getMessage());
+        throw $e;
+    }
 }
 
 /**
@@ -298,16 +303,41 @@ function get_ai_prompt(string $type): array {
 // ──────────────────────────────────────────────────────────────
 
 /**
- * Extrae el primer JSON válido de un texto (maneja bloques ```json```).
+ * Extrae el primer JSON válido de un texto.
+ * Maneja: ```json blocks, JSON directo, texto mixto, trailing commas.
  */
 function extract_json_from_response(string $text): ?array {
+    // 1. Bloque ```json ... ```
     if (preg_match('/```(?:json)?\s*(\{[\s\S]+?\})\s*```/s', $text, $m)) {
         $data = json_decode($m[1], true);
         if ($data !== null) return $data;
     }
+
+    // 2. JSON directo (primer { hasta último })
     if (preg_match('/(\{[\s\S]+\})/s', $text, $m)) {
         $data = json_decode($m[1], true);
         if ($data !== null) return $data;
+
+        // 3. Limpiar trailing commas y reintentar
+        $cleaned = preg_replace('/,\s*([\]}])/s', '$1', $m[1]);
+        $data = json_decode($cleaned, true);
+        if ($data !== null) return $data;
+
+        // 4. JSON truncado — intentar cerrar llaves/corchetes faltantes
+        $raw = $m[1];
+        $opens = substr_count($raw, '{') - substr_count($raw, '}');
+        $openBrackets = substr_count($raw, '[') - substr_count($raw, ']');
+        if ($opens > 0 || $openBrackets > 0) {
+            // Remover último valor incompleto (trailing comma + partial)
+            $raw = preg_replace('/,\s*"[^"]*"?\s*:?\s*[^,}\]]*$/s', '', $raw);
+            $raw .= str_repeat(']', max(0, $openBrackets));
+            $raw .= str_repeat('}', max(0, $opens));
+            $data = json_decode($raw, true);
+            if ($data !== null) {
+                error_log('[WellCore AI] JSON reparado (truncado) — cerradas ' . $opens . ' llaves');
+                return $data;
+            }
+        }
     }
     return null;
 }
@@ -338,6 +368,11 @@ function ai_save_plan(int $clientId, string $type, array $content, int $genId): 
     $db   = getDB();
     $json = json_encode($content, JSON_UNESCAPED_UNICODE);
 
+    if (!$json || strlen($json) < 100) {
+        error_log("[WellCore AI] Plan vacío o muy corto para client=$clientId type=$type — no guardado");
+        return 0;
+    }
+
     // Calcular siguiente versión
     $verStmt = $db->prepare("SELECT COALESCE(MAX(version),0) FROM assigned_plans WHERE client_id = ? AND plan_type = ?");
     $verStmt->execute([$clientId, $type]);
@@ -349,7 +384,9 @@ function ai_save_plan(int $clientId, string $type, array $content, int $genId): 
                 (client_id, plan_type, content, version, ai_generation_id, active, valid_from)
             VALUES (?, ?, ?, ?, ?, 0, CURDATE())
         ")->execute([$clientId, $type, $json, $version, $genId]);
-        return (int) $db->lastInsertId();
+        $planId = (int) $db->lastInsertId();
+        error_log("[WellCore AI] Plan guardado: id=$planId client=$clientId type=$type v$version gen=$genId (" . strlen($json) . " bytes)");
+        return $planId;
     } catch (\Throwable $e) {
         // Sin columna ai_generation_id — intentar sin ella
         try {
@@ -358,9 +395,11 @@ function ai_save_plan(int $clientId, string $type, array $content, int $genId): 
                     (client_id, plan_type, content, version, active, valid_from)
                 VALUES (?, ?, ?, ?, 0, CURDATE())
             ")->execute([$clientId, $type, $json, $version]);
-            return (int) $db->lastInsertId();
+            $planId = (int) $db->lastInsertId();
+            error_log("[WellCore AI] Plan guardado (sin gen_id): id=$planId client=$clientId type=$type v$version");
+            return $planId;
         } catch (\Throwable $e2) {
-            error_log('[WellCore AI] assigned_plans insert error: ' . $e2->getMessage());
+            error_log("[WellCore AI] ERROR assigned_plans INSERT client=$clientId type=$type: " . $e2->getMessage());
             return 0;
         }
     }
@@ -379,10 +418,19 @@ function build_rise_enriched_prompt(array $c, ?array $intake): string {
     $text .= "Nivel experiencia: " . ($c['nivel'] ?: 'intermedio') . "\n";
     $text .= "Restricciones físicas: " . ($c['restricciones'] ?: 'ninguna') . "\n";
 
-    if (!$intake) {
+    if (!$intake || !is_array($intake)) {
         $text .= "\n[Sin datos de intake disponibles — usar perfil base]\n";
+        $text .= "Días disponibles: " . (is_array($c['dias_disponibles']) && $c['dias_disponibles'] ? implode(', ', $c['dias_disponibles']) : 'Lunes a Viernes') . "\n";
+        $text .= "Lugar: " . ($c['lugar_entreno'] ?: 'gym') . "\n";
         return $text;
     }
+
+    // Asegurar que las secciones principales existan como arrays
+    $intake['measurements'] = is_array($intake['measurements'] ?? null) ? $intake['measurements'] : [];
+    $intake['training']     = is_array($intake['training'] ?? null) ? $intake['training'] : [];
+    $intake['availability'] = is_array($intake['availability'] ?? null) ? $intake['availability'] : [];
+    $intake['nutrition']    = is_array($intake['nutrition'] ?? null) ? $intake['nutrition'] : [];
+    $intake['lifestyle']    = is_array($intake['lifestyle'] ?? null) ? $intake['lifestyle'] : [];
 
     // Mediciones
     $m = $intake['measurements'] ?? [];

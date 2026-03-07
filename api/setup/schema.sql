@@ -125,19 +125,62 @@ CREATE TABLE IF NOT EXISTS checkins (
 
 -- Assigned training/nutrition plans
 CREATE TABLE IF NOT EXISTS assigned_plans (
-  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  client_id   INT UNSIGNED NOT NULL,
-  plan_type   ENUM('entrenamiento','nutricion','habitos') NOT NULL,
-  content     LONGTEXT,                    -- HTML or JSON content
-  version     SMALLINT UNSIGNED DEFAULT 1,
-  assigned_by INT UNSIGNED,
-  valid_from  DATE,
-  active      BOOLEAN DEFAULT TRUE,
-  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  client_id         INT UNSIGNED NOT NULL,
+  plan_type         ENUM('entrenamiento','nutricion','habitos','rise') NOT NULL,
+  content           LONGTEXT,                    -- HTML or JSON content
+  version           SMALLINT UNSIGNED DEFAULT 1,
+  assigned_by       INT UNSIGNED,
+  valid_from        DATE,
+  active            BOOLEAN DEFAULT TRUE,
+  ai_generation_id  INT DEFAULT NULL,
+  created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_client (client_id, plan_type),
   FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
   FOREIGN KEY (assigned_by) REFERENCES admins(id) ON DELETE SET NULL
 );
+
+-- RISE Programs (Reto 30 Días)
+CREATE TABLE IF NOT EXISTS rise_programs (
+  id                    INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  client_id             INT UNSIGNED NOT NULL,
+  enrollment_date       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  start_date            DATE NOT NULL,
+  end_date              DATE NOT NULL,
+  experience_level      ENUM('principiante','intermedio','avanzado') NOT NULL,
+  training_location     ENUM('gym','home','hybrid') NOT NULL,
+  gender                ENUM('male','female','other') NOT NULL,
+  status                ENUM('active','completed','paused','cancelled') DEFAULT 'active',
+  personalized_program  LONGTEXT,
+  created_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_client (client_id),
+  INDEX idx_status (status),
+  FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- AI Generations (historial de planes generados por IA)
+CREATE TABLE IF NOT EXISTS ai_generations (
+  id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  client_id         INT UNSIGNED DEFAULT NULL,
+  type              VARCHAR(30) NOT NULL DEFAULT 'entrenamiento',
+  ticket_id         VARCHAR(60) DEFAULT NULL,
+  prompt_tokens     INT UNSIGNED DEFAULT 0,
+  completion_tokens INT UNSIGNED DEFAULT 0,
+  model             VARCHAR(60) DEFAULT 'claude-sonnet-4-6',
+  status            ENUM('queued','pending','generating','completed','failed','approved','rejected') DEFAULT 'pending',
+  raw_response      LONGTEXT DEFAULT NULL,
+  parsed_json       LONGTEXT DEFAULT NULL,
+  coach_notes       TEXT DEFAULT NULL,
+  approved_by       INT UNSIGNED DEFAULT NULL,
+  approved_at       TIMESTAMP NULL DEFAULT NULL,
+  pipeline_stage    VARCHAR(30) DEFAULT NULL,
+  pipeline_data     JSON DEFAULT NULL,
+  created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_client (client_id),
+  INDEX idx_type (type),
+  INDEX idx_status (status),
+  INDEX idx_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Payments
 CREATE TABLE IF NOT EXISTS payments (

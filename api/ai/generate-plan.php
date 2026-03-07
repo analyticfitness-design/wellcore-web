@@ -63,7 +63,14 @@ if ($planType === 'rise') {
             if ($riseRow['training_location']) { $client['lugar_entreno'] = $riseRow['training_location']; }
             if ($riseRow['gender']) { $client['gender'] = $riseRow['gender']; }
         }
-    } catch (\Throwable $ignored) {}
+    } catch (\Throwable $e) {
+        error_log("[RISE] Error cargando intake para client=$clientId: " . $e->getMessage());
+    }
+
+    // Validar que haya datos mínimos para generar
+    if (!$riseIntake && !$client['objetivo']) {
+        respondError('Cliente RISE sin datos de intake ni objetivo. Complete el formulario primero.', 422);
+    }
 }
 
 $pipeline        = [];
@@ -104,6 +111,12 @@ if ($planType === 'rise') {
     if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
 
     // ── Ahora PHP sigue corriendo en background ──────────────────────
+    // Verificar que DB siga activa después de cerrar HTTP
+    try { getDB()->query('SELECT 1'); } catch (\Throwable $e) {
+        error_log("[RISE gen=$genId] DB desconectada post-flush: " . $e->getMessage());
+        exit;
+    }
+
     $userPrompt = build_rise_enriched_prompt($client, $riseIntake);
     $userPrompt .= "\n\nGENERA EL PLAN RISE 30 DIAS EN JSON ESTRICTO (sin texto fuera del JSON).\n\nESQUEMA REQUERIDO:\n" . get_plan_schema('rise');
 
