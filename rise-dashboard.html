@@ -1075,6 +1075,20 @@
                     <span id="streakCount">0</span> días de racha
                 </div>
 
+                <!-- Renewal Banner (hidden by default) -->
+                <div id="rise-renewal-banner" style="display:none;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.3);border-radius:12px;padding:18px 20px;margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                        <div style="flex:0 0 40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;">
+                            <i class="fas fa-flag-checkered" style="color:#fff;font-size:16px;"></i>
+                        </div>
+                        <div style="flex:1;min-width:180px;">
+                            <div style="font-weight:700;color:#fff;font-size:14px;margin-bottom:2px;">Tu reto RISE termina en <span id="rise-renewal-days">0</span> dias</div>
+                            <div style="font-size:12px;color:var(--gray);line-height:1.4;">Cuentanos como te fue y si te gustaria continuar con un plan personalizado.</div>
+                        </div>
+                        <a id="rise-renewal-link" href="#" target="_blank" style="display:inline-block;background:var(--red);color:#fff;text-decoration:none;padding:10px 20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:6px;white-space:nowrap;">Completar Formulario</a>
+                    </div>
+                </div>
+
                 <!-- Hero Countdown -->
                 <div class="card" id="heroCountdownCard" style="background: linear-gradient(135deg, var(--red-dim) 0%, var(--surface) 100%); border: 1px solid rgba(227,30,36,0.3); padding: 30px; text-align: center; margin-bottom: 30px;">
                     <!-- Estado: pendiente (hasta que el coach suba el plan) -->
@@ -3464,6 +3478,7 @@
             if (TOKEN) {
                 applyWatermark(); // Marca de agua con nombre+email del cliente
                 populateRiseProfile();
+                checkRiseRenewal(); // Show renewal banner if <=3 days left
                 checkRiseStatus().then(function(status) {
                     if (status && !status.expired) {
                         loadPlan('training');
@@ -3480,6 +3495,25 @@
                 document.querySelectorAll('[id$="Empty"]').forEach(function(el) { el.style.display = 'block'; });
             }
         });
+
+        // ─── RENEWAL BANNER ─────────────
+        function checkRiseRenewal() {
+            fetch('/api/clients/renewal-status.php', {
+                headers: { 'Authorization': 'Bearer ' + TOKEN }
+            })
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(data) {
+                if (!data || !data.show_banner) return;
+                var banner = document.getElementById('rise-renewal-banner');
+                if (!banner) return;
+                var daysEl = document.getElementById('rise-renewal-days');
+                if (daysEl) daysEl.textContent = data.days_remaining;
+                var linkEl = document.getElementById('rise-renewal-link');
+                if (linkEl && data.form_url) linkEl.href = data.form_url;
+                banner.style.display = 'block';
+            })
+            .catch(function() {});
+        }
 
         // ─── VERIFICAR VIGENCIA RISE ─────────────
         async function checkRiseStatus() {
