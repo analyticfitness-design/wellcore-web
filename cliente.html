@@ -1547,6 +1547,17 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   .day-toggle.today { border-color: var(--accent); background: rgba(0,217,255,0.06) }
   .day-toggle.today .day-label { color: var(--accent) }
 
+  /* Bottom nav notification badge */
+  .bnav-badge {
+    position: absolute;
+    top: 6px; right: calc(50% - 16px);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid rgba(10,10,12,0.97);
+    animation: pulse-subtle 2s ease-in-out infinite;
+  }
+
   /* Responsive for new utilities */
   @media(max-width:768px){
     .welcome-card { flex-direction: column; text-align: center; gap: 12px; padding: 20px }
@@ -2040,7 +2051,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <label>Nutrición seguida</label>
             <div class="radio-group" id="radio-nutricion">
               <label class="radio-label selected" onclick="selectRadio('radio-nutricion',this)">
-                <input type="radio" name="nutricion" value="si" checked><span>Si</span>
+                <input type="radio" name="nutricion" value="si" checked><span>Sí</span>
               </label>
               <label class="radio-label" onclick="selectRadio('radio-nutricion',this)">
                 <input type="radio" name="nutricion" value="no"><span>No</span>
@@ -2359,7 +2370,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            Si, puedes hacer upgrade a un plan superior en cualquier momento. El cambio se aplica de forma inmediata y solo pagas la diferencia proporcional del periodo restante. Para downgrades, el cambio aplica al siguiente periodo de facturación. Contacta a tu coach o visita la sección de pagos.
+            Sí, puedes hacer upgrade a un plan superior en cualquier momento. El cambio se aplica de forma inmediata y solo pagas la diferencia proporcional del periodo restante. Para downgrades, el cambio aplica al siguiente periodo de facturación. Contacta a tu coach o visita la sección de pagos.
           </div>
         </div>
         <div class="faq-item">
@@ -2373,11 +2384,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span>Que pasa si me lesiono?</span>
+            <span>Qué pasa si me lesiono?</span>
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            Si te lesionas, contacta inmediatamente a tu coach. Adaptaremos tu programa de entrenamiento según el tipo y grado de lesión, enfocando en lo que si puedes trabajar sin comprometer la recuperación. Dependiendo de la gravedad, podemos pausar temporalmente tu plan sin costo adicional.
+            Si te lesionas, contacta inmediatamente a tu coach. Adaptaremos tu programa de entrenamiento según el tipo y grado de lesión, enfocando en lo que sí puedes trabajar sin comprometer la recuperación. Dependiendo de la gravedad, podemos pausar temporalmente tu plan sin costo adicional.
           </div>
         </div>
         <div class="faq-item">
@@ -2609,6 +2620,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     </button>
     <button class="bnav-item" id="bnav-plan" onclick="showSection('plan');setActiveBottomNav('plan')">
       <i class="fas fa-dumbbell"></i><span>Plan</span>
+      <span class="bnav-badge" id="bnav-badge-plan" style="display:none"></span>
     </button>
     <button class="bnav-item" id="bnav-seguimiento" onclick="showSection('seguimiento');setActiveBottomNav('seguimiento')">
       <i class="fas fa-chart-line"></i><span>Progreso</span>
@@ -2869,6 +2881,9 @@ function showSection(id) {
   const nav = document.getElementById('nav-' + id);
   if (nav) nav.classList.add('active');
   var bc = document.getElementById('topbar-breadcrumb'); if (bc) bc.textContent = SECTION_LABELS[id] || id;
+  // Sync bottom nav with sidebar navigation
+  var bnMap = { dashboard:'dashboard', plan:'plan', seguimiento:'seguimiento', checkin:'seguimiento', fotos:'seguimiento', biblioteca:'plan', nutricion:'plan', soporte:'soporte', perfil:'perfil' };
+  setActiveBottomNav(bnMap[id] || id);
   closeSidebar();
   if (id === 'seguimiento') loadWeeklyInsight(false);
 }
@@ -3005,10 +3020,10 @@ var NUTRITION_DATA = {
     { name:'Desayuno', foods:[{name:'Avena con leche',qty:'80g',cal:320,prot:12,carbs:52,fat:8},{name:'Huevos revueltos',qty:'3 uds',cal:210,prot:18,carbs:2,fat:14},{name:'Banana',qty:'1 ud',cal:105,prot:1,carbs:27,fat:0}]},
     { name:'Media Mañana', foods:[{name:'Yogurt griego',qty:'200g',cal:130,prot:20,carbs:8,fat:2},{name:'Almendras',qty:'30g',cal:175,prot:6,carbs:6,fat:15},{name:'Arándanos',qty:'80g',cal:46,prot:1,carbs:12,fat:0}]},
     { name:'Almuerzo', foods:[{name:'Pechuga de pollo',qty:'200g',cal:330,prot:62,carbs:0,fat:7},{name:'Arroz integral',qty:'150g',cal:170,prot:4,carbs:36,fat:1},{name:'Ensalada mixta',qty:'150g',cal:45,prot:2,carbs:8,fat:1},{name:'Aceite de oliva',qty:'15ml',cal:120,prot:0,carbs:0,fat:14}]},
-    { name:'Merienda', foods:[{name:'Batido proteina',qty:'1 scoop',cal:120,prot:24,carbs:3,fat:1},{name:'Pan integral',qty:'2 rebanadas',cal:160,prot:6,carbs:28,fat:2}]},
-    { name:'Cena', foods:[{name:'Salmón',qty:'180g',cal:350,prot:40,carbs:0,fat:20},{name:'Papa al horno',qty:'200g',cal:160,prot:4,carbs:36,fat:0},{name:'Brocoli',qty:'150g',cal:50,prot:4,carbs:10,fat:1}]},
+    { name:'Merienda', foods:[{name:'Batido proteína',qty:'1 scoop',cal:120,prot:24,carbs:3,fat:1},{name:'Pan integral',qty:'2 rebanadas',cal:160,prot:6,carbs:28,fat:2}]},
+    { name:'Cena', foods:[{name:'Salmón',qty:'180g',cal:350,prot:40,carbs:0,fat:20},{name:'Papa al horno',qty:'200g',cal:160,prot:4,carbs:36,fat:0},{name:'Brócoli',qty:'150g',cal:50,prot:4,carbs:10,fat:1}]},
     { name:'Pre-Entreno', foods:[{name:'Banana',qty:'1 ud',cal:105,prot:1,carbs:27,fat:0},{name:'Café negro',qty:'1 taza',cal:5,prot:0,carbs:1,fat:0}]},
-    { name:'Post-Entreno', foods:[{name:'Batido proteína + avena',qty:'1 porcion',cal:280,prot:30,carbs:35,fat:4}]}
+    { name:'Post-Entreno', foods:[{name:'Batido proteína + avena',qty:'1 porción',cal:280,prot:30,carbs:35,fat:4}]}
   ]
 };
 function renderNutritionInteractive(container) {
@@ -3200,7 +3215,7 @@ var SUPPLEMENTS_DATA = {
     { name:'Recuperación', icon:'fa-sync-alt', supplements:[
       {name:'Whey Protein',dose:'30g',timing:'Post-entreno',notes:'Dentro de 1h post-sesión'},
       {name:'Glutamina',dose:'5g',timing:'Post-entreno',notes:'Recuperación muscular'},
-      {name:'ZMA',dose:'1 capsula',timing:'Antes de dormir',notes:'Zinc + Magnesio + B6'}
+      {name:'ZMA',dose:'1 cápsula',timing:'Antes de dormir',notes:'Zinc + Magnesio + B6'}
     ]}
   ]
 };
@@ -5207,8 +5222,8 @@ function showNutriResult(analysis, mealType, route) {
   var macroGrid = document.createElement('div');
   macroGrid.style.cssText = 'display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px';
   var macroItems = [
-    { label: 'Calorias', value: totalCal, color: 'var(--red)' },
-    { label: 'Proteina', value: totalProt + 'g', color: 'var(--accent)' },
+    { label: 'Calorías', value: totalCal, color: 'var(--red)' },
+    { label: 'Proteína', value: totalProt + 'g', color: 'var(--accent)' },
     { label: 'Carbos', value: totalCarbs + 'g', color: 'var(--green,#4ade80)' },
     { label: 'Grasa', value: totalFat + 'g', color: 'var(--gray)' }
   ];
