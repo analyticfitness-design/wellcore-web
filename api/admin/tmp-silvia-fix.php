@@ -69,6 +69,36 @@ if ($action === 'update_intake') {
     $content = json_decode($row['content'] ?? '{}', true);
     echo json_encode(['plan_id' => $row['id'], 'gen_id' => $row['ai_generation_id'], 'created' => $row['created_at'], 'plan' => $content], JSON_UNESCAPED_UNICODE);
 
+} elseif ($action === 'migrate') {
+    // Run AI consolidation migration
+    $results = [];
+    $queries = [
+        '1_plan_type' => "ALTER TABLE assigned_plans MODIFY COLUMN plan_type ENUM('entrenamiento','nutricion','habitos','rise') NOT NULL",
+        '2_gen_type' => "ALTER TABLE ai_generations MODIFY COLUMN type VARCHAR(30) NOT NULL DEFAULT 'entrenamiento'",
+        '3_gen_status' => "ALTER TABLE ai_generations MODIFY COLUMN status ENUM('queued','pending','generating','completed','failed','approved','rejected') DEFAULT 'pending'",
+        '4_client_plan' => "ALTER TABLE clients MODIFY COLUMN plan ENUM('esencial','metodo','elite','rise') DEFAULT 'esencial'",
+    ];
+    foreach ($queries as $name => $sql) {
+        try { $db->exec($sql); $results[$name] = 'OK'; }
+        catch (\Throwable $e) { $results[$name] = $e->getMessage(); }
+    }
+    echo json_encode(['migration' => $results]);
+
+} elseif ($action === 'pull') {
+    // Git pull inside container (hardcoded commands, no user input)
+    $cmd = 'cd /code && git pull origin main 2>&1';
+    $output = [];
+    $code = 0;
+    exec($cmd, $output, $code);
+    echo json_encode(['pull' => implode("\n", $output), 'exit_code' => $code]);
+
+} elseif ($action === 'commit') {
+    // Show current git commit (hardcoded, no user input)
+    $cmd = 'cd /code && git log --oneline -3 2>&1';
+    $output = [];
+    exec($cmd, $output);
+    echo json_encode(['commits' => implode("\n", $output)]);
+
 } else {
-    echo json_encode(['error' => 'action must be: update_intake, check, plan']);
+    echo json_encode(['error' => 'action: update_intake, check, plan, migrate, pull, commit']);
 }
