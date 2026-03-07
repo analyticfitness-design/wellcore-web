@@ -798,6 +798,44 @@
         .trn-timer-label{font-size:14px;color:var(--gray,#888);margin-bottom:30px}
         .trn-timer-btn{background:var(--red,#C8102E);border:none;color:#fff;padding:14px 40px;font-size:16px;cursor:pointer;border-radius:8px}
         @media(max-width:600px){.trn-stats{grid-template-columns:repeat(2,1fr)}.trn-ex-actions{flex-direction:column;gap:4px}}
+
+        /* ── Section descriptions — large readable text ── */
+        .section-desc {
+            font-size: 1.08rem;
+            line-height: 1.85;
+            color: rgba(255,255,255,0.62);
+            margin-top: -4px;
+            margin-bottom: 28px;
+            max-width: 660px;
+        }
+
+        /* ── Premium info frames — colored semi-transparent ── */
+        .info-frame {
+            background: rgba(200,16,46,0.035);
+            border: 1px solid rgba(200,16,46,0.12);
+            border-left: 3px solid var(--red);
+            border-radius: var(--radius);
+            padding: 18px 22px;
+            margin-bottom: 24px;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.7);
+        }
+        .info-frame.frame-gold {
+            background: rgba(212,168,83,0.035);
+            border-color: rgba(212,168,83,0.12);
+            border-left-color: var(--gold);
+        }
+        .info-frame.frame-green {
+            background: rgba(34,197,94,0.035);
+            border-color: rgba(34,197,94,0.12);
+            border-left-color: var(--green);
+        }
+        .info-frame.frame-cyan {
+            background: rgba(0,217,255,0.035);
+            border-color: rgba(0,217,255,0.10);
+            border-left-color: #00D9FF;
+        }
     </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
@@ -989,7 +1027,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-dumbbell"></i> Entrenamiento
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Tu programa personalizado de entrenamiento para los 30 días</p>
+                <p class="section-desc">Tu programa personalizado de entrenamiento para los 30 días. Cada sesión está diseñada para llevarte al siguiente nivel.</p>
 
                 <!-- View Toggle -->
                 <div class="trn-toggle-wrap" id="riseTrainingToggle" style="display:none">
@@ -1062,7 +1100,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-utensils"></i> Nutrición
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Tu guía de nutrición personalizada para el reto</p>
+                <p class="section-desc">Tu guía de nutrición personalizada para el reto. Sigue las indicaciones de tu coach para maximizar tus resultados.</p>
 
                 <!-- Plan de nutrición dinámico -->
                 <div id="nutritionLoading" class="card" style="text-align: center; padding: 40px;">
@@ -1107,7 +1145,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-tasks"></i> Hábitos 30 Días
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Seguimiento de hábitos para garantizar tus resultados</p>
+                <p class="section-desc">Seguimiento de hábitos para garantizar tus resultados. La constancia diaria marca la diferencia en tu transformación.</p>
 
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -1156,7 +1194,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-check-circle"></i> Tracking Diario
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Registra tu progreso día a día durante el reto</p>
+                <p class="section-desc">Registra tu progreso día a día durante el reto. Cada registro te acerca más a tu objetivo.</p>
 
                 <div class="card">
                     <div class="card-title">Registro de Hoy — <span id="todayDate"></span></div>
@@ -1219,7 +1257,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-ruler-vertical"></i> Mediciones
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Registra tus medidas cada 10 días para comparar tu progreso</p>
+                <p class="section-desc">Registra tus medidas cada 10 días para comparar tu progreso. Los números no mienten — tu cuerpo está cambiando.</p>
 
 
                 <!-- ═══ GUÍA DE MEDICIÓN ═══ -->
@@ -1407,7 +1445,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-image"></i> Fotos de Progreso
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Documenta tu transformación con fotos de frente, perfil y espalda</p>
+                <p class="section-desc">Documenta tu transformación con fotos de frente, perfil y espalda. Las fotos son la mejor evidencia de tu progreso real.</p>
 
                 <!-- GUIA DE FOTOS -->
                 <div class="card" style="margin-bottom:20px;">
@@ -1591,7 +1629,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-users"></i> Comunidad RISE
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Conecta con otros participantes del reto</p>
+                <p class="section-desc">Conecta con otros participantes del reto. La comunidad te impulsa a dar lo mejor de ti cada día.</p>
 
                 <div class="card">
                     <div class="card-title">Compartir Progreso</div>
@@ -1636,7 +1674,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-headset"></i> Soporte
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 30px;">Tu coach está aquí para ayudarte durante el reto</p>
+                <p class="section-desc">Tu coach está aquí para ayudarte durante el reto. Contáctalo por WhatsApp o email para cualquier duda.</p>
 
                 <div class="card">
                     <div class="card-title">Contactar Coach</div>
@@ -1691,7 +1729,7 @@
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
                     <i class="fas fa-ticket" style="color:var(--red);"></i> Solicitudes al Coach
                 </h1>
-                <p style="color: var(--gray); margin-bottom: 24px;">Pide ajustes, resuelve dudas o haz solicitudes especiales. Tu coach responde en <strong style="color:#FFB800;">máximo 72 horas.</strong></p>
+                <p class="section-desc">Pide ajustes, resuelve dudas o haz solicitudes especiales. Tu coach responde en <strong style="color:#FFB800;">máximo 72 horas.</strong></p>
 
                 <!-- Form nuevo ticket -->
                 <div class="card" style="margin-bottom:20px;">
