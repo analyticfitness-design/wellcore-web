@@ -328,7 +328,7 @@
       '@keyframes wc-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}',
       '@keyframes wc-slide-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}',
       '@media(max-width:400px){#wc-window{width:calc(100vw - 32px);right:-4px}#wc-chat-root{right:16px;bottom:16px}}',
-      '@media(max-width:768px){#wc-chat-root{right:16px;bottom:16px}}'
+      '@media(max-width:768px){#wc-chat-root{right:16px;bottom:80px}}'
     ].join('');
 
     var style = document.createElement('style');
