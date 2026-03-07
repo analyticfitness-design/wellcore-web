@@ -850,6 +850,67 @@
         }
         .photo-upload-box.has-image .photo-remove-btn { display: flex; }
 
+        /* ── PLAN TABS ─── */
+        .tab-nav{
+          display:flex;gap:0;border-bottom:1px solid var(--border);
+          margin-bottom:22px;
+          overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+        }
+        .tab-nav::-webkit-scrollbar{display:none}
+        .tab-btn{
+          background:none;border:none;
+          font-size:.82rem;font-weight:500;
+          color:rgba(255,255,255,0.38);
+          padding:10px 14px;
+          border-bottom:2px solid transparent;
+          margin-bottom:-1px;
+          transition:all 0.18s ease;
+          display:flex;align-items:center;gap:6px;
+          white-space:nowrap;flex-shrink:0;
+          cursor:pointer;
+          font-family:'Inter',sans-serif;
+        }
+        .tab-btn:hover{color:var(--white)}
+        .tab-btn.active{color:var(--white);border-bottom-color:var(--red)}
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+
+        /* ── LOCKED OVERLAY ─── */
+        .locked-overlay{
+          position:absolute;inset:0;
+          background:rgba(10,10,10,0.65);
+          backdrop-filter:blur(3px);
+          display:flex;flex-direction:column;
+          align-items:center;justify-content:center;
+          gap:14px;text-align:center;
+          border-radius:12px;
+          z-index:5;padding:24px;
+        }
+        .locked-overlay .lock-icon{font-size:2.5rem;color:var(--red);margin-bottom:4px}
+        .locked-overlay h3{
+          font-family:'Bebas Neue',sans-serif;
+          font-size:1.6rem;letter-spacing:.06em;
+        }
+        .locked-overlay p{font-size:.875rem;color:rgba(255,255,255,0.48)}
+        .lock-features{list-style:none;padding:0;margin:12px 0 16px;text-align:left;max-width:280px}
+        .lock-features li{font-size:.82rem;color:rgba(255,255,255,0.55);padding:4px 0;display:flex;align-items:center;gap:8px}
+        .lock-features li::before{content:'\2713';color:var(--red);font-weight:700;font-size:.9rem}
+        .btn-upgrade{
+          background:linear-gradient(135deg,var(--red),#a50d25);
+          color:#fff;border:none;border-radius:8px;
+          padding:10px 24px;font-size:.875rem;
+          font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+          transition:all 0.18s ease;
+          display:inline-flex;align-items:center;gap:8px;
+          box-shadow:0 4px 14px rgba(200,16,46,0.3);
+          text-decoration:none;
+        }
+        .btn-upgrade:hover{
+          background:linear-gradient(135deg,#a50d25,#830a1d);
+          box-shadow:0 6px 20px rgba(200,16,46,0.45);
+          transform:translateY(-1px);
+        }
+
         /* ── INTERACTIVE TRAINING ENGINE ─────────────────── */
         .trn-toggle-wrap{display:flex;gap:8px;margin-bottom:18px}
         .trn-toggle{font-family:'JetBrains Mono',monospace;font-size:11px;padding:8px 16px;border:1px solid var(--border,#333);background:transparent;color:var(--gray,#888);cursor:pointer;transition:all .2s;letter-spacing:.05em}
@@ -1164,12 +1225,36 @@
                 </div>
             </section>
 
-            <!-- ═══════════════════ TRAINING ═══════════════════ -->
+            <!-- ═══════════════════ TRAINING (MI PROGRAMA) ═══════════════════ -->
             <section class="section" id="training">
                 <h1 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 10px;">
-                    <i class="fas fa-dumbbell"></i> Entrenamiento
+                    <i class="fas fa-dumbbell"></i> Mi Programa
                 </h1>
-                <p class="section-desc">Tu programa personalizado de entrenamiento para los 30 días. Cada sesión está diseñada para llevarte al siguiente nivel.</p>
+                <p class="section-desc">Tu programa personalizado para los 30 días. Cada sesión está diseñada para llevarte al siguiente nivel.</p>
+
+                <div class="tab-nav">
+                    <button class="tab-btn active" id="rise-tab-btn-entrenamiento" onclick="loadRisePlanTab('entrenamiento')">
+                        <span style="color:var(--red);font-weight:700">//</span> Entrenamiento
+                    </button>
+                    <button class="tab-btn" id="rise-tab-btn-nutricion" onclick="loadRisePlanTab('nutricion')">
+                        <span style="color:var(--red);font-weight:700">//</span> Nutrición
+                    </button>
+                    <button class="tab-btn" id="rise-tab-btn-habitos" onclick="loadRisePlanTab('habitos')">
+                        <span style="color:var(--red);font-weight:700">//</span> Hábitos
+                    </button>
+                    <button class="tab-btn" id="rise-tab-btn-suplementacion" onclick="loadRisePlanTab('suplementacion')">
+                        <span style="color:var(--red);font-weight:700">//</span> Suplementación
+                    </button>
+                    <button class="tab-btn" id="rise-tab-btn-ciclo" onclick="loadRisePlanTab('ciclo')">
+                        <span style="color:var(--red);font-weight:700">//</span> Ciclo Hormonal
+                    </button>
+                    <button class="tab-btn" id="rise-tab-btn-bloodwork" onclick="loadRisePlanTab('bloodwork')">
+                        <span style="color:var(--red);font-weight:700">//</span> Bloodwork
+                    </button>
+                </div>
+
+                <!-- TAB: ENTRENAMIENTO (existing content wrapped) -->
+                <div id="rise-tab-entrenamiento" class="tab-content active">
 
                 <!-- View Toggle -->
                 <div class="trn-toggle-wrap" id="riseTrainingToggle" style="display:none">
@@ -1235,6 +1320,23 @@
                 <div class="card" style="margin-top:10px;border:1px solid rgba(227,30,36,0.2);">
                     <button class="btn-secondary" style="width:100%;" onclick="openTicketWithType('ajuste_entrenamiento')"><i class="fas fa-pen-to-square"></i> Pedir ajuste al plan</button>
                 </div>
+
+                </div><!-- /rise-tab-entrenamiento -->
+
+                <!-- TAB: NUTRICIÓN (locked for RISE) -->
+                <div id="rise-tab-nutricion" class="tab-content"></div>
+
+                <!-- TAB: HÁBITOS (unlocked for RISE) -->
+                <div id="rise-tab-habitos" class="tab-content"></div>
+
+                <!-- TAB: SUPLEMENTACIÓN (unlocked for RISE) -->
+                <div id="rise-tab-suplementacion" class="tab-content"></div>
+
+                <!-- TAB: CICLO HORMONAL (locked for RISE) -->
+                <div id="rise-tab-ciclo" class="tab-content"></div>
+
+                <!-- TAB: BLOODWORK (locked for RISE) -->
+                <div id="rise-tab-bloodwork" class="tab-content"></div>
             </section>
 
             <!-- ═══════════════════ NUTRITION ═══════════════════ -->
@@ -4181,6 +4283,340 @@ document.addEventListener('keydown', function(e) {
     }
   };
 })();
+</script>
+<script>
+// ═══════════════════ RISE PLAN TABS ═══════════════════
+var risePlanTabLoaded = {};
+
+function loadRisePlanTab(tab) {
+    // Tab nav UI
+    document.querySelectorAll('#training .tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('#training .tab-content').forEach(function(c) { c.classList.remove('active'); });
+    var btn = document.getElementById('rise-tab-btn-' + tab);
+    var content = document.getElementById('rise-tab-' + tab);
+    if (btn) btn.classList.add('active');
+    if (content) content.classList.add('active');
+
+    // RISE plan: hábitos + suplementación unlocked, rest locked (except entrenamiento which has its own content)
+    var unlockedTabs = ['entrenamiento', 'habitos', 'suplementacion'];
+    var isUnlocked = unlockedTabs.indexOf(tab) >= 0;
+
+    if (tab === 'entrenamiento') {
+        // Already has its own content, nothing to do
+        return;
+    }
+
+    if (isUnlocked) {
+        if (!risePlanTabLoaded[tab]) {
+            content.innerHTML = '';
+            if (tab === 'habitos') renderRiseHabitsInteractive(content);
+            else if (tab === 'suplementacion') renderRiseSupplementsInteractive(content);
+            risePlanTabLoaded[tab] = true;
+        }
+    } else {
+        // Locked — show demo content + blur overlay
+        if (!risePlanTabLoaded[tab]) {
+            content.innerHTML = '';
+            content.style.position = 'relative';
+            content.style.minHeight = '400px';
+            var demoWrap = document.createElement('div');
+            demoWrap.style.cssText = 'filter:blur(1px);pointer-events:none;opacity:0.7';
+            demoWrap.appendChild(getRiseDemoContent(tab));
+            content.appendChild(demoWrap);
+            content.appendChild(buildRiseLockedOverlay(tab));
+            risePlanTabLoaded[tab] = true;
+        }
+    }
+}
+
+function getRiseTabDisplayName(tab) {
+    var names = { nutricion:'Nutrición', habitos:'Hábitos', suplementacion:'Suplementación', ciclo:'Ciclo Hormonal', bloodwork:'Bloodwork / Labs' };
+    return names[tab] || tab;
+}
+
+function getRiseTabFeatures(tab) {
+    var f = {
+        nutricion: ['Plan de comidas personalizado','Macros por alimento','Tips del coach IA','Historial nutricional'],
+        ciclo: ['Timeline visual de fases','Tabla de compuestos y dosis','Protocolo PCT completo','Calendario de laboratorios'],
+        bloodwork: ['Marcadores con rangos visuales','5 categorías de análisis','Historial de resultados','Alertas automáticas']
+    };
+    return f[tab] || [];
+}
+
+function buildRiseLockedOverlay(tab) {
+    var ov = document.createElement('div');
+    ov.className = 'locked-overlay';
+    ov.style.display = 'flex';
+    var icon = document.createElement('div');
+    icon.className = 'lock-icon';
+    icon.innerHTML = '<i class="fas fa-lock"></i>';
+    ov.appendChild(icon);
+    var h3 = document.createElement('h3');
+    h3.textContent = getRiseTabDisplayName(tab);
+    ov.appendChild(h3);
+    var p = document.createElement('p');
+    p.textContent = 'Disponible en Plan MÉTODO o ELITE';
+    ov.appendChild(p);
+    var ul = document.createElement('ul');
+    ul.className = 'lock-features';
+    getRiseTabFeatures(tab).forEach(function(feat) {
+        var li = document.createElement('li');
+        li.textContent = feat;
+        ul.appendChild(li);
+    });
+    ov.appendChild(ul);
+    var a = document.createElement('a');
+    a.href = 'inscripcion.html';
+    a.className = 'btn-upgrade';
+    a.innerHTML = '<i class="fas fa-arrow-up"></i> Mejorar Plan';
+    ov.appendChild(a);
+    return ov;
+}
+
+function getRiseDemoContent(tab) {
+    var d = document.createElement('div');
+    if (tab === 'nutricion') {
+        d.innerHTML = '<div style="padding:20px">' +
+            '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">' +
+            ['Calorías|2800|#FF6B35','Proteína|180g|#00D9FF','Carbos|320g|#FFD700','Grasas|85g|#FF4D6D'].map(function(k) {
+                var parts = k.split('|');
+                return '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px;text-align:center">' +
+                    '<div style="font-size:.7rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.05em">'+parts[0]+'</div>' +
+                    '<div style="font-size:1.3rem;font-weight:700;color:#fff;margin:4px 0">'+parts[1]+'</div>' +
+                    '<div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden"><div style="width:75%;height:100%;background:'+parts[2]+';border-radius:2px"></div></div></div>';
+            }).join('') +
+            '</div>' +
+            ['Desayuno|320 cal','Media Mañana|351 cal','Almuerzo|665 cal','Merienda|280 cal','Cena|560 cal'].map(function(m) {
+                var parts = m.split('|');
+                return '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">' +
+                    '<span style="font-weight:600;font-size:.9rem">'+parts[0]+'</span><span style="font-size:.72rem;color:rgba(255,255,255,0.4)">'+parts[1]+'</span></div>';
+            }).join('') +
+            '</div>';
+    } else if (tab === 'ciclo') {
+        d.innerHTML = '<div style="padding:20px">' +
+            '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px;margin-bottom:16px">' +
+            '<div style="font-family:\'JetBrains Mono\',monospace;font-size:.7rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Timeline del Ciclo</div>' +
+            '<div style="display:flex;gap:4px;margin-bottom:16px">' +
+            '<div style="flex:3;height:8px;background:var(--red);border-radius:4px 0 0 4px"></div>' +
+            '<div style="flex:2;height:8px;background:#FFD700"></div>' +
+            '<div style="flex:2;height:8px;background:#00D9FF;border-radius:0 4px 4px 0"></div></div>' +
+            '<div style="display:flex;justify-content:space-between;font-size:.7rem;color:rgba(255,255,255,0.4)">' +
+            '<span>Fase ON</span><span>Transición</span><span>PCT</span></div></div>' +
+            '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px">' +
+            '<div style="font-family:\'JetBrains Mono\',monospace;font-size:.7rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Compuestos</div>' +
+            '<div style="display:flex;flex-direction:column;gap:8px">' +
+            ['Testosterona E.|250mg|2x/sem','Anastrozol|0.5mg|EOD','HCG|500 UI|2x/sem'].map(function(c) {
+                var parts = c.split('|');
+                return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)">' +
+                    '<span style="font-size:.85rem">'+parts[0]+'</span><span style="font-size:.72rem;color:rgba(255,255,255,0.4)">'+parts[1]+' — '+parts[2]+'</span></div>';
+            }).join('') +
+            '</div></div></div>';
+    } else if (tab === 'bloodwork') {
+        d.innerHTML = '<div style="padding:20px">' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+            ['Testosterona Total|850 ng/dL|Normal|#22C55E','Estradiol|28 pg/mL|Normal|#22C55E','Hematocrito|46%|Normal|#22C55E','ALT (Hígado)|32 U/L|Normal|#22C55E','Colesterol Total|195 mg/dL|Normal|#FFD700','PSA|0.8 ng/mL|Normal|#22C55E'].map(function(m) {
+                var parts = m.split('|');
+                return '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px">' +
+                    '<div style="font-size:.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px">'+parts[0]+'</div>' +
+                    '<div style="font-size:1.1rem;font-weight:700;color:#fff">'+parts[1]+'</div>' +
+                    '<div style="display:flex;align-items:center;gap:6px;margin-top:4px"><span style="width:8px;height:8px;border-radius:50%;background:'+parts[3]+'"></span><span style="font-size:.7rem;color:'+parts[3]+'">'+parts[2]+'</span></div></div>';
+            }).join('') +
+            '</div></div>';
+    }
+    return d;
+}
+
+// ── RISE HÁBITOS (unlocked interactive content) ──
+function renderRiseHabitsInteractive(container) {
+    var categories = [
+        {
+            name: 'Rutina Matutina',
+            icon: 'fa-sun',
+            color: '#FFD700',
+            habits: [
+                { name: 'Despertar antes de las 7am', checked: false },
+                { name: 'Vaso de agua al despertar', checked: false },
+                { name: '5 min de estiramiento', checked: false },
+                { name: 'Desayuno balanceado', checked: false }
+            ]
+        },
+        {
+            name: 'Hidratación',
+            icon: 'fa-droplet',
+            color: '#00D9FF',
+            habits: [
+                { name: 'Vaso 1 — Mañana', checked: false },
+                { name: 'Vaso 2 — Media mañana', checked: false },
+                { name: 'Vaso 3 — Almuerzo', checked: false },
+                { name: 'Vaso 4 — Tarde', checked: false },
+                { name: 'Vaso 5 — Pre-entreno', checked: false },
+                { name: 'Vaso 6 — Post-entreno', checked: false },
+                { name: 'Vaso 7 — Cena', checked: false },
+                { name: 'Vaso 8 — Antes de dormir', checked: false }
+            ]
+        },
+        {
+            name: 'Descanso',
+            icon: 'fa-moon',
+            color: '#A855F7',
+            habits: [
+                { name: 'Dormir 7+ horas', checked: false },
+                { name: 'No pantallas 30min antes', checked: false },
+                { name: 'Habitación oscura y fresca', checked: false }
+            ]
+        },
+        {
+            name: 'Mindset',
+            icon: 'fa-brain',
+            color: '#F97316',
+            habits: [
+                { name: 'Escribir 3 gratitudes', checked: false },
+                { name: 'Visualización 5 min', checked: false },
+                { name: 'Leer 10 páginas', checked: false }
+            ]
+        }
+    ];
+
+    var totalHabits = 0;
+    categories.forEach(function(c) { totalHabits += c.habits.length; });
+
+    var html = '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-left:3px solid var(--red);padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:rgba(255,255,255,0.55)">' +
+        '<i class="fas fa-fire-flame-curved" style="color:var(--red);margin-right:6px"></i> Registra tus hábitos diarios para el reto RISE. Cada hábito cuenta para tu racha.' +
+        '</div>';
+
+    // Progress
+    html += '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin-bottom:18px">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
+        '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.4)">Progreso del día</span>' +
+        '<span style="font-size:.9rem;font-weight:700" id="rise-habits-pct">0%</span></div>' +
+        '<div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden">' +
+        '<div style="width:0%;height:100%;background:var(--red);border-radius:3px;transition:width 0.3s" id="rise-habits-fill"></div></div>' +
+        '<div style="font-size:.72rem;color:rgba(255,255,255,0.38);margin-top:6px" id="rise-habits-count">0 / ' + totalHabits + ' hábitos completados</div></div>';
+
+    // Categories
+    categories.forEach(function(cat, ci) {
+        html += '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;margin-bottom:12px;overflow:hidden">' +
+            '<div style="padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.04)">' +
+            '<i class="fas ' + cat.icon + '" style="color:' + cat.color + ';font-size:1.1rem"></i>' +
+            '<span style="font-weight:600;font-size:.9rem">' + cat.name + '</span>' +
+            '<span style="margin-left:auto;font-size:.72rem;color:rgba(255,255,255,0.38)" id="rise-cat-count-' + ci + '">0/' + cat.habits.length + '</span></div>';
+        cat.habits.forEach(function(h, hi) {
+            html += '<div style="padding:10px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.03);cursor:pointer" ' +
+                'onclick="toggleRiseHabit(' + ci + ',' + hi + ',this)">' +
+                '<div style="width:22px;height:22px;border:2px solid rgba(255,255,255,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" id="rise-hchk-' + ci + '-' + hi + '">' +
+                '</div>' +
+                '<span style="font-size:.85rem;color:rgba(255,255,255,0.7);transition:all 0.2s" id="rise-hlbl-' + ci + '-' + hi + '">' + h.name + '</span></div>';
+        });
+        html += '</div>';
+    });
+
+    container.innerHTML = html;
+
+    // Store categories for tracking
+    window._riseHabitCategories = categories;
+    window._riseHabitState = {};
+}
+
+function toggleRiseHabit(ci, hi, el) {
+    var key = ci + '-' + hi;
+    var state = window._riseHabitState || {};
+    state[key] = !state[key];
+    window._riseHabitState = state;
+
+    var chk = document.getElementById('rise-hchk-' + ci + '-' + hi);
+    var lbl = document.getElementById('rise-hlbl-' + ci + '-' + hi);
+    if (state[key]) {
+        chk.style.cssText = 'width:22px;height:22px;border:2px solid var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;background:var(--red);flex-shrink:0';
+        chk.innerHTML = '<i class="fas fa-check" style="font-size:11px;color:#fff"></i>';
+        lbl.style.cssText = 'font-size:.85rem;color:rgba(255,255,255,0.4);text-decoration:line-through';
+    } else {
+        chk.style.cssText = 'width:22px;height:22px;border:2px solid rgba(255,255,255,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0';
+        chk.innerHTML = '';
+        lbl.style.cssText = 'font-size:.85rem;color:rgba(255,255,255,0.7)';
+    }
+
+    // Update counts
+    var cats = window._riseHabitCategories;
+    var total = 0, done = 0;
+    cats.forEach(function(cat, catIdx) {
+        var catDone = 0;
+        cat.habits.forEach(function(h, hIdx) {
+            total++;
+            if (state[catIdx + '-' + hIdx]) { done++; catDone++; }
+        });
+        var catEl = document.getElementById('rise-cat-count-' + catIdx);
+        if (catEl) catEl.textContent = catDone + '/' + cat.habits.length;
+    });
+
+    var pct = total > 0 ? Math.round(done / total * 100) : 0;
+    var pctEl = document.getElementById('rise-habits-pct');
+    var fillEl = document.getElementById('rise-habits-fill');
+    var countEl = document.getElementById('rise-habits-count');
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (countEl) countEl.textContent = done + ' / ' + total + ' hábitos completados';
+}
+
+// ── RISE SUPLEMENTACIÓN (unlocked interactive content) ──
+function renderRiseSupplementsInteractive(container) {
+    var protocols = [
+        {
+            name: 'Esenciales',
+            icon: 'fa-pills',
+            color: '#22C55E',
+            supplements: [
+                { name: 'Proteína Whey', dose: '30g', timing: 'Post-entreno', notes: 'Mezclar con agua o leche' },
+                { name: 'Creatina Monohidrato', dose: '5g', timing: 'Diario', notes: 'Con agua, cualquier hora' },
+                { name: 'Multivitamínico', dose: '1 cápsula', timing: 'Con desayuno', notes: 'Con alimentos para mejor absorción' }
+            ]
+        },
+        {
+            name: 'Rendimiento',
+            icon: 'fa-bolt',
+            color: '#F97316',
+            supplements: [
+                { name: 'Pre-entreno / Cafeína', dose: '200mg', timing: '30 min pre-entreno', notes: 'No tomar después de las 4pm' },
+                { name: 'Beta-Alanina', dose: '3.2g', timing: 'Pre-entreno', notes: 'Puede causar hormigueo (normal)' },
+                { name: 'Citrulina Malato', dose: '6g', timing: 'Pre-entreno', notes: 'Mejora el bombeo muscular' }
+            ]
+        },
+        {
+            name: 'Recuperación',
+            icon: 'fa-heart-pulse',
+            color: '#A855F7',
+            supplements: [
+                { name: 'Omega-3 (EPA/DHA)', dose: '2g', timing: 'Con comida', notes: 'Antiinflamatorio' },
+                { name: 'Magnesio Glicinato', dose: '400mg', timing: 'Antes de dormir', notes: 'Mejora calidad del sueño' },
+                { name: 'Vitamina D3', dose: '2000 UI', timing: 'Con desayuno', notes: 'Especialmente si hay poca exposición solar' }
+            ]
+        }
+    ];
+
+    var html = '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-left:3px solid var(--red);padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:rgba(255,255,255,0.55)">' +
+        '<i class="fas fa-flask" style="color:var(--red);margin-right:6px"></i> Protocolo de suplementación recomendado para el reto RISE. Consulta con tu coach antes de hacer cambios.' +
+        '</div>';
+
+    protocols.forEach(function(proto) {
+        html += '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;margin-bottom:12px;overflow:hidden">' +
+            '<div style="padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.04)">' +
+            '<i class="fas ' + proto.icon + '" style="color:' + proto.color + ';font-size:1.1rem"></i>' +
+            '<span style="font-weight:600;font-size:.9rem">' + proto.name + '</span></div>';
+
+        proto.supplements.forEach(function(sup) {
+            html += '<div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.03)">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">' +
+                '<span style="font-size:.88rem;font-weight:500">' + sup.name + '</span>' +
+                '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.72rem;color:' + proto.color + ';background:rgba(255,255,255,0.04);padding:2px 8px;border-radius:4px">' + sup.dose + '</span></div>' +
+                '<div style="display:flex;gap:12px;font-size:.72rem;color:rgba(255,255,255,0.4)">' +
+                '<span><i class="fas fa-clock" style="margin-right:4px"></i>' + sup.timing + '</span>' +
+                '<span><i class="fas fa-info-circle" style="margin-right:4px"></i>' + sup.notes + '</span></div></div>';
+        });
+
+        html += '</div>';
+    });
+
+    container.innerHTML = html;
+}
 </script>
 <script src="/js/community.js"></script>
 <script>
