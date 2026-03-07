@@ -5399,7 +5399,7 @@ function setBestOption(sel, val) {
 }
 
 function loadIntakeForm() {
-  apiFetch('/clients/intake').then(function(r) { return r.json(); }).then(function(data) {
+  apiFetch('/clients/intake.php').then(function(r) { return r.json(); }).then(function(data) {
     var intake = data.profile_intake;
     if (!intake && data.rise_intake) {
       intake = mapRiseIntake(data.rise_intake);
@@ -5465,7 +5465,7 @@ function saveIntakeForm() {
     sueno: document.getElementById('ik-sueno').value
   };
 
-  apiFetch('/clients/intake', {
+  apiFetch('/clients/intake.php', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
