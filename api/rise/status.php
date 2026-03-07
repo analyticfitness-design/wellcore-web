@@ -21,7 +21,7 @@ $cid    = (int)$client['id'];
 
 // Obtener fecha de inicio del plan desde el primer plan asignado activo
 $stmt = $db->prepare("
-    SELECT ap.valid_from, cp.rise_start_date, cp.rise_coach, cp.rise_gender, c.name, c.plan
+    SELECT ap.valid_from, cp.rise_start_date, cp.rise_coach, cp.rise_gender, c.name, c.email, c.plan
     FROM clients c
     LEFT JOIN client_profiles cp ON cp.client_id = c.id
     LEFT JOIN assigned_plans ap ON ap.client_id = c.id AND ap.active = 1 AND ap.plan_type = 'entrenamiento'
@@ -50,6 +50,7 @@ if (!$startDate) {
         'days_remaining' => 30,
         'expired'        => false,
         'client_name'    => $row['name'],
+        'client_email'   => $row['email'],
         'coach'          => $row['rise_coach'] ?? 'silvia',
     ]);
 }
@@ -169,6 +170,7 @@ respond([
     'days_remaining' => $daysRemaining,
     'expired'        => $expired,
     'client_name'    => $row['name'],
+    'client_email'   => $row['email'],
     'coach'          => $row['rise_coach'] ?? 'silvia',
     'gender'         => $row['rise_gender'] ?? 'mujer',
     'message'        => $expired
