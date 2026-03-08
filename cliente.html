@@ -990,31 +990,82 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .hack-tag{display:inline-block;font-size:.57rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:40px;margin-top:7px;border:1px solid;}
 .hack-science{font-size:.65rem;color:rgba(255,255,255,.3);margin-top:5px;font-style:italic;}
 
-/* ── MI CAMINO ── */
-.camino-phase-header{text-align:center;padding:8px 0 24px;}
-.camino-phase-label{display:inline-flex;align-items:center;gap:8px;padding:5px 18px;border-radius:40px;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px;}
-.camino-phase-title{font-size:1.15rem;font-weight:900;color:var(--white);margin:0 0 5px;}
-.camino-phase-sub{font-size:.78rem;color:var(--gray);}
-.camino-roadmap{position:relative;padding:0 0 8px;}
-.camino-line{position:absolute;left:22px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--red),rgba(200,16,46,.1));border-radius:1px;}
-.camino-step{display:flex;gap:14px;align-items:flex-start;padding:0 0 20px;position:relative;}
-.camino-dot{width:16px;height:16px;border-radius:50%;border:2px solid;flex-shrink:0;margin-top:2px;z-index:1;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:900;}
-.camino-dot.done{background:var(--red);border-color:var(--red);color:#fff;}
-.camino-dot.current{background:rgba(200,16,46,.15);border-color:var(--red);animation:camino-pulse 2s ease infinite;}
-.camino-dot.upcoming{background:var(--surface);border-color:var(--border);color:var(--gray);}
-@keyframes camino-pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,16,46,.4);}50%{box-shadow:0 0 0 6px rgba(200,16,46,.0);}}
-.camino-step-body{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;flex:1;transition:border-color .25s;}
-.camino-step-body.current{border-color:rgba(200,16,46,.35);background:rgba(200,16,46,.04);}
-.camino-step-name{font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:3px;}
-.camino-step-desc{font-size:.73rem;color:var(--gray);line-height:1.45;}
-.camino-step-badge{display:inline-flex;align-items:center;gap:4px;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:40px;margin-top:6px;border:1px solid;}
-.camino-milestones{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;}
-.camino-milestones-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
-.camino-milestones-title span{display:inline-block;width:16px;height:2px;border-radius:1px;background:var(--red);}
-.camino-ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
-.camino-ms{text-align:center;padding:10px 6px;background:rgba(255,255,255,.025);border-radius:10px;border:1px solid var(--border);}
-.camino-ms-icon{font-size:1.3rem;margin-bottom:4px;}
-.camino-ms-lbl{font-size:.63rem;color:var(--gray);line-height:1.35;}
+/* ── MIS PRs ── */
+.prs-intro{font-size:.8rem;color:var(--gray);margin-bottom:18px;line-height:1.55;}
+.prs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.pr-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s,transform .2s;cursor:pointer;}
+.pr-card:hover{border-color:rgba(200,16,46,.3);transform:translateY(-2px);}
+@starting-style{.pr-card{opacity:0;transform:translateY(8px);}}
+.pr-card{animation:recipe-in .3s ease both;}
+.pr-card-top{padding:14px 14px 10px;display:flex;align-items:center;gap:10px;}
+.pr-trophy{font-size:1.6rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));flex-shrink:0;}
+.pr-name{font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:2px;}
+.pr-muscle{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;}
+.pr-bottom{padding:8px 14px 14px;border-top:1px solid var(--border);}
+.pr-weight{font-size:1.5rem;font-weight:900;font-family:var(--font-head,'Barlow Condensed',sans-serif);color:var(--white);line-height:1;}
+.pr-weight span{font-size:.75rem;font-weight:600;color:var(--gray);margin-left:3px;}
+.pr-reps{font-size:.68rem;color:var(--gray);margin-top:3px;}
+.pr-date{font-size:.6rem;color:rgba(255,255,255,.2);margin-top:5px;}
+.pr-edit-btn{display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:.63rem;cursor:pointer;transition:all .2s;}
+.pr-edit-btn:hover{border-color:var(--red);color:var(--red);}
+.pr-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px);}
+.pr-modal{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px;width:min(360px,90vw);}
+.pr-modal h3{font-size:1rem;font-weight:800;color:var(--white);margin:0 0 16px;}
+.pr-modal label{display:block;font-size:.7rem;color:var(--gray);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;}
+.pr-modal input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--white);font-size:.88rem;margin-bottom:12px;outline:none;box-sizing:border-box;}
+.pr-modal input:focus{border-color:rgba(200,16,46,.5);}
+.pr-modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px;}
+.pr-modal-cancel{padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:.75rem;cursor:pointer;}
+.pr-modal-save{padding:7px 16px;border-radius:8px;background:var(--red);border:none;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;}
+.pr-new-record{position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#f59e0b,#f87171);color:#fff;font-size:.55rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:40px;}
+
+/* ── COACH FAQ ── */
+.coach-search-wrap{position:relative;margin-bottom:16px;}
+.coach-search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px 10px 36px;color:var(--white);font-size:.85rem;outline:none;box-sizing:border-box;transition:border-color .2s;}
+.coach-search:focus{border-color:rgba(200,16,46,.45);}
+.coach-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gray);font-size:.75rem;pointer-events:none;}
+.coach-cat-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.coach-cat{padding:4px 12px;border-radius:40px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.coach-cat.active,.coach-cat:hover{border-color:var(--red);color:var(--red);background:rgba(200,16,46,.08);}
+.coach-list{display:flex;flex-direction:column;gap:8px;}
+.coach-qa{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s;}
+.coach-qa:hover{border-color:rgba(200,16,46,.2);}
+.coach-q{padding:13px 16px;font-size:.84rem;font-weight:600;color:var(--white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.coach-q i{color:var(--gray);font-size:.7rem;transition:transform .25s;flex-shrink:0;}
+.coach-qa.open .coach-q i{transform:rotate(180deg);color:var(--red);}
+.coach-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1);}
+.coach-qa.open .coach-a{max-height:400px;}
+.coach-a-inner{padding:0 16px 14px;font-size:.78rem;color:var(--gray);line-height:1.65;border-top:1px solid var(--border);}
+.coach-empty{text-align:center;padding:40px 16px;color:var(--gray);font-size:.8rem;}
+.coach-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:40px;margin-bottom:10px;border:1px solid;}
+
+/* ── MI CARTA ── */
+.carta-wrap{display:flex;flex-direction:column;align-items:center;gap:20px;}
+.carta-card{width:min(340px,100%);border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(135deg,#1a0a0a 0%,#0d0d0d 40%,#1a0505 100%);border:1px solid rgba(200,16,46,.2);box-shadow:0 20px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06);}
+.carta-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(200,16,46,.12) 0%,transparent 60%);pointer-events:none;}
+.carta-header{padding:20px 20px 14px;display:flex;align-items:center;justify-content:space-between;}
+.carta-logo{font-size:.72rem;font-weight:900;letter-spacing:.15em;color:var(--red);text-transform:uppercase;}
+.carta-tier{padding:3px 10px;border-radius:40px;font-size:.58rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;}
+.carta-tier.esencial{background:rgba(100,200,100,.12);border:1px solid rgba(100,200,100,.3);color:#4ade80;}
+.carta-tier.metodo{background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);color:#818cf8;}
+.carta-tier.elite{background:rgba(200,16,46,.15);border:1px solid rgba(200,16,46,.4);color:var(--red);}
+.carta-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,rgba(200,16,46,.3),rgba(200,16,46,.08));border:2px solid rgba(200,16,46,.35);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 10px;position:relative;}
+.carta-initials{font-size:1.6rem;font-weight:900;color:var(--white);letter-spacing:-.02em;}
+.carta-name{font-size:1.1rem;font-weight:900;color:var(--white);text-align:center;margin-bottom:3px;letter-spacing:-.01em;}
+.carta-sub{font-size:.65rem;color:var(--gray);text-align:center;letter-spacing:.06em;text-transform:uppercase;}
+.carta-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);margin:16px 0 0;}
+.carta-stat{padding:12px 8px;text-align:center;background:rgba(0,0,0,.3);}
+.carta-stat-val{font-size:1.1rem;font-weight:900;font-family:var(--font-head,'Barlow Condensed',sans-serif);color:var(--white);}
+.carta-stat-lbl{font-size:.55rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+.carta-footer{padding:12px 20px;display:flex;align-items:center;justify-content:space-between;}
+.carta-weeks{font-size:.65rem;color:var(--gray);}
+.carta-code{font-size:.58rem;color:rgba(255,255,255,.2);font-family:'JetBrains Mono',monospace;}
+.carta-actions{display:flex;gap:8px;justify-content:center;}
+.carta-btn{padding:8px 20px;border-radius:8px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;border:none;}
+.carta-btn-primary{background:var(--red);color:#fff;}
+.carta-btn-primary:hover{background:#e01030;}
+.carta-btn-secondary{background:var(--surface);border:1px solid var(--border);color:var(--gray);}
+.carta-btn-secondary:hover{border-color:rgba(200,16,46,.3);color:var(--white);}
 
 /* ── MENTALIDAD ── */
 .breath-section{display:flex;flex-direction:column;align-items:center;padding:24px 16px;border:1px solid var(--border);border-radius:16px;margin-bottom:16px;background:var(--surface);}
@@ -2986,7 +3037,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <button class="acad-tab" onclick="acadSetTab('mentalidad')" id="acad-btn-mentalidad"><i class="fas fa-brain" style="margin-right:5px;font-size:.75rem;"></i>Mente</button>
 
         <button class="acad-tab" onclick="acadSetTab('hacks')" id="acad-btn-hacks"><i class="fas fa-lightbulb" style="margin-right:5px;font-size:.75rem;"></i>Hacks</button>
-        <button class="acad-tab" onclick="acadSetTab('camino')" id="acad-btn-camino"><i class="fas fa-map-marked-alt" style="margin-right:5px;font-size:.75rem;"></i>Mi Camino</button>
+        <button class="acad-tab" onclick="acadSetTab('prs')" id="acad-btn-prs"><i class="fas fa-trophy" style="margin-right:5px;font-size:.75rem;"></i>Mis PRs</button>
+        <button class="acad-tab" onclick="acadSetTab('coach')" id="acad-btn-coach"><i class="fas fa-comments" style="margin-right:5px;font-size:.75rem;"></i>Coach FAQ</button>
+        <button class="acad-tab" onclick="acadSetTab('carta')" id="acad-btn-carta"><i class="fas fa-id-card" style="margin-right:5px;font-size:.75rem;"></i>Mi Carta</button>
       </div>
 
       <!-- CALCULADORAS -->
@@ -3196,9 +3249,19 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div id="hacks-root"><!-- rendered by JS --></div>
       </div>
 
-      <!-- MI CAMINO -->
-      <div class="acad-panel" id="acad-panel-camino">
-        <div id="camino-root"><!-- rendered by JS --></div>
+      <!-- MIS PRs -->
+      <div class="acad-panel" id="acad-panel-prs">
+        <div id="prs-root"><!-- rendered by JS --></div>
+      </div>
+
+      <!-- COACH FAQ -->
+      <div class="acad-panel" id="acad-panel-coach">
+        <div id="coach-root"><!-- rendered by JS --></div>
+      </div>
+
+      <!-- MI CARTA -->
+      <div class="acad-panel" id="acad-panel-carta">
+        <div id="carta-root"><!-- rendered by JS --></div>
       </div>
 
     </section>
@@ -5901,7 +5964,9 @@ function acadSetTab(tab) {
   if (tab === 'mentalidad') renderMentalidad();
 
   if (tab === 'hacks') renderHacks();
-  if (tab === 'camino') renderCamino();
+  if (tab === 'prs') renderPRs();
+  if (tab === 'coach') renderCoachFAQ();
+  if (tab === 'carta') renderCarta();
 }
 
 // ── Phase banner update (called after phase is known) ──
@@ -6676,47 +6741,232 @@ function hacksSetCat(cat) {
 }
 
 // ═══════════════════════════════════════════════
-// ── MI CAMINO ──────────────────────────────────
+// ── MIS PRs ─────────────────────────────────────
 // ═══════════════════════════════════════════════
-var CAMINO_PHASES = [
-  { name:'Bienvenida & Baseline', desc:'Evaluación inicial, medidas, fotos y calibración de cargas. Tu punto de partida documenta el viaje.', icon:'🌟', status:'done', color:'#34d399', weeks:'Sem 1–2' },
-  { name:'Adaptación Neuromuscular', desc:'Aprender el patrón motor con cargas moderadas. La técnica perfecta ahora te protege de lesiones futuras.', icon:'🎯', status:'done', color:'#38bdf8', weeks:'Sem 3–6' },
-  { name:'Fase de Carga — Hipertrofia', desc:'Volumen alto, progresión semanal. Aquí se construye la mayor parte del tejido muscular. Enfócate en sobrecarga progresiva.', icon:'🔥', status:'current', color:'#C8102E', weeks:'Sem 7–14' },
-  { name:'Fase de Pico — Fuerza Máxima', desc:'Reducción de volumen, aumento de intensidad. Consolidas las ganancias y maximizas la expresión de fuerza.', icon:'⚡', status:'upcoming', color:'#f59e0b', weeks:'Sem 15–18' },
-  { name:'Deload & Evaluación', desc:'Recuperación activa. Medidas, fotos de progreso y análisis de resultados. Celebras lo construido.', icon:'🏆', status:'upcoming', color:'#a78bfa', weeks:'Sem 19–20' },
-  { name:'Nuevo Ciclo — Nivel Superior', desc:'Con lo aprendido, inicias un mesociclo más avanzado. Cargas mayores, técnica afinada, resultados compuestos.', icon:'🚀', status:'upcoming', color:'#f87171', weeks:'Sem 21+' }
+var PR_DEFS = [
+  { id:'sq',  label:'Sentadilla',     icon:'🦵', unit:'kg',   tip:'RM estimado (1 rep máxima)' },
+  { id:'dl',  label:'Peso Muerto',    icon:'⚡', unit:'kg',   tip:'RM estimado' },
+  { id:'bp',  label:'Press Banca',    icon:'💪', unit:'kg',   tip:'RM estimado' },
+  { id:'ohp', label:'Press Hombro',   icon:'🏋️', unit:'kg',   tip:'RM estimado con barra' },
+  { id:'pu',  label:'Dominadas',      icon:'🔝', unit:'reps', tip:'Máximo de repeticiones consecutivas' },
+  { id:'row', label:'Remo Inclinado', icon:'🚣', unit:'kg',   tip:'RM estimado con barra' },
+  { id:'run', label:'5K Run',         icon:'🏃', unit:'min',  tip:'Tiempo en minutos (ej. 28.5)' },
+  { id:'pbw', label:'Push-ups',       icon:'💥', unit:'reps', tip:'Máximo sin parar' }
 ];
-var CAMINO_MS = ['📸 Foto Progreso','💪 PR Sentadilla','🏅 1 Mes Completo','📊 Check-in Semanal','⚖️ Composición','🔥 Fuerza +20%'];
-function renderCamino() {
-  var root = document.getElementById('camino-root');
+
+function prLoad() {
+  try { return JSON.parse(localStorage.getItem('wc_prs') || '{}'); } catch(e) { return {}; }
+}
+function prSave(data) {
+  try { localStorage.setItem('wc_prs', JSON.stringify(data)); } catch(e) {}
+}
+function prTrophyColor(def, val) {
+  if (!val) return null;
+  var v = parseFloat(val);
+  if (def.unit === 'kg')   { if (v >= 140) return '#FFD700'; if (v >= 100) return '#C0C0C0'; if (v >= 70) return '#CD7F32'; return null; }
+  if (def.unit === 'reps') { if (v >= 20)  return '#FFD700'; if (v >= 12)  return '#C0C0C0'; if (v >= 8)  return '#CD7F32'; return null; }
+  if (def.unit === 'min')  { if (v <= 22)  return '#FFD700'; if (v <= 26)  return '#C0C0C0'; if (v <= 30) return '#CD7F32'; return null; }
+  return null;
+}
+
+function renderPRs() {
+  var root = document.getElementById('prs-root');
   if (!root) return;
-  var current = CAMINO_PHASES.find(function(p){ return p.status === 'current'; }) || CAMINO_PHASES[0];
-  var phaseHdr = '<div class="camino-phase-header">' +
-    '<div class="camino-phase-label" style="background:' + current.color + '18;color:' + current.color + ';border:1px solid ' + current.color + '33;"><i class="fas fa-map-marker-alt" style="font-size:.65rem;"></i> FASE ACTUAL</div>' +
-    '<div class="camino-phase-title">' + current.icon + ' ' + current.name + '</div>' +
-    '<div class="camino-phase-sub">' + current.weeks + ' · ' + current.desc + '</div>' +
-  '</div>';
-  var stepsHtml = CAMINO_PHASES.map(function(p, i) {
-    var isDone = p.status === 'done', isCur = p.status === 'current';
-    var dotStyle = isDone ? 'background:' + p.color + ';border-color:' + p.color + ';color:#fff;' : isCur ? 'background:rgba(200,16,46,.15);border-color:' + p.color + ';' : 'border-color:var(--border);';
-    var dotContent = isDone ? '<i class="fas fa-check" style="font-size:.5rem;"></i>' : (i+1);
-    return '<div class="camino-step">' +
-      '<div class="camino-dot ' + p.status + '" style="' + dotStyle + '">' + dotContent + '</div>' +
-      '<div class="camino-step-body' + (isCur ? ' current' : '') + '">' +
-        '<div class="camino-step-name">' + p.icon + ' ' + p.name + '</div>' +
-        '<div class="camino-step-desc">' + p.desc + '</div>' +
-        '<span class="camino-step-badge" style="color:' + p.color + ';border-color:' + p.color + '44;background:' + p.color + '10;">' + p.weeks + '</span>' +
+  var prs = prLoad();
+  var cards = PR_DEFS.map(function(def) {
+    var rec = prs[def.id], val = rec ? rec.val : null, date = rec ? rec.date : null;
+    var trophy = prTrophyColor(def, val);
+    var tHtml = trophy ? '<span class="pr-trophy" style="color:' + trophy + '">🏆</span>' : '';
+    var valHtml = val
+      ? '<div class="pr-value">' + val + ' <span class="pr-unit">' + def.unit + '</span>' + tHtml + '</div><div class="pr-date">' + date + '</div>'
+      : '<div class="pr-empty">Sin registro</div>';
+    return '<div class="pr-card" onclick="prOpenModal(\'' + def.id + '\')">' +
+      '<div class="pr-card-icon">' + def.icon + '</div>' +
+      '<div class="pr-card-body"><div class="pr-card-label">' + def.label + '</div>' + valHtml + '</div>' +
+      '<button class="pr-edit-btn" title="Editar"><i class="fas fa-pen"></i></button></div>';
+  }).join('');
+  root.innerHTML =
+    '<div class="pr-header"><div class="pr-header-title"><i class="fas fa-trophy" style="color:#FFD700;margin-right:6px;"></i>Mis Records Personales</div>' +
+    '<div class="pr-header-sub">Toca cualquier ejercicio para registrar o actualizar tu PR</div></div>' +
+    '<div class="pr-grid">' + cards + '</div>';
+}
+
+function prOpenModal(id) {
+  var def = PR_DEFS.find(function(d){ return d.id === id; });
+  if (!def) return;
+  var prs = prLoad(), rec = prs[id], cur = rec ? rec.val : '';
+  var ph = def.unit === 'kg' ? '100' : def.unit === 'reps' ? '10' : '25';
+  var overlay = document.createElement('div');
+  overlay.className = 'pr-modal-overlay'; overlay.id = 'pr-modal';
+  overlay.onclick = function(e){ if (e.target === overlay) prCloseModal(); };
+  overlay.innerHTML =
+    '<div class="pr-modal">' +
+      '<div class="pr-modal-header"><span>' + def.icon + ' ' + def.label + '</span>' +
+        '<button class="pr-modal-close" onclick="prCloseModal()"><i class="fas fa-times"></i></button></div>' +
+      '<div class="pr-modal-body"><p class="pr-modal-tip">' + def.tip + '</p>' +
+        '<label class="pr-modal-label">Tu PR (' + def.unit + ')</label>' +
+        '<input class="pr-modal-input" id="pr-val-input" type="number" min="0" step="0.5" placeholder="' + ph + '" value="' + cur + '">' +
+        '<div class="pr-modal-actions">' +
+          '<button class="pr-modal-cancel" onclick="prCloseModal()">Cancelar</button>' +
+          '<button class="pr-modal-save" onclick="prSaveModal(\'' + id + '\')">Guardar PR</button>' +
+        '</div></div></div>';
+  document.body.appendChild(overlay);
+  setTimeout(function(){ overlay.classList.add('visible'); }, 10);
+  document.getElementById('pr-val-input').focus();
+}
+
+function prSaveModal(id) {
+  var input = document.getElementById('pr-val-input');
+  var val = parseFloat(input.value);
+  if (isNaN(val) || val <= 0) { input.style.borderColor = '#E31E24'; setTimeout(function(){ input.style.borderColor = ''; }, 600); return; }
+  var prs = prLoad();
+  var today = new Date().toLocaleDateString('es-MX', {day:'2-digit', month:'short', year:'numeric'});
+  var isNew = !prs[id] || val > parseFloat(prs[id].val || 0);
+  prs[id] = { val: val, date: today };
+  prSave(prs); prCloseModal(); renderPRs();
+  if (isNew && typeof V6 !== 'undefined' && V6.toast) V6.toast('Nuevo PR registrado 🏆', 'success');
+}
+
+function prCloseModal() {
+  var m = document.getElementById('pr-modal');
+  if (!m) return;
+  m.classList.remove('visible');
+  setTimeout(function(){ if (m.parentNode) m.parentNode.removeChild(m); }, 250);
+}
+
+// ═══════════════════════════════════════════════
+// ── COACH FAQ ───────────────────────────────────
+// ═══════════════════════════════════════════════
+var FAQ_DATA = [
+  { cat:'entrenamiento', q:'¿Con qué frecuencia debo entrenar?', a:'Para la mayoría de los niveles, 3–5 días por semana es óptimo. Principiantes progresan con 3 días full body; intermedios y avanzados con 4–5 días en splits. Lo más importante es la consistencia.' },
+  { cat:'entrenamiento', q:'¿Cuántas series y repeticiones debo hacer?', a:'Depende del objetivo: hipertrofia → 3–4 series x 8–12 reps; fuerza → 3–5 x 3–6; resistencia → 2–3 x 15–20. Tu coach personaliza esto en tu plan.' },
+  { cat:'entrenamiento', q:'¿Puedo entrenar si tengo dolor muscular (DOMS)?', a:'El dolor muscular tardío (DOMS) es normal. Puedes entrenar grupos musculares distintos. Si el dolor es severo, descansa o haz trabajo aeróbico suave. Nunca entrenes con dolor articular agudo.' },
+  { cat:'entrenamiento', q:'¿Qué tan importante es el calentamiento?', a:'Fundamental. Dedica 5–10 min a activación dinámica: movilidad articular, sets de activación y rampas progresivas (50%→70%→85% del peso de trabajo). Reduce lesiones y mejora rendimiento.' },
+  { cat:'entrenamiento', q:'¿Cuándo debo aumentar la carga?', a:'Cuando puedas completar el rango superior de repeticiones con buena técnica en 2 sesiones consecutivas. Regla del 2x2: si logras +2 reps sobre el objetivo en 2 sesiones, sube el peso.' },
+  { cat:'entrenamiento', q:'¿Qué es la sobrecarga progresiva?', a:'El principio más importante del entrenamiento: incrementar gradualmente el estímulo (más peso, reps, series, menos descanso). Sin progresión, el cuerpo se adapta y deja de mejorar.' },
+  { cat:'entrenamiento', q:'¿Puedo hacer cardio y pesas el mismo día?', a:'Sí. Idealmente separados: pesas por la mañana, cardio moderado en la tarde. Si es el mismo bloque, haz primero pesas. Cardio intenso post-pesas puede comprometer la recuperación muscular.' },
+  { cat:'nutricion', q:'¿Cuánta proteína debo consumir al día?', a:'Entre 1.6 y 2.2 g por kg de peso corporal es el rango respaldado por evidencia. Para un atleta de 75 kg: 120–165 g/día de proteína. Prioriza fuentes completas: carne magra, huevo, lácteos, legumbres.' },
+  { cat:'nutricion', q:'¿Debo comer antes de entrenar?', a:'Depende de tu tolerancia. Una comida rica en carbohidratos y proteína 2–3 horas antes optimiza el rendimiento. Si entrenas temprano, algo ligero 30–60 min antes (fruta + proteína) es suficiente.' },
+  { cat:'nutricion', q:'¿Son malos los carbohidratos?', a:'No. Los carbohidratos son el combustible principal del entrenamiento de alta intensidad. La clave es el timing y la cantidad según tu objetivo. Dietas bajas en carbs pueden reducir el rendimiento en fuerza.' },
+  { cat:'nutricion', q:'¿Qué como después de entrenar?', a:'Dentro de las 2 horas post-entreno: 20–40 g de proteína de calidad + carbohidratos de absorción media. Esto maximiza la síntesis proteica y la recarga de glucógeno muscular.' },
+  { cat:'nutricion', q:'¿Necesito suplementos para progresar?', a:'Los básicos con evidencia sólida: creatina monohidrato (3–5 g/día), proteína de suero si no alcanzas tu meta proteica, cafeína pre-entreno. El resto es opcional y dependiente del contexto.' },
+  { cat:'nutricion', q:'¿Cuánta agua debo beber?', a:'Mínimo 35 ml por kg de peso corporal en reposo. Suma 500–750 ml por hora de entrenamiento. La deshidratación del 2% reduce el rendimiento hasta un 20%.' },
+  { cat:'rise', q:'¿Qué incluye el Reto RISE de 30 días?', a:'Acceso al dashboard personalizado con tu plan semana a semana, check-ins con feedback de tu coach, comunidad de participantes activa y seguimiento de métricas de progreso.' },
+  { cat:'rise', q:'¿Cuánto tiempo al día requiere RISE?', a:'El entrenamiento es de 45–60 min, 4 días por semana. Los check-ins semanales toman 5–10 min. El programa está diseñado para personas con agenda apretada.' },
+  { cat:'rise', q:'¿Puedo hacer RISE si soy principiante?', a:'Sí. RISE incluye variantes de ejercicios por nivel. Tu intake inicial calibra tu punto de partida. Los principiantes ven las transformaciones más dramáticas en los primeros 30 días.' },
+  { cat:'rise', q:'¿Qué pasa al terminar los 30 días?', a:'Tienes la opción de continuar con un plan personalizado completo (Método o Elite), o repetir RISE en el siguiente ciclo. Muchos participantes convierten RISE en el inicio de su transformación a largo plazo.' },
+  { cat:'rise', q:'¿Cómo funciona el check-in semanal?', a:'Cada semana llenas un formulario breve con tus métricas (peso, energía, adherencia). Tu coach revisa y te da retroalimentación personalizada antes del siguiente ciclo.' },
+  { cat:'miplan', q:'¿Cada cuánto se actualiza mi plan?', a:'Los planes se revisan cada 4–6 semanas (un mesociclo) según los resultados de tus check-ins. Ajustes de emergencia (lesión, cambio de objetivo) se hacen antes si es necesario.' },
+  { cat:'miplan', q:'¿Puedo pedir un ejercicio alternativo?', a:'Sí. En tu próximo check-in semanal menciona el ejercicio que quieres sustituir y el motivo (lesión, sin equipo, preferencia). Tu coach propondrá un equivalente biomecánico.' },
+  { cat:'miplan', q:'¿Qué hago si me salto una semana de entrenamiento?', a:'No hay problema. Retoma en el punto donde lo dejaste. Si fue más de 2 semanas, reduce la carga un 10–15% la primera semana de regreso. La consistencia a largo plazo importa más que una semana perdida.' },
+  { cat:'miplan', q:'¿Mi plan cambia si viajo o no tengo gym?', a:'Comunícalo en tu check-in o a tu coach directamente. Hay variantes para entrenamiento en casa, hotel o al aire libre. La adaptación al contexto real es parte del programa.' },
+  { cat:'general', q:'¿Cuánto tiempo tarda en verse resultados?', a:'Cambios en rendimiento: 2–4 semanas. Cambios en composición corporal visibles: 8–12 semanas con consistencia. Cambios estructurales significativos: 6–12 meses. La paciencia es la habilidad más difícil del fitness.' },
+  { cat:'general', q:'¿Cuántas horas debo dormir?', a:'7–9 horas para adultos activos. El sueño es cuando ocurre la mayor parte de la síntesis proteica y la adaptación al entrenamiento. Privarte de sueño puede anular hasta el 60% de tus ganancias.' },
+  { cat:'general', q:'¿Qué hago si me estanco (plateau)?', a:'Evalúa: ¿hay sobrecarga progresiva en tu entreno? ¿Estás durmiendo suficiente? ¿Tu nutrición está calibrada? Los plateaus suelen tener causa identificable. Compártelo en tu check-in y lo analizamos juntos.' },
+  { cat:'general', q:'¿Puedo entrenar menstruando?', a:'Sí. Las fases del ciclo influyen en rendimiento. Durante la fase folicular el rendimiento suele ser óptimo. Durante la fase lútea, puedes sentir más fatiga — ajusta la intensidad si es necesario.' }
+];
+var FAQ_CATS = [
+  { id:'todos', label:'Todos' }, { id:'entrenamiento', label:'Entrenamiento' },
+  { id:'nutricion', label:'Nutrición' }, { id:'rise', label:'RISE' },
+  { id:'miplan', label:'Mi Plan' }, { id:'general', label:'General' }
+];
+var faqActiveCat = 'todos', faqOpenId = -1;
+
+function renderCoachFAQ() {
+  var root = document.getElementById('coach-root');
+  if (!root) return;
+  var catsHtml = '<div class="coach-cats">' +
+    FAQ_CATS.map(function(c){
+      return '<button class="coach-cat' + (faqActiveCat === c.id ? ' active' : '') + '" onclick="faqSetCat(\'' + c.id + '\')">' + c.label + '</button>';
+    }).join('') + '</div>';
+  root.innerHTML =
+    '<div class="coach-header"><div class="coach-header-title"><i class="fas fa-comments" style="color:#E31E24;margin-right:7px;"></i>Coach FAQ</div>' +
+    '<div class="coach-header-sub">Preguntas frecuentes respondidas por tu coach</div></div>' +
+    '<div class="coach-search-wrap"><i class="fas fa-search coach-search-icon"></i>' +
+    '<input class="coach-search" id="faq-search" placeholder="Buscar pregunta..." oninput="faqFilter()" autocomplete="off"></div>' +
+    catsHtml + '<div id="faq-list"></div>';
+  faqRender();
+}
+
+function faqSetCat(cat) {
+  faqActiveCat = cat; faqOpenId = -1;
+  var si = document.getElementById('faq-search'); if (si) si.value = '';
+  document.querySelectorAll('.coach-cat').forEach(function(b, i){ b.classList.toggle('active', FAQ_CATS[i] && FAQ_CATS[i].id === cat); });
+  faqRender();
+}
+function faqFilter() { faqOpenId = -1; faqRender(); }
+function faqRender() {
+  var term = ((document.getElementById('faq-search') || {}).value || '').toLowerCase();
+  var items = FAQ_DATA.filter(function(item) {
+    return (faqActiveCat === 'todos' || item.cat === faqActiveCat) &&
+           (!term || item.q.toLowerCase().includes(term) || item.a.toLowerCase().includes(term));
+  });
+  var list = document.getElementById('faq-list');
+  if (!list) return;
+  if (!items.length) {
+    list.innerHTML = '<div class="coach-empty"><i class="fas fa-search" style="font-size:1.5rem;opacity:.3;display:block;margin-bottom:8px;"></i>Sin resultados</div>';
+    return;
+  }
+  list.innerHTML = items.map(function(item, i) {
+    var isOpen = faqOpenId === i;
+    return '<div class="coach-qa' + (isOpen ? ' open' : '') + '" onclick="faqToggle(' + i + ')">' +
+      '<div class="coach-q"><span>' + item.q + '</span><i class="fas fa-chevron-down coach-q-icon"></i></div>' +
+      '<div class="coach-a"><div class="coach-a-inner">' + item.a + '</div></div></div>';
+  }).join('');
+}
+function faqToggle(i) { faqOpenId = faqOpenId === i ? -1 : i; faqRender(); }
+
+// ═══════════════════════════════════════════════
+// ── MI CARTA ATLÉTICA ───────────────────────────
+// ═══════════════════════════════════════════════
+function renderCarta() {
+  var root = document.getElementById('carta-root');
+  if (!root) return;
+  var prs = prLoad();
+  var planColors = { esencial:'#38bdf8', metodo:'#a78bfa', elite:'#FFD700', rise:'#E31E24' };
+  var planLabels = { esencial:'ESENCIAL', metodo:'MÉTODO', elite:'ELITE', rise:'RISE' };
+  var planColor = planColors[clientPlan] || '#E31E24';
+  var planLabel = planLabels[clientPlan] || (clientPlan || '').toUpperCase();
+  var initials = (clientName || 'WC').split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase();
+  var prCount = Object.keys(prs).length;
+  var prBestLabel = '—';
+  PR_DEFS.forEach(function(def) {
+    if (prs[def.id]) prBestLabel = def.label + ' · ' + prs[def.id].val + ' ' + def.unit;
+  });
+  var stats = [
+    { label:'Plan', val: planLabel },
+    { label:'PRs registrados', val: prCount || '—' },
+    { label:'ID Atleta', val: '#' + (clientId || '000') },
+    { label:'Mejor PR', val: prBestLabel }
+  ];
+  var statsHtml = stats.map(function(s){
+    return '<div class="carta-stat"><div class="carta-stat-val">' + s.val + '</div><div class="carta-stat-lbl">' + s.label + '</div></div>';
+  }).join('');
+  root.innerHTML =
+    '<div class="carta-wrap">' +
+      '<div class="carta-header"><div class="carta-header-title">Mi Carta Atlética</div>' +
+      '<div class="carta-header-sub">Tu identidad en WellCore</div></div>' +
+      '<div class="carta-card" id="carta-card-el" style="--carta-color:' + planColor + ';">' +
+        '<div class="carta-bg-glow"></div>' +
+        '<div class="carta-top">' +
+          '<div class="carta-avatar">' + initials + '</div>' +
+          '<div class="carta-name-block">' +
+            '<div class="carta-name">' + (clientName || 'Atleta WellCore') + '</div>' +
+            '<div class="carta-tier ' + clientPlan + '">' + planLabel + '</div>' +
+          '</div>' +
+          '<div class="carta-logo-block">WC</div>' +
+        '</div>' +
+        '<div class="carta-stats">' + statsHtml + '</div>' +
+        '<div class="carta-footer"><span>wellcorefitness.com</span><span>2025–2026</span></div>' +
+      '</div>' +
+      '<div class="carta-actions">' +
+        '<button class="btn btn-carta-share" onclick="cartaShare()"><i class="fas fa-share-nodes" style="margin-right:6px;"></i>Compartir Carta</button>' +
+        '<button class="btn btn-carta-prs" onclick="acadSetTab(\'prs\')"><i class="fas fa-trophy" style="margin-right:6px;"></i>Registrar PRs</button>' +
       '</div>' +
     '</div>';
-  }).join('');
-  var msHtml = CAMINO_MS.map(function(m) {
-    var parts = m.split(' ');
-    var ico = parts[0], lbl = parts.slice(1).join(' ');
-    return '<div class="camino-ms"><div class="camino-ms-icon">' + ico + '</div><div class="camino-ms-lbl">' + lbl + '</div></div>';
-  }).join('');
-  root.innerHTML = phaseHdr +
-    '<div class="camino-roadmap"><div class="camino-line"></div>' + stepsHtml + '</div>' +
-    '<div class="camino-milestones"><div class="camino-milestones-title"><span></span>Hitos del Programa</div><div class="camino-ms-grid">' + msHtml + '</div></div>';
+}
+function cartaShare() {
+  if (typeof V6 !== 'undefined' && V6.toast) V6.toast('Captura la pantalla para compartir tu carta 📸', 'info');
 }
 
 // ── ARCHIVOS LEGACY ──
