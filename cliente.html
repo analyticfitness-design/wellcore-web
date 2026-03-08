@@ -3997,6 +3997,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   var pt = sessionStorage.getItem('wc_preview_token');
   if (!pt) return;
   sessionStorage.setItem('_wc_eff_token', pt);
+  sessionStorage.setItem('_wc_preview_session', '1'); // flag que persiste aunque falle auth
   sessionStorage.removeItem('wc_preview_token');
   var _get = Storage.prototype.getItem;
   var _set = Storage.prototype.setItem;
@@ -4028,6 +4029,11 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (!data || data.error || data.type !== 'client') {
+        if (sessionStorage.getItem('_wc_preview_session')) {
+          // Preview mode: no redirigir a login (causaría loop a admin.html)
+          document.body.innerHTML = '<div style="min-height:100vh;background:#0a0a0a;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#fff;"><div style="text-align:center;padding:32px"><div style="color:#C8102E;font-size:2.5rem;margin-bottom:16px;">⚠</div><h2 style="margin:0 0 8px;font-size:1.2rem;">Sesión de preview inválida</h2><p style="color:rgba(255,255,255,.45);margin:0 0 20px;font-size:.85rem;">El token expiró o el cliente está inactivo.<br>Usa "Ver Portal" nuevamente desde el panel admin.</p><a href="/admin.html" style="display:inline-block;padding:8px 20px;background:#C8102E;color:#fff;text-decoration:none;border-radius:8px;font-size:.82rem;font-weight:600;">Volver al panel</a></div></div>';
+          return;
+        }
         localStorage.removeItem('wc_token');
         window.location.replace('login.html');
         return;

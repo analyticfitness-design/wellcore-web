@@ -511,6 +511,8 @@
     (function() {
         var token = localStorage.getItem('wc_token');
         var role  = localStorage.getItem('wc_user_type');
+        // Si es una sesión de preview (admin impersonando cliente), no redirigir
+        if (sessionStorage.getItem('_wc_preview_session')) return;
         if (token) {
             if (role === 'admin') { window.location.replace('admin.html'); return; }
             var plan = localStorage.getItem('wc_client_plan');
