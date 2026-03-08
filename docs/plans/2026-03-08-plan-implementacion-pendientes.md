@@ -3,118 +3,100 @@
 
 ---
 
-## PROBLEMA CRÍTICO: Producción NO tiene los cambios
+## ESTADO ACTUAL DE PRODUCCIÓN
 
-**Todos los issues que ves en wellcorefitness.com son de producción.**
-El repositorio local está correcto y actualizado.
+Producción se actualizó con `git pull` (hasta commit `1a63b75`).
+Rebuild Docker disparado desde EasyPanel para incluir commits posteriores.
 
-### Comando para resolver TODO de una vez:
-```bash
-# En el servidor de producción:
-cd /ruta/wellcorefitness
-git pull origin main
-```
-
----
-
-## Cambios ya en el repo (listos para git pull)
-
-| Commit | Descripción | Resuelve |
-|--------|-------------|---------|
-| `d92ee1f` | chatbot badge cyan → rojo | Badge confundido con WhatsApp |
-| `1e00e88` | nosotros equipo real + fotos caras + rise overlap + tienda overlap | Múltiples issues |
-| `fec0f77` | planes.html garantía visual | Visual |
-| `407174a` | planes.html garantía tipográfica | Visual |
-| `d30c20a` | iOS overflow-x fix | Mobile scroll |
-| `47b3551` | coaches.html rediseño completo | Expansión coaches |
-| *nuevo* | rise.html padding 200px mobile | Overlap promo bar (más seguro) |
-| *nuevo* | planes.html quitar botones WA | No color verde WA |
-| *nuevo* | metodo.html quitar botón WA | No WA directo |
+### Commits pendientes de confirmar en prod
+| Commit | Descripción |
+|--------|-------------|
+| `c4d1abd` | Remove botones Imprimir/PDF de 6 planes demo |
+| `99989e0` | Icono PLAN METODO: fa-chart-line → fa-crown |
+| `(pendiente)` | rise.html padding 200px → 260px overlap fix |
 
 ---
 
-## Fixes por página (detalle)
+## TODAS LAS TAREAS — Estado
 
-### `/nosotros.html` ✅ (commit 1e00e88)
-- [x] Eliminado Carlos Mendez (CM) — era personaje falso
-- [x] Eliminada Ana Rodriguez (AR) — era personaje falso
-- [x] Equipo reemplazado: Daniel Esparza + Equipo WellCore
-- [x] Sin clase `coach-avatar green` ni `coach-stat-num green` (sin cyan)
-- [x] Foto `object-position: 50% 30%` — muestra caras, no torsos
-- [x] Sección "NSCA/PN" — en LOCAL ya dice "Formados para Aplicar Ciencia"
+### ✅ COMPLETADO (en repo + prod)
 
-### `/proceso.html` ✅ (commit 1e00e88)
-- [x] Foto "CUATRO FASES. UN PROCESO." → `object-position: 50% 30%`
+| Tarea | Commit | Descripción |
+|-------|--------|-------------|
+| coaches.html rediseño | `47b3551` | Pitch page para coaches/influencers LATAM con estudio de mercado, mockups, modelos A/B/C/D |
+| Carlos Mendez eliminado de nosotros.html | `1e00e88` | Equipo real: Daniel Esparza + Equipo WellCore |
+| Fotos muestran caras (no torsos) | `0b6d78b` | object-position: 50% 30% en nosotros + proceso |
+| Chatbot badge rojo (era cyan) | `d92ee1f` | WC.green #00D9FF → #E31E24 |
+| rise.html padding mobile | `6274fc3` | 160px → 200px para no solapar navbar |
+| Botones WhatsApp eliminados | `6274fc3` | planes.html y metodo.html — verde WA → rojo |
+| index.html stats reales | `dbbd6a7` | "94% Adherencia / 1:1 Coaching Directo / 100% Personalizado" |
+| index.html mockup plataforma coaches | `dbbd6a7` | UI mock en sección ¿ERES COACH? |
+| rise.html dashboards reales | `1a63b75` | Steps 02/03/05/06 con imágenes reales del dashboard |
+| Botones Imprimir/PDF eliminados | `c4d1abd` | 6 archivos planes/demo-*.html — solo queda "Enviar al correo" |
+| Icono PLAN METODO | `99989e0` | fa-chart-line → fa-crown en planes.html |
+| rise.html padding → 260px | *(a commitear)* | Más margen para promo bar expandida |
 
-### `/rise.html` ✅ (commit 1e00e88 + nuevo)
-- [x] `.platform-section` mobile padding: `160px → 200px`
-- [x] Previene overlap de "PLATAFORMA RISE" badge con promo bar + navbar
+### 🔲 PENDIENTE
 
-### `/tienda.html` ✅ (commit 1e00e88 + no existen en local)
-- [x] Hero del suplemento: `background-size:45%` + `background-position:center 10%`
-- [x] Productos inexistentes en local: guía nutrición, pack recetas, guantes,
-      foam roller, shaker, bandas de resistencia — no están en el catalogo local
-
-### `/planes.html` ✅ (nuevos cambios)
-- [x] Quitado botón "Preguntanos por WhatsApp" (verde) → reemplazado con CTA rojo
-- [x] Quitado "Habla con el coach primero" con ícono WA → apunta a inscripcion.html
-
-### `/metodo.html` ✅ (nuevo cambio)
-- [x] Quitado "WhatsApp al Coach" → reemplazado con "Hablar con un Coach" rojo
-
-### `/inscripcion.html` ✅ (sesiones anteriores)
-- [x] Botón SELECCIONAR: cambia a rojo (`#E31E24`) al hacer tap
-
-### `js/chat-widget.js` ✅ (commit d92ee1f)
-- [x] `WC.green = '#00D9FF'` → `WC.green = '#E31E24'`
-- [x] Badge de notificación del chatbot: ya no parece WhatsApp
-
-### `/coaches.html` ✅ (commit 47b3551)
-- [x] Rediseño completo como pitch page para coaches/influencers LATAM
-- [x] Estudio de mercado inline + propuestas de colaboración
+| Tarea | Prioridad | Notas |
+|-------|-----------|-------|
+| Confirmar rebuild Docker completado | ALTA | Verificar en wellcorefitness.com |
+| Verificar coaches.html en producción | MEDIA | Confirmar que CM (Carlos Mendez) ya no aparece |
+| Verificar rise.html overlap en móvil | MEDIA | Con promo bar abierta |
+| Formulario de aplicación para coaches | MEDIA | Google Form enlazado desde coaches.html |
+| Media kit coaches PDF/landing | MEDIA | Ver plan expansión coaches |
 
 ---
 
-## No Blue Rule — Estado
+## Tienda — Productos
 
-Archivos que TENÍAN cyan/azul → corregidos:
-- `nosotros.html`: clases `.green` (cyan `#00D9FF`) → eliminadas
-- `chat-widget.js`: `WC.green = '#00D9FF'` → `#E31E24`
-- CSS global `wellcore-v6.css` / `wellcore-v5.css`: `--accent` es rojo `#E31E24`
+Los productos solicitados para eliminar **NO EXISTEN** en el código local:
+- ~~Guía nutrición WellCore~~ — nunca estuvo
+- ~~Pack de recetas fitness~~ — nunca estuvo
+- ~~Guantes de entrenamiento~~ — nunca estuvo
+- ~~Foam roller~~ — nunca estuvo
+- ~~Shaker WellCore~~ — nunca estuvo
+- ~~Bandas de resistencia x5~~ — nunca estuvo
 
----
-
-## Expansión Coaches — Tareas de Esta Semana
-
-Basado en el rediseño de coaches.html, los siguientes pasos para expandir:
-
-### Semana 1 (8-14 Mar):
-1. **Definir perfiles buscados**: Entrenador certificado, editor de video, programador/dev
-2. **Crear formulario de aplicación**: Google Form o Typeform enlazado desde coaches.html
-3. **Establecer modelo de trabajo**: Freelance por proyecto vs. Revenue share vs. Sueldo fijo
-
-### Semana 2 (15-21 Mar):
-1. **Outreach en redes**: DM a coaches con 5k-50k seguidores en LATAM (nicho fitness)
-2. **Crear media kit**: PDF/Landing con qué ofrece WellCore a coaches
-3. **Reuniones de exploración**: 2-3 calls de 30 min con candidatos
-
-### Modelos de colaboración propuestos (en coaches.html):
-- **Modelo A**: Coach asociado — usa plataforma WellCore, revenue share 60/40
-- **Modelo B**: Coach certificado WellCore — formación + clientes asignados
-- **Modelo C**: Coach creador — produce contenido bajo marca WellCore, pago mensual
+Productos actuales en tienda.html (MACROBLENDS): CR2 Creatina + Greens Mix.
 
 ---
 
-## Cómo verificar que git pull funcionó
+## Rise.html — Overlap Fix
 
-Después de hacer `git pull` en producción, verificar en el browser:
+La promo bar expandida (con botón INSCRIBIRME visible) suma ~120px + navbar ~60px = ~180px total.
+- Antes: 200px padding → margen de solo 20px (insuficiente en algunos dispositivos)
+- Ahora: 260px padding → margen de 80px ✅
 
-| URL | Qué verificar |
-|-----|---------------|
-| /nosotros.html | No ver CM (Carlos Mendez) ni AR (Ana Rodriguez) |
-| /nosotros.html | Fotos muestran caras (no torsos) |
-| /rise.html (móvil) | Badge "PLATAFORMA RISE" no queda debajo del navbar |
-| /tienda.html (móvil) | Imagen suplemento no tapa el texto |
-| Chatbot (cualquier página) | Badge es rojo, no cyan |
-| /planes.html | Sin botones verdes de WhatsApp |
-| /inscripcion.html | Al tap en "SELECCIONAR" → botón se pone rojo |
+---
+
+## Coaches.html — Contenido Actual
+
+Commit `47b3551` transformó coaches.html en pitch page completa con:
+1. Hero: "¿ERES COACH, CREADOR O PROFESIONAL DEL FITNESS?"
+2. Estudio de mercado LATAM (tamaño, problema, benchmarks)
+3. Roles que WellCore necesita: Coach, Editor, Dev, Estratega
+4. Mockup del panel de coach (CSS, sin imágenes)
+5. Modelos de trabajo A/B/C/D (revenue share / certificado / creador / freelance)
+6. CTA formulario de aplicación
+
+Si la página aún muestra "Carlos Mendez" en producción → es caché del navegador.
+Solución: Chrome → Ajustes → Privacidad → Borrar datos de navegación → Imágenes en caché.
+
+---
+
+## Cómo hacer Git Pull en Producción
+
+### Opción 1 — EasyPanel Rebuild (más fácil)
+1. Ir a https://panel.wellcorefitness.com/projects/wellcorefitness/box/wellcorefitness
+2. Click "Reconstruir imagen de Docker"
+3. Esperar 2-3 min hasta que el estado vuelva a "running"
+
+### Opción 2 — IDE Terminal
+1. Abrir https://wellcorefitness-wellcorefitness-ide.v9xcpt.easypanel.host
+2. F1 → "Terminal: New Terminal"
+3. `cd /code && git pull origin main`
+
+---
+
+*Documento generado: 2026-03-08 | WellCore Fitness*
