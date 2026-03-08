@@ -970,24 +970,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .timer-complete-msg h3{font-size:1.4rem;font-weight:900;color:var(--white);margin:0 0 6px;}
 .timer-complete-msg p{font-size:.82rem;color:var(--gray);}
 
-/* ── MÚSICA ── */
-.musica-intro{font-size:.8rem;color:var(--gray);margin-bottom:18px;line-height:1.55;}
-.musica-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
-.musica-filter{padding:5px 13px;border-radius:40px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
-.musica-filter.active,.musica-filter:hover{border-color:var(--red);color:var(--red);background:rgba(200,16,46,.08);}
-.musica-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
-.musica-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s,transform .2s;}
-.musica-card:hover{border-color:rgba(200,16,46,.3);transform:translateY(-2px);}
-@starting-style{.musica-card{opacity:0;transform:translateY(8px);}}
-.musica-card{animation:recipe-in .35s ease both;}
-.musica-card-head{height:64px;display:flex;align-items:center;justify-content:center;position:relative;font-size:2rem;}
-.musica-card-body{padding:12px 14px 14px;}
-.musica-card-type{font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px;}
-.musica-card-name{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:4px;}
-.musica-card-desc{font-size:.7rem;color:var(--gray);line-height:1.4;margin-bottom:10px;}
-.musica-bpm{display:flex;align-items:center;gap:4px;font-size:.63rem;color:var(--gray);}
-.musica-play-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:40px;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
-.musica-play-btn:hover{background:#e01030;}
 
 /* ── HACKS ── */
 .hacks-header{text-align:center;padding:4px 0 20px;}
@@ -3002,7 +2984,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <button class="acad-tab" onclick="acadSetTab('recetas')" id="acad-btn-recetas"><i class="fas fa-bowl-food" style="margin-right:5px;font-size:.75rem;"></i>Recetas</button>
         <button class="acad-tab" onclick="acadSetTab('timer')" id="acad-btn-timer"><i class="fas fa-stopwatch" style="margin-right:5px;font-size:.75rem;"></i>Timer</button>
         <button class="acad-tab" onclick="acadSetTab('mentalidad')" id="acad-btn-mentalidad"><i class="fas fa-brain" style="margin-right:5px;font-size:.75rem;"></i>Mente</button>
-        <button class="acad-tab" onclick="acadSetTab('musica')" id="acad-btn-musica"><i class="fas fa-headphones" style="margin-right:5px;font-size:.75rem;"></i>Música</button>
+
         <button class="acad-tab" onclick="acadSetTab('hacks')" id="acad-btn-hacks"><i class="fas fa-lightbulb" style="margin-right:5px;font-size:.75rem;"></i>Hacks</button>
         <button class="acad-tab" onclick="acadSetTab('camino')" id="acad-btn-camino"><i class="fas fa-map-marked-alt" style="margin-right:5px;font-size:.75rem;"></i>Mi Camino</button>
       </div>
@@ -3208,10 +3190,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div id="mentalidad-root"><!-- rendered by JS --></div>
       </div>
 
-      <!-- MÚSICA -->
-      <div class="acad-panel" id="acad-panel-musica">
-        <div id="musica-root"><!-- rendered by JS --></div>
-      </div>
 
       <!-- HACKS -->
       <div class="acad-panel" id="acad-panel-hacks">
@@ -5915,7 +5893,7 @@ function acadSetTab(tab) {
   if (tab === 'recetas') renderRecipes();
   if (tab === 'timer') renderTimer();
   if (tab === 'mentalidad') renderMentalidad();
-  if (tab === 'musica') renderMusica();
+
   if (tab === 'hacks') renderHacks();
   if (tab === 'camino') renderCamino();
 }
@@ -6642,48 +6620,6 @@ function breathTick() {
   BREATH_STATE.elapsed++;
 }
 
-// ═══════════════════════════════════════════════
-// ── MÚSICA ─────────────────────────────────────
-// ═══════════════════════════════════════════════
-var MUSICA_DATA = [
-  { tipo:'Push Day', emoji:'💪', color:'#C8102E', bpm:'130–145 BPM', desc:'Energía máxima para empujar. Cortes agresivos, drops que coinciden con tus series pesadas.', urls:[['Training Montage Mix','https://www.youtube.com/results?search_query=training+montage+gym+mix'],['Spotify Powerlifting','https://open.spotify.com/search/powerlifting%20workout']] },
-  { tipo:'Pull Day', emoji:'🔱', color:'#6366f1', bpm:'120–135 BPM', desc:'Concentración profunda y ritmo constante. Ideal para jalones, remos y bíceps de alto volumen.', urls:[['Deep Focus Gym Mix','https://www.youtube.com/results?search_query=deep+focus+gym+playlist'],['Spotify Pull Day','https://open.spotify.com/search/pull%20day%20workout']] },
-  { tipo:'Legs Day', emoji:'🦵', color:'#f59e0b', bpm:'125–140 BPM', desc:'El día más duro merece la mejor música. Hip hop pesado y rock progresivo.', urls:[['Leg Day Motivation','https://www.youtube.com/results?search_query=leg+day+motivation+music'],['Spotify Leg Day','https://open.spotify.com/search/leg%20day%20workout']] },
-  { tipo:'HIIT / Cardio', emoji:'⚡', color:'#34d399', bpm:'140–170 BPM', desc:'BPM alto, drops frecuentes. Electronic, drum & bass y trance para mantener la intensidad.', urls:[['HIIT Workout Mix','https://www.youtube.com/results?search_query=hiit+workout+music+mix'],['Spotify HIIT','https://open.spotify.com/search/hiit%20cardio%20music']] },
-  { tipo:'Deload / Movilidad', emoji:'🧘', color:'#a78bfa', bpm:'70–95 BPM', desc:'Lo-fi beats, chill instrumentals. Mueve bien, respira, recupera. Sin prisa, sin pausa.', urls:[['Lo-fi Gym Chill','https://www.youtube.com/results?search_query=lofi+gym+chill+workout'],['Spotify Recovery','https://open.spotify.com/search/recovery%20workout%20lofi']] },
-  { tipo:'Full Body', emoji:'🔥', color:'#f87171', bpm:'128–138 BPM', desc:'Rock alternativo y metal moderno con riffs que te sacan lo mejor de cada repetición.', urls:[['Full Body Rock','https://www.youtube.com/results?search_query=full+body+workout+rock+music'],['Spotify Rock Gym','https://open.spotify.com/search/rock%20gym%20workout']] }
-];
-var MUSICA_FILTER = 'Todo';
-function renderMusica() {
-  var root = document.getElementById('musica-root');
-  if (!root) return;
-  var types = ['Todo'].concat(MUSICA_DATA.map(function(m){ return m.tipo; }));
-  var filtered = MUSICA_FILTER === 'Todo' ? MUSICA_DATA : MUSICA_DATA.filter(function(m){ return m.tipo === MUSICA_FILTER; });
-  var filtersHtml = types.map(function(t){ return '<button class="musica-filter' + (t === MUSICA_FILTER ? ' active' : '') + '" onclick="musicaSetFilter(\'' + t + '\')">' + t + '</button>'; }).join('');
-  var cardsHtml = filtered.map(function(m, i) {
-    var linksHtml = m.urls.map(function(u){ return '<a href="' + u[1] + '" target="_blank" rel="noopener" class="musica-play-btn" style="margin-top:5px;"><i class="fas fa-play" style="font-size:.55rem;"></i>' + u[0] + '</a>'; }).join('');
-    return '<div class="musica-card" style="animation-delay:' + (i*.06) + 's;">' +
-      '<div class="musica-card-head" style="background:linear-gradient(135deg,' + m.color + '22,' + m.color + '06);">' +
-        '<span style="font-size:2rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));">' + m.emoji + '</span>' +
-      '</div>' +
-      '<div class="musica-card-body">' +
-        '<div class="musica-card-type" style="color:' + m.color + ';">' + m.tipo + '</div>' +
-        '<div class="musica-bpm" style="margin-bottom:7px;"><i class="fas fa-wave-square" style="opacity:.5;font-size:.55rem;"></i> ' + m.bpm + '</div>' +
-        '<div class="musica-card-desc">' + m.desc + '</div>' +
-        '<div style="display:flex;flex-direction:column;gap:5px;margin-top:10px;">' + linksHtml + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-  root.innerHTML = '<p class="musica-intro">Playlists curadas por tipo de sesión. Cada entrenamiento merece la banda sonora correcta.</p>' +
-    '<div class="musica-filter-row">' + filtersHtml + '</div>' +
-    '<div class="musica-grid">' + cardsHtml + '</div>';
-}
-function musicaSetFilter(tipo) {
-  MUSICA_FILTER = tipo;
-  var root = document.getElementById('musica-root');
-  if (root) root.innerHTML = '';
-  renderMusica();
-}
 
 // ═══════════════════════════════════════════════
 // ── HACKS ──────────────────────────────────────
