@@ -1241,12 +1241,12 @@ button:focus-visible {
 
 /* ── Guarantee Circle — Pulse Glow ── */
 .guarantee-circle {
-  box-shadow: 0 0 30px rgba(0, 217, 255, 0.1);
+  box-shadow: 0 0 30px rgba(227,30,36,0.1);
   transition: box-shadow 0.3s ease;
 }
 
 .guarantee-circle:hover {
-  box-shadow: 0 0 50px rgba(0, 217, 255, 0.2);
+  box-shadow: 0 0 50px rgba(227,30,36,0.2);
 }
 
 

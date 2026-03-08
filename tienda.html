@@ -183,7 +183,7 @@
 
     .cart-btn:hover {
       border-color: var(--accent);
-      background: rgba(0,217,255,0.05);
+      background: rgba(227,30,36,0.05);
     }
 
     .cart-count {
@@ -396,7 +396,7 @@
       background: linear-gradient(135deg,
         rgba(227,30,36,0.12) 0%,
         transparent 50%,
-        rgba(0,217,255,0.04) 100%);
+        rgba(227,30,36,0.04) 100%);
       pointer-events: none;
       z-index: 0;
     }
@@ -664,7 +664,7 @@
       height: 6px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 6px rgba(0,217,255,0.6);
+      box-shadow: 0 0 6px rgba(227,30,36,0.6);
       flex-shrink: 0;
     }
 
@@ -1443,14 +1443,6 @@
         <input type="radio" name="category" value="combos" />
         <span>COMBOS</span>
       </label>
-      <label class="filter-item">
-        <input type="radio" name="category" value="accesorios" />
-        <span>ACCESORIOS</span>
-      </label>
-      <label class="filter-item">
-        <input type="radio" name="category" value="digital" />
-        <span>DIGITAL</span>
-      </label>
     </div>
 
     <hr class="sidebar-divider" />
@@ -1700,15 +1692,6 @@ const PRODUCTS = [
   // ── HARD SUPPS / MACROBLENDS — NUEVOS ─────────────────
   { id:'combo-preworkout-hs', name:'Combo Pre-Workout Hard Supps', brand:'HARD SUPPS', cat:'combos', desc:'Pack pre-entreno Hard Supps con todo para sesiones de máxima intensidad a precio especial.', price:160000, img:'images/shop/combo-preworkout-hs.png', servings:null, weight:null, flavors:null, stock:5, badge:null, featured:false },
 
-  // ── ACCESORIOS ────────────────────────────────────────
-  { id:'bandas-resistencia-x5', name:'Bandas de Resistencia Set x5', brand:'WELLCORE', cat:'accesorios', desc:'Set de 5 bandas elásticas de latex premium con 5 niveles de resistencia progresivos. Ideales para calentamiento, activación glute, rehabilitacion y entrenamiento en casa. Incluyen bolsa de transporte.', price:44900, img:null, servings:null, weight:'5 bandas', flavors:null, stock:30, badge:null, featured:false },
-  { id:'shaker-wellcore-700ml', name:'Shaker WellCore 700ml', brand:'WELLCORE', cat:'accesorios', desc:'Mezclador de 700ml con compartimento inferior. Tapa a prueba de fugas, bola mezcladora de acero inoxidable. Libre de BPA, apto para lavavajillas. Diseño WellCore con acabado mate.', price:24900, img:null, servings:null, weight:'700ml', flavors:null, stock:50, badge:null, featured:false },
-  { id:'guantes-entrenamiento', name:'Guantes de Entrenamiento', brand:'WELLCORE', cat:'accesorios', desc:'Guantes con palma de microfibra de agarre reforzado y respaldo de malla transpirable. Cierre de velcro ajustable. Costuras dobles en zonas de alto desgaste. Tallas S, M, L y XL.', price:29900, img:null, servings:null, weight:null, flavors:['S','M','L','XL'], stock:25, badge:null, featured:false },
-  { id:'foam-roller-45cm', name:'Foam Roller 45cm', brand:'WELLCORE', cat:'accesorios', desc:'Rodillo de espuma de alta densidad para liberacion miofascial, recuperación muscular y movilidad articular. Textura con relieves de masaje. Soporta hasta 150kg. Ideal para warm-up y cool-down.', price:39900, img:null, servings:null, weight:'45cm', flavors:null, stock:20, badge:null, featured:false },
-
-  // ── DIGITAL ───────────────────────────────────────────
-  { id:'guia-nutrición-wellcore', name:'Guia Nutrición WellCore PDF', brand:'WELLCORE', cat:'digital', desc:'Guia digital de nutrición de 85 páginas con plan personalizable por fase. Incluye calculadora de macros, 4 plantillas de menu semanal, lista de compras y tablas de equivalencias. Acceso inmediato.', price:19900, img:'images/shop/guia-nutrición.svg', servings:null, weight:'PDF 85 pags', flavors:null, stock:999, badge:'DESTACADO', featured:true },
-  { id:'pack-recetas-fitness-50', name:'Pack Recetas Fitness 50+', brand:'WELLCORE', cat:'digital', desc:'Mas de 50 recetas altas en proteína con macros exactos por porción, tiempo de preparación e ingredientes accesibles. Categorias: desayunos, almuerzos, cenas, snacks y postres fitness. PDF descargable.', price:14900, img:'images/shop/pack-recetas.svg', servings:null, weight:'PDF 50+ recetas', flavors:null, stock:999, badge:'NUEVO', featured:false }
 ];
 
 /* ================================================================

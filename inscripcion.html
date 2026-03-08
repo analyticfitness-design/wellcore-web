@@ -1090,6 +1090,16 @@
         var plan = card.getAttribute('data-plan');
         document.getElementById('selectedPlanName').textContent = planDisplayNames[plan] || plan;
         document.getElementById('selectedPlanInfo').style.display = 'block';
+        // Reset all buttons
+        document.querySelectorAll('.btn-plan').forEach(function(b) {
+          b.style.background = 'transparent';
+          b.style.borderColor = 'rgba(255,255,255,0.2)';
+          b.style.color = '#fff';
+        });
+        // Highlight selected button
+        this.style.background = '#E31E24';
+        this.style.borderColor = '#E31E24';
+        this.style.color = '#fff';
       });
     });
 
