@@ -2863,7 +2863,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <button class="acad-tab" onclick="acadSetTab('guias')" id="acad-btn-guias"><i class="fas fa-flask" style="margin-right:5px;font-size:.75rem;"></i>Ciencia</button>
         <button class="acad-tab" onclick="acadSetTab('videos')" id="acad-btn-videos"><i class="fab fa-youtube" style="margin-right:5px;font-size:.75rem;"></i>Videos</button>
         <button class="acad-tab" onclick="acadSetTab('recetas')" id="acad-btn-recetas"><i class="fas fa-bowl-food" style="margin-right:5px;font-size:.75rem;"></i>Recetas</button>
-        <button class="acad-tab" onclick="acadSetTab('archivos')" id="acad-btn-archivos"><i class="fas fa-folder-open" style="margin-right:5px;font-size:.75rem;"></i>Mis Archivos</button>
       </div>
 
       <!-- CALCULADORAS -->
@@ -3057,16 +3056,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="recipe-grid" id="recipe-grid"><!-- rendered by JS --></div>
       </div>
 
-      <!-- MIS ARCHIVOS (legacy) -->
-      <div class="acad-panel" id="acad-panel-archivos">
-        <div class="files-grid" id="files-grid"></div>
-        <div id="biblioteca-empty" style="display:none">
-          <div class="empty-state">
-            <i class="fas fa-folder-open" style="font-size:3rem;color:var(--gray);opacity:.35;margin-bottom:14px;display:block"></i>
-            <p style="font-size:1.05rem;line-height:1.7;max-width:400px;margin:0 auto">Tu coach subirá aquí tus documentos y planes personalizados.</p>
-          </div>
-        </div>
-      </div>
 
     </section>
 
@@ -6044,7 +6033,8 @@ function filterVideos(muscle) {
   var planLevel = planLevelMap[clientPlan] || 1;
   var planLabel = { esencial:'Esencial', metodo:'Método', elite:'Elite' };
   gridEl.textContent = '';
-  var filtered = muscle === 'Todo' ? VIDEOS : VIDEOS.filter(function(v){ return v.muscle === muscle; });
+  var allVideos = VIDEOS.filter(function(v){ return v.youtubeId !== ''; });
+  var filtered = muscle === 'Todo' ? allVideos : allVideos.filter(function(v){ return v.muscle === muscle; });
   filtered.forEach(function(v) {
     var required = planLevelMap[v.minPlan] || 1;
     var unlocked = planLevel >= required;
