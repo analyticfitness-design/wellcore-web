@@ -2287,19 +2287,21 @@
     });
     if (!client) { showToast('Cliente no encontrado'); return; }
 
+    // Abrir ventana ANTES del fetch (contexto de click directo → no bloqueada por el browser)
+    var win = window.open('about:blank', '_blank');
+    if (!win) { showToast('Activa ventanas emergentes para usar Ver Portal', 'error'); return; }
+
     apiFetch('/admin/impersonate', {
       method: 'POST',
       body: JSON.stringify({ client_id: client.id })
     })
       .then(function(r) { return r.json(); })
       .then(function(d) {
-        if (!d.token) { showToast('Error al obtener acceso al portal'); return; }
-        // Abre _preview.html con token|plan en el hash (nunca enviado al servidor)
-        // _preview.html guarda el token en sessionStorage y redirige al portal correcto
+        if (!d.token) { win.close(); showToast('Error al obtener acceso al portal: ' + (d.error || 'sin token')); return; }
         var plan = client.plan || '';
-        window.open('/_preview.html#' + d.token + '|' + plan, '_blank');
+        win.location.href = '/_preview.html#' + d.token + '|' + plan;
       })
-      .catch(function() { showToast('Error de conexión al abrir portal'); });
+      .catch(function() { win.close(); showToast('Error de conexión al abrir portal'); });
   }
 
   /* ─── RENDER: CHECK-INS ─── */
