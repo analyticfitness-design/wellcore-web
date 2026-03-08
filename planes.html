@@ -799,17 +799,6 @@
     }
     .footer-legal a:hover { color: rgba(255,255,255,0.5); }
 
-    /* Scroll top */
-    #scrollTop {
-      position: fixed; bottom: 32px; right: 32px;
-      width: 44px; height: 44px; background: #E31E24; color: #fff;
-      border: none; display: flex; align-items: center; justify-content: center;
-      font-size: 14px; cursor: pointer; opacity: 0; pointer-events: none;
-      transition: opacity 0.3s; z-index: 500;
-    }
-    #scrollTop.visible { opacity: 1; pointer-events: auto; }
-    #scrollTop:hover { background: #B8181D; }
-
     /* Misc */
     @keyframes pulse-dot {
       0%, 100% { transform: scale(1); }
@@ -1813,9 +1802,6 @@
     </div>
   </footer>
 
-  <!-- Scroll to top -->
-  <button id="scrollTop" aria-label="Volver arriba" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
-
   <!-- ============================================================
        SCRIPTS
   ============================================================ -->
@@ -1853,17 +1839,6 @@
         menu.classList.toggle('open', !isOpen);
         toggle.textContent = isOpen ? '\u2630' : '\u2715';
       });
-    })();
-
-    // --------------------------------------------------------
-    // Scroll-top button
-    // --------------------------------------------------------
-    (function() {
-      var btn = document.getElementById('scrollTop');
-      if (!btn) return;
-      window.addEventListener('scroll', function() {
-        btn.classList.toggle('visible', window.scrollY > 500);
-      }, { passive: true });
     })();
 
     // --------------------------------------------------------

@@ -250,6 +250,8 @@ input,textarea,select{font-family:'Inter',sans-serif}
   transition:all var(--transition);
 }
 .kpi-card:hover{border-color:var(--red);box-shadow:0 4px 24px rgba(0,0,0,0.25);transform:translateY(-2px)}
+.nutri-recipe-card:hover{border-color:rgba(227,30,36,.3)!important}
+@media(max-width:640px){.nutri-split-grid{grid-template-columns:1fr!important}#nutri-recipes-grid{grid-template-columns:1fr!important}}
 .kpi-label{
   font-family:'JetBrains Mono',monospace;
   font-size:.68rem;font-weight:500;
@@ -2837,6 +2839,164 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <div class="kpi-icon gold"><i class="fas fa-utensils"></i></div>
           <div class="kpi-label">Comidas Registradas</div>
           <div class="kpi-value" id="nutri-meals" style="font-family:var(--font-data,var(--font-mono));">0</div>
+        </div>
+      </div>
+
+      <!-- ── MÓDULO DE COACHING SEMANAL ── -->
+      <div id="nutri-coaching-module" style="background:#0d0d0d;border:1px solid rgba(227,30,36,0.2);border-left:3px solid #E31E24;padding:18px 20px;margin-bottom:16px;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(227,30,36,.04),transparent);pointer-events:none"></div>
+        <div style="position:relative;z-index:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#E31E24">// MÓDULO SEMANAL</span>
+            <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.25)">Auto-generado</span>
+          </div>
+          <p id="nutri-module-text" style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.7;margin:0">
+            <strong style="color:#fff">Objetivo de proteína:</strong> La proteína es el macro más crítico para preservar músculo. Tu meta es alcanzar al menos <span id="nutri-module-prot-goal" style="color:#E31E24">150g</span> al día. Divide en 4-5 tomas de <span id="nutri-module-per-meal" style="color:#E31E24">30-35g</span> para maximizar la síntesis proteica.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── DISTRIBUCIÓN DE MACROS + NUTRIENT TIMING ── -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px" class="nutri-split-grid">
+
+        <!-- Macro Ring Visual -->
+        <div style="background:var(--surface);border:1px solid var(--border);padding:18px;text-align:center">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px">Distribución Hoy</div>
+          <div style="position:relative;width:96px;height:96px;margin:0 auto 14px">
+            <svg viewBox="0 0 36 36" style="width:96px;height:96px;transform:rotate(-90deg)">
+              <!-- Background ring -->
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="3"/>
+              <!-- Protein arc (red) -->
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E31E24" stroke-width="3"
+                stroke-dasharray="40 60" stroke-linecap="butt" id="nutri-ring-prot"/>
+              <!-- Carbs arc (green) -->
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="#22C55E" stroke-width="3"
+                stroke-dasharray="35 65" stroke-linecap="butt" id="nutri-ring-carbs"
+                style="stroke-dashoffset:-40"/>
+              <!-- Fat arc (gold) -->
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="#d4a853" stroke-width="3"
+                stroke-dasharray="25 75" stroke-linecap="butt" id="nutri-ring-fat"
+                style="stroke-dashoffset:-75"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column">
+              <span id="nutri-ring-cal-display" style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;line-height:1">0</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.3)">kcal</span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:14px">
+            <div style="text-align:center">
+              <div style="width:8px;height:8px;border-radius:50%;background:#E31E24;margin:0 auto 3px"></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.4)">Prot</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;margin:0 auto 3px"></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.4)">Carbs</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:8px;height:8px;border-radius:50%;background:#d4a853;margin:0 auto 3px"></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.4)">Grasa</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nutrient Timing -->
+        <div style="background:var(--surface);border:1px solid var(--border);padding:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px">Timing Hoy</div>
+          <div id="nutri-timing-list" style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;background:rgba(227,30,36,.1);border:1px solid rgba(227,30,36,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="fas fa-dumbbell" style="font-size:10px;color:#E31E24"></i>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#fff;font-weight:600">Pre-Entreno</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.4)">~30-40g carbs + 20g prot</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="fas fa-bolt" style="font-size:10px;color:#22C55E"></i>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#fff;font-weight:600">Post-Entreno</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.4)">~30-40g prot + fruta</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;background:rgba(212,168,83,.07);border:1px solid rgba(212,168,83,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="fas fa-moon" style="font-size:10px;color:#d4a853"></i>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#fff;font-weight:600">Noche</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.4)">Proteína lenta (caseína/requesón)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RECETAS SUGERIDAS ── -->
+      <div style="background:var(--surface);border:1px solid var(--border);padding:20px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.06em">Recetas Sugeridas</h3>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;color:rgba(255,255,255,.3);text-transform:uppercase">Según tus macros restantes</span>
+        </div>
+        <div id="nutri-recipes-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+
+          <!-- Recipe cards (static demo, will be personalized when macros load) -->
+          <div class="nutri-recipe-card" onclick="showRecipeDetail('pollo-arroz')" style="background:#0d0d0d;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden">
+            <div style="background:linear-gradient(135deg,#1a0a0a,#111);padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04)">
+              <div style="font-size:22px;margin-bottom:6px">🍗</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.04em;color:#fff;line-height:1.2">Pollo + Arroz integral</div>
+            </div>
+            <div style="padding:10px 12px">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#E31E24;background:rgba(227,30,36,.08);border:1px solid rgba(227,30,36,.15);padding:2px 5px">45g prot</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#22C55E;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.15);padding:2px 5px">60g carbs</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.35)">~480 kcal · 25min</div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#E31E24,transparent)"></div>
+          </div>
+
+          <div class="nutri-recipe-card" onclick="showRecipeDetail('huevos-avena')" style="background:#0d0d0d;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden">
+            <div style="background:linear-gradient(135deg,#0a110a,#111);padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04)">
+              <div style="font-size:22px;margin-bottom:6px">🥚</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.04em;color:#fff;line-height:1.2">Huevos + Avena proteica</div>
+            </div>
+            <div style="padding:10px 12px">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#E31E24;background:rgba(227,30,36,.08);border:1px solid rgba(227,30,36,.15);padding:2px 5px">38g prot</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#22C55E;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.15);padding:2px 5px">45g carbs</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.35)">~380 kcal · 15min</div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#22C55E,transparent)"></div>
+          </div>
+
+          <div class="nutri-recipe-card" onclick="showRecipeDetail('salmón-batata')" style="background:#0d0d0d;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden">
+            <div style="background:linear-gradient(135deg,#0a0a11,#111);padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04)">
+              <div style="font-size:22px;margin-bottom:6px">🐟</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.04em;color:#fff;line-height:1.2">Salmón + Batata</div>
+            </div>
+            <div style="padding:10px 12px">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#E31E24;background:rgba(227,30,36,.08);border:1px solid rgba(227,30,36,.15);padding:2px 5px">42g prot</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#d4a853;background:rgba(212,168,83,.07);border:1px solid rgba(212,168,83,.15);padding:2px 5px">18g grasa</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.35)">~510 kcal · 20min</div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#d4a853,transparent)"></div>
+          </div>
+
+        </div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.2);margin-top:12px;text-align:center;letter-spacing:.08em">// RECETAS ADAPTADAS A LOS MACROS RESTANTES DEL DÍA</p>
+      </div>
+
+      <!-- Recipe Detail Modal -->
+      <div id="nutri-recipe-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:9999;align-items:center;justify-content:center;padding:20px">
+        <div style="background:#0d0d0d;border:1px solid rgba(255,255,255,.1);max-width:420px;width:100%;max-height:80vh;overflow-y:auto;position:relative">
+          <button onclick="closeRecipeModal()" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);width:28px;height:28px;cursor:pointer;font-size:12px;z-index:1">✕</button>
+          <div id="nutri-recipe-modal-body" style="padding:24px"></div>
         </div>
       </div>
 
@@ -6129,6 +6289,88 @@ function checkNutriUsage() {
 // Check usage on load
 if (localStorage.getItem('wc_token')) {
   checkNutriUsage();
+}
+
+// ── Recipe data (static, no user input)
+var RECIPES = {
+  'pollo-arroz': {
+    emoji:'🍗', name:'Pollo + Arroz integral',
+    kcal:480, prot:45, carbs:60, fat:9, time:'25min',
+    ingredientes:['180g pechuga de pollo','100g arroz integral (en crudo)','Aceite de oliva (1 cdta)','Sal, pimienta, ajo en polvo'],
+    pasos:['Cocina el arroz en agua con sal (20 min).','Sazona el pollo con sal, pimienta y ajo.','Cocina a la plancha 6-7 min por lado.','Sirve con arroz y verduras al gusto.']
+  },
+  'huevos-avena': {
+    emoji:'🥚', name:'Huevos + Avena proteica',
+    kcal:380, prot:38, carbs:45, fat:11, time:'15min',
+    ingredientes:['3 huevos enteros','80g avena en hojuelas','1 scoop proteína vainilla','Canela, stevia al gusto'],
+    pasos:['Prepara la avena con agua caliente (3-4 min).','Mezcla la proteína en polvo con la avena cocida.','Revuelve los huevos en sartén con aceite en spray.','Combina y añade canela y stevia.']
+  },
+  'salmon-batata': {
+    emoji:'🐟', name:'Salmón + Batata',
+    kcal:510, prot:42, carbs:38, fat:18, time:'20min',
+    ingredientes:['180g filete de salmón','150g batata (camote)','Limón, eneldo','Aceite de oliva (1 cdta)'],
+    pasos:['Precalienta horno a 200°C.','Corta la batata en cubos, hornea 15 min.','Sazona el salmón con limón y eneldo.','Cocina a la plancha 4-5 min por lado.']
+  }
+};
+
+function makeEl(tag, css, text) {
+  var el = document.createElement(tag);
+  if (css) el.style.cssText = css;
+  if (text !== undefined) el.textContent = text;
+  return el;
+}
+
+function showRecipeDetail(id) {
+  var recipeId = id.replace('salmón-batata','salmon-batata');
+  var r = RECIPES[recipeId]; if (!r) return;
+  var modal = document.getElementById('nutri-recipe-modal');
+  var body = document.getElementById('nutri-recipe-modal-body');
+  while (body.firstChild) body.removeChild(body.firstChild);
+
+  body.appendChild(makeEl('div','font-size:2.5rem;margin-bottom:12px', r.emoji));
+  body.appendChild(makeEl('h3',"font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.06em;margin-bottom:8px", r.name));
+
+  var pillsWrap = makeEl('div','display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px');
+  [{t:r.prot+'g prot',c:'#E31E24',b:'rgba(227,30,36,.08)',bd:'rgba(227,30,36,.2)'},
+   {t:r.carbs+'g carbs',c:'#22C55E',b:'rgba(34,197,94,.07)',bd:'rgba(34,197,94,.2)'},
+   {t:r.fat+'g grasa',c:'#d4a853',b:'rgba(212,168,83,.07)',bd:'rgba(212,168,83,.2)'},
+   {t:r.kcal+' kcal · '+r.time,c:'rgba(255,255,255,.4)',b:'rgba(255,255,255,.04)',bd:'rgba(255,255,255,.08)'}
+  ].forEach(function(p){
+    pillsWrap.appendChild(makeEl('span',"font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 7px;color:"+p.c+";background:"+p.b+";border:1px solid "+p.bd, p.t));
+  });
+  body.appendChild(pillsWrap);
+
+  body.appendChild(makeEl('div',"font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:8px",'Ingredientes'));
+  var ingList = makeEl('ul','margin:0 0 16px;padding-left:18px');
+  r.ingredientes.forEach(function(ing){ ingList.appendChild(makeEl('li','font-size:13px;color:rgba(255,255,255,.65);margin-bottom:4px',ing)); });
+  body.appendChild(ingList);
+
+  body.appendChild(makeEl('div',"font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:8px",'Preparación'));
+  var stepList = makeEl('ol','margin:0;padding-left:18px');
+  r.pasos.forEach(function(paso){ stepList.appendChild(makeEl('li','font-size:13px;color:rgba(255,255,255,.65);margin-bottom:6px',paso)); });
+  body.appendChild(stepList);
+
+  modal.style.display = 'flex';
+}
+
+function closeRecipeModal() {
+  document.getElementById('nutri-recipe-modal').style.display = 'none';
+}
+document.addEventListener('click', function(e){ if (e.target.id === 'nutri-recipe-modal') closeRecipeModal(); });
+
+function updateNutriRing(cal, prot, carbs, fat) {
+  var total = cal || 1;
+  var protArc = Math.min(prot * 4 / total * 100, 100);
+  var carbsArc = Math.min(carbs * 4 / total * 100, 100);
+  var fatArc = Math.min(fat * 9 / total * 100, 100);
+  var p = document.getElementById('nutri-ring-prot');
+  var c = document.getElementById('nutri-ring-carbs');
+  var f = document.getElementById('nutri-ring-fat');
+  if (p) p.setAttribute('stroke-dasharray', protArc + ' ' + (100 - protArc));
+  if (c) { c.setAttribute('stroke-dasharray', carbsArc + ' ' + (100-carbsArc)); c.style.strokeDashoffset = -protArc; }
+  if (f) { f.setAttribute('stroke-dasharray', fatArc + ' ' + (100-fatArc)); f.style.strokeDashoffset = -(protArc + carbsArc); }
+  var calDisp = document.getElementById('nutri-ring-cal-display');
+  if (calDisp) calDisp.textContent = cal || 0;
 }
 
 function handleNutriPhoto(input) {

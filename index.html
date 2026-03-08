@@ -4051,10 +4051,10 @@
     if (hero) hero.style.paddingTop = (bh + 72) + 'px';
   }
 
-  // Show with delay — setTimeout garantiza layout calculado post-show
+  // Apply offset before showing so there's no layout jump
   setTimeout(function(){
+    applyBarOffset();
     bar.classList.add('show');
-    setTimeout(applyBarOffset, 80);
   }, 1500);
   window.addEventListener('resize', applyBarOffset);
 
