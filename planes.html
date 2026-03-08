@@ -19,6 +19,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <!-- v7 Premium Fonts -->
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+  <!-- WellCore v7 Ultra-Premium Design System 2026 -->
+  <link rel="stylesheet" href="css/wellcore-v7.css">
   <!-- Font Awesome 6.4 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- v5 Design System -->
@@ -29,6 +34,12 @@
        PLANES.HTML v5 — Page-specific styles
        Base: wellcore-v5.css
     ============================================================ */
+
+    /* v7 Font Variables */
+    :root {
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
+    }
 
     /* v7 Typography Override — Urbanist + Anton */
     body {
@@ -964,10 +975,11 @@
        HERO
   ============================================================ -->
   <section class="hero-planes v5-grid-bg">
-    <div class="section-wrap">
+    <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+    <div class="section-wrap" style="position:relative;z-index:2;">
       <div class="hero-planes-inner">
         <p class="hero-eyebrow" data-aos="fade-down" data-aos-duration="600">// ELIGE TU PLAN &mdash; EMPIEZA EN 48H</p>
-        <h1 class="hero-h1" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+        <h1 class="hero-h1 v7-split-word" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
           <span class="v7-outline">PLANES Y</span><br><span>PRECIOS.</span>
         </h1>
         <p class="hero-sub" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
@@ -1006,13 +1018,13 @@
       <div class="pricing-grid">
 
         <!-- ESENCIAL -->
-        <div class="pricing-card v6-contain" data-v5-reveal data-v5-delay="1" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+        <div class="pricing-card v6-contain v7-glow-track" data-v5-reveal data-v5-delay="1" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
           <div class="pc-plan"><i class="fas fa-seedling" aria-hidden="true" style="color:#22C55E;margin-right:6px;"></i>PLAN ESENCIAL</div>
           <div class="pc-name">ESENCIAL</div>
           <div class="pc-desc">Entrena con proposito. Primer paso real hacia resultados medibles.</div>
           <div class="pc-price">
             <span class="pc-currency">$</span>
-            <span class="pc-amount" id="price-esencial">299.000</span>
+            <span class="pc-amount" id="price-esencial" style="font-family:var(--font-data,var(--font-mono));">299.000</span>
             <span class="pc-period">/mes</span>
           </div>
           <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-esencial">Facturado mensualmente</div>
@@ -1032,19 +1044,19 @@
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Guia de habitos y estilo de vida</li>
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Check-in semanal con coach</li>
           </ul>
-          <a href="pagar.html?plan=esencial" class="pc-cta v6-magnetic"><span>Empezar con Esencial &rarr;</span></a>
+          <a href="pagar.html?plan=esencial" class="pc-cta v6-magnetic v7-btn-primary v7-magnetic"><span>Empezar con Esencial &rarr;</span></a>
           <p class="pc-footer-note">// Cancela cuando quieras &mdash; sin penalidad</p>
         </div>
 
         <!-- METODO (FEATURED) -->
-        <div class="pricing-card pricing-card-featured v6-contain" data-v5-reveal data-v5-delay="2" data-aos="fade-up" data-aos-duration="600" data-aos-delay="120">
+        <div class="pricing-card pricing-card-featured v6-contain v7-glow-track" data-v5-reveal data-v5-delay="2" data-aos="fade-up" data-aos-duration="600" data-aos-delay="120">
           <div class="pc-popular-bar"><i class="fas fa-star" aria-hidden="true"></i> El plan más elegido por nuestros clientes</div>
           <div class="pc-plan"><i class="fas fa-chart-line" aria-hidden="true" style="color:#E31E24;margin-right:6px;"></i>PLAN METODO</div>
           <div class="pc-name">METODO</div>
           <div class="pc-desc">Entrenamiento + nutrición + habitos. El sistema completo para resultados reales.</div>
           <div class="pc-price">
             <span class="pc-currency" style="color:#E31E24;">$</span>
-            <span class="pc-amount v7-price-glow" id="price-metodo">399.000</span>
+            <span class="pc-amount v7-price-glow" id="price-metodo" style="font-family:var(--font-data,var(--font-mono));">399.000</span>
             <span class="pc-period">/mes</span>
           </div>
           <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-metodo">Facturado mensualmente</div>
@@ -1068,18 +1080,18 @@
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Check-in semanal en vivo con coach</li>
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Revision mensual por videollamada</li>
           </ul>
-          <a href="pagar.html?plan=metodo" class="pc-cta v6-magnetic"><span>Empezar con Metodo &rarr;</span></a>
+          <a href="pagar.html?plan=metodo" class="pc-cta v6-magnetic v7-btn-primary v7-magnetic"><span>Empezar con Metodo &rarr;</span></a>
           <p class="pc-footer-note">// Cancela cuando quieras &mdash; sin penalidad</p>
         </div>
 
         <!-- ELITE -->
-        <div class="pricing-card v6-contain" data-v5-reveal data-v5-delay="3" data-aos="fade-up" data-aos-duration="600" data-aos-delay="240">
+        <div class="pricing-card v6-contain v7-glow-track" data-v5-reveal data-v5-delay="3" data-aos="fade-up" data-aos-duration="600" data-aos-delay="240">
           <div class="pc-plan"><i class="fas fa-crown" aria-hidden="true" style="color:#FFD700;margin-right:6px;"></i>PLAN ELITE</div>
           <div class="pc-name">ELITE</div>
           <div class="pc-desc">Atencion total. Resultados sin excusas. Para quienes exigen lo mejor.</div>
           <div class="pc-price">
             <span class="pc-currency">$</span>
-            <span class="pc-amount" id="price-elite">549.000</span>
+            <span class="pc-amount" id="price-elite" style="font-family:var(--font-data,var(--font-mono));">549.000</span>
             <span class="pc-period">/mes</span>
           </div>
           <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-elite">Facturado mensualmente</div>
@@ -1098,7 +1110,7 @@
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Ciclo hormonal personalizado</li>
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Bloodwork / análisis de laboratorio</li>
           </ul>
-          <a href="pagar.html?plan=elite" class="pc-cta v6-magnetic"><span>Empezar con Elite &rarr;</span></a>
+          <a href="pagar.html?plan=elite" class="pc-cta v6-magnetic v7-btn-primary v7-magnetic"><span>Empezar con Elite &rarr;</span></a>
           <p class="pc-footer-note">// Cancela cuando quieras &mdash; sin penalidad</p>
         </div>
 
@@ -1652,7 +1664,7 @@
        FINAL CTA
   ============================================================ -->
   <section class="final-cta-section">
-    <div class="section-wrap">
+    <div class="section-wrap v7-reveal">
       <p class="final-cta-eyebrow" data-aos="fade-down">&#191;Todavia con dudas?</p>
       <h2 class="final-cta-h2" data-aos="fade-up" data-aos-delay="100">
         TU MEJOR VERSION<br>EMPIEZA <span>HOY.</span>
@@ -1661,7 +1673,7 @@
         El momento perfecto no existe. Pero 48 horas desde ahora, podrias tener ya tu primer programa en manos.
       </p>
       <div class="final-cta-buttons" data-aos="fade-up" data-aos-delay="300">
-        <a href="pagar.html?plan=metodo" class="btn-primary-lg v6-magnetic">Empezar ahora &rarr;</a>
+        <a href="pagar.html?plan=metodo" class="btn-primary-lg v6-magnetic v7-btn-primary v7-magnetic">Empezar ahora &rarr;</a>
         <a href="https://wa.me/573124904720?text=Hola%2C%20quiero%20hablar%20con%20un%20coach%20antes%20de%20decidir" target="_blank" rel="noopener" class="btn-wa">
           <span style="color:#25d366;font-weight:700;">WA</span>
           Habla con el coach primero
@@ -1679,7 +1691,7 @@
   <!-- ============================================================
        FOOTER
   ============================================================ -->
-  <footer data-v5-reveal>
+  <footer data-v5-reveal style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
     <div class="footer-inner">
       <div class="footer-grid">
         <div>
@@ -1749,6 +1761,7 @@
   <script src="js/v5-effects.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
   <script src="js/wellcore-v6.js" defer></script>
+  <script src="js/wellcore-v7.js" defer></script>
   <script>
     // AOS Init (v5 settings)
     AOS.init({ duration: 700, once: true, offset: 30 });

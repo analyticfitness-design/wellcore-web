@@ -35,7 +35,8 @@
       --green:     #22C55E;
       --font-head: 'Bebas Neue', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -429,6 +430,9 @@
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="../css/wellcore-premium.css">
 <link rel="stylesheet" href="../css/wellcore-v6.css">
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<link rel="stylesheet" href="../css/wellcore-v7.css">
 </head>
 <body>
 <div class="v6-scroll-progress" aria-hidden="true"></div>
@@ -471,12 +475,12 @@
 <!-- ============================================================
      HERO
 ============================================================ -->
-<section class="blog-hero">
+<section class="blog-hero v7-reveal">
   <div class="blog-hero-inner">
     <div class="blog-hero-top" data-aos="fade-up" data-aos-duration="700">
       <div>
         <span class="blog-label">// CONOCIMIENTO</span>
-        <h1 class="blog-title">
+        <h1 class="blog-title v7-split-word">
           BLOG<br>
           <span class="sub">wellcore fitness</span>
         </h1>
@@ -519,10 +523,10 @@
 <!-- ============================================================
      FEATURED ARTICLE
 ============================================================ -->
-<section class="featured-section">
+<section class="featured-section v7-reveal">
   <div class="featured-inner" data-aos="fade-up" data-aos-duration="700">
     <span class="featured-tag">// ARTICULO DESTACADO</span>
-    <a href="deficit-calorico.html" class="featured-card" data-post-cat="nutricion">
+    <a href="deficit-calorico.html" class="featured-card v7-glow-track" data-post-cat="nutricion">
       <div class="featured-img">
         <img src="../images/blog/deficit-calorico.jpg" alt="La Verdad Sobre el Deficit Calorico" loading="lazy" />
         <span class="featured-badge">Destacado</span>
@@ -543,7 +547,7 @@
 <!-- ============================================================
      ARTICLES GRID
 ============================================================ -->
-<section class="grid-section">
+<section class="grid-section v7-reveal">
   <div class="grid-inner">
     <div class="grid-header" data-aos="fade-up">
       <span class="grid-label">// TODOS LOS ARTICULOS</span>
@@ -554,7 +558,7 @@
     <div class="articles-grid" id="articlesGrid">
 
       <!-- Card 1: Deficit Calorico -->
-      <article class="art-card" data-cat="nutricion" data-aos="fade-up" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="nutricion" data-aos="fade-up" data-aos-duration="700">
         <a href="deficit-calorico.html">
           <div class="art-card-img">
             <img src="../images/blog/deficit-calorico.jpg" alt="Deficit Calorico" loading="lazy" />
@@ -574,7 +578,7 @@
       </article>
 
       <!-- Card 2: Hipertrofia -->
-      <article class="art-card" data-cat="entrenamiento" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="entrenamiento" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
         <a href="hipertrofia.html">
           <div class="art-card-img">
             <img src="../images/blog/hipertrofia.jpg" alt="Hipertrofia" loading="lazy" />
@@ -594,7 +598,7 @@
       </article>
 
       <!-- Card 3: Rebote -->
-      <article class="art-card" data-cat="fisiologia" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="fisiologia" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
         <a href="rebote-peso.html">
           <div class="art-card-img">
             <img src="../images/blog/rebote-peso.jpg" alt="Rebote de Peso" loading="lazy" />
@@ -614,7 +618,7 @@
       </article>
 
       <!-- Card 4: Estres y Cortisol -->
-      <article class="art-card" data-cat="fisiologia" data-aos="fade-up" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="fisiologia" data-aos="fade-up" data-aos-duration="700">
         <a href="estres-cortisol.html">
           <div class="art-card-img">
             <img src="../images/blog/estres-cortisol.jpg" alt="Estres y Cortisol" loading="lazy" />
@@ -634,7 +638,7 @@
       </article>
 
       <!-- Card 5: Sueno y Recuperacion -->
-      <article class="art-card" data-cat="recuperacion" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="recuperacion" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
         <a href="sueno-recuperacion.html">
           <div class="art-card-img">
             <img src="../images/blog/sueno-recuperacion.jpg" alt="Sueno y Recuperacion" loading="lazy" />
@@ -654,7 +658,7 @@
       </article>
 
       <!-- Card 6: Proteina y Musculo -->
-      <article class="art-card" data-cat="nutricion" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="nutricion" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
         <a href="proteina-muscular.html">
           <div class="art-card-img">
             <img src="../images/blog/proteina-muscular.jpg" alt="Proteina y Musculo" loading="lazy" />
@@ -674,7 +678,7 @@
       </article>
 
       <!-- Card 7: Cardio vs Pesas -->
-      <article class="art-card" data-cat="entrenamiento" data-aos="fade-up" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="entrenamiento" data-aos="fade-up" data-aos-duration="700">
         <a href="cardio-vs-pesas.html">
           <div class="art-card-img">
             <img src="../images/blog/cardio-vs-pesas.jpg" alt="Cardio vs Pesas" loading="lazy" />
@@ -694,7 +698,7 @@
       </article>
 
       <!-- Card 8: Periodizacion -->
-      <article class="art-card" data-cat="entrenamiento" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="entrenamiento" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
         <a href="periodizacion.html">
           <div class="art-card-img">
             <img src="../images/blog/periodizacion.jpg" alt="Periodizacion" loading="lazy" />
@@ -714,7 +718,7 @@
       </article>
 
       <!-- Card 9: Suplementos -->
-      <article class="art-card" data-cat="nutricion" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+      <article class="art-card v7-glow-track" data-cat="nutricion" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
         <a href="suplementos-ciencia.html">
           <div class="art-card-img">
             <img src="../images/blog/suplementos-ciencia.jpg" alt="Suplementos con Evidencia" loading="lazy" />
@@ -745,14 +749,14 @@
     <span class="blog-cta-label">// ¿LISTO PARA APLICARLO?</span>
     <h2 class="blog-cta-title">EL CONOCIMIENTO<br>SIN ACCION<br>NO CAMBIA NADA</h2>
     <p class="blog-cta-desc">Leer sobre ciencia del entrenamiento es el primer paso. El segundo es aplicarla con un plan personalizado y un coach que garantice que lo estas haciendo bien.</p>
-    <a href="../pagar.html" class="cta-start-btn v6-magnetic">
+    <a href="../pagar.html" class="cta-start-btn v6-magnetic v7-btn-primary v7-magnetic">
       Empezar mi programa &rarr;
     </a>
   </div>
 </div>
 
 <!-- FOOTER -->
-<footer id="footer">
+<footer id="footer" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
   <div class="footer-grid-wrap">
     <div class="footer-grid">
       <div>
@@ -845,5 +849,6 @@
   }
 </script>
 <script src="../js/wellcore-v6.js" defer></script>
+<script src="../js/wellcore-v7.js" defer></script>
 </body>
 </html>

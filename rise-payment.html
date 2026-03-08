@@ -21,6 +21,8 @@
             --white:    #ffffff;
             --gray:     rgba(255,255,255,0.45);
             --gray-dim: rgba(255,255,255,0.18);
+            --font-body: 'Axiforma', 'Inter', sans-serif;
+            --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
         }
 
         * {
@@ -71,6 +73,13 @@
         .hero {
             text-align: center;
             margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero > *:not(canvas) {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -308,6 +317,11 @@
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- v7 Premium Fonts -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 <!-- v6 Scroll Progress -->
@@ -326,9 +340,10 @@
     <!-- Main content -->
     <div class="container">
         <div class="hero">
-            <div style="margin-bottom:16px;"><span style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#E31E24;text-transform:uppercase;"><i class="fas fa-check-circle" aria-hidden="true"></i> Paso 3 de 3</span></div>
-            <h1>Confirmar Pago</h1>
-            <p class="subtitle">Completa tu inscripción al Reto RISE</p>
+            <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+            <div style="margin-bottom:16px;position:relative;z-index:2;"><span style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#E31E24;text-transform:uppercase;"><i class="fas fa-check-circle" aria-hidden="true"></i> Paso 3 de 3</span></div>
+            <h1 class="v7-split-word" style="position:relative;z-index:2;">Confirmar Pago</h1>
+            <p class="subtitle" style="position:relative;z-index:2;">Completa tu inscripción al Reto RISE</p>
         </div>
 
         <div class="payment-container v6-glass">
@@ -341,7 +356,7 @@
             <!-- Price Box -->
             <div class="price-box">
                 <div class="price-label">Monto a pagar</div>
-                <div class="price-value">$99.900</div>
+                <div class="price-value" style="font-family:var(--font-data,var(--font-mono));">$99.900</div>
                 <div class="price-subtext">COP / ~$25 USD</div>
             </div>
 
@@ -398,7 +413,7 @@
                 </div>
 
                 <!-- Botón de pago -->
-                <button id="risePayBtn" class="v6-magnetic" onclick="startRisePayment()" style="width:100%;background:#E31E24;border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;padding:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;">
+                <button id="risePayBtn" class="v6-magnetic v7-btn-primary" onclick="startRisePayment()" style="width:100%;background:#E31E24;border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;padding:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;">
                     <i class="fas fa-lock" aria-hidden="true"></i>
                     PAGAR $99.900 COP (~$25 USD)
                 </button>
@@ -512,5 +527,6 @@
         }
     </script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 </body>
 </html>

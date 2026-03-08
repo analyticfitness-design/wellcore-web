@@ -18,6 +18,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- v7 Premium Fonts -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="css/wellcore-v5.css">
 <!-- Premium Visual Redesign -->
@@ -48,7 +53,8 @@
   --white: #ffffff;
   --font-display: 'Bebas Neue', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-body: 'Inter', sans-serif;
+  --font-body: 'Axiforma', 'Inter', sans-serif;
+  --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
   --radius: 0;
   --radius-lg: 0;
   --transition: 0.1s linear;
@@ -457,23 +463,24 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
 <!-- ============================================================
      HERO
      ============================================================ -->
-<section class="hero" aria-label="Hero — Reclutamiento de Coaches" data-v5-reveal>
+<section class="hero" aria-label="Hero — Reclutamiento de Coaches" data-v5-reveal style="position:relative;overflow:hidden;">
+  <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="hero-content v6-glass">
+  <div class="hero-content v6-glass" style="position:relative;z-index:2;">
     <div class="hero-badge" data-aos="fade-down">
       <span class="hero-badge-dot"></span>
       <i class="fas fa-clock" aria-hidden="true"></i> PLAZAS LIMITADAS — APLICA HOY
     </div>
-    <h1 class="hero-title v6-glow-text" data-aos="fade-up" data-aos-delay="80">
+    <h1 class="hero-title v6-glow-text v7-split-word" data-aos="fade-up" data-aos-delay="80">
       TRABAJA CON<br>EL MÉTODO<br><span class="accent">WELLCORE</span>
     </h1>
     <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="160">
       Aplica como coach certificado y haz crecer tu negocio con nuestra plataforma. Infraestructura completa, metodología probada y un equipo que te respalda en cada paso.
     </p>
     <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
-      <a href="#aplicar" class="btn-primary btn-red btn-v5 btn-v5-primary v6-magnetic"><div class="btn-bg"></div><span class="btn-text">ENVIAR MI APLICACIÓN &rarr;</span></a>
-      <a href="#beneficios" class="btn-outline btn-v5 btn-v5-dark v6-magnetic"><div class="btn-bg"></div><span class="btn-text"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> VER BENEFICIOS</span></a>
+      <a href="#aplicar" class="btn-primary btn-red btn-v5 btn-v5-primary v6-magnetic v7-btn-primary v7-magnetic"><div class="btn-bg"></div><span class="btn-text">ENVIAR MI APLICACIÓN &rarr;</span></a>
+      <a href="#beneficios" class="btn-outline btn-v5 btn-v5-dark v6-magnetic v7-btn-ghost"><div class="btn-bg"></div><span class="btn-text"><span style="color:#00D9FF;font-weight:700;">&#10003;</span> VER BENEFICIOS</span></a>
     </div>
     <div class="hero-stats" data-aos="fade-up" data-aos-delay="320">
       <div class="hero-stat">
@@ -524,32 +531,32 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
     </div>
 
     <div class="benefits-grid">
-      <div class="benefit-card" data-aos="fade-up" data-aos-delay="60">
+      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="60">
         <div class="benefit-icon"><i class="fas fa-dollar-sign" aria-hidden="true"></i></div>
         <div class="benefit-title">INGRESOS SUPERIORES AL MERCADO</div>
         <p class="benefit-desc">Genera más de lo que ganarías solo. Sin techo. Sin límite de clientes. Mientras más creces, más ganas — la plataforma escala contigo sin costos adicionales de infraestructura.</p>
       </div>
-      <div class="benefit-card" data-aos="fade-up" data-aos-delay="120">
+      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="120">
         <div class="benefit-icon"><i class="fas fa-server" aria-hidden="true"></i></div>
         <div class="benefit-title">INFRAESTRUCTURA COMPLETA</div>
         <p class="benefit-desc">Portal de clientes, sistema de pagos seguro, seguimiento de progreso, check-ins automáticos y gestión de suscripciones. Todo listo desde el día uno, sin costos adicionales.</p>
       </div>
-      <div class="benefit-card" data-aos="fade-up" data-aos-delay="180">
+      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="180">
         <div class="benefit-icon"><i class="fas fa-diagram-project" aria-hidden="true"></i></div>
         <div class="benefit-title">PROGRAMAS DISEÑADOS PARA TI</div>
         <p class="benefit-desc">Nuestro equipo especializado co-crea los planes de entrenamiento y nutrición personalizados para cada uno de tus clientes, alineados con tu metodología y estilo como coach.</p>
       </div>
-      <div class="benefit-card" data-aos="fade-up" data-aos-delay="240">
+      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="240">
         <div class="benefit-icon"><i class="fas fa-headset" aria-hidden="true"></i></div>
         <div class="benefit-title">SOPORTE TÉCNICO Y OPERATIVO</div>
         <p class="benefit-desc">Acompañamiento real en cada paso: onboarding inicial, gestión de plataforma, resolución de problemas técnicos y soporte operativo continuo según tu plan.</p>
       </div>
-      <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="300">
         <div class="benefit-icon"><i class="fas fa-user-tie" aria-hidden="true"></i></div>
         <div class="benefit-title">MARCA PERSONAL</div>
         <p class="benefit-desc">Tu imagen, tu estilo, tu identidad. WellCore te ayuda a construir y posicionar tu marca personal como coach de élite, diferenciándote en un mercado cada vez más competitivo.</p>
       </div>
-      <div class="benefit-card" data-aos="fade-up" data-aos-delay="360">
+      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="360">
         <div class="benefit-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
         <div class="benefit-title">COMUNIDAD DE ALTO NIVEL</div>
         <p class="benefit-desc">Accede a una red exclusiva de coaches certificados WellCore, recursos educativos de élite, actualizaciones de metodología y mentoría continua de coaches senior.</p>
@@ -570,7 +577,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
     </div>
 
     <div style="display:flex;justify-content:center;" data-aos="fade-up" data-aos-delay="100">
-      <div class="plan-card featured" style="max-width:560px;width:100%;" data-v5-reveal>
+      <div class="plan-card featured v7-glow-track" style="max-width:560px;width:100%;" data-v5-reveal>
         <div class="plan-badge profesional">&#9733; MODELO ÚNICO WELLCORE</div>
         <div class="plan-revenue" style="margin-bottom:4px;">
           <span class="plan-revenue-pct" style="font-size:clamp(28px,4vw,44px);">EQUIPO COMPLETO</span>
@@ -592,7 +599,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
         <div style="background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);padding:14px 20px;margin:20px 0;font-size:12px;color:rgba(255,255,255,0.6);font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;">
           WellCore cubre toda la infraestructura: procesamiento de pagos, plataforma, soporte operativo y administración. Sin costos ocultos para el coach.
         </div>
-        <a href="#aplicar" class="plan-cta solid btn-red btn-v5 btn-v5-primary v6-magnetic"><div class="btn-bg"></div><span class="btn-text">APLICAR AHORA</span></a>
+        <a href="#aplicar" class="plan-cta solid btn-red btn-v5 btn-v5-primary v6-magnetic v7-btn-primary v7-magnetic"><div class="btn-bg"></div><span class="btn-text">APLICAR AHORA</span></a>
       </div>
     </div>
   </div>
@@ -687,7 +694,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
      APPLICATION FORM
      ============================================================ -->
 <section class="form-section v6-lazy-section" id="aplicar" aria-label="Formulario de Aplicación" data-v5-reveal>
-  <div class="container">
+  <div class="container v7-reveal">
     <div class="form-layout">
 
       <!-- Sidebar -->
@@ -1059,7 +1066,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
 <!-- ============================================================
      FOOTER
      ============================================================ -->
-<footer>
+<footer style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
   <div class="footer-logo">WELL<span>CORE</span></div>
   <div class="footer-tagline">MÉTODO DE ÉLITE — RESULTADOS REALES</div>
   <div class="footer-links">
@@ -1377,6 +1384,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
 <script src="js/v5-effects.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>AOS.init({duration:700,once:true});</script>
 </body>

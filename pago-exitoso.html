@@ -31,6 +31,8 @@
             --white:     #FFFFFF;
             --red-dark:  #B8181D;
             --accent:    #00D9FF;
+            --font-body: 'Axiforma', 'Inter', sans-serif;
+            --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
         }
 
         body {
@@ -480,6 +482,9 @@
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 
@@ -520,7 +525,7 @@
         <div class="success-label" id="pageLabel">Verificando pago</div>
 
         <!-- Title dinamico -->
-        <h1 class="success-title" id="pageTitle">
+        <h1 class="success-title v7-split-word" id="pageTitle">
             <span class="highlight" id="titleWord">VERIFICANDO</span> <span id="titleWord2">PAGO</span>
         </h1>
 
@@ -645,7 +650,7 @@
 </main>
 
 <!-- FOOTER -->
-<footer id="footer">
+<footer id="footer" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
     <div class="ft-wrap">
         <div class="ft-copy">
             &copy; 2026 WellCore Fitness &mdash; Todos los derechos reservados
@@ -942,5 +947,6 @@
 </script>
 <script src="js/chat-widget.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 </body>
 </html>

@@ -31,6 +31,8 @@
             --green:        #22C55E;
             --radius:       12px;
             --radius-sm:    8px;
+            --font-body: 'Axiforma', 'Inter', sans-serif;
+            --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1046,6 +1048,11 @@
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- v7 Premium Fonts -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 
     <!-- ──────── v6 GAMIFICATION STYLES ──────── -->
     <style>
@@ -1267,17 +1274,17 @@
                 </div>
 
                 <!-- Hero Countdown -->
-                <div class="card" id="heroCountdownCard" style="background: linear-gradient(135deg, var(--red-dim) 0%, var(--surface) 100%); border: 1px solid rgba(227,30,36,0.3); padding: 30px; text-align: center; margin-bottom: 30px;">
+                <div class="card v7-glow-track" id="heroCountdownCard" style="background: linear-gradient(135deg, var(--red-dim) 0%, var(--surface) 100%); border: 1px solid rgba(227,30,36,0.3); padding: 30px; text-align: center; margin-bottom: 30px;">
                     <!-- Estado: pendiente (hasta que el coach suba el plan) -->
                     <div id="heroPending" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
                         <div style="font-size:2rem;opacity:0.4;">⏳</div>
-                        <div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:.08em;color:var(--gray);">PROGRAMA EN PREPARACIÓN</div>
+                        <div class="v7-split-word" style="font-family:'Bebas Neue';font-size:22px;letter-spacing:.08em;color:var(--gray);">PROGRAMA EN PREPARACIÓN</div>
                         <p style="color:var(--gray);font-size:13px;max-width:260px;line-height:1.5;">Tu coach está personalizando tu plan. El contador inicia cuando tu programa esté listo.</p>
                     </div>
                     <!-- Estado: activo (una vez que el plan existe) -->
                     <div id="heroActive" style="display:none;">
                         <div style="font-family: 'Bebas Neue'; font-size: 60px; color: var(--red); margin-bottom: 16px; line-height: 1;">
-                            <span id="dashCountdownDays">0</span> <span style="font-size:30px;color:var(--gray);">de 30</span>
+                            <span id="dashCountdownDays" style="font-family:var(--font-data,var(--font-mono));">0</span> <span style="font-size:30px;color:var(--gray);">de 30</span>
                         </div>
                         <div style="height: 8px; background: var(--gray-dim); border-radius: 5px; margin-bottom: 16px; overflow: hidden;">
                             <div id="dashCountdownBar" style="height: 100%; background: linear-gradient(90deg, var(--red), #ff2040); width: 0%; transition: width 0.5s ease;"></div>
@@ -1287,7 +1294,7 @@
                 </div>
 
                 <!-- ──────── v6 GAMIFICATION: Week Tracker + XP + Badges ──────── -->
-                <div class="card" style="padding: 24px; margin-bottom: 20px; text-align: center; background: linear-gradient(135deg, var(--surface) 0%, rgba(227,30,36,0.03) 100%); border: 1px solid rgba(255,255,255,0.06);">
+                <div class="card v7-glow-track" style="padding: 24px; margin-bottom: 20px; text-align: center; background: linear-gradient(135deg, var(--surface) 0%, rgba(227,30,36,0.03) 100%); border: 1px solid rgba(255,255,255,0.06);">
                     <!-- Week Tracker -->
                     <div class="v6-week-tracker-label">Semana Actual</div>
                     <div class="v6-week-tracker" style="display:flex;gap:8px;justify-content:center;margin:0 0 20px;">
@@ -1303,7 +1310,7 @@
                     <!-- XP Bar -->
                     <div class="v6-xp-bar" style="margin:0 auto 18px;max-width:400px;">
                         <div class="v6-xp-fill" style="--v6-xp-percent:73%;"></div>
-                        <span class="v6-xp-label">Nivel 4 &middot; 730/1000 XP</span>
+                        <span class="v6-xp-label" style="font-family:var(--font-data,var(--font-mono));">Nivel 4 &middot; 730/1000 XP</span>
                     </div>
 
                     <!-- Badges -->
@@ -4886,6 +4893,7 @@ function renderRiseSupplementsInteractive(container) {
 })();
 </script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 <script>
 // v6 Skeleton loading — shimmers countdown & stat values while data loads
 (function(){

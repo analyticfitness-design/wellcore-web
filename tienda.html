@@ -20,6 +20,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- v7 Premium Fonts -->
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+  <!-- WellCore v7 Ultra-Premium Design System 2026 -->
+  <link rel="stylesheet" href="css/wellcore-v7.css">
 
   <!-- AOS CSS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
@@ -53,7 +58,8 @@
 
       --font-mono:   'JetBrains Mono', monospace;
       --font-display:'Bebas Neue', cursive;
-      --font-body:   'Inter', sans-serif;
+      --font-body:   'Axiforma', 'Inter', sans-serif;
+      --font-data:   'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
 
       --sidebar-w:   200px;
       --navbar-h:    64px;
@@ -1497,11 +1503,12 @@
     </header>
 
     <!-- HERO FEATURE BANNER -->
-    <section id="hero-feature" aria-label="Producto destacado" data-v5-reveal>
-      <span class="hero-badge">&#9679; PRODUCTO DESTACADO</span>
-      <div class="hero-left">
+    <section id="hero-feature" aria-label="Producto destacado" data-v5-reveal style="position:relative;overflow:hidden;">
+      <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+      <span class="hero-badge" style="position:relative;z-index:2;">&#9679; PRODUCTO DESTACADO</span>
+      <div class="hero-left" style="position:relative;z-index:2;">
         <p class="hero-cat">PROTEINA / MACROBLENDS</p>
-        <h2 class="hero-name">PROTEINA WHEY BLEND 4 LB</h2>
+        <h2 class="hero-name v7-split-word">PROTEINA WHEY BLEND 4 LB</h2>
         <p class="hero-tagline">
           Proteína de suero de leche blend premium de 4 libras.<br />
           60 servicios de pura proteína de alta calidad para construccion muscular.<br />
@@ -1510,19 +1517,19 @@
         <div class="hero-meta">
           <div>
             <span class="hero-price-label">PRECIO COP</span>
-            <span class="hero-price">$280.000</span>
+            <span class="hero-price" style="font-family:var(--font-data,var(--font-mono));">$280.000</span>
           </div>
           <div>
             <p class="hero-stock">ENVIO GRATIS</p>
             <p class="hero-stock"><strong>SOLO COLOMBIA</strong></p>
           </div>
         </div>
-        <button class="hero-cta btn-v5 btn-v5-primary v6-magnetic" onclick="heroAddToCart()">
+        <button class="hero-cta btn-v5 btn-v5-primary v6-magnetic v7-btn-primary v7-magnetic" onclick="heroAddToCart()">
           <div class="btn-bg"></div>
           <span class="btn-text">AGREGAR AL CARRITO &rarr;</span>
         </button>
       </div>
-      <div class="hero-right" style="background-image:url('https://suplementosgainslab.com/cdn/shop/files/whey_4lb_vainilla-removebg-preview.png');background-size:contain;background-repeat:no-repeat;background-position:center">
+      <div class="hero-right" style="background-image:url('https://suplementosgainslab.com/cdn/shop/files/whey_4lb_vainilla-removebg-preview.png');background-size:contain;background-repeat:no-repeat;background-position:center;position:relative;z-index:2;">
         <span class="hero-right-label">WHEY BLEND &mdash; 4 LB &mdash; 60 SERVICIOS</span>
       </div>
     </section>
@@ -1535,7 +1542,7 @@
     </div>
 
     <!-- PRODUCTS GRID -->
-    <div id="products-grid" role="list" aria-label="Catalogo de productos">
+    <div id="products-grid" class="v7-reveal" role="list" aria-label="Catalogo de productos">
       <!-- Cards injected by JS -->
       <div id="empty-state" role="listitem">
         <span style="font-size:48px;color:var(--border);font-weight:700;font-family:var(--font-mono)">//</span>
@@ -1592,7 +1599,7 @@
 <!-- ================================================================
      FOOTER
 ================================================================ -->
-<footer id="footer" role="contentinfo">
+<footer id="footer" role="contentinfo" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
   <div class="footer-brand">WELL<span>CORE</span> FITNESS</div>
   <p class="footer-mono">TIENDA OFICIAL &mdash; &copy; 2026 &mdash; SOLO ENVIOS EN COLOMBIA</p>
   <p class="footer-mono">TODOS LOS PRECIOS EN COP (PESOS COLOMBIANOS)</p>
@@ -1764,7 +1771,7 @@ function buildCard(product) {
   const isFeatured = product.featured;
 
   const card = document.createElement('article');
-  card.className = 'product-card' + (isFeatured ? ' featured' : '');
+  card.className = 'product-card v7-glow-track' + (isFeatured ? ' featured' : '');
   card.setAttribute('role', 'listitem');
   card.setAttribute('data-id', product.id);
   card.setAttribute('data-cat', product.cat);
@@ -2161,6 +2168,7 @@ updateCartUI();
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 <script>
   AOS.init({ duration: 500, easing: 'linear', once: true, offset: 60 });
 </script>

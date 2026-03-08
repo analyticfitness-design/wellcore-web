@@ -49,10 +49,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
   <!-- AOS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <!-- Google Fonts -->
+  <!-- Google Fonts + v7 Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- v7 Premium Fonts: Axiforma (body), DIN Next LT Pro (data) -->
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
 
   <style>
     /* ============================================================
@@ -71,9 +75,10 @@
       --white:     #ffffff;
       --gray:      rgba(255,255,255,0.45);
       --gray-dim:  rgba(255,255,255,0.18);
-      --font-head: 'Bebas Neue', sans-serif;
+      --font-head: 'Bebas Neue', Impact, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', system-ui, sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
       --red-dark: #B8181D;
       --accent: #00D9FF;
       --green: #22C55E;
@@ -298,6 +303,15 @@
       position: relative;
       overflow: hidden;
     }
+    /* v7 Canvas particles */
+    #hero .v7-particles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
     /* Grid overlay */
     #hero::before {
       content: '';
@@ -473,15 +487,16 @@
       border-left: 1px solid var(--border);
     }
     .hero-stat-num {
-      font-family: var(--font-head);
+      font-family: var(--font-data, var(--font-head));
       font-size: 32px;
       line-height: 1;
       color: var(--white);
       display: block;
+      font-weight: 700;
     }
     .hero-stat-num.red { color: var(--red); }
     .hero-stat-label {
-      font-family: var(--font-mono);
+      font-family: var(--font-data, var(--font-mono));
       font-size: 8px;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -1051,11 +1066,13 @@
       margin-bottom: 0;
     }
     .plan-price {
-      font-family: var(--font-head);
+      font-family: var(--font-data, var(--font-head));
       font-size: 44px;
       line-height: 1;
       color: var(--white);
       margin-bottom: 4px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
     .plan-price-period {
       font-family: var(--font-mono);
@@ -2490,6 +2507,8 @@
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <!-- WellCore v6 Design System 2026 -->
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 <!-- v6 Scroll Progress -->
@@ -2585,6 +2604,8 @@
      2. HERO
 ============================================================ -->
 <section id="hero">
+  <!-- v7 Canvas Particles -->
+  <canvas class="v7-particles" data-v7-particles aria-hidden="true"></canvas>
   <div class="hero-side-photo">
     <img src="images/coach/IMG_7580.png" alt="WellCore Fitness Coach" fetchpriority="high" decoding="async" width="600" height="800" />
   </div>
@@ -2599,15 +2620,15 @@
       <span>Basado en Evidencia</span>
     </div>
 
-    <!-- Beta badge -->
+    <!-- Badge -->
     <div class="hero-badge">
       <div class="badge-dot"></div>
-      <i class="fas fa-shield-alt" aria-hidden="true" style="font-size:9px;margin-right:4px;"></i>BETA &middot; ACCESO FUNDADOR
+      <i class="fas fa-shield-alt" aria-hidden="true" style="font-size:9px;margin-right:4px;"></i>ACCESO FUNDADOR &middot; 2026
     </div>
 
-    <!-- Main headline -->
-    <h1 class="hero-headline">SIN MILAGROS,</h1>
-    <h1 class="hero-headline-2"><em>solo</em> CIENCIA</h1>
+    <!-- Main headline — v7 kinetic typography -->
+    <h1 class="hero-headline v7-split-word">SIN MILAGROS,</h1>
+    <h1 class="hero-headline-2"><em>solo</em> <span class="v7-split-word">CIENCIA</span></h1>
 
     <!-- Subtitle -->
     <p class="hero-subtitle">Coaching 1-1 completamente personalizado.</p>
@@ -2619,10 +2640,10 @@
       <div class="hero-rule-line"></div>
     </div>
 
-    <!-- Stats bar -->
-    <div class="hero-stats">
+    <!-- Stats bar — v7 glass effect -->
+    <div class="hero-stats" style="background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;">
       <div class="hero-stat">
-        <span class="hero-stat-num">1:1</span>
+        <span class="hero-stat-num" data-v7-count="1">1:1</span>
         <span class="hero-stat-label"><i class="fas fa-comments" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Atenci&oacute;n Directa</span>
       </div>
       <div class="hero-stat">
@@ -2630,22 +2651,22 @@
         <span class="hero-stat-label"><i class="fas fa-sync-alt" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Ajuste de Plan</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num red">BETA</span>
-        <span class="hero-stat-label"><i class="fas fa-rocket" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Acceso Fundador</span>
+        <span class="hero-stat-num red">2026</span>
+        <span class="hero-stat-label"><i class="fas fa-rocket" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Lanzamiento</span>
       </div>
     </div>
 
-    <!-- CTA buttons -->
+    <!-- CTA buttons — v7 premium -->
     <div class="hero-ctas">
-      <a href="/inscripcion.html" class="btn-red v6-magnetic"><div class="btn-bg"></div><span class="btn-text">Comenzar Ahora &rarr;</span></a>
-      <a href="planes.html" class="btn-outline">Ver Planes</a>
+      <a href="/inscripcion.html" class="btn-red v7-btn-primary v7-magnetic"><div class="btn-bg"></div><span class="btn-text">Comenzar Ahora &rarr;</span></a>
+      <a href="planes.html" class="btn-outline v7-btn-ghost">Ver Planes</a>
     </div>
 
-    <!-- Price pills -->
+    <!-- Price pills — DIN Next LT Pro data font -->
     <div class="hero-prices">
-      <span class="price-pill">ESENCIAL <strong>$399k</strong> COP/mes</span>
-      <span class="price-pill">M&Eacute;TODO <strong>$504k</strong> COP/mes</span>
-      <span class="price-pill">&Eacute;LITE <strong>$630k</strong> COP/mes</span>
+      <span class="price-pill" style="font-family:var(--font-data,var(--font-mono));">ESENCIAL <strong>$399k</strong> COP/mes</span>
+      <span class="price-pill" style="font-family:var(--font-data,var(--font-mono));">M&Eacute;TODO <strong>$504k</strong> COP/mes</span>
+      <span class="price-pill" style="font-family:var(--font-data,var(--font-mono));">&Eacute;LITE <strong>$630k</strong> COP/mes</span>
     </div>
 
   </div>
@@ -2673,7 +2694,7 @@
         </div>
 
         <div class="rise-ctas">
-          <a href="/rise-enroll.html" class="btn-red v6-magnetic"><div class="btn-bg"></div><span class="btn-text">Unirme al Reto &rarr;</span></a>
+          <a href="/rise-enroll.html" class="btn-red v7-btn-primary v7-magnetic"><div class="btn-bg"></div><span class="btn-text">Unirme al Reto &rarr;</span></a>
           <a href="/rise.html" class="rise-cta-secondary">Ver Detalles</a>
         </div>
 
@@ -2746,7 +2767,7 @@
   <div class="trust-layout">
 
     <!-- LEFT: Statement -->
-    <div class="trust-left" data-aos="fade-right">
+    <div class="trust-left v7-reveal" data-aos="fade-right">
       <span class="trust-eyebrow"><i class="fas fa-flask" aria-hidden="true" style="margin-right:5px;"></i>POR QU&Eacute; WELLCORE FUNCIONA</span>
       <p class="trust-statement">
         El <em>80%</em> de los programas fallan porque no fueron dise&ntilde;ados <em>para ti.</em>
@@ -2793,10 +2814,10 @@
 <section id="about">
 
   <!-- Top statement band -->
-  <div class="about-statement-band" data-aos="fade-up">
+  <div class="about-statement-band v7-reveal" data-aos="fade-up">
     <div class="about-statement-text">
       <span class="about-tag">WELLCORE FITNESS &mdash; NUESTRO ENFOQUE</span>
-      <h2 class="about-quote">
+      <h2 class="about-quote v7-split-word">
         Sin dogmas.<br>
         Sin atajos.<br>
         <em>Solo ciencia aplicada.</em>
@@ -2861,8 +2882,8 @@
 
   <div class="proceso-steps-v2">
 
-    <div class="proceso-step-v2" data-aos="fade-up" data-aos-delay="0">
-      <div class="paso-num-big">01</div>
+    <div class="proceso-step-v2 v7-reveal" data-aos="fade-up" data-aos-delay="0">
+      <div class="paso-num-big" style="font-family:var(--font-data,var(--font-head));">01</div>
       <span class="paso-label">01 &mdash; Diagn&oacute;stico</span>
       <h3 class="paso-title-v2">DIAGN&Oacute;STICO<br>REAL</h3>
       <p class="paso-desc-v2">
@@ -2870,8 +2891,8 @@
       </p>
     </div>
 
-    <div class="proceso-step-v2" data-aos="fade-up" data-aos-delay="100">
-      <div class="paso-num-big">02</div>
+    <div class="proceso-step-v2 v7-reveal" data-aos="fade-up" data-aos-delay="100">
+      <div class="paso-num-big" style="font-family:var(--font-data,var(--font-head));">02</div>
       <span class="paso-label">02 &mdash; Programa</span>
       <h3 class="paso-title-v2">PROGRAMA<br>INDIVIDUAL</h3>
       <p class="paso-desc-v2">
@@ -2879,8 +2900,8 @@
       </p>
     </div>
 
-    <div class="proceso-step-v2" data-aos="fade-up" data-aos-delay="200">
-      <div class="paso-num-big">03</div>
+    <div class="proceso-step-v2 v7-reveal" data-aos="fade-up" data-aos-delay="200">
+      <div class="paso-num-big" style="font-family:var(--font-data,var(--font-head));">03</div>
       <span class="paso-label">03 &mdash; Evoluci&oacute;n</span>
       <h3 class="paso-title-v2">AJUSTE<br>CONTINUO</h3>
       <p class="paso-desc-v2">
@@ -2906,7 +2927,7 @@
 
       <!-- Plan Esencial -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="0">
-        <div class="plan-card v6-contain">
+        <div class="plan-card v6-contain v7-glow-track">
           <div class="plan-name">ESENCIAL</div>
           <div class="plan-price">$399.000</div>
           <div class="plan-price-period">COP / mes</div>
@@ -2925,7 +2946,7 @@
 
       <!-- Plan Metodo (featured) -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="plan-card featured v6-contain">
+        <div class="plan-card featured v6-contain v7-glow-track">
           <div class="popular-badge"><i class="fas fa-star" aria-hidden="true"></i> M&Aacute;S POPULAR</div>
           <div class="plan-name">M&Eacute;TODO</div>
           <div class="plan-price">$504.000</div>
@@ -2946,7 +2967,7 @@
 
       <!-- Plan Elite -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="plan-card v6-contain">
+        <div class="plan-card v6-contain v7-glow-track">
           <div class="plan-name">&Eacute;LITE</div>
           <div class="plan-price">$630.000</div>
           <div class="plan-price-period">COP / mes</div>
@@ -3151,7 +3172,7 @@
   <div class="blog-grid">
 
     <!-- Blog Card 1: Deficit Calorico -->
-    <a href="blog/deficit-calorico.html" class="blog-card" data-aos="fade-up" data-aos-delay="0">
+    <a href="blog/deficit-calorico.html" class="blog-card v7-glow-track" data-aos="fade-up" data-aos-delay="0">
       <div class="blog-img">
         <img src="images/blog/deficit-calorico.jpg" alt="D&eacute;ficit Cal&oacute;rico" loading="lazy" decoding="async" width="400" height="240" />
       </div>
@@ -3167,7 +3188,7 @@
     </a>
 
     <!-- Blog Card 2: Hipertrofia -->
-    <a href="blog/hipertrofia.html" class="blog-card" data-aos="fade-up" data-aos-delay="100">
+    <a href="blog/hipertrofia.html" class="blog-card v7-glow-track" data-aos="fade-up" data-aos-delay="100">
       <div class="blog-img">
         <img src="images/blog/hipertrofia.jpg" alt="Hipertrofia" loading="lazy" decoding="async" width="400" height="240" />
       </div>
@@ -3183,7 +3204,7 @@
     </a>
 
     <!-- Blog Card 3: Rebote de Peso -->
-    <a href="blog/rebote-peso.html" class="blog-card" data-aos="fade-up" data-aos-delay="200">
+    <a href="blog/rebote-peso.html" class="blog-card v7-glow-track" data-aos="fade-up" data-aos-delay="200">
       <div class="blog-img">
         <img src="images/blog/rebote-peso.jpg" alt="Rebote de Peso" loading="lazy" decoding="async" width="400" height="240" />
       </div>
@@ -3308,9 +3329,9 @@
       </div>
     </div>
 
-    <div class="faq-cta-wrap" data-aos="fade-up">
+    <div class="faq-cta-wrap v7-reveal" data-aos="fade-up">
       <p class="faq-cta-label">&iquest;Tienes otra pregunta?</p>
-      <a href="https://wa.me/573124904720" class="btn-red"><div class="btn-bg"></div><span class="btn-text">Agenda tu Consulta Gratuita &rarr;</span></a>
+      <a href="https://wa.me/573124904720" class="btn-red v7-btn-primary v7-magnetic"><div class="btn-bg"></div><span class="btn-text">Agenda tu Consulta Gratuita &rarr;</span></a>
     </div>
   </div>
 </section>
@@ -3322,15 +3343,15 @@
 ============================================================ -->
 <section id="cta-final">
   <div class="container">
-    <div class="cta-inner" data-aos="fade-up">
-      <h2 class="cta-headline">
+    <div class="cta-inner v7-reveal" data-aos="fade-up">
+      <h2 class="cta-headline v7-split-word">
         &iquest;LISTO PARA<br>TRANSFORMARTE?
       </h2>
       <p class="cta-sub">Sin compromiso. Sin contratos. Solo resultados.</p>
-      <div class="cta-beta-badge">&#9670; Cupos limitados en fase beta</div>
+      <div class="cta-beta-badge">&#9670; Lanzamiento 2026 &mdash; Acceso Fundador</div>
       <div class="cta-buttons">
-        <a href="/inscripcion.html" class="btn-dark v6-magnetic">Ver Planes &rarr;</a>
-        <a href="https://wa.me/573124904720" class="btn-white-outline">Consulta Gratuita</a>
+        <a href="/inscripcion.html" class="btn-dark v7-btn-primary v7-magnetic">Ver Planes &rarr;</a>
+        <a href="https://wa.me/573124904720" class="btn-white-outline v7-btn-ghost">Consulta Gratuita</a>
       </div>
       <div class="cta-trust-row">
         <div class="cta-trust-item"><i class="fas fa-user-check" aria-hidden="true" style="color:#00D9FF;"></i> Seguimiento 1-1 real</div>
@@ -3345,12 +3366,12 @@
 <!-- ============================================================
      11. FOOTER
 ============================================================ -->
-<footer id="footer">
+<footer id="footer" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
   <div class="container">
     <div class="row">
 
       <!-- Col 1: Logo + tagline + social -->
-      <div class="col-lg-4 col-md-6 mb-5" data-aos="fade-up" data-aos-delay="0">
+      <div class="col-lg-4 col-md-6 mb-5 v7-reveal" data-aos="fade-up" data-aos-delay="0">
         <div class="footer-logo">WELLCORE <span>FITNESS</span></div>
         <p class="footer-tagline">Coaching online 1:1 basado en ciencia. Sin milagros, sin contratos, sin suplementos innecesarios.</p>
         <div class="footer-socials">
@@ -3428,6 +3449,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 <script>
   /* --- AOS Init --- */
   AOS.init({

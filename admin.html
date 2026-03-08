@@ -37,6 +37,8 @@
       --radius-sm: 6px;
       --shadow:    0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2);
       --shadow-lg: 0 4px 24px rgba(0,0,0,0.5);
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
 
     html, body {
@@ -1319,6 +1321,11 @@
     }
   </style>
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- v7 Premium Fonts -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 <script src="js/api.js"></script>
@@ -1420,36 +1427,36 @@
       ───────────────────────────── -->
       <div class="section active" id="section-dashboard">
 
-        <div class="section-title">DASHBOARD</div>
+        <div class="section-title v7-split-word">DASHBOARD</div>
         <div class="section-sub">VISION GENERAL DEL NEGOCIO &mdash; <span id="todayDate"></span></div>
 
         <!-- KPI GRID -->
         <div class="kpi-grid">
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9673;</span>
             <div class="kpi-label">Clientes Activos</div>
-            <div class="kpi-value">0</div>
+            <div class="kpi-value" style="font-family:var(--font-data,var(--font-mono));">0</div>
             <div class="kpi-footer">sin clientes registrados</div>
           </div>
 
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9672;</span>
             <div class="kpi-label">MRR</div>
-            <div class="kpi-value green">$0</div>
+            <div class="kpi-value green" style="font-family:var(--font-data,var(--font-mono));">$0</div>
             <div class="kpi-footer">ingreso mensual recurrente</div>
           </div>
 
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9671;</span>
             <div class="kpi-label">Check-ins Pendientes</div>
-            <div class="kpi-value red">0</div>
+            <div class="kpi-value red" style="font-family:var(--font-data,var(--font-mono));">0</div>
             <div class="kpi-footer">sin check-ins pendientes</div>
           </div>
 
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9655;</span>
             <div class="kpi-label">Formularios Nuevos</div>
-            <div class="kpi-value" style="color:var(--gold);">0</div>
+            <div class="kpi-value" style="color:var(--gold);font-family:var(--font-data,var(--font-mono));">0</div>
             <div class="kpi-footer">leads sin contactar</div>
           </div>
         </div>
@@ -1667,28 +1674,28 @@
 
         <!-- KPI RISE -->
         <div class="kpi-grid">
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#E31E24;font-weight:700">&#9650;</span>
             <div class="kpi-label">Inscritos Totales</div>
-            <div class="kpi-value" id="riseTotal">-</div>
+            <div class="kpi-value" id="riseTotal" style="font-family:var(--font-data,var(--font-mono));">-</div>
             <div class="kpi-footer">todos los tiempos</div>
           </div>
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#22C55E;font-weight:700">&#10003;</span>
             <div class="kpi-label">Activos Ahora</div>
-            <div class="kpi-value green" id="riseActive">-</div>
+            <div class="kpi-value green" id="riseActive" style="font-family:var(--font-data,var(--font-mono));">-</div>
             <div class="kpi-footer">en progreso</div>
           </div>
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#FACC15;font-weight:700">&#9670;</span>
             <div class="kpi-label">Pendientes Intake</div>
-            <div class="kpi-value" style="color:var(--gold);" id="risePendingIntake">-</div>
+            <div class="kpi-value" style="color:var(--gold);font-family:var(--font-data,var(--font-mono));" id="risePendingIntake">-</div>
             <div class="kpi-footer">formulario sin completar</div>
           </div>
-          <div class="kpi-card">
+          <div class="kpi-card v7-glow-track">
             <span class="kpi-icon" style="color:#00D9FF;font-weight:700">&#9672;</span>
             <div class="kpi-label">Ingresos RISE</div>
-            <div class="kpi-value" style="color:#00D9FF;" id="riseRevenue">-</div>
+            <div class="kpi-value" style="color:#00D9FF;font-family:var(--font-data,var(--font-mono));" id="riseRevenue">-</div>
             <div class="kpi-footer">$27 USD por inscrito</div>
           </div>
         </div>
@@ -3266,6 +3273,7 @@
 </script>
 <script src="js/community.js"></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 
 </body>
 </html>

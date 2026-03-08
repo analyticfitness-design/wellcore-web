@@ -27,6 +27,8 @@
   --transition:0.1s linear;
   --radius:0;
   --radius-lg:0;
+  --font-body: 'Axiforma', 'Inter', sans-serif;
+  --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
 }
 html{scroll-behavior:smooth}
 body{
@@ -641,6 +643,11 @@ input,textarea,select{font-family:'Inter',sans-serif}
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- v7 Premium Fonts -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 
@@ -710,24 +717,24 @@ input,textarea,select{font-family:'Inter',sans-serif}
 
     <!-- ===== SECTION 1: DASHBOARD ===== -->
     <section id="sec-dashboard" class="section active">
-      <h1 class="section-title">DASH<span>//</span>BOARD</h1>
+      <h1 class="section-title v7-split-word">DASH<span>//</span>BOARD</h1>
 
       <div class="kpi-grid">
-        <div class="kpi-card">
+        <div class="kpi-card v7-glow-track">
           <div class="kpi-label">Clientes Activos</div>
-          <div class="kpi-value" id="kpi-clients">--</div>
+          <div class="kpi-value" id="kpi-clients" style="font-family:var(--font-data,var(--font-mono));">--</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card v7-glow-track">
           <div class="kpi-label">Tickets Abiertos</div>
-          <div class="kpi-value" id="kpi-tickets">--</div>
+          <div class="kpi-value" id="kpi-tickets" style="font-family:var(--font-data,var(--font-mono));">--</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card v7-glow-track">
           <div class="kpi-label">Revenue Mes</div>
-          <div class="kpi-value" id="kpi-revenue">--</div>
+          <div class="kpi-value" id="kpi-revenue" style="font-family:var(--font-data,var(--font-mono));">--</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card v7-glow-track">
           <div class="kpi-label">Mi Comision (60%)</div>
-          <div class="kpi-value" id="kpi-commission">--</div>
+          <div class="kpi-value" id="kpi-commission" style="font-family:var(--font-data,var(--font-mono));">--</div>
         </div>
       </div>
 
@@ -1005,17 +1012,17 @@ input,textarea,select{font-family:'Inter',sans-serif}
       <h1 class="section-title">REFERI<span>//</span>DOS</h1>
 
       <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="kpi-card">
+        <div class="kpi-card v7-glow-track">
           <div class="kpi-label">Clicks</div>
-          <div class="kpi-value" id="ref-clicks">--</div>
+          <div class="kpi-value" id="ref-clicks" style="font-family:var(--font-data,var(--font-mono));">--</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card v7-glow-track">
           <div class="kpi-label">Conversiones</div>
-          <div class="kpi-value" id="ref-conversions">--</div>
+          <div class="kpi-value" id="ref-conversions" style="font-family:var(--font-data,var(--font-mono));">--</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card v7-glow-track">
           <div class="kpi-label">Comision %</div>
-          <div class="kpi-value" id="ref-commission">--</div>
+          <div class="kpi-value" id="ref-commission" style="font-family:var(--font-data,var(--font-mono));">--</div>
         </div>
       </div>
 
@@ -2011,5 +2018,6 @@ init();
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 </body>
 </html>

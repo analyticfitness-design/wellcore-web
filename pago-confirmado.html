@@ -18,7 +18,8 @@
       --text: #e4e4e7; --text-muted: #71717a; --green: #22c55e; --accent: #00D9FF;
       --font-display: 'Bebas Neue', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
     body {
       background: var(--bg);
@@ -102,6 +103,9 @@
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
   <!-- v5 Preloader -->
@@ -121,7 +125,7 @@
     </div>
 
     <div class="check" data-aos="fade-up" data-aos-delay="60">&#10003;</div>
-    <h1 class="v6-glow-text" data-aos="fade-up" data-aos-delay="100">PAGO CONFIRMADO</h1>
+    <h1 class="v6-glow-text v7-split-word" data-aos="fade-up" data-aos-delay="100">PAGO CONFIRMADO</h1>
     <p data-aos="fade-up" data-aos-delay="150">Tu pago ha sido procesado exitosamente. Recibiras un email de confirmacion con los detalles de tu suscripcion y credenciales de acceso.</p>
     <div class="ref" id="ref" data-aos="fade-up" data-aos-delay="180"></div>
     <ol class="steps" data-aos="fade-up" data-aos-delay="210">
@@ -160,6 +164,7 @@
   </script>
   <script src="js/v5-effects.js" defer></script>
   <script src="js/wellcore-v6.js" defer></script>
+  <script src="js/wellcore-v7.js" defer></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init({duration:700,once:true});</script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>

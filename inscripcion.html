@@ -23,6 +23,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- v7 Premium Fonts -->
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+  <!-- WellCore v7 Ultra-Premium Design System 2026 -->
+  <link rel="stylesheet" href="css/wellcore-v7.css">
   <link rel="stylesheet" href="css/wellcore-v5.css">
 <!-- Premium Visual Redesign -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
@@ -48,7 +53,8 @@
       --green:     #22C55E;
       --font-head: 'Bebas Neue', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -501,14 +507,17 @@
   <main style="background:#0a0a0a; min-height:100vh; padding-top:72px;">
 
     <!-- Page Header -->
-    <div style="padding:80px 24px 48px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06);">
+    <div style="padding:80px 24px 48px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06); position:relative; overflow:hidden;">
+      <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+      <div style="position:relative;z-index:2;">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E31E24;display:block;margin-bottom:16px;"><i class="fas fa-bolt" aria-hidden="true" style="margin-right:6px;"></i>COMIENZA TU TRANSFORMACION</span>
-      <h1 class="v6-glow-text" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);color:#fff;letter-spacing:2px;line-height:0.95;margin-bottom:16px;">INSCRIPCION</h1>
+      <h1 class="v6-glow-text v7-split-word" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);color:#fff;letter-spacing:2px;line-height:0.95;margin-bottom:16px;">INSCRIPCION</h1>
       <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;max-width:600px;margin:0 auto;">Una vez que completes el formulario, tu coach se pondra en contacto contigo directamente por WhatsApp para coordinar el inicio.</p>
+      </div>
     </div>
 
     <!-- Form Container -->
-    <div data-v5-reveal style="max-width:860px;margin:0 auto;padding:60px 24px 100px;">
+    <div data-v5-reveal class="v7-reveal" style="max-width:860px;margin:0 auto;padding:60px 24px 100px;">
 
       <!-- Invite Beta Banner (hidden by default, shown by JS) -->
       <div id="inviteBanner" style="display:none;padding:16px 20px;border:1px solid rgba(0,217,255,0.3);background:rgba(0,217,255,0.06);margin-bottom:32px;">
@@ -545,9 +554,9 @@
           <div class="plan-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
 
             <!-- ESENCIAL -->
-            <div class="plan-card" data-plan="esencial" style="border:4px solid var(--border);border-radius:0;background:#18181b;padding:32px 24px;position:relative;">
+            <div class="plan-card v7-glow-track" data-plan="esencial" style="border:4px solid var(--border);border-radius:0;background:#18181b;padding:32px 24px;position:relative;">
               <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;margin-bottom:4px;">ESENCIAL</div>
-              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;">$399.000</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;font-family:var(--font-data,var(--font-mono));">$399.000</div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">COP / mes</div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-bottom:14px;">&#126; $109 USD (internacional)</div>
               <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:12px;color:rgba(255,255,255,0.6);">
@@ -561,10 +570,10 @@
             </div>
 
             <!-- METODO (featured) -->
-            <div class="plan-card" data-plan="metodo" style="border:4px solid #E31E24;border-radius:0;background:#E31E24;padding:32px 24px;position:relative;">
+            <div class="plan-card v7-glow-track" data-plan="metodo" style="border:4px solid #E31E24;border-radius:0;background:#E31E24;padding:32px 24px;position:relative;">
               <div style="display:inline-block;background:#0a0a0a;color:#fff;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:0;margin-bottom:12px;">MAS POPULAR</div>
               <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;margin-bottom:4px;">METODO</div>
-              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;">$504.000</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;font-family:var(--font-data,var(--font-mono));">$504.000</div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:6px;">COP / mes</div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:14px;">&#126; $138 USD (internacional)</div>
               <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:12px;color:rgba(255,255,255,0.85);">
@@ -579,9 +588,9 @@
             </div>
 
             <!-- ELITE -->
-            <div class="plan-card" data-plan="elite" style="border:4px solid var(--border);border-radius:0;background:#18181b;padding:32px 24px;position:relative;">
+            <div class="plan-card v7-glow-track" data-plan="elite" style="border:4px solid var(--border);border-radius:0;background:#18181b;padding:32px 24px;position:relative;">
               <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;margin-bottom:4px;">ELITE</div>
-              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;">$630.000</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:#fff;font-family:var(--font-data,var(--font-mono));">$630.000</div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">COP / mes</div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-bottom:14px;">&#126; $173 USD (internacional)</div>
               <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:12px;color:rgba(255,255,255,0.6);">
@@ -942,7 +951,7 @@
 
           <!-- Submit Button -->
           <div style="margin-top:32px;text-align:center;">
-            <button type="submit" id="submitBtn" class="btn-red btn-v5 btn-v5-primary v6-magnetic" style="display:none;background:#E31E24;color:#fff;border:4px solid #E31E24;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:16px 48px;border-radius:0;cursor:pointer;transition:background 0.1s linear;">
+            <button type="submit" id="submitBtn" class="btn-red btn-v5 btn-v5-primary v6-magnetic v7-btn-primary v7-magnetic" style="display:none;background:#E31E24;color:#fff;border:4px solid #E31E24;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:16px 48px;border-radius:0;cursor:pointer;transition:background 0.1s linear;">
               <span class="btn-v5-text">Enviar Fórmulario</span><span class="btn-v5-arrow">&rarr;</span>
             </button>
           </div>
@@ -983,7 +992,7 @@
   <!-- ============================================================
        FOOTER
   ============================================================ -->
-  <footer style="background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.06);padding:48px 32px;">
+  <footer style="background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.06);padding:48px 32px;border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
     <div style="max-width:1280px;margin:0 auto;">
       <div class="footer-links" style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:24px;">
         <a href="/" style="font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);transition:color 0.1s linear;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Inicio</a>
@@ -1105,6 +1114,7 @@
 
   <script src="js/v5-effects.js" defer></script>
   <script src="js/wellcore-v6.js" defer></script>
+  <script src="js/wellcore-v7.js" defer></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init({duration:700,once:true});</script>
 </body>

@@ -22,6 +22,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- v7 Premium Fonts -->
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+  <!-- WellCore v7 Ultra-Premium Design System 2026 -->
+  <link rel="stylesheet" href="css/wellcore-v7.css">
 
   <style>
 
@@ -47,7 +52,8 @@
       --white:     #FFFFFF;
       --font-head: 'Bebas Neue', cursive;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
 
     /* --- Reset --- */
@@ -926,14 +932,16 @@
        HERO
   ============================================================ -->
   <section id="hero" class="v5-grid-bg" style="position:relative;" data-v5-reveal>
-    <div class="container-wc hero-inner" style="padding-top:120px;padding-bottom:120px;">
+    <!-- v7 Canvas Particles -->
+    <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+    <div class="container-wc hero-inner" style="padding-top:120px;padding-bottom:120px;position:relative;z-index:2;">
       <div class="hero-content">
 
         <div class="hero-code-tag" data-aos="fade-up" data-aos-duration="600">
           PROTOCOLO DE ENTRENAMIENTO BASADO EN EVIDENCIA
         </div>
 
-        <h1 class="h1-massive" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80">
+        <h1 class="h1-massive v7-split-word" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80">
           EL<br>METODO.
         </h1>
 
@@ -950,17 +958,17 @@
         <div class="hero-stats" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
           <div class="stat-pill" data-aos="fade-up" data-aos-delay="0">
             <div class="stat-pill-dot"></div>
-            <span class="stat-pill-val">87%</span>
+            <span class="stat-pill-val" style="font-family:var(--font-data,var(--font-mono));">87%</span>
             <span>adherencia promedio</span>
           </div>
           <div class="stat-pill" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-pill-dot"></div>
-            <span class="stat-pill-val">12 sem</span>
+            <span class="stat-pill-val" style="font-family:var(--font-data,var(--font-mono));">12 sem</span>
             <span>promedio hasta resultados visibles</span>
           </div>
           <div class="stat-pill" data-aos="fade-up" data-aos-delay="200">
             <div class="stat-pill-dot"></div>
-            <span class="stat-pill-val">1:1</span>
+            <span class="stat-pill-val" style="font-family:var(--font-data,var(--font-mono));">1:1</span>
             <span>atencion real, sin bots</span>
           </div>
         </div>
@@ -1133,7 +1141,7 @@
 
       <div class="pilares-row-1" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="pilar-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="pilar-card v7-glow-track" data-aos="fade-up" data-aos-delay="0">
           <div class="pilar-number">PILAR // 01</div>
           <div class="pilar-icon"><i class="fas fa-dumbbell" aria-hidden="true"></i></div>
           <div class="pilar-name">PROGRESION POR SOBRECARGA</div>
@@ -1150,7 +1158,7 @@
           <div class="pilar-footnote">Fuente: Schoenfeld et al., Journal of Strength and Conditioning Research, 2022</div>
         </div>
 
-        <div class="pilar-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="pilar-card v7-glow-track" data-aos="fade-up" data-aos-delay="100">
           <div class="pilar-number">PILAR // 02</div>
           <div class="pilar-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
           <div class="pilar-name">PERIODIZACION INTELIGENTE</div>
@@ -1171,7 +1179,7 @@
 
       <div class="pilares-row-2" style="margin-top:1px;" data-aos="fade-up" data-aos-delay="160">
 
-        <div class="pilar-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="pilar-card v7-glow-track" data-aos="fade-up" data-aos-delay="0">
           <div class="pilar-number">PILAR // 03</div>
           <div class="pilar-icon"><i class="fas fa-utensils" aria-hidden="true"></i></div>
           <div class="pilar-name">NUTRICION DE PRECISION</div>
@@ -1188,7 +1196,7 @@
           <div class="pilar-footnote">Fuente: ISSN Position Stand, 2023</div>
         </div>
 
-        <div class="pilar-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="pilar-card v7-glow-track" data-aos="fade-up" data-aos-delay="100">
           <div class="pilar-number">PILAR // 04</div>
           <div class="pilar-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
           <div class="pilar-name">RECUPERACION OPTIMIZADA</div>
@@ -1205,7 +1213,7 @@
           <div class="pilar-footnote">Fuente: Meeusen et al., Medicine and Science in Sports, 2022</div>
         </div>
 
-        <div class="pilar-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="pilar-card v7-glow-track" data-aos="fade-up" data-aos-delay="200">
           <div class="pilar-number">PILAR // 05</div>
           <div class="pilar-icon"><i class="fas fa-magnifying-glass" aria-hidden="true"></i></div>
           <div class="pilar-name">ADHERENCIA CONDUCTUAL</div>
@@ -1384,7 +1392,7 @@
 
       <div class="cases-grid" data-aos="fade-up" data-aos-delay="120">
 
-        <div class="case-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="case-card v7-glow-track" data-aos="fade-up" data-aos-delay="0">
           <div class="case-header-row">
             <div class="case-avatar">C</div>
             <div>
@@ -1414,7 +1422,7 @@
           </div>
         </div>
 
-        <div class="case-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="case-card v7-glow-track" data-aos="fade-up" data-aos-delay="100">
           <div class="case-header-row">
             <div class="case-avatar" style="background:rgba(0,217,255,0.08);border-color:rgba(0,217,255,0.2);color:var(--accent);">S</div>
             <div>
@@ -1444,7 +1452,7 @@
           </div>
         </div>
 
-        <div class="case-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="case-card v7-glow-track" data-aos="fade-up" data-aos-delay="0">
           <div class="case-header-row">
             <div class="case-avatar">M</div>
             <div>
@@ -1474,7 +1482,7 @@
           </div>
         </div>
 
-        <div class="case-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="case-card v7-glow-track" data-aos="fade-up" data-aos-delay="100">
           <div class="case-header-row">
             <div class="case-avatar" style="background:rgba(0,217,255,0.08);border-color:rgba(0,217,255,0.2);color:var(--accent);">A</div>
             <div>
@@ -1673,11 +1681,11 @@
   ============================================================ -->
   <section id="cta-final" class="v6-lazy-section" data-v5-reveal>
     <div class="container-wc">
-      <div class="cta-inner">
+      <div class="cta-inner v7-reveal">
 
         <div class="cta-eyebrow" data-aos="fade-up"><i class="fas fa-arrow-right" aria-hidden="true" style="margin-right:6px;"></i> Siguiente paso</div>
 
-        <h2 class="cta-title" data-aos="fade-up" data-aos-delay="60">
+        <h2 class="cta-title v7-split-word" data-aos="fade-up" data-aos-delay="60">
           LISTO PARA<br><span>VERIFICARLO</span><br>TU MISMO?
         </h2>
 
@@ -1686,10 +1694,10 @@
         </p>
 
         <div class="cta-buttons" data-aos="fade-up" data-aos-delay="180">
-          <a href="planes.html" class="btn-primary-red btn-v5 btn-v5-primary v6-magnetic">
+          <a href="planes.html" class="btn-primary-red btn-v5 btn-v5-primary v7-btn-primary v7-magnetic">
             <div class="btn-bg"></div><span class="btn-text"><i class="fas fa-arrow-right" aria-hidden="true"></i> Ver Planes</span>
           </a>
-          <a href="https://wa.me/573124904720" class="btn-secondary-outline">
+          <a href="https://wa.me/573124904720" class="btn-secondary-outline v7-btn-ghost">
             <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp al Coach
           </a>
         </div>
@@ -1709,7 +1717,7 @@
   <!-- ============================================================
        FOOTER
   ============================================================ -->
-  <footer id="footer">
+  <footer id="footer" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
     <div class="container-wc">
 
       <div class="footer-inner">
@@ -1861,6 +1869,6 @@
     });
   </script>
 <script src="js/chat-widget.js" defer></script>
-<script src="js/v5-effects.js" defer></script><script src="js/wellcore-v6.js" defer></script><script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script><script>AOS.init({duration:700,once:true,offset:30});</script>
+<script src="js/v5-effects.js" defer></script><script src="js/wellcore-v6.js" defer></script><script src="js/wellcore-v7.js" defer></script><script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script><script>AOS.init({duration:700,once:true,offset:30});</script>
 </body>
 </html>

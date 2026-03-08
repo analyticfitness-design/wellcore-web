@@ -18,7 +18,8 @@
       --gray: rgba(255,255,255,0.45);
       --font-head: 'Bebas Neue', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -239,6 +240,9 @@
     }
   </style>
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
   <!-- Floating particles -->
@@ -255,7 +259,7 @@
     <div class="logo">
       <a href="/"><img src="/images/logo/imagotipo-blanco.png" alt="WellCore Fitness" /></a>
     </div>
-    <div class="error-code">404</div>
+    <div class="error-code v7-split-word">404</div>
     <div class="error-label">// page_not_found <span class="blink">_</span></div>
     <div class="divider"></div>
     <p class="error-msg">La ruta solicitada no existe o fue movida. Verifica la URL o vuelve al inicio para encontrar lo que buscas.</p>
@@ -272,5 +276,6 @@
   document.getElementById('errorTime').textContent = new Date().toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
 </script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 </body>
 </html>

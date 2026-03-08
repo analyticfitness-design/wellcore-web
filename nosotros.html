@@ -20,8 +20,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- v7 Premium Fonts -->
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/wellcore-v5.css">
+  <!-- WellCore v7 Ultra-Premium Design System 2026 -->
+  <link rel="stylesheet" href="css/wellcore-v7.css">
 
   <style>
     /* ============================================================
@@ -49,7 +54,8 @@
       --gray-deep: rgba(255,255,255,0.08);
       --font-head: 'Bebas Neue', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
 
     /* --- Reset & Base --- */
@@ -626,8 +632,10 @@
 <!-- ============================================================
      HERO — QUIENES SOMOS
 ============================================================ -->
-<section id="hero-nosotros" class="section-wrap" data-v5-reveal>
-  <div class="container-wc">
+<section id="hero-nosotros" class="section-wrap" data-v5-reveal style="position:relative;overflow:hidden;">
+  <!-- v7 Canvas Particles -->
+  <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+  <div class="container-wc" style="position:relative;z-index:1;">
 
     <p class="hero-breadcrumb" data-aos="fade-right" data-aos-duration="600">
       <a href="index.html">Inicio</a>
@@ -637,7 +645,7 @@
 
     <span class="section-marker" data-aos="fade-right" data-aos-duration="600" data-aos-delay="50">[00] &mdash; Identidad</span>
 
-    <h1 class="hero-statement" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+    <h1 class="hero-statement v7-split-word" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
       <span class="accent-red">Sin</span> Dogmas.
       <span class="accent-line">Sin Atajos.</span>
       Solo
@@ -807,7 +815,7 @@
       </div>
 
       <!-- VISION -->
-      <div class="mvp-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160">
+      <div class="mvp-card v7-glow-track" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160">
         <div class="mvp-icon green">
           <i class="fas fa-eye" aria-hidden="true"></i>
         </div>
@@ -822,7 +830,7 @@
       </div>
 
       <!-- PROMESA -->
-      <div class="mvp-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
+      <div class="mvp-card v7-glow-track" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
         <div class="mvp-icon gray">
           <i class="fas fa-flask" aria-hidden="true"></i>
         </div>
@@ -940,7 +948,7 @@
     <div class="team-grid">
 
       <!-- Coach Principal -->
-      <div class="coach-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80" data-v5-reveal>
+      <div class="coach-card v7-glow-track" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80" data-v5-reveal>
         <div class="coach-header">
           <div class="coach-avatar">CM</div>
           <div class="coach-meta">
@@ -993,7 +1001,7 @@
       </div>
 
       <!-- Coach Nutricion -->
-      <div class="coach-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160" data-v5-reveal>
+      <div class="coach-card v7-glow-track" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160" data-v5-reveal>
         <div class="coach-header">
           <div class="coach-avatar green">AR</div>
           <div class="coach-meta">
@@ -1187,9 +1195,9 @@
 <section id="sec-cta" class="section-wrap v6-lazy-section" data-v5-reveal>
   <div class="cta-bg-word" aria-hidden="true">EMPIEZA</div>
   <div class="container-wc">
-    <div class="cta-inner" data-aos="fade-up" data-aos-duration="800">
+    <div class="cta-inner v7-reveal" data-aos="fade-up" data-aos-duration="800">
       <p class="cta-eyebrow">[07] &mdash; El siguiente paso es tuyo</p>
-      <h2 class="cta-title">
+      <h2 class="cta-title v7-split-word">
         Listo para<br>Trabajar con<br><span style="color:var(--red);">Nosotros?</span>
       </h2>
       <p class="cta-sub">
@@ -1197,8 +1205,8 @@
         <strong>Pero no siempre lo habra.</strong>
       </p>
       <div class="cta-buttons">
-        <a href="planes.html" class="btn-primary-cta btn-red btn-v5 btn-v5-primary v6-magnetic"><div class="btn-bg"></div><span class="btn-text">Ver Planes &rarr;</span></a>
-        <a href="https://wa.me/573124904720?text=Hola%2C%20me%20interesa%20conocer%20mas%20sobre%20WellCore" target="_blank" rel="noopener noreferrer" class="btn-outline-cta btn-v5 btn-v5-dark"><div class="btn-bg"></div><span class="btn-text">WA WhatsApp al Coach</span></a>
+        <a href="planes.html" class="btn-primary-cta btn-red btn-v5 btn-v5-primary v7-btn-primary v7-magnetic"><div class="btn-bg"></div><span class="btn-text">Ver Planes &rarr;</span></a>
+        <a href="https://wa.me/573124904720?text=Hola%2C%20me%20interesa%20conocer%20mas%20sobre%20WellCore" target="_blank" rel="noopener noreferrer" class="btn-outline-cta btn-v5 btn-v5-dark v7-btn-ghost"><div class="btn-bg"></div><span class="btn-text">WA WhatsApp al Coach</span></a>
       </div>
     </div>
   </div>
@@ -1207,7 +1215,7 @@
 <!-- ============================================================
      FOOTER
 ============================================================ -->
-<footer id="footer">
+<footer id="footer" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
   <div class="container-wc">
     <div class="footer-grid">
 
@@ -1374,6 +1382,7 @@
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>AOS.init({duration:700,once:true});</script>
 </body>

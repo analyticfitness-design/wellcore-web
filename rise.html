@@ -7,6 +7,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- v7 Premium Fonts -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+    <!-- WellCore v7 Ultra-Premium Design System 2026 -->
+    <link rel="stylesheet" href="css/wellcore-v7.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
@@ -28,6 +33,8 @@
             --gray-dim: rgba(255,255,255,0.18);
             --ease-brand: cubic-bezier(0.16,1,0.3,1);
             --text-hero: clamp(3rem,8vw,5.5rem); /* #26 Fluid Typography */
+            --font-body: 'Axiforma', 'Inter', sans-serif;
+            --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
         }
 
         * { margin:0;padding:0;box-sizing:border-box; }
@@ -803,7 +810,7 @@
             <span>Plataforma RISE</span>
         </div>
 
-        <h2 class="platform-title">
+        <h2 class="platform-title v7-split-word">
             <span class="split-word" data-split>TECNOLOGIA QUE</span><br>
             <span class="platform-title-line2">IMPULSA TU CAMBIO</span>
         </h2>
@@ -818,7 +825,7 @@
     <div class="bento-grid">
 
         <!-- ROW 1: Hero statement + Founder badge -->
-        <div class="bento-item bento-hero" style="grid-column:span 8;padding:48px 40px;">
+        <div class="bento-item bento-hero v7-glow-track" style="grid-column:span 8;padding:48px 40px;">
             <div class="bento-concept">
                 <div class="bento-concept__eyebrow"><i class="fas fa-flask"></i> Lanzamiento 2026</div>
                 <h3 class="bento-concept__title">La primera plataforma de coaching online<br>que realmente se siente <em>personal</em></h3>
@@ -830,7 +837,7 @@
             </div>
         </div>
 
-        <div class="bento-item" style="grid-column:span 4;padding:40px 28px;text-align:center;">
+        <div class="bento-item v7-glow-track" style="grid-column:span 4;padding:40px 28px;text-align:center;">
             <div class="bento-founder">
                 <div class="bento-founder__badge">
                     <i class="fas fa-gem"></i>
@@ -841,37 +848,37 @@
         </div>
 
         <!-- ROW 2: 4 Value props -->
-        <div class="bento-item bento-stat" style="grid-column:span 3;">
+        <div class="bento-item bento-stat v7-glow-track" style="grid-column:span 3;">
             <div class="bento-stat-card">
                 <div class="bento-stat-card__icon"><i class="fas fa-code" style="color:var(--red)"></i></div>
-                <div class="bento-stat-card__number bento-stat-card__number--red">1ra</div>
+                <div class="bento-stat-card__number bento-stat-card__number--red" style="font-family:var(--font-data,var(--font-mono));">1ra</div>
                 <div class="bento-stat-card__label">Plataforma de coaching<br>interactivo en LATAM</div>
             </div>
         </div>
-        <div class="bento-item bento-stat" style="grid-column:span 3;">
+        <div class="bento-item bento-stat v7-glow-track" style="grid-column:span 3;">
             <div class="bento-stat-card">
                 <div class="bento-stat-card__icon"><i class="fas fa-dumbbell" style="color:var(--accent)"></i></div>
-                <div class="bento-stat-card__number bento-stat-card__number--accent">1:1</div>
+                <div class="bento-stat-card__number bento-stat-card__number--accent" style="font-family:var(--font-data,var(--font-mono));">1:1</div>
                 <div class="bento-stat-card__label">Coach real dedicado<br>no bots, no plantillas</div>
             </div>
         </div>
-        <div class="bento-item bento-stat" style="grid-column:span 3;">
+        <div class="bento-item bento-stat v7-glow-track" style="grid-column:span 3;">
             <div class="bento-stat-card">
                 <div class="bento-stat-card__icon"><i class="fas fa-chart-line" style="color:#ff6b35"></i></div>
-                <div class="bento-stat-card__number" style="color:#ff6b35">30</div>
+                <div class="bento-stat-card__number" style="color:#ff6b35;font-family:var(--font-data,var(--font-mono));">30</div>
                 <div class="bento-stat-card__label">Dias de tracking<br>en tiempo real</div>
             </div>
         </div>
-        <div class="bento-item bento-stat" style="grid-column:span 3;">
+        <div class="bento-item bento-stat v7-glow-track" style="grid-column:span 3;">
             <div class="bento-stat-card">
                 <div class="bento-stat-card__icon"><i class="fas fa-mobile-screen-button" style="color:#22C55E"></i></div>
-                <div class="bento-stat-card__number bento-stat-card__number--green">24/7</div>
+                <div class="bento-stat-card__number bento-stat-card__number--green" style="font-family:var(--font-data,var(--font-mono));">24/7</div>
                 <div class="bento-stat-card__label">Acceso desde cualquier<br>dispositivo</div>
             </div>
         </div>
 
         <!-- ROW 3: Why different + Testimonial-style -->
-        <div class="bento-item" style="grid-column:span 7;padding:36px 32px;">
+        <div class="bento-item v7-glow-track" style="grid-column:span 7;padding:36px 32px;">
             <div class="bento-why">
                 <div class="bento-why__title"><i class="fas fa-bolt" style="color:var(--red);margin-right:8px;"></i>Por que RISE es diferente</div>
                 <div class="bento-why__grid">
@@ -903,7 +910,7 @@
             </div>
         </div>
 
-        <div class="bento-item" style="grid-column:span 5;padding:36px 28px;display:flex;flex-direction:column;justify-content:center;">
+        <div class="bento-item v7-glow-track" style="grid-column:span 5;padding:36px 28px;display:flex;flex-direction:column;justify-content:center;">
             <div class="bento-pioneer">
                 <div class="bento-pioneer__quote">&ldquo;Construimos la plataforma que nos hubiera gustado tener cuando empezamos a entrenar.&rdquo;</div>
                 <div class="bento-pioneer__author">
@@ -917,7 +924,7 @@
         </div>
 
         <!-- ROW 4: Feature pills full width -->
-        <div class="bento-item bento-full">
+        <div class="bento-item bento-full v7-glow-track">
             <div class="bento-features">
                 <div class="bento-features__list">
                     <div class="bento-feature-pill"><i class="fas fa-dumbbell"></i><span>Entrenamiento 1:1</span></div>
@@ -1231,8 +1238,8 @@
     </div>
 
     <!-- CTA -->
-    <div class="platform-cta">
-        <a href="/rise-enroll.html" class="cta-btn v6-magnetic">
+    <div class="platform-cta v7-reveal">
+        <a href="/rise-enroll.html" class="cta-btn v6-magnetic v7-btn-primary v7-magnetic">
             <i class="fas fa-bolt"></i> Quiero Acceso Ahora
         </a>
         <p class="cta-sub">Acceso inmediato al dashboard tras tu inscripcion</p>
@@ -1242,7 +1249,7 @@
 <!-- ============================================================
      FOOTER
 ============================================================ -->
-<footer id="footer">
+<footer id="footer" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
   <div class="container">
     <div class="row">
       <div class="col-lg-4 col-md-6 mb-5">
@@ -1430,6 +1437,7 @@ document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.obser
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 
 <!-- Promo Bar Logic -->
 <script>

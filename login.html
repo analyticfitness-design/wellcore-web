@@ -25,6 +25,8 @@
             --white:    #ffffff;
             --gray:     rgba(255,255,255,0.45);
             --gray-dim: rgba(255,255,255,0.18);
+            --font-body: 'Axiforma', 'Inter', sans-serif;
+            --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
         }
 
         html, body {
@@ -489,6 +491,11 @@
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- v7 Premium Fonts -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 
@@ -516,6 +523,7 @@
 
     <!-- ═══ LEFT ═══ -->
     <div class="panel-left">
+        <canvas id="v7ParticlesLogin" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.45;" aria-hidden="true"></canvas>
         <div class="panel-top-bar"></div>
 
         <div class="left-body">
@@ -535,15 +543,15 @@
             <hr class="stats-divider">
             <div class="stats-row">
                 <div class="stat-item">
-                    <div class="stat-value">200+</div>
+                    <div class="stat-value" style="font-family:var(--font-data,var(--font-mono));">200+</div>
                     <div class="stat-label">Clientes activos</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">3</div>
+                    <div class="stat-value" style="font-family:var(--font-data,var(--font-mono));">3</div>
                     <div class="stat-label">Planes</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">24/7</div>
+                    <div class="stat-value" style="font-family:var(--font-data,var(--font-mono));">24/7</div>
                     <div class="stat-label">Acceso</div>
                 </div>
             </div>
@@ -552,13 +560,13 @@
 
     <!-- ═══ RIGHT ═══ -->
     <div class="panel-right">
-        <div class="login-box v6-glass">
+        <div class="login-box v6-glass v7-glow-track">
 
             <div class="login-label">
                 <i class="fas fa-lock" aria-hidden="true"></i> Acceso seguro
             </div>
 
-            <div class="login-title v6-glow-text">INICIA SESIÓN</div>
+            <div class="login-title v6-glow-text v7-split-word">INICIA SESIÓN</div>
             <div class="login-hint">Ingresa tu email o usuario y contraseña</div>
 
             <div class="login-error" id="loginError">
@@ -583,7 +591,7 @@
                     <input type="checkbox" id="rememberMe" style="accent-color:#E31E24;width:16px;height:16px;cursor:pointer;">
                     <label for="rememberMe" style="font-size:12px;color:rgba(255,255,255,0.45);cursor:pointer;user-select:none;">Recordar mis datos</label>
                 </div>
-                <button class="btn-login v6-magnetic" type="submit" id="btnLogin">
+                <button class="btn-login v6-magnetic v7-btn-primary" type="submit" id="btnLogin">
                     <div class="btn-sweep"></div>
                     <div class="btn-login-label">
                         <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i>
@@ -830,5 +838,6 @@ async function handleGoogleResponse(response) {
 <script src="js/rise-modal.js"></script>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 </body>
 </html>

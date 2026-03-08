@@ -18,6 +18,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- v7 Premium Fonts -->
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+  <!-- WellCore v7 Ultra-Premium Design System 2026 -->
+  <link rel="stylesheet" href="css/wellcore-v7.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
@@ -45,7 +50,8 @@
       --gray-faint:rgba(255,255,255,0.08);
       --font-head: 'Bebas Neue', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Axiforma', 'Inter', sans-serif;
+      --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -620,19 +626,20 @@
 </div>
 
 <!-- HERO -->
-<section class="faq-hero">
-  <div class="faq-hero-inner">
+<section class="faq-hero" style="position:relative;overflow:hidden;">
+  <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+  <div class="faq-hero-inner" style="position:relative;z-index:2;">
     <div data-aos="fade-right" data-aos-duration="700">
       <span class="faq-hero-label"><i class="fas fa-database" aria-hidden="true"></i> BASE DE CONOCIMIENTO</span>
-      <h1 class="faq-hero-title">BASE<br>DE<br><span>DATOS</span></h1>
+      <h1 class="faq-hero-title v7-split-word">BASE<br>DE<br><span>DATOS</span></h1>
       <p class="faq-hero-desc">Todo lo que necesitas saber antes, durante y despues de tu transformacion con WellCore. Respuestas precisas, sin rodeos.</p>
       <div class="faq-hero-stats">
         <div>
-          <span class="faq-stat-num">25</span>
+          <span class="faq-stat-num" style="font-family:var(--font-data,var(--font-mono));">25</span>
           <span class="faq-stat-label"><i class="fas fa-circle-question" aria-hidden="true"></i> preguntas</span>
         </div>
         <div>
-          <span class="faq-stat-num">05</span>
+          <span class="faq-stat-num" style="font-family:var(--font-data,var(--font-mono));">05</span>
           <span class="faq-stat-label"><i class="fas fa-tag" aria-hidden="true"></i> categorias</span>
         </div>
         <div>
@@ -1556,15 +1563,15 @@
 
 <!-- CTA FINAL -->
 <section style="padding: 0 32px 120px; max-width:1280px; margin:0 auto;">
-  <div class="faq-cta" data-aos="fade-up">
+  <div class="faq-cta v7-reveal" data-aos="fade-up">
     <span class="faq-cta-tag"><i class="fas fa-circle-question" aria-hidden="true"></i> ¿SIGUES CON DUDAS?</span>
     <h2>NO ENCONTRASTE<br>TU RESPUESTA</h2>
     <p>Habla directamente con nuestro equipo. Respondemos en menos de 24 horas. Sin bots, sin formularios eternos.</p>
     <div class="faq-cta-btns">
-      <a href="https://wa.me/573124904720" class="btn-cta-primary v6-magnetic">
+      <a href="https://wa.me/573124904720" class="btn-cta-primary v6-magnetic v7-btn-primary v7-magnetic">
         <span style="color:#25d366;font-weight:700;">WA</span> Escribir por WhatsApp
       </a>
-      <a href="mailto:info@wellcorefitness.com" class="btn-cta-secondary v6-magnetic">
+      <a href="mailto:info@wellcorefitness.com" class="btn-cta-secondary v6-magnetic v7-btn-ghost">
         <i class="fas fa-envelope" aria-hidden="true" style="color:var(--red);"></i> Enviar email
       </a>
     </div>
@@ -1796,7 +1803,7 @@
 </section>
 
 <!-- FOOTER -->
-<footer id="footer">
+<footer id="footer" style="border-image:linear-gradient(90deg,transparent,var(--red),transparent) 1;border-top-width:2px;border-top-style:solid;">
   <div class="footer-grid-wrap">
     <div class="footer-grid">
       <div>
@@ -2053,5 +2060,6 @@
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 </body>
 </html>

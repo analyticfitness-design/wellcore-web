@@ -32,6 +32,8 @@
   --radius:12px;
   --radius-sm:8px;
   --radius-lg:16px;
+  --font-body: 'Axiforma', 'Inter', sans-serif;
+  --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
 }
 html{scroll-behavior:smooth}
 body{
@@ -1687,6 +1689,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- v7 Premium Fonts -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
@@ -1797,27 +1804,27 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <p class="section-desc">Tu resumen de progreso y actividad. Aquí puedes ver cómo vas avanzando en tu programa de entrenamiento personalizado.</p>
 
       <div class="kpi-grid">
-        <div class="kpi-card accent-left-red card-hover">
+        <div class="kpi-card accent-left-red card-hover v7-glow-track">
           <div class="kpi-icon red"><i class="fas fa-crown" id="kpi-plan-icon"></i></div>
           <div class="kpi-label">Plan Activo</div>
           <div class="kpi-value" id="kpi-plan">—</div>
         </div>
-        <div class="kpi-card accent-left-cyan card-hover">
+        <div class="kpi-card accent-left-cyan card-hover v7-glow-track">
           <div class="kpi-icon cyan"><i class="fas fa-calendar-check"></i></div>
           <div class="kpi-label">Semanas Activo</div>
-          <div class="kpi-value" id="kpi-semanas">—</div>
+          <div class="kpi-value" id="kpi-semanas" style="font-family:var(--font-data,var(--font-mono));">—</div>
           <div class="kpi-sub" id="kpi-semanas-sub"></div>
         </div>
-        <div class="kpi-card accent-left-green card-hover">
+        <div class="kpi-card accent-left-green card-hover v7-glow-track">
           <div class="kpi-icon green"><i class="fas fa-fire"></i></div>
           <div class="kpi-label">Adherencia</div>
-          <div class="kpi-value" id="kpi-adherencia">—</div>
+          <div class="kpi-value" id="kpi-adherencia" style="font-family:var(--font-data,var(--font-mono));">—</div>
           <div class="progress-bar"><div class="progress-fill" id="kpi-adherencia-bar" style="width:0%"></div></div>
         </div>
-        <div class="kpi-card accent-left-gold card-hover">
+        <div class="kpi-card accent-left-gold card-hover v7-glow-track">
           <div class="kpi-icon gold"><i class="fas fa-clock"></i></div>
           <div class="kpi-label">Próxima Entrega</div>
-          <div class="kpi-value" id="kpi-entrega">—</div>
+          <div class="kpi-value" id="kpi-entrega" style="font-family:var(--font-data,var(--font-mono));">—</div>
           <div class="kpi-sub" id="kpi-entrega-sub"></div>
         </div>
       </div>
@@ -2808,28 +2815,28 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Daily Summary KPIs -->
       <div class="kpi-grid" id="nutri-kpis">
-        <div class="kpi-card accent-left-red card-hover">
+        <div class="kpi-card accent-left-red card-hover v7-glow-track">
           <div class="kpi-icon red"><i class="fas fa-fire"></i></div>
           <div class="kpi-label">Calorías Hoy</div>
-          <div class="kpi-value" id="nutri-cal">0</div>
+          <div class="kpi-value" id="nutri-cal" style="font-family:var(--font-data,var(--font-mono));">0</div>
           <div class="progress-bar"><div class="progress-fill" id="nutri-cal-bar" style="width:0%"></div></div>
         </div>
-        <div class="kpi-card accent-left-cyan card-hover">
+        <div class="kpi-card accent-left-cyan card-hover v7-glow-track">
           <div class="kpi-icon cyan"><i class="fas fa-drumstick-bite"></i></div>
           <div class="kpi-label">Proteína (g)</div>
-          <div class="kpi-value" id="nutri-prot">0</div>
+          <div class="kpi-value" id="nutri-prot" style="font-family:var(--font-data,var(--font-mono));">0</div>
           <div class="progress-bar"><div class="progress-fill" id="nutri-prot-bar" style="width:0%;background:var(--accent)"></div></div>
         </div>
-        <div class="kpi-card accent-left-green card-hover">
+        <div class="kpi-card accent-left-green card-hover v7-glow-track">
           <div class="kpi-icon green"><i class="fas fa-bread-slice"></i></div>
           <div class="kpi-label">Carbohidratos (g)</div>
-          <div class="kpi-value" id="nutri-carbs">0</div>
+          <div class="kpi-value" id="nutri-carbs" style="font-family:var(--font-data,var(--font-mono));">0</div>
           <div class="progress-bar"><div class="progress-fill" id="nutri-carbs-bar" style="width:0%;background:var(--green)"></div></div>
         </div>
-        <div class="kpi-card accent-left-gold card-hover">
+        <div class="kpi-card accent-left-gold card-hover v7-glow-track">
           <div class="kpi-icon gold"><i class="fas fa-utensils"></i></div>
           <div class="kpi-label">Comidas Registradas</div>
-          <div class="kpi-value" id="nutri-meals">0</div>
+          <div class="kpi-value" id="nutri-meals" style="font-family:var(--font-data,var(--font-mono));">0</div>
         </div>
       </div>
 
@@ -7144,6 +7151,7 @@ document.addEventListener('keydown', function(e) {
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+<script src="js/wellcore-v7.js" defer></script>
 <script>
 // v6 Skeleton loading — shimmers KPI values while data loads
 (function(){
