@@ -577,37 +577,40 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
     }
     @media (max-width: 860px) { .guarantee-inner { grid-template-columns: 1fr; gap: 48px; } }
+    /* GUARANTEE — Visual tipográfico (sin círculo) */
     .guarantee-visual {
-      position: relative; display: flex; align-items: center; justify-content: center;
+      position: relative; display: flex; align-items: center; justify-content: flex-start;
     }
-    .guarantee-block {
-      text-align: center; padding: 40px 52px;
-      background: #0d0d0f; border: 1px solid rgba(227,30,36,0.2);
-      position: relative; display: inline-flex; flex-direction: column; align-items: center;
-    }
-    .guarantee-block::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 3px; background: #E31E24;
-    }
-    .guarantee-block-number {
+    .guar-statement { display: flex; align-items: flex-end; gap: 0; user-select: none; }
+    .guar-statement-num {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(100px, 18vw, 160px);
-      line-height: 0.85; color: #fff; letter-spacing: -4px;
+      font-size: clamp(160px, 22vw, 220px);
+      line-height: 0.85; color: #fff; letter-spacing: -6px; position: relative;
     }
-    .guarantee-block-divider {
-      width: 100%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(227,30,36,0.6), transparent);
-      margin: 14px 0;
+    .guar-statement-num::after {
+      content: ''; position: absolute; bottom: 18px; left: 0; right: 0;
+      height: 4px; background: #E31E24;
     }
-    .guarantee-block-tag {
-      font-family: 'Bebas Neue', sans-serif; font-size: 46px;
-      letter-spacing: 10px; color: #E31E24; line-height: 1;
+    .guar-statement-text {
+      display: flex; flex-direction: column; gap: 4px;
+      padding-left: 18px; padding-bottom: 22px;
     }
-    .guarantee-block-sub {
-      font-family: 'JetBrains Mono', monospace; font-size: 9px;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      color: rgba(255,255,255,0.3); margin-top: 14px;
+    .guar-statement-unit {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 8vw, 76px); line-height: 1;
+      color: #E31E24; letter-spacing: 4px;
     }
+    .guar-statement-sub {
+      font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+      letter-spacing: 0.18em; color: rgba(255,255,255,0.3);
+      text-transform: uppercase; line-height: 1.6;
+    }
+    .guar-statement-badge {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 8px;
+      letter-spacing: 0.14em; color: #E31E24; text-transform: uppercase;
+    }
+    .guar-dot { width: 6px; height: 6px; border-radius: 50%; background: #E31E24; animation: pulse-dot 1.8s ease-in-out infinite; flex-shrink: 0; }
     .guarantee-content h2 {
       font-family: 'Bebas Neue', sans-serif; font-size: 52px;
       line-height: 0.95; letter-spacing: 1px; color: #fff; margin-bottom: 20px;
@@ -806,7 +809,9 @@
       .testimonials-tabs { max-width: 100%; }
       .t-tab { padding: 10px 12px; font-size: 8px; }
       .guarantee-section { padding: 60px 0; }
-      .guarantee-inner { grid-template-columns: 1fr; gap: 40px; }
+      .guarantee-inner { grid-template-columns: 1fr; gap: 32px; }
+      .guarantee-visual { justify-content: center; }
+      .guar-statement { justify-content: center; }
       .faq-section { padding: 60px 0; }
       .final-cta-section { padding: 80px 0; }
       .final-cta-buttons { flex-direction: column; align-items: center; }
@@ -829,8 +834,8 @@
       .hero-planes { padding: 60px 0 48px; }
       .hero-h1 { font-size: clamp(48px, 13vw, 64px); }
       .value-grid { grid-template-columns: 1fr; }
-      .guarantee-block { padding: 28px 36px; }
-      .guarantee-block-tag { font-size: 36px; letter-spacing: 6px; }
+      .guar-statement-num { font-size: clamp(120px, 32vw, 160px); }
+      .guar-statement-unit { font-size: clamp(42px, 11vw, 56px); }
       .testimonials-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 24px; }
       .footer-bottom { flex-direction: column; }
@@ -1559,11 +1564,15 @@
     <div class="section-wrap">
       <div class="guarantee-inner">
         <div class="guarantee-visual" data-aos="fade-right" data-aos-duration="700">
-          <div class="guarantee-block">
-            <div class="guarantee-block-number">30</div>
-            <div class="guarantee-block-divider"></div>
-            <div class="guarantee-block-tag">DÍAS</div>
-            <div class="guarantee-block-sub">// Garantía activa &bull; Compromiso WellCore</div>
+          <div class="guar-statement">
+            <div class="guar-statement-num">30</div>
+            <div class="guar-statement-text">
+              <div class="guar-statement-unit">DÍAS</div>
+              <div class="guar-statement-sub">SEGUIMIENTO<br>GARANTIZADO</div>
+              <div class="guar-statement-badge">
+                <div class="guar-dot"></div> ACTIVO
+              </div>
+            </div>
           </div>
         </div>
         <div class="guarantee-content" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
