@@ -1904,8 +1904,8 @@
       .nav-inner { padding: 0 20px; }
       .nav-logo { font-size: 18px; }
 
-      /* HERO */
-      #hero { padding-top: 60px; min-height: 100svh; }
+      /* HERO — padding-top base cuando bar no está visible aún */
+      #hero { padding-top: 120px; min-height: 100svh; }
       .hero-inner { padding: 32px 20px 48px; }
       .hero-badge {
         font-size: 8px;
@@ -3973,11 +3973,12 @@
     if (hero) hero.style.paddingTop = (bh + 72) + 'px';
   }
 
-  // Show with delay
+  // Show with delay — setTimeout garantiza layout calculado post-show
   setTimeout(function(){
     bar.classList.add('show');
-    requestAnimationFrame(applyBarOffset);
+    setTimeout(applyBarOffset, 80);
   }, 1500);
+  window.addEventListener('resize', applyBarOffset);
 
   // Dismiss
   bar.querySelector('.v6-promo-bar-close').addEventListener('click', function(){
