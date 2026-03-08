@@ -1073,28 +1073,11 @@
                     <div class="journey-mockups">
                         <div class="journey-mockup-laptop">
                             <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
-                            <div class="mock-screen">
-                                <div class="mock-row red w40"></div>
-                                <div class="mock-chart">
-                                    <div class="mock-bar" style="height:40%"></div><div class="mock-bar" style="height:60%"></div>
-                                    <div class="mock-bar hi" style="height:80%"></div><div class="mock-bar" style="height:55%"></div>
-                                    <div class="mock-bar hi" style="height:90%"></div><div class="mock-bar" style="height:70%"></div>
-                                    <div class="mock-bar hi" style="height:85%"></div>
-                                </div>
-                                <div class="mock-row w70"></div><div class="mock-row w50"></div>
-                            </div>
+                            <img src="/images/mockups/tracking-desktop.png" alt="Tracking Diario — escritorio" loading="lazy">
                         </div>
                         <div class="journey-mockup-phone">
                             <div class="journey-mockup-phone__notch"></div>
-                            <div class="mock-phone">
-                                <div class="mock-row red w50"></div>
-                                <div class="mock-chart" style="height:36px;margin-top:8px;">
-                                    <div class="mock-bar" style="height:50%"></div><div class="mock-bar hi" style="height:80%"></div>
-                                    <div class="mock-bar" style="height:60%"></div><div class="mock-bar hi" style="height:90%"></div>
-                                    <div class="mock-bar" style="height:70%"></div>
-                                </div>
-                                <div class="mock-row w60" style="margin-top:6px"></div>
-                            </div>
+                            <img src="/images/mockups/tracking-mobile.png" alt="Tracking Diario — móvil" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -1476,6 +1459,16 @@ if (!CSS.supports('animation-timeline', 'view()')) {
 
 // Journey steps reveal
 document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.observe(el); });
+
+// Forzar reveal en elementos ya visibles al cargar (e.g. navegación directa a #platform)
+setTimeout(function() {
+    document.querySelectorAll('.journey-step, .bento-item').forEach(function(el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+            el.classList.add('revealed');
+        }
+    });
+}, 200);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
@@ -1513,25 +1506,9 @@ document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.obser
 
 <!-- GSAP v6 Premium Animations -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  gsap.registerPlugin(ScrollTrigger);
-
-  /* Bento grid items — stagger cascade */
-  gsap.from('.bento-item', {
-    opacity: 0, y: 50, scale: 0.95, stagger: 0.1, duration: 0.7, ease: 'power3.out',
-    scrollTrigger: { trigger: '.bento-grid', start: 'top 85%' }
-  });
-
-  /* Journey steps — handled by IntersectionObserver + CSS .revealed class */
-  /* (GSAP from() conflicts with CSS opacity:0 initial state) */
-
-  /* CTA button — dramatic entrance */
-  gsap.from('.platform-cta', {
-    opacity: 0, y: 40, scale: 0.95, duration: 0.8, ease: 'back.out(1.4)',
-    scrollTrigger: { trigger: '.platform-cta', start: 'top 90%' }
-  });
-});
+/* Bento items: CSS scroll-driven handles reveal (no GSAP override needed).
+   Journey steps + CTA: handled by IntersectionObserver above.
+   GSAP/Lenis loaded for other pages via wellcore-v6.js only. */
 </script>
 </body>
 </html>
