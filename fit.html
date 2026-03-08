@@ -48,7 +48,7 @@
 
     /* --- Reset & Base --- */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; /* Lenis en wellcore-v7.js maneja smooth scroll */ }
     body {
       background: var(--bg);
       color: var(--white);
@@ -727,14 +727,16 @@
       <div class="v7-glow-track" style="background:var(--card);padding:48px 36px;border:1px solid var(--border);position:relative;">
         <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:20px;">Plan</div>
         <h3 style="font-family:var(--font-head);font-size:40px;color:var(--white);margin-bottom:8px;">ESENCIAL</h3>
-        <div class="v7-font-data" style="font-family:var(--font-data);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$95<span style="font-size:18px;color:var(--gray);">/mes</span></div>
-        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">USD · facturación mensual</div>
+        <div class="v7-font-data" style="font-family:var(--font-data);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$299.000<span style="font-size:18px;color:var(--gray);">/mes</span></div>
+        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">COP &middot; Colombia &mdash; facturación mensual</div>
         <div style="height:1px;background:var(--border);margin-bottom:28px;"></div>
         <ul style="list-style:none;padding:0;margin-bottom:36px;">
           <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Plan de entrenamiento personalizado</li>
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Plan nutricional completo</li>
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Check-in semanal por escrito</li>
-          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Ajustes mensuales al programa</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Portal de cliente con acceso 24/7</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Seguimiento de métricas y progreso</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Soporte por mensaje &mdash; respuesta 48h</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Mediciones corporales + fotos de progreso</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Comunidad y chat grupal RISE</li>
         </ul>
         <a href="inscripcion.html?plan=esencial" style="display:block;text-align:center;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:14px;text-decoration:none;">ELEGIR ESENCIAL</a>
       </div>
@@ -744,14 +746,16 @@
         <div style="position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--rose));"></div>
         <div style="display:inline-block;background:var(--red);color:#fff;font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:6px 14px;margin-bottom:20px;">MÁS ELEGIDO</div>
         <h3 style="font-family:var(--font-head);font-size:40px;color:var(--white);margin-bottom:8px;">MÉTODO</h3>
-        <div class="v7-font-data" style="font-family:var(--font-data);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$120<span style="font-size:18px;color:var(--gray);">/mes</span></div>
-        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">USD · facturación mensual</div>
+        <div class="v7-font-data" style="font-family:var(--font-data);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$399.000<span style="font-size:18px;color:var(--gray);">/mes</span></div>
+        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">COP &middot; Colombia &mdash; facturación mensual</div>
         <div style="height:1px;background:rgba(220,60,100,0.2);margin-bottom:28px;"></div>
         <ul style="list-style:none;padding:0;margin-bottom:36px;">
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Todo lo del plan Esencial</li>
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Videollamada de revisión mensual</li>
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Plan periodizado por fases</li>
-          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Adaptación a tu ciclo menstrual</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Todo lo del plan Esencial +</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Plan nutricional 100% personalizado</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Guía de hábitos y estilo de vida</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Macros y calorías ajustadas a tu meta</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Suplementación interactiva</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--red);flex-shrink:0;margin-top:2px;"></i>Soporte por mensaje &mdash; respuesta 24h</li>
         </ul>
         <a href="inscripcion.html?plan=metodo" style="display:block;text-align:center;background:var(--red);color:#fff;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:14px;text-decoration:none;">ELEGIR MÉTODO</a>
       </div>
@@ -760,18 +764,143 @@
       <div class="v7-glow-track" style="background:var(--card);padding:48px 36px;border:1px solid var(--border);position:relative;">
         <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:20px;">Plan</div>
         <h3 style="font-family:var(--font-head);font-size:40px;color:var(--white);margin-bottom:8px;">ELITE</h3>
-        <div class="v7-font-data" style="font-family:var(--font-data);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$150<span style="font-size:18px;color:var(--gray);">/mes</span></div>
-        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">USD · facturación mensual</div>
+        <div class="v7-font-data" style="font-family:var(--font-data);font-size:56px;color:var(--white);line-height:1;margin-bottom:4px;">$549.000<span style="font-size:18px;color:var(--gray);">/mes</span></div>
+        <div style="font-size:11px;color:var(--gray);margin-bottom:32px;">COP &middot; Colombia &mdash; facturación mensual</div>
         <div style="height:1px;background:var(--border);margin-bottom:28px;"></div>
         <ul style="list-style:none;padding:0;margin-bottom:36px;">
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Todo lo del plan Método</li>
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Acompañamiento diario por WhatsApp</li>
-          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Ajustes en tiempo real</li>
-          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Prioridad total de respuesta</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Todo lo del plan Método +</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Check-in semanal en vivo con tu coach</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Revisión mensual por videollamada</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Línea directa WhatsApp con el coach</li>
+          <li style="display:flex;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Ciclo hormonal personalizado</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check" style="color:var(--rose);flex-shrink:0;margin-top:2px;"></i>Soporte prioritario &mdash; respuesta 8h</li>
         </ul>
         <a href="inscripcion.html?plan=elite" style="display:block;text-align:center;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:14px;text-decoration:none;">ELEGIR ELITE</a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══ PLATAFORMA — Mockups ═══ -->
+<section id="sec-plataforma" style="padding:100px 0;background:var(--bg);overflow:hidden;">
+  <div class="container">
+
+    <!-- Header -->
+    <div style="text-align:center;margin-bottom:72px;" data-aos="fade-up">
+      <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;">Tu plataforma</div>
+      <h2 style="font-family:var(--font-head);font-size:clamp(44px,7vw,80px);line-height:0.93;color:var(--white);">
+        TODO EN UN<br><span style="color:var(--red);">SOLO LUGAR.</span>
+      </h2>
+      <p style="font-size:15px;color:var(--gray);margin-top:16px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.7;">
+        No más PDFs, no más grupos de WhatsApp caóticos. Tu portal personal con todo lo que necesitas para transformarte — diseñado para que nunca pierdas el rumbo.
+      </p>
+    </div>
+
+    <!-- Feature pills -->
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:80px;" data-aos="fade-up" data-aos-delay="100">
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+        <i class="fas fa-dumbbell" style="color:var(--rose);font-size:12px;"></i> Entrenamiento 1:1
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+        <i class="fas fa-leaf" style="color:var(--rose);font-size:12px;"></i> Guía de hábitos
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+        <i class="fas fa-chart-line" style="color:var(--rose);font-size:12px;"></i> Tracking diario
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+        <i class="fas fa-ruler-vertical" style="color:var(--rose);font-size:12px;"></i> Mediciones corporales
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+        <i class="fas fa-camera" style="color:var(--rose);font-size:12px;"></i> Fotos de progreso
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+        <i class="fas fa-comments" style="color:var(--rose);font-size:12px;"></i> Comunidad RISE
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+        <i class="fas fa-mobile-screen-button" style="color:var(--rose);font-size:12px;"></i> Acceso 24/7
+      </div>
+    </div>
+
+    <!-- Mockup 1: Dashboard -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:100px;" data-aos="fade-up">
+      <div>
+        <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;">01 — Dashboard</div>
+        <h3 style="font-family:var(--font-head);font-size:clamp(32px,4vw,48px);color:var(--white);line-height:1;margin-bottom:16px;">Tu centro de control personal</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;margin-bottom:24px;">KPIs del reto, accesos rápidos, progreso visual y todo lo que necesitas en un solo lugar. Funciona perfecto en tu celular y computadora.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Métricas en tiempo real</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Vista semanal del programa</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Acceso 24/7 desde cualquier dispositivo</div>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <div style="border-radius:14px;overflow:hidden;background:#1a1a1d;border:1px solid rgba(255,255,255,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+          <div style="display:flex;gap:6px;padding:8px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+          </div>
+          <img src="/images/mockups/dashboard-desktop.png" alt="Dashboard WellCore" style="width:100%;display:block;" loading="lazy">
+        </div>
+        <div style="position:absolute;right:-20px;bottom:-20px;width:110px;background:#000;border-radius:18px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);box-shadow:0 12px 30px rgba(0,0,0,0.5);">
+          <div style="width:50px;height:12px;background:#000;border-radius:0 0 8px 8px;margin:0 auto;"></div>
+          <img src="/images/mockups/dashboard-mobile.png" alt="Dashboard móvil" style="width:100%;display:block;margin-top:-2px;" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Mockup 2: Tracking -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:100px;" data-aos="fade-up">
+      <div style="position:relative;order:1;">
+        <div style="border-radius:14px;overflow:hidden;background:#1a1a1d;border:1px solid rgba(255,255,255,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+          <div style="display:flex;gap:6px;padding:8px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+          </div>
+          <img src="/images/mockups/tracking-desktop.png" alt="Tracking Diario WellCore" style="width:100%;display:block;" loading="lazy">
+        </div>
+      </div>
+      <div style="order:2;">
+        <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;">02 — Tracking</div>
+        <h3 style="font-family:var(--font-head);font-size:clamp(32px,4vw,48px);color:var(--white);line-height:1;margin-bottom:16px;">Registras tu día en 30 segundos</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;margin-bottom:24px;">Cada día marcas si entrenaste, seguiste tu nutrición, cuánta agua tomaste y horas de sueño. Tu coach ve tu progreso en tiempo real y ajusta el programa si es necesario.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Tracking de agua, sueño y nutrición</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Tu coach te monitorea</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Nunca estás sola en el proceso</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mockup 3: Mediciones -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;" data-aos="fade-up">
+      <div>
+        <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;">03 — Progreso real</div>
+        <h3 style="font-family:var(--font-head);font-size:clamp(32px,4vw,48px);color:var(--white);line-height:1;margin-bottom:16px;">Datos que te motivan</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.8;margin-bottom:24px;">Registras medidas corporales y fotos de progreso. La plataforma calcula tus cambios automáticamente con indicadores de color. Ver el número cambiar semana a semana — eso engancha.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> 8 medidas corporales registradas</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Fotos frente / lado / espalda</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><i class="fas fa-check-circle" style="color:var(--rose);"></i> Cambios calculados automáticamente</div>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <div style="border-radius:14px;overflow:hidden;background:#1a1a1d;border:1px solid rgba(255,255,255,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+          <div style="display:flex;gap:6px;padding:8px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+          </div>
+          <img src="/images/mockups/measurements-desktop.png" alt="Mediciones WellCore" style="width:100%;display:block;" loading="lazy">
+        </div>
+        <div style="position:absolute;right:-20px;bottom:-20px;width:110px;background:#000;border-radius:18px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);box-shadow:0 12px 30px rgba(0,0,0,0.5);">
+          <div style="width:50px;height:12px;background:#000;border-radius:0 0 8px 8px;margin:0 auto;"></div>
+          <img src="/images/mockups/measurements-mobile.png" alt="Mediciones móvil" style="width:100%;display:block;margin-top:-2px;" loading="lazy">
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -893,8 +1022,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- AOS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<!-- Lenis Smooth Scroll -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<!-- Lenis: inicializado por wellcore-v7.js (no duplicar) -->
 
 <script>
   /* --- AOS init --- */
