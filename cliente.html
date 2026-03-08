@@ -965,6 +965,28 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .recipe-locked{padding:20px;text-align:center;opacity:.5;font-size:.82rem;color:var(--gray);}
 .recipe-locked i{display:block;font-size:1.4rem;margin-bottom:6px;color:var(--gray);}
 
+/* ── BANCO DE VIDEOS ── */
+.video-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s;}
+.video-card:hover{border-color:rgba(200,16,46,.4);transform:translateY(-2px);}
+.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--card);}
+.video-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+.video-card:hover .video-thumb img{transform:scale(1.04);}
+.video-play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);transition:background .2s;}
+.video-card:hover .video-play-btn{background:rgba(0,0,0,.55);}
+.video-play-btn i{font-size:2.2rem;color:#fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));transition:transform .2s;}
+.video-card:hover .video-play-btn i{transform:scale(1.1);}
+.video-card-body{padding:14px 16px;}
+.video-card-title{font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.35;}
+.video-card-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.video-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.07em;padding:2px 8px;border-radius:40px;}
+.video-tag-muscle{background:var(--red-dim);color:var(--red);}
+.video-tag-plan{background:rgba(255,255,255,.06);color:var(--gray);}
+.video-locked-card{background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);overflow:hidden;opacity:.45;}
+.video-locked-card .video-thumb{filter:blur(3px);}
+.video-lock-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(0,0,0,.6);}
+.video-lock-overlay i{font-size:1.6rem;color:var(--white);}
+.video-lock-overlay span{font-size:.72rem;color:rgba(255,255,255,.7);letter-spacing:.04em;}
+
 /* ===== LIGHTBOX MODAL ===== */
 .modal-backdrop{
   display:none;
@@ -2839,7 +2861,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <div class="acad-tabs">
         <button class="acad-tab active" onclick="acadSetTab('calculadoras')" id="acad-btn-calculadoras"><i class="fas fa-calculator" style="margin-right:5px;font-size:.75rem;"></i>Calculadoras</button>
         <button class="acad-tab" onclick="acadSetTab('guias')" id="acad-btn-guias"><i class="fas fa-flask" style="margin-right:5px;font-size:.75rem;"></i>Ciencia</button>
-        <button class="acad-tab" onclick="acadSetTab('ejercicios')" id="acad-btn-ejercicios"><i class="fas fa-dumbbell" style="margin-right:5px;font-size:.75rem;"></i>Técnica</button>
+        <button class="acad-tab" onclick="acadSetTab('videos')" id="acad-btn-videos"><i class="fab fa-youtube" style="margin-right:5px;font-size:.75rem;"></i>Videos</button>
         <button class="acad-tab" onclick="acadSetTab('recetas')" id="acad-btn-recetas"><i class="fas fa-bowl-food" style="margin-right:5px;font-size:.75rem;"></i>Recetas</button>
         <button class="acad-tab" onclick="acadSetTab('archivos')" id="acad-btn-archivos"><i class="fas fa-folder-open" style="margin-right:5px;font-size:.75rem;"></i>Mis Archivos</button>
       </div>
@@ -3023,10 +3045,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div class="guide-grid" id="guide-grid"><!-- rendered by JS --></div>
       </div>
 
-      <!-- TÉCNICA DE EJERCICIOS -->
-      <div class="acad-panel" id="acad-panel-ejercicios">
-        <div class="exercise-filter" id="exercise-filter"><!-- rendered by JS --></div>
-        <div class="exercise-grid" id="exercise-grid"><!-- rendered by JS --></div>
+      <!-- BANCO DE VIDEOS -->
+      <div class="acad-panel" id="acad-panel-videos">
+        <div class="exercise-filter" id="video-filter"><!-- rendered by JS --></div>
+        <div class="exercise-grid" id="video-grid"><!-- rendered by JS --></div>
       </div>
 
       <!-- RECETAS -->
@@ -5734,7 +5756,7 @@ function acadSetTab(tab) {
   if (btn) btn.classList.add('active');
   if (panel) panel.classList.add('active');
   if (tab === 'guias') renderGuides();
-  if (tab === 'ejercicios') renderExercises();
+  if (tab === 'videos') renderVideos();
   if (tab === 'recetas') renderRecipes();
   if (tab === 'archivos') renderBiblioteca();
 }
@@ -5967,97 +5989,82 @@ function closeGuide() {
 }
 
 // ── EJERCICIOS ──
-var EXERCISES = [
-  // PECHO
-  { name:'Press de Banca', muscle:'Pecho', minPlan:'esencial', cues:['Escápulas retraídas y deprimidas','Barra sobre la parte baja del pecho','Codos a 45-75° del torso','Empuje como si separaras el piso','Mantén contacto con el banco en todo momento'],
-    mistakes:['Codos muy abiertos a 90° (estrés en hombros)','Rebotar la barra en el pecho','Levantar la cadera del banco'] },
-  { name:'Press Inclinado con Mancuernas', muscle:'Pecho', minPlan:'esencial', cues:['Ángulo de 30-45° en el banco','Mancuernas alineadas con los clavículas','Bajar hasta sentir el estiramiento del pectoral','Presionar hacia arriba y ligeramente adentro'],
-    mistakes:['Banco demasiado inclinado (activa más deltoides)','Perder arco lumbar durante el movimiento'] },
-  { name:'Fondos en Paralelas', muscle:'Pecho', minPlan:'metodo', cues:['Inclínate hacia adelante para activar pectoral','Codos apuntan hacia atrás','Descenso controlado hasta 90° de flexión de codo','Sin hiperextender los codos al subir'],
-    mistakes:['Torso vertical (activa tríceps, no pecho)','Descenso excesivo (estrés en hombro)'] },
-  // ESPALDA
-  { name:'Remo con Barra', muscle:'Espalda', minPlan:'esencial', cues:['Torso a 45° del suelo','Barra cerca al cuerpo durante todo el recorrido','Llevar el codo atrás y arriba','Contraer escápulas al final del recorrido'],
-    mistakes:['Usar la cadera para subir la barra','Cuello en hiperextensión','Barra muy separada del cuerpo'] },
-  { name:'Dominadas (Pull-ups)', muscle:'Espalda', minPlan:'esencial', cues:['Agarre ligeramente más ancho que hombros','Iniciar el movimiento deprimiendo las escápulas','Llevar el pecho hacia la barra','Descenso lento y controlado (2-3 seg)'],
-    mistakes:['Usar el momentum del cuerpo','Rango de movimiento incompleto','No extender completamente al bajar'] },
-  { name:'Remo en Polea Baja', muscle:'Espalda', minPlan:'esencial', cues:['Espalda erguida, no inclinada al tirar','Codos cerca al cuerpo','Retracción escapular al final','Pausa de 1 seg en la contracción máxima'],
-    mistakes:['Inclinarse hacia atrás con la espalda','Soltar el peso sin control'] },
-  // PIERNA
-  { name:'Sentadilla', muscle:'Pierna', minPlan:'esencial', cues:['Pies a ancho de hombros, ligeramente rotados afuera','Rodillas en línea con los dedos del pie','Profundidad: muslos paralelos al suelo mínimo','Codos abajo (barra baja) o arriba (barra alta)','Empuja el suelo, no "sube" la barra'],
-    mistakes:['Rodillas colapsando hacia adentro (valgo)','Talones levantándose del suelo','Curvar la espalda baja (buttwink excesivo)'] },
-  { name:'Peso Muerto Convencional', muscle:'Pierna', minPlan:'esencial', cues:['Barra sobre el empeine, a ~2-3cm de las espinillas','Cadera baja al inicio, no es una sentadilla','Espalda plana (curva neutral, no hiperlordosis)','Empujar el suelo al inicio, no tirar la barra','Bloquear las caderas al final'],
-    mistakes:['Barra muy separada del cuerpo','Redondear la espalda lumbar','Hiperextender al final (riesgo lumbar)'] },
-  { name:'Prensa de Piernas', muscle:'Pierna', minPlan:'esencial', cues:['Pies a ancho de hombros en la plataforma','Bajar hasta 90° de flexión de rodilla','No bloquear completamente las rodillas al subir','Empujar con toda la planta del pie'],
-    mistakes:['Peso excesivo con rango limitado','Levantar la cadera de la plataforma','Rodillas colapsando hacia adentro'] },
-  { name:'Hip Thrust', muscle:'Glúteo', minPlan:'esencial', cues:['Banca a la altura de los omóplatos','Barra sobre los pliegues de la cadera (con almohadilla)','Empujar con los talones, no la punta del pie','Extensión completa de cadera, pelvis en retroversión al final','Mantener el core activado durante todo el movimiento'],
-    mistakes:['Extensión lumbar en lugar de cadera','Barra rodándose hacia arriba durante el movimiento','Rango incompleto'] },
-  { name:'Zancada con Mancuernas', muscle:'Pierna', minPlan:'esencial', cues:['Paso largo hacia adelante','Rodilla trasera baja hasta casi tocar el suelo','Torso erguido durante todo el movimiento','Empujar con el talón de la pierna adelantada para volver'],
-    mistakes:['Torso inclinado hacia adelante','Rodilla delantera pasando la punta del pie','Pasos muy cortos'] },
-  // HOMBROS
-  { name:'Press Militar', muscle:'Hombros', minPlan:'esencial', cues:['Barra al nivel de la clavícula al inicio','Core activado, sin extender la espalda baja','Codos ligeramente adelante de la barra','Empujar la barra en línea recta sobre la cabeza','Llevar las orejas entre los brazos al subir'],
-    mistakes:['Inclinarse hacia atrás excesivamente','Codos muy abiertos a los lados','Rango incompleto (no extender los codos)'] },
-  { name:'Elevaciones Laterales', muscle:'Hombros', minPlan:'esencial', cues:['Ligera flexión de codo (15-20°)','Elevar hasta que los brazos queden paralelos al suelo','El meñique ligeramente más alto que el pulgar al final','Descenso lento y controlado (3 seg)'],
-    mistakes:['Uso del momentum (trampa con el torso)','Subir por encima de la horizontal','Demasiado peso, rango incompleto'] },
-  // BÍCEPS
-  { name:'Curl con Barra', muscle:'Bíceps', minPlan:'esencial', cues:['Codos pegados a los costados, sin moverse','Supinación completa de la muñeca al subir','Pausa de 1 seg en la contracción máxima','Descenso controlado (2-3 seg) con extensión completa'],
-    mistakes:['Balancear el torso para subir el peso','Codos moviéndose hacia adelante al subir','No extender completamente al bajar'] },
-  { name:'Curl de Martillo', muscle:'Bíceps', minPlan:'esencial', cues:['Agarre neutro (palmas enfrentadas) durante todo el movimiento','Codos estables en los costados','Sube a ritmo controlado y baja lento'],
-    mistakes:['Girar la muñeca al subir (eso es curl normal)','Codos desplazándose hacia adelante'] },
-  // TRÍCEPS
-  { name:'Press Francés (Skull Crusher)', muscle:'Tríceps', minPlan:'metodo', cues:['Barra de EZ o mancuernas al frente','Codos apuntando al techo, sin abrirse','Bajar hasta cerca de la frente o ligeramente atrás','Extensión completa de codo al subir'],
-    mistakes:['Codos abriéndose hacia los lados al bajar','Usar el hombro para terminar el movimiento'] },
-  { name:'Extensión en Polea Alta', muscle:'Tríceps', minPlan:'esencial', cues:['Torso ligeramente inclinado hacia adelante','Codos fijos a los costados, apuntando al suelo','Extensión completa de codo en la contracción','Agarre neutro o prono según el implemento'],
-    mistakes:['Codos moviéndose durante el movimiento','No extender completamente al bajar'] },
-  // CORE
-  { name:'Plancha (Plank)', muscle:'Core', minPlan:'esencial', cues:['Cuerpo en línea recta de cabeza a talones','Activar glúteos y core simultáneamente','Cuello en posición neutral (no mirar arriba ni abajo)','Respiración diafragmática durante el ejercicio'],
-    mistakes:['Cadera cayendo hacia el suelo','Cadera elevada (posición de montaña)','Apnea durante el ejercicio'] },
-  { name:'Dead Bug', muscle:'Core', minPlan:'esencial', cues:['Espalda baja en contacto con el suelo durante todo el movimiento','Bajar el brazo y pierna contrarios simultáneamente','Movimiento lento y controlado (3-4 seg)','Exhalar durante el descenso'],
-    mistakes:['Espalda arqueándose al extender las extremidades','Velocidad excesiva que elimina el trabajo de estabilización'] },
-  { name:'RKC Plank', muscle:'Core', minPlan:'metodo', cues:['Partiendo de una plancha normal','Activar todos los músculos del cuerpo simultáneamente (apretar puños, glúteos, cuádriceps)','Crear tensión total — como si quisieras "romper" el piso'],
-    mistakes:['Posición incorrecta de base antes de agregar tensión'] }
+// ── BANCO DE VIDEOS ──
+// Para agregar videos: reemplaza el youtubeId con el ID del video de YouTube
+// (lo que va después de ?v= en la URL del video)
+// Ejemplo: https://www.youtube.com/watch?v=dQw4w9WgXcQ → youtubeId: 'dQw4w9WgXcQ'
+var VIDEOS = [
+  // ESENCIAL — ejercicios fundamentales
+  { name:'Sentadilla — Técnica Completa', muscle:'Pierna', minPlan:'esencial', youtubeId:'' },
+  { name:'Peso Muerto Convencional', muscle:'Pierna', minPlan:'esencial', youtubeId:'' },
+  { name:'Press de Banca', muscle:'Pecho', minPlan:'esencial', youtubeId:'' },
+  { name:'Dominadas (Pull-ups)', muscle:'Espalda', minPlan:'esencial', youtubeId:'' },
+  { name:'Hip Thrust', muscle:'Glúteo', minPlan:'esencial', youtubeId:'' },
+  { name:'Press Militar', muscle:'Hombros', minPlan:'esencial', youtubeId:'' },
+  { name:'Curl con Barra', muscle:'Bíceps', minPlan:'esencial', youtubeId:'' },
+  { name:'Plancha — Activación de Core', muscle:'Core', minPlan:'esencial', youtubeId:'' },
+  // MÉTODO — ejercicios intermedios
+  { name:'Remo con Barra', muscle:'Espalda', minPlan:'metodo', youtubeId:'' },
+  { name:'Zancada con Mancuernas', muscle:'Pierna', minPlan:'metodo', youtubeId:'' },
+  { name:'Press Inclinado', muscle:'Pecho', minPlan:'metodo', youtubeId:'' },
+  { name:'Elevaciones Laterales', muscle:'Hombros', minPlan:'metodo', youtubeId:'' },
+  { name:'Fondos en Paralelas', muscle:'Pecho', minPlan:'metodo', youtubeId:'' },
+  { name:'Dead Bug', muscle:'Core', minPlan:'metodo', youtubeId:'' },
+  // ELITE — ejercicios avanzados
+  { name:'Sentadilla Búlgara', muscle:'Pierna', minPlan:'elite', youtubeId:'' },
+  { name:'Peso Muerto Rumano', muscle:'Glúteo', minPlan:'elite', youtubeId:'' },
+  { name:'Press Francés (Skull Crusher)', muscle:'Tríceps', minPlan:'elite', youtubeId:'' },
+  { name:'RKC Plank', muscle:'Core', minPlan:'elite', youtubeId:'' }
 ];
 
-var exerciseFilter = 'Todo';
-function renderExercises() {
-  var filterEl = document.getElementById('exercise-filter');
-  var gridEl = document.getElementById('exercise-grid');
-  if (!filterEl || filterEl.children.length > 0) { filterExercises(exerciseFilter); return; }
-  var muscles = ['Todo','Pecho','Espalda','Pierna','Glúteo','Hombros','Bíceps','Tríceps','Core'];
+var videoFilter = 'Todo';
+function renderVideos() {
+  var filterEl = document.getElementById('video-filter');
+  var gridEl = document.getElementById('video-grid');
+  if (!filterEl || filterEl.children.length > 0) { filterVideos(videoFilter); return; }
+  var muscles = ['Todo','Pierna','Glúteo','Pecho','Espalda','Hombros','Bíceps','Tríceps','Core'];
   muscles.forEach(function(m) {
     var btn = document.createElement('button');
-    btn.className = 'exercise-filter-btn' + (m === exerciseFilter ? ' active' : '');
+    btn.className = 'exercise-filter-btn' + (m === videoFilter ? ' active' : '');
     btn.textContent = m;
     btn.addEventListener('click', function(){
-      document.querySelectorAll('.exercise-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('#video-filter .exercise-filter-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
-      exerciseFilter = m;
-      filterExercises(m);
+      videoFilter = m;
+      filterVideos(m);
     });
     filterEl.appendChild(btn);
   });
-  filterExercises('Todo');
+  filterVideos('Todo');
 }
 
-function filterExercises(muscle) {
-  var gridEl = document.getElementById('exercise-grid');
+function filterVideos(muscle) {
+  var gridEl = document.getElementById('video-grid');
   if (!gridEl) return;
   var planLevelMap = { esencial:1, metodo:2, elite:3 };
   var planLevel = planLevelMap[clientPlan] || 1;
+  var planLabel = { esencial:'Esencial', metodo:'Método', elite:'Elite' };
   gridEl.textContent = '';
-  var filtered = muscle === 'Todo' ? EXERCISES : EXERCISES.filter(function(e){ return e.muscle === muscle; });
-  filtered.forEach(function(ex) {
-    var required = planLevelMap[ex.minPlan] || 1;
+  var filtered = muscle === 'Todo' ? VIDEOS : VIDEOS.filter(function(v){ return v.muscle === muscle; });
+  filtered.forEach(function(v) {
+    var required = planLevelMap[v.minPlan] || 1;
     var unlocked = planLevel >= required;
     var card = document.createElement('div');
-    card.className = 'exercise-card';
+    // Thumbnail URL de YouTube (fallback si no tiene ID)
+    var thumbUrl = v.youtubeId
+      ? 'https://img.youtube.com/vi/' + v.youtubeId + '/mqdefault.jpg'
+      : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="320" height="180"%3E%3Crect width="320" height="180" fill="%23121215"/%3E%3Ctext x="50%25" y="50%25" font-family="sans-serif" font-size="12" fill="%23666" text-anchor="middle" dy=".3em"%3EVídeo próximamente%3C/text%3E%3C/svg%3E';
     if (!unlocked) {
-      card.innerHTML = '<div class="exercise-header"><div><div class="exercise-muscle-tag">' + ex.muscle + '</div><div class="exercise-name">' + ex.name + '</div></div></div><div class="exercise-locked"><i class="fas fa-lock"></i><span>Requiere plan ' + ex.minPlan.charAt(0).toUpperCase() + ex.minPlan.slice(1) + '</span></div>';
+      card.className = 'video-locked-card';
+      card.innerHTML = '<div class="video-thumb"><img src="' + thumbUrl + '" alt="" loading="lazy"><div class="video-lock-overlay"><i class="fas fa-lock"></i><span>' + planLabel[v.minPlan] + ' o superior</span></div></div><div class="video-card-body"><div class="video-card-title" style="color:var(--gray);">' + v.name + '</div><div class="video-card-tags"><span class="video-tag video-tag-muscle">' + v.muscle + '</span></div></div>';
     } else {
-      var cuesHtml = ex.cues.map(function(c){ return '<li>' + c + '</li>'; }).join('');
-      var mistakesHtml = ex.mistakes.map(function(m){ return '<li>' + m + '</li>'; }).join('');
-      card.innerHTML = '<div class="exercise-header"><div><div class="exercise-muscle-tag">' + ex.muscle + '</div><div class="exercise-name">' + ex.name + '</div></div></div>' +
-        '<div class="exercise-body"><ul class="exercise-cues">' + cuesHtml + '</ul>' +
-        '<div class="exercise-mistakes"><div class="exercise-mistakes-label"><i class="fas fa-triangle-exclamation" style="margin-right:4px;"></i>Errores comunes</div><ul>' + mistakesHtml + '</ul></div></div>';
+      card.className = 'video-card v7-glow-track';
+      card.innerHTML = '<div class="video-thumb"><img src="' + thumbUrl + '" alt="' + v.name + '" loading="lazy"><div class="video-play-btn"><i class="fab fa-youtube"></i></div></div><div class="video-card-body"><div class="video-card-title">' + v.name + '</div><div class="video-card-tags"><span class="video-tag video-tag-muscle">' + v.muscle + '</span><span class="video-tag video-tag-plan"><i class="fas fa-check" style="margin-right:3px;font-size:.55rem;opacity:.6;"></i>' + planLabel[v.minPlan] + '</span></div></div>';
+      if (v.youtubeId) {
+        card.addEventListener('click', function(){
+          window.open('https://www.youtube.com/watch?v=' + v.youtubeId, '_blank');
+        });
+      }
     }
     gridEl.appendChild(card);
   });
