@@ -409,6 +409,115 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
   .guide-grid { grid-template-columns: 1fr; }
   .hero-title { font-size: 52px; }
 }
+
+/* ============================================================
+   PAIN POINTS SECTION
+   ============================================================ */
+.pain-section { background: var(--bg); border-top: 1px solid var(--border); }
+.pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); overflow: hidden; margin-bottom: 1px; }
+.pain-card { background: var(--surface); padding: 36px 32px; position: relative; transition: background var(--transition); }
+.pain-card:hover { background: var(--surface-2); }
+.pain-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); opacity: 0; transition: opacity 0.1s linear; }
+.pain-card:hover::after { opacity: 1; }
+.pain-icon { font-size: 18px; color: var(--red); margin-bottom: 12px; }
+.pain-number { font-family: var(--font-display); font-size: 64px; color: rgba(227,30,36,0.1); line-height: 1; margin-bottom: 6px; letter-spacing: 0.02em; }
+.pain-title { font-family: var(--font-display); font-size: 20px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 10px; }
+.pain-desc { font-size: 14px; color: var(--gray); line-height: 1.65; }
+
+/* ============================================================
+   MARKET STATS BAR
+   ============================================================ */
+.market-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-top: 3px solid var(--red); }
+.market-stat { background: var(--surface-2); padding: 32px 24px; text-align: center; }
+.market-stat-value { font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); color: var(--red); letter-spacing: 0.02em; line-height: 1; margin-bottom: 6px; }
+.market-stat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--gray); text-transform: uppercase; }
+.market-stat-note { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 4px; line-height: 1.4; }
+
+/* ============================================================
+   WORK MODELS SECTION
+   ============================================================ */
+.models-section { background: linear-gradient(180deg, var(--bg) 0%, #0c0c0e 100%); border-top: 1px solid var(--border); }
+.models-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.model-card { background: var(--surface); border: 1px solid var(--border); padding: 40px 32px; position: relative; display: flex; flex-direction: column; gap: 0; transition: border-color 0.1s linear; }
+.model-card:hover { border-color: rgba(227,30,36,0.4); }
+.model-card.model-featured { border-color: var(--red); background: linear-gradient(180deg, rgba(227,30,36,0.05) 0%, var(--surface) 40%); }
+.model-card.model-featured:hover { border-color: rgba(255,255,255,0.4); }
+.model-card.model-gold { border-color: rgba(245,200,66,0.3); }
+.model-card.model-gold:hover { border-color: rgba(245,200,66,0.5); }
+.model-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; padding: 4px 12px; margin-bottom: 24px; width: fit-content; }
+.model-tag.tag-standard { color: var(--red); border: 1px solid rgba(227,30,36,0.4); background: var(--red-dim); }
+.model-tag.tag-featured { color: var(--white); background: var(--red); border: 1px solid var(--red); }
+.model-tag.tag-gold { color: var(--gold); border: 1px solid rgba(245,200,66,0.4); background: var(--gold-dim); }
+.model-badge-best { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: var(--white); background: var(--red); padding: 4px 16px; white-space: nowrap; }
+.model-name { font-family: var(--font-display); font-size: 26px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 8px; }
+.model-income { font-family: var(--font-display); font-size: 48px; letter-spacing: 0.02em; color: var(--red); line-height: 1; margin-bottom: 4px; }
+.model-card.model-gold .model-income { color: var(--gold); }
+.model-income-note { font-family: var(--font-mono); font-size: 10px; color: var(--gray); letter-spacing: 0.06em; margin-bottom: 24px; }
+.model-divider { height: 1px; background: var(--border); margin-bottom: 24px; }
+.model-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; flex: 1; }
+.model-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray-light); line-height: 1.5; }
+.model-features li .chk { color: var(--red); flex-shrink: 0; margin-top: 2px; font-size: 12px; }
+.model-card.model-gold .model-features li .chk { color: var(--gold); }
+.model-cta { display: block; text-align: center; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; padding: 14px 24px; text-decoration: none; cursor: pointer; transition: all 0.1s linear; width: 100%; }
+.model-cta.outline { color: var(--gray-light); border: 1px solid var(--border-hover); background: transparent; }
+.model-cta.outline:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+.model-cta.solid { color: var(--white); background: var(--red); border: 1px solid var(--red); }
+.model-cta.solid:hover { background: var(--red-dark); border-color: var(--red-dark); }
+.model-cta.gold-cta { color: #0a0a0a; background: var(--gold); border: 1px solid var(--gold); }
+.model-cta.gold-cta:hover { opacity: 0.85; }
+
+/* ============================================================
+   TEAM ECOSYSTEM SECTION
+   ============================================================ */
+.team-section { background: var(--surface); border-top: 1px solid var(--border); }
+.team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); overflow: hidden; }
+.team-role { background: var(--bg); padding: 40px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; transition: background 0.1s linear; position: relative; }
+.team-role:hover { background: #0d0d0f; }
+.team-role-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--red-dim); border: 1px solid rgba(227,30,36,0.25); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--red); flex-shrink: 0; }
+.team-role.team-center { background: rgba(227,30,36,0.04); border-left: 1px solid rgba(227,30,36,0.15); border-right: 1px solid rgba(227,30,36,0.15); padding-top: 52px; }
+.team-role.team-center .team-role-icon { width: 76px; height: 76px; background: var(--red); border-color: var(--red); font-size: 26px; color: #fff; }
+.team-role-title { font-family: var(--font-display); font-size: 16px; letter-spacing: 0.06em; color: var(--white); }
+.team-role.team-center .team-role-title { font-size: 20px; }
+.team-role-desc { font-size: 12px; color: var(--gray); line-height: 1.6; }
+.team-role-tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--red); margin-top: 2px; text-transform: uppercase; }
+.team-coach-label { position: absolute; top: 0; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.14em; color: var(--red); background: rgba(227,30,36,0.15); border: 1px solid rgba(227,30,36,0.3); padding: 3px 12px; white-space: nowrap; }
+
+/* ============================================================
+   INCOME COMPARISON BARS
+   ============================================================ */
+.income-bars { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+.income-bar-row { display: grid; grid-template-columns: 180px 1fr 100px; align-items: center; gap: 16px; }
+.income-bar-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--gray-light); }
+.income-bar-track { height: 6px; background: rgba(255,255,255,0.06); position: relative; }
+.income-bar-fill { height: 100%; background: var(--red); transition: width 0s; }
+.income-bar-fill.gold { background: var(--gold); }
+.income-bar-value { font-family: var(--font-display); font-size: 16px; letter-spacing: 0.04em; color: var(--red); white-space: nowrap; text-align: right; }
+.income-bar-value.gold { color: var(--gold); }
+
+/* ============================================================
+   RESPONSIVE NUEVAS SECCIONES
+   ============================================================ */
+@media (max-width: 1100px) {
+  .pain-grid { grid-template-columns: repeat(2, 1fr); }
+  .market-stats { grid-template-columns: repeat(2, 1fr); }
+  .models-grid { grid-template-columns: 1fr 1fr; }
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+  .income-bar-row { grid-template-columns: 140px 1fr 90px; }
+}
+@media (max-width: 768px) {
+  .pain-grid { grid-template-columns: 1fr; }
+  .market-stats { grid-template-columns: repeat(2, 1fr); }
+  .models-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .income-bar-row { grid-template-columns: 110px 1fr 80px; gap: 8px; }
+  .income-bar-label { font-size: 10px; }
+  .income-bar-value { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .market-stats { grid-template-columns: 1fr 1fr; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+  .income-bar-row { grid-template-columns: 90px 1fr 70px; }
+}
 </style>
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
@@ -512,95 +621,152 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
 </div>
 
 <!-- ============================================================
-     WHY WELLCORE
+     PAIN POINTS — POR QUÉ LOS COACHES NO ESCALAN
      ============================================================ -->
-<section class="why-section" id="beneficios" aria-label="Por qué WellCore" data-v5-reveal>
+<section class="pain-section" id="problema" aria-label="Por qué los coaches no escalan" data-v5-reveal>
   <div class="container">
-    <div class="why-header">
-      <div>
-        <div class="section-label" data-aos="fade-right"><i class="fas fa-star" aria-hidden="true"></i> POR QUÉ WELLCORE</div>
-        <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">TODO LO QUE<br>NECESITAS PARA<br>ESCALAR</h2>
-        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="120">Nos encargamos de la infraestructura para que tú te concentres en lo que sabes hacer: transformar vidas.</p>
+    <div style="max-width:680px;margin-bottom:56px;" data-aos="fade-up">
+      <div class="section-label"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> EL PROBLEMA REAL</div>
+      <h2 class="section-title">¿POR QUÉ LA MAYORÍA<br>DE COACHES NUNCA<br><span style="color:var(--red)">ESCALA?</span></h2>
+      <p class="section-subtitle">Tienes el conocimiento. Tienes los resultados. Pero algo te está frenando — y no es tu talento.</p>
+    </div>
+
+    <div class="pain-grid">
+      <div class="pain-card" data-aos="fade-up" data-aos-delay="40">
+        <div class="pain-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+        <div class="pain-number">01</div>
+        <div class="pain-title">EL TECHO DEL TIEMPO</div>
+        <p class="pain-desc">Un coach solo puede atender 20 a 40 clientes máximo. Cada hora que pasas en DMs, en admin o editando contenido es una hora que no estás transformando vidas ni generando ingresos.</p>
       </div>
-      <div class="why-header-right" data-aos="fade-left">
-        <div class="revenue-badge">
-          <div class="revenue-number" style="font-size:clamp(36px,5vw,56px);line-height:1;">CRECE</div>
-          <div class="revenue-label">CON RESPALDO<br>DE EQUIPO COMPLETO</div>
-        </div>
+      <div class="pain-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="pain-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
+        <div class="pain-number">02</div>
+        <div class="pain-title">BURNOUT REAL</div>
+        <p class="pain-desc">32.8% de coaches experimentan burnout personal. Hacerlo todo solo — entrenar, planificar, editar, responder, facturar — destruye la calidad de tu trabajo y tu salud mental.</p>
+      </div>
+      <div class="pain-card" data-aos="fade-up" data-aos-delay="120">
+        <div class="pain-icon"><i class="fas fa-user-slash" aria-hidden="true"></i></div>
+        <div class="pain-number">03</div>
+        <div class="pain-title">CLIENTES QUE SE VAN</div>
+        <p class="pain-desc">Solo el 44% de clientes permanece después de 24 meses sin sistemas de retención. Sin nutricionista, sin comunidad, sin seguimiento estructurado — el churn te consume mes a mes.</p>
+      </div>
+      <div class="pain-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="pain-icon"><i class="fas fa-video-slash" aria-hidden="true"></i></div>
+        <div class="pain-number">04</div>
+        <div class="pain-title">CONTENIDO SIN IMPACTO</div>
+        <p class="pain-desc">Sin editor, sin estratega, sin calidad profesional — tu contenido queda invisible. Instagram y TikTok son el canal #1 de adquisición en LATAM y requieren producción consistente.</p>
+      </div>
+      <div class="pain-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="pain-icon"><i class="fas fa-tag" aria-hidden="true"></i></div>
+        <div class="pain-number">05</div>
+        <div class="pain-title">COBRAS MUY POCO</div>
+        <p class="pain-desc">La mayoría de coaches en LATAM cobra $50–$150 USD/mes, cuando el mercado admite $200–$500 USD/mes. Sin infraestructura profesional no puedes justificar precios de élite.</p>
+      </div>
+      <div class="pain-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="pain-icon"><i class="fas fa-minus-circle" aria-hidden="true"></i></div>
+        <div class="pain-number">06</div>
+        <div class="pain-title">UN SOLO INGRESO</div>
+        <p class="pain-desc">Depender solo de clientes 1:1 te hace vulnerable. Perder 3 clientes en un mes es una crisis financiera. Sin sistemas, sin productos escalables, el riesgo nunca desaparece.</p>
       </div>
     </div>
 
-    <div class="benefits-grid">
-      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="60">
-        <div class="benefit-icon"><i class="fas fa-dollar-sign" aria-hidden="true"></i></div>
-        <div class="benefit-title">INGRESOS SUPERIORES AL MERCADO</div>
-        <p class="benefit-desc">Genera más de lo que ganarías solo. Sin techo. Sin límite de clientes. Mientras más creces, más ganas — la plataforma escala contigo sin costos adicionales de infraestructura.</p>
+    <!-- Market data bar -->
+    <div class="market-stats" data-aos="fade-up" data-aos-delay="60">
+      <div class="market-stat">
+        <div class="market-stat-value">$6.1B</div>
+        <div class="market-stat-label">Mercado LATAM 2030</div>
+        <div class="market-stat-note">Fitness online en América Latina</div>
       </div>
-      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="120">
-        <div class="benefit-icon"><i class="fas fa-server" aria-hidden="true"></i></div>
-        <div class="benefit-title">INFRAESTRUCTURA COMPLETA</div>
-        <p class="benefit-desc">Portal de clientes, sistema de pagos seguro, seguimiento de progreso, check-ins automáticos y gestión de suscripciones. Todo listo desde el día uno, sin costos adicionales.</p>
+      <div class="market-stat">
+        <div class="market-stat-value">26.4%</div>
+        <div class="market-stat-label">CAGR 2025–2030</div>
+        <div class="market-stat-note">El doble del promedio global</div>
       </div>
-      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="180">
-        <div class="benefit-icon"><i class="fas fa-diagram-project" aria-hidden="true"></i></div>
-        <div class="benefit-title">PROGRAMAS DISEÑADOS PARA TI</div>
-        <p class="benefit-desc">Nuestro equipo especializado co-crea los planes de entrenamiento y nutrición personalizados para cada uno de tus clientes, alineados con tu metodología y estilo como coach.</p>
+      <div class="market-stat">
+        <div class="market-stat-value">$8K</div>
+        <div class="market-stat-label">Techo solo coach</div>
+        <div class="market-stat-note">Máximo mensual sin equipo</div>
       </div>
-      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="240">
-        <div class="benefit-icon"><i class="fas fa-headset" aria-hidden="true"></i></div>
-        <div class="benefit-title">SOPORTE TÉCNICO Y OPERATIVO</div>
-        <p class="benefit-desc">Acompañamiento real en cada paso: onboarding inicial, gestión de plataforma, resolución de problemas técnicos y soporte operativo continuo según tu plan.</p>
-      </div>
-      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="300">
-        <div class="benefit-icon"><i class="fas fa-user-tie" aria-hidden="true"></i></div>
-        <div class="benefit-title">MARCA PERSONAL</div>
-        <p class="benefit-desc">Tu imagen, tu estilo, tu identidad. WellCore te ayuda a construir y posicionar tu marca personal como coach de élite, diferenciándote en un mercado cada vez más competitivo.</p>
-      </div>
-      <div class="benefit-card v7-glow-track" data-aos="fade-up" data-aos-delay="360">
-        <div class="benefit-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
-        <div class="benefit-title">COMUNIDAD DE ALTO NIVEL</div>
-        <p class="benefit-desc">Accede a una red exclusiva de coaches certificados WellCore, recursos educativos de élite, actualizaciones de metodología y mentoría continua de coaches senior.</p>
+      <div class="market-stat">
+        <div class="market-stat-value">3–10×</div>
+        <div class="market-stat-label">Ingreso con equipo</div>
+        <div class="market-stat-note">Coaches que delegan y sistematizan</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     PLAN TIERS
+     MODELOS DE TRABAJO — 3 OPCIONES
      ============================================================ -->
-<section class="plans-section" id="planes" aria-label="Modelo de Trabajo Coach" data-v5-reveal>
+<section class="models-section" id="modelos" aria-label="Modelos de trabajo WellCore" data-v5-reveal>
   <div class="container">
     <div class="plans-header" data-aos="fade-up">
-      <div class="section-label"><i class="fas fa-handshake" aria-hidden="true"></i> MODELO DE TRABAJO</div>
-      <h2 class="section-title">ASÍ TRABAJA<br>WELLCORE</h2>
-      <p class="section-subtitle">Un modelo claro y justo. Tus ingresos crecen con cada cliente que sumes — con infraestructura, soporte y metodología WellCore respaldándote.</p>
+      <div class="section-label"><i class="fas fa-layer-group" aria-hidden="true"></i> MODELOS DE TRABAJO</div>
+      <h2 class="section-title">ELIGE CÓMO<br>TRABAJAR CON<br><span style="color:var(--red)">WELLCORE</span></h2>
+      <p class="section-subtitle">Tres modelos diseñados para distintos momentos de tu carrera. Todos incluyen acceso al equipo WellCore y la infraestructura completa.</p>
     </div>
 
-    <div style="display:flex;justify-content:center;" data-aos="fade-up" data-aos-delay="100">
-      <div class="plan-card featured v7-glow-track" style="max-width:560px;width:100%;" data-v5-reveal>
-        <div class="plan-badge profesional">&#9733; MODELO ÚNICO WELLCORE</div>
-        <div class="plan-revenue" style="margin-bottom:4px;">
-          <span class="plan-revenue-pct" style="font-size:clamp(28px,4vw,44px);">EQUIPO COMPLETO</span>
-        </div>
-        <div class="plan-revenue-note">INFRAESTRUCTURA + METODOLOGÍA + SOPORTE — SIN COSTO ADICIONAL</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Clientes ilimitados desde el día 1</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Portal completo con seguimiento avanzado de clientes</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Planes de entrenamiento y nutrición ilimitados</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Check-in semanal integrado con cada cliente</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Analytics de rendimiento y progreso de clientes</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Soporte WellCore por WhatsApp — respuesta en 48h</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Onboarding completo con kit de bienvenida</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Acceso a la red y metodología WellCore</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Sistema de pagos integrado — cobros cada 15 días</li>
-          <li><span class="check"><span style="color:#E31E24;font-weight:700;">&#10003;</span></span>Posibilidad de aparecer en campañas de marca</li>
+    <div class="models-grid" data-aos="fade-up" data-aos-delay="60">
+
+      <!-- Modelo 1: Coach WellCore -->
+      <div class="model-card" data-v5-reveal>
+        <div class="model-tag tag-standard"><i class="fas fa-dumbbell" aria-hidden="true"></i> COACH WELLCORE</div>
+        <div class="model-name">COACH CERTIFICADO</div>
+        <div class="model-income">60%</div>
+        <div class="model-income-note">DE CADA SUSCRIPCIÓN · PAGOS QUINCENALES</div>
+        <div class="model-divider"></div>
+        <ul class="model-features">
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Clientes bajo la marca WellCore</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Programación co-creada por el equipo</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Nutricionista incluido para tus clientes</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Portal y sistema de pagos sin costo</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Soporte operativo y onboarding completo</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Check-in semanal automatizado por cliente</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Posibilidad de aparecer en campañas WellCore</li>
         </ul>
-        <div style="background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);padding:14px 20px;margin:20px 0;font-size:12px;color:rgba(255,255,255,0.6);font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;">
-          WellCore cubre toda la infraestructura: procesamiento de pagos, plataforma, soporte operativo y administración. Sin costos ocultos para el coach.
-        </div>
-        <a href="#aplicar" class="plan-cta solid btn-red btn-v5 btn-v5-primary v6-magnetic v7-btn-primary v7-magnetic"><div class="btn-bg"></div><span class="btn-text">APLICAR AHORA</span></a>
+        <a href="#aplicar" class="model-cta outline v6-magnetic">APLICAR COMO COACH &rarr;</a>
       </div>
+
+      <!-- Modelo 2: White-Label (FEATURED) -->
+      <div class="model-card model-featured" data-v5-reveal>
+        <div class="model-badge-best">MÁS SOLICITADO</div>
+        <div class="model-tag tag-featured"><i class="fas fa-crown" aria-hidden="true"></i> WHITE-LABEL</div>
+        <div class="model-name">TU PROPIA MARCA</div>
+        <div class="model-income">60%</div>
+        <div class="model-income-note">TU MARCA · NUESTRA INFRAESTRUCTURA</div>
+        <div class="model-divider"></div>
+        <ul class="model-features">
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Toda la infraestructura bajo TU nombre</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Portal personalizado con tu branding</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Equipo WellCore opera en segundo plano</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Nutricionista + programador dedicados</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Editor de contenido disponible (cotización)</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Tus clientes ven únicamente tu marca</li>
+          <li><span class="chk"><i class="fas fa-check" aria-hidden="true"></i></span>Potencial $20K–$80K/mes con el equipo</li>
+        </ul>
+        <a href="#aplicar" class="model-cta solid v6-magnetic">APLICAR WHITE-LABEL &rarr;</a>
+      </div>
+
+      <!-- Modelo 3: Influencer / Creador -->
+      <div class="model-card model-gold" data-v5-reveal>
+        <div class="model-tag tag-gold"><i class="fas fa-star" aria-hidden="true"></i> INFLUENCER / CREADOR</div>
+        <div class="model-name">MONETIZA TU AUDIENCIA</div>
+        <div class="model-income" style="color:var(--gold);">×10</div>
+        <div class="model-income-note">CONVIERTE SEGUIDORES EN INGRESOS RECURRENTES</div>
+        <div class="model-divider"></div>
+        <ul class="model-features">
+          <li><span class="chk" style="color:var(--gold);"><i class="fas fa-check" aria-hidden="true"></i></span>Tienes audiencia — nosotros la monetizamos</li>
+          <li><span class="chk" style="color:var(--gold);"><i class="fas fa-check" aria-hidden="true"></i></span>Programa fitness co-branded listo en días</li>
+          <li><span class="chk" style="color:var(--gold);"><i class="fas fa-check" aria-hidden="true"></i></span>Estratega de contenido incluido</li>
+          <li><span class="chk" style="color:var(--gold);"><i class="fas fa-check" aria-hidden="true"></i></span>Editor de video disponible (producción LATAM)</li>
+          <li><span class="chk" style="color:var(--gold);"><i class="fas fa-check" aria-hidden="true"></i></span>Conversión de audiencia a clientes de pago</li>
+          <li><span class="chk" style="color:var(--gold);"><i class="fas fa-check" aria-hidden="true"></i></span>Revenue share personalizado según audiencia</li>
+          <li><span class="chk" style="color:var(--gold);"><i class="fas fa-check" aria-hidden="true"></i></span>Requiere 50K+ seguidores activos</li>
+        </ul>
+        <a href="#aplicar" class="model-cta gold-cta v6-magnetic">HABLAR CON EL EQUIPO &rarr;</a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -640,52 +806,76 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
 </section>
 
 <!-- ============================================================
-     GUIA DE GRABACION
+     TEAM ECOSYSTEM — LOS 5 ROLES
      ============================================================ -->
-<section class="guide-section v6-lazy-section" id="guia" aria-label="Guía de Grabación" data-v5-reveal>
+<section class="team-section v6-lazy-section" id="equipo" aria-label="El equipo WellCore" data-v5-reveal>
   <div class="container">
-    <div class="guide-header" data-aos="fade-up">
-      <div class="section-label"><i class="fas fa-camera" aria-hidden="true"></i> ESTÁNDARES DE CALIDAD</div>
-      <h2 class="section-title">REQUISITOS PARA<br>GRABAR TUS VIDEOS</h2>
-      <p class="section-subtitle">Todos los videos deben cumplir estos estándares antes de ser aprobados por el equipo WellCore.</p>
+    <div style="text-align:center;margin-bottom:64px;" data-aos="fade-up">
+      <div class="section-label" style="justify-content:center;"><i class="fas fa-users" aria-hidden="true"></i> EL EQUIPO QUE TE RESPALDA</div>
+      <h2 class="section-title">EL TOP 1% DE COACHES<br>ONLINE NO TRABAJA<br><span style="color:var(--red)">SOLO</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Estos son los 5 roles que operan detrás de los coaches que generan $20,000+ USD al mes. Todos disponibles para ti con WellCore.</p>
     </div>
 
-    <div class="guide-grid">
-      <div class="guide-item" data-aos="fade-up" data-aos-delay="40">
-        <div class="guide-number">01</div>
-        <div class="guide-tag">TÉCNICO</div>
-        <p class="guide-rule">Resolución mínima 1080p, formato MP4 o MOV, máximo 400MB por video. Framerate recomendado 30fps o 60fps.</p>
+    <div class="team-grid" data-aos="fade-up" data-aos-delay="60">
+      <div class="team-role">
+        <div class="team-role-icon"><i class="fas fa-chess" aria-hidden="true"></i></div>
+        <div class="team-role-title">ESTRATEGA</div>
+        <p class="team-role-desc">Diseña el sistema de adquisición de clientes, posicionamiento y arquitectura de ofertas. Define dónde y cómo creces.</p>
+        <div class="team-role-tag">IMPACTO: ADQUISICIÓN</div>
       </div>
-      <div class="guide-item" data-aos="fade-up" data-aos-delay="80">
-        <div class="guide-number">02</div>
-        <div class="guide-tag">ILUMINACIÓN</div>
-        <p class="guide-rule">Luz natural o artificial directa hacia tu frente. Absolutamente sin contraluz. La figura debe verse con claridad total.</p>
+      <div class="team-role">
+        <div class="team-role-icon"><i class="fas fa-laptop-code" aria-hidden="true"></i></div>
+        <div class="team-role-title">DESARROLLADOR</div>
+        <p class="team-role-desc">Construye y mantiene la plataforma, el portal de clientes y los sistemas de pago que hacen escalar el negocio.</p>
+        <div class="team-role-tag">IMPACTO: INFRAESTRUCTURA</div>
       </div>
-      <div class="guide-item" data-aos="fade-up" data-aos-delay="120">
-        <div class="guide-number">03</div>
-        <div class="guide-tag">ENCUADRE</div>
-        <p class="guide-rule">Cuerpo completo visible en todo momento durante el movimiento. Fondo neutro o limpio, sin desorden visible.</p>
+      <div class="team-role team-center">
+        <div class="team-coach-label">TÚ — EL COACH</div>
+        <div class="team-role-icon"><i class="fas fa-user" aria-hidden="true"></i></div>
+        <div class="team-role-title">COACH / CREADOR</div>
+        <p class="team-role-desc" style="color:rgba(255,255,255,0.7);">Tú te enfocas en transformar vidas. El equipo maneja todo lo demás.</p>
+        <div class="team-role-tag" style="color:rgba(255,255,255,0.5);">ENFOQUE: COACHING</div>
       </div>
-      <div class="guide-item" data-aos="fade-up" data-aos-delay="160">
-        <div class="guide-number">04</div>
-        <div class="guide-tag">AUDIO</div>
-        <p class="guide-rule">Silencio ambiental durante la demostración. Sin música de fondo. El sonido del movimiento debe ser capturable.</p>
+      <div class="team-role">
+        <div class="team-role-icon"><i class="fas fa-film" aria-hidden="true"></i></div>
+        <div class="team-role-title">EDITOR</div>
+        <p class="team-role-desc">Produce Reels, YouTube y contenido de marca con calidad profesional. Contenido = canal #1 de adquisición en LATAM.</p>
+        <div class="team-role-tag">IMPACTO: VISIBILIDAD</div>
       </div>
-      <div class="guide-item" data-aos="fade-up" data-aos-delay="200">
-        <div class="guide-number">05</div>
-        <div class="guide-tag">CONTENIDO</div>
-        <p class="guide-rule">Demostración completa del ejercicio: posición de arranque, ejecución correcta del movimiento y posición de finalización.</p>
+      <div class="team-role">
+        <div class="team-role-icon"><i class="fas fa-apple-alt" aria-hidden="true"></i></div>
+        <div class="team-role-title">NUTRICIONISTA</div>
+        <p class="team-role-desc">Diseña planes de alimentación personalizados. Clientes con soporte nutricional tienen retención 30%+ mayor.</p>
+        <div class="team-role-tag">IMPACTO: RETENCIÓN</div>
       </div>
-      <div class="guide-item" data-aos="fade-up" data-aos-delay="240">
-        <div class="guide-number">06</div>
-        <div class="guide-tag">VESTIMENTA</div>
-        <p class="guide-rule">Ropa deportiva limpia y en buen estado. Sin logos visibles de marcas competidoras al método WellCore.</p>
+    </div>
+
+    <!-- Income comparison -->
+    <div style="margin-top:72px;" data-aos="fade-up">
+      <div class="section-label" style="margin-bottom:32px;"><i class="fas fa-chart-bar" aria-hidden="true"></i> INGRESO MENSUAL — COACH SOLO VS EQUIPO WELLCORE</div>
+      <div class="income-bars">
+        <div class="income-bar-row">
+          <div class="income-bar-label">Solo sin sistemas</div>
+          <div class="income-bar-track"><div class="income-bar-fill" style="width:12%;"></div></div>
+          <div class="income-bar-value" style="color:rgba(255,255,255,0.35);">$1.5K–$6K</div>
+        </div>
+        <div class="income-bar-row">
+          <div class="income-bar-label">Solo + herramientas</div>
+          <div class="income-bar-track"><div class="income-bar-fill" style="width:30%;"></div></div>
+          <div class="income-bar-value" style="color:rgba(255,255,255,0.5);">$5K–$15K</div>
+        </div>
+        <div class="income-bar-row">
+          <div class="income-bar-label">Coach + equipo parcial</div>
+          <div class="income-bar-track"><div class="income-bar-fill" style="width:56%;"></div></div>
+          <div class="income-bar-value">$10K–$30K</div>
+        </div>
+        <div class="income-bar-row">
+          <div class="income-bar-label">Coach + equipo WellCore</div>
+          <div class="income-bar-track"><div class="income-bar-fill gold" style="width:90%;"></div></div>
+          <div class="income-bar-value gold">$25K–$80K+</div>
+        </div>
       </div>
-      <div class="guide-item" data-aos="fade-up" data-aos-delay="280">
-        <div class="guide-number">07</div>
-        <div class="guide-tag">APROBACIÓN</div>
-        <p class="guide-rule">Todos los videos son revisados por el equipo WellCore antes de publicarse. Tiempo de revisión: 3 a 5 días hábiles.</p>
-      </div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.2);margin-top:20px;letter-spacing:0.06em;">FUENTE: Health &amp; Fitness Association LATAM Survey 2024 · ABC Trainerize Industry Report 2024 · Investigación de mercado WellCore 2026</p>
     </div>
   </div>
 </section>
@@ -700,7 +890,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
       <!-- Sidebar -->
       <div class="form-sidebar" data-aos="fade-right">
         <div class="section-label"><i class="fas fa-paper-plane" aria-hidden="true"></i> FORMULARIO DE APLICACIÓN</div>
-        <h2 class="form-sidebar-title">APLICA COMO<br>COACH<br><span style="color:var(--red)">WELLCORE</span></h2>
+        <h2 class="form-sidebar-title">APLICA CON<br>EL EQUIPO<br><span style="color:var(--red)">WELLCORE</span></h2>
         <p class="form-sidebar-desc">Completa el formulario con tu información. Nuestro equipo revisará tu aplicación en 5 a 7 días hábiles y te contactará directamente para el siguiente paso.</p>
 
         <div class="form-info-card">
@@ -819,6 +1009,28 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
               </select>
               <div class="form-error-msg" id="err-clientes">Indica cuántos clientes tienes actualmente.</div>
             </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label"><i class="fas fa-id-badge" aria-hidden="true"></i> Tipo de perfil <span class="required">*</span></label>
+            <div class="radio-group" id="perfil-group">
+              <label class="radio-item">
+                <input type="radio" name="perfil" value="coach" required>
+                <span class="radio-custom"></span>
+                <span class="radio-label">Coach / Entrenador</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="perfil" value="influencer">
+                <span class="radio-custom"></span>
+                <span class="radio-label">Influencer / Creador</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="perfil" value="marca">
+                <span class="radio-custom"></span>
+                <span class="radio-label">Marca / Academia</span>
+              </label>
+            </div>
+            <div class="form-error-msg" id="err-perfil">Selecciona tu tipo de perfil.</div>
           </div>
 
           <div class="form-group">
@@ -1129,13 +1341,14 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
     });
   });
 
-  document.querySelectorAll('a[href="#beneficios"]').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      var target = document.getElementById('beneficios');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+  ['#problema','#modelos','#equipo','#beneficios'].forEach(function(anchor) {
+    var id = anchor.replace('#','');
+    document.querySelectorAll('a[href="' + anchor + '"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
   });
 
@@ -1272,6 +1485,15 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
         }
       });
 
+      var perfilSel = document.querySelector('input[name="perfil"]:checked');
+      var errPerfil = document.getElementById('err-perfil');
+      if (!perfilSel) {
+        if (errPerfil) errPerfil.classList.add('visible');
+        valid = false;
+      } else {
+        if (errPerfil) errPerfil.classList.remove('visible');
+      }
+
       var checked = document.querySelectorAll('input[name="especializacion"]:checked');
       var errEsp = document.getElementById('err-especializacion');
       if (checked.length === 0) {
@@ -1299,6 +1521,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
       var especialidades = [];
       checked.forEach(function(cb) { especialidades.push(cb.value); });
 
+      var perfilChecked = document.querySelector('input[name="perfil"]:checked');
       var payload = {
         name: document.getElementById('f-nombre').value.trim(),
         email: document.getElementById('f-email').value.trim(),
@@ -1306,6 +1529,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
         city: document.getElementById('f-ciudad').value.trim(),
         experience: document.getElementById('f-experiencia').value,
         current_clients: document.getElementById('f-clientes').value,
+        profile_type: perfilChecked ? perfilChecked.value : '',
         specializations: especialidades,
         plan: 'modelo-unico-60-40',
         bio: document.getElementById('f-sobre-ti').value.trim(),
@@ -1362,7 +1586,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
     document.head.appendChild(style);
 
     var animTargets = document.querySelectorAll(
-      '.benefit-card, .plan-card, .guide-item, .form-info-card, .process-step, .video-card'
+      '.benefit-card, .plan-card, .guide-item, .form-info-card, .process-step, .video-card, .pain-card, .model-card, .team-role, .market-stat, .income-bar-row'
     );
 
     animTargets.forEach(function(el) { el.classList.add('anim-fade'); });
