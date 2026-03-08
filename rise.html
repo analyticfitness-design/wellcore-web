@@ -6,9 +6,11 @@
     <title>RISE 30-Day Challenge | WellCore Fitness</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
+        /* ══════ #01 Design Tokens + #11 OKLCH ══════ */
         :root {
             --bg:       #0a0a0a;
             --surface:  #111113;
@@ -16,6 +18,7 @@
             --card:     #18181b;
             --border:   rgba(255,255,255,0.06);
             --red:      #E31E24;
+            --red-glow: rgba(227,30,36,0.4);
             --red-dark: #B8181D;
             --red-dim:  rgba(227,30,36,0.10);
             --accent:   #00D9FF;
@@ -23,540 +26,702 @@
             --white:    #ffffff;
             --gray:     rgba(255,255,255,0.45);
             --gray-dim: rgba(255,255,255,0.18);
+            --ease-brand: cubic-bezier(0.16,1,0.3,1);
+            --text-hero: clamp(3rem,8vw,5.5rem); /* #26 Fluid Typography */
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin:0;padding:0;box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family:'Inter',system-ui,sans-serif;
+            background:var(--bg);color:var(--white);
+            overflow-x:hidden;
         }
 
-        html, body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--white);
-            overflow-x: hidden;
+        /* ══════ #34 Canvas 2D Particles ══════ */
+        .particles-canvas{
+            position:absolute;top:0;left:0;width:100%;height:100%;
+            pointer-events:none;z-index:0;
         }
 
-        /* ──────── HEADER ──────── */
-        header {
-            background: var(--surface);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            letter-spacing: 0.05em;
-            color: var(--red);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 14px;
-        }
-
-        .nav-links a:hover {
-            color: var(--red);
-        }
-
-        /* ──────── HERO SECTION ──────── */
-        .hero {
-            background: var(--surface);
-            padding: 100px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.45em;
-            color: var(--red);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(48px, 6vw, 72px);
-            letter-spacing: 0.02em;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: var(--gray);
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 60px;
-        }
-
-        button, .btn {
-            padding: 12px 32px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn-primary {
-            background: var(--red);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: var(--red-dark);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--red);
-            border: 1px solid var(--red);
-        }
-
-        .btn-secondary:hover {
-            background: var(--red-dim);
-        }
-
-        /* ──────── COUNTDOWN ──────── */
-        .countdown-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 4px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .countdown-label {
-            font-size: 12px;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-        }
-
-        .countdown-timer {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        .countdown-item {
-            text-align: center;
-        }
-
-        .countdown-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 36px;
-            color: var(--red);
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .countdown-unit {
-            font-size: 12px;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* ──────── CONTAINER ──────── */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        /* ──────── FEATURES GRID ──────── */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 80px;
-        }
-
-        .feature-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 32px;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            border-color: var(--red);
-            background: var(--surface-2);
-        }
-
-        .feature-icon {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: var(--red);
-            width: 52px;
-            height: 52px;
-            background: rgba(227,30,36,0.08);
-            border: 1px solid rgba(227,30,36,0.25);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
-            flex-shrink: 0;
-        }
-
-        .feature-card:hover .feature-icon {
-            background: rgba(227,30,36,0.15);
-            box-shadow: 0 0 18px rgba(227,30,36,0.3);
-            transform: translateY(-2px);
-        }
-
-        .feature-card h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.02em;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.6;
-        }
-
-        /* ──────── PRICING ──────── */
-        .pricing-section {
-            background: var(--surface);
-            padding: 60px 20px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .pricing-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .pricing-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.45em;
-            color: var(--red);
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .pricing-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 42px;
-            letter-spacing: 0.02em;
-            margin-bottom: 8px;
-        }
-
-        .pricing-description {
-            color: var(--gray);
-            margin-bottom: 32px;
-            font-size: 15px;
-        }
-
-        .price-display {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 40px 20px;
-            border-radius: 4px;
-            margin-bottom: 32px;
-        }
-
-        .price-amount {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 64px;
-            color: var(--red);
-            letter-spacing: -0.02em;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .price-currency {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        /* ──────── INFO SECTION ──────── */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 32px;
-            margin: 80px 0;
-        }
-
-        .info-item h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 0.02em;
-            margin-bottom: 12px;
-            color: var(--red);
-        }
-
-        .info-item p {
-            color: var(--gray);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* ──────── FOOTER ──────── */
-        footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--gray);
-            font-size: 13px;
-        }
-
-        /* ══════ PLATFORM PREVIEW SECTION ══════ */
+        /* ══════ PLATFORM SECTION ══════ */
         .platform-section{
-          position:relative;overflow:hidden;
-          padding:100px 20px 80px;
-          background:linear-gradient(180deg, var(--bg) 0%, #0d0d10 50%, var(--bg) 100%);
-        }
-        .platform-glow-orb{
-          position:absolute;border-radius:50%;filter:blur(120px);
-          pointer-events:none;opacity:0.4;
-        }
-        .platform-glow-orb--1{
-          width:600px;height:600px;top:-200px;left:-200px;
-          background:radial-gradient(circle,rgba(227,30,36,0.25),transparent 70%);
-          animation:orb-drift 12s ease-in-out infinite alternate;
-        }
-        .platform-glow-orb--2{
-          width:500px;height:500px;bottom:-150px;right:-150px;
-          background:radial-gradient(circle,rgba(0,217,255,0.12),transparent 70%);
-          animation:orb-drift 15s ease-in-out infinite alternate-reverse;
-        }
-        @keyframes orb-drift{
-          0%{transform:translate(0,0) scale(1)}
-          100%{transform:translate(60px,40px) scale(1.15)}
+            position:relative;overflow:hidden;
+            padding:120px 20px 100px;
         }
 
+        /* ── Gradient mesh background ── */
+        .platform-section::before{
+            content:'';position:absolute;inset:0;z-index:0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 30%, rgba(227,30,36,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 70%, rgba(0,217,255,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 90% 40% at 50% 0%, rgba(227,30,36,0.04) 0%, transparent 50%);
+        }
+
+        /* ══════ HEADER — #19 Kinetic Typography ══════ */
         .platform-header{
-          text-align:center;max-width:700px;margin:0 auto 64px;position:relative;z-index:2;
+            text-align:center;max-width:800px;margin:0 auto 80px;
+            position:relative;z-index:2;
+        }
+        .platform-badge{
+            display:inline-flex;align-items:center;gap:8px;
+            background:rgba(227,30,36,0.06);
+            border:1px solid rgba(227,30,36,0.15);
+            border-radius:100px;padding:8px 20px;margin-bottom:24px;
+            backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+        }
+        .platform-badge span{
+            font-family:'JetBrains Mono',monospace;font-size:10px;
+            letter-spacing:3px;color:var(--red);text-transform:uppercase;
         }
         .platform-title{
-          font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,64px);
-          letter-spacing:0.02em;line-height:1.05;margin-bottom:20px;
+            font-family:'Bebas Neue',sans-serif;
+            font-size:var(--text-hero);
+            letter-spacing:0.02em;line-height:1.05;margin-bottom:24px;
         }
-        .platform-title-accent{
-          background:linear-gradient(90deg,var(--red),#ff4d52,var(--red));
-          background-size:200% 100%;
-          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-          background-clip:text;
-          animation:gradient-shift 4s ease infinite;
+        /* #19 Split text animation */
+        .split-word{
+            display:inline-block;overflow:hidden;
+        }
+        .split-char{
+            display:inline-block;
+            transform:translateY(110%);
+            transition:transform 0.6s var(--ease-brand);
+        }
+        .split-word.revealed .split-char{
+            transform:translateY(0);
+        }
+        /* stagger via custom property */
+        .split-char{ transition-delay:calc(var(--i) * 40ms); }
+
+        .platform-title-line2{
+            background:linear-gradient(90deg,var(--red),#ff6b6b,#FFB800,#ff6b6b,var(--red));
+            background-size:300% 100%;
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;
+            animation:gradient-shift 6s ease infinite;
+            opacity:0;transform:translateY(30px);
+            transition:opacity 0.8s ease 0.4s, transform 0.8s var(--ease-brand) 0.4s;
+        }
+        .platform-title-line2.revealed{
+            opacity:1;transform:translateY(0);
         }
         @keyframes gradient-shift{
-          0%,100%{background-position:0% 50%}
-          50%{background-position:100% 50%}
+            0%,100%{background-position:0% 50%}
+            50%{background-position:100% 50%}
         }
         .platform-subtitle{
-          font-size:17px;color:var(--gray);line-height:1.7;max-width:550px;margin:0 auto;
+            font-size:17px;color:var(--gray);line-height:1.7;max-width:560px;margin:0 auto;
         }
 
-        /* ── Showcase Layout ── */
-        .mockup-showcase{
-          position:relative;max-width:1100px;margin:0 auto 24px;
-          display:flex;align-items:center;justify-content:center;
-          perspective:1200px;z-index:2;
+        /* ══════ #29 Bento Grid Layout ══════ */
+        .bento-grid{
+            display:grid;
+            grid-template-columns:repeat(12, 1fr);
+            grid-template-rows:auto;
+            gap:20px;
+            max-width:1200px;margin:0 auto 80px;
+            position:relative;z-index:2;
         }
-        .mockup-showcase--reverse{ flex-direction:row-reverse; }
+        .bento-item{
+            border-radius:20px;overflow:hidden;
+            background:rgba(255,255,255,0.02);
+            border:1px solid rgba(255,255,255,0.06);
+            transition:transform 0.5s var(--ease-brand), box-shadow 0.5s ease, border-color 0.5s ease;
+            position:relative;
+        }
+        .bento-item:hover{
+            transform:translateY(-6px);
+            border-color:rgba(227,30,36,0.2);
+            box-shadow:0 30px 60px rgba(0,0,0,0.4), 0 0 80px rgba(227,30,36,0.06);
+        }
 
-        /* ── Laptop Mockup ── */
-        .mockup-laptop{
-          width:min(780px,72vw);border-radius:16px;overflow:hidden;
-          background:#1a1a1d;
-          border:1px solid rgba(255,255,255,0.08);
-          box-shadow:
-            0 25px 60px rgba(0,0,0,0.5),
-            0 0 80px rgba(227,30,36,0.06),
-            inset 0 1px 0 rgba(255,255,255,0.05);
-          transition:transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.6s ease;
-          transform:rotateY(0deg) rotateX(2deg);
-        }
-        .mockup-showcase:hover .mockup-laptop{
-          transform:rotateY(-2deg) rotateX(0deg) scale(1.01);
-          box-shadow:
-            0 35px 80px rgba(0,0,0,0.6),
-            0 0 120px rgba(227,30,36,0.1),
-            inset 0 1px 0 rgba(255,255,255,0.08);
-        }
-        .mockup-showcase--reverse:hover .mockup-laptop{
-          transform:rotateY(2deg) rotateX(0deg) scale(1.01);
-        }
-        .mockup-laptop__bezel{
-          display:flex;align-items:center;gap:10px;
-          padding:10px 16px;
-          background:rgba(255,255,255,0.03);
-          border-bottom:1px solid rgba(255,255,255,0.06);
-        }
-        .mockup-laptop__dots{display:flex;gap:6px;}
-        .mockup-laptop__dots span{
-          width:10px;height:10px;border-radius:50%;
-          background:rgba(255,255,255,0.1);
-        }
-        .mockup-laptop__dots span:first-child{background:#ff5f57}
-        .mockup-laptop__dots span:nth-child(2){background:#febc2e}
-        .mockup-laptop__dots span:last-child{background:#28c840}
-        .mockup-laptop__url{
-          flex:1;text-align:center;
-          font-family:'JetBrains Mono',monospace;font-size:11px;
-          color:rgba(255,255,255,0.3);
-          background:rgba(255,255,255,0.04);
-          padding:4px 12px;border-radius:6px;
-        }
-        .mockup-laptop__screen{line-height:0;}
-        .mockup-laptop__screen img{width:100%;height:auto;display:block;}
+        /* Bento item sizes */
+        .bento-hero{grid-column:span 8;grid-row:span 2;}
+        .bento-phone{grid-column:span 4;grid-row:span 2;}
+        .bento-wide{grid-column:span 6;}
+        .bento-stat{grid-column:span 3;}
+        .bento-full{grid-column:span 12;}
 
-        /* ── Phone Mockup ── */
-        .mockup-phone{
-          position:absolute;z-index:10;
-          width:min(200px,22vw);
-          background:#0a0a0a;
-          border-radius:28px;overflow:hidden;
-          border:3px solid rgba(255,255,255,0.12);
-          box-shadow:
-            0 20px 50px rgba(0,0,0,0.6),
-            0 0 60px rgba(227,30,36,0.08),
-            inset 0 1px 0 rgba(255,255,255,0.1);
-          transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);
+        /* ── Laptop in bento ── */
+        .bento-laptop{padding:0;}
+        .bento-laptop__bezel{
+            display:flex;align-items:center;gap:10px;
+            padding:12px 18px;
+            background:rgba(255,255,255,0.03);
+            border-bottom:1px solid rgba(255,255,255,0.06);
         }
-        .mockup-phone--float-right{
-          right:-3%;bottom:-8%;
-          animation:phone-float 6s ease-in-out infinite;
+        .bento-laptop__dots{display:flex;gap:6px;}
+        .bento-laptop__dots span{width:10px;height:10px;border-radius:50%;}
+        .bento-laptop__dots span:nth-child(1){background:#ff5f57}
+        .bento-laptop__dots span:nth-child(2){background:#febc2e}
+        .bento-laptop__dots span:nth-child(3){background:#28c840}
+        .bento-laptop__url{
+            flex:1;text-align:center;
+            font-family:'JetBrains Mono',monospace;font-size:11px;
+            color:rgba(255,255,255,0.25);
+            background:rgba(255,255,255,0.04);padding:5px 14px;border-radius:8px;
         }
-        .mockup-phone--float-left{
-          left:-3%;bottom:-8%;
-          animation:phone-float 6s ease-in-out infinite 1s;
+        .bento-laptop__screen{line-height:0;overflow:hidden;}
+        .bento-laptop__screen img{width:100%;height:auto;display:block;}
+
+        /* ── Phone in bento ── */
+        .bento-phone-frame{
+            height:100%;display:flex;flex-direction:column;
+            align-items:center;justify-content:center;
+            padding:24px 16px;
+            background:linear-gradient(180deg, rgba(227,30,36,0.04) 0%, transparent 40%);
+        }
+        .phone-device{
+            width:min(220px,80%);
+            background:#000;border-radius:32px;overflow:hidden;
+            border:3px solid rgba(255,255,255,0.12);
+            box-shadow:0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(227,30,36,0.06);
+            animation:phone-float 7s ease-in-out infinite;
         }
         @keyframes phone-float{
-          0%,100%{transform:translateY(0)}
-          50%{transform:translateY(-14px)}
+            0%,100%{transform:translateY(0) rotate(0deg)}
+            25%{transform:translateY(-10px) rotate(0.5deg)}
+            75%{transform:translateY(-6px) rotate(-0.5deg)}
         }
-        .mockup-showcase:hover .mockup-phone{
-          transform:translateY(-8px) scale(1.03);
+        .phone-device__notch{
+            width:90px;height:20px;background:#000;
+            border-radius:0 0 14px 14px;margin:0 auto;position:relative;z-index:2;
         }
-        .mockup-phone__notch{
-          width:100px;height:22px;
-          background:#0a0a0a;
-          border-radius:0 0 16px 16px;
-          margin:0 auto;position:relative;z-index:2;
-        }
-        .mockup-phone__screen{line-height:0;margin-top:-6px;}
-        .mockup-phone__screen img{width:100%;height:auto;display:block;}
-
-        /* ── Captions ── */
-        .mockup-caption{
-          display:flex;align-items:flex-start;gap:16px;
-          max-width:560px;margin:0 auto 72px;
-          padding:20px 24px;
-          background:rgba(255,255,255,0.03);
-          border:1px solid rgba(255,255,255,0.06);
-          border-radius:14px;
-          backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-        }
-        .mockup-caption__icon{
-          width:40px;height:40px;flex-shrink:0;
-          display:flex;align-items:center;justify-content:center;
-          background:rgba(227,30,36,0.1);border:1px solid rgba(227,30,36,0.25);
-          border-radius:10px;color:var(--red);font-size:16px;
-        }
-        .mockup-caption strong{
-          display:block;font-size:15px;margin-bottom:4px;
-          font-family:'Inter',sans-serif;font-weight:600;
-        }
-        .mockup-caption span{
-          font-size:13px;color:var(--gray);line-height:1.5;
+        .phone-device__screen{line-height:0;margin-top:-4px;}
+        .phone-device__screen img{width:100%;height:auto;display:block;}
+        .phone-device__label{
+            text-align:center;margin-top:16px;
+            font-size:12px;color:var(--gray);letter-spacing:0.05em;
         }
 
+        /* ── Stat cards in bento ── */
+        .bento-stat-card{
+            height:100%;padding:28px 24px;
+            display:flex;flex-direction:column;justify-content:center;
+            background:linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+        }
+        .bento-stat-card__number{
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(36px,4vw,52px);
+            line-height:1;margin-bottom:8px;
+            font-variation-settings:'wght' 400;
+            transition:font-variation-settings 0.4s var(--ease-brand);
+        }
+        .bento-item:hover .bento-stat-card__number{
+            font-variation-settings:'wght' 800;
+        }
+        .bento-stat-card__number--red{color:var(--red);}
+        .bento-stat-card__number--accent{color:var(--accent);}
+        .bento-stat-card__number--green{color:#22C55E;}
+        .bento-stat-card__label{
+            font-size:13px;color:var(--gray);line-height:1.4;
+        }
+        .bento-stat-card__icon{
+            font-size:20px;margin-bottom:14px;opacity:0.5;
+        }
+
+        /* ── Bento Concept cards ── */
+        .bento-concept__eyebrow{
+            display:inline-flex;align-items:center;gap:8px;
+            font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+            color:var(--red);margin-bottom:16px;
+        }
+        .bento-concept__title{
+            font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,3.5vw,40px);
+            line-height:1.1;color:#fff;margin-bottom:16px;letter-spacing:0.01em;
+        }
+        .bento-concept__title em{
+            font-style:normal;
+            background:linear-gradient(90deg,var(--red),#ff6b6b);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+        }
+        .bento-concept__desc{font-size:14px;color:var(--gray);line-height:1.7;max-width:520px;}
+
+        .bento-founder{display:flex;flex-direction:column;align-items:center;gap:12px;}
+        .bento-founder__badge{
+            width:56px;height:56px;border-radius:50%;
+            background:linear-gradient(135deg,rgba(227,30,36,0.15),rgba(227,30,36,0.05));
+            border:1px solid rgba(227,30,36,0.25);
+            display:flex;align-items:center;justify-content:center;
+            font-size:22px;color:var(--red);
+            animation:pulse-founder 3s ease infinite;
+        }
+        @keyframes pulse-founder{0%,100%{box-shadow:0 0 0 0 rgba(227,30,36,0.2)}50%{box-shadow:0 0 30px 8px rgba(227,30,36,0.15)}}
+        .bento-founder__title{
+            font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;letter-spacing:0.05em;
+        }
+        .bento-founder__desc{font-size:12px;color:var(--gray);line-height:1.6;text-align:center;}
+        .bento-founder__desc strong{color:#fff;}
+
+        .bento-why__title{font-size:15px;font-weight:700;color:#fff;margin-bottom:20px;}
+        .bento-why__grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;}
+        .bento-why__item{display:flex;align-items:center;gap:10px;}
+        .bento-why__icon{width:22px;text-align:center;flex-shrink:0;font-size:12px;}
+        .bento-why__old{font-size:13px;color:rgba(255,255,255,0.3);text-decoration:line-through;}
+        .bento-why__new{font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;}
+
+        .bento-pioneer__quote{
+            font-size:16px;font-style:italic;color:rgba(255,255,255,0.7);
+            line-height:1.7;margin-bottom:20px;
+            border-left:3px solid var(--red);padding-left:16px;
+        }
+        .bento-pioneer__author{display:flex;align-items:center;gap:12px;}
+        .bento-pioneer__avatar{
+            width:38px;height:38px;border-radius:50%;
+            background:var(--red);display:flex;align-items:center;justify-content:center;
+            font-size:12px;font-weight:700;color:#fff;
+        }
+        .bento-pioneer__name{font-size:13px;font-weight:600;color:#fff;}
+        .bento-pioneer__role{font-size:11px;color:var(--gray);}
+
+        @media(max-width:900px){
+            .bento-why__grid{grid-template-columns:1fr;}
+        }
+
+        /* ── Feature row in bento ── */
+        .bento-features{
+            padding:32px;
+            display:flex;align-items:center;gap:24px;
+            background:linear-gradient(90deg, rgba(227,30,36,0.04) 0%, transparent 50%);
+        }
+        .bento-features__list{
+            display:flex;gap:16px;flex:1;
+            flex-wrap:wrap;justify-content:center;
+        }
+        .bento-feature-pill{
+            display:flex;align-items:center;gap:10px;
+            padding:12px 20px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:12px;
+            white-space:nowrap;flex-shrink:0;
+            transition:all 0.3s var(--ease-brand);
+        }
+        .bento-feature-pill:hover{
+            background:rgba(227,30,36,0.08);
+            border-color:rgba(227,30,36,0.2);
+            transform:translateY(-2px);
+        }
+        .bento-feature-pill i{color:var(--red);font-size:14px;}
+        .bento-feature-pill span{font-size:13px;font-weight:500;}
+
+        /* ══════ #02 Scroll-Driven Animations ══════ */
+        @supports (animation-timeline: view()) {
+            .bento-item{
+                animation:bento-reveal linear both;
+                animation-timeline:view();
+                animation-range:entry 0% entry 30%;
+            }
+            @keyframes bento-reveal{
+                from{opacity:0;transform:translateY(60px) scale(0.95)}
+                to{opacity:1;transform:translateY(0) scale(1)}
+            }
+        }
+
+        /* Fallback for browsers without scroll-driven */
+        @supports not (animation-timeline: view()) {
+            .bento-item{
+                opacity:0;transform:translateY(40px);
+                transition:opacity 0.7s var(--ease-brand), transform 0.7s var(--ease-brand);
+            }
+            .bento-item.revealed{opacity:1;transform:translateY(0);}
+        }
+
+        /* ══════ #24 Parallax Layer ══════ */
+        .parallax-layer{
+            position:absolute;z-index:1;pointer-events:none;
+        }
+        .parallax-grid{
+            width:200%;height:200%;top:-50%;left:-50%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size:80px 80px;
+            transform:perspective(500px) rotateX(60deg);
+            opacity:0.5;
+            mask-image:radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
+            -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
+        }
+
+        /* ══════ Floating geometric shapes — #24 ══════ */
+        .geo-shape{
+            position:absolute;z-index:1;pointer-events:none;
+            border:1px solid rgba(227,30,36,0.1);
+            animation:geo-float 20s linear infinite;
+        }
+        .geo-shape--1{
+            width:300px;height:300px;border-radius:50%;
+            top:10%;right:-5%;
+            border-color:rgba(0,217,255,0.06);
+        }
+        .geo-shape--2{
+            width:200px;height:200px;
+            top:40%;left:-3%;
+            transform:rotate(45deg);
+            border-color:rgba(227,30,36,0.08);
+        }
+        .geo-shape--3{
+            width:150px;height:150px;border-radius:50%;
+            bottom:15%;right:10%;
+            border-color:rgba(255,255,255,0.04);
+        }
+        @keyframes geo-float{
+            0%{transform:rotate(0deg) translateY(0)}
+            25%{transform:rotate(90deg) translateY(-20px)}
+            50%{transform:rotate(180deg) translateY(0)}
+            75%{transform:rotate(270deg) translateY(20px)}
+            100%{transform:rotate(360deg) translateY(0)}
+        }
+        .geo-shape--2{ animation-duration:25s;animation-direction:reverse; }
+        .geo-shape--3{ animation-duration:30s; }
+
+        /* ══════ JOURNEY SECTION ══════ */
+        .journey-section{
+            max-width:1200px;margin:0 auto 80px;
+            position:relative;z-index:2;
+        }
+        .journey-header{
+            text-align:center;margin-bottom:60px;
+        }
+        .journey-header h2{
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(32px,5vw,52px);letter-spacing:0.02em;
+        }
+        .journey-header p{
+            font-size:16px;color:var(--gray);margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6;
+        }
+
+        /* Timeline */
+        .journey-timeline{
+            position:relative;
+            display:flex;flex-direction:column;gap:80px;
+        }
+        .journey-timeline::before{
+            content:'';position:absolute;left:32px;top:0;bottom:0;
+            width:2px;
+            background:linear-gradient(180deg,var(--red),rgba(227,30,36,0.1));
+        }
+
+        .journey-step{
+            display:grid;grid-template-columns:64px 1fr;gap:32px;
+            align-items:start;
+            opacity:0;transform:translateX(-30px);
+            transition:all 0.7s var(--ease-brand);
+        }
+        .journey-step.revealed{opacity:1;transform:translateX(0);}
+
+        .journey-step__number{
+            width:64px;height:64px;border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            font-family:'Bebas Neue',sans-serif;font-size:24px;
+            background:rgba(227,30,36,0.1);
+            border:2px solid rgba(227,30,36,0.3);
+            color:var(--red);
+            position:relative;z-index:2;
+            transition:all 0.4s var(--ease-brand);
+        }
+        .journey-step:hover .journey-step__number{
+            background:var(--red);color:#fff;
+            box-shadow:0 0 30px rgba(227,30,36,0.4);
+        }
+
+        .journey-step__content{
+            padding-top:8px;
+        }
+        .journey-step__title{
+            font-family:'Inter',sans-serif;font-size:20px;font-weight:700;
+            margin-bottom:8px;
+        }
+        .journey-step__desc{
+            font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:20px;
+        }
+        .journey-step__tags{
+            display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;
+        }
+        .journey-step__tag{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:5px 12px;border-radius:8px;font-size:11px;font-weight:500;
+            background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+            color:rgba(255,255,255,0.6);
+        }
+        .journey-step__tag i{font-size:10px;color:var(--red);}
+        .journey-step__upgrade-hint{
+            display:inline-flex;align-items:center;gap:8px;
+            margin-top:12px;padding:8px 14px;border-radius:8px;
+            background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+            font-size:11px;color:rgba(255,255,255,0.4);
+        }
+        .journey-step__upgrade-hint strong{color:rgba(255,255,255,0.7);}
+
+        /* ── Chat Simulacro ── */
+        .chat-sim{
+            margin-top:28px;border-radius:16px;overflow:hidden;
+            background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);
+        }
+        .chat-sim__header{
+            display:flex;align-items:center;gap:10px;padding:14px 20px;
+            border-bottom:1px solid rgba(255,255,255,0.06);
+            font-size:13px;font-weight:600;color:#fff;
+        }
+        .chat-sim__online{
+            margin-left:auto;font-size:11px;font-weight:400;color:var(--gray);
+            display:flex;align-items:center;gap:6px;
+        }
+        .chat-sim__dot{
+            width:7px;height:7px;border-radius:50%;background:#22C55E;
+            display:inline-block;animation:pulse-dot 2s ease infinite;
+        }
+        @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
+        .chat-sim__messages{padding:16px 20px;display:flex;flex-direction:column;gap:14px;}
+        .chat-sim__achievement{
+            display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+            padding:10px 16px;border-radius:10px;
+            background:rgba(227,30,36,0.06);border:1px solid rgba(227,30,36,0.15);
+            font-size:12px;color:rgba(255,255,255,0.7);
+        }
+        .chat-sim__achievement i{color:gold;font-size:14px;}
+        .chat-sim__achievement strong{color:#fff;}
+        .chat-sim__achievement em{color:var(--red);font-style:normal;font-weight:600;}
+        .chat-sim__msg{display:flex;gap:10px;align-items:flex-start;}
+        .chat-sim__avatar{
+            width:34px;height:34px;border-radius:50%;flex-shrink:0;
+            display:flex;align-items:center;justify-content:center;
+            font-size:11px;font-weight:700;color:#fff;
+        }
+        .chat-sim__bubble{flex:1;}
+        .chat-sim__name{font-size:12px;font-weight:600;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+        .chat-sim__badge{
+            font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;
+            background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);
+        }
+        .chat-sim__badge--coach{background:rgba(227,30,36,0.2);color:var(--red);}
+        .chat-sim__text{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6;}
+        .chat-sim__reactions{display:flex;gap:6px;margin-top:6px;}
+        .chat-sim__react{
+            font-size:11px;padding:3px 8px;border-radius:12px;
+            background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+            cursor:default;
+        }
+        .chat-sim__photo-preview{
+            display:flex;gap:8px;margin-top:8px;
+        }
+        .chat-sim__photo-box{
+            width:100px;height:65px;border-radius:8px;
+            background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+            display:flex;align-items:center;justify-content:center;gap:5px;
+            font-size:10px;color:rgba(255,255,255,0.4);
+        }
+        .chat-sim__photo-box i{font-size:14px;color:rgba(255,255,255,0.25);}
+
+        /* ── Upgrade Plans Cards ── */
+        .upgrade-plans{margin-top:32px;}
+        .upgrade-plans__intro{
+            font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:20px;
+        }
+        .upgrade-plans__intro strong{color:#fff;}
+        .upgrade-plans__grid{
+            display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+        }
+        .upgrade-plan-card{
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:14px;padding:24px 20px;
+            position:relative;overflow:hidden;
+            transition:all 0.3s var(--ease-brand);
+        }
+        .upgrade-plan-card:hover{
+            border-color:rgba(255,255,255,0.15);
+            transform:translateY(-4px);
+            box-shadow:0 12px 40px rgba(0,0,0,0.3);
+        }
+        .upgrade-plan-card--featured{
+            border-color:rgba(227,30,36,0.3);
+            background:rgba(227,30,36,0.06);
+        }
+        .upgrade-plan-card--featured:hover{
+            border-color:rgba(227,30,36,0.5);
+            box-shadow:0 12px 40px rgba(227,30,36,0.15);
+        }
+        .upgrade-plan-card__badge{
+            position:absolute;top:12px;right:12px;
+            background:var(--red);color:#fff;
+            font-size:10px;font-weight:700;letter-spacing:0.05em;
+            padding:3px 10px;border-radius:6px;text-transform:uppercase;
+        }
+        .upgrade-plan-card__icon{font-size:22px;margin-bottom:10px;}
+        .upgrade-plan-card__name{
+            font-family:'Bebas Neue',sans-serif;font-size:22px;
+            letter-spacing:0.03em;color:#fff;margin-bottom:4px;
+        }
+        .upgrade-plan-card__price{
+            font-size:20px;font-weight:700;color:#fff;margin-bottom:14px;
+        }
+        .upgrade-plan-card__price span{
+            font-size:12px;font-weight:400;color:var(--gray);margin-left:2px;
+        }
+        .upgrade-plan-card__list{
+            list-style:none;padding:0;margin:0;
+        }
+        .upgrade-plan-card__list li{
+            font-size:12px;color:rgba(255,255,255,0.55);
+            padding:5px 0;border-top:1px solid rgba(255,255,255,0.05);
+            display:flex;align-items:center;gap:6px;
+        }
+        .upgrade-plan-card__list li::before{
+            content:'\f00c';font-family:'Font Awesome 6 Free';font-weight:900;
+            font-size:9px;color:var(--red);
+        }
+        .upgrade-plans__note{
+            margin-top:20px;font-size:13px;color:var(--gray);
+            padding:12px 16px;border-radius:10px;
+            background:rgba(227,30,36,0.05);border:1px solid rgba(227,30,36,0.12);
+            display:inline-flex;align-items:center;
+        }
+        @media(max-width:700px){
+            .upgrade-plans__grid{grid-template-columns:1fr;}
+        }
+
+        /* Mockup pair inside journey step */
+        .journey-mockups{
+            display:flex;gap:16px;align-items:flex-start;
+            margin-top:8px;
+        }
+        .journey-mockup-laptop{
+            flex:1;max-width:600px;border-radius:14px;overflow:hidden;
+            background:#1a1a1d;
+            border:1px solid rgba(255,255,255,0.06);
+            box-shadow:0 16px 40px rgba(0,0,0,0.4);
+            transition:transform 0.5s var(--ease-brand);
+        }
+        .journey-mockup-laptop:hover{transform:translateY(-4px) scale(1.01);}
+        .journey-mockup-laptop__bar{
+            display:flex;align-items:center;gap:8px;padding:8px 14px;
+            background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);
+        }
+        .journey-mockup-laptop__bar span{
+            width:8px;height:8px;border-radius:50%;
+        }
+        .journey-mockup-laptop__bar span:nth-child(1){background:#ff5f57}
+        .journey-mockup-laptop__bar span:nth-child(2){background:#febc2e}
+        .journey-mockup-laptop__bar span:nth-child(3){background:#28c840}
+        .journey-mockup-laptop img{width:100%;display:block;}
+
+        .journey-mockup-phone{
+            width:140px;flex-shrink:0;
+            background:#000;border-radius:22px;overflow:hidden;
+            border:2px solid rgba(255,255,255,0.1);
+            box-shadow:0 12px 30px rgba(0,0,0,0.5);
+            animation:phone-float 7s ease-in-out infinite;
+        }
+        .journey-mockup-phone__notch{
+            width:70px;height:16px;background:#000;
+            border-radius:0 0 10px 10px;margin:0 auto;
+        }
+        .journey-mockup-phone img{width:100%;display:block;margin-top:-2px;}
+
+        /* ══════ CTA Section ══════ */
         .platform-cta{
-          text-align:center;padding-top:24px;position:relative;z-index:2;
+            text-align:center;max-width:600px;margin:0 auto;
+            position:relative;z-index:2;
+        }
+        .cta-btn{
+            display:inline-flex;align-items:center;gap:10px;
+            padding:18px 52px;
+            background:var(--red);color:#fff;
+            font-family:'Inter',sans-serif;font-size:16px;font-weight:600;
+            border:none;border-radius:12px;cursor:pointer;
+            text-decoration:none;
+            position:relative;overflow:hidden;
+            transition:transform 0.3s var(--ease-brand), box-shadow 0.3s ease;
+        }
+        .cta-btn:hover{
+            transform:translateY(-3px);
+            box-shadow:0 16px 40px rgba(227,30,36,0.3);
+        }
+        /* #20 shimmer */
+        .cta-btn::after{
+            content:'';position:absolute;top:0;left:-100%;
+            width:100%;height:100%;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+            transition:left 0.6s ease;
+        }
+        .cta-btn:hover::after{left:100%;}
+        .cta-sub{
+            color:var(--gray);font-size:13px;margin-top:14px;
         }
 
-        /* ── Reveal Animation ── */
-        .reveal-on-scroll{
-          opacity:0;transform:translateY(40px);
-          transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        /* ══════ #10 :has() — Highlight row on hover ══════ */
+        .bento-grid:has(.bento-hero:hover) .bento-phone{
+            border-color:rgba(227,30,36,0.15);
         }
-        .reveal-on-scroll.revealed{
-          opacity:1;transform:translateY(0);
+        .bento-grid:has(.bento-phone:hover) .bento-hero{
+            border-color:rgba(0,217,255,0.1);
         }
 
-        /* ──────── RESPONSIVE ──────── */
-        @media (max-width: 768px) {
-            .countdown-timer {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+        /* ══════ RESPONSIVE ══════ */
+        @media (max-width: 900px) {
+            .bento-grid{
+                grid-template-columns:1fr;
+                gap:16px;
             }
+            .bento-grid > .bento-item,
+            .bento-hero,.bento-phone,.bento-wide,.bento-stat,.bento-full{
+                grid-column:span 1 !important;grid-row:span 1 !important;
+            }
+            .bento-features{flex-direction:column;padding:20px;}
+            .bento-features__list{width:100%;gap:10px;}
+            .bento-feature-pill{padding:10px 16px;}
+            .phone-device{width:min(180px,60%);}
+            .platform-section{padding:60px 12px 60px;}
+            .geo-shape{display:none;}
 
-            .countdown-value {
-                font-size: 24px;
-            }
+            .bento-concept__title{font-size:26px;}
+            .bento-concept__desc{font-size:13px;}
 
-            .cta-buttons {
-                flex-direction: column;
-            }
+            .bento-why__grid{grid-template-columns:1fr;gap:8px;}
+            .bento-why__old,.bento-why__new{font-size:12px;}
 
-            button, .btn {
-                width: 100%;
+            .bento-pioneer__quote{font-size:14px;}
+
+            .bento-stat-card__number{font-size:clamp(36px,10vw,48px);}
+
+            .journey-mockups{flex-direction:column;}
+            .journey-mockup-laptop{max-width:100%;}
+            .journey-mockup-phone{width:160px;align-self:center;}
+
+            .journey-timeline::before{left:24px;}
+            .journey-step{grid-template-columns:48px 1fr;gap:16px;}
+            .journey-step__number{width:48px;height:48px;font-size:18px;}
+            .journey-step__title{font-size:20px;}
+            .journey-step__desc{font-size:13px;}
+
+            .chat-sim__messages{padding:12px 14px;}
+            .chat-sim__msg{gap:8px;}
+            .chat-sim__text{font-size:12px;}
+            .chat-sim__photo-preview{flex-direction:row;}
+            .chat-sim__photo-box{width:80px;height:55px;}
+
+            .upgrade-plans__grid{grid-template-columns:1fr;}
+
+            .journey-step__upgrade-hint{font-size:10px;flex-wrap:wrap;}
+
+            .platform-title{font-size:clamp(36px,10vw,60px);}
+
+            .split-char{transition-delay:calc(var(--i) * 20ms) !important;}
+        }
+
+        /* ══════ #36 prefers-reduced-motion ══════ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration:0.01ms !important;
+                transition-duration:0.01ms !important;
             }
-            .mockup-showcase{perspective:none;}
-            .mockup-phone{width:min(140px,30vw);}
-            .mockup-phone--float-right{right:-2%;bottom:-4%;}
-            .mockup-phone--float-left{left:-2%;bottom:-4%;}
-            .mockup-laptop{width:min(700px,82vw);}
-            .mockup-caption{margin-left:12px;margin-right:12px;}
-            .platform-section{padding:60px 12px 48px;}
         }
     </style>
+<!-- Site Base Styles (navbar, footer, etc.) -->
+<link rel="stylesheet" href="css/wellcore-v5.css">
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
@@ -571,289 +736,702 @@
   <a href="/rise-enroll.html" class="v6-promo-bar-cta">Inscribirme <i class="fas fa-arrow-right"></i></a>
   <button class="v6-promo-bar-close" aria-label="Cerrar">&times;</button>
 </div>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <a href="/" class="logo">WELLCORE</a>
-            <nav class="nav-links">
-                <a href="/">Inicio</a>
-                <a href="/rise.html">RISE</a>
-                <a href="/login.html">Acceso</a>
-            </nav>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">WELL<span>CORE</span></a>
+
+    <ul class="nav-links">
+      <li><a href="metodo.html">M&eacute;todo</a></li>
+      <li><a href="rise.html" style="color:var(--red);position:relative;font-weight:600;">RISE<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="planes.html">Planes</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="coaches.html" style="color:rgba(227,30,36,0.7);position:relative;">Coaches<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
+    </ul>
+
+    <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:var(--red);border:2px solid var(--red);padding:6px 12px;border-radius:0;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='var(--red-dark)';this.style.borderColor='var(--red-dark)'" onmouseout="this.style.background='var(--red)';this.style.borderColor='var(--red)'">MI CUENTA</a>
+
+    <a href="/inscripcion.html" class="nav-cta">Empezar &rarr;</a>
+
+    <button class="nav-hamburger" id="navToggle" aria-label="Abrir men&uacute;">
+      &#9776;
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="navMobileMenu" role="navigation" aria-label="Men&uacute; m&oacute;vil">
+  <ul>
+    <li><a href="metodo.html" class="nav-mobile-link">M&eacute;todo</a></li>
+    <li><a href="rise.html" class="nav-mobile-link" style="color:#E31E24;font-weight:700;">&#9670; RISE &mdash; Reto 30 D&iacute;as</a></li>
+    <li><a href="nosotros.html" class="nav-mobile-link">Nosotros</a></li>
+    <li><a href="proceso.html" class="nav-mobile-link">Proceso</a></li>
+    <li><a href="planes.html" class="nav-mobile-link">Planes</a></li>
+    <li><a href="tienda.html" class="nav-mobile-link">Tienda</a></li>
+    <li><a href="blog/index.html" class="nav-mobile-link">Blog</a></li>
+    <li><a href="faq.html" class="nav-mobile-link">FAQ</a></li>
+    <li><a href="coaches.html" class="nav-mobile-link" style="color:#E31E24;">&#9670; Trabaja con Nosotros</a></li>
+    <li><a href="login.html" class="nav-mobile-link" style="color:#fff;background:var(--red);padding:8px 16px;text-align:center;font-weight:700;font-size:10px;letter-spacing:0.1em;">MI CUENTA</a></li>
+  </ul>
+  <a href="inscripcion.html" class="nav-mobile-cta">Empezar &rarr;</a>
+</div>
+
+<!-- ══════ PLATFORM SECTION ══════ -->
+<section class="platform-section" id="platform">
+    <!-- #34 Canvas 2D Particles -->
+    <canvas class="particles-canvas" id="particlesCanvas"></canvas>
+
+    <!-- #24 Parallax grid -->
+    <div class="parallax-layer parallax-grid"></div>
+
+    <!-- Floating geometry -->
+    <div class="geo-shape geo-shape--1"></div>
+    <div class="geo-shape geo-shape--2"></div>
+    <div class="geo-shape geo-shape--3"></div>
+
+    <!-- Header — #19 Kinetic Typography -->
+    <div class="platform-header">
+        <div class="platform-badge">
+            <i class="fas fa-rocket" style="color:var(--red);font-size:11px;"></i>
+            <span>Plataforma RISE</span>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-tag"><i class="fas fa-fire" aria-hidden="true"></i> Disponible Todo Marzo</div>
-            <h1>Reto RISE 30 Días</h1>
-            <p>30 días. Un plan personalizado. Resultados reales.</p>
+        <h2 class="platform-title">
+            <span class="split-word" data-split>TECNOLOGIA QUE</span><br>
+            <span class="platform-title-line2">IMPULSA TU CAMBIO</span>
+        </h2>
 
-            <div class="cta-buttons">
-                <a href="/rise-enroll.html" class="btn btn-primary v6-magnetic">Inscribirse Ahora</a>
-                <a href="#features" class="btn btn-secondary">Ver Detalles</a>
+        <p class="platform-subtitle">
+            Dashboard inteligente, programa personalizado y seguimiento completo
+            &mdash; accede desde cualquier dispositivo, en cualquier momento.
+        </p>
+    </div>
+
+    <!-- ══════ #29 Bento Grid — Concepto RISE ══════ -->
+    <div class="bento-grid">
+
+        <!-- ROW 1: Hero statement + Founder badge -->
+        <div class="bento-item bento-hero" style="grid-column:span 8;padding:48px 40px;">
+            <div class="bento-concept">
+                <div class="bento-concept__eyebrow"><i class="fas fa-flask"></i> Lanzamiento 2026</div>
+                <h3 class="bento-concept__title">La primera plataforma de coaching online<br>que realmente se siente <em>personal</em></h3>
+                <p class="bento-concept__desc">
+                    RISE no es un PDF ni un video generico. Es un dashboard interactivo con tu entrenamiento,
+                    tracking en tiempo real, mediciones automaticas y una comunidad que te impulsa.
+                    Tecnologia que antes solo existia en apps de $50 USD/mes &mdash; ahora accesible para LATAM.
+                </p>
             </div>
+        </div>
 
-            <!-- Countdown -->
-            <div class="countdown-box">
-                <div class="countdown-label">Tiempo Restante en Marzo</div>
-                <div class="countdown-timer">
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="days">0</div>
-                        <div class="countdown-unit">Días</div>
+        <div class="bento-item" style="grid-column:span 4;padding:40px 28px;text-align:center;">
+            <div class="bento-founder">
+                <div class="bento-founder__badge">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="bento-founder__title">Modo Fundador</div>
+                <div class="bento-founder__desc">Haz parte de los primeros en construir la empresa de coaching online mas referente de Latinoamerica. Tu transformacion es nuestra carta de presentacion.</div>
+            </div>
+        </div>
+
+        <!-- ROW 2: 4 Value props -->
+        <div class="bento-item bento-stat" style="grid-column:span 3;">
+            <div class="bento-stat-card">
+                <div class="bento-stat-card__icon"><i class="fas fa-code" style="color:var(--red)"></i></div>
+                <div class="bento-stat-card__number bento-stat-card__number--red">1ra</div>
+                <div class="bento-stat-card__label">Plataforma de coaching<br>interactivo en LATAM</div>
+            </div>
+        </div>
+        <div class="bento-item bento-stat" style="grid-column:span 3;">
+            <div class="bento-stat-card">
+                <div class="bento-stat-card__icon"><i class="fas fa-dumbbell" style="color:var(--accent)"></i></div>
+                <div class="bento-stat-card__number bento-stat-card__number--accent">1:1</div>
+                <div class="bento-stat-card__label">Coach real dedicado<br>no bots, no plantillas</div>
+            </div>
+        </div>
+        <div class="bento-item bento-stat" style="grid-column:span 3;">
+            <div class="bento-stat-card">
+                <div class="bento-stat-card__icon"><i class="fas fa-chart-line" style="color:#ff6b35"></i></div>
+                <div class="bento-stat-card__number" style="color:#ff6b35">30</div>
+                <div class="bento-stat-card__label">Dias de tracking<br>en tiempo real</div>
+            </div>
+        </div>
+        <div class="bento-item bento-stat" style="grid-column:span 3;">
+            <div class="bento-stat-card">
+                <div class="bento-stat-card__icon"><i class="fas fa-mobile-screen-button" style="color:#22C55E"></i></div>
+                <div class="bento-stat-card__number bento-stat-card__number--green">24/7</div>
+                <div class="bento-stat-card__label">Acceso desde cualquier<br>dispositivo</div>
+            </div>
+        </div>
+
+        <!-- ROW 3: Why different + Testimonial-style -->
+        <div class="bento-item" style="grid-column:span 7;padding:36px 32px;">
+            <div class="bento-why">
+                <div class="bento-why__title"><i class="fas fa-bolt" style="color:var(--red);margin-right:8px;"></i>Por que RISE es diferente</div>
+                <div class="bento-why__grid">
+                    <div class="bento-why__item">
+                        <div class="bento-why__icon"><i class="fas fa-xmark" style="color:#666"></i></div>
+                        <div class="bento-why__old">PDFs genericos que nadie lee</div>
                     </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="hours">0</div>
-                        <div class="countdown-unit">Horas</div>
+                    <div class="bento-why__item">
+                        <div class="bento-why__icon"><i class="fas fa-check" style="color:var(--red)"></i></div>
+                        <div class="bento-why__new">Dashboard interactivo con tu plan en vivo</div>
                     </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="minutes">0</div>
-                        <div class="countdown-unit">Minutos</div>
+                    <div class="bento-why__item">
+                        <div class="bento-why__icon"><i class="fas fa-xmark" style="color:#666"></i></div>
+                        <div class="bento-why__old">Respuestas por WhatsApp en 3 dias</div>
                     </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="seconds">0</div>
-                        <div class="countdown-unit">Segundos</div>
+                    <div class="bento-why__item">
+                        <div class="bento-why__icon"><i class="fas fa-check" style="color:var(--red)"></i></div>
+                        <div class="bento-why__new">Sistema de tickets con SLA garantizado</div>
+                    </div>
+                    <div class="bento-why__item">
+                        <div class="bento-why__icon"><i class="fas fa-xmark" style="color:#666"></i></div>
+                        <div class="bento-why__old">Entrenar solo sin saber si vas bien</div>
+                    </div>
+                    <div class="bento-why__item">
+                        <div class="bento-why__icon"><i class="fas fa-check" style="color:var(--red)"></i></div>
+                        <div class="bento-why__new">Comunidad + logros + coach en tiempo real</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Features -->
-    <section class="container" id="features">
-        <div style="text-align:center;margin-bottom:48px;">
-            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;margin-bottom:16px;">
-                <i class="fas fa-list-check" aria-hidden="true" style="color:var(--red);font-size:11px;"></i>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">QUÉ INCLUYE</span>
-            </div>
-            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:0.02em;">RISE. 4 PILARES.</h2>
-        </div>
-
-        <div class="features" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-            <div class="feature-card v6-contain">
-                <div class="feature-icon"><i class="fas fa-dumbbell" aria-hidden="true"></i></div>
-                <h3>Entrenamiento Personalizado</h3>
-                <p>Programa 1:1 diseñado para tu nivel, tu cuerpo y tus objetivos. Gym o casa &mdash; tú eliges.</p>
-            </div>
-
-            <div class="feature-card v6-contain">
-                <div class="feature-icon"><i class="fas fa-utensils" aria-hidden="true"></i></div>
-                <h3>Guía de Nutrición</h3>
-                <p>Cómo alimentarte correctamente durante el reto. Principios claros, sin dietas extremas.</p>
-            </div>
-
-            <div class="feature-card v6-contain">
-                <div class="feature-icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
-                <h3>Guía de Hábitos</h3>
-                <p>Sistema de hábitos diarios para garantizar consistencia. Pequeños cambios, gran impacto.</p>
-            </div>
-
-            <div class="feature-card v6-contain">
-                <div class="feature-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
-                <h3>Seguimiento del Reto</h3>
-                <p>Revisión de tu progreso durante los 30 días. No estarás solo en este proceso.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ══════ PLATFORM PREVIEW — Premium Mockups ══════ -->
-    <section class="platform-section" id="platform">
-        <div class="platform-glow-orb platform-glow-orb--1"></div>
-        <div class="platform-glow-orb platform-glow-orb--2"></div>
-
-        <div class="platform-header">
-            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;margin-bottom:16px;">
-                <i class="fas fa-mobile-screen-button" aria-hidden="true" style="color:var(--red);font-size:11px;"></i>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">TU PLATAFORMA</span>
-            </div>
-            <h2 class="platform-title">Tecnologia que<br><span class="platform-title-accent">Impulsa tu Cambio</span></h2>
-            <p class="platform-subtitle">Dashboard personalizado, tracking en tiempo real y programa completo &mdash; todo desde tu celular o computadora.</p>
-        </div>
-
-        <!-- ── Desktop + Mobile Showcase Row 1 ── -->
-        <div class="mockup-showcase reveal-on-scroll">
-            <div class="mockup-laptop">
-                <div class="mockup-laptop__bezel">
-                    <div class="mockup-laptop__dots"><span></span><span></span><span></span></div>
-                    <div class="mockup-laptop__url">wellcorefitness.com/rise-dashboard</div>
-                </div>
-                <div class="mockup-laptop__screen">
-                    <img src="/images/mockups/dashboard-desktop.png" alt="RISE Dashboard — Vista Desktop" fetchpriority="high" decoding="async" width="1922" height="893">
-                </div>
-            </div>
-            <div class="mockup-phone mockup-phone--float-right">
-                <div class="mockup-phone__notch"></div>
-                <div class="mockup-phone__screen">
-                    <img src="/images/mockups/dashboard-mobile.png" alt="RISE Dashboard — Vista Mobile" loading="lazy" decoding="async" width="1170" height="2532">
+        <div class="bento-item" style="grid-column:span 5;padding:36px 28px;display:flex;flex-direction:column;justify-content:center;">
+            <div class="bento-pioneer">
+                <div class="bento-pioneer__quote">&ldquo;Construimos la plataforma que nos hubiera gustado tener cuando empezamos a entrenar.&rdquo;</div>
+                <div class="bento-pioneer__author">
+                    <div class="bento-pioneer__avatar">DE</div>
+                    <div>
+                        <div class="bento-pioneer__name">Daniel Esparza</div>
+                        <div class="bento-pioneer__role">CEO &amp; Head Coach, WellCore Fitness</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="mockup-caption reveal-on-scroll">
-            <div class="mockup-caption__icon"><i class="fas fa-chart-pie"></i></div>
-            <div>
-                <strong>Dashboard Inteligente</strong>
-                <span>KPIs en tiempo real, progreso del reto y acceso rapido a todas tus herramientas.</span>
-            </div>
-        </div>
-
-        <!-- ── Desktop + Mobile Showcase Row 2 ── -->
-        <div class="mockup-showcase mockup-showcase--reverse reveal-on-scroll">
-            <div class="mockup-laptop">
-                <div class="mockup-laptop__bezel">
-                    <div class="mockup-laptop__dots"><span></span><span></span><span></span></div>
-                    <div class="mockup-laptop__url">wellcorefitness.com/mi-programa</div>
-                </div>
-                <div class="mockup-laptop__screen">
-                    <img src="/images/mockups/training-desktop.png" alt="Programa de Entrenamiento — Vista Desktop" loading="lazy" decoding="async" width="1440" height="900">
-                </div>
-            </div>
-            <div class="mockup-phone mockup-phone--float-left">
-                <div class="mockup-phone__notch"></div>
-                <div class="mockup-phone__screen">
-                    <img src="/images/mockups/training-mobile.png" alt="Programa de Entrenamiento — Vista Mobile" loading="lazy" decoding="async" width="1170" height="2532">
+        <!-- ROW 4: Feature pills full width -->
+        <div class="bento-item bento-full">
+            <div class="bento-features">
+                <div class="bento-features__list">
+                    <div class="bento-feature-pill"><i class="fas fa-dumbbell"></i><span>Entrenamiento 1:1</span></div>
+                    <div class="bento-feature-pill"><i class="fas fa-leaf"></i><span>Sistema de Habitos</span></div>
+                    <div class="bento-feature-pill"><i class="fas fa-capsules"></i><span>Suplementacion</span></div>
+                    <div class="bento-feature-pill"><i class="fas fa-ruler-vertical"></i><span>Mediciones Corporales</span></div>
+                    <div class="bento-feature-pill"><i class="fas fa-camera"></i><span>Fotos de Progreso</span></div>
+                    <div class="bento-feature-pill"><i class="fas fa-chart-line"></i><span>Tracking Diario</span></div>
+                    <div class="bento-feature-pill"><i class="fas fa-comments"></i><span>Comunidad RISE</span></div>
+                    <div class="bento-feature-pill"><i class="fas fa-trophy"></i><span>Logros y Retos</span></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="mockup-caption reveal-on-scroll">
-            <div class="mockup-caption__icon"><i class="fas fa-dumbbell"></i></div>
-            <div>
-                <strong>Programa Personalizado</strong>
-                <span>Entrenamiento, nutricion, habitos y suplementacion &mdash; 6 pestanas interactivas en tu bolsillo.</span>
+    <!-- ══════ JOURNEY — Tu Experiencia RISE ══════ -->
+    <div class="journey-section">
+        <div class="journey-header">
+            <div class="platform-badge" style="margin-bottom:20px;">
+                <i class="fas fa-route" style="color:var(--red);font-size:11px;"></i>
+                <span>Tu Experiencia</span>
             </div>
+            <h2>Asi Vives los 30 Dias</h2>
+            <p>Desde el dia 1 hasta tu transformacion. Cada paso esta disenado para que nunca te sientas solo.</p>
         </div>
 
-        <!-- ── Desktop + Mobile Showcase Row 3 ── -->
-        <div class="mockup-showcase reveal-on-scroll">
-            <div class="mockup-laptop">
-                <div class="mockup-laptop__bezel">
-                    <div class="mockup-laptop__dots"><span></span><span></span><span></span></div>
-                    <div class="mockup-laptop__url">wellcorefitness.com/tracking</div>
+        <div class="journey-timeline">
+
+            <!-- Step 1: Inscripcion -->
+            <div class="journey-step" data-reveal>
+                <div class="journey-step__number">01</div>
+                <div class="journey-step__content">
+                    <div class="journey-step__title">Te Inscribes y Cuentas tu Historia</div>
+                    <div class="journey-step__desc">
+                        Completas un intake personalizado: tus medidas, objetivos, nivel de experiencia, horarios y limitaciones.
+                        Con esta info tu coach disena un programa 100% para ti &mdash; no es una plantilla generica.
+                    </div>
+                    <div class="journey-step__tags">
+                        <span class="journey-step__tag"><i class="fas fa-clipboard-list"></i> Intake personalizado</span>
+                        <span class="journey-step__tag"><i class="fas fa-ruler"></i> Medidas iniciales</span>
+                        <span class="journey-step__tag"><i class="fas fa-bullseye"></i> Objetivos claros</span>
+                    </div>
                 </div>
-                <div class="mockup-laptop__screen">
-                    <img src="/images/mockups/tracking-desktop.png" alt="Tracking Diario — Vista Desktop" loading="lazy" decoding="async" width="1922" height="893">
+            </div>
+
+            <!-- Step 2: Dashboard -->
+            <div class="journey-step" data-reveal>
+                <div class="journey-step__number">02</div>
+                <div class="journey-step__content">
+                    <div class="journey-step__title">Accedes a tu Dashboard Personal</div>
+                    <div class="journey-step__desc">
+                        Tu centro de control: KPIs del reto, accesos rapidos, progreso visual y todo lo que necesitas en un solo lugar.
+                        Funciona perfecto en celular y computadora.
+                    </div>
+                    <div class="journey-step__tags">
+                        <span class="journey-step__tag"><i class="fas fa-chart-pie"></i> KPIs en tiempo real</span>
+                        <span class="journey-step__tag"><i class="fas fa-mobile-screen-button"></i> Mobile-first</span>
+                        <span class="journey-step__tag"><i class="fas fa-bolt"></i> Acceso 24/7</span>
+                    </div>
+                    <div class="journey-mockups">
+                        <div class="journey-mockup-laptop">
+                            <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
+                            <img src="/images/mockups/dashboard-desktop.png" alt="Dashboard" loading="lazy">
+                        </div>
+                        <div class="journey-mockup-phone">
+                            <div class="journey-mockup-phone__notch"></div>
+                            <img src="/images/mockups/dashboard-mobile.png" alt="Dashboard Mobile" loading="lazy">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mockup-phone mockup-phone--float-right">
-                <div class="mockup-phone__notch"></div>
-                <div class="mockup-phone__screen">
-                    <img src="/images/mockups/tracking-mobile.png" alt="Tracking Diario — Vista Mobile" loading="lazy" decoding="async" width="1170" height="2532">
+
+            <!-- Step 3: Programa -->
+            <div class="journey-step" data-reveal>
+                <div class="journey-step__number">03</div>
+                <div class="journey-step__content">
+                    <div class="journey-step__title">Tu Programa de Entrenamiento Personalizado</div>
+                    <div class="journey-step__desc">
+                        Recibes un plan de entrenamiento disenado para tu nivel, tu cuerpo y tus objetivos.
+                        Gym o casa &mdash; tu eliges. Incluye guia de habitos y suplementacion basica.
+                    </div>
+                    <div class="journey-step__tags">
+                        <span class="journey-step__tag"><i class="fas fa-dumbbell"></i> Entrenamiento 1:1</span>
+                        <span class="journey-step__tag"><i class="fas fa-leaf"></i> Habitos diarios</span>
+                        <span class="journey-step__tag"><i class="fas fa-capsules"></i> Suplementacion</span>
+                    </div>
+                    <div class="journey-step__upgrade-hint">
+                        <i class="fas fa-lock" style="color:var(--gray);font-size:10px;"></i>
+                        <span>Nutricion avanzada, Ciclo Hormonal y Bloodwork disponibles en nuestros <strong>planes mensuales</strong></span>
+                    </div>
+                    <div class="journey-mockups">
+                        <div class="journey-mockup-laptop">
+                            <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
+                            <img src="/images/mockups/training-desktop.png" alt="Mi Programa" loading="lazy">
+                        </div>
+                        <div class="journey-mockup-phone">
+                            <div class="journey-mockup-phone__notch"></div>
+                            <img src="/images/mockups/training-mobile.png" alt="Programa Mobile" loading="lazy">
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Step 4: Tracking Diario -->
+            <div class="journey-step" data-reveal>
+                <div class="journey-step__number">04</div>
+                <div class="journey-step__content">
+                    <div class="journey-step__title">Registras tu Dia en 30 Segundos</div>
+                    <div class="journey-step__desc">
+                        Cada dia marcas si entrenaste, si seguiste tu nutricion, cuanta agua tomaste y horas de sueno.
+                        Tu coach ve tu progreso y ajusta el programa si es necesario. Nunca estas solo.
+                    </div>
+                    <div class="journey-step__tags">
+                        <span class="journey-step__tag"><i class="fas fa-check-circle"></i> Tracking diario</span>
+                        <span class="journey-step__tag"><i class="fas fa-droplet"></i> Agua y sueno</span>
+                        <span class="journey-step__tag"><i class="fas fa-eye"></i> Coach te monitorea</span>
+                    </div>
+                    <div class="journey-mockups">
+                        <div class="journey-mockup-laptop">
+                            <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
+                            <img src="/images/mockups/tracking-desktop.png" alt="Tracking Diario" loading="lazy">
+                        </div>
+                        <div class="journey-mockup-phone">
+                            <div class="journey-mockup-phone__notch"></div>
+                            <img src="/images/mockups/tracking-mobile.png" alt="Tracking Mobile" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Mediciones y Fotos -->
+            <div class="journey-step" data-reveal>
+                <div class="journey-step__number">05</div>
+                <div class="journey-step__content">
+                    <div class="journey-step__title">Mides tu Progreso con Datos Reales</div>
+                    <div class="journey-step__desc">
+                        Registras medidas corporales (peso, musculo, grasa, pecho, cintura, brazo) y subes fotos de progreso
+                        con guia visual incluida. La plataforma calcula tus cambios automaticamente con indicadores de color.
+                    </div>
+                    <div class="journey-step__tags">
+                        <span class="journey-step__tag"><i class="fas fa-ruler-vertical"></i> 8 medidas corporales</span>
+                        <span class="journey-step__tag"><i class="fas fa-camera"></i> Fotos frente/lado/espalda</span>
+                        <span class="journey-step__tag"><i class="fas fa-arrow-trend-up"></i> Cambios automaticos</span>
+                    </div>
+                    <div class="journey-mockups">
+                        <div class="journey-mockup-laptop">
+                            <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
+                            <img src="/images/mockups/measurements-desktop.png" alt="Mediciones" loading="lazy">
+                        </div>
+                        <div class="journey-mockup-phone">
+                            <div class="journey-mockup-phone__notch"></div>
+                            <img src="/images/mockups/measurements-mobile.png" alt="Mediciones Mobile" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Comunidad -->
+            <div class="journey-step" data-reveal>
+                <div class="journey-step__number">06</div>
+                <div class="journey-step__content">
+                    <div class="journey-step__title">Compartes Logros con la Comunidad RISE</div>
+                    <div class="journey-step__desc">
+                        Chat en tiempo real con todos los participantes del reto. Compartes tus logros, celebras los de otros,
+                        haces preguntas y recibes motivacion. Tu coach tambien esta ahi. No es solo un reto &mdash; es un equipo.
+                    </div>
+                    <div class="journey-step__tags">
+                        <span class="journey-step__tag"><i class="fas fa-comments"></i> Chat en tiempo real</span>
+                        <span class="journey-step__tag"><i class="fas fa-trophy"></i> Logros compartidos</span>
+                        <span class="journey-step__tag"><i class="fas fa-heart"></i> Apoyo del grupo</span>
+                        <span class="journey-step__tag"><i class="fas fa-user-tie"></i> Coach presente</span>
+                    </div>
+                    <div class="journey-mockups">
+                        <div class="journey-mockup-laptop">
+                            <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
+                            <img src="/images/mockups/community-desktop.png" alt="Comunidad" loading="lazy">
+                        </div>
+                        <div class="journey-mockup-phone">
+                            <div class="journey-mockup-phone__notch"></div>
+                            <img src="/images/mockups/community-mobile.png" alt="Comunidad Mobile" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Chat simulacro -->
+                    <div class="chat-sim">
+                        <div class="chat-sim__header">
+                            <i class="fas fa-comments" style="color:var(--red)"></i>
+                            <span>Chat de la Comunidad RISE</span>
+                            <span class="chat-sim__online"><span class="chat-sim__dot"></span> 12 en linea</span>
+                        </div>
+                        <div class="chat-sim__messages">
+                            <div class="chat-sim__achievement">
+                                <i class="fas fa-trophy"></i>
+                                <span><strong>Maria G.</strong> desbloqueo el logro <em>&laquo;7 dias sin fallar&raquo;</em></span>
+                                <div class="chat-sim__reactions">
+                                    <span class="chat-sim__react">&#128293; 8</span>
+                                    <span class="chat-sim__react">&#128170; 5</span>
+                                    <span class="chat-sim__react">&#10084;&#65039; 12</span>
+                                </div>
+                            </div>
+                            <div class="chat-sim__msg">
+                                <div class="chat-sim__avatar" style="background:#22C55E">CR</div>
+                                <div class="chat-sim__bubble">
+                                    <div class="chat-sim__name">Carlos R. <span class="chat-sim__badge">Dia 18</span></div>
+                                    <div class="chat-sim__text">Hoy logre hacer 12 reps en sentadilla con 80kg &#128170; nunca habia llegado a eso. El programa funciona!</div>
+                                    <div class="chat-sim__reactions">
+                                        <span class="chat-sim__react">&#128293; 6</span>
+                                        <span class="chat-sim__react">&#128588; 4</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-sim__msg">
+                                <div class="chat-sim__avatar" style="background:var(--red)">DE</div>
+                                <div class="chat-sim__bubble">
+                                    <div class="chat-sim__name">Coach Daniel <span class="chat-sim__badge chat-sim__badge--coach">Coach</span></div>
+                                    <div class="chat-sim__text">Tremendo Carlos! &#128165; Eso es progresion real. Recuerda mantener la tecnica en las ultimas reps.</div>
+                                </div>
+                            </div>
+                            <div class="chat-sim__msg">
+                                <div class="chat-sim__avatar" style="background:#8B5CF6">LP</div>
+                                <div class="chat-sim__bubble">
+                                    <div class="chat-sim__name">Laura P. <span class="chat-sim__badge">Dia 24</span></div>
+                                    <div class="chat-sim__text">Mis fotos del dia 1 vs hoy &#128248; No puedo creer el cambio en solo 3 semanas!</div>
+                                    <div class="chat-sim__photo-preview">
+                                        <div class="chat-sim__photo-box"><i class="fas fa-image"></i> Antes</div>
+                                        <div class="chat-sim__photo-box"><i class="fas fa-image"></i> Despues</div>
+                                    </div>
+                                    <div class="chat-sim__reactions">
+                                        <span class="chat-sim__react">&#128293; 15</span>
+                                        <span class="chat-sim__react">&#10084;&#65039; 9</span>
+                                        <span class="chat-sim__react">&#127881; 7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-sim__achievement">
+                                <i class="fas fa-medal"></i>
+                                <span><strong>Carlos R.</strong> desbloqueo <em>&laquo;Primera marca personal&raquo;</em></span>
+                                <div class="chat-sim__reactions">
+                                    <span class="chat-sim__react">&#128170; 11</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7: Resultados -->
+            <div class="journey-step" data-reveal>
+                <div class="journey-step__number">07</div>
+                <div class="journey-step__content">
+                    <div class="journey-step__title">30 Dias Despues: Tu Transformacion</div>
+                    <div class="journey-step__desc">
+                        Comparas tus fotos del dia 1 vs dia 30. Ves tus numeros mejorados. Sientes la diferencia.
+                        Y esto es solo el comienzo &mdash; RISE es tu puerta de entrada al ecosistema WellCore.
+                    </div>
+                    <div class="journey-step__tags">
+                        <span class="journey-step__tag"><i class="fas fa-images"></i> Antes vs Despues</span>
+                        <span class="journey-step__tag"><i class="fas fa-chart-line"></i> Datos comparativos</span>
+                        <span class="journey-step__tag"><i class="fas fa-arrow-up"></i> Siguiente nivel</span>
+                    </div>
+
+                    <!-- Planes upgrade cards -->
+                    <div class="upgrade-plans">
+                        <div class="upgrade-plans__intro">
+                            Al terminar RISE, accedes a nuestros planes mensuales 1:1 con tu coach a <strong>precio preferencial</strong>:
+                        </div>
+                        <div class="upgrade-plans__grid">
+                            <div class="upgrade-plan-card">
+                                <div class="upgrade-plan-card__icon" style="color:#22C55E"><i class="fas fa-seedling"></i></div>
+                                <div class="upgrade-plan-card__name">Esencial</div>
+                                <ul class="upgrade-plan-card__list">
+                                    <li>Entrenamiento personalizado</li>
+                                    <li>Portal 24/7 con metricas</li>
+                                    <li>Guia nutricional basica</li>
+                                    <li>Seguimiento semanal</li>
+                                </ul>
+                            </div>
+                            <div class="upgrade-plan-card upgrade-plan-card--featured">
+                                <div class="upgrade-plan-card__badge">Popular</div>
+                                <div class="upgrade-plan-card__icon" style="color:var(--red)"><i class="fas fa-fire"></i></div>
+                                <div class="upgrade-plan-card__name">Metodo</div>
+                                <ul class="upgrade-plan-card__list">
+                                    <li>Todo de Esencial +</li>
+                                    <li>Nutricion avanzada + IA</li>
+                                    <li>Suplementacion personalizada</li>
+                                    <li>Sistema de habitos</li>
+                                    <li>Mediciones corporales</li>
+                                </ul>
+                            </div>
+                            <div class="upgrade-plan-card">
+                                <div class="upgrade-plan-card__icon" style="color:var(--accent)"><i class="fas fa-crown"></i></div>
+                                <div class="upgrade-plan-card__name">Elite</div>
+                                <ul class="upgrade-plan-card__list">
+                                    <li>Todo de Metodo +</li>
+                                    <li>Bloodwork y biometria</li>
+                                    <li>Check-in semanal en vivo</li>
+                                    <li>Acceso prioritario al coach</li>
+                                    <li>Programa 100% personalizado</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="upgrade-plans__note">
+                            <i class="fas fa-gift" style="color:var(--red);margin-right:6px;"></i>
+                            Graduados RISE obtienen descuento exclusivo en cualquier plan &mdash; tu progreso no se detiene.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
 
-        <div class="mockup-caption reveal-on-scroll">
-            <div class="mockup-caption__icon"><i class="fas fa-bullseye"></i></div>
-            <div>
-                <strong>Tracking y Mediciones</strong>
-                <span>Registra tu progreso diario, medidas corporales y fotos de progreso con analisis automatico.</span>
-            </div>
+    <!-- CTA -->
+    <div class="platform-cta">
+        <a href="/rise-enroll.html" class="cta-btn v6-magnetic">
+            <i class="fas fa-bolt"></i> Quiero Acceso Ahora
+        </a>
+        <p class="cta-sub">Acceso inmediato al dashboard tras tu inscripcion</p>
+    </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 mb-5">
+        <div class="footer-logo">WELLCORE <span>FITNESS</span></div>
+        <p class="footer-tagline">Coaching online 1:1 basado en ciencia. Sin milagros, sin contratos, sin suplementos innecesarios.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/wellcore.fitness/" target="_blank" rel="noopener" class="footer-social">IG</a>
+          <a href="https://www.youtube.com/@Wellcorefitness" target="_blank" rel="noopener" class="footer-social">YT</a>
+          <a href="https://www.tiktok.com/@wellcore.fitness" target="_blank" rel="noopener" class="footer-social">TK</a>
+          <a href="/postulate.html" class="footer-social">@</a>
         </div>
+      </div>
+      <div class="col-lg-2 col-md-6 mb-5">
+        <div class="footer-col-title">Navegaci&oacute;n</div>
+        <ul class="footer-links">
+          <li><a href="metodo.html">M&eacute;todo</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="proceso.html">Proceso</a></li>
+          <li><a href="planes.html">Planes</a></li>
+          <li><a href="blog/index.html">Blog</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 mb-5">
+        <div class="footer-col-title">Planes</div>
+        <ul class="footer-links">
+          <li><a href="planes.html">Esencial &mdash; $399.000 COP</a></li>
+          <li><a href="planes.html">M&eacute;todo &mdash; $504.000 COP</a></li>
+          <li><a href="planes.html">&Eacute;lite &mdash; $630.000 COP</a></li>
+          <li><a href="https://wa.me/573124904720">Consulta Gratuita</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6 mb-5">
+        <div class="footer-col-title">Contacto</div>
+        <div class="footer-contact-item">@ info@wellcorefitness.com</div>
+        <div class="footer-contact-item">IG @wellcore.fitness</div>
+        <div class="footer-col-title mt-4">Newsletter</div>
+        <p style="font-size:14px; color:var(--gray); margin-bottom:0;">Contenido exclusivo sobre ciencia del ejercicio, cada semana.</p>
+        <form class="newsletter-form" onsubmit="return false;">
+          <input type="email" class="newsletter-input" placeholder="tu@email.com" />
+          <button type="submit" class="newsletter-btn">&rarr;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">WellCore Fitness &copy; 2026 &mdash; Todos los derechos reservados.</span>
+      <div class="footer-legal">
+        <a href="/legal/privacidad.html">Pol&iacute;tica de Privacidad</a>
+        <a href="/legal/terminos.html">T&eacute;rminos</a>
+        <a href="/legal/cookies.html">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-        <!-- CTA -->
-        <div class="platform-cta reveal-on-scroll">
-            <a href="/rise-enroll.html" class="btn btn-primary v6-magnetic" style="font-size:16px;padding:16px 48px;border-radius:8px;">Quiero Acceso Ahora</a>
-            <p style="color:var(--gray);font-size:13px;margin-top:12px;">Acceso inmediato al dashboard tras tu inscripcion</p>
-        </div>
-    </section>
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script>
+/* ══════ #34 Canvas 2D Particles ══════ */
+(function() {
+    var canvas = document.getElementById('particlesCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var PARTICLE_COUNT = 80;
+    var mouse = { x: -1000, y: -1000 };
 
-    <!-- Pricing -->
-    <section class="pricing-section v6-lazy-section">
-        <div class="pricing-content">
-            <div class="pricing-label">Precio Especial Marzo</div>
-            <h2 class="pricing-title">Una Inversión Accesible</h2>
-            <p class="pricing-description">Acceso de 30 días con garantía de satisfacción</p>
+    function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
-            <div class="price-display v6-contain">
-                <div class="price-amount">$99.900</div>
-                <div class="price-currency">COP &middot; Pago único &middot; 30 días</div>
-                <div class="price-currency" style="margin-top:6px;font-size:12px;color:#888;">Pagos internacionales: ~$27 USD</div>
-            </div>
+    canvas.parentElement.addEventListener('mousemove', function(e) {
+        var rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    });
 
-            <a href="/rise-enroll.html" class="btn btn-primary v6-magnetic">Comenzar Ahora</a>
-        </div>
-    </section>
+    for (var i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 1.5 + 0.5,
+            color: Math.random() > 0.7 ? 'rgba(227,30,36,' : 'rgba(255,255,255,'
+        });
+    }
 
-    <!-- Info Section -->
-    <section class="container v6-lazy-section">
-        <div style="text-align:center;margin-bottom:48px;">
-            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:4px;padding:6px 14px;margin-bottom:16px;">
-                <i class="fas fa-circle-question" aria-hidden="true" style="color:var(--red);font-size:11px;"></i>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">PREGUNTAS FRECUENTES</span>
-            </div>
-            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:0.02em;">LO QUE NECESITAS SABER.</h2>
-        </div>
-        <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-            <div class="info-item">
-                <h3><i class="fas fa-user-check" aria-hidden="true" style="color:var(--red);margin-right:8px;"></i>¿Quién puede apuntarse?</h3>
-                <p>Todos los niveles. El programa se adapta a ti.</p>
-            </div>
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            <div class="info-item">
-                <h3><i class="fas fa-map-marker-alt" aria-hidden="true" style="color:var(--red);margin-right:8px;"></i>¿Dónde entreno?</h3>
-                <p>Gym, casa o ambos. Sin equipamiento obligatorio.</p>
-            </div>
+        for (var i = 0; i < particles.length; i++) {
+            var p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
 
-            <div class="info-item">
-                <h3><i class="fas fa-fingerprint" aria-hidden="true" style="color:var(--red);margin-right:8px;"></i>¿Es personalizado de verdad?</h3>
-                <p>Sí. Tu intake captura medidas, objetivos, horarios y limitaciones.</p>
-            </div>
-
-            <div class="info-item">
-                <h3><i class="fas fa-arrow-right" aria-hidden="true" style="color:var(--red);margin-right:8px;"></i>¿Qué pasa después?</h3>
-                <p>Al completar RISE, accedes a nuestros planes mensuales 1:1.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="v6-lazy-section">
-        <p>&copy; 2026 WellCore Fitness. Todos los derechos reservados. | <a href="/privacy.html" style="color: var(--red);">Privacidad</a> | <a href="/terms.html" style="color: var(--red);">Términos</a></p>
-    </footer>
-
-    <script>
-        function updateCountdown() {
-            const now = new Date();
-            const end = new Date('2026-03-31T23:59:59');
-
-            if (now > end) {
-                ['days','hours','minutes','seconds'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.textContent = '00';
-                });
-                return;
+            // Mouse repulsion
+            var dx = p.x - mouse.x;
+            var dy = p.y - mouse.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+                p.x += dx / dist * 1.5;
+                p.y += dy / dist * 1.5;
             }
 
-            const diff = end - now;
-            document.getElementById('days').textContent = Math.floor(diff / 86400000);
-            document.getElementById('hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
-            document.getElementById('minutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
-            const secEl = document.getElementById('seconds');
-            if (secEl) secEl.textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
-        }
+            // Wrap around
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+            // Draw particle
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = p.color + '0.4)';
+            ctx.fill();
 
-        // ── Intersection Observer — reveal on scroll (#35 Tesis Visual) ──
-        const revealObs = new IntersectionObserver(function(entries) {
-            entries.forEach(function(e) {
-                if (e.isIntersecting) {
-                    e.target.classList.add('revealed');
-                    revealObs.unobserve(e.target);
+            // Draw connections
+            for (var j = i + 1; j < particles.length; j++) {
+                var p2 = particles[j];
+                var d = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
+                if (d < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = 'rgba(227,30,36,' + (0.06 * (1 - d / 120)) + ')';
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
                 }
-            });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.reveal-on-scroll').forEach(function(el) {
-            revealObs.observe(el);
-        });
-    </script>
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+
+    // Only run particles if not reduced motion
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        draw();
+    }
+})();
+
+/* ══════ #19 Kinetic Typography — Split Text ══════ */
+document.querySelectorAll('[data-split]').forEach(function(word) {
+    var text = word.textContent;
+    word.textContent = '';
+    for (var i = 0; i < text.length; i++) {
+        var span = document.createElement('span');
+        span.className = 'split-char';
+        span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+        span.style.setProperty('--i', i);
+        word.appendChild(span);
+    }
+});
+
+/* ══════ #35 Intersection Observer — Reveal ══════ */
+var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+        if (e.isIntersecting) {
+            e.target.classList.add('revealed');
+            observer.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+// Observe split words
+document.querySelectorAll('.split-word').forEach(function(el) { observer.observe(el); });
+// Observe title line2 (gradient reveal)
+document.querySelectorAll('.platform-title-line2').forEach(function(el) { observer.observe(el); });
+
+// Fallback for browsers without scroll-driven animations
+if (!CSS.supports('animation-timeline', 'view()')) {
+    document.querySelectorAll('.bento-item').forEach(function(el) { observer.observe(el); });
+}
+
+// Journey steps reveal
+document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.observe(el); });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
+
+<!-- Promo Bar Logic -->
 <script>
 (function(){
   var bar = document.getElementById('v6PromoBar');
@@ -886,30 +1464,20 @@ document.addEventListener('DOMContentLoaded', function() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
   gsap.registerPlugin(ScrollTrigger);
 
-  /* Feature cards — stagger cascade */
-  gsap.from('.feature-card', {
+  /* Bento grid items — stagger cascade */
+  gsap.from('.bento-item', {
     opacity: 0, y: 50, scale: 0.95, stagger: 0.1, duration: 0.7, ease: 'power3.out',
-    scrollTrigger: { trigger: '.feature-card', start: 'top 85%' }
+    scrollTrigger: { trigger: '.bento-grid', start: 'top 85%' }
   });
 
-  /* Mockup showcase — slide in from sides */
-  gsap.from('.mockup-laptop', {
-    opacity: 0, x: -60, duration: 1, ease: 'power2.out',
-    scrollTrigger: { trigger: '.mockup-showcase', start: 'top 80%' }
-  });
-  gsap.from('.mockup-phone', {
-    opacity: 0, x: 60, duration: 1, delay: 0.2, ease: 'power2.out',
-    scrollTrigger: { trigger: '.mockup-showcase', start: 'top 80%' }
-  });
+  /* Journey steps — handled by IntersectionObserver + CSS .revealed class */
+  /* (GSAP from() conflicts with CSS opacity:0 initial state) */
 
-  /* Pricing section — scale up */
-  var pricingCards = document.querySelectorAll('.pricing-card, .plan-card');
-  if (pricingCards.length) {
-    gsap.from(pricingCards, {
-      opacity: 0, scale: 0.9, y: 30, stagger: 0.15, duration: 0.8, ease: 'back.out(1.4)',
-      scrollTrigger: { trigger: pricingCards[0], start: 'top 85%' }
-    });
-  }
+  /* CTA button — dramatic entrance */
+  gsap.from('.platform-cta', {
+    opacity: 0, y: 40, scale: 0.95, duration: 0.8, ease: 'back.out(1.4)',
+    scrollTrigger: { trigger: '.platform-cta', start: 'top 90%' }
+  });
 });
 </script>
 </body>

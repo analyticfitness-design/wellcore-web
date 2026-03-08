@@ -799,6 +799,25 @@ p { text-wrap: pretty; }
 }
 
 
+/* ── Navbar v6 — Spacing Fix ──
+   Prevents MI CUENTA / EMPEZAR overlap on dense navbars.
+   ──────────────────────────────────────────────── */
+.nav-links {
+  gap: clamp(12px, 1.5vw, 28px) !important;
+}
+
+.nav-inner > a[href*="login"],
+.nav-cta {
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.nav-inner > a[href*="login"] {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+
 /* ── Responsive Utilities ──
    Mobile-first helpers.
    ──────────────────────────────────────────────── */
@@ -935,6 +954,302 @@ button:focus-visible {
 }
 
 
+/* ── Plan Cards v6 — Premium Featured Redesign ── */
+
+/* Featured card — dark glass with red glow (replaces flat red) */
+.plan-card.featured {
+  background: linear-gradient(
+    165deg,
+    rgba(227, 30, 36, 0.10) 0%,
+    rgba(18, 4, 6, 0.97) 45%,
+    rgba(227, 30, 36, 0.05) 100%
+  ) !important;
+  border: 1px solid rgba(227, 30, 36, 0.30) !important;
+  box-shadow:
+    0 0 40px rgba(227, 30, 36, 0.10),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  overflow: hidden;
+}
+
+/* Red accent glow line — top edge */
+.plan-card.featured::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E31E24, #ff4444, #E31E24, transparent);
+  box-shadow: 0 0 15px rgba(227, 30, 36, 0.5), 0 0 30px rgba(227, 30, 36, 0.2);
+  z-index: 1;
+}
+
+.plan-card.featured:hover {
+  border-color: rgba(227, 30, 36, 0.50) !important;
+  box-shadow:
+    0 0 60px rgba(227, 30, 36, 0.15),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transform: translateY(-8px) !important;
+}
+
+/* Featured price — red accent for contrast on dark bg */
+.plan-card.featured .plan-price {
+  color: #E31E24 !important;
+}
+
+/* Featured plan name — subtle glow */
+.plan-card.featured .plan-name {
+  text-shadow: 0 0 24px rgba(227, 30, 36, 0.3);
+  font-size: 32px !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* Featured CTA — red button (replaces dark on old red bg) */
+.plan-card.featured .btn-plan-cta {
+  background: #E31E24 !important;
+  border: 1px solid #E31E24 !important;
+  color: #fff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.plan-card.featured .btn-plan-cta:hover {
+  background: #c41a1f !important;
+  border-color: #c41a1f !important;
+  box-shadow: 0 4px 24px rgba(227, 30, 36, 0.4) !important;
+}
+
+/* ── Popular Badge — Premium Glassmorphism Pill ── */
+.popular-badge {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  background: rgba(227, 30, 36, 0.10) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(227, 30, 36, 0.25) !important;
+  color: #ff6b6b !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase;
+  padding: 6px 16px !important;
+  border-radius: 100px !important;
+  margin-bottom: 16px !important;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  width: fit-content;
+  align-self: flex-start;
+  animation: v6-badge-pulse 3s ease-in-out infinite alternate;
+}
+
+/* Badge icon glow */
+.popular-badge i,
+.popular-badge .fa-star {
+  color: #E31E24;
+  font-size: 8px;
+  filter: drop-shadow(0 0 4px rgba(227, 30, 36, 0.6));
+}
+
+/* Shimmer sweep on badge — micro-interaction */
+.popular-badge::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: v6-badge-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes v6-badge-shimmer {
+  0%, 60% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes v6-badge-pulse {
+  0% { box-shadow: 0 0 8px rgba(227, 30, 36, 0.10); }
+  100% { box-shadow: 0 0 16px rgba(227, 30, 36, 0.25); }
+}
+
+
+/* ── Planes.html v6 — Pricing Card Featured Redesign ── */
+
+/* Featured pricing card — dark glass with red glow */
+.pricing-card-featured {
+  background: linear-gradient(
+    165deg,
+    rgba(227, 30, 36, 0.10) 0%,
+    rgba(18, 4, 6, 0.97) 45%,
+    rgba(227, 30, 36, 0.05) 100%
+  ) !important;
+  border: 1px solid rgba(227, 30, 36, 0.30) !important;
+  box-shadow:
+    0 0 40px rgba(227, 30, 36, 0.10),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Red accent glow line — top edge */
+.pricing-card-featured::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E31E24, #ff4444, #E31E24, transparent);
+  box-shadow: 0 0 15px rgba(227, 30, 36, 0.5), 0 0 30px rgba(227, 30, 36, 0.2);
+  z-index: 1;
+}
+
+/* Hide v5 rotated "MÁS POPULAR" ribbon */
+.pricing-card-featured::before {
+  display: none !important;
+}
+
+.pricing-card-featured:hover {
+  border-color: rgba(227, 30, 36, 0.50) !important;
+  box-shadow:
+    0 0 60px rgba(227, 30, 36, 0.15),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transform: translateY(-8px) !important;
+}
+
+/* Popular bar → Glassmorphism pill badge */
+.pc-popular-bar {
+  background: rgba(227, 30, 36, 0.10) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(227, 30, 36, 0.25) !important;
+  color: #ff6b6b !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.10em !important;
+  padding: 6px 16px !important;
+  border-radius: 100px !important;
+  margin: 0 0 16px 0 !important;
+  width: fit-content;
+  position: relative;
+  overflow: hidden;
+  animation: v6-badge-pulse 3s ease-in-out infinite alternate;
+}
+
+/* Shimmer on popular bar pill */
+.pc-popular-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: v6-badge-shimmer 4s ease-in-out infinite;
+}
+
+.pc-popular-bar i {
+  color: #E31E24 !important;
+  font-size: 8px;
+  filter: drop-shadow(0 0 4px rgba(227, 30, 36, 0.6));
+}
+
+/* Plan names — Bebas Neue bold upright */
+.pricing-card .pc-name {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  font-size: 32px !important;
+}
+
+/* Featured pricing price — red accent */
+.pricing-card-featured .pc-amount {
+  color: #E31E24 !important;
+}
+
+/* Featured CTA — red bg */
+.pricing-card-featured .pc-cta {
+  background: #E31E24 !important;
+  border-color: #E31E24 !important;
+  color: #fff !important;
+}
+.pricing-card-featured .pc-cta:hover {
+  background: #c41a1f !important;
+  border-color: #c41a1f !important;
+  box-shadow: 0 4px 24px rgba(227, 30, 36, 0.4) !important;
+}
+
+/* ── Pricing Cards — 3D Tilt on Hover (TESIS #23) ── */
+.pricing-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease !important;
+  transform-style: preserve-3d;
+}
+
+/* ── Comparison Table — Featured Column Glow (TESIS #33) ── */
+.compare-table thead th.col-featured {
+  background: rgba(227, 30, 36, 0.08) !important;
+  border-bottom: 2px solid #E31E24 !important;
+  position: relative;
+}
+
+.compare-table thead th.col-featured .th-badge {
+  background: rgba(227, 30, 36, 0.12) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(227, 30, 36, 0.25) !important;
+  color: #ff6b6b !important;
+  border-radius: 100px !important;
+  padding: 3px 10px !important;
+  font-size: 8px !important;
+}
+
+/* ── ROI Card WellCore — Glow Border (TESIS #33) ── */
+.roi-card.wellcore {
+  border: 1px solid rgba(227, 30, 36, 0.30) !important;
+  box-shadow:
+    0 0 30px rgba(227, 30, 36, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.4) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.roi-card.wellcore::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E31E24, transparent);
+  box-shadow: 0 0 10px rgba(227, 30, 36, 0.4);
+}
+
+.roi-card.wellcore:hover {
+  border-color: rgba(227, 30, 36, 0.45) !important;
+  box-shadow:
+    0 0 50px rgba(227, 30, 36, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── Testimonial Cards — Glassmorphism Hover (TESIS #33) ── */
+.testimonial-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(227, 30, 36, 0.2) !important;
+}
+
+/* ── Guarantee Circle — Pulse Glow ── */
+.guarantee-circle {
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.guarantee-circle:hover {
+  box-shadow: 0 0 50px rgba(0, 217, 255, 0.2);
+}
+
+
 /* ── Footer v6 Enhancements ── */
 .footer-logo {
   text-shadow: 0 0 20px rgba(227, 30, 36, 0.3), 0 0 40px rgba(227, 30, 36, 0.1);
@@ -973,6 +1288,121 @@ footer::before, #footer::before {
 }
 
 
+/* ══════════════════════════════════════════════════════════════
+   v7 CINEMATIC TYPOGRAPHY SYSTEM
+   TESIS #25 Variable Fonts · #26 Fluid Typography · #27 Kinetic
+   #116 text-stroke + paint-order · #110 Variable Axes
+   Fonts: Urbanist (variable body) + Anton (display/data)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── v7 Fluid Typography Scale (TESIS #26) ──
+   clamp(min, preferred, max) — scales 320px → 1920px+
+   ──────────────────────────────────────────────── */
+:root {
+  --v7-text-hero:    clamp(2.5rem, 6vw, 5rem);
+  --v7-text-display: clamp(2rem, 4.5vw, 3.5rem);
+  --v7-text-price:   clamp(2.2rem, 5vw, 3.8rem);
+  --v7-text-title:   clamp(1.5rem, 3vw, 2.2rem);
+  --v7-text-body:    clamp(0.9rem, 1.1vw, 1.05rem);
+  --v7-text-label:   clamp(0.6rem, 0.85vw, 0.75rem);
+  --v7-text-micro:   clamp(0.5rem, 0.7vw, 0.625rem);
+
+  /* Font stacks */
+  --v7-font-body: 'Urbanist', sans-serif;
+  --v7-font-data: 'Anton', sans-serif;
+}
+
+
+/* ── v7 Kinetic Typography (TESIS #27) ──
+   Variable font weight animation on hover/focus.
+   Urbanist: smooth wght transition (100-900).
+   Anton: letter-spacing + glow (static font).
+   ──────────────────────────────────────────────── */
+
+/* Urbanist kinetic — weight morphs on hover */
+.v7-kinetic {
+  font-family: var(--v7-font-body);
+  font-variation-settings: 'wght' 400;
+  transition: font-variation-settings 0.35s var(--v6-ease-out);
+}
+.v7-kinetic:hover {
+  font-variation-settings: 'wght' 700;
+}
+
+/* Anton kinetic — tracking + glow on hover */
+.v7-kinetic-data {
+  font-family: var(--v7-font-data);
+  letter-spacing: 0.02em;
+  transition: letter-spacing 0.35s var(--v6-ease-out),
+              text-shadow 0.35s var(--v6-ease-out);
+}
+.v7-kinetic-data:hover {
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 30px oklch(52% 0.24 24 / 40%);
+}
+
+
+/* ── v7 Text Effects Premium (TESIS #116) ──
+   -webkit-text-stroke + paint-order for outlined text.
+   Gradient fills for cinematic price display.
+   ──────────────────────────────────────────────── */
+
+/* Outlined text — stroke renders behind fill */
+.v7-text-outline {
+  -webkit-text-stroke: 1px oklch(95% 0.005 260 / 30%);
+  paint-order: stroke fill;
+}
+
+/* Outlined text — hollow (transparent fill) */
+.v7-text-outline-hollow {
+  -webkit-text-stroke: 1.5px oklch(95% 0.005 260 / 50%);
+  paint-order: stroke fill;
+  color: transparent;
+}
+
+/* Gradient text fill — white to brand red */
+.v7-text-gradient {
+  background: linear-gradient(135deg, #fff 30%, #E31E24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gradient text fill — red to soft red */
+.v7-text-gradient-warm {
+  background: linear-gradient(90deg, #E31E24 0%, #ff6b6b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cinematic price glow */
+.v7-price-glow {
+  text-shadow:
+    0 0 20px oklch(52% 0.24 24 / 25%),
+    0 0 60px oklch(52% 0.24 24 / 10%);
+}
+
+
+/* ── v7 Fluid Utility Classes ──
+   Apply fluid sizing directly via class.
+   ──────────────────────────────────────────────── */
+.v7-fluid-hero    { font-size: var(--v7-text-hero) !important; }
+.v7-fluid-display { font-size: var(--v7-text-display) !important; }
+.v7-fluid-price   { font-size: var(--v7-text-price) !important; }
+.v7-fluid-title   { font-size: var(--v7-text-title) !important; }
+.v7-fluid-body    { font-size: var(--v7-text-body) !important; }
+.v7-fluid-label   { font-size: var(--v7-text-label) !important; }
+.v7-fluid-micro   { font-size: var(--v7-text-micro) !important; }
+
+
+/* ── v7 Font Stack Classes ──
+   Quick-apply font families.
+   ──────────────────────────────────────────────── */
+.v7-urbanist { font-family: var(--v7-font-body) !important; }
+.v7-anton    { font-family: var(--v7-font-data) !important; }
+
+
 /* ── Prefers Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
   .v6-scroll-progress,
@@ -987,5 +1417,9 @@ footer::before, #footer::before {
   }
   .v6-skeleton {
     animation: none !important;
+  }
+  .v7-kinetic,
+  .v7-kinetic-data {
+    transition: none !important;
   }
 }

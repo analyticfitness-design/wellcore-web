@@ -1,0 +1,3 @@
+# WellCore Platform - Plan de Upgrade Completo y Seguro 2026
+
+Plan escrito - inicializando...

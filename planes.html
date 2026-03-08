@@ -7,9 +7,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planes y Precios &mdash; WellCore Fitness</title>
-  <meta name="description" content="Elige tu plan WellCore: Esencial $399.000, Metodo $504.000 o Elite $630.000 COP al mes. Coaching personalizado 1:1, nutrición, habitos y resultados garantizados." />
+  <meta name="description" content="Elige tu plan WellCore: Esencial $299.000, Metodo $399.000 o Elite $549.000 COP al mes. Coaching personalizado 1:1, nutrición, habitos y resultados garantizados." />
   <meta property="og:title" content="Planes y Precios &mdash; WellCore Fitness">
-  <meta property="og:description" content="Elige tu plan WellCore: Esencial $399.000, Metodo $504.000 o Elite $630.000 COP al mes. Coaching personalizado 1:1, nutrición, habitos y resultados garantizados.">
+  <meta property="og:description" content="Elige tu plan WellCore: Esencial $299.000, Metodo $399.000 o Elite $549.000 COP al mes. Coaching personalizado 1:1, nutrición, habitos y resultados garantizados.">
   <meta property="og:image" content="https://wellcorefitness.com/assets/img/og-wellcore.jpg">
   <meta property="og:url" content="https://wellcorefitness.com/planes.html">
   <meta property="og:type" content="website">
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   <!-- Font Awesome 6.4 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- v5 Design System -->
@@ -30,7 +30,108 @@
        Base: wellcore-v5.css
     ============================================================ */
 
-    body { padding-top: 72px; }
+    /* v7 Typography Override — Urbanist + Anton */
+    body {
+      padding-top: 72px;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    /* v7 Fluid pricing — Anton display with cinematic glow */
+    .pc-amount {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      letter-spacing: 0.01em;
+      transition: letter-spacing 0.35s cubic-bezier(0.2,0,0,1), text-shadow 0.35s cubic-bezier(0.2,0,0,1);
+    }
+    .pc-amount:hover {
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 30px rgba(227,30,36,0.4);
+    }
+    .pc-currency, .pc-period {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 300;
+    }
+
+    /* v7 Plan label — Bebas Neue display bold */
+    .pricing-card .pc-plan {
+      font-family: 'Bebas Neue', sans-serif !important;
+      font-style: normal !important;
+      font-weight: 400 !important;
+      font-size: 28px !important; letter-spacing: 3px;
+      color: #E31E24;
+      -webkit-text-stroke: 0.6px currentColor;
+      paint-order: stroke fill;
+    }
+
+    /* v7 Plan names — bold, NO italic */
+    .pricing-card .pc-name {
+      font-family: 'Bebas Neue', sans-serif !important;
+      font-style: normal !important;
+      font-size: 32px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* v7 Description — Urbanist light, fluid */
+    .pc-desc {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 300;
+      font-size: clamp(0.85rem, 1.1vw, 1rem);
+      line-height: 1.6;
+    }
+
+    /* v7 Feature list — Urbanist */
+    .pc-features li {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 400;
+    }
+
+    /* v7 CTA buttons — Urbanist bold (legibility over display) */
+    .pc-cta {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* v7 Section subtitles — Urbanist light */
+    .hero-sub, .section-sub, .roi-intro, .final-cta-sub, .guarantee-content p {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 300;
+    }
+
+    /* v7 FAQ text — Urbanist */
+    .faq-question-text {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+    }
+    .faq-answer-inner {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 300;
+    }
+
+    /* v7 Testimonial quotes — Urbanist italic */
+    .t-quote {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 300;
+      font-style: italic;
+    }
+    .t-name {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+    }
+
+    /* v7 Footer text — Urbanist */
+    .footer-tagline, .footer-links a {
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    /* v7 Outlined text for hero decorative elements (TESIS #116) */
+    .hero-h1 .v7-outline {
+      -webkit-text-stroke: 2px rgba(255,255,255,0.5);
+      paint-order: stroke fill;
+      color: transparent;
+    }
 
     .section-wrap {
       max-width: 1280px;
@@ -62,8 +163,9 @@
     }
     .hero-planes-inner { text-align: center; position: relative; z-index: 1; }
     .hero-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
       color: #E31E24; margin-bottom: 24px;
       display: flex; align-items: center; justify-content: center; gap: 10px;
     }
@@ -94,8 +196,9 @@
     .trust-item {
       display: flex; align-items: center; gap: 10px;
       padding: 16px 28px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
       color: rgba(255,255,255,0.45);
       border-right: 1px solid rgba(255,255,255,0.06); white-space: nowrap;
     }
@@ -116,22 +219,25 @@
       background: #111113; border: 1px solid rgba(255,255,255,0.06); padding: 6px 8px;
     }
     .billing-toggle-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(255,255,255,0.45); padding: 8px 20px;
       cursor: pointer; transition: all 0.1s linear;
     }
     .billing-toggle-label.active { background: #E31E24; color: #fff; }
     .billing-save-badge {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 700;
       font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
       background: rgba(0,217,255,0.10); color: #00D9FF;
       border: 1px solid rgba(0,217,255,0.2); padding: 3px 10px; margin-left: 4px;
     }
     .annual-reveal-note {
       margin-top: 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(255,255,255,0.25);
     }
     .annual-reveal-note strong { color: #00D9FF; }
@@ -146,6 +252,10 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 24px; align-items: stretch;
     }
+    /* Override v5 breakpoint that collapses grid at 1200px */
+    @media (max-width: 1200px) {
+      .pricing-grid { grid-template-columns: repeat(3, 1fr); max-width: none; }
+    }
     @media (max-width: 960px) {
       .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
     }
@@ -154,9 +264,10 @@
     .pc-popular-bar {
       background: #E31E24;
       text-align: center; padding: 9px 24px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-      color: #fff; font-weight: 600;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 700;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: #fff;
       margin: -40px -32px 28px -32px;
     }
 
@@ -167,32 +278,36 @@
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
     }
     .pc-social-proof span {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
       color: rgba(255,255,255,0.45);
     }
     .pc-social-proof strong { color: #fff; }
 
     /* Features sub-label */
     .pc-features-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
       color: rgba(255,255,255,0.18); margin-bottom: 12px; margin-top: 4px;
     }
 
     /* Footer note below CTA */
     .pc-footer-note {
       margin-top: 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 400;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
       color: rgba(255,255,255,0.18); text-align: center;
     }
 
     /* Annual savings note */
     #annual-savings-note {
       display: none; text-align: center; margin-top: 32px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
     }
 
     /* ============================================================
@@ -205,13 +320,14 @@
     }
     .compare-header { text-align: center; margin-bottom: 60px; }
     .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
       color: #E31E24; margin-bottom: 16px;
     }
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(44px, 6vw, 72px); line-height: 0.95;
+      font-size: clamp(52px, 7vw, 88px); line-height: 0.95;
       letter-spacing: 1px; color: #fff; margin-bottom: 20px;
     }
     .section-sub {
@@ -228,8 +344,9 @@
       position: sticky; top: 72px; background: #111113; z-index: 5;
     }
     .compare-table thead th:first-child {
-      text-align: left; font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      text-align: left; font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
       color: rgba(255,255,255,0.45);
     }
     .compare-table thead th.col-featured {
@@ -239,14 +356,16 @@
       border-right: 2px solid #E31E24;
     }
     .compare-table thead th .th-badge {
-      display: block; font-family: 'JetBrains Mono', monospace;
-      font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
-      color: #E31E24; margin-top: 4px; font-weight: 400;
+      display: block; font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: #E31E24; margin-top: 4px;
     }
     .compare-table thead th .th-price {
-      display: block; font-family: 'JetBrains Mono', monospace;
-      font-size: 11px; color: rgba(255,255,255,0.45);
-      margin-top: 4px; font-weight: 400; letter-spacing: 1px;
+      display: block; font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 15px; color: #fff;
+      margin-top: 6px; letter-spacing: 0.5px;
     }
     .compare-table tbody td {
       padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -254,7 +373,9 @@
       text-align: center; vertical-align: middle;
     }
     .compare-table tbody td:first-child {
-      text-align: left; color: rgba(255,255,255,0.6); font-size: 14px;
+      text-align: left; color: rgba(255,255,255,0.85); font-size: 14px;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
     }
     .compare-table tbody tr td.col-featured {
       background: rgba(227,30,36,0.03);
@@ -265,16 +386,18 @@
     .compare-table tbody tr:hover td.col-featured { background: rgba(227,30,36,0.05); }
     .compare-table .cat-row td {
       background: rgba(255,255,255,0.015);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
       color: rgba(255,255,255,0.18); padding: 12px 24px;
     }
     .compare-table .cat-row td.col-featured { background: rgba(227,30,36,0.04); }
     .c-yes { color: #00D9FF; font-size: 16px; }
     .c-no  { color: rgba(255,255,255,0.18); font-size: 14px; }
     .c-mono {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.45);
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+      font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.45);
     }
     .compare-ctas { display: grid; grid-template-columns: repeat(3, 1fr); min-width: 700px; }
     .compare-cta-cell { padding: 24px; text-align: center; }
@@ -284,8 +407,9 @@
     }
     .compare-cta-link {
       display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 700;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
       padding: 12px 24px; transition: all 0.1s linear;
     }
     .compare-cta-link.outline { color: #fff; border: 1px solid rgba(255,255,255,0.10); }
@@ -294,77 +418,57 @@
     .compare-cta-link.red-btn:hover { background: #B8181D; }
 
     /* ============================================================
-       ROI SECTION
+       VALUE STACK SECTION
     ============================================================ */
-    .roi-section { padding: 100px 0; }
-    .roi-header { text-align: center; margin-bottom: 64px; }
-    .roi-intro {
+    .value-section { padding: 100px 0; }
+    .value-header { text-align: center; margin-bottom: 64px; }
+    .value-intro {
       font-size: 16px; font-weight: 300;
       color: rgba(255,255,255,0.45); max-width: 600px; margin: 16px auto 0;
     }
-    .roi-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 2px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 64px;
+    .value-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-bottom: 64px;
     }
-    @media (max-width: 900px) { .roi-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 520px)  { .roi-grid { grid-template-columns: 1fr; } }
-    .roi-card {
+    @media (max-width: 900px) { .value-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .value-grid { grid-template-columns: 1fr; } }
+    .value-item {
       background: #111113; padding: 36px 28px;
-      border: 2px solid transparent; transition: all 0.1s linear;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.2s ease;
     }
-    .roi-card.wellcore { background: rgba(227,30,36,0.05); border: 2px solid #E31E24; }
-    .roi-card:not(.wellcore):hover { background: #1a1a1d; }
-    .roi-card-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-      color: rgba(255,255,255,0.18); margin-bottom: 16px;
+    .value-item:hover { border-color: rgba(227,30,36,0.3); }
+    .value-item-icon {
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      background: rgba(227,30,36,0.08); border: 1px solid rgba(227,30,36,0.15);
+      color: #E31E24; font-size: 18px; margin-bottom: 20px;
     }
-    .roi-card.wellcore .roi-card-label { color: #E31E24; }
-    .roi-card-name {
-      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
-      letter-spacing: 1px; color: #fff; margin-bottom: 6px;
+    .value-item-title {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 700;
+      font-size: 14px; letter-spacing: 0.5px;
+      color: #fff; margin-bottom: 8px;
     }
-    .roi-card-price {
-      font-family: 'Bebas Neue', sans-serif; font-size: 48px;
-      line-height: 1; color: rgba(255,255,255,0.25); margin-bottom: 20px;
+    .value-item-desc {
+      font-size: 13px; line-height: 1.6;
+      color: rgba(255,255,255,0.45);
     }
-    .roi-card.wellcore .roi-card-price { color: #E31E24; }
-    .roi-card-includes {
-      list-style: none; padding: 0; margin: 0 0 20px;
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .roi-card-includes li {
-      font-size: 12px; color: rgba(255,255,255,0.45);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .roi-card-includes li::before {
-      content: ''; width: 4px; height: 4px; border-radius: 50%;
-      background: rgba(255,255,255,0.18); flex-shrink: 0;
-    }
-    .roi-card.wellcore .roi-card-includes li::before { background: #00D9FF; }
-    .roi-verdict {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
-      padding: 8px 14px; display: inline-block;
-    }
-    .roi-verdict.bad  { color: rgba(255,80,80,0.7);  background: rgba(255,80,80,0.06);  border: 1px solid rgba(255,80,80,0.15); }
-    .roi-verdict.ok   { color: rgba(255,200,80,0.8); background: rgba(255,200,80,0.06); border: 1px solid rgba(255,200,80,0.15); }
-    .roi-verdict.best { color: #00D9FF; background: rgba(0,217,255,0.10); border: 1px solid rgba(0,217,255,0.2); }
-    .roi-callout {
+    .value-callout {
       background: #111113; border: 1px solid rgba(255,255,255,0.10);
-      border-left: 4px solid #00D9FF;
+      border-left: 4px solid #E31E24;
       padding: 32px 40px; display: flex;
       align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
     }
-    .roi-callout-text { font-size: 22px; font-weight: 300; color: #fff; max-width: 640px; line-height: 1.5; }
-    .roi-callout-text strong { color: #00D9FF; font-weight: 700; }
-    .roi-callout-stat { text-align: center; flex-shrink: 0; }
-    .roi-callout-stat-num {
-      font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 1; color: #00D9FF;
+    .value-callout-text { font-size: 20px; font-weight: 300; color: #fff; max-width: 640px; line-height: 1.5; }
+    .value-callout-text strong { color: #E31E24; font-weight: 700; }
+    .value-callout-stat { text-align: center; flex-shrink: 0; }
+    .value-callout-stat-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 1; color: #E31E24;
     }
-    .roi-callout-stat-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    .value-callout-stat-label {
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(255,255,255,0.45); margin-top: 4px;
     }
 
@@ -383,8 +487,9 @@
     }
     .t-tab {
       flex: 1; padding: 12px 20px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(255,255,255,0.45); background: transparent;
       border: none; border-right: 1px solid rgba(255,255,255,0.06);
       cursor: pointer; transition: all 0.1s linear;
@@ -410,8 +515,9 @@
     .t-result {
       background: rgba(0,217,255,0.10); border: 1px solid rgba(0,217,255,0.15);
       padding: 10px 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
       display: flex; align-items: center; gap: 8px;
     }
     .t-author { display: flex; align-items: center; gap: 14px; }
@@ -423,13 +529,15 @@
     }
     .t-name { font-size: 14px; font-weight: 600; color: #fff; }
     .t-meta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
       color: rgba(255,255,255,0.45); margin-top: 2px;
     }
     .t-plan-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 600;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
       padding: 3px 10px; border: 1px solid rgba(255,255,255,0.10);
       color: rgba(255,255,255,0.18); margin-top: 4px; display: inline-block;
     }
@@ -462,8 +570,8 @@
       letter-spacing: 1px; color: #fff; text-align: center; line-height: 1.1;
     }
     .guarantee-circle-sub {
-      font-family: 'JetBrains Mono', monospace; font-size: 9px;
-      letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 600;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
     }
     .guarantee-content h2 {
       font-family: 'Bebas Neue', sans-serif; font-size: 52px;
@@ -478,8 +586,9 @@
     .trust-badge {
       display: flex; align-items: center; gap: 10px;
       padding: 12px 18px; background: #111113; border: 1px solid rgba(255,255,255,0.10);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif;
+      font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
       color: rgba(255,255,255,0.45); transition: border-color 0.1s linear;
     }
     .trust-badge:hover { border-color: rgba(255,255,255,0.2); }
@@ -534,8 +643,8 @@
       pointer-events: none;
     }
     .final-cta-eyebrow {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      letter-spacing: 4px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 600;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
       color: rgba(255,255,255,0.45); margin-bottom: 24px;
     }
     .final-cta-h2 {
@@ -555,17 +664,17 @@
     .btn-primary-lg {
       display: inline-flex; align-items: center; gap: 12px;
       background: #E31E24; color: #fff;
-      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
-      letter-spacing: 2px; text-transform: uppercase; padding: 20px 40px;
-      border: 4px solid #E31E24; transition: all 0.1s linear;
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 700;
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 20px 40px; border: 4px solid #E31E24; transition: all 0.1s linear;
     }
     .btn-primary-lg:hover { background: #B8181D; border-color: #B8181D; }
     .btn-wa {
       display: inline-flex; align-items: center; gap: 12px;
       background: transparent; color: #fff;
-      font-family: 'JetBrains Mono', monospace; font-size: 12px;
-      letter-spacing: 2px; text-transform: uppercase; padding: 20px 40px;
-      border: 4px solid rgba(255,255,255,0.15); transition: all 0.1s linear;
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 600;
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 20px 40px; border: 4px solid rgba(255,255,255,0.15); transition: all 0.1s linear;
     }
     .btn-wa:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.03); }
     .final-cta-reassure {
@@ -573,8 +682,8 @@
       display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap;
     }
     .final-cta-reassure span {
-      font-family: 'JetBrains Mono', monospace; font-size: 9px;
-      letter-spacing: 2px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(255,255,255,0.18); display: flex; align-items: center; gap: 8px;
     }
 
@@ -606,8 +715,8 @@
     }
     .footer-social a:hover { border-color: #E31E24; color: #E31E24; }
     .footer-col-title {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      letter-spacing: 3px; text-transform: uppercase;
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 700;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
       color: rgba(255,255,255,0.18); margin-bottom: 20px;
     }
     .footer-links { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
@@ -618,13 +727,13 @@
       align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
     }
     .footer-copy {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.2);
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.2);
     }
     .footer-legal { display: flex; gap: 20px; }
     .footer-legal a {
-      font-family: 'JetBrains Mono', monospace; font-size: 9px;
-      letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.2);
+      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 500;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.2);
       transition: color 0.1s linear;
     }
     .footer-legal a:hover { color: rgba(255,255,255,0.5); }
@@ -655,9 +764,9 @@
       .hero-sub { font-size: 15px; margin-bottom: 40px; }
       .compare-section { padding: 60px 0; }
       .compare-ctas { min-width: unset; grid-template-columns: 1fr; }
-      .roi-section { padding: 60px 0; }
-      .roi-grid { grid-template-columns: repeat(2, 1fr); }
-      .roi-callout { flex-direction: column; text-align: center; padding: 24px 20px; }
+      .value-section { padding: 60px 0; }
+      .value-grid { grid-template-columns: repeat(2, 1fr); }
+      .value-callout { flex-direction: column; text-align: center; padding: 24px 20px; }
       .testimonials-section { padding: 60px 0; }
       .testimonials-tabs { max-width: 100%; }
       .t-tab { padding: 10px 12px; font-size: 8px; }
@@ -675,7 +784,7 @@
       body { font-size: 17px; line-height: 1.75; }
       .hero-sub { font-size: 16px; }
       .compare-table tbody td { font-size: 15px; padding: 14px 16px; }
-      .roi-card-val { font-size: 28px; }
+      .value-item-title { font-size: 13px; }
       .t-body { font-size: 15px; }
       .t-name { font-size: 15px; }
       .faq-q { font-size: 15px; min-height: 48px; }
@@ -684,12 +793,111 @@
     @media (max-width: 480px) {
       .hero-planes { padding: 60px 0 48px; }
       .hero-h1 { font-size: clamp(48px, 13vw, 64px); }
-      .roi-grid { grid-template-columns: 1fr; }
+      .value-grid { grid-template-columns: 1fr; }
       .guarantee-circle { width: 200px; height: 200px; }
       .guarantee-circle-text { font-size: 24px; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 24px; }
       .footer-bottom { flex-direction: column; }
+    }
+
+    /* ============================================================
+       PREMIUM VISUAL ENHANCEMENTS v6
+    ============================================================ */
+
+    /* Premium: Glassmorphism pricing cards */
+    .pricing-card {
+      background: rgba(17,17,19,0.85) !important;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.06) !important;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .pricing-card:hover {
+      border-color: rgba(255,255,255,0.12) !important;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      transform: translateY(-4px);
+    }
+    .pricing-card-featured {
+      border-color: rgba(227,30,36,0.3) !important;
+    }
+    .pricing-card-featured:hover {
+      border-color: rgba(227,30,36,0.5) !important;
+      box-shadow: 0 30px 60px rgba(227,30,36,0.1);
+    }
+
+    /* Premium: Animated gradient border — featured card */
+    @property --border-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @keyframes rotate-border {
+      to { --border-angle: 360deg; }
+    }
+    .pricing-card-featured::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      z-index: -1;
+      background: conic-gradient(from var(--border-angle), #E31E24, transparent 40%, transparent 60%, #E31E24);
+      animation: rotate-border 6s linear infinite;
+      opacity: 0.3;
+    }
+    .pricing-card-featured {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Premium: Animated glow blobs */
+    .hero-planes::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: 30%;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(100,50,200,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      animation: float-blob 6s ease-in-out infinite alternate;
+    }
+    @keyframes float-blob {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(40px, -30px); }
+    }
+
+    /* Premium: Shimmer on CTAs */
+    .pc-cta {
+      position: relative;
+      overflow: hidden;
+    }
+    .pc-cta::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      transition: left 0.6s ease;
+    }
+    .pc-cta:hover::after {
+      left: 100%;
+    }
+
+    /* Premium: Mouse-tracking glow on value items */
+    .value-item {
+      position: relative;
+      overflow: hidden;
+    }
+    .value-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(227,30,36,0.06) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .value-item:hover::before {
+      opacity: 1;
     }
   </style>
 <!-- Premium Visual Redesign -->
@@ -717,12 +925,9 @@
   <!-- ============================================================
        NAVBAR
   ============================================================ -->
-  <nav id="navbar" class="solid" data-v5-reveal>
+  <nav id="navbar" class="solid">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <img src="images/logo/imagotipo-blanco.png" alt="WellCore Fitness" decoding="async" width="1600" height="406" style="height:40px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-        <span style="display:none;font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:#fff;">WELLCORE</span>
-      </a>
+      <a href="/" class="nav-logo">WELL<span>CORE</span></a>
       <ul class="nav-links">
         <li><a href="metodo.html">M&eacute;todo</a></li>
         <li><a href="rise.html" style="color:var(--red,#E31E24);position:relative;font-weight:600;">RISE<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
@@ -734,7 +939,7 @@
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="coaches.html" style="color:rgba(227,30,36,0.7);position:relative;">Coaches<span style="position:absolute;top:-6px;right:-10px;width:5px;height:5px;border-radius:50%;background:#E31E24;animation:pulse-dot 1.8s ease-in-out infinite;"></span></a></li>
       </ul>
-      <a href="login.html" style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:#E31E24;border:2px solid #E31E24;padding:6px 12px;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='#B8181D';this.style.borderColor='#B8181D'" onmouseout="this.style.background='#E31E24';this.style.borderColor='#E31E24'">MI CUENTA</a>
+      <a href="login.html" style="font-family:'Urbanist',sans-serif;font-weight:700;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-decoration:none;background:#E31E24;border:2px solid #E31E24;padding:6px 12px;transition:background .1s linear,border-color .1s linear;" onmouseover="this.style.background='#B8181D';this.style.borderColor='#B8181D'" onmouseout="this.style.background='#E31E24';this.style.borderColor='#E31E24'">MI CUENTA</a>
       <a href="pagar.html" class="nav-cta">Empezar &rarr;</a>
       <button class="nav-hamburger" id="navToggle">&#9776;</button>
     </div>
@@ -763,7 +968,7 @@
       <div class="hero-planes-inner">
         <p class="hero-eyebrow" data-aos="fade-down" data-aos-duration="600">// ELIGE TU PLAN &mdash; EMPIEZA EN 48H</p>
         <h1 class="hero-h1" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
-          PLANES Y<br><span>PRECIOS.</span>
+          <span class="v7-outline">PLANES Y</span><br><span>PRECIOS.</span>
         </h1>
         <p class="hero-sub" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
           Sin contratos de largo plazo. Sin suplementos obligatorios. Solo resultados reales respaldados por ciencia aplicada.
@@ -807,11 +1012,11 @@
           <div class="pc-desc">Entrena con proposito. Primer paso real hacia resultados medibles.</div>
           <div class="pc-price">
             <span class="pc-currency">$</span>
-            <span class="pc-amount" id="price-esencial">399.000</span>
+            <span class="pc-amount" id="price-esencial">299.000</span>
             <span class="pc-period">/mes</span>
           </div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-esencial">Facturado mensualmente</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
+          <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-esencial">Facturado mensualmente</div>
+          <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
           <hr class="pc-divider">
           <p class="pc-features-label">Incluye</p>
           <ul class="pc-features">
@@ -821,6 +1026,8 @@
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Soporte por mensaje &mdash; respuesta 48h</li>
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Ajuste mensual de programa</li>
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Biblioteca de ejercicios con video</li>
+            <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Comunidad y chat grupal</li>
+            <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Mediciones corporales + fotos progreso</li>
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Plan nutricional personalizado</li>
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Guia de habitos y estilo de vida</li>
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Check-in semanal con coach</li>
@@ -837,11 +1044,11 @@
           <div class="pc-desc">Entrenamiento + nutrición + habitos. El sistema completo para resultados reales.</div>
           <div class="pc-price">
             <span class="pc-currency" style="color:#E31E24;">$</span>
-            <span class="pc-amount" id="price-metodo">504.000</span>
+            <span class="pc-amount v7-price-glow" id="price-metodo">399.000</span>
             <span class="pc-period">/mes</span>
           </div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-metodo">Facturado mensualmente</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
+          <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-metodo">Facturado mensualmente</div>
+          <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
           <hr class="pc-divider">
           <div class="pc-social-proof">
             <i class="fas fa-users" aria-hidden="true" style="color:#00D9FF;"></i>
@@ -856,6 +1063,8 @@
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Soporte por mensaje &mdash; respuesta 24h</li>
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Ajuste quincenal de programa</li>
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Reporte mensual de progreso</li>
+            <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Seguimiento de sueño y estrés</li>
+            <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Suplementación interactiva</li>
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Check-in semanal en vivo con coach</li>
             <li class="pc-inactive"><i class="fas fa-times pc-x" aria-hidden="true"></i> Revision mensual por videollamada</li>
           </ul>
@@ -870,11 +1079,11 @@
           <div class="pc-desc">Atencion total. Resultados sin excusas. Para quienes exigen lo mejor.</div>
           <div class="pc-price">
             <span class="pc-currency">$</span>
-            <span class="pc-amount" id="price-elite">630.000</span>
+            <span class="pc-amount" id="price-elite">549.000</span>
             <span class="pc-period">/mes</span>
           </div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-elite">Facturado mensualmente</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
+          <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px;" id="note-elite">Facturado mensualmente</div>
+          <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
           <hr class="pc-divider">
           <p class="pc-features-label">Todo lo de Metodo, mas:</p>
           <ul class="pc-features">
@@ -886,6 +1095,8 @@
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Estrategia de suplementación personalizada</li>
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Plan de viaje y contingencia</li>
             <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Linea directa WhatsApp con el coach</li>
+            <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Ciclo hormonal personalizado</li>
+            <li><i class="fas fa-check pc-check" aria-hidden="true"></i> Bloodwork / análisis de laboratorio</li>
           </ul>
           <a href="pagar.html?plan=elite" class="pc-cta v6-magnetic"><span>Empezar con Elite &rarr;</span></a>
           <p class="pc-footer-note">// Cancela cuando quieras &mdash; sin penalidad</p>
@@ -896,7 +1107,7 @@
       <!-- Annual savings note -->
       <p id="annual-savings-note">
         <span style="margin-right:8px;font-weight:700;">//</span>
-        Con el plan anual ahorras: Esencial $798.000 | Metodo $1.008.000 | Elite $1.260.000 COP
+        Con el plan anual ahorras: Esencial $598.000 | Metodo $798.000 | Elite $1.098.000 COP
       </p>
 
     </div><!-- /section-wrap -->
@@ -920,16 +1131,16 @@
               <th scope="col" style="width:40%;">Caracteristica</th>
               <th scope="col" style="width:20%;">
                 ESENCIAL
-                <span class="th-price">$399.000 COP/mes</span>
+                <span class="th-price">$299.000 COP/mes</span>
               </th>
               <th scope="col" class="col-featured" style="width:20%;">
                 METODO
                 <span class="th-badge">Más popular</span>
-                <span class="th-price">$504.000 COP/mes</span>
+                <span class="th-price">$399.000 COP/mes</span>
               </th>
               <th scope="col" style="width:20%;">
                 ELITE
-                <span class="th-price">$630.000 COP/mes</span>
+                <span class="th-price">$549.000 COP/mes</span>
               </th>
             </tr>
           </thead>
@@ -999,6 +1210,24 @@
               <td class="col-featured"><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
               <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
             </tr>
+            <tr>
+              <td>Suplementación personalizada</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+              <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>Comunidad y chat grupal</td>
+              <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+              <td class="col-featured"><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+              <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>Mediciones corporales + fotos progreso</td>
+              <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+              <td class="col-featured"><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+              <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+            </tr>
 
             <tr class="cat-row"><td colspan="4">Seguimiento y soporte</td></tr>
             <tr>
@@ -1044,6 +1273,18 @@
               <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
             </tr>
             <tr>
+              <td>Ciclo hormonal personalizado</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-no">&mdash;</span></td>
+              <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>Bloodwork / análisis de laboratorio</td>
+              <td><span class="c-no">&mdash;</span></td>
+              <td class="col-featured"><span class="c-no">&mdash;</span></td>
+              <td><i class="fas fa-check c-yes" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
               <td style="border-bottom:none;"></td>
               <td style="border-bottom:none;"></td>
               <td class="col-featured" style="border-bottom:2px solid #E31E24;"></td>
@@ -1068,81 +1309,58 @@
   </section>
 
   <!-- ============================================================
-       ROI SECTION
+       VALUE STACK SECTION
   ============================================================ -->
-  <section class="roi-section">
+  <section class="value-section">
     <div class="section-wrap">
-      <div class="roi-header" data-aos="fade-up">
-        <p class="section-label">// Contexto de valor</p>
-        <h2 class="section-title">&#191;CUANTO VALE<br>TU SALUD?</h2>
-        <p class="roi-intro">
-          Antes de decir "es caro", compara lo que realmente estás pagando cuando no usas WellCore &mdash; y los resultados que no estás obteniendo.
+      <div class="value-header" data-aos="fade-up">
+        <p class="section-label">// Tu inversión incluye</p>
+        <h2 class="section-title">TODO ESTO<br>POR UN PLAN.</h2>
+        <p class="value-intro">
+          Cada componente está diseñado para funcionar en conjunto. No es solo entrenamiento &mdash; es un sistema completo para transformar tu cuerpo y tus hábitos.
         </p>
       </div>
 
-      <div class="roi-grid" data-aos="fade-up" data-aos-delay="100">
-        <div class="roi-card wellcore">
-          <p class="roi-card-label">WellCore &mdash; Recomendado</p>
-          <h3 class="roi-card-name">METODO</h3>
-          <div class="roi-card-price">$504.000 COP</div>
-          <ul class="roi-card-includes">
-            <li>Entrenamiento personalizado</li>
-            <li>Nutrición + macros + recetas</li>
-            <li>Guia de habitos completa</li>
-            <li>Soporte 24h real</li>
-            <li>Seguimiento y progreso</li>
-            <li>Coach certificado</li>
-          </ul>
-          <span class="roi-verdict best"><i class="fas fa-star" aria-hidden="true" style="margin-right:6px;"></i> Mejor relacion valor / precio</span>
+      <div class="value-grid" data-aos="fade-up" data-aos-delay="100">
+        <div class="value-item">
+          <div class="value-item-icon"><i class="fas fa-dumbbell" aria-hidden="true"></i></div>
+          <div class="value-item-title">Plan de entrenamiento personalizado</div>
+          <p class="value-item-desc">Diseñado para tu cuerpo, tu nivel y tus objetivos. Se ajusta según tu progreso real &mdash; no es una plantilla genérica.</p>
         </div>
-        <div class="roi-card">
-          <p class="roi-card-label">Alternativa tradicional</p>
-          <h3 class="roi-card-name">GYM + PT</h3>
-          <div class="roi-card-price">~$300</div>
-          <ul class="roi-card-includes">
-            <li>Membresia gym: ~$60/mes</li>
-            <li>PT presencial: 4 sesiones ~$200</li>
-            <li>Sin nutrición incluida</li>
-            <li>Sin seguimiento online</li>
-            <li>Solo mientras estes en el gym</li>
-          </ul>
-          <span class="roi-verdict bad"><span style="margin-right:6px;">&times;</span> 2.5x más caro, menos resultados</span>
+        <div class="value-item">
+          <div class="value-item-icon"><i class="fas fa-utensils" aria-hidden="true"></i></div>
+          <div class="value-item-title">Plan nutricional completo</div>
+          <p class="value-item-desc">Macros, calorías y recetas adaptadas a tus preferencias y tu vida real. Nutrición que puedes sostener.</p>
         </div>
-        <div class="roi-card">
-          <p class="roi-card-label">Lo que usa la mayoría</p>
-          <h3 class="roi-card-name">APP GENERICA</h3>
-          <div class="roi-card-price">~$15</div>
-          <ul class="roi-card-includes">
-            <li>Programas predefinidos</li>
-            <li>Sin personalización real</li>
-            <li>Sin soporte humano</li>
-            <li>Sin ajuste por progreso</li>
-            <li>Sin ciencia aplicada</li>
-          </ul>
-          <span class="roi-verdict ok"><span style="margin-right:6px;">!</span> Barato &mdash; pero sin resultados</span>
+        <div class="value-item">
+          <div class="value-item-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
+          <div class="value-item-title">Guía de hábitos y estilo de vida</div>
+          <p class="value-item-desc">Sueño, estrés, rutinas diarias. El sistema completo para que los resultados se mantengan &mdash; no solo en el gym.</p>
         </div>
-        <div class="roi-card">
-          <p class="roi-card-label">Otra opcion popular</p>
-          <h3 class="roi-card-name">COACH ONLINE GENERICO</h3>
-          <div class="roi-card-price">~$80</div>
-          <ul class="roi-card-includes">
-            <li>Plan generico descargable</li>
-            <li>Soporte variable / inconsistente</li>
-            <li>Sin nutrición o incluida parcialmente</li>
-            <li>Sin metodologia documentada</li>
-            <li>Resultados impredecibles</li>
-          </ul>
-          <span class="roi-verdict ok"><span style="margin-right:6px;">?</span> Mejor que nada, pero sin sistema</span>
+        <div class="value-item">
+          <div class="value-item-icon"><i class="fas fa-user-check" aria-hidden="true"></i></div>
+          <div class="value-item-title">Coach dedicado y certificado</div>
+          <p class="value-item-desc">Un profesional que conoce tu caso, revisa tu progreso y responde tus dudas en menos de 24 horas.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-item-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+          <div class="value-item-title">Portal de seguimiento 24/7</div>
+          <p class="value-item-desc">Métricas, progreso, comunicación con tu coach. Todo en un solo lugar, accesible desde cualquier dispositivo.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-item-icon"><i class="fas fa-sync-alt" aria-hidden="true"></i></div>
+          <div class="value-item-title">Ajustes continuos de programa</div>
+          <p class="value-item-desc">Tu programa evoluciona contigo. Sin estancamiento, sin mesetas. Cada ciclo se optimiza con datos reales.</p>
         </div>
       </div>
 
-      <div class="roi-callout" data-aos="fade-up" data-aos-delay="150">
-        <p class="roi-callout-text">
-          Con WellCore <strong>ahorras hasta $180 USD al mes</strong> comparado con gym + PT, y obtienes algo que esas opciones no dan: un sistema completo de entrenamiento, nutrición y habitos bajo un mismo techo &mdash; con seguimiento real.
+      <div class="value-callout" data-aos="fade-up" data-aos-delay="150">
+        <p class="value-callout-text">
+          Un sistema completo de entrenamiento, nutrición y hábitos por <strong>menos de $13.000 al día</strong> &mdash; menos de lo que cuesta un café con tu almuerzo.
         </p>
-        <div class="roi-callout-stat">
-          <div class="roi-callout-stat-num">$180</div>
-          <div class="roi-callout-stat-label">Ahorro mensual vs alternativas</div>
+        <div class="value-callout-stat">
+          <div class="value-callout-stat-num">$13K</div>
+          <div class="value-callout-stat-label">Costo diario plan Método</div>
         </div>
       </div>
 
@@ -1373,7 +1591,7 @@
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <div class="faq-answer-inner">Si. Al elegir facturación anual obtienes <strong>2 meses gratis (17% de descuento)</strong>. Los precios anuales quedan asi: Esencial $3.990.000/año (vs $4.788.000), Método $5.040.000/año (vs $6.048.000), Elite $6.300.000/año (vs $7.560.000) COP. Puedes activar la facturación anual desde el toggle en la parte superior de está pagina.</div>
+            <div class="faq-answer-inner">Si. Al elegir facturación anual obtienes <strong>2 meses gratis (17% de descuento)</strong>. Los precios anuales quedan asi: Esencial $2.990.000/año (vs $3.588.000), Método $3.990.000/año (vs $4.788.000), Elite $5.490.000/año (vs $6.588.000) COP. Puedes activar la facturación anual desde el toggle en la parte superior de está pagina.</div>
           </div>
         </div>
 
@@ -1421,7 +1639,7 @@
 
       <div style="text-align:center;margin-top:48px;" data-aos="fade-up" data-aos-delay="200">
         <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:20px;">&#191;Tienes otra pregunta que no está aqui?</p>
-        <a href="https://wa.me/573124904720?text=Hola%2C%20tengo%20preguntas%20sobre%20los%20planes%20de%20WellCore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,0.10);padding:14px 28px;transition:all 0.1s linear;" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.10)'">
+        <a href="https://wa.me/573124904720?text=Hola%2C%20tengo%20preguntas%20sobre%20los%20planes%20de%20WellCore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;font-family:'Urbanist',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,0.10);padding:14px 28px;transition:all 0.1s linear;" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.10)'">
           <span style="color:#25d366;font-size:16px;font-weight:700;">WA</span>
           Preguntanos por WhatsApp
         </a>
@@ -1519,12 +1737,14 @@
 
   <!-- WhatsApp float -->
   <a href="https://wa.me/573124904720" target="_blank" rel="noopener" aria-label="WhatsApp"
-     style="position:fixed;bottom:88px;right:32px;width:44px;height:44px;background:#25d366;display:flex;align-items:center;justify-content:center;z-index:500;font-size:11px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace;letter-spacing:1px;transition:transform 0.1s linear;"
+     style="position:fixed;bottom:88px;right:32px;width:44px;height:44px;background:#25d366;display:flex;align-items:center;justify-content:center;z-index:500;font-size:11px;font-weight:700;color:#fff;font-family:'Urbanist',sans-serif;letter-spacing:1px;transition:transform 0.1s linear;"
      onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">WA</a>
 
   <!-- ============================================================
        SCRIPTS
   ============================================================ -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="js/v5-effects.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
@@ -1573,19 +1793,23 @@
     // Billing toggle: monthly / annual
     // --------------------------------------------------------
     var PRICES = {
-      monthly: { esencial: '399.000', metodo: '504.000', elite: '630.000' },
-      annual:  { esencial: '332.500', metodo: '420.000', elite: '525.000' }
+      monthly: { esencial: '299.000', metodo: '399.000', elite: '549.000' },
+      annual:  { esencial: '2.990.000', metodo: '3.990.000', elite: '5.490.000' }
     };
 
     function setBilling(mode) {
       document.getElementById('toggleMonthly').classList.toggle('active', mode === 'monthly');
       document.getElementById('toggleAnnual').classList.toggle('active',  mode === 'annual');
 
-      var savings = { esencial: '$798.000', metodo: '$1.008.000', elite: '$1.260.000' };
+      var savings = { esencial: '$598.000', metodo: '$798.000', elite: '$1.098.000' };
       ['esencial', 'metodo', 'elite'].forEach(function(plan) {
         var priceEl = document.getElementById('price-' + plan);
         var noteEl  = document.getElementById('note-' + plan);
-        if (priceEl) priceEl.textContent = PRICES[mode][plan];
+        if (priceEl) {
+          priceEl.textContent = PRICES[mode][plan];
+          var periodEl = priceEl.parentElement && priceEl.parentElement.querySelector('.pc-period');
+          if (periodEl) periodEl.textContent = mode === 'monthly' ? '/mes' : '/año';
+        }
         if (noteEl) {
           noteEl.textContent = mode === 'monthly'
             ? 'Facturado mensualmente'
@@ -1701,7 +1925,74 @@
       }, { passive: true });
     })();
 
+    // Premium: Mouse tracking glow for value items
+    document.querySelectorAll('.value-item').forEach(item => {
+      item.addEventListener('mousemove', e => {
+        const r = item.getBoundingClientRect();
+        item.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        item.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+
   </script>
+
+  <!-- GSAP ScrollTrigger — TESIS #13 Stagger Animations -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Pricing cards — stagger scale + fade
+    gsap.from('.pricing-card', {
+      scrollTrigger: { trigger: '.pricing-grid', start: 'top 85%', once: true },
+      y: 60, opacity: 0, scale: 0.95, duration: 0.7,
+      stagger: 0.12, ease: 'expo.out'
+    });
+
+    // Value Stack items — stagger slide up
+    gsap.from('.value-item', {
+      scrollTrigger: { trigger: '.value-grid', start: 'top 85%', once: true },
+      y: 50, opacity: 0, duration: 0.6,
+      stagger: 0.1, ease: 'power3.out'
+    });
+
+    // Testimonial cards — stagger
+    gsap.from('.testimonial-card', {
+      scrollTrigger: { trigger: '.testimonials-section', start: 'top 80%', once: true },
+      y: 40, opacity: 0, duration: 0.6,
+      stagger: 0.1, ease: 'power3.out'
+    });
+
+    // Comparison table rows — stagger
+    gsap.from('.compare-table tbody tr', {
+      scrollTrigger: { trigger: '.compare-table', start: 'top 85%', once: true },
+      x: -20, opacity: 0, duration: 0.4,
+      stagger: 0.04, ease: 'power2.out'
+    });
+
+    // Hero title — scale entrance
+    gsap.from('.hero-h1', {
+      scrollTrigger: { trigger: '.hero-planes', start: 'top 90%', once: true },
+      y: 40, opacity: 0, scale: 0.96, duration: 1,
+      ease: 'expo.out'
+    });
+
+    // Trust strip items — stagger
+    gsap.from('.trust-item', {
+      scrollTrigger: { trigger: '.trust-strip', start: 'top 90%', once: true },
+      y: 20, opacity: 0, duration: 0.5,
+      stagger: 0.08, ease: 'power2.out'
+    });
+
+    // Final CTA — dramatic entrance
+    gsap.from('.final-cta-h2', {
+      scrollTrigger: { trigger: '.final-cta-section', start: 'top 80%', once: true },
+      y: 60, opacity: 0, scale: 0.9, duration: 0.8,
+      ease: 'expo.out'
+    });
+  });
+  </script>
+
   <script src="js/chat-widget.js" defer></script>
 
 </body>
