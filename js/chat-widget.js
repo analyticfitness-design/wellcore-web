@@ -19,7 +19,7 @@
     surface2:    '#1a1a1d',
     border:      '#252528',
     gray:        '#A1A1AA',
-    green:       '#00D9FF',
+    green:       '#E31E24',
     waLink:      'https://wa.me/573124904720',
     coachEmail:  'info@wellcorefitness.com',
     storageKey:  'wc_chat_history',
