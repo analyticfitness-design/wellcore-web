@@ -680,7 +680,7 @@
 
     /* Product Image */
     .product-img {
-      height: 180px;
+      height: 240px;
       background: linear-gradient(135deg, #1a0002 0%, #0a0a0a 50%, #0d0d10 100%);
       position: relative;
       overflow: hidden;
@@ -690,7 +690,15 @@
       flex-shrink: 0;
     }
 
-    .product-card.featured .product-img { height: 260px; }
+    .product-img img {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .product-card:hover .product-img img {
+      transform: scale(1.08);
+    }
+
+    .product-card.featured .product-img { height: 340px; }
 
     .product-img::after {
       content: '';
@@ -1505,7 +1513,7 @@
     <!-- HERO FEATURE BANNER -->
     <section id="hero-feature" aria-label="Producto destacado" data-v5-reveal style="position:relative;overflow:hidden;">
       <canvas class="v7-particles" data-v7-particles aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
-      <span class="hero-badge" style="position:relative;z-index:2;">&#9679; PRODUCTO DESTACADO</span>
+      <span class="hero-badge">&#9679; PRODUCTO DESTACADO</span>
       <div class="hero-left" style="position:relative;z-index:2;">
         <p class="hero-cat">PROTEINA / MACROBLENDS</p>
         <h2 class="hero-name v7-split-word">PROTEINA WHEY BLEND 4 LB</h2>
@@ -1810,7 +1818,7 @@ function buildCard(product) {
     imgEl.src = product.img;
     imgEl.alt = product.name;
     imgEl.loading = 'lazy';
-    imgEl.style.cssText = 'max-width:80%;max-height:140px;object-fit:contain;position:relative;z-index:1';
+    imgEl.style.cssText = 'max-width:88%;max-height:200px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 12px 28px rgba(0,0,0,0.7));';
     imgEl.onerror = function() { this.style.display='none'; };
     imgDiv.appendChild(imgEl);
   } else {
