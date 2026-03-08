@@ -970,23 +970,69 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .timer-complete-msg h3{font-size:1.4rem;font-weight:900;color:var(--white);margin:0 0 6px;}
 .timer-complete-msg p{font-size:.82rem;color:var(--gray);}
 
-/* ── MI STACK ── */
-.stack-intro{font-size:.8rem;color:var(--gray);margin-bottom:16px;line-height:1.5;}
-.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
-.stack-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s,transform .2s;}
-.stack-card:hover{border-color:rgba(200,16,46,.25);transform:translateY(-2px);}
-@starting-style{.stack-card{opacity:0;transform:translateY(8px);}}
-.stack-card{animation:recipe-in .3s ease both;}
-.stack-card-top{padding:14px 14px 10px;display:flex;align-items:flex-start;gap:10px;}
-.stack-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
-.stack-name{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:3px;}
-.stack-sub{font-size:.7rem;color:var(--gray);line-height:1.35;}
-.stack-bottom{padding:8px 14px 12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.stack-timing{font-size:.68rem;color:var(--gray);display:flex;align-items:center;gap:4px;}
-.stack-stars{display:flex;gap:2px;}
-.stack-star{font-size:.65rem;color:#f59e0b;}
-.stack-star.empty{color:rgba(255,255,255,.15);}
-.stack-locked-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;opacity:.45;pointer-events:none;display:flex;align-items:center;gap:10px;}
+/* ── MÚSICA ── */
+.musica-intro{font-size:.8rem;color:var(--gray);margin-bottom:18px;line-height:1.55;}
+.musica-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.musica-filter{padding:5px 13px;border-radius:40px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.musica-filter.active,.musica-filter:hover{border-color:var(--red);color:var(--red);background:rgba(200,16,46,.08);}
+.musica-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.musica-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s,transform .2s;}
+.musica-card:hover{border-color:rgba(200,16,46,.3);transform:translateY(-2px);}
+@starting-style{.musica-card{opacity:0;transform:translateY(8px);}}
+.musica-card{animation:recipe-in .35s ease both;}
+.musica-card-head{height:64px;display:flex;align-items:center;justify-content:center;position:relative;font-size:2rem;}
+.musica-card-body{padding:12px 14px 14px;}
+.musica-card-type{font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px;}
+.musica-card-name{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:4px;}
+.musica-card-desc{font-size:.7rem;color:var(--gray);line-height:1.4;margin-bottom:10px;}
+.musica-bpm{display:flex;align-items:center;gap:4px;font-size:.63rem;color:var(--gray);}
+.musica-play-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:40px;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+.musica-play-btn:hover{background:#e01030;}
+
+/* ── HACKS ── */
+.hacks-header{text-align:center;padding:4px 0 20px;}
+.hacks-header h3{font-size:1.1rem;font-weight:900;color:var(--white);margin:0 0 5px;}
+.hacks-header p{font-size:.78rem;color:var(--gray);}
+.hacks-cat-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.hacks-cat{padding:5px 13px;border-radius:40px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.hacks-cat.active,.hacks-cat:hover{border-color:var(--red);color:var(--red);background:rgba(200,16,46,.08);}
+.hacks-list{display:flex;flex-direction:column;gap:10px;}
+.hack-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:border-color .25s,transform .2s;}
+.hack-card:hover{border-color:rgba(200,16,46,.25);transform:translateX(3px);}
+@starting-style{.hack-card{opacity:0;transform:translateX(-8px);}}
+.hack-card{animation:recipe-in .3s ease both;}
+.hack-emoji{font-size:1.6rem;flex-shrink:0;line-height:1;filter:drop-shadow(0 2px 5px rgba(0,0,0,.4));}
+.hack-body{}
+.hack-title{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:4px;}
+.hack-text{font-size:.76rem;color:var(--gray);line-height:1.55;}
+.hack-tag{display:inline-block;font-size:.57rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:40px;margin-top:7px;border:1px solid;}
+.hack-science{font-size:.65rem;color:rgba(255,255,255,.3);margin-top:5px;font-style:italic;}
+
+/* ── MI CAMINO ── */
+.camino-phase-header{text-align:center;padding:8px 0 24px;}
+.camino-phase-label{display:inline-flex;align-items:center;gap:8px;padding:5px 18px;border-radius:40px;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px;}
+.camino-phase-title{font-size:1.15rem;font-weight:900;color:var(--white);margin:0 0 5px;}
+.camino-phase-sub{font-size:.78rem;color:var(--gray);}
+.camino-roadmap{position:relative;padding:0 0 8px;}
+.camino-line{position:absolute;left:22px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--red),rgba(200,16,46,.1));border-radius:1px;}
+.camino-step{display:flex;gap:14px;align-items:flex-start;padding:0 0 20px;position:relative;}
+.camino-dot{width:16px;height:16px;border-radius:50%;border:2px solid;flex-shrink:0;margin-top:2px;z-index:1;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:900;}
+.camino-dot.done{background:var(--red);border-color:var(--red);color:#fff;}
+.camino-dot.current{background:rgba(200,16,46,.15);border-color:var(--red);animation:camino-pulse 2s ease infinite;}
+.camino-dot.upcoming{background:var(--surface);border-color:var(--border);color:var(--gray);}
+@keyframes camino-pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,16,46,.4);}50%{box-shadow:0 0 0 6px rgba(200,16,46,.0);}}
+.camino-step-body{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;flex:1;transition:border-color .25s;}
+.camino-step-body.current{border-color:rgba(200,16,46,.35);background:rgba(200,16,46,.04);}
+.camino-step-name{font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:3px;}
+.camino-step-desc{font-size:.73rem;color:var(--gray);line-height:1.45;}
+.camino-step-badge{display:inline-flex;align-items:center;gap:4px;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:40px;margin-top:6px;border:1px solid;}
+.camino-milestones{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;}
+.camino-milestones-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.camino-milestones-title span{display:inline-block;width:16px;height:2px;border-radius:1px;background:var(--red);}
+.camino-ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
+.camino-ms{text-align:center;padding:10px 6px;background:rgba(255,255,255,.025);border-radius:10px;border:1px solid var(--border);}
+.camino-ms-icon{font-size:1.3rem;margin-bottom:4px;}
+.camino-ms-lbl{font-size:.63rem;color:var(--gray);line-height:1.35;}
 
 /* ── MENTALIDAD ── */
 .breath-section{display:flex;flex-direction:column;align-items:center;padding:24px 16px;border:1px solid var(--border);border-radius:16px;margin-bottom:16px;background:var(--surface);}
@@ -1006,41 +1052,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .breath-tech-desc{font-size:.74rem;color:var(--gray);line-height:1.5;}
 .breath-tech-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:40px;margin-top:7px;}
 
-/* ── TENDENCIAS ── */
-.tend-empty{text-align:center;padding:48px 16px;}
-.tend-empty-icon{font-size:3rem;margin-bottom:12px;opacity:.35;}
-.tend-empty h3{font-size:1rem;font-weight:700;color:var(--white);margin:0 0 6px;}
-.tend-empty p{font-size:.8rem;color:var(--gray);max-width:340px;margin:0 auto;line-height:1.55;}
-.tend-section{margin-bottom:24px;}
-.tend-section-title{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
-.tend-section-title span{display:inline-block;width:20px;height:2px;border-radius:1px;background:var(--red);}
-.tend-chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;overflow:hidden;}
-.tend-chart-wrap canvas{display:block;width:100%;height:auto;}
-.tend-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
-.tend-stat{text-align:center;padding:10px 6px;background:rgba(255,255,255,.025);border-radius:10px;}
-.tend-stat-val{font-size:1.1rem;font-weight:700;font-family:var(--font-head,'Barlow Condensed',sans-serif);color:var(--white);}
-.tend-stat-lbl{font-size:.6rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
-
-/* ── RETOS ── */
-.retos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
-.reto-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .25s,transform .2s;}
-.reto-card:hover{border-color:rgba(200,16,46,.25);transform:translateY(-2px);}
-@starting-style{.reto-card{opacity:0;transform:translateY(8px);}}
-.reto-card{animation:recipe-in .3s ease both;}
-.reto-card-top{padding:16px 16px 10px;display:flex;align-items:flex-start;gap:12px;}
-.reto-emoji{font-size:2rem;flex-shrink:0;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));}
-.reto-title{font-size:.92rem;font-weight:700;color:var(--white);margin-bottom:4px;}
-.reto-desc{font-size:.75rem;color:var(--gray);line-height:1.4;}
-.reto-days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:12px 16px;border-top:1px solid var(--border);}
-.reto-day{aspect-ratio:1;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--gray);cursor:pointer;transition:all .2s;user-select:none;}
-.reto-day:hover{border-color:rgba(200,16,46,.3);color:var(--white);}
-.reto-day.done{background:var(--red-dim);border-color:rgba(200,16,46,.4);color:var(--red);}
-.reto-day.today{border-color:rgba(200,16,46,.5);box-shadow:0 0 0 2px rgba(200,16,46,.15);}
-.reto-progress-bar-wrap{padding:0 16px 14px;}
-.reto-prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;font-size:.68rem;color:var(--gray);}
-.reto-prog-track{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
-.reto-prog-fill{height:100%;background:linear-gradient(90deg,var(--red),#ff6b35);border-radius:2px;transition:width .4s cubic-bezier(.4,0,.2,1);}
-.reto-badge{display:inline-flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:40px;border:1px solid;}
 
 /* ── RECETAS PREMIUM ── */
 .recipe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
@@ -2990,10 +3001,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <button class="acad-tab" onclick="acadSetTab('videos')" id="acad-btn-videos"><i class="fab fa-youtube" style="margin-right:5px;font-size:.75rem;"></i>Videos</button>
         <button class="acad-tab" onclick="acadSetTab('recetas')" id="acad-btn-recetas"><i class="fas fa-bowl-food" style="margin-right:5px;font-size:.75rem;"></i>Recetas</button>
         <button class="acad-tab" onclick="acadSetTab('timer')" id="acad-btn-timer"><i class="fas fa-stopwatch" style="margin-right:5px;font-size:.75rem;"></i>Timer</button>
-        <button class="acad-tab" onclick="acadSetTab('stack')" id="acad-btn-stack"><i class="fas fa-pills" style="margin-right:5px;font-size:.75rem;"></i>Stack</button>
         <button class="acad-tab" onclick="acadSetTab('mentalidad')" id="acad-btn-mentalidad"><i class="fas fa-brain" style="margin-right:5px;font-size:.75rem;"></i>Mente</button>
-        <button class="acad-tab" onclick="acadSetTab('tendencias')" id="acad-btn-tendencias"><i class="fas fa-chart-line" style="margin-right:5px;font-size:.75rem;"></i>Tendencias</button>
-        <button class="acad-tab" onclick="acadSetTab('retos')" id="acad-btn-retos"><i class="fas fa-fire" style="margin-right:5px;font-size:.75rem;"></i>Retos</button>
+        <button class="acad-tab" onclick="acadSetTab('musica')" id="acad-btn-musica"><i class="fas fa-headphones" style="margin-right:5px;font-size:.75rem;"></i>Música</button>
+        <button class="acad-tab" onclick="acadSetTab('hacks')" id="acad-btn-hacks"><i class="fas fa-lightbulb" style="margin-right:5px;font-size:.75rem;"></i>Hacks</button>
+        <button class="acad-tab" onclick="acadSetTab('camino')" id="acad-btn-camino"><i class="fas fa-map-marked-alt" style="margin-right:5px;font-size:.75rem;"></i>Mi Camino</button>
       </div>
 
       <!-- CALCULADORAS -->
@@ -3192,24 +3203,24 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <div id="timer-root"><!-- rendered by JS --></div>
       </div>
 
-      <!-- MI STACK -->
-      <div class="acad-panel" id="acad-panel-stack">
-        <div id="stack-root"><!-- rendered by JS --></div>
-      </div>
-
       <!-- MENTALIDAD -->
       <div class="acad-panel" id="acad-panel-mentalidad">
         <div id="mentalidad-root"><!-- rendered by JS --></div>
       </div>
 
-      <!-- TENDENCIAS -->
-      <div class="acad-panel" id="acad-panel-tendencias">
-        <div id="tendencias-root"><!-- rendered by JS --></div>
+      <!-- MÚSICA -->
+      <div class="acad-panel" id="acad-panel-musica">
+        <div id="musica-root"><!-- rendered by JS --></div>
       </div>
 
-      <!-- RETOS -->
-      <div class="acad-panel" id="acad-panel-retos">
-        <div id="retos-root"><!-- rendered by JS --></div>
+      <!-- HACKS -->
+      <div class="acad-panel" id="acad-panel-hacks">
+        <div id="hacks-root"><!-- rendered by JS --></div>
+      </div>
+
+      <!-- MI CAMINO -->
+      <div class="acad-panel" id="acad-panel-camino">
+        <div id="camino-root"><!-- rendered by JS --></div>
       </div>
 
     </section>
@@ -5903,10 +5914,10 @@ function acadSetTab(tab) {
   if (tab === 'videos') renderVideos();
   if (tab === 'recetas') renderRecipes();
   if (tab === 'timer') renderTimer();
-  if (tab === 'stack') renderStack();
   if (tab === 'mentalidad') renderMentalidad();
-  if (tab === 'tendencias') renderTendencias();
-  if (tab === 'retos') renderRetos();
+  if (tab === 'musica') renderMusica();
+  if (tab === 'hacks') renderHacks();
+  if (tab === 'camino') renderCamino();
 }
 
 // ── Phase banner update (called after phase is known) ──
@@ -6520,52 +6531,6 @@ function timerComplete() {
   if (stage) stage.innerHTML = '<div class="timer-complete-msg"><div class="t-icon">🏆</div><h3>¡Completado!</h3><p>Excelente trabajo. Descansa y repite.</p><button class="timer-btn timer-btn-start" style="margin-top:16px;" onclick="timerReset()">REPETIR</button></div>';
 }
 
-// ═══════════════════════════════════════════════
-// ── MI STACK ───────────────────────────────────
-// ═══════════════════════════════════════════════
-var STACK_DATA = [
-  { name:'Proteína Whey', sub:'Post-entrenamiento · aumento masa muscular', icon:'💪', color:'rgba(52,211,153,.12)', iconBg:'rgba(52,211,153,.15)', timing:'30 min post-entreno', dose:'25–30g', stars:5, plan:'esencial' },
-  { name:'Creatina Monohidrato', sub:'Fuerza y potencia anaeróbica comprobada', icon:'⚡', color:'rgba(99,102,241,.1)', iconBg:'rgba(99,102,241,.15)', timing:'Cualquier hora · con agua', dose:'3–5g', stars:5, plan:'esencial' },
-  { name:'Multivitamínico', sub:'Cubre déficits nutricionales de la dieta', icon:'🌿', color:'rgba(245,158,11,.1)', iconBg:'rgba(245,158,11,.15)', timing:'Con el desayuno', dose:'1 tableta', stars:4, plan:'esencial' },
-  { name:'Omega-3 (EPA/DHA)', sub:'Inflamación, recuperación y salud articular', icon:'🐟', color:'rgba(56,189,248,.1)', iconBg:'rgba(56,189,248,.15)', timing:'Con comida principal', dose:'2–3g EPA+DHA', stars:5, plan:'metodo' },
-  { name:'Cafeína + L-Teanina', sub:'Foco, energía sostenida sin crash', icon:'☕', color:'rgba(251,146,60,.1)', iconBg:'rgba(251,146,60,.15)', timing:'30 min pre-entreno', dose:'200mg + 100mg', stars:4, plan:'metodo' },
-  { name:'Magnesio Glicinato', sub:'Calidad del sueño y reducción de cortisol', icon:'🌙', color:'rgba(167,139,250,.1)', iconBg:'rgba(167,139,250,.15)', timing:'30 min antes de dormir', dose:'200–400mg', stars:4, plan:'metodo' },
-  { name:'Ashwagandha KSM-66', sub:'Adaptógeno · estrés, fuerza, testosterona', icon:'🧠', color:'rgba(236,72,153,.1)', iconBg:'rgba(236,72,153,.15)', timing:'Con desayuno o noche', dose:'300–600mg', stars:4, plan:'elite' },
-  { name:'Beta-Alanina', sub:'Resistencia muscular · volumen de trabajo', icon:'🔥', color:'rgba(239,68,68,.1)', iconBg:'rgba(239,68,68,.15)', timing:'Pre-entreno', dose:'3.2–6.4g', stars:3, plan:'elite' }
-];
-
-function renderStack() {
-  var root = document.getElementById('stack-root');
-  if (!root || root.innerHTML !== '') return;
-  var planLevelMap = { esencial:1, metodo:2, elite:3 };
-  var planLevel = planLevelMap[clientPlan] || 1;
-  var html = '<p class="stack-intro">Suplementos respaldados por evidencia científica, organizados por prioridad y plan. La dosis y el timing importan tanto como el suplemento en sí.</p>' +
-    '<div class="stack-grid">';
-  STACK_DATA.forEach(function(s, i) {
-    var required = planLevelMap[s.plan] || 1;
-    var unlocked = planLevel >= required;
-    var stars = '';
-    for (var j=0; j<5; j++) stars += '<span class="stack-star' + (j < s.stars ? '' : ' empty') + '">★</span>';
-    if (!unlocked) {
-      html += '<div class="stack-locked-card" style="animation-delay:' + (i*.04) + 's;">' +
-        '<i class="fas fa-lock" style="color:var(--gray);opacity:.4;font-size:1.1rem;"></i>' +
-        '<div><div style="font-size:.82rem;font-weight:600;color:var(--gray);">' + s.name + '</div>' +
-        '<div style="font-size:.68rem;color:var(--gray);opacity:.5;margin-top:2px;">Plan ' + s.plan.charAt(0).toUpperCase() + s.plan.slice(1) + ' o superior</div></div></div>';
-    } else {
-      html += '<div class="stack-card" style="animation-delay:' + (i*.04) + 's;">' +
-        '<div class="stack-card-top">' +
-          '<div class="stack-icon" style="background:' + s.iconBg + ';">' + s.icon + '</div>' +
-          '<div><div class="stack-name">' + s.name + '</div><div class="stack-sub">' + s.sub + '</div></div>' +
-        '</div>' +
-        '<div class="stack-bottom">' +
-          '<div class="stack-timing"><i class="fas fa-clock" style="opacity:.5;font-size:.6rem;"></i><span><b style="color:var(--white);">' + s.dose + '</b> · ' + s.timing + '</span></div>' +
-          '<div class="stack-stars">' + stars + '</div>' +
-        '</div></div>';
-    }
-  });
-  html += '</div>';
-  root.innerHTML = html;
-}
 
 // ═══════════════════════════════════════════════
 // ── MENTALIDAD ─────────────────────────────────
@@ -6678,128 +6643,138 @@ function breathTick() {
 }
 
 // ═══════════════════════════════════════════════
-// ── TENDENCIAS ─────────────────────────────────
+// ── MÚSICA ─────────────────────────────────────
 // ═══════════════════════════════════════════════
-function renderTendencias() {
-  var root = document.getElementById('tendencias-root');
-  if (!root || root.innerHTML !== '') return;
-  // Pull check-in data from existing wcCheckins if available
-  var checkins = (typeof wcCheckins !== 'undefined' && wcCheckins.length) ? wcCheckins : [];
-  if (!checkins.length) {
-    root.innerHTML = '<div class="tend-empty">' +
-      '<div class="tend-empty-icon">📊</div>' +
-      '<h3>Aún no hay datos</h3>' +
-      '<p>Tu coach cargará tu progreso después del primer check-in semanal. Aquí verás tus tendencias de peso, fuerza y métricas corporales.</p>' +
-      '<div style="display:flex;gap:8px;justify-content:center;margin-top:20px;flex-wrap:wrap;">' +
-        ['Peso', 'Fuerza', 'Medidas', 'Composición'].map(function(l){ return '<span style="padding:6px 14px;border:1px solid var(--border);border-radius:40px;font-size:.7rem;color:var(--gray);">' + l + '</span>'; }).join('') +
+var MUSICA_DATA = [
+  { tipo:'Push Day', emoji:'💪', color:'#C8102E', bpm:'130–145 BPM', desc:'Energía máxima para empujar. Cortes agresivos, drops que coinciden con tus series pesadas.', urls:[['Training Montage Mix','https://www.youtube.com/results?search_query=training+montage+gym+mix'],['Spotify Powerlifting','https://open.spotify.com/search/powerlifting%20workout']] },
+  { tipo:'Pull Day', emoji:'🔱', color:'#6366f1', bpm:'120–135 BPM', desc:'Concentración profunda y ritmo constante. Ideal para jalones, remos y bíceps de alto volumen.', urls:[['Deep Focus Gym Mix','https://www.youtube.com/results?search_query=deep+focus+gym+playlist'],['Spotify Pull Day','https://open.spotify.com/search/pull%20day%20workout']] },
+  { tipo:'Legs Day', emoji:'🦵', color:'#f59e0b', bpm:'125–140 BPM', desc:'El día más duro merece la mejor música. Hip hop pesado y rock progresivo.', urls:[['Leg Day Motivation','https://www.youtube.com/results?search_query=leg+day+motivation+music'],['Spotify Leg Day','https://open.spotify.com/search/leg%20day%20workout']] },
+  { tipo:'HIIT / Cardio', emoji:'⚡', color:'#34d399', bpm:'140–170 BPM', desc:'BPM alto, drops frecuentes. Electronic, drum & bass y trance para mantener la intensidad.', urls:[['HIIT Workout Mix','https://www.youtube.com/results?search_query=hiit+workout+music+mix'],['Spotify HIIT','https://open.spotify.com/search/hiit%20cardio%20music']] },
+  { tipo:'Deload / Movilidad', emoji:'🧘', color:'#a78bfa', bpm:'70–95 BPM', desc:'Lo-fi beats, chill instrumentals. Mueve bien, respira, recupera. Sin prisa, sin pausa.', urls:[['Lo-fi Gym Chill','https://www.youtube.com/results?search_query=lofi+gym+chill+workout'],['Spotify Recovery','https://open.spotify.com/search/recovery%20workout%20lofi']] },
+  { tipo:'Full Body', emoji:'🔥', color:'#f87171', bpm:'128–138 BPM', desc:'Rock alternativo y metal moderno con riffs que te sacan lo mejor de cada repetición.', urls:[['Full Body Rock','https://www.youtube.com/results?search_query=full+body+workout+rock+music'],['Spotify Rock Gym','https://open.spotify.com/search/rock%20gym%20workout']] }
+];
+var MUSICA_FILTER = 'Todo';
+function renderMusica() {
+  var root = document.getElementById('musica-root');
+  if (!root) return;
+  var types = ['Todo'].concat(MUSICA_DATA.map(function(m){ return m.tipo; }));
+  var filtered = MUSICA_FILTER === 'Todo' ? MUSICA_DATA : MUSICA_DATA.filter(function(m){ return m.tipo === MUSICA_FILTER; });
+  var filtersHtml = types.map(function(t){ return '<button class="musica-filter' + (t === MUSICA_FILTER ? ' active' : '') + '" onclick="musicaSetFilter(\'' + t + '\')">' + t + '</button>'; }).join('');
+  var cardsHtml = filtered.map(function(m, i) {
+    var linksHtml = m.urls.map(function(u){ return '<a href="' + u[1] + '" target="_blank" rel="noopener" class="musica-play-btn" style="margin-top:5px;"><i class="fas fa-play" style="font-size:.55rem;"></i>' + u[0] + '</a>'; }).join('');
+    return '<div class="musica-card" style="animation-delay:' + (i*.06) + 's;">' +
+      '<div class="musica-card-head" style="background:linear-gradient(135deg,' + m.color + '22,' + m.color + '06);">' +
+        '<span style="font-size:2rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));">' + m.emoji + '</span>' +
+      '</div>' +
+      '<div class="musica-card-body">' +
+        '<div class="musica-card-type" style="color:' + m.color + ';">' + m.tipo + '</div>' +
+        '<div class="musica-bpm" style="margin-bottom:7px;"><i class="fas fa-wave-square" style="opacity:.5;font-size:.55rem;"></i> ' + m.bpm + '</div>' +
+        '<div class="musica-card-desc">' + m.desc + '</div>' +
+        '<div style="display:flex;flex-direction:column;gap:5px;margin-top:10px;">' + linksHtml + '</div>' +
       '</div>' +
     '</div>';
-    return;
-  }
-  // Build chart from checkin data
-  var weights = checkins.filter(function(c){ return c.peso; }).map(function(c){ return parseFloat(c.peso); });
-  if (!weights.length) { root.innerHTML = '<div class="tend-empty"><div class="tend-empty-icon">📊</div><h3>Sin datos de peso aún</h3><p>Registra tu peso en el check-in semanal para ver tu progreso aquí.</p></div>'; return; }
-  var min = Math.min.apply(null, weights) - 2;
-  var max = Math.max.apply(null, weights) + 2;
-  var total = weights[0] - weights[weights.length - 1];
-  root.innerHTML = '<div class="tend-section">' +
-    '<div class="tend-section-title"><span></span>Tendencia de Peso</div>' +
-    '<div class="tend-chart-wrap"><canvas id="tend-canvas" height="120"></canvas></div>' +
-    '<div class="tend-stats-row">' +
-      '<div class="tend-stat"><div class="tend-stat-val">' + weights[weights.length-1] + 'kg</div><div class="tend-stat-lbl">Actual</div></div>' +
-      '<div class="tend-stat"><div class="tend-stat-val" style="color:' + (total > 0 ? '#f87171' : '#34d399') + ';">' + (total > 0 ? '-' : '+') + Math.abs(total).toFixed(1) + 'kg</div><div class="tend-stat-lbl">Cambio</div></div>' +
-      '<div class="tend-stat"><div class="tend-stat-val">' + weights.length + '</div><div class="tend-stat-lbl">Check-ins</div></div>' +
-    '</div></div>';
-  // Draw simple SVG line chart
-  var w = 500, h = 120, pad = 20;
-  var pts = weights.map(function(v, i){ return { x: pad + (i / Math.max(weights.length-1,1)) * (w - pad*2), y: h - pad - ((v - min) / (max - min)) * (h - pad*2) }; });
-  var path = 'M ' + pts.map(function(p){ return p.x + ' ' + p.y; }).join(' L ');
-  var area = path + ' L ' + pts[pts.length-1].x + ' ' + (h-pad) + ' L ' + pts[0].x + ' ' + (h-pad) + ' Z';
-  var canvas = document.getElementById('tend-canvas');
-  if (canvas) {
-    var ns = 'http://www.w3.org/2000/svg';
-    var svg = document.createElementNS(ns, 'svg');
-    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    svg.setAttribute('style', 'width:100%;height:auto;display:block;');
-    var defs = document.createElementNS(ns, 'defs');
-    var grad = document.createElementNS(ns, 'linearGradient');
-    grad.id = 'tend-grad'; grad.setAttribute('x1','0'); grad.setAttribute('y1','0'); grad.setAttribute('x2','0'); grad.setAttribute('y2','1');
-    ['rgba(200,16,46,.35)','rgba(200,16,46,.02)'].forEach(function(c, si){ var s = document.createElementNS(ns,'stop'); s.setAttribute('offset', si === 0 ? '0%' : '100%'); s.setAttribute('stop-color', c); grad.appendChild(s); });
-    defs.appendChild(grad); svg.appendChild(defs);
-    var areaEl = document.createElementNS(ns, 'path'); areaEl.setAttribute('d', area); areaEl.setAttribute('fill', 'url(#tend-grad)'); svg.appendChild(areaEl);
-    var lineEl = document.createElementNS(ns, 'path'); lineEl.setAttribute('d', path); lineEl.setAttribute('fill', 'none'); lineEl.setAttribute('stroke', 'var(--red)'); lineEl.setAttribute('stroke-width', '2'); lineEl.setAttribute('stroke-linecap', 'round'); svg.appendChild(lineEl);
-    pts.forEach(function(p){ var dot = document.createElementNS(ns,'circle'); dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); dot.setAttribute('r', '3'); dot.setAttribute('fill', 'var(--red)'); svg.appendChild(dot); });
-    canvas.parentNode.replaceChild(svg, canvas);
-  }
+  }).join('');
+  root.innerHTML = '<p class="musica-intro">Playlists curadas por tipo de sesión. Cada entrenamiento merece la banda sonora correcta.</p>' +
+    '<div class="musica-filter-row">' + filtersHtml + '</div>' +
+    '<div class="musica-grid">' + cardsHtml + '</div>';
+}
+function musicaSetFilter(tipo) {
+  MUSICA_FILTER = tipo;
+  var root = document.getElementById('musica-root');
+  if (root) root.innerHTML = '';
+  renderMusica();
 }
 
 // ═══════════════════════════════════════════════
-// ── RETOS ──────────────────────────────────────
+// ── HACKS ──────────────────────────────────────
 // ═══════════════════════════════════════════════
-var RETOS_DATA = [
-  { id:'hidratacion', emoji:'💧', title:'Reto Hidratación 7 Días', desc:'Bebe 2.5L de agua cada día durante 7 días consecutivos. Rendimiento, recuperación y composición corporal dependen de la hidratación.', color:'#38bdf8', plan:'esencial' },
-  { id:'proteina',    emoji:'🥩', title:'Reto Proteína 7 Días',    desc:'Llega a tu meta de proteína diaria 7 días seguidos. 1.6–2.2g/kg de peso corporal. El músculo se construye con consistencia.', color:'#34d399', plan:'esencial' },
-  { id:'suenio',      emoji:'🌙', title:'Reto Sueño 7 Días',       desc:'Duerme 7–9 horas cada noche durante 7 días. El 80% de la recuperación muscular ocurre mientras duermes.', color:'#a78bfa', plan:'metodo' },
-  { id:'pasos',       emoji:'🚶', title:'Reto 10k Pasos 7 Días',   desc:'Alcanza 10,000 pasos diarios durante 7 días. El NEAT (actividad no-estructurada) representa hasta el 30% del gasto energético total.', color:'#f59e0b', plan:'metodo' },
-  { id:'movilidad',   emoji:'🧘', title:'Reto Movilidad 7 Días',   desc:'10 minutos de movilidad/stretching cada día. Previene lesiones, mejora postura y amplitud de movimiento. La recuperación es entrenamiento.', color:'#f87171', plan:'elite' }
+var HACKS_DATA = [
+  { cat:'Fuerza', emoji:'⚡', title:'RIR como arma secreta', text:'Termina tus series con 1–2 repeticiones en reserva. Entrenar al 80–85% del fallo genera adaptación similar al fallo total con mucho menos fatiga acumulada.', tag:'Intensidad', tc:'#C8102E', science:'Zourdos et al. (2016) J Strength Cond Res', plan:'esencial' },
+  { cat:'Fuerza', emoji:'🏋️', title:'Tempo 3-0-1 en compuestos', text:'Controla la fase excéntrica 3 segundos, sin pausa, explosivo en concéntrico. El tiempo bajo tensión (TUT) aumentado en la negativa genera mayor daño muscular y reclutamiento motor.', tag:'Técnica', tc:'#6366f1', science:'Schoenfeld (2010) NSCA', plan:'esencial' },
+  { cat:'Nutrición', emoji:'🥩', title:'Proteína distribuida, no acumulada', text:'Distribuir 30–40g en 4–5 comidas maximiza la síntesis proteica. La leucina activa mTORC1 — necesitas un umbral de ~2–3g de leucina por comida para activar la señalización.', tag:'Nutrición', tc:'#34d399', science:'Norton & Layman (2006) J Nutr', plan:'esencial' },
+  { cat:'Recuperación', emoji:'🌙', title:'El sueño es el esteroide natural', text:'Durante NREM profundo se secreta el 70% del total diario de GH. Dormir menos de 6h reduce testosterona un 10–15% y compromete directamente la recuperación muscular.', tag:'Sueño', tc:'#a78bfa', science:'Van Cauter et al. (2000) Sleep', plan:'esencial' },
+  { cat:'Nutrición', emoji:'⏰', title:'Ventana anabólica real', text:'La ventana de 30min post-entreno es un mito exagerado. La ventana real es 3–5 horas. Lo que importa es el total diario de proteína (1.6–2.2g/kg). El timing es secundario.', tag:'Timing', tc:'#f59e0b', science:'Schoenfeld & Aragon (2013) JISSN', plan:'metodo' },
+  { cat:'Fuerza', emoji:'🧠', title:'Activación neural pre-set pesado', text:'2–3 respiraciones diafragmáticas profundas antes de un set máximo mejoran la conexión mente-músculo. Exhala con presión creando brace abdominal antes del primer rep.', tag:'Neural', tc:'#38bdf8', science:'Calatayud et al. (2016) J Hum Kinet', plan:'metodo' },
+  { cat:'Recuperación', emoji:'🧊', title:'Frío post-entreno: cuándo sí y cuándo no', text:'El baño de hielo post-entreno REDUCE hipertrofia si se aplica dentro de las 4h (bloquea mTOR). Úsalo solo en deload o recuperación entre sesiones del mismo día.', tag:'Recuperación', tc:'#f87171', science:'Roberts et al. (2015) J Physiol', plan:'metodo' },
+  { cat:'Composición', emoji:'📊', title:'Déficit calórico inteligente', text:'Un déficit del 20–25% del TDEE preserva más músculo que déficits agresivos (>35%). Mayor déficit = mayor catabolismo muscular y cortisol. Lento y sostenido siempre gana.', tag:'Corte', tc:'#fb923c', science:'Helms et al. (2014) JISSN', plan:'elite' },
+  { cat:'Fuerza', emoji:'🔬', title:'Periodización ondulante diaria', text:'Variar carga e intensidad por sesión (5x5 pesado · 4x10 moderado · 3x15 ligero) supera a la periodización lineal en ganancias de fuerza según múltiples meta-análisis.', tag:'Periodización', tc:'#C8102E', science:'Harries et al. (2015) Int J Sports Physiol Perform', plan:'elite' }
 ];
-
-function renderRetos() {
-  var root = document.getElementById('retos-root');
-  if (!root || root.innerHTML !== '') return;
+var HACKS_CAT = 'Todo';
+function renderHacks() {
+  var root = document.getElementById('hacks-root');
+  if (!root) return;
   var planLevelMap = { esencial:1, metodo:2, elite:3 };
   var planLevel = planLevelMap[clientPlan] || 1;
-  var today = new Date().getDay();
-  var html = '<div class="retos-grid">';
-  RETOS_DATA.forEach(function(r, idx) {
-    var required = planLevelMap[r.plan] || 1;
-    var unlocked = planLevel >= required;
-    var key = 'wc_reto_' + r.id;
-    var done = JSON.parse(localStorage.getItem(key) || '{}');
-    var doneCount = Object.keys(done).length;
-    var pct = Math.round((doneCount / 7) * 100);
-    var daysHtml = '';
-    for (var d = 1; d <= 7; d++) {
-      var isDone = !!done[d];
-      var isToday = d === (today === 0 ? 7 : today);
-      daysHtml += '<div class="reto-day ' + (isDone ? 'done' : '') + (isToday ? ' today' : '') + '" ' +
-        (unlocked ? 'onclick="retoToggleDay(\'' + r.id + '\',' + d + ',this)"' : '') +
-        '>' + d + '</div>';
-    }
-    html += '<div class="reto-card" style="animation-delay:' + (idx*.05) + 's;">' +
-      '<div style="height:3px;background:linear-gradient(90deg,' + r.color + ',' + r.color + '88);"></div>' +
-      '<div class="reto-card-top">' +
-        '<div class="reto-emoji">' + r.emoji + '</div>' +
-        '<div><div class="reto-title">' + r.title + '</div><div class="reto-desc">' + r.desc + '</div>' +
-        '<div style="margin-top:6px;">' + (unlocked
-          ? '<span class="reto-badge" style="background:' + r.color + '18;color:' + r.color + ';border-color:' + r.color + '44;">' + (doneCount === 7 ? '🏆 COMPLETADO' : 'DÍA ' + doneCount + '/7') + '</span>'
-          : '<span class="reto-badge" style="background:rgba(255,255,255,.04);color:var(--gray);border-color:var(--border);"><i class="fas fa-lock" style="font-size:.55rem;margin-right:3px;"></i>Plan ' + r.plan.charAt(0).toUpperCase() + r.plan.slice(1) + '</span>') + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="reto-days-grid">' + daysHtml + '</div>' +
-      '<div class="reto-progress-bar-wrap">' +
-        '<div class="reto-prog-row"><span>' + doneCount + ' de 7 días</span><span style="color:' + r.color + ';font-weight:700;">' + pct + '%</span></div>' +
-        '<div class="reto-prog-track"><div class="reto-prog-fill" style="width:' + pct + '%;background:linear-gradient(90deg,' + r.color + ',' + r.color + 'aa);"></div></div>' +
+  var cats = ['Todo','Fuerza','Nutrición','Recuperación','Composición'];
+  var visible = HACKS_DATA.filter(function(h){ return planLevelMap[h.plan] <= planLevel; });
+  var filtered = HACKS_CAT === 'Todo' ? visible : visible.filter(function(h){ return h.cat === HACKS_CAT; });
+  var locked = HACKS_DATA.filter(function(h){ return planLevelMap[h.plan] > planLevel; });
+  var catsHtml = cats.map(function(c){ return '<button class="hacks-cat' + (c === HACKS_CAT ? ' active' : '') + '" onclick="hacksSetCat(\'' + c + '\')">' + c + '</button>'; }).join('');
+  var hacksHtml = filtered.map(function(h, i) {
+    return '<div class="hack-card" style="animation-delay:' + (i*.05) + 's;">' +
+      '<div class="hack-emoji">' + h.emoji + '</div>' +
+      '<div class="hack-body">' +
+        '<div class="hack-title">' + h.title + '</div>' +
+        '<div class="hack-text">' + h.text + '</div>' +
+        '<span class="hack-tag" style="color:' + h.tc + ';border-color:' + h.tc + '44;background:' + h.tc + '12;">' + h.tag + '</span>' +
+        '<div class="hack-science"><i class="fas fa-flask" style="margin-right:4px;"></i>' + h.science + '</div>' +
       '</div>' +
     '</div>';
-  });
-  html += '</div>';
-  root.innerHTML = html;
+  }).join('');
+  var lockedNote = locked.length ? '<div style="margin-top:16px;padding:14px;background:rgba(255,255,255,.03);border:1px dashed var(--border);border-radius:12px;text-align:center;font-size:.75rem;color:var(--gray);"><i class="fas fa-lock" style="margin-right:6px;opacity:.4;"></i>' + locked.length + ' hacks disponibles con planes superiores</div>' : '';
+  root.innerHTML = '<div class="hacks-header"><h3>🔬 Hacks Basados en Evidencia</h3><p>Estrategias de alto impacto respaldadas por investigación científica</p></div>' +
+    '<div class="hacks-cat-row">' + catsHtml + '</div>' +
+    '<div class="hacks-list">' + hacksHtml + '</div>' + lockedNote;
+}
+function hacksSetCat(cat) {
+  HACKS_CAT = cat;
+  var root = document.getElementById('hacks-root');
+  if (root) root.innerHTML = '';
+  renderHacks();
 }
 
-function retoToggleDay(id, day, el) {
-  var key = 'wc_reto_' + id;
-  var done = JSON.parse(localStorage.getItem(key) || '{}');
-  if (done[day]) { delete done[day]; el.classList.remove('done'); } else { done[day] = 1; el.classList.add('done'); }
-  localStorage.setItem(key, JSON.stringify(done));
-  // Refresh progress
-  var doneCount = Object.keys(done).length;
-  var pct = Math.round((doneCount / 7) * 100);
-  var card = el.closest('.reto-card');
-  if (card) {
-    var fill = card.querySelector('.reto-prog-fill'); if (fill) fill.style.width = pct + '%';
-    var prog = card.querySelectorAll('.reto-prog-row span'); if (prog[0]) prog[0].textContent = doneCount + ' de 7 días'; if (prog[1]) prog[1].textContent = pct + '%';
-  }
+// ═══════════════════════════════════════════════
+// ── MI CAMINO ──────────────────────────────────
+// ═══════════════════════════════════════════════
+var CAMINO_PHASES = [
+  { name:'Bienvenida & Baseline', desc:'Evaluación inicial, medidas, fotos y calibración de cargas. Tu punto de partida documenta el viaje.', icon:'🌟', status:'done', color:'#34d399', weeks:'Sem 1–2' },
+  { name:'Adaptación Neuromuscular', desc:'Aprender el patrón motor con cargas moderadas. La técnica perfecta ahora te protege de lesiones futuras.', icon:'🎯', status:'done', color:'#38bdf8', weeks:'Sem 3–6' },
+  { name:'Fase de Carga — Hipertrofia', desc:'Volumen alto, progresión semanal. Aquí se construye la mayor parte del tejido muscular. Enfócate en sobrecarga progresiva.', icon:'🔥', status:'current', color:'#C8102E', weeks:'Sem 7–14' },
+  { name:'Fase de Pico — Fuerza Máxima', desc:'Reducción de volumen, aumento de intensidad. Consolidas las ganancias y maximizas la expresión de fuerza.', icon:'⚡', status:'upcoming', color:'#f59e0b', weeks:'Sem 15–18' },
+  { name:'Deload & Evaluación', desc:'Recuperación activa. Medidas, fotos de progreso y análisis de resultados. Celebras lo construido.', icon:'🏆', status:'upcoming', color:'#a78bfa', weeks:'Sem 19–20' },
+  { name:'Nuevo Ciclo — Nivel Superior', desc:'Con lo aprendido, inicias un mesociclo más avanzado. Cargas mayores, técnica afinada, resultados compuestos.', icon:'🚀', status:'upcoming', color:'#f87171', weeks:'Sem 21+' }
+];
+var CAMINO_MS = ['📸 Foto Progreso','💪 PR Sentadilla','🏅 1 Mes Completo','📊 Check-in Semanal','⚖️ Composición','🔥 Fuerza +20%'];
+function renderCamino() {
+  var root = document.getElementById('camino-root');
+  if (!root) return;
+  var current = CAMINO_PHASES.find(function(p){ return p.status === 'current'; }) || CAMINO_PHASES[0];
+  var phaseHdr = '<div class="camino-phase-header">' +
+    '<div class="camino-phase-label" style="background:' + current.color + '18;color:' + current.color + ';border:1px solid ' + current.color + '33;"><i class="fas fa-map-marker-alt" style="font-size:.65rem;"></i> FASE ACTUAL</div>' +
+    '<div class="camino-phase-title">' + current.icon + ' ' + current.name + '</div>' +
+    '<div class="camino-phase-sub">' + current.weeks + ' · ' + current.desc + '</div>' +
+  '</div>';
+  var stepsHtml = CAMINO_PHASES.map(function(p, i) {
+    var isDone = p.status === 'done', isCur = p.status === 'current';
+    var dotStyle = isDone ? 'background:' + p.color + ';border-color:' + p.color + ';color:#fff;' : isCur ? 'background:rgba(200,16,46,.15);border-color:' + p.color + ';' : 'border-color:var(--border);';
+    var dotContent = isDone ? '<i class="fas fa-check" style="font-size:.5rem;"></i>' : (i+1);
+    return '<div class="camino-step">' +
+      '<div class="camino-dot ' + p.status + '" style="' + dotStyle + '">' + dotContent + '</div>' +
+      '<div class="camino-step-body' + (isCur ? ' current' : '') + '">' +
+        '<div class="camino-step-name">' + p.icon + ' ' + p.name + '</div>' +
+        '<div class="camino-step-desc">' + p.desc + '</div>' +
+        '<span class="camino-step-badge" style="color:' + p.color + ';border-color:' + p.color + '44;background:' + p.color + '10;">' + p.weeks + '</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  var msHtml = CAMINO_MS.map(function(m) {
+    var parts = m.split(' ');
+    var ico = parts[0], lbl = parts.slice(1).join(' ');
+    return '<div class="camino-ms"><div class="camino-ms-icon">' + ico + '</div><div class="camino-ms-lbl">' + lbl + '</div></div>';
+  }).join('');
+  root.innerHTML = phaseHdr +
+    '<div class="camino-roadmap"><div class="camino-line"></div>' + stepsHtml + '</div>' +
+    '<div class="camino-milestones"><div class="camino-milestones-title"><span></span>Hitos del Programa</div><div class="camino-ms-grid">' + msHtml + '</div></div>';
 }
 
 // ── ARCHIVOS LEGACY ──
