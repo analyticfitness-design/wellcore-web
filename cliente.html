@@ -35,6 +35,9 @@
   --radius-lg:16px;
   --font-body: 'Axiforma', 'Inter', sans-serif;
   --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
+  --phase-color: #C8102E;
+  --phase-color-dim: rgba(200,16,46,0.10);
+  --phase-color-border: rgba(200,16,46,0.25);
 }
 html{scroll-behavior:smooth}
 body{
@@ -282,10 +285,12 @@ input,textarea,select{font-family:'Inter',sans-serif}
   display:flex;align-items:center;gap:20px;
   background:var(--surface);
   border:1px solid var(--border);
+  border-left:3px solid var(--phase-color);
   border-radius:var(--radius);
   padding:22px 28px;
   margin-bottom:24px;
   width:fit-content;
+  transition:border-color 0.4s ease;
 }
 .ring-label{display:flex;flex-direction:column;gap:4px}
 .ring-pct{
@@ -1846,8 +1851,12 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         </div>
         <div style="margin-left:16px">
           <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Estado Programa</div>
-          <div style="font-size:.855rem;color:var(--white)" id="ring-fase-label">Fase de Ejecución</div>
+          <div style="font-size:.855rem;color:var(--phase-color);font-weight:600;" id="ring-fase-label">Fase de Ejecución</div>
           <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray);margin-top:4px" id="ring-semana-label">—</div>
+          <div id="phase-badge" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--phase-color);border:1px solid var(--phase-color-border);background:var(--phase-color-dim);border-radius:4px;transition:all 0.3s ease;">
+            <i class="fas fa-fire" id="phase-badge-icon"></i>
+            <span id="phase-badge-text">CARGA</span>
+          </div>
         </div>
       </div>
 
@@ -5511,13 +5520,59 @@ function updateDashboardKPIs(profile) {
   var kpiEntrega = document.getElementById('kpi-entrega');
   if (kpiEntrega) kpiEntrega.textContent = 'Lunes ' + nextMonday.getDate() + ' ' + monthNames[nextMonday.getMonth()];
 
-  // Phase calculation (12 semanas por ciclo)
-  var fase = semanas < 2 ? 1 : semanas < 4 ? 2 : semanas < 12 ? 3 : 4;
-  var faseLabels = { 1: 'Diagnóstico', 2: 'Programa', 3: 'Ejecución', 4: 'Resultados' };
+  // ── Adaptive Mesocycle Phase System (v7 #94) ──────────────────────────
+  var PHASES = {
+    load:   { color: '#C8102E', label: 'CARGA',    icon: 'fa-fire',       text: 'Fase de Carga' },
+    deload: { color: '#10b981', label: 'DESCARGA', icon: 'fa-leaf',       text: 'Semana de Descarga' },
+    peak:   { color: '#f59e0b', label: 'PICO',     icon: 'fa-bolt',       text: 'Pico de Rendimiento' },
+    test:   { color: '#a855f7', label: 'TEST',     icon: 'fa-flask-vial', text: 'Test y Evaluación' }
+  };
+  var cycle = ['load','load','load','deload']; // 4-week mesocycle
+  var cyclePos = semanas > 0 ? ((semanas - 1) % 4) : 0;
+  var phaseKey = cycle[cyclePos] || 'load';
+  if (semanas >= 12) phaseKey = 'peak';
+  if (semanas >= 14) phaseKey = 'test';
+  var phase = PHASES[phaseKey];
+
+  // Set global --phase-color CSS property
+  document.documentElement.style.setProperty('--phase-color', phase.color);
+  document.documentElement.style.setProperty('--phase-color-dim', phase.color + '1a');
+  document.documentElement.style.setProperty('--phase-color-border', phase.color + '40');
+
+  // Update progress ring color + stroke
+  var ring = document.getElementById('progress-ring');
+  if (ring) {
+    ring.setAttribute('stroke', phase.color);
+    var totalWeeks = 12;
+    var ringPct = Math.min(Math.round((semanas / totalWeeks) * 100), 100);
+    var offset = Math.round(314 * (1 - ringPct / 100));
+    ring.setAttribute('stroke-dashoffset', offset);
+    var ringPctEl = document.querySelector('.ring-pct');
+    if (ringPctEl) ringPctEl.textContent = ringPct + '%';
+  }
+
+  // Update ring labels
   var semanaLabel = document.getElementById('ring-semana-label');
   if (semanaLabel) semanaLabel.textContent = 'Semana ' + semanas + ' de 12';
   var faseLabel = document.getElementById('ring-fase-label');
-  if (faseLabel) faseLabel.textContent = faseLabels[fase] || 'Ejecución';
+  if (faseLabel) faseLabel.textContent = phase.text;
+
+  // Update phase badge
+  var badge = document.getElementById('phase-badge');
+  if (badge) {
+    badge.style.color = phase.color;
+    badge.style.borderColor = phase.color + '40';
+    badge.style.background = phase.color + '1a';
+  }
+  var badgeIcon = document.getElementById('phase-badge-icon');
+  if (badgeIcon) badgeIcon.className = 'fas ' + phase.icon;
+  var badgeText = document.getElementById('phase-badge-text');
+  if (badgeText) badgeText.textContent = phase.label;
+
+  // Phase calculation (program phases F01-F04)
+  var fase = semanas < 2 ? 1 : semanas < 4 ? 2 : semanas < 12 ? 3 : 4;
+  var kpiSemanaSub = document.getElementById('kpi-semanas-sub');
+  if (kpiSemanaSub) kpiSemanaSub.textContent = 'Fase F0' + fase + ' · ' + phase.label;
 }
 
 function saveProfile() {
