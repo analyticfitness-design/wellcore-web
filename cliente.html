@@ -814,6 +814,157 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .btn-view:hover{background:rgba(200,16,46,.2);border-color:var(--red)}
 .btn-view:disabled{opacity:.4;cursor:not-allowed}
 
+/* ===== WELLCORE ACADEMY ===== */
+.academy-phase-banner{
+  background:linear-gradient(135deg,var(--phase-color-dim,rgba(200,16,46,.10)) 0%,var(--surface) 100%);
+  border:1px solid var(--phase-color-border,rgba(200,16,46,.25));
+  border-radius:var(--radius);
+  padding:18px 22px;
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:22px;
+  transition:all 0.4s ease;
+}
+.academy-phase-icon{
+  width:48px;height:48px;border-radius:var(--radius-sm);
+  background:var(--phase-color-dim,rgba(200,16,46,.10));
+  border:1px solid var(--phase-color-border,rgba(200,16,46,.25));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:var(--phase-color,var(--red));
+  flex-shrink:0;transition:all 0.4s ease;
+}
+.academy-phase-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--phase-color,var(--red));margin-bottom:3px;}
+.academy-phase-title{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:2px;}
+.academy-phase-sub{font-size:.78rem;color:var(--gray);}
+.academy-phase-cta{margin-left:auto;flex-shrink:0;background:var(--phase-color-dim,rgba(200,16,46,.10));border:1px solid var(--phase-color-border,rgba(200,16,46,.25));color:var(--phase-color,var(--red));border-radius:var(--radius-sm);padding:7px 14px;font-size:.75rem;font-weight:600;white-space:nowrap;transition:all .2s;}
+.academy-phase-cta:hover{background:var(--phase-color,var(--red));color:#fff;}
+
+.acad-tabs{display:flex;gap:6px;margin-bottom:20px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;}
+.acad-tabs::-webkit-scrollbar{display:none;}
+.acad-tab{padding:8px 16px;font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--border);border-radius:40px;color:var(--gray);background:transparent;white-space:nowrap;transition:all .2s;}
+.acad-tab.active{background:var(--red-dim);border-color:rgba(200,16,46,.4);color:var(--red);}
+.acad-panel{display:none;}
+.acad-panel.active{display:block;}
+
+/* Calculadoras */
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.calc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:border-color .2s;}
+.calc-card:hover{border-color:rgba(200,16,46,.3);}
+.calc-card-title{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.calc-card-title i{color:var(--red);width:16px;}
+.calc-card-desc{font-size:.78rem;color:var(--gray);margin-bottom:16px;line-height:1.5;}
+.calc-field{margin-bottom:10px;}
+.calc-label{font-size:.72rem;font-weight:600;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:4px;}
+.calc-input,.calc-select{
+  width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:9px 12px;font-size:.85rem;color:var(--white);outline:none;transition:border-color .2s;
+  font-family:inherit;
+}
+.calc-input:focus,.calc-select:focus{border-color:var(--red);}
+.calc-select option{background:var(--card);}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.calc-btn{
+  width:100%;margin-top:14px;
+  background:var(--red-dim);border:1px solid rgba(200,16,46,.35);
+  color:var(--red);border-radius:var(--radius-sm);
+  padding:10px;font-size:.82rem;font-weight:600;
+  transition:all .2s;
+}
+.calc-btn:hover{background:var(--red);color:#fff;}
+.calc-result{
+  margin-top:12px;background:var(--card);border:1px solid rgba(200,16,46,.2);
+  border-radius:var(--radius-sm);padding:14px;display:none;
+}
+.calc-result.show{display:block;}
+.calc-result-main{font-family:var(--font-data,'DIN Next LT Pro',sans-serif);font-size:1.8rem;font-weight:700;color:var(--phase-color,var(--red));line-height:1;}
+.calc-result-label{font-size:.72rem;color:var(--gray);margin-top:4px;letter-spacing:.04em;}
+.calc-result-breakdown{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;}
+.calc-result-item{background:var(--surface);border-radius:6px;padding:6px 10px;font-size:.75rem;color:var(--gray);}
+.calc-result-item strong{color:var(--white);font-family:var(--font-data,'DIN Next LT Pro',sans-serif);}
+
+/* Guías de ciencia */
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.guide-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:border-color .2s,transform .15s;}
+.guide-card:hover{border-color:rgba(200,16,46,.3);transform:translateY(-1px);}
+.guide-card.read{border-color:rgba(34,197,94,.2);}
+.guide-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.guide-icon-wrap{width:42px;height:42px;border-radius:var(--radius-sm);background:var(--red-dim);border:1px solid rgba(200,16,46,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--red);flex-shrink:0;}
+.guide-card.read .guide-icon-wrap{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:#22C55E;}
+.guide-meta{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.guide-time{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gray);letter-spacing:.05em;}
+.guide-read-badge{font-size:.58rem;font-family:'JetBrains Mono',monospace;background:rgba(34,197,94,.12);color:#22C55E;border-radius:40px;padding:1px 7px;letter-spacing:.06em;}
+.guide-title{font-size:.9rem;font-weight:700;color:var(--white);}
+.guide-preview{font-size:.78rem;color:var(--gray);line-height:1.55;}
+.guide-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:2000;
+  display:flex;align-items:flex-end;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.guide-modal.open{opacity:1;pointer-events:all;}
+.guide-modal-inner{
+  background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;
+  padding:28px 22px 40px;width:100%;max-width:640px;margin:0 auto;
+  max-height:85vh;overflow-y:auto;
+  transform:translateY(40px);transition:transform .3s ease;
+}
+.guide-modal.open .guide-modal-inner{transform:translateY(0);}
+.guide-modal-title{font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:16px;}
+.guide-modal-body{font-size:.88rem;color:rgba(255,255,255,.75);line-height:1.75;}
+.guide-modal-body h4{color:var(--white);font-size:.9rem;margin:16px 0 6px;font-weight:600;}
+.guide-modal-body ul{padding-left:18px;margin:0 0 10px;}
+.guide-modal-body li{margin-bottom:5px;}
+.guide-modal-body strong{color:var(--white);}
+.guide-modal-close{position:absolute;top:16px;right:16px;background:var(--card);border:1px solid var(--border);color:var(--gray);width:32px;height:32px;border-radius:50%;font-size:1.1rem;display:flex;align-items:center;justify-content:center;}
+
+/* Ejercicios */
+.exercise-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.exercise-filter-btn{padding:5px 12px;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--border);border-radius:40px;color:var(--gray);background:transparent;transition:all .2s;}
+.exercise-filter-btn.active{background:var(--red-dim);border-color:rgba(200,16,46,.4);color:var(--red);}
+.exercise-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.exercise-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s;}
+.exercise-card:hover{border-color:rgba(200,16,46,.3);}
+.exercise-header{padding:16px 16px 12px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;}
+.exercise-muscle-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;background:var(--red-dim);color:var(--red);border-radius:40px;padding:2px 8px;white-space:nowrap;}
+.exercise-name{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:4px;}
+.exercise-body{padding:14px 16px;}
+.exercise-cues{list-style:none;padding:0;margin:0 0 10px;}
+.exercise-cues li{font-size:.78rem;color:var(--gray);padding:4px 0 4px 14px;position:relative;line-height:1.4;}
+.exercise-cues li::before{content:'→';position:absolute;left:0;color:var(--red);font-size:.7rem;}
+.exercise-mistakes{margin-top:8px;}
+.exercise-mistakes-label{font-size:.65rem;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,158,11,.7);margin-bottom:4px;}
+.exercise-mistakes ul{list-style:none;padding:0;margin:0;}
+.exercise-mistakes li{font-size:.75rem;color:rgba(245,158,11,.8);padding:3px 0 3px 14px;position:relative;}
+.exercise-mistakes li::before{content:'!';position:absolute;left:0;font-weight:700;}
+.exercise-locked{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 16px;text-align:center;gap:8px;opacity:.5;}
+.exercise-locked i{font-size:1.4rem;color:var(--gray);}
+.exercise-locked span{font-size:.78rem;color:var(--gray);}
+
+/* Recetas */
+.recipe-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.recipe-filter-btn{padding:5px 12px;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--border);border-radius:40px;color:var(--gray);background:transparent;transition:all .2s;}
+.recipe-filter-btn.active{background:var(--red-dim);border-color:rgba(200,16,46,.4);color:var(--red);}
+.recipe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.recipe-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s;}
+.recipe-card:hover{border-color:rgba(200,16,46,.3);transform:translateY(-1px);}
+.recipe-header{padding:16px 16px 10px;border-bottom:1px solid var(--border);}
+.recipe-name{font-size:.92rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.recipe-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.recipe-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;padding:2px 7px;border-radius:40px;}
+.recipe-tag-plan{background:var(--red-dim);color:var(--red);}
+.recipe-tag-kcal{background:rgba(245,158,11,.12);color:#f59e0b;}
+.recipe-tag-time{background:var(--card);color:var(--gray);}
+.recipe-macros{display:flex;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);}
+.recipe-macro{flex:1;text-align:center;}
+.recipe-macro-val{font-family:var(--font-data,'DIN Next LT Pro',sans-serif);font-size:1rem;font-weight:700;color:var(--white);}
+.recipe-macro-label{font-size:.6rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;}
+.recipe-body{padding:14px 16px;font-size:.78rem;color:var(--gray);line-height:1.5;display:none;}
+.recipe-card.open .recipe-body{display:block;}
+.recipe-body h4{font-size:.8rem;color:var(--white);font-weight:600;margin:10px 0 5px;}
+.recipe-body ul{padding-left:14px;margin:0 0 8px;}
+.recipe-body ol{padding-left:14px;margin:0;}
+.recipe-body li{margin-bottom:3px;}
+.recipe-locked{padding:20px;text-align:center;opacity:.5;font-size:.82rem;color:var(--gray);}
+.recipe-locked i{display:block;font-size:1.4rem;margin-bottom:6px;color:var(--gray);}
+
 /* ===== LIGHTBOX MODAL ===== */
 .modal-backdrop{
   display:none;
@@ -2668,21 +2819,243 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
     </section>
 
-    <!-- ===== SECTION 5: BIBLIOTECA ===== -->
+    <!-- ===== SECTION 5: WELLCORE ACADEMY ===== -->
     <section id="sec-biblioteca" class="section">
-      <h1 class="section-title">Biblioteca</h1>
-      <p class="section-desc">Todos tus documentos, planes y recursos en un solo lugar. Tu coach los sube aquí cuando están listos.</p>
+      <h1 class="section-title">WellCore <span>Academy</span></h1>
+      <p class="section-desc">Guías científicas, calculadoras y recursos que complementan tu programa. El contenido se adapta a tu fase actual de entrenamiento.</p>
 
-      <div class="files-grid" id="files-grid">
-        <!-- Populated by JS -->
+      <!-- Phase-adaptive banner -->
+      <div class="academy-phase-banner" id="acad-phase-banner">
+        <div class="academy-phase-icon" id="acad-phase-icon"><i class="fas fa-fire" id="acad-phase-icon-i"></i></div>
+        <div>
+          <div class="academy-phase-label" id="acad-phase-label">FASE ACTUAL</div>
+          <div class="academy-phase-title" id="acad-phase-title">Carga — Enfoque en Hipertrofia</div>
+          <div class="academy-phase-sub" id="acad-phase-sub">Guías recomendadas para esta semana</div>
+        </div>
+        <button class="academy-phase-cta" onclick="acadSetTab('guias')">Ver Guías <i class="fas fa-arrow-right" style="font-size:.65rem;margin-left:4px;"></i></button>
       </div>
-      <div id="biblioteca-empty" style="display:none">
-        <div class="empty-state">
-          <i class="fas fa-folder-open" style="font-size:3rem;color:var(--gray);opacity:.35;margin-bottom:14px;display:block"></i>
-          <p style="font-size:1.05rem;line-height:1.7;max-width:400px;margin:0 auto">Tu coach subirá aquí tus documentos y planes personalizados. Los archivos aparecen automáticamente cuando están preparados.</p>
+
+      <!-- Tabs -->
+      <div class="acad-tabs">
+        <button class="acad-tab active" onclick="acadSetTab('calculadoras')" id="acad-btn-calculadoras"><i class="fas fa-calculator" style="margin-right:5px;font-size:.75rem;"></i>Calculadoras</button>
+        <button class="acad-tab" onclick="acadSetTab('guias')" id="acad-btn-guias"><i class="fas fa-flask" style="margin-right:5px;font-size:.75rem;"></i>Ciencia</button>
+        <button class="acad-tab" onclick="acadSetTab('ejercicios')" id="acad-btn-ejercicios"><i class="fas fa-dumbbell" style="margin-right:5px;font-size:.75rem;"></i>Técnica</button>
+        <button class="acad-tab" onclick="acadSetTab('recetas')" id="acad-btn-recetas"><i class="fas fa-bowl-food" style="margin-right:5px;font-size:.75rem;"></i>Recetas</button>
+        <button class="acad-tab" onclick="acadSetTab('archivos')" id="acad-btn-archivos"><i class="fas fa-folder-open" style="margin-right:5px;font-size:.75rem;"></i>Mis Archivos</button>
+      </div>
+
+      <!-- CALCULADORAS -->
+      <div class="acad-panel active" id="acad-panel-calculadoras">
+        <div class="calc-grid">
+
+          <!-- TDEE -->
+          <div class="calc-card">
+            <div class="calc-card-title"><i class="fas fa-fire"></i> TDEE — Gasto Calórico</div>
+            <div class="calc-card-desc">Calcula tus calorías de mantenimiento diarias según tu nivel de actividad.</div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label class="calc-label">Peso (kg)</label>
+                <input class="calc-input" type="number" id="tdee-peso" placeholder="70" min="30" max="250">
+              </div>
+              <div class="calc-field">
+                <label class="calc-label">Altura (cm)</label>
+                <input class="calc-input" type="number" id="tdee-altura" placeholder="170" min="120" max="230">
+              </div>
+            </div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label class="calc-label">Edad</label>
+                <input class="calc-input" type="number" id="tdee-edad" placeholder="28" min="14" max="80">
+              </div>
+              <div class="calc-field">
+                <label class="calc-label">Sexo</label>
+                <select class="calc-select" id="tdee-sexo">
+                  <option value="m">Masculino</option>
+                  <option value="f">Femenino</option>
+                </select>
+              </div>
+            </div>
+            <div class="calc-field">
+              <label class="calc-label">Nivel de Actividad</label>
+              <select class="calc-select" id="tdee-act">
+                <option value="1.2">Sedentario (sin ejercicio)</option>
+                <option value="1.375" selected>Ligero (1-3 días/semana)</option>
+                <option value="1.55">Moderado (3-5 días/semana)</option>
+                <option value="1.725">Activo (6-7 días/semana)</option>
+                <option value="1.9">Muy activo (doble sesión)</option>
+              </select>
+            </div>
+            <button class="calc-btn" onclick="calcTDEE()">Calcular</button>
+            <div class="calc-result" id="res-tdee">
+              <div class="calc-result-main" id="res-tdee-val">—</div>
+              <div class="calc-result-label">kcal/día de mantenimiento</div>
+              <div class="calc-result-breakdown" id="res-tdee-breakdown"></div>
+            </div>
+          </div>
+
+          <!-- 1RM -->
+          <div class="calc-card">
+            <div class="calc-card-title"><i class="fas fa-weight-hanging"></i> 1RM — Repetición Máxima</div>
+            <div class="calc-card-desc">Estima tu máximo de fuerza para un ejercicio sin tener que llegar al fallo real.</div>
+            <div class="calc-field">
+              <label class="calc-label">Ejercicio</label>
+              <select class="calc-select" id="orm-ejercicio">
+                <option>Sentadilla</option><option>Press de banca</option><option>Peso muerto</option>
+                <option>Press militar</option><option>Remo con barra</option><option>Otro</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label class="calc-label">Peso usado (kg)</label>
+                <input class="calc-input" type="number" id="orm-peso" placeholder="80" min="1" max="500">
+              </div>
+              <div class="calc-field">
+                <label class="calc-label">Reps completadas</label>
+                <input class="calc-input" type="number" id="orm-reps" placeholder="8" min="1" max="30">
+              </div>
+            </div>
+            <button class="calc-btn" onclick="calcORM()">Calcular 1RM</button>
+            <div class="calc-result" id="res-orm">
+              <div class="calc-result-main" id="res-orm-val">—</div>
+              <div class="calc-result-label">kg estimado de 1RM (Epley)</div>
+              <div class="calc-result-breakdown" id="res-orm-breakdown"></div>
+            </div>
+          </div>
+
+          <!-- MACROS -->
+          <div class="calc-card">
+            <div class="calc-card-title"><i class="fas fa-chart-pie"></i> Macros Óptimos</div>
+            <div class="calc-card-desc">Distribución de proteína, carbohidratos y grasas según tu objetivo.</div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label class="calc-label">Peso (kg)</label>
+                <input class="calc-input" type="number" id="mac-peso" placeholder="70">
+              </div>
+              <div class="calc-field">
+                <label class="calc-label">TDEE (kcal)</label>
+                <input class="calc-input" type="number" id="mac-kcal" placeholder="2400">
+              </div>
+            </div>
+            <div class="calc-field">
+              <label class="calc-label">Objetivo</label>
+              <select class="calc-select" id="mac-obj">
+                <option value="deficit">Déficit — Perder grasa (−300 kcal)</option>
+                <option value="mant" selected>Mantenimiento — Recomposición</option>
+                <option value="super">Superávit — Ganar músculo (+250 kcal)</option>
+              </select>
+            </div>
+            <button class="calc-btn" onclick="calcMacros()">Calcular Macros</button>
+            <div class="calc-result" id="res-mac">
+              <div class="calc-result-main" id="res-mac-val">—</div>
+              <div class="calc-result-label">kcal objetivo/día</div>
+              <div class="calc-result-breakdown" id="res-mac-breakdown"></div>
+            </div>
+          </div>
+
+          <!-- VOLUMEN ENTRENAMIENTO -->
+          <div class="calc-card">
+            <div class="calc-card-title"><i class="fas fa-layer-group"></i> Volumen de Entrenamiento</div>
+            <div class="calc-card-desc">Series semanales recomendadas por grupo muscular (basado en RP — Renaissance Periodization).</div>
+            <div class="calc-field">
+              <label class="calc-label">Grupo muscular</label>
+              <select class="calc-select" id="vol-musculo">
+                <option value="pecho">Pecho</option><option value="espalda">Espalda</option>
+                <option value="pierna">Cuádriceps / Femoral</option><option value="gluteo">Glúteo</option>
+                <option value="hombros">Hombros</option><option value="biceps">Bíceps</option>
+                <option value="triceps">Tríceps</option><option value="core">Core</option>
+              </select>
+            </div>
+            <div class="calc-field">
+              <label class="calc-label">Nivel de experiencia</label>
+              <select class="calc-select" id="vol-nivel">
+                <option value="inicial">Inicial (0-1 año)</option>
+                <option value="intermedio" selected>Intermedio (1-3 años)</option>
+                <option value="avanzado">Avanzado (3+ años)</option>
+              </select>
+            </div>
+            <button class="calc-btn" onclick="calcVolumen()">Ver Volumen</button>
+            <div class="calc-result" id="res-vol">
+              <div class="calc-result-main" id="res-vol-val">—</div>
+              <div class="calc-result-label">series semanales (MV óptimo)</div>
+              <div class="calc-result-breakdown" id="res-vol-breakdown"></div>
+            </div>
+          </div>
+
+          <!-- HIDRATACIÓN -->
+          <div class="calc-card">
+            <div class="calc-card-title"><i class="fas fa-droplet"></i> Hidratación Diaria</div>
+            <div class="calc-card-desc">Requerimiento mínimo de agua según tu peso y nivel de actividad.</div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label class="calc-label">Peso (kg)</label>
+                <input class="calc-input" type="number" id="hid-peso" placeholder="70">
+              </div>
+              <div class="calc-field">
+                <label class="calc-label">Clima</label>
+                <select class="calc-select" id="hid-clima">
+                  <option value="frio">Frío / AC</option>
+                  <option value="temp" selected>Templado</option>
+                  <option value="calor">Calor / húmedo</option>
+                </select>
+              </div>
+            </div>
+            <div class="calc-field">
+              <label class="calc-label">Actividad física</label>
+              <select class="calc-select" id="hid-act">
+                <option value="1">Sin entrenamiento hoy</option>
+                <option value="2" selected>Entrenamiento moderado (&lt;60 min)</option>
+                <option value="3">Entrenamiento intenso (&gt;60 min)</option>
+              </select>
+            </div>
+            <button class="calc-btn" onclick="calcHidratacion()">Calcular</button>
+            <div class="calc-result" id="res-hid">
+              <div class="calc-result-main" id="res-hid-val">—</div>
+              <div class="calc-result-label">litros/día recomendados</div>
+              <div class="calc-result-breakdown" id="res-hid-breakdown"></div>
+            </div>
+          </div>
+
         </div>
       </div>
+
+      <!-- GUÍAS DE CIENCIA -->
+      <div class="acad-panel" id="acad-panel-guias">
+        <div class="guide-grid" id="guide-grid"><!-- rendered by JS --></div>
+      </div>
+
+      <!-- TÉCNICA DE EJERCICIOS -->
+      <div class="acad-panel" id="acad-panel-ejercicios">
+        <div class="exercise-filter" id="exercise-filter"><!-- rendered by JS --></div>
+        <div class="exercise-grid" id="exercise-grid"><!-- rendered by JS --></div>
+      </div>
+
+      <!-- RECETAS -->
+      <div class="acad-panel" id="acad-panel-recetas">
+        <div class="recipe-filter" id="recipe-filter"><!-- rendered by JS --></div>
+        <div class="recipe-grid" id="recipe-grid"><!-- rendered by JS --></div>
+      </div>
+
+      <!-- MIS ARCHIVOS (legacy) -->
+      <div class="acad-panel" id="acad-panel-archivos">
+        <div class="files-grid" id="files-grid"></div>
+        <div id="biblioteca-empty" style="display:none">
+          <div class="empty-state">
+            <i class="fas fa-folder-open" style="font-size:3rem;color:var(--gray);opacity:.35;margin-bottom:14px;display:block"></i>
+            <p style="font-size:1.05rem;line-height:1.7;max-width:400px;margin:0 auto">Tu coach subirá aquí tus documentos y planes personalizados.</p>
+          </div>
+        </div>
+      </div>
+
     </section>
+
+    <!-- Guide modal (global) -->
+    <div class="guide-modal" id="guide-modal" onclick="if(event.target===this)closeGuide()">
+      <div class="guide-modal-inner" style="position:relative;">
+        <button class="guide-modal-close" onclick="closeGuide()">&times;</button>
+        <div class="guide-modal-title" id="guide-modal-title"></div>
+        <div class="guide-modal-body" id="guide-modal-body"></div>
+      </div>
+    </div>
 
     <!-- ===== SECTION 6: SOPORTE ===== -->
     <section id="sec-soporte" class="section">
@@ -3649,8 +4022,9 @@ function init() {
   loadWeekGrid();
   wlInitForm();
 
-  // Init biblioteca
+  // Init Academy
   renderBiblioteca();
+  setTimeout(function(){ initCalcGating(); updateAcadPhaseBanner(); }, 600);
 
   // SLA
   renderSLA();
@@ -5349,7 +5723,449 @@ function toggleCheckinDetail(summaryEl) {
   if (chevron) chevron.textContent = detail.classList.contains('open') ? '\u25B4' : '\u25BE';
 }
 
-// ===== BIBLIOTECA =====
+// ===== WELLCORE ACADEMY =====
+
+// ── Tab switcher ──
+function acadSetTab(tab) {
+  document.querySelectorAll('.acad-tab').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.acad-panel').forEach(function(p){ p.classList.remove('active'); });
+  var btn = document.getElementById('acad-btn-' + tab);
+  var panel = document.getElementById('acad-panel-' + tab);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+  if (tab === 'guias') renderGuides();
+  if (tab === 'ejercicios') renderExercises();
+  if (tab === 'recetas') renderRecipes();
+  if (tab === 'archivos') renderBiblioteca();
+}
+
+// ── Phase banner update (called after phase is known) ──
+function updateAcadPhaseBanner() {
+  var phaseColor = getComputedStyle(document.documentElement).getPropertyValue('--phase-color').trim() || '#C8102E';
+  var PHASE_MAP = {
+    '#C8102E': { label: 'FASE: CARGA', title: 'Carga — Enfoque en Volumen', sub: 'Guías recomendadas: Hipertrofia y Sobrecarga Progresiva', icon: 'fa-fire' },
+    '#10b981': { label: 'FASE: DESCARGA', title: 'Deload — Recuperación Activa', sub: 'Guías recomendadas: Descanso y Recuperación Muscular', icon: 'fa-leaf' },
+    '#f59e0b': { label: 'FASE: PICO', title: 'Pico — Máximo Rendimiento', sub: 'Guías recomendadas: Intensidad y RPE avanzado', icon: 'fa-bolt' },
+    '#a855f7': { label: 'FASE: TEST', title: 'Test — Evaluación de Composición', sub: 'Calculadora recomendada: 1RM y Volumen', icon: 'fa-flask-vial' }
+  };
+  var info = PHASE_MAP[phaseColor] || PHASE_MAP['#C8102E'];
+  var el = function(id){ return document.getElementById(id); };
+  if (el('acad-phase-label')) el('acad-phase-label').textContent = info.label;
+  if (el('acad-phase-title')) el('acad-phase-title').textContent = info.title;
+  if (el('acad-phase-sub')) el('acad-phase-sub').textContent = info.sub;
+  if (el('acad-phase-icon-i')) el('acad-phase-icon-i').className = 'fas ' + info.icon;
+}
+
+// ── CALCULADORAS — gating ──
+function initCalcGating() {
+  var planLevelMap = { esencial:1, metodo:2, elite:3 };
+  var planLevel = planLevelMap[clientPlan] || 1;
+  // Macros (metodo+) y Volumen (metodo+)
+  var gates = [
+    { calcBtn: document.querySelector('[onclick="calcMacros()"]'), minLevel: 2, label:'Método' },
+    { calcBtn: document.querySelector('[onclick="calcVolumen()"]'), minLevel: 2, label:'Método' }
+  ];
+  gates.forEach(function(g) {
+    if (!g.calcBtn || planLevel >= g.minLevel) return;
+    var card = g.calcBtn.closest('.calc-card');
+    if (!card) return;
+    // Deshabilitar todos los inputs del card
+    card.querySelectorAll('input, select, button').forEach(function(el){ el.disabled = true; el.style.opacity = '.4'; });
+    // Overlay de bloqueo
+    var ov = document.createElement('div');
+    ov.style.cssText = 'margin-top:12px;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;';
+    ov.innerHTML = '<i class="fas fa-lock" style="color:var(--red);font-size:1.2rem;display:block;margin-bottom:6px;"></i><span style="font-size:.78rem;color:var(--gray);">Requiere plan <strong style="color:var(--white);">' + g.label + '</strong> o superior</span>';
+    card.appendChild(ov);
+  });
+}
+
+// ── CALCULADORAS ──
+function calcTDEE() {
+  var peso = +document.getElementById('tdee-peso').value;
+  var alt = +document.getElementById('tdee-altura').value;
+  var edad = +document.getElementById('tdee-edad').value;
+  var sexo = document.getElementById('tdee-sexo').value;
+  var act = +document.getElementById('tdee-act').value;
+  if (!peso || !alt || !edad) { showToast('Completa todos los campos', 'info'); return; }
+  var bmr = sexo === 'm'
+    ? 10*peso + 6.25*alt - 5*edad + 5
+    : 10*peso + 6.25*alt - 5*edad - 161;
+  var tdee = Math.round(bmr * act);
+  var res = document.getElementById('res-tdee');
+  document.getElementById('res-tdee-val').textContent = tdee.toLocaleString();
+  document.getElementById('res-tdee-breakdown').innerHTML =
+    '<div class="calc-result-item"><strong>' + Math.round(tdee * 0.9) + '</strong> kcal déficit</div>' +
+    '<div class="calc-result-item"><strong>' + tdee + '</strong> kcal mant.</div>' +
+    '<div class="calc-result-item"><strong>' + Math.round(tdee + 250) + '</strong> kcal superávit</div>';
+  res.classList.add('show');
+}
+
+function calcORM() {
+  var peso = +document.getElementById('orm-peso').value;
+  var reps = +document.getElementById('orm-reps').value;
+  if (!peso || !reps) { showToast('Ingresa peso y reps', 'info'); return; }
+  var orm = Math.round(peso * (1 + reps / 30));
+  var res = document.getElementById('res-orm');
+  document.getElementById('res-orm-val').textContent = orm + ' kg';
+  var pcts = [90, 80, 75, 70, 65];
+  var html = '';
+  pcts.forEach(function(p){ html += '<div class="calc-result-item"><strong>' + Math.round(orm * p/100) + 'kg</strong> @' + p + '%</div>'; });
+  document.getElementById('res-orm-breakdown').innerHTML = html;
+  res.classList.add('show');
+}
+
+function calcMacros() {
+  var peso = +document.getElementById('mac-peso').value;
+  var kcal = +document.getElementById('mac-kcal').value;
+  var obj = document.getElementById('mac-obj').value;
+  if (!peso || !kcal) { showToast('Completa peso y TDEE', 'info'); return; }
+  var adjust = obj === 'deficit' ? -300 : obj === 'super' ? 250 : 0;
+  var target = kcal + adjust;
+  var prot = Math.round(peso * 2.2);
+  var fat = Math.round(peso * 1.0);
+  var carbs = Math.round((target - prot*4 - fat*9) / 4);
+  carbs = Math.max(50, carbs);
+  var res = document.getElementById('res-mac');
+  document.getElementById('res-mac-val').textContent = target.toLocaleString();
+  document.getElementById('res-mac-breakdown').innerHTML =
+    '<div class="calc-result-item"><strong>' + prot + 'g</strong> proteína</div>' +
+    '<div class="calc-result-item"><strong>' + carbs + 'g</strong> carbos</div>' +
+    '<div class="calc-result-item"><strong>' + fat + 'g</strong> grasa</div>';
+  res.classList.add('show');
+}
+
+function calcVolumen() {
+  var musculo = document.getElementById('vol-musculo').value;
+  var nivel = document.getElementById('vol-nivel').value;
+  var VOL = {
+    pecho:    { inicial:[8,12,16], intermedio:[10,16,22], avanzado:[12,18,26] },
+    espalda:  { inicial:[10,14,20], intermedio:[12,18,25], avanzado:[14,22,30] },
+    pierna:   { inicial:[8,12,18], intermedio:[10,16,22], avanzado:[12,18,26] },
+    gluteo:   { inicial:[6,10,16], intermedio:[8,12,20], avanzado:[10,16,24] },
+    hombros:  { inicial:[6,10,14], intermedio:[8,14,18], avanzado:[10,16,22] },
+    biceps:   { inicial:[6,10,14], intermedio:[8,12,18], avanzado:[10,14,20] },
+    triceps:  { inicial:[6,10,14], intermedio:[8,12,18], avanzado:[10,14,20] },
+    core:     { inicial:[4,8,12],  intermedio:[6,10,16],  avanzado:[8,12,20] }
+  };
+  var v = VOL[musculo][nivel];
+  var res = document.getElementById('res-vol');
+  document.getElementById('res-vol-val').textContent = v[1] + ' series';
+  document.getElementById('res-vol-breakdown').innerHTML =
+    '<div class="calc-result-item"><strong>' + v[0] + '</strong> MEV (mínimo)</div>' +
+    '<div class="calc-result-item"><strong>' + v[1] + '</strong> MAV (óptimo)</div>' +
+    '<div class="calc-result-item"><strong>' + v[2] + '</strong> MRV (máximo)</div>';
+  res.classList.add('show');
+}
+
+function calcHidratacion() {
+  var peso = +document.getElementById('hid-peso').value;
+  var clima = document.getElementById('hid-clima').value;
+  var act = +document.getElementById('hid-act').value;
+  if (!peso) { showToast('Ingresa tu peso', 'info'); return; }
+  var base = peso * 0.033;
+  var climaAdj = clima === 'calor' ? 0.5 : clima === 'frio' ? 0 : 0.25;
+  var actAdj = act === 1 ? 0 : act === 2 ? 0.5 : 1.0;
+  var total = (base + climaAdj + actAdj).toFixed(1);
+  var res = document.getElementById('res-hid');
+  document.getElementById('res-hid-val').textContent = total + ' L';
+  document.getElementById('res-hid-breakdown').innerHTML =
+    '<div class="calc-result-item"><strong>' + Math.round(total / 8 * 10) / 10 + ' L</strong> por toma (x8)</div>' +
+    '<div class="calc-result-item"><strong>' + Math.round(total * 1000) + ' ml</strong> total</div>';
+  res.classList.add('show');
+}
+
+// ── GUÍAS DE CIENCIA ──
+var GUIDES = [
+  { id:'periodizacion', icon:'fa-calendar-days', time:'3 min', minPlan:'esencial', title:'¿Qué es la Periodización?',
+    preview:'Por qué tu plan cambia cada semana — y por qué eso es exactamente lo que necesitas.',
+    content:`<h4>¿Qué es?</h4><p>La periodización es la organización sistemática del entrenamiento en bloques de tiempo con objetivos específicos. No se trata de entrenar más fuerte siempre, sino de entrenar <strong>más inteligente</strong>.</p><h4>Los 3 bloques básicos</h4><ul><li><strong>Mesociclo:</strong> 3-6 semanas de entrenamiento con un enfoque específico (volumen, intensidad, etc.)</li><li><strong>Microciclo:</strong> una semana de entrenamiento</li><li><strong>Macrociclo:</strong> el plan anual completo</li></ul><h4>¿Por qué funciona?</h4><p>Tu cuerpo se adapta rápidamente al estrés del entrenamiento. Al variar sistemáticamente el volumen e intensidad, evitas el estancamiento y maximizas las adaptaciones. Los estudios muestran que la periodización produce <strong>2-3× más ganancias</strong> que el entrenamiento lineal simple.</p><h4>Tu plan WellCore</h4><p>Cada 4 semanas pasas por: 3 semanas de carga progresiva + 1 semana de deload. Este ciclo es la base del sistema WellCore.</p>` },
+  { id:'rpe', icon:'fa-gauge-high', time:'2 min', minPlan:'esencial', title:'RPE: La Escala del Esfuerzo',
+    preview:'Cómo medir la intensidad real de tu entrenamiento sin necesitar un laboratorio.',
+    content:`<h4>¿Qué es el RPE?</h4><p><strong>Rating of Perceived Exertion</strong> — escala del 1 al 10 que mide qué tan cerca estás del fallo muscular.</p><h4>La escala práctica</h4><ul><li><strong>RPE 6:</strong> Podrías hacer 4+ reps más fácilmente</li><li><strong>RPE 7:</strong> Podrías hacer 3 reps más</li><li><strong>RPE 8:</strong> Podrías hacer 2 reps más — zona de entrenamiento productiva</li><li><strong>RPE 9:</strong> 1 rep más posible — alta intensidad</li><li><strong>RPE 10:</strong> Fallo muscular</li></ul><h4>¿Por qué importa?</h4><p>Entrenar siempre a RPE 10 genera más fatiga de la que puedes recuperar. El "sweet spot" para hipertrofia es <strong>RPE 7-9</strong>. Aprender a autoevaluar tu RPE es una de las habilidades más valiosas que puedes desarrollar.</p>` },
+  { id:'sobrecarga', icon:'fa-arrow-trend-up', time:'2 min', minPlan:'esencial', title:'Sobrecarga Progresiva',
+    preview:'La ley #1 del entrenamiento: si no progresas, no creces.',
+    content:`<h4>El principio fundamental</h4><p>Tu cuerpo solo se adapta (hipertrofia, fuerza) cuando se enfrenta a un estrés <strong>mayor al que está acostumbrado</strong>. Sin sobrecarga progresiva, el entrenamiento te mantiene, pero no te transforma.</p><h4>Formas de progresar</h4><ul><li><strong>Más peso:</strong> Aumentar la carga (el método más obvio)</li><li><strong>Más reps:</strong> Mismo peso, más repeticiones</li><li><strong>Más series:</strong> Mayor volumen semanal</li><li><strong>Menos descanso:</strong> Mayor densidad de entrenamiento</li><li><strong>Mejor técnica:</strong> Mismo peso, más activación muscular</li></ul><h4>La regla del 2%</h4><p>Intenta aumentar el peso un <strong>2-5% por semana</strong> en ejercicios compuestos cuando domines el rango de reps prescrito. En ejercicios de aislamiento, el aumento puede ser menor.</p>` },
+  { id:'hipertrofia', icon:'fa-person-walking-arrow-right', time:'4 min', minPlan:'esencial', title:'Hipertrofia: Volumen y Tensión',
+    preview:'La ciencia detrás del crecimiento muscular — qué necesitas realmente para crecer.',
+    content:`<h4>¿Qué estimula el crecimiento?</h4><p>La investigación actual (Schoenfeld, 2010-2024) identifica 3 mecanismos principales:</p><ul><li><strong>Tensión mecánica:</strong> La principal — pesos que generan tensión alta en el músculo durante todo el rango de movimiento</li><li><strong>Estrés metabólico:</strong> El "pump" — acumulación de metabolitos como lactato</li><li><strong>Daño muscular:</strong> Menor rol del que se pensaba antes</li></ul><h4>El rol del volumen</h4><p>Más series semanales = más crecimiento (hasta cierto punto). El MEV (Mínimo Volumen Efectivo) es el piso; el MRV (Máximo Volumen Recuperable) es el techo. Operar entre estos límites es el arte del diseño de programas.</p><h4>Tempo y rango de movimiento</h4><p>Usar el rango de movimiento completo aumenta la hipertrofia hasta un <strong>30% más</strong> comparado con rangos parciales. El tempo no importa tanto — lo que importa es la tensión mecánica, no la velocidad.</p>` },
+  { id:'deload', icon:'fa-battery-half', time:'2 min', minPlan:'esencial', title:'El Deload: Por Qué Descansar es Entrenar',
+    preview:'La semana que te parece "perder el tiempo" es en realidad donde ocurre la magia.',
+    content:`<h4>¿Qué pasa durante el deload?</h4><p>El crecimiento muscular y las ganancias de fuerza <strong>ocurren durante la recuperación</strong>, no durante el entrenamiento. El entrenamiento es el estímulo; la recuperación es la adaptación.</p><h4>Síntomas de que necesitas un deload</h4><ul><li>Rendimiento estancado o decreciente</li><li>Motivación baja para entrenar</li><li>Dolores articulares persistentes</li><li>Sueño perturbado a pesar del cansancio</li><li>Irritabilidad inusual</li></ul><h4>Cómo hacer un deload efectivo</h4><p>En WellCore usamos el protocolo de <strong>reducción de volumen al 60%</strong> con misma intensidad. No es una semana libre — sigues entrenando, pero con 40% menos series. Esto permite recuperación sin perder las adaptaciones.</p>` },
+  { id:'suenio', icon:'fa-moon', time:'3 min', minPlan:'metodo', title:'Sueño y Recuperación',
+    preview:'El suplemento más potente que existe no se vende en ninguna tienda.',
+    content:`<h4>¿Por qué el sueño es crítico?</h4><p>Durante el sueño profundo (NREM fase 3), la hipófisis libera el <strong>90% de la hormona de crecimiento diaria</strong>. Menos de 7 horas reduce la síntesis proteica muscular hasta un 30%.</p><h4>Lo que pasa con poco sueño</h4><ul><li>Cortisol elevado → mayor catabolismo muscular</li><li>Insulina menos sensible → peor particionamiento de nutrientes</li><li>Menor fuerza y coordinación → mayor riesgo de lesión</li><li>Peor regulación del apetito → más hambre, peores elecciones</li></ul><h4>Estrategias de calidad</h4><ul><li>Temperatura de habitación: 18-20°C es óptima</li><li>Sin pantallas 45 min antes de dormir</li><li>Horario consistente (mismo hora de dormir y despertar)</li><li>Oscuridad total o antifaz</li></ul><p>Si optimizas solo UNA cosa fuera del gym, que sea el sueño.</p>` },
+  { id:'proteina', icon:'fa-drumstick-bite', time:'3 min', minPlan:'metodo', title:'Proteína: La Ciencia Detrás del Número',
+    preview:'¿1g por kg? ¿2g? ¿3g? La respuesta real basada en evidencia.',
+    content:`<h4>¿Cuánta proteína necesitas?</h4><p>El consenso científico actual (Morton 2018, Stokes 2018) para maximizar la síntesis proteica muscular es <strong>1.6-2.2g/kg de peso corporal</strong> para personas que entrenan resistencia.</p><h4>El mito de "más es mejor"</h4><p>Por encima de 2.2g/kg, el exceso de proteína no genera más músculo — simplemente se oxida como energía. No hay beneficio en ir a 3g/kg si ya cubres el rango efectivo.</p><h4>Distribución a lo largo del día</h4><ul><li>20-40g por toma maximiza la síntesis (leucina threshold)</li><li>4-5 tomas distribuidas > 2 tomas grandes con misma cantidad total</li><li>Proteína post-entreno: el timing importa menos de lo que pensabas — tienes una ventana de varias horas</li></ul><h4>Fuentes de calidad</h4><p>Prioriza fuentes completas (carne, huevo, lácteos, legumbres combinadas). El suero de leche (whey) es eficiente pero no indispensable si cubres el total diario.</p>` },
+  { id:'cardio', icon:'fa-person-running', time:'2 min', minPlan:'metodo', title:'Cardio y Músculo: ¿Son Enemigos?',
+    preview:'El efecto de interferencia existe — pero es mucho más pequeño de lo que te han dicho.',
+    content:`<h4>¿El cardio destruye músculo?</h4><p>No si se hace correctamente. El "efecto de interferencia" (Wilson 2012) existe pero es <strong>mínimo en cantidades moderadas</strong> de cardio.</p><h4>La regla práctica</h4><ul><li>Hasta 3-4 sesiones de cardio moderado por semana: impacto mínimo en hipertrofia</li><li>Cardio de baja intensidad (LISS): virtualmente sin interferencia</li><li>HIIT intenso: mayor interferencia, mayor riesgo de afectar recuperación</li></ul><h4>Orden de entrenamiento</h4><p>Si entrenas cardio y pesas el mismo día, haz <strong>pesas primero</strong> cuando el glucógeno está alto. El cardio post-pesas o en sesión separada es lo ideal.</p><h4>El cardio y la composición corporal</h4><p>El cardio es una herramienta de gasto calórico y salud cardiovascular. No es necesario para perder grasa si el déficit calórico existe — pero sí puede facilitar mantener ese déficit sin reducir tanto la ingesta.</p>` },
+  { id:'frecuencia', icon:'fa-calendar-week', time:'2 min', minPlan:'elite', title:'Frecuencia, Volumen e Intensidad',
+    preview:'Las 3 variables de entrenamiento y cómo manipularlas para tu objetivo.',
+    content:`<h4>Las 3 variables clave</h4><ul><li><strong>Frecuencia:</strong> Cuántas veces/semana entrenas un músculo</li><li><strong>Volumen:</strong> Series y reps totales por semana</li><li><strong>Intensidad:</strong> % del 1RM o RPE usado</li></ul><h4>¿Cuál es más importante?</h4><p>El <strong>volumen semanal</strong> es el predictor más consistente de hipertrofia, siempre que la intensidad sea suficiente (RPE 7+). La frecuencia es un vehículo para distribuir ese volumen.</p><h4>Para hipertrofia</h4><ul><li>Frecuencia óptima: 2 veces/semana por grupo muscular</li><li>Volumen: 10-20 series semanales según experiencia</li><li>Intensidad: 60-80% del 1RM, RPE 7-9</li></ul><h4>Para fuerza</h4><ul><li>Frecuencia: 3-5 veces/semana en los movimientos principales</li><li>Volumen: menor, más series a alta intensidad</li><li>Intensidad: 80-95% del 1RM, series de 1-5 reps</li></ul>` },
+  { id:'composicion', icon:'fa-scale-balanced', time:'2 min', minPlan:'elite', title:'Composición Corporal vs Peso',
+    preview:'Por qué la báscula puede mentirte — y qué métricas realmente importan.',
+    content:`<h4>El problema del peso</h4><p>El peso en la báscula incluye músculo, grasa, agua, glucógeno y contenido intestinal. Puede fluctuar <strong>1-3 kg en un día</strong> sin que tu composición haya cambiado.</p><h4>Qué medir en cambio</h4><ul><li><strong>Circunferencias:</strong> cintura, cadera, brazos, piernas — más representativas</li><li><strong>Fotos de progreso:</strong> el mejor indicador visual</li><li><strong>Rendimiento en el gym:</strong> si tu fuerza sube, estás progresando</li><li><strong>Cómo queda la ropa:</strong> indicador práctico real</li></ul><h4>La recomposición es posible</h4><p>En personas con menos de 2-3 años de entrenamiento, es posible perder grasa y ganar músculo simultáneamente — llamada "recomposición corporal". Requiere alto consumo proteico y entrenamiento de resistencia progresivo.</p><h4>Expectativas reales</h4><p>Una persona natural puede ganar <strong>1-2 kg de músculo real por mes</strong> en el mejor escenario (principiante). A medida que avanzas, el ritmo se reduce significativamente.</p>` }
+];
+
+var GUIDES_READ = JSON.parse(localStorage.getItem('wc_guides_read') || '{}');
+function renderGuides() {
+  var grid = document.getElementById('guide-grid');
+  if (!grid || grid.children.length > 0) return;
+  var planLevelMap = { esencial:1, metodo:2, elite:3 };
+  var planLevel = planLevelMap[clientPlan] || 1;
+  var planLabel = { esencial:'Esencial', metodo:'Método', elite:'Elite' };
+  GUIDES.forEach(function(g) {
+    var required = planLevelMap[g.minPlan || 'esencial'];
+    var unlocked = planLevel >= required;
+    var isRead = !!GUIDES_READ[g.id];
+    var card = document.createElement('div');
+    if (!unlocked) {
+      card.className = 'guide-card';
+      card.style.cssText = 'opacity:.5;cursor:default;';
+      card.innerHTML = '<div class="guide-top">' +
+        '<div class="guide-icon-wrap" style="background:var(--card);border-color:var(--border);"><i class="fas fa-lock" style="color:var(--gray);"></i></div>' +
+        '<div style="flex:1"><div class="guide-meta"><span class="guide-time" style="background:var(--card);color:var(--gray);border-radius:40px;padding:2px 8px;font-size:.62rem;">' + planLabel[g.minPlan] + ' o superior</span></div>' +
+        '<div class="guide-title" style="color:var(--gray);">' + g.title + '</div></div></div>' +
+        '<div class="guide-preview">' + g.preview + '</div>';
+    } else {
+      card.className = 'guide-card v7-glow-track' + (isRead ? ' read' : '');
+      card.innerHTML = '<div class="guide-top">' +
+        '<div class="guide-icon-wrap"><i class="fas ' + g.icon + '"></i></div>' +
+        '<div style="flex:1"><div class="guide-meta"><span class="guide-time"><i class="fas fa-clock" style="margin-right:3px;opacity:.5;"></i>' + g.time + '</span>' +
+        (isRead ? '<span class="guide-read-badge">LEÍDA</span>' : '') + '</div>' +
+        '<div class="guide-title">' + g.title + '</div></div></div>' +
+        '<div class="guide-preview">' + g.preview + '</div>';
+      card.addEventListener('click', function(){ openGuide(g); });
+    }
+    grid.appendChild(card);
+  });
+}
+
+function openGuide(g) {
+  var modal = document.getElementById('guide-modal');
+  document.getElementById('guide-modal-title').textContent = g.title;
+  document.getElementById('guide-modal-body').innerHTML = g.content;
+  modal.classList.add('open');
+  GUIDES_READ[g.id] = true;
+  localStorage.setItem('wc_guides_read', JSON.stringify(GUIDES_READ));
+}
+function closeGuide() {
+  document.getElementById('guide-modal').classList.remove('open');
+  // Refresh read state
+  document.querySelectorAll('.guide-card').forEach(function(c, i) {
+    if (GUIDES_READ[GUIDES[i].id]) {
+      c.classList.add('read');
+      var badge = c.querySelector('.guide-meta');
+      if (badge && !c.querySelector('.guide-read-badge')) {
+        badge.insertAdjacentHTML('beforeend','<span class="guide-read-badge">LEÍDA</span>');
+      }
+      var iconW = c.querySelector('.guide-icon-wrap');
+      if (iconW) { iconW.style.background='rgba(34,197,94,.1)'; iconW.style.borderColor='rgba(34,197,94,.25)'; iconW.style.color='#22C55E'; }
+    }
+  });
+}
+
+// ── EJERCICIOS ──
+var EXERCISES = [
+  // PECHO
+  { name:'Press de Banca', muscle:'Pecho', minPlan:'esencial', cues:['Escápulas retraídas y deprimidas','Barra sobre la parte baja del pecho','Codos a 45-75° del torso','Empuje como si separaras el piso','Mantén contacto con el banco en todo momento'],
+    mistakes:['Codos muy abiertos a 90° (estrés en hombros)','Rebotar la barra en el pecho','Levantar la cadera del banco'] },
+  { name:'Press Inclinado con Mancuernas', muscle:'Pecho', minPlan:'esencial', cues:['Ángulo de 30-45° en el banco','Mancuernas alineadas con los clavículas','Bajar hasta sentir el estiramiento del pectoral','Presionar hacia arriba y ligeramente adentro'],
+    mistakes:['Banco demasiado inclinado (activa más deltoides)','Perder arco lumbar durante el movimiento'] },
+  { name:'Fondos en Paralelas', muscle:'Pecho', minPlan:'metodo', cues:['Inclínate hacia adelante para activar pectoral','Codos apuntan hacia atrás','Descenso controlado hasta 90° de flexión de codo','Sin hiperextender los codos al subir'],
+    mistakes:['Torso vertical (activa tríceps, no pecho)','Descenso excesivo (estrés en hombro)'] },
+  // ESPALDA
+  { name:'Remo con Barra', muscle:'Espalda', minPlan:'esencial', cues:['Torso a 45° del suelo','Barra cerca al cuerpo durante todo el recorrido','Llevar el codo atrás y arriba','Contraer escápulas al final del recorrido'],
+    mistakes:['Usar la cadera para subir la barra','Cuello en hiperextensión','Barra muy separada del cuerpo'] },
+  { name:'Dominadas (Pull-ups)', muscle:'Espalda', minPlan:'esencial', cues:['Agarre ligeramente más ancho que hombros','Iniciar el movimiento deprimiendo las escápulas','Llevar el pecho hacia la barra','Descenso lento y controlado (2-3 seg)'],
+    mistakes:['Usar el momentum del cuerpo','Rango de movimiento incompleto','No extender completamente al bajar'] },
+  { name:'Remo en Polea Baja', muscle:'Espalda', minPlan:'esencial', cues:['Espalda erguida, no inclinada al tirar','Codos cerca al cuerpo','Retracción escapular al final','Pausa de 1 seg en la contracción máxima'],
+    mistakes:['Inclinarse hacia atrás con la espalda','Soltar el peso sin control'] },
+  // PIERNA
+  { name:'Sentadilla', muscle:'Pierna', minPlan:'esencial', cues:['Pies a ancho de hombros, ligeramente rotados afuera','Rodillas en línea con los dedos del pie','Profundidad: muslos paralelos al suelo mínimo','Codos abajo (barra baja) o arriba (barra alta)','Empuja el suelo, no "sube" la barra'],
+    mistakes:['Rodillas colapsando hacia adentro (valgo)','Talones levantándose del suelo','Curvar la espalda baja (buttwink excesivo)'] },
+  { name:'Peso Muerto Convencional', muscle:'Pierna', minPlan:'esencial', cues:['Barra sobre el empeine, a ~2-3cm de las espinillas','Cadera baja al inicio, no es una sentadilla','Espalda plana (curva neutral, no hiperlordosis)','Empujar el suelo al inicio, no tirar la barra','Bloquear las caderas al final'],
+    mistakes:['Barra muy separada del cuerpo','Redondear la espalda lumbar','Hiperextender al final (riesgo lumbar)'] },
+  { name:'Prensa de Piernas', muscle:'Pierna', minPlan:'esencial', cues:['Pies a ancho de hombros en la plataforma','Bajar hasta 90° de flexión de rodilla','No bloquear completamente las rodillas al subir','Empujar con toda la planta del pie'],
+    mistakes:['Peso excesivo con rango limitado','Levantar la cadera de la plataforma','Rodillas colapsando hacia adentro'] },
+  { name:'Hip Thrust', muscle:'Glúteo', minPlan:'esencial', cues:['Banca a la altura de los omóplatos','Barra sobre los pliegues de la cadera (con almohadilla)','Empujar con los talones, no la punta del pie','Extensión completa de cadera, pelvis en retroversión al final','Mantener el core activado durante todo el movimiento'],
+    mistakes:['Extensión lumbar en lugar de cadera','Barra rodándose hacia arriba durante el movimiento','Rango incompleto'] },
+  { name:'Zancada con Mancuernas', muscle:'Pierna', minPlan:'esencial', cues:['Paso largo hacia adelante','Rodilla trasera baja hasta casi tocar el suelo','Torso erguido durante todo el movimiento','Empujar con el talón de la pierna adelantada para volver'],
+    mistakes:['Torso inclinado hacia adelante','Rodilla delantera pasando la punta del pie','Pasos muy cortos'] },
+  // HOMBROS
+  { name:'Press Militar', muscle:'Hombros', minPlan:'esencial', cues:['Barra al nivel de la clavícula al inicio','Core activado, sin extender la espalda baja','Codos ligeramente adelante de la barra','Empujar la barra en línea recta sobre la cabeza','Llevar las orejas entre los brazos al subir'],
+    mistakes:['Inclinarse hacia atrás excesivamente','Codos muy abiertos a los lados','Rango incompleto (no extender los codos)'] },
+  { name:'Elevaciones Laterales', muscle:'Hombros', minPlan:'esencial', cues:['Ligera flexión de codo (15-20°)','Elevar hasta que los brazos queden paralelos al suelo','El meñique ligeramente más alto que el pulgar al final','Descenso lento y controlado (3 seg)'],
+    mistakes:['Uso del momentum (trampa con el torso)','Subir por encima de la horizontal','Demasiado peso, rango incompleto'] },
+  // BÍCEPS
+  { name:'Curl con Barra', muscle:'Bíceps', minPlan:'esencial', cues:['Codos pegados a los costados, sin moverse','Supinación completa de la muñeca al subir','Pausa de 1 seg en la contracción máxima','Descenso controlado (2-3 seg) con extensión completa'],
+    mistakes:['Balancear el torso para subir el peso','Codos moviéndose hacia adelante al subir','No extender completamente al bajar'] },
+  { name:'Curl de Martillo', muscle:'Bíceps', minPlan:'esencial', cues:['Agarre neutro (palmas enfrentadas) durante todo el movimiento','Codos estables en los costados','Sube a ritmo controlado y baja lento'],
+    mistakes:['Girar la muñeca al subir (eso es curl normal)','Codos desplazándose hacia adelante'] },
+  // TRÍCEPS
+  { name:'Press Francés (Skull Crusher)', muscle:'Tríceps', minPlan:'metodo', cues:['Barra de EZ o mancuernas al frente','Codos apuntando al techo, sin abrirse','Bajar hasta cerca de la frente o ligeramente atrás','Extensión completa de codo al subir'],
+    mistakes:['Codos abriéndose hacia los lados al bajar','Usar el hombro para terminar el movimiento'] },
+  { name:'Extensión en Polea Alta', muscle:'Tríceps', minPlan:'esencial', cues:['Torso ligeramente inclinado hacia adelante','Codos fijos a los costados, apuntando al suelo','Extensión completa de codo en la contracción','Agarre neutro o prono según el implemento'],
+    mistakes:['Codos moviéndose durante el movimiento','No extender completamente al bajar'] },
+  // CORE
+  { name:'Plancha (Plank)', muscle:'Core', minPlan:'esencial', cues:['Cuerpo en línea recta de cabeza a talones','Activar glúteos y core simultáneamente','Cuello en posición neutral (no mirar arriba ni abajo)','Respiración diafragmática durante el ejercicio'],
+    mistakes:['Cadera cayendo hacia el suelo','Cadera elevada (posición de montaña)','Apnea durante el ejercicio'] },
+  { name:'Dead Bug', muscle:'Core', minPlan:'esencial', cues:['Espalda baja en contacto con el suelo durante todo el movimiento','Bajar el brazo y pierna contrarios simultáneamente','Movimiento lento y controlado (3-4 seg)','Exhalar durante el descenso'],
+    mistakes:['Espalda arqueándose al extender las extremidades','Velocidad excesiva que elimina el trabajo de estabilización'] },
+  { name:'RKC Plank', muscle:'Core', minPlan:'metodo', cues:['Partiendo de una plancha normal','Activar todos los músculos del cuerpo simultáneamente (apretar puños, glúteos, cuádriceps)','Crear tensión total — como si quisieras "romper" el piso'],
+    mistakes:['Posición incorrecta de base antes de agregar tensión'] }
+];
+
+var exerciseFilter = 'Todo';
+function renderExercises() {
+  var filterEl = document.getElementById('exercise-filter');
+  var gridEl = document.getElementById('exercise-grid');
+  if (!filterEl || filterEl.children.length > 0) { filterExercises(exerciseFilter); return; }
+  var muscles = ['Todo','Pecho','Espalda','Pierna','Glúteo','Hombros','Bíceps','Tríceps','Core'];
+  muscles.forEach(function(m) {
+    var btn = document.createElement('button');
+    btn.className = 'exercise-filter-btn' + (m === exerciseFilter ? ' active' : '');
+    btn.textContent = m;
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.exercise-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      exerciseFilter = m;
+      filterExercises(m);
+    });
+    filterEl.appendChild(btn);
+  });
+  filterExercises('Todo');
+}
+
+function filterExercises(muscle) {
+  var gridEl = document.getElementById('exercise-grid');
+  if (!gridEl) return;
+  var planLevelMap = { esencial:1, metodo:2, elite:3 };
+  var planLevel = planLevelMap[clientPlan] || 1;
+  gridEl.textContent = '';
+  var filtered = muscle === 'Todo' ? EXERCISES : EXERCISES.filter(function(e){ return e.muscle === muscle; });
+  filtered.forEach(function(ex) {
+    var required = planLevelMap[ex.minPlan] || 1;
+    var unlocked = planLevel >= required;
+    var card = document.createElement('div');
+    card.className = 'exercise-card';
+    if (!unlocked) {
+      card.innerHTML = '<div class="exercise-header"><div><div class="exercise-muscle-tag">' + ex.muscle + '</div><div class="exercise-name">' + ex.name + '</div></div></div><div class="exercise-locked"><i class="fas fa-lock"></i><span>Requiere plan ' + ex.minPlan.charAt(0).toUpperCase() + ex.minPlan.slice(1) + '</span></div>';
+    } else {
+      var cuesHtml = ex.cues.map(function(c){ return '<li>' + c + '</li>'; }).join('');
+      var mistakesHtml = ex.mistakes.map(function(m){ return '<li>' + m + '</li>'; }).join('');
+      card.innerHTML = '<div class="exercise-header"><div><div class="exercise-muscle-tag">' + ex.muscle + '</div><div class="exercise-name">' + ex.name + '</div></div></div>' +
+        '<div class="exercise-body"><ul class="exercise-cues">' + cuesHtml + '</ul>' +
+        '<div class="exercise-mistakes"><div class="exercise-mistakes-label"><i class="fas fa-triangle-exclamation" style="margin-right:4px;"></i>Errores comunes</div><ul>' + mistakesHtml + '</ul></div></div>';
+    }
+    gridEl.appendChild(card);
+  });
+}
+
+// ── RECETAS ──
+var RECIPES = [
+  // ESENCIAL
+  { name:'Bowl de Arroz con Pollo', plan:'esencial', kcal:480, tiempo:'25 min', prot:42, carbs:48, fat:10, obj:'mant',
+    ingredientes:['200g pechuga de pollo','1 taza arroz integral','1 taza de brócoli al vapor','1 cdta aceite de oliva','Sal, pimienta, ajo en polvo'],
+    pasos:['Cocina el arroz según instrucciones (20 min).','Sazona el pollo con sal, pimienta y ajo. Sella en sartén 5-6 min por lado.','Cuece el brócoli al vapor 4 min.','Ensambla en bowl. Chorrito de aceite de oliva.'] },
+  { name:'Avena Proteica Nocturna', plan:'esencial', kcal:380, tiempo:'5 min + reposo', prot:28, carbs:40, fat:8, obj:'deficit',
+    ingredientes:['70g avena tradicional','200ml leche descremada','1 scoop proteína de vainilla','1/2 banano','1 cdta mantequilla de maní'],
+    pasos:['Mezcla avena, leche y proteína en un recipiente.','Tapa y refrigera 8 horas (o toda la noche).','Al servir, agrega banano en rodajas y mantequilla de maní.'] },
+  { name:'Omelette de 4 Huevos', plan:'esencial', kcal:340, tiempo:'10 min', prot:30, carbs:6, fat:22, obj:'deficit',
+    ingredientes:['4 huevos enteros','50g espinaca','30g queso bajo en grasa','Sal, pimienta, cúrcuma','Aceite en spray'],
+    pasos:['Bate los huevos con sal, pimienta y cúrcuma.','En sartén antiadherente con spray, vierte los huevos.','Agrega espinaca y queso cuando los bordes empiecen a solidificar.','Dobla y sirve inmediatamente.'] },
+  { name:'Ensalada Proteica César', plan:'esencial', kcal:420, tiempo:'15 min', prot:38, carbs:22, fat:18, obj:'mant',
+    ingredientes:['150g pechuga de pollo a la plancha','2 tazas de lechuga romana','30g crutones integrales','2 cdas aderezo César light','20g queso parmesano rallado'],
+    pasos:['Cocina el pollo sazonado en sartén hasta dorar.','Trocea la lechuga y mezcla con aderezo.','Agrega el pollo en tiras, crutones y parmesano.'] },
+  { name:'Batido Verde Post-Entreno', plan:'esencial', kcal:290, tiempo:'5 min', prot:24, carbs:36, fat:4, obj:'deficit',
+    ingredientes:['1 scoop proteína vainilla','1 taza espinaca fresca','1/2 banano congelado','200ml leche de almendras','1/2 taza hielo'],
+    pasos:['Licúa todos los ingredientes por 40 segundos.','Consume dentro de los primeros 30-60 min post-entreno.'] },
+  // MÉTODO
+  { name:'Salmón al Horno con Vegetales', plan:'metodo', kcal:510, tiempo:'30 min', prot:44, carbs:28, fat:22, obj:'mant',
+    ingredientes:['180g filete de salmón','1 taza de vegetales mixtos (calabacín, pimiento, cebolla)','1/2 batata mediana','2 cdas aceite de oliva','Limón, eneldo, ajo'],
+    pasos:['Precalienta horno a 200°C.','Sazona el salmón con limón, eneldo, sal y ajo.','En bandeja, coloca vegetales con aceite. Hornea 10 min.','Agrega el salmón y hornea 15-18 min más.'] },
+  { name:'Bowl de Quinoa y Atún', plan:'metodo', kcal:440, tiempo:'20 min', prot:40, carbs:44, fat:12, obj:'mant',
+    ingredientes:['3/4 taza quinoa cocida','2 latas atún en agua','1 aguacate pequeño','Tomate cherry, pepino','Jugo de limón, sal'],
+    pasos:['Cocina la quinoa (15 min).','Escurre el atún y mezcla con quinoa.','Agrega aguacate en cubos, tomate y pepino.','Aliña con limón y sal al gusto.'] },
+  { name:'Pasta Integral con Pavo', plan:'metodo', kcal:520, tiempo:'25 min', prot:38, carbs:58, fat:14, obj:'super',
+    ingredientes:['80g pasta integral','150g carne de pavo molida','1/2 taza salsa de tomate natural','Ajo, cebolla, albahaca','1 cdta aceite de oliva'],
+    pasos:['Cocina la pasta al dente.','Saltea ajo y cebolla en aceite. Agrega el pavo.','Incorpora salsa de tomate, salpimenta y cocina 10 min.','Mezcla con la pasta y sirve con albahaca fresca.'] },
+  { name:'Pancakes Proteicos de Banano', plan:'metodo', kcal:360, tiempo:'15 min', prot:28, carbs:38, fat:10, obj:'mant',
+    ingredientes:['1 banano maduro','2 huevos enteros','1/2 scoop proteína en polvo','1 cdta polvo de hornear','Canela, vainilla'],
+    pasos:['Aplasta el banano hasta hacer un puré.','Mezcla todos los ingredientes hasta obtener masa homogénea.','Cocina en sartén antiadherente 2-3 min por lado.','Sirve con frutas frescas o miel de maple ligera.'] },
+  { name:'Stir Fry de Tofu y Verduras', plan:'metodo', kcal:380, tiempo:'20 min', prot:24, carbs:32, fat:16, obj:'deficit',
+    ingredientes:['200g tofu firme','1 taza brócoli','1 taza zanahoria en juliana','2 cdas salsa soya baja en sodio','Jengibre, ajo, aceite de sésamo','Arroz integral al servir'],
+    pasos:['Presiona el tofu y córtalo en cubos. Saltea en aceite hasta dorar.','Agrega ajo y jengibre rallados, salteá 1 min.','Incorpora vegetales y saltea 4-5 min a fuego alto.','Agrega la salsa de soya, mezcla y sirve sobre arroz.'] },
+  // ELITE
+  { name:'Overnight Oats Premium', plan:'elite', kcal:420, tiempo:'10 min + reposo', prot:32, carbs:44, fat:12, obj:'mant',
+    ingredientes:['80g avena de corte grueso','250ml leche entera','1 scoop proteína sabor neutral','2 cdas semillas de chía','1 cdta miel cruda','Frutos rojos mixtos'],
+    pasos:['Combina avena, leche, proteína y semillas de chía.','Refrigera 8-12 horas.','Al servir, agrega miel y frutos rojos frescos.','Opcional: granola casera por encima para textura.'] },
+  { name:'Buddha Bowl Hipertrofia', plan:'elite', kcal:560, tiempo:'30 min', prot:46, carbs:52, fat:18, obj:'super',
+    ingredientes:['150g tempeh marinado','1 taza arroz negro cocido','Edamame, rábano, zanahoria rallada','1/4 aguacate','Aderezo tahini: 2 cdas tahini, limón, ajo, agua'],
+    pasos:['Marina el tempeh en soya, ajo y jengibre 20 min. Saltea hasta dorar.','Construye el bowl: arroz negro de base.','Dispone tempeh, edamame, zanahoria y rábano.','Agrega aguacate y vierte el aderezo de tahini.'] },
+  { name:'Teriyaki Salmón Rice Bowl', plan:'elite', kcal:580, tiempo:'25 min', prot:48, carbs:50, fat:20, obj:'super',
+    ingredientes:['200g salmón','1 taza arroz jazmín','Salsa teriyaki: soya, miel, jengibre, ajo','1/2 taza edamame','Sésamo, cebolla verde'],
+    pasos:['Marina el salmón 15 min en la salsa teriyaki.','Cocina el arroz.','Sella el salmón en sartén caliente 3-4 min por lado.','Sirve sobre el arroz con edamame, sésamo y cebolla verde.'] },
+  { name:'Energy Balls de Proteína', plan:'elite', kcal:280, tiempo:'15 min + frío', prot:18, carbs:26, fat:14, obj:'mant',
+    ingredientes:['1 taza avena fina','2 cdas mantequilla de almendras','1 scoop proteína chocolate','3 cdas miel','2 cdas chispas de chocolate oscuro','Cacao en polvo para cubrir'],
+    pasos:['Mezcla todos los ingredientes hasta que formen una masa moldeable.','Si está muy seca, agrega 1 cda de agua. Si muy húmeda, más avena.','Forma 12 bolitas del tamaño de una nuez.','Cubre en cacao y refrigera 1 hora. Guarda hasta 1 semana.'] },
+  { name:'Ricotta Toast Proteico', plan:'elite', kcal:320, tiempo:'10 min', prot:22, carbs:28, fat:14, obj:'deficit',
+    ingredientes:['2 rebanadas pan de masa madre','80g ricotta baja en grasa','1 scoop proteína sabor vainilla','Fresas frescas en rodajas','Miel, menta, pistachos picados'],
+    pasos:['Mezcla la ricotta con la proteína hasta integrar.','Tuesta el pan.','Unta generosamente la mezcla de ricotta.','Corona con fresas, menta, pistachos y un hilo de miel.'] }
+];
+
+var recipeFilter = 'Todo';
+function renderRecipes() {
+  var filterEl = document.getElementById('recipe-filter');
+  var gridEl = document.getElementById('recipe-grid');
+  if (!filterEl || filterEl.children.length > 0) { filterRecipes(recipeFilter); return; }
+  var cats = ['Todo','Déficit','Mantenimiento','Superávit'];
+  cats.forEach(function(c) {
+    var btn = document.createElement('button');
+    btn.className = 'recipe-filter-btn' + (c === recipeFilter ? ' active' : '');
+    btn.textContent = c;
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.recipe-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      recipeFilter = c;
+      filterRecipes(c);
+    });
+    filterEl.appendChild(btn);
+  });
+  filterRecipes('Todo');
+}
+
+function filterRecipes(cat) {
+  var gridEl = document.getElementById('recipe-grid');
+  if (!gridEl) return;
+  var planLevelMap = { esencial:1, metodo:2, elite:3 };
+  var planLevel = planLevelMap[clientPlan] || 1;
+  var objMap = { 'Déficit':'deficit', 'Mantenimiento':'mant', 'Superávit':'super' };
+  gridEl.textContent = '';
+  RECIPES.filter(function(r){ return cat === 'Todo' || r.obj === objMap[cat]; }).forEach(function(r) {
+    var required = planLevelMap[r.plan] || 1;
+    var unlocked = planLevel >= required;
+    var card = document.createElement('div');
+    card.className = 'recipe-card';
+    var planLabel = { esencial:'ESENCIAL', metodo:'MÉTODO', elite:'ELITE' };
+    var objLabel = { deficit:'Déficit', mant:'Mantenimiento', super:'Superávit' };
+    if (!unlocked) {
+      card.innerHTML = '<div class="recipe-header"><div class="recipe-name">' + r.name + '</div><div class="recipe-tags"><span class="recipe-tag recipe-tag-plan">' + planLabel[r.plan] + '</span></div></div><div class="recipe-locked"><i class="fas fa-lock"></i>Requiere plan ' + r.plan.charAt(0).toUpperCase() + r.plan.slice(1) + '</div>';
+    } else {
+      var ingHtml = r.ingredientes.map(function(i){ return '<li>' + i + '</li>'; }).join('');
+      var pasosHtml = r.pasos.map(function(p){ return '<li>' + p + '</li>'; }).join('');
+      card.innerHTML = '<div class="recipe-header"><div class="recipe-name">' + r.name + '</div>' +
+        '<div class="recipe-tags"><span class="recipe-tag recipe-tag-plan">' + planLabel[r.plan] + '</span><span class="recipe-tag recipe-tag-kcal">' + r.kcal + ' kcal</span><span class="recipe-tag recipe-tag-time"><i class="fas fa-clock" style="margin-right:2px;opacity:.5;font-size:.55rem;"></i>' + r.tiempo + '</span><span class="recipe-tag" style="background:rgba(99,102,241,.12);color:#818cf8;">' + objLabel[r.obj] + '</span></div></div>' +
+        '<div class="recipe-macros"><div class="recipe-macro"><div class="recipe-macro-val">' + r.prot + 'g</div><div class="recipe-macro-label">Prot</div></div><div class="recipe-macro"><div class="recipe-macro-val">' + r.carbs + 'g</div><div class="recipe-macro-label">Carbs</div></div><div class="recipe-macro"><div class="recipe-macro-val">' + r.fat + 'g</div><div class="recipe-macro-label">Grasa</div></div></div>' +
+        '<div class="recipe-body"><h4><i class="fas fa-list-ul" style="margin-right:6px;opacity:.6;"></i>Ingredientes</h4><ul>' + ingHtml + '</ul><h4><i class="fas fa-fire-burner" style="margin-right:6px;opacity:.6;"></i>Preparación</h4><ol>' + pasosHtml + '</ol></div>';
+      card.addEventListener('click', function(){ card.classList.toggle('open'); });
+    }
+    gridEl.appendChild(card);
+  });
+}
+
+// ── ARCHIVOS LEGACY ──
 const FILES = [
   { name: 'Plan de Entrenamiento', isPlan: true, planType: 'entrenamiento', minPlan: 'esencial', demoFile: 'planes/demo-entrenamiento.html' },
   { name: 'Plan de Nutrición',     isPlan: true, planType: 'nutricion',     minPlan: 'metodo',   demoFile: 'planes/demo-nutricion.html' },
