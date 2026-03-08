@@ -2128,3 +2128,56 @@ nav {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   35. MOBILE OVERFLOW — Global fixes
+   ══════════════════════════════════════════════════════════════ */
+
+/*
+ * Fix: html overflow-x hidden
+ * Cuando html tiene overflow:visible y body tiene overflow:hidden,
+ * html se convierte en el scroll container y los position:fixed con
+ * right:0 se anclan al scrollable width (478px) en lugar del viewport (390px).
+ * También previene que transforms de animación iniciales causen scroll horizontal.
+ */
+html {
+  overflow-x: hidden;
+}
+
+/*
+ * Fix: MI CUENTA button en navbars de blog
+ * En blog pages el botón está dentro de un div extra, por lo que el selector
+ * .nav-inner > a[href*="login"] de v6.css no aplica (usa >).
+ * Esto lo sobreescribe con descendant combinator.
+ */
+.nav-inner a[href*="login"] {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/*
+ * Fix: compare-table overflow en planes.html
+ * La tabla con min-width:700px necesita un wrapper con width explícito
+ * para que overflow-x:auto cree un scroll container correctamente.
+ */
+@media (max-width: 768px) {
+  .compare-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/*
+ * Fix: nav-cta visible en mobile en blog pages
+ * En páginas del blog, el nav-cta y MI CUENTA están dentro de un div flex
+ * que persiste en mobile. Ocultamos nav-cta para dar espacio al menú.
+ */
+@media (max-width: 991px) {
+  .nav-inner .nav-cta {
+    display: none !important;
+  }
+}
