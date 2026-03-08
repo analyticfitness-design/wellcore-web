@@ -11,8 +11,6 @@
     <!-- v7 Premium Fonts -->
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
-    <!-- WellCore v7 Ultra-Premium Design System 2026 -->
-    <link rel="stylesheet" href="css/wellcore-v7.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
@@ -34,7 +32,8 @@
             --gray-dim: rgba(255,255,255,0.18);
             --ease-brand: cubic-bezier(0.16,1,0.3,1);
             --text-hero: clamp(3rem,8vw,5.5rem); /* #26 Fluid Typography */
-            --font-body: 'Axiforma', 'Inter', sans-serif;
+            --font-body: 'Axiforma', 'Inter', system-ui, sans-serif;
+            --font-head: 'Bebas Neue', Impact, sans-serif;
             --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
         }
 
@@ -761,6 +760,8 @@
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
+<!-- WellCore v7 Ultra-Premium Design System 2026 -->
+<link rel="stylesheet" href="css/wellcore-v7.css">
 </head>
 <body>
 <div class="v6-scroll-progress"></div>
@@ -970,13 +971,13 @@
     </div>
 
     <!-- ══════ JOURNEY — Tu Experiencia RISE ══════ -->
-    <div class="journey-section">
+    <div class="journey-section v7-reveal">
         <div class="journey-header">
             <div class="platform-badge" style="margin-bottom:20px;">
                 <i class="fas fa-route" style="color:var(--red);font-size:11px;"></i>
                 <span>Tu Experiencia</span>
             </div>
-            <h2>Asi Vives los 30 Dias</h2>
+            <h2 class="v7-split-word">Asi Vives los 30 Dias</h2>
             <p>Desde el dia 1 hasta tu transformacion. Cada paso esta disenado para que nunca te sientas solo.</p>
         </div>
 
@@ -1221,7 +1222,7 @@
                             Al terminar RISE, accedes a nuestros planes mensuales 1:1 con tu coach a <strong>precio preferencial</strong>:
                         </div>
                         <div class="upgrade-plans__grid">
-                            <div class="upgrade-plan-card">
+                            <div class="upgrade-plan-card v7-glow-track">
                                 <div class="upgrade-plan-card__icon" style="color:#22C55E"><i class="fas fa-seedling"></i></div>
                                 <div class="upgrade-plan-card__name">Esencial</div>
                                 <ul class="upgrade-plan-card__list">
@@ -1231,7 +1232,7 @@
                                     <li>Seguimiento semanal</li>
                                 </ul>
                             </div>
-                            <div class="upgrade-plan-card upgrade-plan-card--featured">
+                            <div class="upgrade-plan-card upgrade-plan-card--featured v7-glow-track">
                                 <div class="upgrade-plan-card__badge">Popular</div>
                                 <div class="upgrade-plan-card__icon" style="color:var(--red)"><i class="fas fa-fire"></i></div>
                                 <div class="upgrade-plan-card__name">Metodo</div>
@@ -1243,7 +1244,7 @@
                                     <li>Mediciones corporales</li>
                                 </ul>
                             </div>
-                            <div class="upgrade-plan-card">
+                            <div class="upgrade-plan-card v7-glow-track">
                                 <div class="upgrade-plan-card__icon" style="color:var(--accent)"><i class="fas fa-crown"></i></div>
                                 <div class="upgrade-plan-card__name">Elite</div>
                                 <ul class="upgrade-plan-card__list">

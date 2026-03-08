@@ -29,6 +29,7 @@
   --radius:0;
   --radius-lg:0;
   --font-body: 'Axiforma', 'Inter', sans-serif;
+  --font-head: 'Bebas Neue', Impact, sans-serif;
   --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
 }
 html{scroll-behavior:smooth}
@@ -717,7 +718,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
   <div class="content-area">
 
     <!-- ===== SECTION 1: DASHBOARD ===== -->
-    <section id="sec-dashboard" class="section active">
+    <section id="sec-dashboard" class="section active v7-reveal">
       <h1 class="section-title v7-split-word">DASH<span>//</span>BOARD</h1>
 
       <div class="kpi-grid">
@@ -757,8 +758,8 @@ input,textarea,select{font-family:'Inter',sans-serif}
     </section>
 
     <!-- ===== SECTION 2: MIS CLIENTES ===== -->
-    <section id="sec-clientes" class="section">
-      <h1 class="section-title">MIS <span>//</span>CLIENTES</h1>
+    <section id="sec-clientes" class="section v7-reveal">
+      <h1 class="section-title v7-split-word">MIS <span>//</span>CLIENTES</h1>
 
       <div class="table-wrap">
         <table class="data-table" id="clients-table">
@@ -780,8 +781,8 @@ input,textarea,select{font-family:'Inter',sans-serif}
     </section>
 
     <!-- ===== SECTION 3: TICKETS ===== -->
-    <section id="sec-tickets" class="section">
-      <h1 class="section-title">TICKETS <span>//</span></h1>
+    <section id="sec-tickets" class="section v7-reveal">
+      <h1 class="section-title v7-split-word">TICKETS <span>//</span></h1>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
         <div style="display:flex;gap:8px">
@@ -790,7 +791,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
           <button class="btn-outline ticket-filter" data-filter="in_progress" onclick="filterTickets('in_progress',this)">En Progreso</button>
           <button class="btn-outline ticket-filter" data-filter="closed" onclick="filterTickets('closed',this)">Cerrados</button>
         </div>
-        <button class="btn-primary" onclick="toggleNewTicket()">+ Nuevo Ticket</button>
+        <button class="btn-primary v7-btn-primary" onclick="toggleNewTicket()">+ Nuevo Ticket</button>
       </div>
 
       <!-- New Ticket Form (hidden by default) -->
@@ -833,8 +834,8 @@ input,textarea,select{font-family:'Inter',sans-serif}
             <textarea class="form-textarea" id="tk-desc" rows="4" required minlength="20" placeholder="Describe la solicitud en detalle..."></textarea>
           </div>
           <div style="display:flex;gap:12px">
-            <button type="submit" class="btn-primary" id="btn-submit-ticket">Enviar Ticket</button>
-            <button type="button" class="btn-outline" onclick="toggleNewTicket()">Cancelar</button>
+            <button type="submit" class="btn-primary v7-btn-primary" id="btn-submit-ticket">Enviar Ticket</button>
+            <button type="button" class="btn-outline v7-btn-ghost" onclick="toggleNewTicket()">Cancelar</button>
           </div>
         </form>
       </div>
@@ -901,7 +902,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
             </div>
           </div>
 
-          <button class="btn-primary" id="btn-save-brand" onclick="saveBrand()">Guardar Marca</button>
+          <button class="btn-primary v7-btn-primary" id="btn-save-brand" onclick="saveBrand()">Guardar Marca</button>
         </div>
 
         <!-- Right Column: Preview -->
@@ -922,7 +923,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
     </section>
 
     <!-- ===== SECTION 5: MI PERFIL ===== -->
-    <section id="sec-perfil" class="section">
+    <section id="sec-perfil" class="section v7-reveal">
       <h1 class="section-title">MI <span>//</span>PERFIL</h1>
 
       <div class="card">
@@ -993,8 +994,8 @@ input,textarea,select{font-family:'Inter',sans-serif}
           </div>
 
           <div style="display:flex;align-items:center;gap:14px;margin-top:8px">
-            <button type="submit" class="btn-primary">Guardar Perfil</button>
-            <a href="#" class="btn-outline" id="public-profile-link" target="_blank" style="text-decoration:none">Ver mi perfil publico</a>
+            <button type="submit" class="btn-primary v7-btn-primary">Guardar Perfil</button>
+            <a href="#" class="btn-outline v7-btn-ghost" id="public-profile-link" target="_blank" style="text-decoration:none">Ver mi perfil publico</a>
           </div>
         </form>
       </div>
@@ -1054,7 +1055,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
     </section>
 
     <!-- ===== SECTION 7: RECURSOS ===== -->
-    <section id="sec-recursos" class="section">
+    <section id="sec-recursos" class="section v7-reveal">
       <h1 class="section-title">RECUR<span>//</span>SOS</h1>
 
       <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px;line-height:1.6">
