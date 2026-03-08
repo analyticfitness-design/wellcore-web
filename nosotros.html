@@ -527,9 +527,10 @@
     @media (max-width: 768px) {
       .container-wc { padding: 0 20px; }
       .mvp-grid { grid-template-columns: 1fr; gap: 2px; }
-      .estandar-grid { grid-template-columns: 1fr !important; }
-      .estandar-card { padding: 36px 28px !important; }
-      .estandar-strip { flex-direction: column; padding: 28px 24px !important; }
+      .origen-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .origen-stats-grid { grid-template-columns: 1fr !important; }
+      .origen-stats-grid > div { border-right: none !important; border-bottom: 1px solid var(--border); padding: 36px 24px !important; }
+      .origen-stats-grid > div:last-child { border-bottom: none; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .team-grid { grid-template-columns: 1fr; }
       .dif-grid { grid-template-columns: 1fr; }
@@ -675,86 +676,65 @@
 <section id="sec-origen" class="section-wrap" data-v5-reveal>
   <div class="container-wc">
 
-    <div style="max-width:820px;margin-bottom:72px;">
-      <span class="section-marker" data-aos="fade-right" data-aos-duration="600">[01] &mdash; Lo que nos define</span>
-      <h2 style="font-family:var(--font-head);font-size:clamp(52px,6vw,96px);line-height:0.95;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:24px;" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-        El <em style="color:var(--red);font-style:normal;">Est&aacute;ndar</em><br>WellCore.
-      </h2>
-      <p style="font-family:var(--font-body);font-size:17px;line-height:1.7;color:var(--gray);max-width:580px;" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
-        No una historia. Un conjunto de principios no negociables que definen cada programa,
-        cada respuesta y cada decisi&oacute;n que tomamos contigo.
+    <!-- Headline block -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:96px;" class="origen-hero-grid">
+
+      <div data-aos="fade-up" data-aos-duration="700">
+        <span class="section-marker">[01] &mdash; Por qu&eacute; existimos</span>
+        <h2 style="font-family:var(--font-head);font-size:clamp(56px,6vw,100px);line-height:0.9;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:0;">
+          Tu cuerpo<br>necesita un<br>
+          <em style="color:var(--red);font-style:normal;">protocolo.</em><br>
+          No una<br>plantilla.
+        </h2>
+      </div>
+
+      <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="120" style="padding-top:16px;">
+        <p style="font-family:var(--font-body);font-size:18px;line-height:1.8;color:var(--gray);margin-bottom:28px;">
+          La industria del fitness lleva d&eacute;cadas vendiendo la misma soluci&oacute;n gen&eacute;rica a cuerpos completamente distintos.
+          Nosotros dedicamos <strong style="color:var(--white);">9 a&ntilde;os a construir el antidoto</strong>: un sistema donde cada programa se
+          dise&ntilde;a desde cero, con evidencia, para una persona real.
+        </p>
+        <p style="font-family:var(--font-body);font-size:18px;line-height:1.8;color:var(--gray);margin-bottom:0;">
+          Cuando abrimos en 2026, no era el comienzo.
+          <strong style="color:var(--white);">Era el punto en que ya ten&iacute;amos las respuestas.</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- Data row — 3 big numbers -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);margin-bottom:2px;" class="origen-stats-grid" data-aos="fade-up" data-aos-duration="600" data-aos-delay="60">
+
+      <div style="padding:48px 40px;border-right:1px solid var(--border);position:relative;overflow:hidden;">
+        <div style="font-family:var(--font-head);font-size:clamp(72px,8vw,120px);line-height:0.85;color:var(--white);letter-spacing:-2px;margin-bottom:16px;">9</div>
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:8px;">A&ntilde;os</div>
+        <div style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--gray);">Construyendo y refinando el protocolo antes de lanzar al p&uacute;blico.</div>
+        <div style="font-family:var(--font-head);font-size:160px;line-height:1;color:rgba(227,30,36,0.04);position:absolute;bottom:-20px;right:-10px;letter-spacing:0;pointer-events:none;" aria-hidden="true">9</div>
+      </div>
+
+      <div style="padding:48px 40px;border-right:1px solid var(--border);position:relative;overflow:hidden;">
+        <div style="font-family:var(--font-head);font-size:clamp(72px,8vw,120px);line-height:0.85;color:var(--white);letter-spacing:-2px;margin-bottom:16px;">0</div>
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Plantillas</div>
+        <div style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--gray);">Ning&uacute;n programa en WellCore es igual a otro. Cada uno nace de cero para ti.</div>
+        <div style="font-family:var(--font-head);font-size:160px;line-height:1;color:rgba(255,255,255,0.03);position:absolute;bottom:-20px;right:-10px;letter-spacing:0;pointer-events:none;" aria-hidden="true">0</div>
+      </div>
+
+      <div style="padding:48px 40px;position:relative;overflow:hidden;">
+        <div style="font-family:var(--font-head);font-size:clamp(72px,8vw,120px);line-height:0.85;color:var(--white);letter-spacing:-2px;margin-bottom:16px;">24h</div>
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Respuesta</div>
+        <div style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--gray);">Tu coach responde en m&aacute;ximo 24 horas. No un bot. No un correo autom&aacute;tico.</div>
+        <div style="font-family:var(--font-head);font-size:120px;line-height:1;color:rgba(255,255,255,0.03);position:absolute;bottom:-20px;right:-10px;letter-spacing:0;pointer-events:none;" aria-hidden="true">24h</div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:28px 40px;background:var(--red);margin-top:0;"
+         data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+      <p style="font-family:var(--font-head);font-size:clamp(18px,2vw,26px);letter-spacing:1px;text-transform:uppercase;color:#fff;line-height:1.2;margin:0;">
+        Si el gen&eacute;rico funcionara, no estar&iacute;as aqu&iacute;.
       </p>
-    </div>
-
-    <!-- 4 Principle Cards -->
-    <div class="estandar-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px;">
-
-      <div class="estandar-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="80"
-           style="background:var(--surface);padding:52px 44px;border-top:2px solid var(--red);position:relative;overflow:hidden;transition:background .1s linear;">
-        <div style="font-family:var(--font-head);font-size:100px;line-height:1;color:rgba(227,30,36,0.07);position:absolute;top:8px;right:20px;letter-spacing:0;pointer-events:none;user-select:none;" aria-hidden="true">01</div>
-        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:20px;">Protocolo</div>
-        <h3 style="font-family:var(--font-head);font-size:clamp(36px,3.5vw,56px);letter-spacing:1px;text-transform:uppercase;color:var(--white);line-height:0.95;margin-bottom:20px;">
-          Cero<br>Plantillas
-        </h3>
-        <p style="font-family:var(--font-body);font-size:15px;line-height:1.8;color:var(--gray);">
-          Tu programa se construye desde cero para tu cuerpo, tu historial y tus objetivos concretos.
-          <strong style="color:var(--white);">Nadie m&aacute;s en WellCore tiene el mismo plan que t&uacute;.</strong>
-        </p>
-      </div>
-
-      <div class="estandar-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="140"
-           style="background:var(--surface);padding:52px 44px;border-top:2px solid var(--border);position:relative;overflow:hidden;transition:background .1s linear;">
-        <div style="font-family:var(--font-head);font-size:100px;line-height:1;color:rgba(255,255,255,0.04);position:absolute;top:8px;right:20px;letter-spacing:0;pointer-events:none;user-select:none;" aria-hidden="true">02</div>
-        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:20px;">Ciencia</div>
-        <h3 style="font-family:var(--font-head);font-size:clamp(36px,3.5vw,56px);letter-spacing:1px;text-transform:uppercase;color:var(--white);line-height:0.95;margin-bottom:20px;">
-          Evidencia<br>Primero
-        </h3>
-        <p style="font-family:var(--font-body);font-size:15px;line-height:1.8;color:var(--gray);">
-          Cada ejercicio, cada macro, cada periodicaci&oacute;n tiene respaldo en investigaci&oacute;n actual.
-          <strong style="color:var(--white);">No modas. No intuici&oacute;n. Ciencia aplicada a ti.</strong>
-        </p>
-      </div>
-
-      <div class="estandar-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200"
-           style="background:var(--surface);padding:52px 44px;border-top:2px solid var(--border);position:relative;overflow:hidden;transition:background .1s linear;">
-        <div style="font-family:var(--font-head);font-size:100px;line-height:1;color:rgba(255,255,255,0.04);position:absolute;top:8px;right:20px;letter-spacing:0;pointer-events:none;user-select:none;" aria-hidden="true">03</div>
-        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:20px;">Seguimiento</div>
-        <h3 style="font-family:var(--font-head);font-size:clamp(36px,3.5vw,56px);letter-spacing:1px;text-transform:uppercase;color:var(--white);line-height:0.95;margin-bottom:20px;">
-          Un Coach<br>Real
-        </h3>
-        <p style="font-family:var(--font-body);font-size:15px;line-height:1.8;color:var(--gray);">
-          No un bot. No un PDF y &laquo;nos vemos en 90 d&iacute;as&raquo;. Un coach que lee tu reporte,
-          <strong style="color:var(--white);">responde en 24h y ajusta tu protocolo cada semana.</strong>
-        </p>
-      </div>
-
-      <div class="estandar-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="260"
-           style="background:var(--surface);padding:52px 44px;border-top:2px solid var(--border);position:relative;overflow:hidden;transition:background .1s linear;">
-        <div style="font-family:var(--font-head);font-size:100px;line-height:1;color:rgba(255,255,255,0.04);position:absolute;top:8px;right:20px;letter-spacing:0;pointer-events:none;user-select:none;" aria-hidden="true">04</div>
-        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:20px;">Resultados</div>
-        <h3 style="font-family:var(--font-head);font-size:clamp(36px,3.5vw,56px);letter-spacing:1px;text-transform:uppercase;color:var(--white);line-height:0.95;margin-bottom:20px;">
-          Datos,<br>No Promesas
-        </h3>
-        <p style="font-family:var(--font-body);font-size:15px;line-height:1.8;color:var(--gray);">
-          Peso, composici&oacute;n corporal, rendimiento, medidas reales. Seguimiento cuantificado semana a semana.
-          <strong style="color:var(--white);">N&uacute;meros concretos, no sensaciones.</strong>
-        </p>
-      </div>
-
-    </div>
-
-    <!-- Credibility strip -->
-    <div class="estandar-strip" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80"
-         style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;padding:36px 44px;border:1px solid var(--border);background:var(--surface-2);margin-top:2px;">
-      <div>
-        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:10px;">Por qu&eacute; confiar en este est&aacute;ndar</div>
-        <div style="font-family:var(--font-head);font-size:clamp(22px,2.8vw,36px);letter-spacing:1px;text-transform:uppercase;color:var(--white);line-height:1.1;">
-          9 a&ntilde;os construyendo este protocolo.&nbsp;
-          <span style="color:var(--red);">Lanzamos en 2026.</span>
-        </div>
-      </div>
-      <a href="inscripcion.html" class="btn-primary-cta v6-magnetic" style="flex-shrink:0;">
-        Comienza ahora &rarr;
+      <a href="inscripcion.html" class="v6-magnetic" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#fff;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.3);padding:14px 28px;text-decoration:none;transition:all .2s;flex-shrink:0;">
+        Empieza ahora &rarr;
       </a>
     </div>
 

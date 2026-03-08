@@ -630,7 +630,7 @@
                 width: 70vw;
             }
             .sidebar.show { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 16px 14px 74px; }
+            .main-content { margin-left: 0; padding: 16px 14px 74px; min-width: 0; max-width: 100%; overflow-x: hidden; }
             .hamburger-menu { display: flex; align-items: center; justify-content: center; }
             .bottom-nav { display: flex; }
             .topbar-user-name-inline { display: none; }
@@ -1007,15 +1007,20 @@
         .trn-timer-btn{background:var(--red,#C8102E);border:none;color:#fff;padding:14px 40px;font-size:16px;cursor:pointer;border-radius:8px}
         @media(max-width:600px){
           .trn-stats{grid-template-columns:repeat(2,1fr)}
-          .trn-day-header{padding:12px 14px}
+          .trn-day-header{padding:12px 14px;gap:8px}
+          .trn-day-info{min-width:0;flex:1}
+          .trn-day-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
           .trn-day-body{padding:0 10px 14px}
-          .trn-ex-row{gap:6px;padding:10px 10px}
-          .trn-ex-actions{flex-direction:column;gap:4px}
-          .trn-ex-actions button{padding:5px 8px;font-size:10px}
-          .trn-ex-name{font-size:13px}
+          /* Wrap actions to next line so exercise name never overflows */
+          .trn-ex-row{flex-wrap:wrap;gap:6px;padding:10px 10px}
+          .trn-ex-details{width:calc(100% - 60px);min-width:0}
+          .trn-ex-actions{flex-direction:row;gap:6px;width:100%;padding-left:46px;flex-wrap:wrap}
+          .trn-ex-actions button{flex:1;min-width:0;padding:6px 8px;font-size:10px;text-align:center}
+          .trn-ex-name{font-size:13px;word-break:break-word}
           .trn-ai-bubble{margin:0 10px 8px 10px}
           #riseAppView{overflow-x:hidden}
           .trn-progress-wrap{padding:12px 14px}
+          .trn-timer-display{font-size:52px}
         }
 
         /* ── Section descriptions — large readable text ── */
