@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planes y Precios &mdash; WellCore Fitness</title>
@@ -15,19 +12,35 @@
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://wellcorefitness.com/planes.html">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <!-- DNS prefetch — reduce latencia a CDNs externos -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://fonts.cdnfonts.com">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- CSS crítico — render-blocking intencional (evita FOUC en hero) -->
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-  <!-- v7 Premium Fonts -->
-  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
-  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
-  <!-- WellCore v7 Ultra-Premium Design System 2026 -->
-  <link rel="stylesheet" href="css/wellcore-v7.css">
-  <!-- Font Awesome 6.4 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- v5 Design System -->
   <link rel="stylesheet" href="css/wellcore-v5.css">
+  <link rel="stylesheet" href="css/wellcore-v7.css">
+
+  <!-- CSS no-crítico — carga asíncrona (no bloquea FCP) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"></noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma"></noscript>
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro"></noscript>
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-9BYQNT117R");</script>
 
   <style>
     /* ============================================================
@@ -241,8 +254,8 @@
       font-family: 'Urbanist', sans-serif;
       font-variation-settings: 'wght' 700;
       font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
-      background: rgba(0,217,255,0.10); color: #00D9FF;
-      border: 1px solid rgba(0,217,255,0.2); padding: 3px 10px; margin-left: 4px;
+      background: rgba(0,217,255,0.10); color: #E31E24;
+      border: 1px solid rgba(227,30,36,0.2); padding: 3px 10px; margin-left: 4px;
     }
     .annual-reveal-note {
       margin-top: 14px;
@@ -251,7 +264,7 @@
       font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(255,255,255,0.25);
     }
-    .annual-reveal-note strong { color: #00D9FF; }
+    .annual-reveal-note strong { color: #E31E24; }
 
     /* ============================================================
        PRICING SECTION
@@ -318,7 +331,7 @@
       display: none; text-align: center; margin-top: 32px;
       font-family: 'Urbanist', sans-serif;
       font-variation-settings: 'wght' 600;
-      font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #E31E24;
     }
 
     /* ============================================================
@@ -403,7 +416,7 @@
       color: rgba(255,255,255,0.18); padding: 12px 24px;
     }
     .compare-table .cat-row td.col-featured { background: rgba(227,30,36,0.04); }
-    .c-yes { color: #00D9FF; font-size: 16px; }
+    .c-yes { color: #E31E24; font-size: 16px; }
     .c-no  { color: rgba(255,255,255,0.18); font-size: 14px; }
     .c-mono {
       font-family: 'Urbanist', sans-serif;
@@ -524,11 +537,11 @@
       line-height: 1.7; flex: 1; font-style: italic;
     }
     .t-result {
-      background: rgba(0,217,255,0.10); border: 1px solid rgba(0,217,255,0.15);
+      background: rgba(0,217,255,0.10); border: 1px solid rgba(227,30,36,0.15);
       padding: 10px 16px;
       font-family: 'Urbanist', sans-serif;
       font-variation-settings: 'wght' 600;
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #E31E24;
       display: flex; align-items: center; gap: 8px;
     }
     .t-author { display: flex; align-items: center; gap: 14px; }
@@ -567,22 +580,33 @@
     .guarantee-visual {
       position: relative; display: flex; align-items: center; justify-content: center;
     }
-    .guarantee-circle {
-      width: 280px; height: 280px; border: 2px solid #00D9FF; border-radius: 50%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 8px; position: relative;
+    .guarantee-block {
+      text-align: center; padding: 40px 52px;
+      background: #0d0d0f; border: 1px solid rgba(227,30,36,0.2);
+      position: relative; display: inline-flex; flex-direction: column; align-items: center;
     }
-    .guarantee-circle::before {
-      content: ''; position: absolute; inset: 12px;
-      border: 1px solid rgba(0,217,255,0.15); border-radius: 50%;
+    .guarantee-block::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: #E31E24;
     }
-    .guarantee-circle-text {
-      font-family: 'Bebas Neue', sans-serif; font-size: 32px;
-      letter-spacing: 1px; color: #fff; text-align: center; line-height: 1.1;
+    .guarantee-block-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(100px, 18vw, 160px);
+      line-height: 0.85; color: #fff; letter-spacing: -4px;
     }
-    .guarantee-circle-sub {
-      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 600;
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #00D9FF;
+    .guarantee-block-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(227,30,36,0.6), transparent);
+      margin: 14px 0;
+    }
+    .guarantee-block-tag {
+      font-family: 'Bebas Neue', sans-serif; font-size: 46px;
+      letter-spacing: 10px; color: #E31E24; line-height: 1;
+    }
+    .guarantee-block-sub {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); margin-top: 14px;
     }
     .guarantee-content h2 {
       font-family: 'Bebas Neue', sans-serif; font-size: 52px;
@@ -805,8 +829,8 @@
       .hero-planes { padding: 60px 0 48px; }
       .hero-h1 { font-size: clamp(48px, 13vw, 64px); }
       .value-grid { grid-template-columns: 1fr; }
-      .guarantee-circle { width: 200px; height: 200px; }
-      .guarantee-circle-text { font-size: 24px; }
+      .guarantee-block { padding: 28px 36px; }
+      .guarantee-block-tag { font-size: 36px; letter-spacing: 6px; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 24px; }
       .footer-bottom { flex-direction: column; }
@@ -986,10 +1010,10 @@
           Sin contratos de largo plazo. Sin suplementos obligatorios. Solo resultados reales respaldados por ciencia aplicada.
         </p>
         <div class="trust-strip" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
-          <div class="trust-item"><i class="fas fa-lock" aria-hidden="true" style="color:#00D9FF;"></i> Pago seguro Wompi</div>
-          <div class="trust-item"><i class="fas fa-times-circle" aria-hidden="true" style="color:#00D9FF;"></i> Sin contrato</div>
-          <div class="trust-item"><i class="fas fa-bolt" aria-hidden="true" style="color:#00D9FF;"></i> Entrega en 48h</div>
-          <div class="trust-item"><i class="fas fa-headset" aria-hidden="true" style="color:#00D9FF;"></i> Soporte real</div>
+          <div class="trust-item"><i class="fas fa-lock" aria-hidden="true" style="color:#E31E24;"></i> Pago seguro Wompi</div>
+          <div class="trust-item"><i class="fas fa-times-circle" aria-hidden="true" style="color:#E31E24;"></i> Sin contrato</div>
+          <div class="trust-item"><i class="fas fa-bolt" aria-hidden="true" style="color:#E31E24;"></i> Entrega en 48h</div>
+          <div class="trust-item"><i class="fas fa-headset" aria-hidden="true" style="color:#E31E24;"></i> Soporte real</div>
         </div>
       </div>
     </div>
@@ -1063,7 +1087,7 @@
           <div style="font-family:'Urbanist',sans-serif;font-weight:400;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:20px;">COP &middot; COLOMBIA</div>
           <hr class="pc-divider">
           <div class="pc-social-proof">
-            <i class="fas fa-users" aria-hidden="true" style="color:#00D9FF;"></i>
+            <i class="fas fa-users" aria-hidden="true" style="color:#E31E24;"></i>
             <span>Elegido por el <strong>+60%</strong> de nuestros clientes activos</span>
           </div>
           <p class="pc-features-label">Todo lo de Esencial, mas:</p>
@@ -1264,7 +1288,7 @@
               <td>Tiempo de respuesta soporte</td>
               <td><span class="c-mono">48h</span></td>
               <td class="col-featured"><span class="c-mono">24h</span></td>
-              <td><span class="c-mono" style="color:#00D9FF;">8h prioritario</span></td>
+              <td><span class="c-mono" style="color:#E31E24;">8h prioritario</span></td>
             </tr>
             <tr>
               <td>Check-in semanal con coach (en vivo)</td>
@@ -1427,7 +1451,7 @@
         <div class="testimonial-card">
           <div class="t-stars"><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i></div>
           <p class="t-quote">"Probe tres coaches antes de WellCore. La diferencia es que aqui tienes un sistema real &mdash; todo conectado: entrenamiento, comer bien y mentalidad. En 10 semanas me olvide del rebote que siempre tenia."</p>
-          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Sin rebote &mdash; 10 semanas de progreso constante</div>
+          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Sin rebote &mdash; 10 semanas de progreso constante</div>
           <div class="t-author">
             <div class="t-avatar">J</div>
             <div>
@@ -1457,7 +1481,7 @@
         <div class="testimonial-card">
           <div class="t-stars"><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i></div>
           <p class="t-quote">"El plan Esencial es perfecto para quien empieza. El programa está bien explicado, los ejercicios tienen videos y cuando tenia dudas me respondian rápido. Ya voy a pasarme al Metodo."</p>
-          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> -6 kg en 3 meses desde cero</div>
+          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> -6 kg en 3 meses desde cero</div>
           <div class="t-author">
             <div class="t-avatar">L</div>
             <div>
@@ -1500,7 +1524,7 @@
         <div class="testimonial-card">
           <div class="t-stars"><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i></div>
           <p class="t-quote">"Soy muy exigente con lo que pago. El plan Elite lo justifica con creces &mdash; la videollamada mensual y el check-in semanal cambian todo. Siento que tengo un equipo detras de mi, no solo una app."</p>
-          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Competencia fitness en 6 meses de Elite</div>
+          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Competencia fitness en 6 meses de Elite</div>
           <div class="t-author">
             <div class="t-avatar">V</div>
             <div>
@@ -1513,7 +1537,7 @@
         <div class="testimonial-card">
           <div class="t-stars"><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i><i class="fas fa-star" aria-hidden="true"></i></div>
           <p class="t-quote">"Tenia una lesión en el hombro y ningun coach online sabia como manejarla. En WellCore Elite me hicieron un plan de contingencia completo &mdash; segui progresando mientras me recuperaba. Eso no tiene precio."</p>
-          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Progreso continuo durante recuperación</div>
+          <div class="t-result"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Progreso continuo durante recuperación</div>
           <div class="t-author">
             <div class="t-avatar">R</div>
             <div>
@@ -1535,10 +1559,11 @@
     <div class="section-wrap">
       <div class="guarantee-inner">
         <div class="guarantee-visual" data-aos="fade-right" data-aos-duration="700">
-          <div class="guarantee-circle">
-            <span style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#00D9FF;line-height:1;">//</span>
-            <div class="guarantee-circle-text">30 DIAS</div>
-            <div class="guarantee-circle-sub">Seguimiento garantizado</div>
+          <div class="guarantee-block">
+            <div class="guarantee-block-number">30</div>
+            <div class="guarantee-block-divider"></div>
+            <div class="guarantee-block-tag">DÍAS</div>
+            <div class="guarantee-block-sub">// Garantía activa &bull; Compromiso WellCore</div>
           </div>
         </div>
         <div class="guarantee-content" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
@@ -1554,10 +1579,10 @@
             * Para aplicar la garantía: debe haberse completado mínimo el 80% del programa durante 30 días continuos y presentar registro de seguimiento en el portal.
           </p>
           <div class="guarantee-trust-row">
-            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Pago seguro Wompi</div>
-            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> SSL encriptado</div>
-            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Soporte WhatsApp</div>
-            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Sin contrato</div>
+            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Pago seguro Wompi</div>
+            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> SSL encriptado</div>
+            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Soporte WhatsApp</div>
+            <div class="trust-badge"><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Sin contrato</div>
           </div>
         </div>
       </div>
@@ -1652,7 +1677,7 @@
       <div style="text-align:center;margin-top:48px;" data-aos="fade-up" data-aos-delay="200">
         <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:20px;">&#191;Tienes otra pregunta que no está aqui?</p>
         <a href="https://wa.me/573124904720?text=Hola%2C%20tengo%20preguntas%20sobre%20los%20planes%20de%20WellCore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;font-family:'Urbanist',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,0.10);padding:14px 28px;transition:all 0.1s linear;" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.10)'">
-          <span style="color:#25d366;font-size:16px;font-weight:700;">WA</span>
+          <i class="fab fa-whatsapp" style="color:#25d366;font-size:24px;"></i>
           Preguntanos por WhatsApp
         </a>
       </div>
@@ -1680,10 +1705,10 @@
         </a>
       </div>
       <div class="final-cta-reassure" data-aos="fade-up" data-aos-delay="400">
-        <span><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Sin contrato</span>
-        <span><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Cancela cuando quieras</span>
-        <span><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Resultados en 12 semanas</span>
-        <span><i class="fas fa-check" aria-hidden="true" style="color:#00D9FF;font-weight:700;"></i> Pago seguro Wompi</span>
+        <span><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Sin contrato</span>
+        <span><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Cancela cuando quieras</span>
+        <span><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Resultados en 12 semanas</span>
+        <span><i class="fas fa-check" aria-hidden="true" style="color:#E31E24;font-weight:700;"></i> Pago seguro Wompi</span>
       </div>
     </div>
   </section>
@@ -1746,11 +1771,6 @@
 
   <!-- Scroll to top -->
   <button id="scrollTop" aria-label="Volver arriba" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
-
-  <!-- WhatsApp float -->
-  <a href="https://wa.me/573124904720" target="_blank" rel="noopener" aria-label="WhatsApp"
-     style="position:fixed;bottom:88px;right:32px;width:44px;height:44px;background:#25d366;display:flex;align-items:center;justify-content:center;z-index:500;font-size:11px;font-weight:700;color:#fff;font-family:'Urbanist',sans-serif;letter-spacing:1px;transition:transform 0.1s linear;"
-     onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">WA</a>
 
   <!-- ============================================================
        SCRIPTS

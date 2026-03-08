@@ -80,7 +80,7 @@
       --font-body: 'Axiforma', 'Inter', system-ui, sans-serif;
       --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
       --red-dark: #B8181D;
-      --accent: #00D9FF;
+      --accent: #E31E24;
       --green: #22C55E;
     }
 
@@ -3354,9 +3354,9 @@
         <a href="https://wa.me/573124904720" class="btn-white-outline v7-btn-ghost">Consulta Gratuita</a>
       </div>
       <div class="cta-trust-row">
-        <div class="cta-trust-item"><i class="fas fa-user-check" aria-hidden="true" style="color:#00D9FF;"></i> Seguimiento 1-1 real</div>
-        <div class="cta-trust-item"><i class="fas fa-shield-alt" aria-hidden="true" style="color:#00D9FF;"></i> Sin contratos forzados</div>
-        <div class="cta-trust-item"><i class="fas fa-rocket" aria-hidden="true" style="color:#00D9FF;"></i> Fase beta &mdash; acceso fundador</div>
+        <div class="cta-trust-item"><i class="fas fa-user-check" aria-hidden="true" style="color:#E31E24;"></i> Seguimiento 1-1 real</div>
+        <div class="cta-trust-item"><i class="fas fa-shield-alt" aria-hidden="true" style="color:#E31E24;"></i> Sin contratos forzados</div>
+        <div class="cta-trust-item"><i class="fas fa-rocket" aria-hidden="true" style="color:#E31E24;"></i> Fase beta &mdash; acceso fundador</div>
       </div>
       <p style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.45);margin-top:32px;letter-spacing:1px;">Tu coach se pondr&aacute; en contacto por WhatsApp en 24h.</p>
     </div>
@@ -3964,17 +3964,30 @@
   updateCountdown();
   setInterval(updateCountdown, 60000);
 
+  function applyBarOffset() {
+    var nav = document.getElementById('navbar');
+    var hero = document.getElementById('hero');
+    if (!nav) return;
+    var bh = bar.getBoundingClientRect().height || bar.offsetHeight;
+    nav.style.top = bh + 'px';
+    if (hero) hero.style.paddingTop = (bh + 72) + 'px';
+  }
+
   // Show with delay
-  setTimeout(function(){ bar.classList.add('show'); }, 1500);
+  setTimeout(function(){
+    bar.classList.add('show');
+    requestAnimationFrame(applyBarOffset);
+  }, 1500);
 
   // Dismiss
   bar.querySelector('.v6-promo-bar-close').addEventListener('click', function(){
     bar.classList.remove('show');
     sessionStorage.setItem('v6_promo_closed', '1');
     setTimeout(function(){ bar.remove(); }, 400);
-    // Reset navbar position
     var nav = document.getElementById('navbar');
     if (nav) nav.style.top = '';
+    var hero = document.getElementById('hero');
+    if (hero) hero.style.paddingTop = '';
   });
 })();
 </script>

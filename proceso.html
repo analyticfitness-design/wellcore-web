@@ -32,7 +32,7 @@
       --red: #E31E24; --red-dark: #B8181D; --red-dim: rgba(227,30,36,0.12); --red-glow: rgba(227,30,36,0.25);
       --bg: #0a0a0a; --surface: #111113; --surface-2: #1a1a1d;
       --border: rgba(255,255,255,0.06); --gray: rgba(255,255,255,0.45);
-      --gray-dim: rgba(255,255,255,0.18); --accent: #00D9FF; --green: #22C55E;
+      --gray-dim: rgba(255,255,255,0.18); --accent: #E31E24; --green: #22C55E;
       --accent-dim: rgba(0,217,255,0.12); --orange: #FF8C00;
       --orange-dim: rgba(255,140,0,0.12); --white: #fff;
       --font-head: 'Bebas Neue', cursive; --font-mono: 'JetBrains Mono', monospace;
@@ -74,11 +74,11 @@
     .week-cell.phase-prog { background:rgba(255,140,0,0.06); border-color:rgba(255,140,0,0.25); color:rgba(255,140,0,0.7); }
     .week-cell.phase-exec { background:rgba(227,30,36,0.1); border-color:rgba(227,30,36,0.4); color:var(--red); }
     .week-cell.phase-exec.active-week { background:rgba(227,30,36,0.18); box-shadow:0 0 12px rgba(227,30,36,0.3); }
-    .week-cell.phase-result { background:rgba(0,217,255,0.08); border-color:rgba(0,217,255,0.3); color:var(--accent); }
+    .week-cell.phase-result { background:rgba(227,30,36,0.08); border-color:rgba(227,30,36,0.3); color:var(--accent); }
     .week-grid-legend { display:flex; gap:20px; margin-top:12px; flex-wrap:wrap; }
     .legend-item { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); }
     .legend-dot { width:8px; height:8px; border-radius:1px; }
-    .hero-time-note { display:inline-flex; align-items:center; gap:10px; background:rgba(0,217,255,0.06); border:1px solid rgba(0,217,255,0.15); padding:10px 18px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); }
+    .hero-time-note { display:inline-flex; align-items:center; gap:10px; background:rgba(227,30,36,0.06); border:1px solid rgba(227,30,36,0.15); padding:10px 18px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); }
     .hero-stats { display:flex; gap:48px; margin-top:60px; flex-wrap:wrap; }
     .hero-stat-num { font-family:var(--font-head); font-size:52px; line-height:1; color:var(--white); }
     .hero-stat-num span { color:var(--red); }
@@ -121,14 +121,14 @@
     .node-f01 .phase-node-inner { background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.15); color:rgba(255,255,255,0.4); }
     .node-f02 .phase-node-inner { background:rgba(255,140,0,0.06); border-color:rgba(255,140,0,0.3); color:var(--orange); }
     .node-f03 .phase-node-inner { background:rgba(227,30,36,0.1); border-color:rgba(227,30,36,0.5); color:var(--red); box-shadow:0 0 20px rgba(227,30,36,0.2); }
-    .node-f04 .phase-node-inner { background:rgba(0,217,255,0.08); border-color:rgba(0,217,255,0.4); color:var(--accent); }
+    .node-f04 .phase-node-inner { background:rgba(227,30,36,0.08); border-color:rgba(0,217,255,0.4); color:var(--accent); }
     .phase-content { flex:1; min-width:0; }
     .phase-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:28px; flex-wrap:wrap; gap:16px; }
     .phase-tag { display:inline-block; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; text-transform:uppercase; padding:4px 10px; margin-bottom:12px; }
     .tag-f01 { color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.1); background:transparent; }
     .tag-f02 { color:var(--orange); border:1px solid rgba(255,140,0,0.25); background:rgba(255,140,0,0.06); }
     .tag-f03 { color:var(--red); border:1px solid rgba(227,30,36,0.35); background:rgba(227,30,36,0.08); }
-    .tag-f04 { color:var(--accent); border:1px solid rgba(0,217,255,0.3); background:rgba(0,217,255,0.06); }
+    .tag-f04 { color:var(--accent); border:1px solid rgba(227,30,36,0.3); background:rgba(227,30,36,0.06); }
     .phase-num { font-family:var(--font-head); font-size:clamp(80px,12vw,160px); line-height:0.85; letter-spacing:-2px; opacity:0.06; position:absolute; right:0; top:-20px; pointer-events:none; user-select:none; }
     .num-f01 { color:var(--white); } .num-f02 { color:var(--orange); } .num-f03 { color:var(--red); } .num-f04 { color:var(--accent); }
     .phase-title { font-family:var(--font-head); font-size:clamp(36px,5vw,60px); letter-spacing:2px; line-height:1; color:var(--white); margin-bottom:6px; }
@@ -159,7 +159,7 @@
     .time-circle-row { display:flex; gap:20px; margin-bottom:24px; flex-wrap:wrap; }
     .time-circle { width:100px; height:100px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px solid; }
     .tc-f01 { border-color:rgba(255,255,255,0.15); background:rgba(255,255,255,0.02); } .tc-f02 { border-color:rgba(255,140,0,0.3); background:rgba(255,140,0,0.05); }
-    .tc-f03 { border-color:rgba(227,30,36,0.4); background:rgba(227,30,36,0.07); } .tc-f04 { border-color:rgba(0,217,255,0.3); background:rgba(0,217,255,0.05); }
+    .tc-f03 { border-color:rgba(227,30,36,0.4); background:rgba(227,30,36,0.07); } .tc-f04 { border-color:rgba(227,30,36,0.3); background:rgba(0,217,255,0.05); }
     .tc-num { font-family:var(--font-head); font-size:28px; line-height:1; }
     .tc-f01 .tc-num { color:rgba(255,255,255,0.5); } .tc-f02 .tc-num { color:var(--orange); } .tc-f03 .tc-num { color:var(--red); } .tc-f04 .tc-num { color:var(--accent); }
     .tc-label { font-family:var(--font-mono); font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--gray); text-align:center; margin-top:2px; }
@@ -170,7 +170,7 @@
     .cycle-arrow { display:flex; align-items:center; justify-content:center; font-size:14px; color:rgba(255,255,255,0.15); }
     .stats-row { display:flex; gap:24px; flex-wrap:wrap; }
     .stat-box { flex:1; min-width:120px; padding:20px; border:1px solid; display:flex; flex-direction:column; align-items:center; text-align:center; }
-    .stat-box-f04 { border-color:rgba(0,217,255,0.2); background:rgba(0,217,255,0.04); }
+    .stat-box-f04 { border-color:rgba(227,30,36,0.2); background:rgba(0,217,255,0.04); }
     .stat-val { font-family:var(--font-head); font-size:42px; line-height:1; color:var(--accent); }
     .stat-unit { font-family:var(--font-head); font-size:22px; color:var(--accent); opacity:0.6; }
     .stat-desc { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-top:6px; }
@@ -353,13 +353,13 @@
         <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.15);"></div> Diagnóstico</div>
         <div class="legend-item"><div class="legend-dot" style="background:rgba(255,140,0,0.5);"></div> Programa</div>
         <div class="legend-item"><div class="legend-dot" style="background:#E31E24;"></div> Ejecución activa</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#00D9FF;"></div> Resultados</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#E31E24;"></div> Resultados</div>
       </div>
     </div>
 
     <div data-aos="fade-up" data-aos-delay="320">
       <div class="hero-time-note">
-        <span style="font-size:7px;color:#00D9FF;">&#9679;</span>
+        <span style="font-size:7px;color:#E31E24;">&#9679;</span>
         Tiempo promedio para resultados visibles: 8-12 semanas
       </div>
     </div>
@@ -429,7 +429,7 @@
       <h2 class="section-title">CUATRO FASES.<br>UN PROCESO.</h2>
       <p class="section-desc">Cada fase tiene un propósito específico. Nada está ahí por estética. Todo responde a un modelo probado de transformación física real.</p>
       <div style="margin-top:40px;border-radius:0;overflow:hidden;" data-aos="fade-up" data-aos-delay="100">
-        <img src="images/fotos/proceso-02.jpg" alt="Proceso WellCore — Fases de transformación" loading="lazy" decoding="async" width="1600" height="2844" style="width:100%;height:280px;object-fit:cover;object-position:center;display:block;opacity:0.85;" />
+        <img src="images/fotos/proceso-02.jpg" alt="Proceso WellCore — Fases de transformación" loading="lazy" decoding="async" width="1600" height="2844" style="width:100%;height:340px;object-fit:cover;object-position:top center;display:block;opacity:0.85;" />
       </div>
     </div>
 
@@ -458,7 +458,7 @@
             El diagnóstico no es un formulario de bienvenida. Es la base de todo. Sin datos reales sobre tu cuerpo, tu historial y tus hábitos, cualquier programa es una suposición. Aquí recolectamos toda la información que necesitamos para diseñar algo que realmente funcione para ti.
           </p>
           <div class="deliverable-box deliverable-box-f01" data-aos="fade-up">
-            <span class="deliverable-icon" style="color:#00D9FF;font-weight:700;">&#10003;</span>
+            <span class="deliverable-icon" style="color:#E31E24;font-weight:700;">&#10003;</span>
             <div class="deliverable-content">
               <div class="deliverable-label"><i class="fas fa-file-alt" aria-hidden="true" style="margin-right:4px;"></i> Entregable principal</div>
               <div class="deliverable-title">Tu Ficha de Diagnóstico Personalizada</div>
@@ -519,7 +519,7 @@
             Con los datos del diagnóstico, tu coach diseña tu programa completo. No es una plantilla modificada. Es una construcción desde cero basada en tus métricas, tu disponibilidad y tu objetivo específico. El programa se entrega en tu portal antes de que empiece la ejecución.
           </p>
           <div class="deliverable-box deliverable-box-f02" data-aos="fade-up">
-            <span class="deliverable-icon" style="color:#00D9FF;font-weight:700;">&#10003;</span>
+            <span class="deliverable-icon" style="color:#E31E24;font-weight:700;">&#10003;</span>
             <div class="deliverable-content">
               <div class="deliverable-label"><i class="fas fa-file-alt" aria-hidden="true" style="margin-right:4px;"></i> Entregable principal</div>
               <div class="deliverable-title">Tus Archivos de Programa Completos</div>
@@ -571,7 +571,7 @@
               <h2 class="phase-title">EJECUCIÓN Y<br>SEGUIMIENTO</h2>
               <p class="phase-weeks"><i class="fas fa-fire" aria-hidden="true" style="margin-right:6px;"></i> DONDE PASAN LOS RESULTADOS</p>
             </div>
-            <span class="phase-badge-main"><span style="font-size:7px;color:#00D9FF;">&#9679;</span> FASE PRINCIPAL</span>
+            <span class="phase-badge-main"><span style="font-size:7px;color:#E31E24;">&#9679;</span> FASE PRINCIPAL</span>
           </div>
           <div class="time-circle-row" data-aos="fade-up">
             <div class="time-circle tc-f03"><span class="tc-num">9</span><span class="tc-label">semanas</span></div>
@@ -582,7 +582,7 @@
             Esta es la fase donde todo sucede. Son 9 semanas de ejecución activa, seguimiento constante y ajustes en tiempo real. Tu coach no desaparece después de entregarte el PDF. Está presente en cada semana para analizar tu progreso y corregir el rumbo antes de que los problemas se acumulen.
           </p>
           <div class="deliverable-box deliverable-box-f03" data-aos="fade-up">
-            <span class="deliverable-icon" style="color:#00D9FF;font-weight:700;">&#10003;</span>
+            <span class="deliverable-icon" style="color:#E31E24;font-weight:700;">&#10003;</span>
             <div class="deliverable-content">
               <div class="deliverable-label"><i class="fas fa-chart-line" aria-hidden="true" style="margin-right:4px;"></i> Sistema de seguimiento continuo</div>
               <div class="deliverable-title">Seguimiento Semanal + Ajustes en Tiempo Real</div>
@@ -595,22 +595,22 @@
             <div class="card-section-title" style="margin-bottom:16px;"><i class="fas fa-rotate" aria-hidden="true" style="margin-right:6px;"></i> CICLO SEMANAL DE AJUSTE</div>
             <div class="cycle-diagram">
               <div class="cycle-step">
-                <div class="cycle-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+                <div class="cycle-icon"><span style="color:#E31E24;font-weight:700;">&#10003;</span></div>
                 <div class="cycle-label">Semana de<br>entrenamiento</div>
               </div>
               <div class="cycle-arrow">&rarr;</div>
               <div class="cycle-step">
-                <div class="cycle-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+                <div class="cycle-icon"><span style="color:#E31E24;font-weight:700;">&#10003;</span></div>
                 <div class="cycle-label">Check-in<br>de progreso</div>
               </div>
               <div class="cycle-arrow">&rarr;</div>
               <div class="cycle-step">
-                <div class="cycle-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+                <div class="cycle-icon"><span style="color:#E31E24;font-weight:700;">&#10003;</span></div>
                 <div class="cycle-label">Análisis del<br>coach</div>
               </div>
               <div class="cycle-arrow">&rarr;</div>
               <div class="cycle-step">
-                <div class="cycle-icon"><span style="color:#00D9FF;font-weight:700;">&#10003;</span></div>
+                <div class="cycle-icon"><span style="color:#E31E24;font-weight:700;">&#10003;</span></div>
                 <div class="cycle-label">Ajuste del<br>programa</div>
               </div>
             </div>
@@ -697,7 +697,7 @@
           </div>
           <br>
           <div class="deliverable-box deliverable-box-f04" data-aos="fade-up">
-            <span class="deliverable-icon" style="color:#00D9FF;font-weight:700;">&#10003;</span>
+            <span class="deliverable-icon" style="color:#E31E24;font-weight:700;">&#10003;</span>
             <div class="deliverable-content">
               <div class="deliverable-label"><i class="fas fa-file-alt" aria-hidden="true" style="margin-right:4px;"></i> Entregable final</div>
               <div class="deliverable-title">Informe de Evaluación Final + Plan de Proyección</div>

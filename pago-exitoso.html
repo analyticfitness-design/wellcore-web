@@ -26,11 +26,11 @@
             --border:    #252528;
             --gray:      #A1A1AA;
             --dark:      #52525B;
-            --green:     #00D9FF;
-            --green-dim: rgba(0,217,255,0.08);
+            --green:     #E31E24;
+            --green-dim: rgba(227,30,36,0.08);
             --white:     #FFFFFF;
             --red-dark:  #B8181D;
-            --accent:    #00D9FF;
+            --accent:    #E31E24;
             --font-body: 'Axiforma', 'Inter', sans-serif;
             --font-data: 'DIN Next LT Pro', 'Barlow', system-ui, sans-serif;
         }
@@ -125,7 +125,7 @@
         .check-outer-ring {
             position: absolute;
             width: 120px; height: 120px; border-radius: 50%;
-            border: 1px solid rgba(0,217,255,0.15);
+            border: 1px solid rgba(227,30,36,0.15);
             animation: outerPulse 2.5s ease-in-out infinite;
         }
         @keyframes outerPulse {
@@ -406,7 +406,7 @@
         }
         .status-banner.approved {
             background: var(--green-dim);
-            border: 1px solid rgba(0,217,255,0.3);
+            border: 1px solid rgba(227,30,36,0.3);
             color: var(--green);
         }
         .status-banner.pending {
@@ -594,7 +594,7 @@
         <!-- Info cards (siempre visibles) -->
         <div class="info-grid">
             <div class="info-card green">
-                <div class="ic-icon green"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+                <div class="ic-icon green"><span style="color:#E31E24;font-weight:700;">//</span></div>
                 <div class="ic-label">Credenciales</div>
                 <div class="ic-value green">Menos de 6h</div>
                 <div class="ic-sub">Acceso al portal por email</div>
@@ -612,7 +612,7 @@
                 <div class="ic-sub">Adaptado a tus objetivos y nivel</div>
             </div>
             <div class="info-card green">
-                <div class="ic-icon green"><span style="color:#00D9FF;font-weight:700;">//</span></div>
+                <div class="ic-icon green"><span style="color:#E31E24;font-weight:700;">//</span></div>
                 <div class="ic-label">Pago</div>
                 <div class="ic-value green">100% Seguro</div>
                 <div class="ic-sub">Procesado con cifrado SSL por Wompi</div>
@@ -669,7 +669,7 @@
    ================================================================ */
 (function() {
     var container = document.getElementById('particles');
-    var colors    = ['#E31E24', '#00D9FF', '#FFFFFF', '#E31E24', '#00D9FF'];
+    var colors    = ['#E31E24', '#E31E24', '#FFFFFF', '#E31E24', '#E31E24'];
     var count     = 28;
 
     for (var i = 0; i < count; i++) {
@@ -745,7 +745,7 @@
         if (type !== 'loading' && spin) {
             spin.style.display = 'none';
             var iconEl = document.createElement('span');
-            iconEl.style.cssText = 'color:#00D9FF;font-weight:700;font-size:14px;';
+            iconEl.style.cssText = 'color:#E31E24;font-weight:700;font-size:14px;';
             iconEl.textContent = '//';
             banner.insertBefore(iconEl, banner.firstChild);
         }

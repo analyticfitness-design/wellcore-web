@@ -18,7 +18,7 @@
   --surface-2:#1a1a1d;
   --border:#252528;
   --gray:#A1A1AA;
-  --accent:#00D9FF;
+  --accent:#E31E24;
   --green:#22C55E;
   --gold:#FFD700;
   --white:#FFFFFF;
@@ -509,7 +509,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
   text-transform:uppercase;
 }
 .badge-open{background:rgba(227,30,36,0.15);color:#E31E24;border:1px solid rgba(227,30,36,0.3)}
-.badge-in_progress{background:rgba(0,217,255,0.1);color:var(--accent);border:1px solid rgba(0,217,255,0.2)}
+.badge-in_progress{background:rgba(0,217,255,0.1);color:var(--accent);border:1px solid rgba(227,30,36,0.2)}
 .badge-closed{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)}
 .badge-normal{background:var(--surface-2);color:var(--gray);border:1px solid var(--border)}
 .badge-alta{background:rgba(227,30,36,0.12);color:#E31E24;border:1px solid rgba(227,30,36,0.25)}
@@ -1999,7 +1999,7 @@ function showTicketDetail(ticket) {
     body.appendChild(respTitle);
 
     var respText = document.createElement('div');
-    respText.style.cssText = 'background:var(--surface-2);border:1px solid rgba(0,217,255,0.2);border-left:3px solid var(--accent);padding:14px;font-size:.85rem;color:var(--white);line-height:1.6';
+    respText.style.cssText = 'background:var(--surface-2);border:1px solid rgba(227,30,36,0.2);border-left:3px solid var(--accent);padding:14px;font-size:.85rem;color:var(--white);line-height:1.6';
     respText.textContent = ticket.response;
     body.appendChild(respText);
   }

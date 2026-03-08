@@ -26,7 +26,7 @@
             --red-glow: rgba(227,30,36,0.4);
             --red-dark: #B8181D;
             --red-dim:  rgba(227,30,36,0.10);
-            --accent:   #00D9FF;
+            --accent:   #E31E24;
             --green:    #22C55E;
             --white:    #ffffff;
             --gray:     rgba(255,255,255,0.45);
@@ -361,7 +361,7 @@
         .geo-shape--1{
             width:300px;height:300px;border-radius:50%;
             top:10%;right:-5%;
-            border-color:rgba(0,217,255,0.06);
+            border-color:rgba(227,30,36,0.06);
         }
         .geo-shape--2{
             width:200px;height:200px;
@@ -614,6 +614,34 @@
         .journey-mockup-laptop__bar span:nth-child(2){background:#febc2e}
         .journey-mockup-laptop__bar span:nth-child(3){background:#28c840}
         .journey-mockup-laptop img{width:100%;display:block;}
+
+        /* ── Mockup inline screens (no-image fallback) ── */
+        .mock-screen{
+            width:100%;padding:14px;background:#0a0a0c;
+            font-family:'Inter',system-ui,sans-serif;
+        }
+        .mock-row{height:7px;border-radius:3px;background:rgba(255,255,255,0.07);margin-bottom:5px;}
+        .mock-row.red{background:rgba(227,30,36,0.35);}
+        .mock-row.w50{width:50%;}  .mock-row.w70{width:70%;}  .mock-row.w40{width:40%;}
+        .mock-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:8px 0;}
+        .mock-card{background:rgba(255,255,255,0.05);border-radius:5px;padding:7px 6px;}
+        .mock-card-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#fff;line-height:1;}
+        .mock-card-lbl{font-size:7px;color:rgba(255,255,255,0.3);margin-top:1px;text-transform:uppercase;letter-spacing:1px;}
+        .mock-list{display:flex;flex-direction:column;gap:4px;margin:8px 0;}
+        .mock-list-item{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border-radius:4px;padding:6px 8px;}
+        .mock-check{width:10px;height:10px;border-radius:2px;background:rgba(227,30,36,0.5);flex-shrink:0;}
+        .mock-check.done{background:#22c55e;}
+        .mock-check.empty{background:rgba(255,255,255,0.1);}
+        .mock-txt{height:5px;border-radius:2px;background:rgba(255,255,255,0.15);flex:1;}
+        .mock-chart{height:48px;display:flex;align-items:flex-end;gap:3px;margin:8px 0;padding:0 4px;}
+        .mock-bar{flex:1;border-radius:2px 2px 0 0;background:rgba(227,30,36,0.4);}
+        .mock-bar.hi{background:rgba(227,30,36,0.75);}
+        .mock-bubbles{display:flex;flex-direction:column;gap:5px;margin:8px 0;}
+        .mock-bubble{max-width:75%;padding:6px 9px;border-radius:8px;background:rgba(255,255,255,0.06);}
+        .mock-bubble.me{align-self:flex-end;background:rgba(227,30,36,0.25);}
+
+        /* phone mockup */
+        .mock-phone{padding:10px 8px;background:#0a0a0c;}
 
         .journey-mockup-phone{
             width:140px;flex-shrink:0;
@@ -987,11 +1015,27 @@
                     <div class="journey-mockups">
                         <div class="journey-mockup-laptop">
                             <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
-                            <img src="/images/mockups/dashboard-desktop.png" alt="Dashboard" loading="lazy">
+                            <div class="mock-screen">
+                                <div class="mock-row red w70"></div>
+                                <div class="mock-cards">
+                                    <div class="mock-card"><div class="mock-card-num">87%</div><div class="mock-card-lbl">Adherencia</div></div>
+                                    <div class="mock-card"><div class="mock-card-num">18</div><div class="mock-card-lbl">Sesiones</div></div>
+                                    <div class="mock-card"><div class="mock-card-num">-4kg</div><div class="mock-card-lbl">Progreso</div></div>
+                                </div>
+                                <div class="mock-row w70"></div><div class="mock-row w50"></div><div class="mock-row w40"></div>
+                            </div>
                         </div>
                         <div class="journey-mockup-phone">
                             <div class="journey-mockup-phone__notch"></div>
-                            <img src="/images/mockups/dashboard-mobile.png" alt="Dashboard Mobile" loading="lazy">
+                            <div class="mock-phone">
+                                <div class="mock-row red w70"></div>
+                                <div class="mock-row w50" style="margin-top:6px"></div>
+                                <div class="mock-cards" style="grid-template-columns:1fr 1fr;margin-top:8px;">
+                                    <div class="mock-card"><div class="mock-card-num">87%</div><div class="mock-card-lbl">Adherencia</div></div>
+                                    <div class="mock-card"><div class="mock-card-num">18</div><div class="mock-card-lbl">Sesiones</div></div>
+                                </div>
+                                <div class="mock-row w70" style="margin-top:6px"></div><div class="mock-row w50"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1018,11 +1062,27 @@
                     <div class="journey-mockups">
                         <div class="journey-mockup-laptop">
                             <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
-                            <img src="/images/mockups/training-desktop.png" alt="Mi Programa" loading="lazy">
+                            <div class="mock-screen">
+                                <div class="mock-row red w50"></div>
+                                <div class="mock-list">
+                                    <div class="mock-list-item"><div class="mock-check done"></div><div class="mock-txt"></div><div class="mock-txt w40" style="width:25%;"></div></div>
+                                    <div class="mock-list-item"><div class="mock-check done"></div><div class="mock-txt"></div><div class="mock-txt" style="width:20%;"></div></div>
+                                    <div class="mock-list-item"><div class="mock-check empty"></div><div class="mock-txt w70"></div></div>
+                                    <div class="mock-list-item"><div class="mock-check empty"></div><div class="mock-txt w50"></div></div>
+                                </div>
+                                <div class="mock-row w60"></div>
+                            </div>
                         </div>
                         <div class="journey-mockup-phone">
                             <div class="journey-mockup-phone__notch"></div>
-                            <img src="/images/mockups/training-mobile.png" alt="Programa Mobile" loading="lazy">
+                            <div class="mock-phone">
+                                <div class="mock-row red w60"></div>
+                                <div class="mock-list" style="margin-top:8px;">
+                                    <div class="mock-list-item"><div class="mock-check done"></div><div class="mock-txt"></div></div>
+                                    <div class="mock-list-item"><div class="mock-check done"></div><div class="mock-txt w70"></div></div>
+                                    <div class="mock-list-item"><div class="mock-check empty"></div><div class="mock-txt w50"></div></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1045,11 +1105,28 @@
                     <div class="journey-mockups">
                         <div class="journey-mockup-laptop">
                             <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
-                            <img src="/images/mockups/tracking-desktop.png" alt="Tracking Diario" loading="lazy">
+                            <div class="mock-screen">
+                                <div class="mock-row red w40"></div>
+                                <div class="mock-chart">
+                                    <div class="mock-bar" style="height:40%"></div><div class="mock-bar" style="height:60%"></div>
+                                    <div class="mock-bar hi" style="height:80%"></div><div class="mock-bar" style="height:55%"></div>
+                                    <div class="mock-bar hi" style="height:90%"></div><div class="mock-bar" style="height:70%"></div>
+                                    <div class="mock-bar hi" style="height:85%"></div>
+                                </div>
+                                <div class="mock-row w70"></div><div class="mock-row w50"></div>
+                            </div>
                         </div>
                         <div class="journey-mockup-phone">
                             <div class="journey-mockup-phone__notch"></div>
-                            <img src="/images/mockups/tracking-mobile.png" alt="Tracking Mobile" loading="lazy">
+                            <div class="mock-phone">
+                                <div class="mock-row red w50"></div>
+                                <div class="mock-chart" style="height:36px;margin-top:8px;">
+                                    <div class="mock-bar" style="height:50%"></div><div class="mock-bar hi" style="height:80%"></div>
+                                    <div class="mock-bar" style="height:60%"></div><div class="mock-bar hi" style="height:90%"></div>
+                                    <div class="mock-bar" style="height:70%"></div>
+                                </div>
+                                <div class="mock-row w60" style="margin-top:6px"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1072,11 +1149,30 @@
                     <div class="journey-mockups">
                         <div class="journey-mockup-laptop">
                             <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
-                            <img src="/images/mockups/measurements-desktop.png" alt="Mediciones" loading="lazy">
+                            <div class="mock-screen">
+                                <div class="mock-row red w50"></div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:8px 0;">
+                                    <div class="mock-card"><div class="mock-card-num">78kg</div><div class="mock-card-lbl">Peso actual</div></div>
+                                    <div class="mock-card"><div class="mock-card-num">22%</div><div class="mock-card-lbl">Grasa corp.</div></div>
+                                </div>
+                                <div class="mock-chart" style="height:40px;">
+                                    <div class="mock-bar hi" style="height:100%"></div><div class="mock-bar hi" style="height:90%"></div>
+                                    <div class="mock-bar" style="height:75%"></div><div class="mock-bar" style="height:60%"></div>
+                                    <div class="mock-bar" style="height:45%"></div>
+                                </div>
+                                <div class="mock-row w60"></div>
+                            </div>
                         </div>
                         <div class="journey-mockup-phone">
                             <div class="journey-mockup-phone__notch"></div>
-                            <img src="/images/mockups/measurements-mobile.png" alt="Mediciones Mobile" loading="lazy">
+                            <div class="mock-phone">
+                                <div class="mock-row red w50"></div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:7px 0;">
+                                    <div class="mock-card"><div class="mock-card-num">78kg</div><div class="mock-card-lbl">Peso</div></div>
+                                    <div class="mock-card"><div class="mock-card-num">22%</div><div class="mock-card-lbl">Grasa</div></div>
+                                </div>
+                                <div class="mock-row w70"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1100,11 +1196,27 @@
                     <div class="journey-mockups">
                         <div class="journey-mockup-laptop">
                             <div class="journey-mockup-laptop__bar"><span></span><span></span><span></span></div>
-                            <img src="/images/mockups/community-desktop.png" alt="Comunidad" loading="lazy">
+                            <div class="mock-screen">
+                                <div class="mock-row red w40"></div>
+                                <div class="mock-bubbles">
+                                    <div class="mock-bubble"><div class="mock-txt w70"></div></div>
+                                    <div class="mock-bubble me"><div class="mock-txt w50"></div></div>
+                                    <div class="mock-bubble"><div class="mock-txt"></div></div>
+                                    <div class="mock-bubble me"><div class="mock-txt w70"></div></div>
+                                </div>
+                                <div class="mock-row w50"></div>
+                            </div>
                         </div>
                         <div class="journey-mockup-phone">
                             <div class="journey-mockup-phone__notch"></div>
-                            <img src="/images/mockups/community-mobile.png" alt="Comunidad Mobile" loading="lazy">
+                            <div class="mock-phone">
+                                <div class="mock-row red w40"></div>
+                                <div class="mock-bubbles" style="margin-top:8px;">
+                                    <div class="mock-bubble"><div class="mock-txt w70"></div></div>
+                                    <div class="mock-bubble me"><div class="mock-txt w50"></div></div>
+                                    <div class="mock-bubble"><div class="mock-txt"></div></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

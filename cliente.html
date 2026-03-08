@@ -21,7 +21,7 @@
   --border:rgba(255,255,255,0.07);
   --gray:rgba(255,255,255,0.48);
   --gray-dim:rgba(255,255,255,0.12);
-  --accent:#00D9FF;
+  --accent:#E31E24;
   --gold:#d4a853;
   --gold-dim:rgba(212,168,83,0.12);
   --green:#22C55E;
@@ -502,7 +502,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
 .day-toggle:hover{border-color:var(--red)}
 .day-toggle.done{
   border-color:var(--accent);
-  background:rgba(0,217,255,0.08);
+  background:rgba(227,30,36,0.08);
 }
 .day-label{
   font-family:'JetBrains Mono',monospace;
@@ -671,7 +671,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .btn-sm:hover{border-color:var(--red);color:var(--red)}
 .btn-sm.active{background:rgba(200,16,46,0.12);border-color:var(--red);color:var(--red)}
 /* History table variation arrows */
-.wl-up{color:#00D9FF;font-weight:600}
+.wl-up{color:#E31E24;font-weight:600}
 .wl-down{color:var(--red);font-weight:600}
 .wl-same{color:#52525B;font-weight:500}
 /* Exercise chart */
@@ -1001,7 +1001,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   border-radius:14px 14px 0 0;
 }
 .intake-section[data-accent="red"]::before{background:linear-gradient(90deg,#E31E24,#ff4d52)}
-.intake-section[data-accent="cyan"]::before{background:linear-gradient(90deg,#00D9FF,#00a0cc)}
+.intake-section[data-accent="cyan"]::before{background:linear-gradient(90deg,#E31E24,#00a0cc)}
 .intake-section[data-accent="amber"]::before{background:linear-gradient(90deg,#FFB800,#ff8c00)}
 .intake-section[data-accent="green"]::before{background:linear-gradient(90deg,#00C853,#00965e)}
 .intake-section[data-accent="purple"]::before{background:linear-gradient(90deg,#A855F7,#7c3aed)}
@@ -1015,7 +1015,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   font-size:14px;flex-shrink:0;
 }
 .intake-section[data-accent="red"] .intake-header i{background:rgba(227,30,36,0.15);color:#E31E24}
-.intake-section[data-accent="cyan"] .intake-header i{background:rgba(0,217,255,0.12);color:#00D9FF}
+.intake-section[data-accent="cyan"] .intake-header i{background:rgba(0,217,255,0.12);color:#E31E24}
 .intake-section[data-accent="amber"] .intake-header i{background:rgba(255,184,0,0.12);color:#FFB800}
 .intake-section[data-accent="green"] .intake-header i{background:rgba(0,200,83,0.12);color:#00C853}
 .intake-section[data-accent="purple"] .intake-header i{background:rgba(168,85,247,0.12);color:#A855F7}
@@ -1332,7 +1332,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
   /* --- Global Progress --- */
   .trn-demo-banner{display:flex;gap:16px;align-items:flex-start;background:linear-gradient(135deg,rgba(0,217,255,.08),rgba(200,16,46,.06));border:1px solid rgba(0,217,255,.25);padding:18px 22px;margin-bottom:20px}
-  .trn-demo-icon{font-size:22px;color:#00D9FF;flex-shrink:0;margin-top:2px}
+  .trn-demo-icon{font-size:22px;color:#E31E24;flex-shrink:0;margin-top:2px}
   .trn-demo-text{display:flex;flex-direction:column;gap:6px}
   .trn-demo-text strong{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--white)}
   .trn-demo-text span{font-size:13px;color:var(--gray);line-height:1.5}
@@ -1509,7 +1509,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   .info-frame {
     background: rgba(0,217,255,0.035);
     border: 1px solid rgba(0,217,255,0.10);
-    border-left: 3px solid #00D9FF;
+    border-left: 3px solid #E31E24;
     border-radius: var(--radius);
     padding: 18px 22px;
     margin-bottom: 24px;
@@ -1536,7 +1536,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
   /* Accent left borders */
   .accent-left-red { border-left: 3px solid var(--red) !important }
-  .accent-left-cyan { border-left: 3px solid #00D9FF !important }
+  .accent-left-cyan { border-left: 3px solid #E31E24 !important }
   .accent-left-green { border-left: 3px solid var(--green) !important }
   .accent-left-gold { border-left: 3px solid var(--gold) !important }
 
@@ -1605,7 +1605,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     flex-shrink: 0;
   }
   .kpi-icon.red { background: var(--red-dim); color: var(--red) }
-  .kpi-icon.cyan { background: rgba(0,217,255,0.1); color: #00D9FF }
+  .kpi-icon.cyan { background: rgba(0,217,255,0.1); color: #E31E24 }
   .kpi-icon.green { background: rgba(34,197,94,0.1); color: var(--green) }
   .kpi-icon.gold { background: rgba(212,168,83,0.1); color: var(--gold) }
   .kpi-sub {
@@ -1661,7 +1661,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   .quick-action-card:hover .qa-arrow { transform: translateX(3px); color: var(--red) }
 
   /* Day card enhanced (seguimiento) */
-  .day-toggle.today { border-color: var(--accent); background: rgba(0,217,255,0.06) }
+  .day-toggle.today { border-color: var(--accent); background: rgba(227,30,36,0.06) }
   .day-toggle.today .day-label { color: var(--accent) }
 
   /* Bottom nav notification badge */
@@ -1995,10 +1995,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <p class="section-desc">Registra tu entrenamiento semanal, pesos por ejercicio y medidas corporales. Tu progreso te motiva a seguir adelante.</p>
 
       <!-- Weekly Insight -->
-      <div id="ai-insight-box" style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:18px 22px;margin-bottom:24px;display:none">
+      <div id="ai-insight-box" style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:18px 22px;margin-bottom:24px;display:none">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <span style="color:#00D9FF;font-weight:700;font-size:14px">&#9733;</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#00D9FF">Insight Semanal</span>
+          <span style="color:#E31E24;font-weight:700;font-size:14px">&#9733;</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#E31E24">Insight Semanal</span>
           <button id="ai-insight-refresh" style="margin-left:auto;background:none;border:1px solid var(--border);color:var(--gray);font-size:10px;padding:3px 8px;cursor:pointer;font-family:'JetBrains Mono',monospace" onclick="loadWeeklyInsight(true)">Actualizar</button>
         </div>
         <div id="ai-insight-content" style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.75)">Cargando insight...</div>
@@ -2007,7 +2007,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Weekly training log -->
       <div class="accent-left-cyan" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:24px">
-        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px"><i class="fas fa-calendar-week" style="color:#00D9FF;margin-right:8px"></i>Registro Semanal de Entrenamiento</h3>
+        <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px"><i class="fas fa-calendar-week" style="color:#E31E24;margin-right:8px"></i>Registro Semanal de Entrenamiento</h3>
         <p style="font-size:.92rem;color:var(--gray);margin-bottom:16px;line-height:1.6">Marca los días que entrenaste esta semana. Cada día cuenta.</p>
         <div class="week-grid" id="week-grid">
           <div class="day-toggle" data-day="0" onclick="toggleTrainingDay(0)">
@@ -2067,7 +2067,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <!-- 2. HISTORIAL SEMANAL POR EJERCICIO -->
       <div class="wl-card accent-left-cyan">
         <div class="wl-section-title">
-          <span><i class="fas fa-chart-line" style="color:#00D9FF;margin-right:8px"></i>Progresión Semana a Semana</span>
+          <span><i class="fas fa-chart-line" style="color:#E31E24;margin-right:8px"></i>Progresión Semana a Semana</span>
         </div>
         <p style="font-size:.92rem;color:var(--gray);margin-bottom:14px;line-height:1.6">Compara cómo evolucionan tus pesos semana a semana en cada ejercicio.</p>
         <div style="margin-bottom:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -2077,7 +2077,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           </select>
         </div>
         <div id="wl-history-body">
-          <div class="empty-state"><span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span><p>Selecciona un ejercicio para ver su historial.</p></div>
+          <div class="empty-state"><span style="color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span><p>Selecciona un ejercicio para ver su historial.</p></div>
         </div>
       </div>
 
@@ -2156,8 +2156,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
                   <circle cx="130" cy="100" r="8" fill="#FF6B35"/><text x="130" y="104" fill="#fff" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">C</text>
                   <line x1="44" y1="124" x2="96" y2="124" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="4,3"/>
                   <circle cx="10" cy="124" r="8" fill="#FFB800"/><text x="10" y="128" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">Ca</text>
-                  <line x1="38" y1="164" x2="62" y2="164" stroke="#00D9FF" stroke-width="1.5" stroke-dasharray="4,3"/>
-                  <circle cx="130" cy="164" r="8" fill="#00D9FF"/><text x="130" y="168" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">M</text>
+                  <line x1="38" y1="164" x2="62" y2="164" stroke="#E31E24" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <circle cx="130" cy="164" r="8" fill="#E31E24"/><text x="130" y="168" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">M</text>
                 </svg>
               </div>
               <div style="flex:1;min-width:160px;display:flex;flex-direction:column;gap:10px;">
@@ -2173,8 +2173,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
                   <span style="background:#FFB800;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">Ca · CADERA</span>
                   <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Punto más ancho de los glúteos, <strong style="color:#fff;">pies juntos</strong>. La cinta debe quedar horizontal.</p>
                 </div>
-                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #00D9FF;">
-                  <span style="background:#00D9FF;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">M · MUSLO</span>
+                <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #E31E24;">
+                  <span style="background:#E31E24;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">M · MUSLO</span>
                   <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Parte más gruesa, <strong style="color:#fff;">justo debajo del glúteo</strong>. Pierna ligeramente separada.</p>
                 </div>
                 <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #A855F7;">
@@ -2193,7 +2193,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- ═══ PROGRESS BARS ═══ -->
       <div class="metrics-form" id="metrics-progress-bars" style="display:none;margin-bottom:20px;">
-        <h3><i class="fas fa-chart-bar" style="color:#00D9FF;margin-right:8px"></i>Tu Progreso Actual</h3>
+        <h3><i class="fas fa-chart-bar" style="color:#E31E24;margin-right:8px"></i>Tu Progreso Actual</h3>
         <div id="progress-bars-container"></div>
       </div>
 
@@ -2256,8 +2256,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
                 <circle cx="10" cy="124" r="8" fill="#FFB800"/>
                 <text x="10" y="128" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">Ca</text>
                 <!-- MUSLO — cian -->
-                <line x1="38" y1="164" x2="62" y2="164" stroke="#00D9FF" stroke-width="1.5" stroke-dasharray="4,3"/>
-                <circle cx="130" cy="164" r="8" fill="#00D9FF"/>
+                <line x1="38" y1="164" x2="62" y2="164" stroke="#E31E24" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <circle cx="130" cy="164" r="8" fill="#E31E24"/>
                 <text x="130" y="168" fill="#000" font-size="6" text-anchor="middle" font-family="monospace" font-weight="bold">M</text>
               </svg>
             </div>
@@ -2276,8 +2276,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
                 <span style="background:#FFB800;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">Ca · CADERA</span>
                 <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Punto más ancho de los glúteos, <strong style="color:#fff;">pies juntos</strong>. La cinta debe quedar horizontal.</p>
               </div>
-              <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #00D9FF;">
-                <span style="background:#00D9FF;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">M · MUSLO</span>
+              <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #E31E24;">
+                <span style="background:#E31E24;color:#000;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:monospace;letter-spacing:.5px;">M · MUSLO</span>
                 <p style="margin:6px 0 0;font-size:12px;color:var(--gray);line-height:1.5;">Parte más gruesa, <strong style="color:#fff;">justo debajo del glúteo</strong>. Pierna ligeramente separada, peso distribuido.</p>
               </div>
               <div style="background:#1a1a1d;border-radius:8px;padding:11px;border-left:3px solid #A855F7;">
@@ -2354,10 +2354,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Metrics Table -->
       <div class="metrics-table-wrap">
-        <h3><i class="fas fa-table" style="color:#00D9FF;margin-right:8px"></i>Historial de Medidas Corporales</h3>
+        <h3><i class="fas fa-table" style="color:#E31E24;margin-right:8px"></i>Historial de Medidas Corporales</h3>
         <div id="metrics-table-body">
           <div class="empty-state">
-            <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span>
+            <span style="color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span>
             <p>Aún no hay medidas registradas. Registra tu primera medida arriba.</p>
           </div>
         </div>
@@ -2447,7 +2447,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           </div>
           <div id="checkins-history">
             <div class="empty-state">
-              <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span>
+              <span style="color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9671;</span>
               <p>Aún no has enviado check-ins. Envía el primero arriba.</p>
             </div>
           </div>
@@ -2547,8 +2547,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
               </div>
             </div>
             <!-- TIP -->
-            <div style="background:var(--card);border-radius:8px;padding:11px 14px;border-left:3px solid #00D9FF;">
-              <span style="background:#00D9FF;color:#000;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">TIP</span>
+            <div style="background:var(--card);border-radius:8px;padding:11px 14px;border-left:3px solid #E31E24;">
+              <span style="background:#E31E24;color:#000;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;font-family:monospace;letter-spacing:.5px">TIP</span>
               <p style="margin:5px 0 0;font-size:11px;color:var(--gray);line-height:1.5">Toma fotos <strong style="color:var(--white)">cada 7-10 días</strong> para notar cambios reales. La consistencia en condiciones es más importante que la frecuencia.</p>
             </div>
           </div>
@@ -2599,7 +2599,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <h3 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:16px">Historial de Fotos</h3>
         <div id="photos-gallery">
           <div class="empty-state">
-            <span style="color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9673;</span>
+            <span style="color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4">&#9673;</span>
             <p>Aún no has subido fotos de progreso. Sube tu primera sesión arriba.</p>
           </div>
         </div>
@@ -2700,8 +2700,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <i class="fab fa-whatsapp"></i> Abrir WhatsApp
           </a>
         </div>
-        <div class="contact-card card-hover" style="border-left:3px solid #00D9FF">
-          <i class="fas fa-envelope" style="color:#00D9FF;font-size:1.5rem"></i>
+        <div class="contact-card card-hover" style="border-left:3px solid #E31E24">
+          <i class="fas fa-envelope" style="color:#E31E24;font-size:1.5rem"></i>
           <h4>Correo Electrónico</h4>
           <p style="font-size:.92rem;line-height:1.6">Para consultas detalladas o envío de documentos</p>
           <a href="mailto:info@wellcorefitness.com?subject=Consulta%20Portal%20Cliente"
@@ -3205,33 +3205,33 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <h4>ESENCIAL</h4>
             <span class="compare-badge other-badge">BÁSICO</span>
             <ul class="compare-list">
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
               <li class="no">&#10005; Plan de nutrición</li>
               <li class="no">&#10005; Plan de hábitos</li>
               <li class="no">&#10005; Check-in semanal</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Soporte 48h</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Soporte 48h</li>
             </ul>
           </div>
           <div class="compare-card" id="compare-metodo">
             <h4>MÉTODO</h4>
             <span class="compare-badge other-badge">INTERMEDIO</span>
             <ul class="compare-list">
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de nutrición</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Plan de nutrición</li>
               <li class="no">&#10005; Plan de hábitos</li>
               <li class="no">&#10005; Check-in semanal</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Soporte 24h</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Soporte 24h</li>
             </ul>
           </div>
           <div class="compare-card" id="compare-elite">
             <h4>ELITE</h4>
             <span class="compare-badge other-badge">PREMIUM</span>
             <ul class="compare-list">
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de nutrición</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Plan de hábitos</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Check-in semanal</li>
-              <li class="yes"><span style="color:#00D9FF;font-weight:700">&#10003;</span> Soporte prioritario 8h</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Plan de entrenamiento</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Plan de nutrición</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Plan de hábitos</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Check-in semanal</li>
+              <li class="yes"><span style="color:#E31E24;font-weight:700">&#10003;</span> Soporte prioritario 8h</li>
             </ul>
           </div>
         </div>
@@ -3694,13 +3694,13 @@ function renderNutritionInteractive(container) {
   var totals = {cal:0,prot:0,carbs:0,fat:0};
   data.meals.forEach(function(m){m.foods.forEach(function(f){totals.cal+=f.cal;totals.prot+=f.prot;totals.carbs+=f.carbs;totals.fat+=f.fat})});
 
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu plan personalizado aparecerá cuando tu coach lo asigne.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Datos demo — tu plan personalizado aparecerá cuando tu coach lo asigne.</div>';
 
   // KPI Bar
   html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">';
   var kpis = [
     {label:'Calorías',val:totals.cal,target:data.targets.cal,color:'#FF6B35'},
-    {label:'Proteína',val:totals.prot,target:data.targets.prot,color:'#00D9FF'},
+    {label:'Proteína',val:totals.prot,target:data.targets.prot,color:'#E31E24'},
     {label:'Carbos',val:totals.carbs,target:data.targets.carbs,color:'#FFD700'},
     {label:'Grasas',val:totals.fat,target:data.targets.fat,color:'#FF4D6D'}
   ];
@@ -3733,7 +3733,7 @@ function renderNutritionInteractive(container) {
     // Coach tip button (Metodo/Elite only, with daily limits)
     var pl = PLAN_LEVEL[clientPlan] || 1;
     if (pl >= 2) {
-      html += '<button onclick="event.stopPropagation();getNutriCoachTip(this,\''+meal.name+'\')" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--text-sec);padding:6px 12px;border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip</button>';
+      html += '<button onclick="event.stopPropagation();getNutriCoachTip(this,\''+meal.name+'\')" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--text-sec);padding:6px 12px;border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="fas fa-user-md" style="color:#E31E24"></i> Coach Tip</button>';
     }
     html += '</div></div>';
   });
@@ -3808,7 +3808,7 @@ function renderHabitsInteractive(container) {
   data.categories.forEach(function(c){c.habits.forEach(function(h){totalHabits++;if(saved[h.id])doneCount++})});
   var pct = totalHabits > 0 ? Math.round(doneCount / totalHabits * 100) : 0;
 
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — tu coach personalizará tus hábitos.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Datos demo — tu coach personalizará tus hábitos.</div>';
 
   // Streak + Progress
   html += '<div style="display:flex;gap:12px;margin-bottom:18px">';
@@ -3884,7 +3884,7 @@ var SUPPLEMENTS_DATA = {
 };
 function renderSupplementsInteractive(container) {
   var data = SUPPLEMENTS_DATA;
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Protocolo demo — tu coach ajustará suplementos a tu caso.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Protocolo demo — tu coach ajustará suplementos a tu caso.</div>';
 
   data.categories.forEach(function(cat) {
     html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:12px;overflow:hidden">';
@@ -3923,7 +3923,7 @@ var CYCLE_DATA = {
   warning: 'ADVERTENCIA MÉDICA: Este contenido es informativo. El uso de sustancias hormonales requiere supervisión médica obligatoria. WellCore no promueve ni recomienda el uso sin prescripción.',
   phases: [
     {name:'Carga',weeks:'Sem 1-4',color:'#FF6B35'},
-    {name:'Mantenimiento',weeks:'Sem 5-12',color:'#00D9FF'},
+    {name:'Mantenimiento',weeks:'Sem 5-12',color:'#E31E24'},
     {name:'PCT',weeks:'Sem 13-16',color:'#FFD700'},
     {name:'Descanso',weeks:'Sem 17+',color:'#4CAF50'}
   ],
@@ -3948,7 +3948,7 @@ function renderCycleInteractive(container) {
   // Warning banner
   html += '<div style="background:rgba(200,16,46,0.1);border:2px solid var(--red);border-radius:var(--radius-sm);padding:16px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px"><i class="fas fa-exclamation-triangle" style="color:var(--red);font-size:1.5rem;flex-shrink:0;margin-top:2px"></i><div style="font-size:.82rem;color:var(--text-sec);line-height:1.5">'+data.warning+'</div></div>';
 
-  html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Protocolo demo — '+data.name+' ('+data.duration+')</div>';
+  html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Protocolo demo — '+data.name+' ('+data.duration+')</div>';
 
   // Timeline
   html += '<div style="margin-bottom:20px"><div style="font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Timeline de Fases</div>';
@@ -3977,7 +3977,7 @@ function renderCycleInteractive(container) {
   // Labs
   html += '<div><div style="font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Calendario de Labs</div>';
   data.labs.forEach(function(l){
-    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:6px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span style="font-weight:600;font-size:.88rem">'+l.name+'</span><span style="font-size:.72rem;color:#00D9FF"><i class="fas fa-calendar-alt"></i> '+l.when+'</span></div><div style="font-size:.75rem;color:var(--text-sec)">'+l.markers+'</div></div>';
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:6px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span style="font-weight:600;font-size:.88rem">'+l.name+'</span><span style="font-size:.72rem;color:#E31E24"><i class="fas fa-calendar-alt"></i> '+l.when+'</span></div><div style="font-size:.75rem;color:var(--text-sec)">'+l.markers+'</div></div>';
   });
   html += '</div>';
 
@@ -3987,7 +3987,7 @@ function getCycleDemoContent() {
   var d = document.createElement('div');
   d.style.cssText = 'padding:16px';
   d.innerHTML = '<div style="background:rgba(200,16,46,0.1);border:2px solid var(--red);border-radius:6px;padding:12px;margin-bottom:12px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Advertencia médica...</div>';
-  d.innerHTML += '<div style="display:flex;gap:4px;height:32px;border-radius:6px;overflow:hidden;margin-bottom:12px"><div style="flex:1;background:#FF6B35;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">Carga</div><div style="flex:2;background:#00D9FF;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">Mantenimiento</div><div style="flex:1;background:#FFD700;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">PCT</div></div>';
+  d.innerHTML += '<div style="display:flex;gap:4px;height:32px;border-radius:6px;overflow:hidden;margin-bottom:12px"><div style="flex:1;background:#FF6B35;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">Carga</div><div style="flex:2;background:#E31E24;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">Mantenimiento</div><div style="flex:1;background:#FFD700;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#000">PCT</div></div>';
   var items = ['Testosterona Enantato — 500mg/sem','Anastrozol — 0.5mg EOD','HCG — 500 UI 2x/sem'];
   items.forEach(function(i){
     d.innerHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:6px;font-size:.82rem">'+i+'</div>';
@@ -4033,9 +4033,9 @@ function renderBloodworkInteractive(container) {
     if (m.value >= m.optimal_low && m.value <= m.optimal_high) optimalCount++;
   })});
 
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #00D9FF;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#00D9FF"></i> Datos demo — sube tus labs reales para análisis personalizado.</div>';
+  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Datos demo — sube tus labs reales para análisis personalizado.</div>';
   // CTA para subir resultados de laboratorio
-  html += '<div style="background:linear-gradient(135deg,rgba(200,16,46,0.12),rgba(0,217,255,0.08));border:1px solid rgba(200,16,46,0.25);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;text-align:center">';
+  html += '<div style="background:linear-gradient(135deg,rgba(200,16,46,0.12),rgba(227,30,36,0.08));border:1px solid rgba(200,16,46,0.25);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;text-align:center">';
   html += '<i class="fas fa-flask" style="color:var(--red);font-size:1.5rem;margin-bottom:10px;display:block"></i>';
   html += '<div style="font-weight:600;font-size:.95rem;margin-bottom:6px">Sube tus Resultados de Laboratorio</div>';
   html += '<div style="font-size:.78rem;color:var(--gray);margin-bottom:14px;line-height:1.5">Envía tus exámenes de sangre (PDF o foto) por WhatsApp o en tu Check-in semanal.<br>Tu coach los analizará y actualizará esta sección con tus valores reales.</div>';
@@ -4099,16 +4099,16 @@ function getCoachTip(section, topic) {
   }).then(function(r) { return r.json(); }).then(function(data) {
     if (btn) {
       btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip';
+      btn.innerHTML = '<i class="fas fa-user-md" style="color:#E31E24"></i> Coach Tip';
     }
     if (data.tip) {
       var tipDiv = document.createElement('div');
-      tipDiv.style.cssText = 'background:rgba(0,217,255,0.08);border:1px solid rgba(0,217,255,0.2);border-radius:6px;padding:12px;margin-top:8px;font-size:.82rem;color:var(--text-sec);line-height:1.5';
-      tipDiv.innerHTML = '<i class="fas fa-user-md" style="color:#00D9FF;margin-right:6px"></i>' + data.tip;
+      tipDiv.style.cssText = 'background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.2);border-radius:6px;padding:12px;margin-top:8px;font-size:.82rem;color:var(--text-sec);line-height:1.5';
+      tipDiv.innerHTML = '<i class="fas fa-user-md" style="color:#E31E24;margin-right:6px"></i>' + data.tip;
       if (btn && btn.parentElement) btn.parentElement.insertBefore(tipDiv, btn.nextSibling);
     }
   }).catch(function() {
-    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-md" style="color:#00D9FF"></i> Coach Tip'; }
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-md" style="color:#E31E24"></i> Coach Tip'; }
   });
 }
 
@@ -4520,7 +4520,7 @@ function wlRenderHistory() {
     container.textContent = '';
     const emp = document.createElement('div');
     emp.className = 'empty-state';
-    const ic = document.createElement('span'); ic.textContent = '//'; ic.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
+    const ic = document.createElement('span'); ic.textContent = '//'; ic.style.cssText = 'color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
     const p = document.createElement('p'); p.textContent = 'Selecciona un ejercicio para ver su historial.';
     emp.appendChild(ic); emp.appendChild(p);
     container.appendChild(emp);
@@ -4533,7 +4533,7 @@ function wlRenderHistory() {
   if (history.length === 0) {
     const emp = document.createElement('div');
     emp.className = 'empty-state';
-    const ic = document.createElement('span'); ic.textContent = '//'; ic.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
+    const ic = document.createElement('span'); ic.textContent = '//'; ic.style.cssText = 'color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
     const p = document.createElement('p'); p.textContent = 'Sin registros para ' + ex + ' aún.';
     emp.appendChild(ic); emp.appendChild(p);
     container.appendChild(emp);
@@ -4736,7 +4736,7 @@ function renderMetricsTable(metrics) {
   if (metrics.length === 0) {
     container.textContent = '';
     var emptyDiv = document.createElement('div'); emptyDiv.className = 'empty-state';
-    var emptyIc = document.createElement('span'); emptyIc.textContent = '//'; emptyIc.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
+    var emptyIc = document.createElement('span'); emptyIc.textContent = '//'; emptyIc.style.cssText = 'color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
     var emptyP = document.createElement('p'); emptyP.textContent = 'Aún no hay medidas registradas.';
     emptyDiv.appendChild(emptyIc); emptyDiv.appendChild(emptyP); container.appendChild(emptyDiv);
     document.getElementById('metrics-progress-bars').style.display = 'none';
@@ -5051,7 +5051,7 @@ function getWeekNumber(d) {
 function loadActivityFeed() {
   var feedList = document.getElementById('activity-feed-list');
   if (!feedList) return;
-  var ICON_STYLE = 'width:32px;height:32px;border-radius:0;background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.2);display:flex;align-items:center;justify-content:center;color:#00D9FF;font-weight:700;font-size:.8rem;flex-shrink:0';
+  var ICON_STYLE = 'width:32px;height:32px;border-radius:0;background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.2);display:flex;align-items:center;justify-content:center;color:#E31E24;font-weight:700;font-size:.8rem;flex-shrink:0';
 
   var requests = [
     apiFetch('/metrics/?limit=3').then(function(r) { return r.json(); }).catch(function() { return { metrics: [] }; }),
@@ -5130,7 +5130,7 @@ function renderCheckins(checkins) {
   if (checkins.length === 0) {
     container.textContent = '';
     var empCI = document.createElement('div'); empCI.className = 'empty-state';
-    var empIc = document.createElement('span'); empIc.textContent = '//'; empIc.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
+    var empIc = document.createElement('span'); empIc.textContent = '//'; empIc.style.cssText = 'color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
     var empP = document.createElement('p'); empP.textContent = 'Aún no has enviado check-ins.';
     empCI.appendChild(empIc); empCI.appendChild(empP); container.appendChild(empCI);
     return;
@@ -5163,8 +5163,8 @@ function renderCheckins(checkins) {
     if (comentario) addDetailLine('Comentarios:', comentario);
     if (coachReply) {
       var replyP = document.createElement('p');
-      replyP.style.cssText = 'margin-top:8px;padding:8px;background:rgba(0,217,255,0.06);border-left:2px solid #00D9FF';
-      var replyS = document.createElement('strong'); replyS.textContent = 'Coach: '; replyS.style.color = '#00D9FF';
+      replyP.style.cssText = 'margin-top:8px;padding:8px;background:rgba(227,30,36,0.06);border-left:2px solid #E31E24';
+      var replyS = document.createElement('strong'); replyS.textContent = 'Coach: '; replyS.style.color = '#E31E24';
       replyP.appendChild(replyS); replyP.appendChild(document.createTextNode(coachReply));
       detail.appendChild(replyP);
     }
@@ -5203,7 +5203,7 @@ function renderBiblioteca() {
 
     var card    = document.createElement('div');  card.className = 'file-card';
     var icon    = document.createElement('div');  icon.className = 'file-icon';
-    var iconSp  = document.createElement('span'); iconSp.textContent = '//'; iconSp.style.cssText = 'color:#00D9FF;font-weight:700';
+    var iconSp  = document.createElement('span'); iconSp.textContent = '//'; iconSp.style.cssText = 'color:#E31E24;font-weight:700';
     icon.appendChild(iconSp);
     var fname   = document.createElement('div');  fname.className = 'file-name'; fname.textContent = f.name;
     var badge   = document.createElement('span'); badge.className = 'file-plan-req ' + planClasses[f.minPlan]; badge.textContent = planLabels[f.minPlan];
@@ -5273,7 +5273,7 @@ function renderSLA() {
   const SLA = {
     esencial: { label: '48 horas', color: '#A1A1AA', bg: 'rgba(161,161,170,0.1)' },
     metodo:   { label: '24 horas — PRIORITARIO', color: '#C8102E', bg: 'rgba(200,16,46,0.1)' },
-    elite:    { label: '8 horas — PRIORITARIO', color: '#00D9FF', bg: 'rgba(0,217,255,0.1)' }
+    elite:    { label: '8 horas — PRIORITARIO', color: '#E31E24', bg: 'rgba(0,217,255,0.1)' }
   };
   const sla = SLA[clientPlan] || SLA.esencial;
   const card = document.getElementById('sla-card');
@@ -5576,7 +5576,7 @@ function showToast(msg, type) {
   var unicodeIcons = { success: '\u2713', error: '\u2717', info: '\u2139' };
   var toast = document.createElement('div');
   toast.className = 'toast toast-' + type;
-  var iconSpan = document.createElement('span'); iconSpan.textContent = unicodeIcons[type] || unicodeIcons.success; iconSpan.style.cssText = 'color:#00D9FF;font-weight:700';
+  var iconSpan = document.createElement('span'); iconSpan.textContent = unicodeIcons[type] || unicodeIcons.success; iconSpan.style.cssText = 'color:#E31E24;font-weight:700';
   toast.appendChild(iconSpan); toast.appendChild(document.createTextNode(' ' + msg));
   document.body.appendChild(toast);
   setTimeout(function() {
@@ -5709,7 +5709,7 @@ function loadPhotosGallery() {
       var empty = document.createElement('div');
       empty.className = 'empty-state';
       var icon = document.createElement('span');
-      icon.style.cssText = 'color:#00D9FF;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
+      icon.style.cssText = 'color:#E31E24;font-weight:700;font-size:2.5rem;display:block;opacity:.4';
       icon.textContent = '\u25C9';
       empty.appendChild(icon);
       var p = document.createElement('p');

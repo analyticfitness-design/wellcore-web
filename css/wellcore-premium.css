@@ -812,7 +812,7 @@ label,
   transition: border-color 0.3s var(--ease) !important;
 }
 .roi-callout:hover {
-  border-color: rgba(0,217,255,0.3) !important;
+  border-color: rgba(227,30,36,0.3) !important;
 }
 
 /* ============================================================
@@ -867,7 +867,7 @@ label,
   transition: box-shadow 0.3s var(--ease) !important;
 }
 .guarantee-circle:hover {
-  box-shadow: 0 0 40px rgba(0,217,255,0.15) !important;
+  box-shadow: 0 0 40px rgba(227,30,36,0.15) !important;
 }
 
 /* ============================================================
@@ -1884,7 +1884,7 @@ textarea:focus {
   transform: translateY(-2px) !important;
 }
 .day-toggle.done {
-  box-shadow: 0 0 12px rgba(0,217,255,0.15) !important;
+  box-shadow: 0 0 12px rgba(227,30,36,0.15) !important;
 }
 
 /* ============================================================
@@ -2329,7 +2329,7 @@ textarea:focus {
 }
 .efficacy-bar-fill {
   border-radius: var(--radius-pill) !important;
-  box-shadow: 0 0 6px rgba(0,217,255,0.3) !important;
+  box-shadow: 0 0 6px rgba(227,30,36,0.3) !important;
 }
 
 /* ============================================================

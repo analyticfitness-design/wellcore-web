@@ -44,7 +44,7 @@
   --wc-red-dark:     #B8181D;
   --wc-red-dim:      rgba(227, 30, 36, 0.10);
   --wc-red-glow:     rgba(227, 30, 36, 0.4);
-  --wc-cyan:         #00D9FF;
+  --wc-cyan:         #E31E24;
   --wc-green:        #22C55E;
   --wc-gold:         #d4a853;
   --wc-black:        #0a0a0a;
@@ -2179,5 +2179,38 @@ html {
 @media (max-width: 991px) {
   .nav-inner .nav-cta {
     display: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   36. PROMO BAR — Mobile one-line fix
+   El flex-wrap:wrap de v6.css hace la barra de 2 filas en móvil
+   causando que el navbar se superponga al hero. La forzamos a
+   una sola línea ocultando el texto largo y mostrando solo lo esencial.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .v6-promo-bar {
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 44px 0 12px !important;
+    gap: 8px !important;
+  }
+  /* Oculta el texto largo, deja solo countdown + CTA */
+  .v6-promo-bar > span:not(.v6-promo-bar-countdown) {
+    display: none !important;
+  }
+  .v6-promo-bar > i { display: none !important; }
+  .v6-promo-bar-countdown::before {
+    content: '⚡ RISE 30 Días · ';
+    font-weight: 700;
+    color: #fff;
+  }
+  /* Navbar offset ajustado para barra de 44px */
+  .v6-promo-bar.show ~ #navbar,
+  #navbar.bar-open {
+    top: 44px !important;
   }
 }

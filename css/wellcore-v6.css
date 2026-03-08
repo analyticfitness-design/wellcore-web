@@ -500,7 +500,7 @@ p { text-wrap: pretty; }
 
 .v6-badge-blue {
   background: oklch(70% 0.15 230 / 15%);
-  color: #00D9FF;
+  color: #E31E24;
   border: 1px solid oklch(70% 0.15 230 / 25%);
 }
 
