@@ -2644,16 +2644,16 @@
     <!-- Stats bar — v7 glass effect -->
     <div class="hero-stats" style="background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;">
       <div class="hero-stat">
-        <span class="hero-stat-num" data-v7-count="1">1:1</span>
-        <span class="hero-stat-label"><i class="fas fa-comments" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Atenci&oacute;n Directa</span>
+        <span class="hero-stat-num" data-v7-count="94">94%</span>
+        <span class="hero-stat-label"><i class="fas fa-chart-line" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Adherencia Promedio</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">SEMANAL</span>
-        <span class="hero-stat-label"><i class="fas fa-sync-alt" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Ajuste de Plan</span>
+        <span class="hero-stat-num">1:1</span>
+        <span class="hero-stat-label"><i class="fas fa-comments" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Coaching Directo</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num red">2026</span>
-        <span class="hero-stat-label"><i class="fas fa-rocket" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Lanzamiento</span>
+        <span class="hero-stat-num red">100%</span>
+        <span class="hero-stat-label"><i class="fas fa-user-check" aria-hidden="true" style="color:var(--red);margin-right:4px;font-size:9px;"></i>Personalizado</span>
       </div>
     </div>
 
@@ -3113,34 +3113,101 @@
       <a href="/postulate.html" style="display:inline-flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:#E31E24;color:#fff;padding:14px 28px;border:4px solid #E31E24;border-radius:0;text-decoration:none;transition:background 0.1s linear;" onmouseover="this.style.background='#B8181D'" onmouseout="this.style.background='#E31E24'">Post&uacute;late &rarr;</a>
       <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2);margin-top:16px;letter-spacing:1px;">Formulario dedicado pr&oacute;ximamente.</p>
     </div>
-    <!-- RIGHT: Coach photos + benefits -->
-    <div style="display:grid;grid-template-rows:auto auto;gap:0;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;">
-        <img src="images/coach/img-9362.jpg" alt="Coach WellCore — Daniel Esparza" loading="lazy" style="width:100%;height:240px;object-fit:cover;object-position:center top;display:block;opacity:0.9;">
-        <img src="images/coach/img-9363.jpg" alt="Coach WellCore — Entrenamiento" loading="lazy" style="width:100%;height:240px;object-fit:cover;object-position:center;display:block;opacity:0.9;">
+    <!-- RIGHT: Platform Mockup -->
+    <div class="coach-mockup-wrap" style="position:relative;">
+      <!-- Browser chrome frame -->
+      <div style="background:#111;border:1px solid rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(227,30,36,0.08);">
+        <!-- Title bar -->
+        <div style="background:#0d0d0d;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.06);">
+          <span style="width:9px;height:9px;border-radius:50%;background:#E31E24;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12);display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12);display:inline-block;"></span>
+          <span style="flex:1;background:rgba(255,255,255,0.04);border-radius:4px;padding:4px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;">wellcorefitness.com/coach-panel</span>
+          <span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 6px #22c55e;"></span>
+        </div>
+        <!-- App shell -->
+        <div style="display:grid;grid-template-columns:auto 1fr;min-height:340px;">
+          <!-- Sidebar -->
+          <div style="background:#0a0a0a;width:52px;border-right:1px solid rgba(255,255,255,0.05);padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:18px;">
+            <div style="width:28px;height:28px;background:#E31E24;border-radius:4px;display:flex;align-items:center;justify-content:center;">
+              <span style="color:#fff;font-size:12px;font-weight:700;">W</span>
+            </div>
+            <div style="width:30px;height:1px;background:rgba(255,255,255,0.06);"></div>
+            <span style="color:#E31E24;font-size:13px;" title="Dashboard">&#9632;</span>
+            <span style="color:rgba(255,255,255,0.2);font-size:11px;" title="Clientes">&#9675;</span>
+            <span style="color:rgba(255,255,255,0.2);font-size:11px;" title="Planes">&#9675;</span>
+            <span style="color:rgba(255,255,255,0.2);font-size:11px;" title="Ingresos">&#9675;</span>
+            <span style="color:rgba(255,255,255,0.2);font-size:11px;" title="Chat">&#9675;</span>
+          </div>
+          <!-- Main panel -->
+          <div style="background:#0f0f0f;padding:16px;">
+            <!-- Header bar -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;">COACH PANEL</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#fff;">Panel de Coach</div>
+              </div>
+              <div style="background:#E31E24;border-radius:4px;padding:4px 10px;font-family:'JetBrains Mono',monospace;font-size:8px;color:#fff;letter-spacing:1px;">ACTIVO</div>
+            </div>
+            <!-- KPI row -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+              <div style="background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:6px;padding:10px;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-bottom:4px;letter-spacing:1px;">CLIENTES</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;letter-spacing:1px;">18</div>
+              </div>
+              <div style="background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:6px;padding:10px;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-bottom:4px;letter-spacing:1px;">MES</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#E31E24;letter-spacing:1px;">$5.7M</div>
+              </div>
+              <div style="background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:6px;padding:10px;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-bottom:4px;letter-spacing:1px;">ADHERENCIA</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#22c55e;letter-spacing:1px;">91%</div>
+              </div>
+            </div>
+            <!-- Client list -->
+            <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">CLIENTES ACTIVOS</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <!-- Client rows -->
+              <div style="display:flex;align-items:center;gap:8px;background:#141414;border-radius:5px;padding:8px 10px;">
+                <div style="width:24px;height:24px;border-radius:50%;background:#E31E24;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">MG</div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Mar&iacute;a G.</div>
+                  <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:4px;"><div style="height:100%;width:88%;background:#E31E24;border-radius:2px;"></div></div>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.3);flex-shrink:0;">Semana 6</div>
+                <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;"></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;background:#141414;border-radius:5px;padding:8px 10px;">
+                <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">CR</div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Carlos R.</div>
+                  <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:4px;"><div style="height:100%;width:62%;background:#E31E24;border-radius:2px;"></div></div>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.3);flex-shrink:0;">Semana 4</div>
+                <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;"></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;background:#141414;border-radius:5px;padding:8px 10px;">
+                <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">JP</div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Juan P.</div>
+                  <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:4px;"><div style="height:100%;width:45%;background:#E31E24;border-radius:2px;"></div></div>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.3);flex-shrink:0;">Semana 2</div>
+                <span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;flex-shrink:0;"></span>
+              </div>
+            </div>
+            <!-- Bottom action strip -->
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.05);display:flex;gap:8px;align-items:center;">
+              <div style="flex:1;background:#141414;border-radius:5px;padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);">
+                <span style="color:#E31E24;margin-right:6px;">&#9650;</span>+2 nuevos check-ins para revisar
+              </div>
+              <div style="background:#E31E24;border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:8px;color:#fff;white-space:nowrap;cursor:pointer;">Revisar</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="coaches-benefits" style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
-        <div style="padding:24px;border:1px solid rgba(255,255,255,0.06);border-right:none;border-bottom:none;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#E31E24;margin-bottom:8px;">01 &mdash;</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;margin-bottom:6px;">METODOLOG&Iacute;A<br>ESTRUCTURADA</div>
-          <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;margin:0;">Sistema probado, no intuici&oacute;n. Protocolos claros.</p>
-        </div>
-        <div style="padding:24px;border:1px solid rgba(255,255,255,0.06);border-bottom:none;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#E31E24;margin-bottom:8px;">02 &mdash;</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;margin-bottom:6px;">SOPORTE<br>DEL EQUIPO</div>
-          <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;margin:0;">Acceso directo. No est&aacute;s solo.</p>
-        </div>
-        <div style="padding:24px;border:1px solid rgba(255,255,255,0.06);border-right:none;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#E31E24;margin-bottom:8px;">03 &mdash;</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;margin-bottom:6px;">HERRAMIENTAS<br>Y PROTOCOLOS</div>
-          <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;margin:0;">Formatos y templates WellCore.</p>
-        </div>
-        <div style="padding:24px;border:1px solid rgba(255,255,255,0.06);">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#E31E24;margin-bottom:8px;">04 &mdash;</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;margin-bottom:6px;">MARCA EN<br>CRECIMIENTO</div>
-          <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;margin:0;">Posicionamiento real en 2026.</p>
-        </div>
-      </div>
+      <!-- Floating label -->
+      <div style="position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:#E31E24;padding:5px 16px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:#fff;text-transform:uppercase;white-space:nowrap;border-radius:2px;">Panel real · Datos en tiempo real</div>
     </div>
   </div>
   <style>
