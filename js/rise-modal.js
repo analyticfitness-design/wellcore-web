@@ -1,296 +1,294 @@
 /**
- * RISE Modal Popup
- * Muestra un modal promocional al entrar a la página
- * Solo aparece una vez por sesión (localStorage)
+ * RISE Modal Popup — Premium 2026
+ * Diseño basado en WELLCORE_TENDENCIAS_2026: sharp edges, Anton font,
+ * JetBrains Mono, grid background, animación de escala.
  */
 
 (function() {
-    // No mostrar si ya fue cerrado en esta sesión
-    if (sessionStorage.getItem('rise_modal_closed')) {
-        return;
-    }
+    if (sessionStorage.getItem('rise_modal_closed')) return;
 
-    // Crear estilos del modal
     const styles = `
-        .rise-modal-overlay {
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        .rm-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.3s ease-in;
+            padding: 20px;
+        }
+        .rm-overlay.active { display: flex; }
+
+        @keyframes rm-in {
+            from { opacity: 0; transform: scale(0.93) translateY(12px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .rise-modal-overlay.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .rise-modal-content {
-            background: #111113;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 4px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
+        .rm-card {
+            background: #0d0d0d;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 0;
+            max-width: 480px;
+            width: 100%;
             position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            animation: slideUp 0.4s ease-out;
+            overflow: hidden;
+            animation: rm-in 0.35s cubic-bezier(0.16,1,0.3,1) both;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .rise-modal-close {
+        /* Red bottom glow bar */
+        .rm-card::after {
+            content: '';
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #E31E24;
-            font-size: 24px;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #E31E24, #ff4466, #E31E24);
         }
 
-        .rise-modal-close:hover {
-            transform: scale(1.2);
+        /* Grid background */
+        .rm-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(227,30,36,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(227,30,36,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .rise-modal-badge {
-            display: inline-block;
-            background: rgba(227, 30, 36, 0.2);
-            border: 1px solid #E31E24;
-            color: #E31E24;
-            padding: 6px 12px;
-            border-radius: 16px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 15px;
-        }
-
-        .rise-modal-title {
-            color: #fff;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            line-height: 1.2;
-        }
-
-        .rise-modal-subtitle {
-            color: #aaa;
-            font-size: 15px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .rise-modal-price {
-            background: rgba(227, 30, 36, 0.1);
-            border: 1px solid rgba(227, 30, 36, 0.3);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .rise-modal-price-label {
-            color: #E31E24;
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .rise-modal-price-value {
-            color: #E31E24;
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .rise-modal-features {
-            margin-bottom: 20px;
-        }
-
-        .rise-modal-feature {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            font-size: 13px;
-            color: #ccc;
-        }
-
-        .rise-modal-feature-icon {
-            color: #E31E24;
-            margin-right: 8px;
-            font-weight: 700;
-            min-width: 20px;
-        }
-
-        .rise-modal-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .rise-modal-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
+        /* Close button */
+        .rm-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 28px; height: 28px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
             font-size: 14px;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+            z-index: 10;
+            border-radius: 0;
+            font-family: monospace;
         }
+        .rm-close:hover { background: rgba(227,30,36,0.15); border-color: rgba(227,30,36,0.4); color: #fff; }
 
-        .rise-modal-btn-primary {
+        /* Header strip */
+        .rm-header {
+            background: rgba(227,30,36,0.08);
+            border-bottom: 1px solid rgba(227,30,36,0.15);
+            padding: 14px 24px;
+            display: flex; align-items: center; gap: 10px;
+            position: relative; z-index: 1;
+        }
+        .rm-dot {
+            width: 7px; height: 7px; border-radius: 50%;
             background: #E31E24;
-            color: white;
+            box-shadow: 0 0 8px #E31E24;
+            animation: rm-pulse 1.8s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes rm-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        .rm-badge-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.22em;
+            text-transform: uppercase; color: #E31E24;
         }
 
-        .rise-modal-btn-primary:hover {
-            background: #B8181D;
+        /* Body */
+        .rm-body {
+            padding: 28px 28px 24px;
+            position: relative; z-index: 1;
         }
 
-        .rise-modal-btn-secondary {
-            background: transparent;
+        .rm-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 8px;
+        }
+
+        .rm-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(52px, 10vw, 72px);
+            line-height: 0.88;
+            letter-spacing: 1px;
+            color: #fff;
+            margin: 0 0 6px;
+        }
+        .rm-title span { color: #E31E24; }
+
+        .rm-subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            max-width: 340px;
+        }
+
+        /* Price block */
+        .rm-price {
+            background: rgba(227,30,36,0.08);
+            border: 1px solid rgba(227,30,36,0.2);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex; align-items: baseline; gap: 10px;
+        }
+        .rm-price-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.2em;
+            text-transform: uppercase; color: #E31E24;
+        }
+        .rm-price-amount {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px; line-height: 1;
+            color: #E31E24; letter-spacing: 1px;
+        }
+        .rm-price-currency {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px; color: rgba(255,255,255,0.4);
+            letter-spacing: 0.1em;
+        }
+
+        /* Feature pills */
+        .rm-pills {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            margin-bottom: 24px;
+        }
+        .rm-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.55);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 5px 10px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .rm-pill::before {
+            content: '✓';
             color: #E31E24;
-            border: 1px solid #E31E24;
+            font-weight: 700;
         }
 
-        .rise-modal-btn-secondary:hover {
-            background: rgba(227, 30, 36, 0.1);
+        /* Buttons */
+        .rm-buttons {
+            display: flex; gap: 10px;
         }
+        .rm-btn-primary {
+            flex: 1;
+            background: #E31E24;
+            color: #fff;
+            border: none;
+            padding: 14px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            transition: background 0.15s;
+            border-radius: 0;
+        }
+        .rm-btn-primary:hover { background: #B8181D; }
 
-        @media (max-width: 600px) {
-            .rise-modal-content {
-                padding: 30px;
-            }
+        .rm-btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-radius: 0;
+        }
+        .rm-btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.7); }
 
-            .rise-modal-title {
-                font-size: 24px;
-            }
-
-            .rise-modal-buttons {
-                flex-direction: column;
-            }
+        @media (max-width: 520px) {
+            .rm-body { padding: 24px 20px 20px; }
+            .rm-buttons { flex-direction: column; }
+            .rm-title { font-size: 52px; }
         }
     `;
 
-    // Inyectar estilos
     const styleSheet = document.createElement('style');
     styleSheet.textContent = styles;
     document.head.appendChild(styleSheet);
 
-    // HTML del modal
     const modalHTML = `
-        <div class="rise-modal-overlay" id="riseModalOverlay">
-            <div class="rise-modal-content">
-                <button class="rise-modal-close" id="riseModalClose">&times;</button>
+        <div class="rm-overlay" id="riseModalOverlay">
+            <div class="rm-card">
+                <button class="rm-close" id="riseModalClose">✕</button>
 
-                <div class="rise-modal-badge">🚀 Oferta Especial Marzo</div>
-                <h2 class="rise-modal-title">Reto RISE</h2>
-                <p class="rise-modal-subtitle">30 días transformando tu entrenamiento con programa 100% personalizado</p>
-
-                <div class="rise-modal-price">
-                    <div class="rise-modal-price-label">Precio especial</div>
-                    <div class="rise-modal-price-value">$27 USD</div>
+                <div class="rm-header">
+                    <span class="rm-dot"></span>
+                    <span class="rm-badge-text">Oferta especial · Marzo 2026 · Cupos limitados</span>
                 </div>
 
-                <div class="rise-modal-features">
-                    <div class="rise-modal-feature">
-                        <span class="rise-modal-feature-icon">✓</span>
-                        <span>Programa personalizado (gym o casa)</span>
-                    </div>
-                    <div class="rise-modal-feature">
-                        <span class="rise-modal-feature-icon">✓</span>
-                        <span>Guía de nutrición y hábitos</span>
-                    </div>
-                    <div class="rise-modal-feature">
-                        <span class="rise-modal-feature-icon">✓</span>
-                        <span>Trazabilidad y tracking diario</span>
-                    </div>
-                    <div class="rise-modal-feature">
-                        <span class="rise-modal-feature-icon">✓</span>
-                        <span>Acceso a comunidad RISE</span>
-                    </div>
-                </div>
+                <div class="rm-body">
+                    <div class="rm-eyebrow">// Reto 30 días</div>
+                    <h2 class="rm-title">RETO<br><span>RISE</span></h2>
+                    <p class="rm-subtitle">Programa 100% personalizado. Coach que responde en 24h. Plataforma con tracking diario.</p>
 
-                <div class="rise-modal-buttons">
-                    <a href="/rise-enroll.html" class="rise-modal-btn rise-modal-btn-primary">Inscribirse</a>
-                    <button class="rise-modal-btn rise-modal-btn-secondary" id="riseModalLearn">Más Info</button>
+                    <div class="rm-price">
+                        <div>
+                            <div class="rm-price-label">Precio especial</div>
+                            <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px;">
+                                <span class="rm-price-amount">$27</span>
+                                <span class="rm-price-currency">USD · único pago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rm-pills">
+                        <span class="rm-pill">Programa gym o casa</span>
+                        <span class="rm-pill">Guía nutricional</span>
+                        <span class="rm-pill">Tracking diario</span>
+                        <span class="rm-pill">Comunidad RISE</span>
+                    </div>
+
+                    <div class="rm-buttons">
+                        <a href="/rise-enroll.html" class="rm-btn-primary">Inscribirme ahora →</a>
+                        <button class="rm-btn-ghost" id="riseModalLearn">Más Info</button>
+                    </div>
                 </div>
             </div>
         </div>
     `;
 
-    // Esperar a que DOM esté listo
     function initRiseModal() {
-        // Insertar HTML
         document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-        // Referencias
         const overlay = document.getElementById('riseModalOverlay');
         const closeBtn = document.getElementById('riseModalClose');
         const learnBtn = document.getElementById('riseModalLearn');
 
-        // Mostrar modal después de 1 segundo
-        setTimeout(() => {
-            overlay.classList.add('active');
-        }, 1000);
+        setTimeout(() => { overlay.classList.add('active'); }, 1200);
 
-        // Cerrar modal
         function closeModal() {
-            overlay.classList.remove('active');
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.25s';
             sessionStorage.setItem('rise_modal_closed', 'true');
-            setTimeout(() => {
-                overlay.remove();
-            }, 300);
+            setTimeout(() => overlay.remove(), 280);
         }
 
         closeBtn.addEventListener('click', closeModal);
-
-        // Más info
-        learnBtn.addEventListener('click', () => {
-            closeModal();
-            window.location.href = '/rise.html';
-        });
-
-        // Cerrar al clickear fuera del modal
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                closeModal();
-            }
-        });
+        learnBtn.addEventListener('click', () => { closeModal(); window.location.href = '/rise.html'; });
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
     }
 
-    // Ejecutar cuando el DOM esté listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initRiseModal);
     } else {

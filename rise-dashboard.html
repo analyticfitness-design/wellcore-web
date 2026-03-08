@@ -965,33 +965,47 @@
         .trn-day.expanded .trn-day-chevron{transform:rotate(180deg)}
         .trn-day-body{display:none;padding:0 20px 20px}
         .trn-day.expanded .trn-day-body{display:block}
-        .trn-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
-        .trn-stat{background:rgba(255,255,255,.03);padding:10px;text-align:center;border-radius:8px}
-        .trn-stat-label{font-size:9px;color:var(--gray,#888);text-transform:uppercase;letter-spacing:.12em;font-family:'JetBrains Mono',monospace}
-        .trn-stat-value{font-size:13px;color:var(--white,#fff);font-weight:600;margin-top:4px}
-        .trn-warmup{background:rgba(227,30,36,.06);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:16px;border-radius:0 8px 8px 0}
-        .trn-warmup-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;color:#E31E24;margin-bottom:6px}
-        .trn-warmup-text{font-size:12px;color:var(--gray,#888);line-height:1.6}
-        .trn-ex{border:1px solid var(--border,#333);margin-bottom:8px;transition:all .2s;border-radius:8px;overflow:hidden}
-        .trn-ex.done{border-color:rgba(200,16,46,.3);background:rgba(200,16,46,.04)}
-        .trn-ex-row{display:flex;align-items:center;gap:10px;padding:12px 14px}
-        .trn-ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray,#888);min-width:20px}
-        .trn-ex-check{width:20px;height:20px;border:2px solid var(--border,#333);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:transparent;font-size:12px;transition:all .2s;flex-shrink:0;background:transparent}
+        /* ── TRAINING STATS (bento premium) ── */
+        .trn-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.05);margin-bottom:16px;border:1px solid rgba(255,255,255,0.05)}
+        .trn-stat{background:#0d0d0d;padding:14px 10px;text-align:center;position:relative;overflow:hidden}
+        .trn-stat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red,#C8102E),transparent);opacity:0;transition:opacity .2s}
+        .trn-stat:hover::after{opacity:1}
+        .trn-stat-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.15em;margin-bottom:6px}
+        .trn-stat-value{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--white,#fff);letter-spacing:1px;line-height:1}
+
+        /* ── WARMUP ── */
+        .trn-warmup{background:rgba(227,30,36,.05);border:1px solid rgba(227,30,36,.18);border-left:3px solid #E31E24;padding:14px 18px;margin-bottom:16px;border-radius:0;position:relative;overflow:hidden}
+        .trn-warmup::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(227,30,36,.04),transparent);pointer-events:none}
+        .trn-warmup-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:#E31E24;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+        .trn-warmup-title::before{content:'▶';font-size:8px}
+        .trn-warmup-text{font-size:12px;color:rgba(255,255,255,.55);line-height:1.7}
+
+        /* ── EXERCISE ROWS ── */
+        .trn-ex{border:1px solid rgba(255,255,255,0.06);margin-bottom:6px;transition:border-color .2s;border-radius:0;overflow:hidden;position:relative}
+        .trn-ex::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(200,16,46,.07) 0%,transparent 60%);opacity:0;transition:opacity .25s;pointer-events:none}
+        .trn-ex:hover{border-color:rgba(200,16,46,.3)}
+        .trn-ex:hover::before{opacity:1}
+        .trn-ex.done{border-color:rgba(200,16,46,.25);background:rgba(200,16,46,.04)}
+        .trn-ex-row{display:flex;align-items:center;gap:12px;padding:13px 16px}
+        .trn-ex-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:rgba(200,16,46,.4);min-width:24px;line-height:1;transition:color .2s}
+        .trn-ex:hover .trn-ex-num{color:rgba(200,16,46,.85)}
+        .trn-ex-check{width:20px;height:20px;border:1px solid rgba(255,255,255,0.15);border-radius:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:transparent;font-size:11px;transition:all .2s;flex-shrink:0;background:transparent}
         .trn-ex.done .trn-ex-check{background:var(--red,#C8102E);border-color:var(--red,#C8102E);color:#fff}
         .trn-ex-details{flex:1;min-width:0}
-        .trn-ex-name{font-size:14px;color:var(--white,#fff);font-weight:500}
-        .trn-ex.done .trn-ex-name{text-decoration:line-through;opacity:.6}
-        .trn-ex-tags{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
-        .trn-ex-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray,#888);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:4px}
-        .trn-ex-actions{display:flex;gap:6px;flex-shrink:0}
-        .trn-ex-actions button{background:rgba(255,255,255,.04);border:1px solid var(--border,#333);color:var(--gray,#888);padding:6px 10px;cursor:pointer;font-size:11px;transition:all .2s;border-radius:6px}
-        .trn-ex-actions button:hover{border-color:var(--red,#C8102E);color:var(--white,#fff)}
+        .trn-ex-name{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--white,#fff);letter-spacing:.04em;line-height:1.2}
+        .trn-ex.done .trn-ex-name{text-decoration:line-through;opacity:.5}
+        .trn-ex-tags{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
+        .trn-ex-tag{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.4);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);padding:2px 7px;letter-spacing:.04em}
+        .trn-ex-actions{display:flex;gap:5px;flex-shrink:0}
+        .trn-ex-actions button{background:transparent;border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:5px 10px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;transition:all .2s;border-radius:0}
+        .trn-ex-actions button:hover{border-color:var(--red,#C8102E);color:var(--white,#fff);background:rgba(200,16,46,.08)}
         .trn-ex-notes{display:none;padding:8px 14px 12px 54px;border-top:1px solid var(--border,#333)}
         .trn-ex.notes-open .trn-ex-notes{display:flex;gap:8px;align-items:flex-start}
         .trn-ex-notes-icon{color:#E31E24;flex-shrink:0;font-size:12px;margin-top:2px}
         .trn-ex-notes-text{font-size:12px;color:var(--gray,#888);line-height:1.6}
-        .trn-cooldown{background:rgba(200,16,46,.04);border-left:3px solid var(--red,#C8102E);padding:12px 16px;margin-top:16px;border-radius:0 8px 8px 0}
-        .trn-cooldown-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--red,#C8102E);margin-bottom:6px}
+        .trn-cooldown{background:rgba(200,16,46,.05);border:1px solid rgba(200,16,46,.18);border-left:3px solid var(--red,#C8102E);padding:14px 18px;margin-top:16px;border-radius:0}
+        .trn-cooldown-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--red,#C8102E);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+        .trn-cooldown-title::before{content:'◼';font-size:7px}
         .trn-cooldown-text{font-size:12px;color:var(--gray,#888);line-height:1.6}
         .trn-ai-bubble{display:none;padding:10px 14px;margin:0 14px 10px 54px;background:rgba(227,30,36,.06);border:1px solid rgba(227,30,36,.15);border-radius:8px}
         .trn-ai-bubble.visible{display:block}
@@ -4944,6 +4958,15 @@ function renderRiseSupplementsInteractive(container) {
     });
   }, 5000);
 })();
+
+// Radial glow tracking para .trn-ex (hover effect premium)
+document.addEventListener('mousemove', function(e) {
+  var el = e.target.closest('.trn-ex');
+  if (!el) return;
+  var r = el.getBoundingClientRect();
+  el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+  el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+});
 </script>
 </body>
 </html>

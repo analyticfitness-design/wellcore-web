@@ -577,40 +577,56 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
     }
     @media (max-width: 860px) { .guarantee-inner { grid-template-columns: 1fr; gap: 48px; } }
-    /* GUARANTEE — Visual tipográfico (sin círculo) */
+    /* GUARANTEE — Bento card premium */
     .guarantee-visual {
-      position: relative; display: flex; align-items: center; justify-content: flex-start;
+      position: relative; display: flex; align-items: stretch; justify-content: flex-start;
     }
-    .guar-statement { display: flex; align-items: flex-end; gap: 0; user-select: none; }
-    .guar-statement-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(160px, 22vw, 220px);
-      line-height: 0.85; color: #fff; letter-spacing: -6px; position: relative;
+    .guar-bento {
+      background: #0d0d0d; border: 1px solid rgba(255,255,255,0.07);
+      width: 100%; position: relative; overflow: hidden;
     }
-    .guar-statement-num::after {
-      content: ''; position: absolute; bottom: 18px; left: 0; right: 0;
-      height: 4px; background: #E31E24;
+    .guar-bento::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #E31E24, #ff4466, #E31E24);
     }
-    .guar-statement-text {
-      display: flex; flex-direction: column; gap: 4px;
-      padding-left: 18px; padding-bottom: 22px;
+    .guar-bento-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 28px 0; margin-bottom: 4px;
     }
-    .guar-statement-unit {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(52px, 8vw, 76px); line-height: 1;
-      color: #E31E24; letter-spacing: 4px;
+    .guar-bento-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 0.2em; color: rgba(255,255,255,0.28); text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
     }
-    .guar-statement-sub {
-      font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
-      letter-spacing: 0.18em; color: rgba(255,255,255,0.3);
-      text-transform: uppercase; line-height: 1.6;
-    }
-    .guar-statement-badge {
-      display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
-      font-family: 'JetBrains Mono', monospace; font-size: 8px;
+    .guar-bento-live {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
       letter-spacing: 0.14em; color: #E31E24; text-transform: uppercase;
     }
-    .guar-dot { width: 6px; height: 6px; border-radius: 50%; background: #E31E24; animation: pulse-dot 1.8s ease-in-out infinite; flex-shrink: 0; }
+    .guar-dot { width: 6px; height: 6px; border-radius: 50%; background: #E31E24;
+      box-shadow: 0 0 8px #E31E24; animation: pulse-dot 1.8s ease-in-out infinite; flex-shrink: 0; }
+    .guar-bento-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(100px, 16vw, 150px); line-height: 0.85;
+      color: #fff; letter-spacing: -4px; padding: 0 28px;
+    }
+    .guar-bento-unit {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 52px);
+      color: #E31E24; letter-spacing: 4px; padding: 0 28px; margin-top: -10px; margin-bottom: 20px;
+    }
+    .guar-bento-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 0 28px; }
+    .guar-bento-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+      background: rgba(255,255,255,0.04); margin: 0 0 3px;
+    }
+    .guar-bento-stat { background: #0d0d0d; padding: 18px 14px; text-align: center; }
+    .guar-bento-stat-val {
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; line-height: 1;
+    }
+    .guar-bento-stat-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.28); text-transform: uppercase; margin-top: 4px;
+    }
     .guarantee-content h2 {
       font-family: 'Bebas Neue', sans-serif; font-size: 52px;
       line-height: 0.95; letter-spacing: 1px; color: #fff; margin-bottom: 20px;
@@ -672,58 +688,65 @@
     ============================================================ */
     .final-cta-section {
       padding: 120px 0; text-align: center; position: relative; overflow: hidden;
+      background: #E31E24;
     }
     .final-cta-section::before {
-      content: ''; position: absolute; bottom: -200px; left: 50%;
-      transform: translateX(-50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(ellipse, rgba(227,30,36,0.07) 0%, transparent 70%);
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(0,0,0,0.04) 0,
+        rgba(0,0,0,0.04) 1px,
+        transparent 1px,
+        transparent 40px
+      );
       pointer-events: none;
     }
     .final-cta-eyebrow {
-      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 600;
-      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-      color: rgba(255,255,255,0.45); margin-bottom: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: rgba(0,0,0,0.45); margin-bottom: 20px;
     }
     .final-cta-h2 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(56px, 8vw, 96px); line-height: 0.95;
-      letter-spacing: 2px; color: #fff; margin-bottom: 16px;
+      font-size: clamp(72px, 12vw, 130px); line-height: 0.88;
+      letter-spacing: 1px; color: #000; margin-bottom: 24px;
     }
-    .final-cta-h2 span { color: #E31E24; }
+    .final-cta-h2 span { color: #fff; }
     .final-cta-sub {
-      font-size: 17px; font-weight: 300;
-      color: rgba(255,255,255,0.45); max-width: 520px;
-      margin: 0 auto 48px; line-height: 1.7;
+      font-size: 17px; font-weight: 400;
+      color: rgba(0,0,0,0.6); max-width: 480px;
+      margin: 0 auto 48px; line-height: 1.65;
     }
     .final-cta-buttons {
       display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
     }
     .btn-primary-lg {
       display: inline-flex; align-items: center; gap: 12px;
-      background: #E31E24; color: #fff;
+      background: #000; color: #fff;
       font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 700;
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-      padding: 20px 40px; border: 4px solid #E31E24; transition: all 0.1s linear;
+      padding: 20px 40px; border: 4px solid #000; transition: all 0.15s linear;
     }
-    .btn-primary-lg:hover { background: #B8181D; border-color: #B8181D; }
+    .btn-primary-lg:hover { background: #1a1a1a; border-color: #1a1a1a; }
     .btn-wa {
       display: inline-flex; align-items: center; gap: 12px;
-      background: transparent; color: #fff;
+      background: transparent; color: #000;
       font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 600;
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-      padding: 20px 40px; border: 4px solid rgba(255,255,255,0.15); transition: all 0.1s linear;
+      padding: 20px 40px; border: 4px solid rgba(0,0,0,0.25); transition: all 0.15s linear;
     }
-    .btn-wa:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.03); }
+    .btn-wa:hover { border-color: rgba(0,0,0,0.5); background: rgba(0,0,0,0.06); }
     .final-cta-reassure {
       margin-top: 32px;
       display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap;
     }
     .final-cta-reassure span {
-      font-family: 'Urbanist', sans-serif; font-variation-settings: 'wght' 500;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(255,255,255,0.18); display: flex; align-items: center; gap: 8px;
+      color: rgba(0,0,0,0.4); display: flex; align-items: center; gap: 8px;
     }
+    .final-cta-reassure span i { color: rgba(0,0,0,0.5); }
 
     /* ============================================================
        FOOTER
@@ -1564,13 +1587,26 @@
     <div class="section-wrap">
       <div class="guarantee-inner">
         <div class="guarantee-visual" data-aos="fade-right" data-aos-duration="700">
-          <div class="guar-statement">
-            <div class="guar-statement-num">30</div>
-            <div class="guar-statement-text">
-              <div class="guar-statement-unit">DÍAS</div>
-              <div class="guar-statement-sub">SEGUIMIENTO<br>GARANTIZADO</div>
-              <div class="guar-statement-badge">
-                <div class="guar-dot"></div> ACTIVO
+          <div class="guar-bento">
+            <div class="guar-bento-top">
+              <span class="guar-bento-tag">// GARANTÍA</span>
+              <span class="guar-bento-live"><span class="guar-dot"></span> ACTIVA</span>
+            </div>
+            <div class="guar-bento-num">30</div>
+            <div class="guar-bento-unit">DÍAS</div>
+            <div class="guar-bento-divider"></div>
+            <div class="guar-bento-grid">
+              <div class="guar-bento-stat">
+                <div class="guar-bento-stat-val">100%</div>
+                <div class="guar-bento-stat-label">PERSONALIZADO</div>
+              </div>
+              <div class="guar-bento-stat">
+                <div class="guar-bento-stat-val">24H</div>
+                <div class="guar-bento-stat-label">RESPUESTA</div>
+              </div>
+              <div class="guar-bento-stat">
+                <div class="guar-bento-stat-val">0</div>
+                <div class="guar-bento-stat-label">EXCUSAS</div>
               </div>
             </div>
           </div>
@@ -1685,8 +1721,9 @@
 
       <div style="text-align:center;margin-top:48px;" data-aos="fade-up" data-aos-delay="200">
         <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:20px;">&#191;Tienes otra pregunta que no est&aacute; aqu&iacute;?</p>
-        <a href="inscripcion.html" class="btn-primary-lg v6-magnetic v7-btn-primary v7-magnetic" style="font-size:11px;padding:16px 32px;">
-          Escribenos aqu&iacute; &rarr;
+        <a href="https://wa.me/573124904720?text=Hola!%20Tengo%20una%20pregunta%20sobre%20los%20planes%20WellCore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:14px;background:#25D366;color:#fff;font-family:'Urbanist',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:18px 36px;text-decoration:none;border:none;transition:background 0.2s;" onmouseover="this.style.background='#1da851'" onmouseout="this.style.background='#25D366'">
+          <i class="fab fa-whatsapp" style="font-size:1.4rem;"></i>
+          Preguntanos por WhatsApp
         </a>
       </div>
 

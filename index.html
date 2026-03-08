@@ -43,20 +43,21 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BYQNT117R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9BYQNT117R');</script>
 
-  <!-- Font Awesome 6.4 -->
+  <!-- Font Awesome 6.4 — crítico (iconos visibles en hero) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Bootstrap 5.3 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <!-- AOS -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <!-- Google Fonts + v7 Premium Fonts -->
+  <!-- Bootstrap 5.3 — no-bloqueante -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" /></noscript>
+  <!-- AOS — no-bloqueante -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'" />
+  <!-- Google Fonts — crítico (Bebas Neue visible en hero) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <!-- v7 Premium Fonts: Axiforma (body), DIN Next LT Pro (data) -->
-  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
-  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+  <!-- v7 Fuentes premium — no-bloqueantes (Axiforma, DIN Next LT Pro) -->
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" media="print" onload="this.media='all'" />
 
   <style>
     /* ============================================================
@@ -1162,6 +1163,8 @@
       background: var(--surface);
       padding: 100px 0;
       border-top: 1px solid var(--border);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 700px;
     }
     .transf-header {
       text-align: center;
@@ -1256,6 +1259,8 @@
     #coaches {
       background: var(--bg);
       border-top: 1px solid var(--border);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 600px;
     }
 
     /* ============================================================
@@ -1265,6 +1270,8 @@
       background: var(--bg);
       padding: 100px 0 0 0;
       border-top: 1px solid var(--border);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 500px;
     }
     .blog-header {
       max-width: 1200px;
@@ -1390,6 +1397,8 @@
       background: var(--bg);
       padding: 100px 0;
       border-top: 1px solid var(--border);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 500px;
     }
     .faq-header {
       text-align: center;
@@ -1906,8 +1915,8 @@
       .nav-logo { font-size: 18px; }
 
       /* HERO — padding-top base cuando bar no está visible aún */
-      #hero { padding-top: 120px; min-height: 100svh; }
-      .hero-inner { padding: 32px 20px 48px; text-align: center; width: 100%; max-width: none; margin: 0 auto; }
+      #hero { padding-top: 120px; min-height: 100svh; overflow: hidden; max-width: 100vw; }
+      .hero-inner { padding: 32px 20px 48px; text-align: center; width: 100%; max-width: none; margin: 0 auto; box-sizing: border-box; }
       .hero-meta { justify-content: center; }
       .hero-badge {
         font-size: 8px;
@@ -3511,8 +3520,8 @@
 <!-- ============================================================
      SCRIPTS
 ============================================================ -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>

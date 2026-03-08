@@ -31,7 +31,7 @@ _append_*.py
 _fix_*.py
 
 # Screenshots & debug
-*.png
+screenshots/
 *.jpeg
 snapshot.txt
 
