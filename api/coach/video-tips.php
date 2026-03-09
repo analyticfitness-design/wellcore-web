@@ -24,15 +24,25 @@ if ($method === 'GET') {
 
     if (!$coach_id) respond(['items' => []]);
 
+    $page   = max(1, (int)($_GET['page']  ?? 1));
+    $limit  = min(100, max(1, (int)($_GET['limit'] ?? 100)));
+    $offset = ($page - 1) * $limit;
+
+    $total = (int)$db->prepare("SELECT COUNT(*) FROM coach_video_tips WHERE coach_id = ? AND is_active = 1")
+                     ->execute([$coach_id]) ? $db->query("SELECT FOUND_ROWS()")->fetchColumn() : 0;
+    $cntStmt = $db->prepare("SELECT COUNT(*) FROM coach_video_tips WHERE coach_id = ? AND is_active = 1");
+    $cntStmt->execute([$coach_id]);
+    $total = (int)$cntStmt->fetchColumn();
+
     $stmt = $db->prepare("
         SELECT id, title, video_url, thumbnail_url, duration_sec, sort_order, created_at
         FROM coach_video_tips
         WHERE coach_id = ? AND is_active = 1
         ORDER BY sort_order ASC, created_at DESC
-        LIMIT 10
+        LIMIT ? OFFSET ?
     ");
-    $stmt->execute([$coach_id]);
-    respond(['items' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
+    $stmt->execute([$coach_id, $limit, $offset]);
+    respond(['items' => $stmt->fetchAll(PDO::FETCH_ASSOC), 'total' => $total, 'page' => $page]);
 
 } elseif ($method === 'POST') {
     $coach    = authenticateCoach();
