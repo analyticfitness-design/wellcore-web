@@ -6695,7 +6695,7 @@ function filterVideos(muscle) {
     var card = document.createElement('div');
     // Thumbnail URL de YouTube (fallback si no tiene ID)
     var thumbUrl = v.youtubeId
-      ? 'https://img.youtube.com/vi/' + v.youtubeId + '/mqdefault.jpg'
+      ? 'https://img.youtube.com/vi/' + v.youtubeId + '/' + (v.thumbFrame ? v.thumbFrame + '.jpg' : 'mqdefault.jpg')
       : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="320" height="180"%3E%3Crect width="320" height="180" fill="%23121215"/%3E%3Ctext x="50%25" y="50%25" font-family="sans-serif" font-size="12" fill="%23666" text-anchor="middle" dy=".3em"%3EVídeo próximamente%3C/text%3E%3C/svg%3E';
     if (!unlocked) {
       card.className = 'video-locked-card';
@@ -6762,7 +6762,55 @@ var RECIPES = [
     pasos:['Mezcla todos los ingredientes hasta que formen una masa moldeable.','Si está muy seca, agrega 1 cda de agua. Si muy húmeda, más avena.','Forma 12 bolitas del tamaño de una nuez.','Cubre en cacao y refrigera 1 hora. Guarda hasta 1 semana.'] },
   { name:'Ricotta Toast Proteico', plan:'elite', kcal:320, tiempo:'10 min', prot:22, carbs:28, fat:14, obj:'deficit',
     ingredientes:['2 rebanadas pan de masa madre','80g ricotta baja en grasa','1 scoop proteína sabor vainilla','Fresas frescas en rodajas','Miel, menta, pistachos picados'],
-    pasos:['Mezcla la ricotta con la proteína hasta integrar.','Tuesta el pan.','Unta generosamente la mezcla de ricotta.','Corona con fresas, menta, pistachos y un hilo de miel.'] }
+    pasos:['Mezcla la ricotta con la proteína hasta integrar.','Tuesta el pan.','Unta generosamente la mezcla de ricotta.','Corona con fresas, menta, pistachos y un hilo de miel.'] },
+  // ── NUEVAS ESENCIAL ──
+  { name:'Wrap de Pollo y Vegetales', plan:'esencial', kcal:410, tiempo:'20 min', prot:35, carbs:42, fat:11, obj:'mant',
+    ingredientes:['150g pechuga de pollo','1 tortilla integral grande','1/2 taza lechuga','1/4 tomate en cubos','2 cdas hummus','Sal, pimienta, pimentón'],
+    pasos:['Sazona el pollo y cocínalo en sartén 5-6 min por lado. Deja reposar y desmecha.','Calienta la tortilla 30 segundos.','Unta el hummus sobre la tortilla.','Agrega el pollo, lechuga y tomate. Enrolla firmemente.'] },
+  { name:'Arroz con Huevo y Frijoles', plan:'esencial', kcal:490, tiempo:'15 min', prot:28, carbs:68, fat:10, obj:'super',
+    ingredientes:['1 taza arroz blanco cocido','2 huevos enteros','1/2 taza frijoles negros cocidos','1 cdta aceite de coco','Sal, comino, ajo en polvo'],
+    pasos:['Calienta el arroz y los frijoles en sartén con el aceite.','Abre espacio en el centro, agrega los huevos y revuelve suavemente.','Sazona con sal, comino y ajo. Mezcla todo junto 2 min.','Sirve caliente. Ideal como almuerzo de recuperación.'] },
+  { name:'Tostadas de Aguacate con Huevo', plan:'esencial', kcal:320, tiempo:'10 min', prot:18, carbs:28, fat:16, obj:'deficit',
+    ingredientes:['2 rebanadas pan integral tostado','1/2 aguacate maduro','2 huevos pochados','Sal, pimienta, hojuelas de chile','Jugo de limón'],
+    pasos:['Aplasta el aguacate con limón y sal.','Pocha los huevos en agua con un chorrito de vinagre, 3 min.','Unta el aguacate sobre las tostadas.','Coloca un huevo pochado sobre cada tostada. Sazona y sirve.'] },
+  { name:'Yogur Griego Proteico', plan:'esencial', kcal:260, tiempo:'5 min', prot:24, carbs:22, fat:8, obj:'deficit',
+    ingredientes:['200g yogur griego natural 0%','1/2 scoop proteína de vainilla','1 cdta miel','1/4 taza granola baja en azúcar','Frutos rojos al gusto'],
+    pasos:['Mezcla el yogur griego con la proteína hasta integrar bien.','Agrega la miel y revuelve.','Sirve en un bowl y corona con granola y frutos rojos.','Consume inmediatamente para mantener la textura de la granola.'] },
+  { name:'Caldo de Pollo con Verduras', plan:'esencial', kcal:280, tiempo:'35 min', prot:26, carbs:18, fat:8, obj:'deficit',
+    ingredientes:['200g pollo con hueso','1 zanahoria mediana','1 rama de apio','1/4 cebolla','Sal, pimienta, laurel, cilantro'],
+    pasos:['Lleva el pollo a hervir con 1 litro de agua y la cebolla.','Espuma el caldo en los primeros 5 min. Baja el fuego.','Agrega zanahoria, apio, laurel. Cocina 25 min a fuego medio.','Retira el pollo, desmecha la carne y regresa al caldo. Sazona y agrega cilantro.'] },
+  // ── NUEVAS MÉTODO ──
+  { name:'Tacos Proteicos de Pollo', plan:'metodo', kcal:450, tiempo:'20 min', prot:36, carbs:44, fat:12, obj:'mant',
+    ingredientes:['180g pollo molido o desmechado','4 tortillas de maíz pequeñas','1/4 cebolla morada','1 tomate','Cilantro, lima','Salsa verde o roja al gusto'],
+    pasos:['Saltea el pollo con ajo, comino y pimentón hasta dorar.','Calienta las tortillas en sartén seca 30s por lado.','Arma cada taco con pollo, cebolla morada, tomate y cilantro.','Exprime lima y agrega salsa al gusto. Sirve de inmediato.'] },
+  { name:'Arroz Frito Proteico', plan:'metodo', kcal:540, tiempo:'15 min', prot:34, carbs:58, fat:16, obj:'super',
+    ingredientes:['1.5 tazas arroz cocido (frío de preferencia)','3 huevos','100g camarones o pollo','2 cdas salsa soya baja en sodio','Cebolla verde, zanahoria, aceite de sésamo'],
+    pasos:['Saltea la proteína en aceite caliente hasta cocer. Reserva.','En el mismo wok, saltea zanahoria y cebolla verde 2 min.','Agrega el arroz frío y saltea a fuego alto 3 min.','Haz un hueco, agrega los huevos y revuelve. Incorpora soya, proteína y aceite de sésamo.'] },
+  { name:'Lentejas con Pollo Desmechado', plan:'metodo', kcal:420, tiempo:'40 min', prot:38, carbs:44, fat:8, obj:'deficit',
+    ingredientes:['1 taza lentejas verdes','150g pechuga de pollo','1/2 cebolla','2 dientes ajo','1 tomate','Comino, laurel, sal, cilantro'],
+    pasos:['Cocina el pollo en agua con sal 20 min. Reserva el caldo y desmecha.','En olla, saltea cebolla y ajo. Agrega tomate y sofríe 3 min.','Incorpora las lentejas lavadas, el caldo de pollo y laurel.','Cocina 20 min a fuego medio. Agrega el pollo desmechado, comino y cilantro. Ajusta sal.'] },
+  { name:'Bowl Mediterráneo', plan:'metodo', kcal:400, tiempo:'25 min', prot:32, carbs:38, fat:14, obj:'deficit',
+    ingredientes:['150g atún en lata al natural','1/2 taza cuscús cocido','Tomate cherry, pepino, cebolla morada','10 aceitunas kalamata','2 cdas queso feta desmenuzado','Aderezo: aceite de oliva, limón, orégano'],
+    pasos:['Cocina el cuscús según instrucciones (5 min en agua hirviendo tapado).','Mezcla el aderezo en un bowl pequeño.','Arma el bowl: cuscús de base, atún, vegetales picados y aceitunas.','Esparce el feta, vierte el aderezo y sirve frío o a temperatura ambiente.'] },
+  { name:'Pollo Tikka Masala Fit', plan:'metodo', kcal:480, tiempo:'35 min', prot:42, carbs:32, fat:18, obj:'mant',
+    ingredientes:['200g pechuga de pollo en cubos','1/2 taza yogur natural sin grasa','1/2 taza tomate triturado','1/2 taza leche de coco light','Tikka masala: comino, coriandro, cúrcuma, pimentón, garam masala','Arroz basmati para servir'],
+    pasos:['Marina el pollo en yogur con la mitad de las especias. 15 min mínimo.','Sella el pollo marinado en sartén con aceite hasta dorar.','Agrega el tomate triturado y las especias restantes. Cocina 5 min.','Incorpora la leche de coco, reduce 10 min. Sirve sobre arroz basmati.'] },
+  // ── NUEVAS ELITE ──
+  { name:'Salmón Costra de Nueces', plan:'elite', kcal:580, tiempo:'25 min', prot:44, carbs:24, fat:32, obj:'super',
+    ingredientes:['200g filete de salmón','3 cdas nueces picadas finamente','1 cdta mostaza Dijon','1 cdta miel','1/2 taza quinoa','Espárragos al vapor'],
+    pasos:['Precalienta horno a 200°C.','Mezcla nueces, mostaza y miel. Extiende sobre el salmón.','Hornea 12-15 min hasta que la costra esté dorada.','Sirve sobre quinoa cocida con espárragos al vapor.'] },
+  { name:'Poké Bowl Premium', plan:'elite', kcal:620, tiempo:'20 min', prot:42, carbs:64, fat:18, obj:'super',
+    ingredientes:['180g atún fresco en cubos','1 taza arroz sushi cocido','1/2 aguacate','Edamame, pepino, rábano','Salsa ponzu: soya, mirin, yuzu','Sésamo, microverdes'],
+    pasos:['Sazona el atún con salsa ponzu 10 min.','Prepara el arroz de sushi (con vinagre de arroz y azúcar).','Arma el bowl: arroz de base, atún, aguacate, edamame, pepino y rábano.','Finaliza con sésamo, microverdes y un hilo extra de ponzu.'] },
+  { name:'Curry Verde de Pollo', plan:'elite', kcal:510, tiempo:'30 min', prot:40, carbs:38, fat:18, obj:'mant',
+    ingredientes:['200g pechuga de pollo en tiras','1 lata leche de coco','2 cdas pasta de curry verde','1 taza zanahoria y calabacín','Albahaca tailandesa, lima','Arroz jazmín para servir'],
+    pasos:['Saltea la pasta de curry en aceite hasta aromatizar, 1 min.','Agrega el pollo y sella. Vierte la leche de coco.','Incorpora los vegetales y cocina 12 min a fuego medio.','Finaliza con albahaca y jugo de lima. Sirve sobre arroz jazmín.'] },
+  { name:'Waffles Proteicos con Frutos Rojos', plan:'elite', kcal:440, tiempo:'20 min', prot:30, carbs:48, fat:14, obj:'super',
+    ingredientes:['1 scoop proteína de vainilla','60g avena fina','2 huevos','100ml leche descremada','1 cdta polvo de hornear','Frutos rojos mixtos, miel de maple sin azúcar'],
+    pasos:['Mezcla todos los ingredientes en licuadora hasta obtener una masa lisa.','Precalienta la waflera y engrasa ligeramente.','Vierte la masa y cocina hasta dorar (~4 min).','Sirve con frutos rojos frescos y miel de maple.'] },
+  { name:'Gazpacho Proteico de Sandía', plan:'elite', kcal:220, tiempo:'15 min + frío', prot:16, carbs:28, fat:4, obj:'deficit',
+    ingredientes:['2 tazas sandía sin semillas','1 tomate maduro','1/2 pepino','1/4 pimiento rojo','1 scoop proteína sin sabor (neutral)','Aceite de oliva, sal, vinagre de jerez, menta'],
+    pasos:['Licúa la sandía, tomate, pepino y pimiento hasta obtener un líquido suave.','Agrega el scoop de proteína y mezcla bien.','Sazona con sal, vinagre y un chorrito de aceite de oliva.','Refrigera 1 hora. Sirve frío con hojas de menta y un hilo de aceite.'] }
 ];
 
 var recipeFilter = 'Todo';
@@ -6774,14 +6822,22 @@ function recipeEmoji(name) {
   if (n.includes('huevo') || n.includes('tortilla') || n.includes('clara')) return '🥚';
   if (n.includes('batido') || n.includes('verde') || n.includes('proteico') && n.includes('batido')) return '🥤';
   if (n.includes('buddha')) return '🍱';
-  if (n.includes('teriyaki')) return '🍣';
+  if (n.includes('teriyaki') || n.includes('poké') || n.includes('poke')) return '🍣';
   if (n.includes('quinoa')) return '🥙';
   if (n.includes('pasta')) return '🍝';
-  if (n.includes('pancake')) return '🥞';
+  if (n.includes('pancake') || n.includes('waffle')) return '🧇';
   if (n.includes('tofu') || n.includes('stir')) return '🥢';
   if (n.includes('overnight') || n.includes('oats') || n.includes('avena')) return '🥣';
   if (n.includes('energy') || n.includes('ball')) return '⚡';
   if (n.includes('ricotta') || n.includes('toast')) return '🍞';
+  if (n.includes('wrap')) return '🌯';
+  if (n.includes('taco')) return '🌮';
+  if (n.includes('yogur')) return '🫙';
+  if (n.includes('caldo')) return '🍲';
+  if (n.includes('lenteja')) return '🫘';
+  if (n.includes('tikka') || n.includes('curry')) return '🍛';
+  if (n.includes('gazpacho') || n.includes('sandía')) return '🍉';
+  if (n.includes('tostada') || n.includes('aguacate')) return '🥑';
   if (n.includes('ensalada')) return '🥗';
   if (n.includes('bowl')) return '🥗';
   return '🍽️';
@@ -7021,8 +7077,8 @@ function timerComplete() {
 // ═══════════════════════════════════════════════
 var BREATH_TECH = [
   { name:'Respiración Cuadrada', tag:'Estrés agudo', tagColor:'#38bdf8', desc:'Inhala 4s · Retén 4s · Exhala 4s · Retén 4s. Activa el nervio vago. Úsala antes de un entrenamiento intenso o situación de presión.', phases:[{label:'Inhala',s:4},{label:'Retén',s:4},{label:'Exhala',s:4},{label:'Retén',s:4}] },
-  { name:'4-7-8 Relax', tag:'Pre-sueño', tagColor:'#a78bfa', desc:'Inhala 4s · Retén 7s · Exhala 8s. Reduce cortisol y activa parasimpático. Ideal 30 minutos antes de dormir para maximizar recuperación.', phases:[{label:'Inhala',s:4},{label:'Retén',s:7},{label:'Exhala',s:8}] },
-  { name:'Respiración Fisiológica', tag:'Recuperación rápida', tagColor:'#34d399', desc:'Doble inhalación nasal rápida + exhalación lenta. El doble inhale reinicia el estado del CO₂. Úsala entre series de alta intensidad o episodios de ansiedad.', phases:[] }
+  { name:'Respiración 4-7-8', tag:'Pre-sueño', tagColor:'#a78bfa', desc:'Inhala 4s · Retén 7s · Exhala 8s. Reduce cortisol y activa el sistema nervioso parasimpático. Ideal 30 minutos antes de dormir para maximizar recuperación.', phases:[{label:'Inhala',s:4},{label:'Retén',s:7},{label:'Exhala',s:8}] },
+  { name:'Respiración Fisiológica', tag:'Recuperación rápida', tagColor:'#34d399', desc:'Doble inhalación nasal rápida + exhalación lenta. La doble inhalación restablece los niveles de CO₂. Úsala entre series de alta intensidad o episodios de ansiedad.', phases:[] }
 ];
 var BREATH_STATE = { running:false, iv:null, phaseIdx:0, elapsed:0, techIdx:0 };
 
@@ -7106,7 +7162,7 @@ function renderMentalidad() {
       '</svg>' +
       '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">' +
         '<div class="breath-timer-lbl" id="breath-digits">00</div>' +
-        '<div class="breath-instruction" id="breath-inst">Box Breathing</div>' +
+        '<div class="breath-instruction" id="breath-inst">Respiración Cuadrada</div>' +
       '</div>' +
     '</div>' +
     '<div class="breath-phase-bar" id="breath-phase-bar">Elige técnica y presiona Iniciar</div>' +
