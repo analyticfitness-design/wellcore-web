@@ -125,4 +125,9 @@ if (!col($pdo, 'client_profiles', 'avatar_url'))
     run($pdo, "ALTER TABLE client_profiles ADD COLUMN avatar_url VARCHAR(512) DEFAULT NULL", "019 avatar_url");
 else echo "SKIP: 019 avatar_url already exists\n";
 
+echo "\n=== Migration 020: client_profiles dashboard_video_url ===\n";
+if (!col($pdo, 'client_profiles', 'dashboard_video_url'))
+    run($pdo, "ALTER TABLE client_profiles ADD COLUMN dashboard_video_url VARCHAR(512) DEFAULT NULL", "020 dashboard_video_url");
+else echo "SKIP: 020 dashboard_video_url already exists\n";
+
 echo "\n=== ALL MIGRATIONS DONE ===\n";
