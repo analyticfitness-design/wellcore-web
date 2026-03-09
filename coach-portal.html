@@ -764,6 +764,12 @@ input,textarea,select{font-family:'Inter',sans-serif}
     <a class="nav-item" onclick="showSection('analytics')" id="nav-analytics">
       <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span> Analytics
     </a>
+    <a class="nav-item" onclick="showSection('mensajes')" id="nav-mensajes">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span> Mensajes
+    </a>
+    <a class="nav-item" onclick="showSection('revenue')" id="nav-revenue">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span> Revenue
+    </a>
   </nav>
 
   <div class="sidebar-user">
@@ -1433,6 +1439,92 @@ input,textarea,select{font-family:'Inter',sans-serif}
       </div>
     </section>
 
+    <!-- ===== SECTION: MENSAJES ===== -->
+    <section id="sec-mensajes" class="section v7-reveal">
+      <h1 class="section-title">MEN<span>//</span>SAJES</h1>
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px">
+        Comunicación directa con tus clientes. Sin WhatsApp, sin salir de la plataforma.
+      </p>
+
+      <!-- Broadcast -->
+      <div class="card v7-glow-track" style="margin-bottom:20px">
+        <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:10px">📢 Mensaje masivo a todos los clientes activos</div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <textarea id="broadcast-text" placeholder="Escribe tu mensaje para todos los clientes..." style="flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:#fff;padding:10px 12px;font-size:.84rem;resize:vertical;min-height:70px;font-family:inherit"></textarea>
+          <button class="btn-primary v7-magnetic" onclick="sendBroadcast()" style="white-space:nowrap">Enviar a todos</button>
+        </div>
+        <div id="broadcast-result" style="margin-top:8px;font-size:.8rem;color:var(--gray)"></div>
+      </div>
+
+      <!-- Quick Templates -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+        <span style="font-size:.78rem;color:var(--gray);align-self:center">Templates:</span>
+        <button class="btn-outline" style="font-size:.76rem;padding:5px 12px" onclick="setTemplate('bienvenida')">Bienvenida</button>
+        <button class="btn-outline" style="font-size:.76rem;padding:5px 12px" onclick="setTemplate('motivacion')">Motivación</button>
+        <button class="btn-outline" style="font-size:.76rem;padding:5px 12px" onclick="setTemplate('checkin')">Check-in</button>
+        <button class="btn-outline" style="font-size:.76rem;padding:5px 12px" onclick="setTemplate('pago')">Recordatorio Pago</button>
+      </div>
+
+      <!-- Thread view -->
+      <div style="display:grid;grid-template-columns:220px 1fr;gap:16px;min-height:400px">
+        <!-- Client list -->
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="padding:12px 14px;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);border-bottom:1px solid var(--border)">Clientes</div>
+          <div id="msg-client-list" style="overflow-y:auto;max-height:360px">
+            <div style="padding:20px;text-align:center;color:var(--gray);font-size:.82rem"><i class="fas fa-spinner fa-spin"></i></div>
+          </div>
+        </div>
+        <!-- Thread -->
+        <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column">
+          <div id="msg-thread-header" style="padding:12px 16px;font-size:.85rem;font-weight:600;border-bottom:1px solid var(--border);color:var(--gray)">Selecciona un cliente</div>
+          <div id="msg-thread" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;min-height:280px"></div>
+          <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px">
+            <input id="msg-input" placeholder="Escribe un mensaje..." style="flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:#fff;padding:9px 12px;font-size:.84rem" onkeydown="if(event.key==='Enter')sendMessage()">
+            <button class="btn-primary v7-magnetic" onclick="sendMessage()">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: REVENUE ===== -->
+    <section id="sec-revenue" class="section v7-reveal">
+      <h1 class="section-title">RE<span>//</span>VENUE</h1>
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px">
+        Tu ingreso mensual recurrente, historial y clientes por renovar.
+      </p>
+
+      <!-- MRR KPI -->
+      <div class="kpi-grid" style="margin-bottom:24px">
+        <div class="kpi-card v7-glow-track">
+          <div class="kpi-label">MRR Actual</div>
+          <div class="kpi-value" id="rev-mrr">—</div>
+        </div>
+        <div class="kpi-card v7-glow-track">
+          <div class="kpi-label">Clientes Activos</div>
+          <div class="kpi-value" id="rev-active">—</div>
+        </div>
+        <div class="kpi-card v7-glow-track">
+          <div class="kpi-label">Por Renovar (30d)</div>
+          <div class="kpi-value" id="rev-renewing">—</div>
+        </div>
+      </div>
+
+      <!-- Sparkline 6 meses -->
+      <div class="card v7-glow-track" style="margin-bottom:20px">
+        <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:14px">Histórico 6 meses</div>
+        <svg id="rev-sparkline" viewBox="0 0 500 80" style="width:100%;height:80px;display:block"></svg>
+        <div id="rev-sparkline-labels" style="display:flex;justify-content:space-between;margin-top:4px;font-size:.72rem;color:var(--gray)"></div>
+      </div>
+
+      <!-- Renewal alerts -->
+      <div class="card v7-glow-track">
+        <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:14px">Clientes por renovar</div>
+        <div id="rev-renewals">
+          <div style="padding:20px;text-align:center;color:var(--gray);font-size:.82rem"><i class="fas fa-spinner fa-spin"></i></div>
+        </div>
+      </div>
+    </section>
+
   </div><!-- /content-area -->
 </div><!-- /main-wrap -->
 
@@ -1467,7 +1559,9 @@ var sectionMap = {
   referidos: 'Referidos',
   recursos: 'Recursos',
   academia: 'Academia',
-  analytics: 'Analytics'
+  analytics: 'Analytics',
+  mensajes: 'Mensajes',
+  revenue: 'Revenue'
 };
 
 // ===== AUTH CHECK =====
@@ -1557,6 +1651,8 @@ function showSection(name) {
   if (name === 'marca')     loadBrandData();
   if (name === 'academia')  loadAcademia();
   if (name === 'analytics') loadAnalytics();
+  if (name === 'mensajes')  loadMensajes();
+  if (name === 'revenue')   loadRevenue();
 
   closeSidebar();
 }
@@ -2862,6 +2958,269 @@ function loadAnalytics() {
         topList.insertAdjacentHTML('beforeend', rows2);
       }
     }
+  }).catch(function() {});
+}
+
+// ===== MENSAJES =====
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+var _msgClients = [];
+var _msgActiveClient = null;
+var _msgTemplates = {
+  bienvenida: '¡Bienvenido/a al equipo WellCore! 🎉 Estoy aquí para acompañarte en cada paso. Cualquier duda, escríbeme.',
+  motivacion: '¡Vas increíble! Recuerda que la consistencia es la clave. Sigue así, ¡tú puedes! 💪',
+  checkin: 'Hola! ¿Cómo va la semana? ¿Has podido completar tus entrenamientos? Cuéntame cómo te sientes.',
+  pago: 'Hola, te recuerdo que tu próxima renovación se acerca. Cualquier consulta sobre tu plan, con gusto te ayudo.'
+};
+
+function setTemplate(type) {
+  var t = _msgTemplates[type] || '';
+  var area = document.getElementById('broadcast-text');
+  var input = document.getElementById('msg-input');
+  if (area) area.value = t;
+  if (input) input.value = t;
+}
+
+function loadMensajes() {
+  api.get('coach/clients-list').then(function(r) {
+    _msgClients = r.clients || [];
+    var list = document.getElementById('msg-client-list');
+    if (!list) return;
+    if (!_msgClients.length) {
+      list.textContent = '';
+      var empty = document.createElement('div');
+      empty.style.cssText = 'padding:16px;text-align:center;color:var(--gray);font-size:.8rem';
+      empty.textContent = 'Sin clientes asignados';
+      list.appendChild(empty);
+      return;
+    }
+    list.textContent = '';
+    _msgClients.forEach(function(c) {
+      var item = document.createElement('div');
+      item.className = 'msg-client-item';
+      item.dataset.id = c.id;
+      item.style.cssText = 'padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);font-size:.83rem;transition:background .15s';
+      var name = document.createElement('div');
+      name.style.cssText = 'font-weight:600;color:#fff';
+      name.textContent = c.name || 'Sin nombre';
+      var plan = document.createElement('div');
+      plan.style.cssText = 'font-size:.75rem;color:var(--gray)';
+      plan.textContent = c.plan || '';
+      item.appendChild(name);
+      item.appendChild(plan);
+      item.addEventListener('click', function() { openThread(c.id, c.name || 'Sin nombre'); });
+      list.appendChild(item);
+    });
+  }).catch(function() {
+    var list = document.getElementById('msg-client-list');
+    if (!list) return;
+    list.textContent = '';
+    var err = document.createElement('div');
+    err.style.cssText = 'padding:16px;text-align:center;color:var(--gray);font-size:.8rem';
+    err.textContent = 'Error cargando clientes';
+    list.appendChild(err);
+  });
+}
+
+function openThread(clientId, clientName) {
+  _msgActiveClient = clientId;
+  document.querySelectorAll('.msg-client-item').forEach(function(el) {
+    el.style.background = el.dataset.id == clientId ? 'rgba(255,255,255,.05)' : '';
+  });
+  var header = document.getElementById('msg-thread-header');
+  if (header) header.textContent = clientName;
+  var thread = document.getElementById('msg-thread');
+  if (thread) { thread.textContent = ''; }
+
+  api.get('coach/messages?client_id=' + clientId).then(function(r) {
+    var msgs = r.messages || [];
+    if (!thread) return;
+    thread.textContent = '';
+    if (!msgs.length) {
+      var empty = document.createElement('div');
+      empty.style.cssText = 'text-align:center;color:var(--gray);font-size:.8rem;padding:20px';
+      empty.textContent = 'Sin mensajes aún. Sé el primero en escribir.';
+      thread.appendChild(empty);
+      return;
+    }
+    msgs.forEach(function(m) {
+      var isCoach = m.direction === 'coach_to_client';
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;justify-content:' + (isCoach ? 'flex-end' : 'flex-start');
+      var bubble = document.createElement('div');
+      bubble.style.cssText = 'max-width:75%;background:' + (isCoach ? 'var(--red)' : 'rgba(255,255,255,.08)') +
+        ';color:#fff;border-radius:' + (isCoach ? '12px 12px 2px 12px' : '12px 12px 12px 2px') +
+        ';padding:9px 13px;font-size:.83rem;line-height:1.5';
+      var txt = document.createElement('div');
+      txt.textContent = m.message;
+      var time = document.createElement('div');
+      time.style.cssText = 'font-size:.68rem;color:rgba(255,255,255,.5);margin-top:3px;text-align:right';
+      time.textContent = String(m.created_at || '').slice(11, 16);
+      bubble.appendChild(txt);
+      bubble.appendChild(time);
+      row.appendChild(bubble);
+      thread.appendChild(row);
+    });
+    thread.scrollTop = thread.scrollHeight;
+  }).catch(function() {
+    if (!thread) return;
+    thread.textContent = '';
+    var err = document.createElement('div');
+    err.style.cssText = 'text-align:center;color:var(--red);font-size:.8rem;padding:20px';
+    err.textContent = 'Error cargando mensajes';
+    thread.appendChild(err);
+  });
+}
+
+function sendMessage() {
+  if (!_msgActiveClient) return;
+  var input = document.getElementById('msg-input');
+  var msg = (input ? input.value : '').trim();
+  if (!msg) return;
+  if (input) input.value = '';
+  var name = '';
+  var h = document.getElementById('msg-thread-header');
+  if (h) name = h.textContent;
+  api.post('coach/messages', { client_id: _msgActiveClient, message: msg })
+    .then(function() { openThread(_msgActiveClient, name); })
+    .catch(function() {});
+}
+
+function sendBroadcast() {
+  var area = document.getElementById('broadcast-text');
+  var msg = (area ? area.value : '').trim();
+  if (!msg) return;
+  var res = document.getElementById('broadcast-result');
+  if (res) res.textContent = 'Enviando...';
+  api.post('coach/broadcast', { message: msg }).then(function(r) {
+    if (area) area.value = '';
+    if (res) res.textContent = '✓ Enviado a ' + (r.sent || 0) + ' clientes activos';
+    setTimeout(function() { if (res) res.textContent = ''; }, 4000);
+  }).catch(function() {
+    if (res) res.textContent = 'Error al enviar';
+  });
+}
+
+// ===== REVENUE =====
+function loadRevenue() {
+  api.get('coach/revenue').then(function(d) {
+    var mrrEl = document.getElementById('rev-mrr');
+    var renewEl = document.getElementById('rev-renewals');
+    var renewCount = document.getElementById('rev-renewing');
+
+    if (mrrEl) mrrEl.textContent = '$' + (d.mrr_current || 0).toLocaleString();
+    var renewals = d.clients_renewing || [];
+    if (renewCount) renewCount.textContent = renewals.length;
+
+    // Sparkline SVG
+    var history = d.mrr_history || [];
+    if (history.length) {
+      var amounts = history.map(function(h) { return h.amount; });
+      var maxVal = Math.max.apply(null, amounts) || 1;
+      var w = 500, hh = 70, pad = 20;
+      var pts = amounts.map(function(v, i) {
+        var x = pad + (i / (amounts.length - 1)) * (w - pad * 2);
+        var y = hh - (v / maxVal) * (hh - 10);
+        return x + ',' + y;
+      });
+      var svgEl = document.getElementById('rev-sparkline');
+      if (svgEl) {
+        svgEl.textContent = '';
+        var poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+        poly.setAttribute('points', pts.join(' '));
+        poly.setAttribute('fill', 'none');
+        poly.setAttribute('stroke', 'var(--red)');
+        poly.setAttribute('stroke-width', '2.5');
+        poly.setAttribute('stroke-linejoin', 'round');
+        svgEl.appendChild(poly);
+        pts.forEach(function(p, i) {
+          var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          var coords = p.split(',');
+          circle.setAttribute('cx', coords[0]);
+          circle.setAttribute('cy', coords[1]);
+          circle.setAttribute('r', '3.5');
+          circle.setAttribute('fill', 'var(--red)');
+          var title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+          title.textContent = '$' + amounts[i];
+          circle.appendChild(title);
+          svgEl.appendChild(circle);
+        });
+      }
+      var labelsEl = document.getElementById('rev-sparkline-labels');
+      if (labelsEl) {
+        labelsEl.textContent = '';
+        history.forEach(function(h) {
+          var span = document.createElement('span');
+          span.textContent = String(h.month || '').slice(5);
+          labelsEl.appendChild(span);
+        });
+      }
+    }
+
+    // Renewals table
+    if (renewEl) {
+      renewEl.textContent = '';
+      if (!renewals.length) {
+        var empty = document.createElement('p');
+        empty.style.cssText = 'color:var(--gray);font-size:.84rem;padding:16px 0;text-align:center';
+        empty.textContent = 'Ningún cliente renueva en los próximos 30 días.';
+        renewEl.appendChild(empty);
+      } else {
+        var table = document.createElement('table');
+        table.style.cssText = 'width:100%;border-collapse:collapse';
+        var thead = document.createElement('thead');
+        thead.innerHTML = '<tr style="font-size:.72rem;color:var(--gray);border-bottom:1px solid var(--border)"><th style="padding:8px;text-align:left">Cliente</th><th style="padding:8px">Plan</th><th style="padding:8px;text-align:center">Días</th><th style="padding:8px;text-align:right">Acción</th></tr>';
+        table.appendChild(thead);
+        var tbody = document.createElement('tbody');
+        renewals.forEach(function(c) {
+          var urgency = c.days_left <= 7 ? 'var(--red)' : c.days_left <= 14 ? '#f59e0b' : 'var(--gray)';
+          var tr = document.createElement('tr');
+          tr.style.cssText = 'border-bottom:1px solid var(--border)';
+          var tdName = document.createElement('td');
+          tdName.style.cssText = 'padding:9px 8px;font-size:.84rem';
+          tdName.textContent = c.name || '';
+          var tdPlan = document.createElement('td');
+          tdPlan.style.cssText = 'padding:9px 8px;font-size:.78rem;color:var(--gray);text-align:center';
+          tdPlan.textContent = c.plan || '';
+          var tdDays = document.createElement('td');
+          tdDays.style.cssText = 'padding:9px 8px;text-align:center;font-family:var(--font-data,monospace);color:' + urgency + ';font-weight:700';
+          tdDays.textContent = c.days_left + 'd';
+          var tdBtn = document.createElement('td');
+          tdBtn.style.cssText = 'padding:9px 8px;text-align:right';
+          var btn = document.createElement('button');
+          btn.className = 'btn-outline';
+          btn.style.cssText = 'font-size:.74rem;padding:4px 10px';
+          btn.textContent = 'Recordatorio';
+          btn.addEventListener('click', function() { sendRenewalReminder(c.id, c.name || ''); });
+          tdBtn.appendChild(btn);
+          tr.appendChild(tdName);
+          tr.appendChild(tdPlan);
+          tr.appendChild(tdDays);
+          tr.appendChild(tdBtn);
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        renewEl.appendChild(table);
+      }
+    }
+  }).catch(function() {
+    var el = document.getElementById('rev-renewals');
+    if (!el) return;
+    el.textContent = '';
+    var err = document.createElement('p');
+    err.style.cssText = 'color:var(--gray);font-size:.84rem;padding:16px 0;text-align:center';
+    err.textContent = 'Error cargando revenue.';
+    el.appendChild(err);
+  });
+}
+
+function sendRenewalReminder(clientId, clientName) {
+  var msg = _msgTemplates.pago;
+  api.post('coach/messages', { client_id: clientId, message: msg }).then(function() {
+    showSection('mensajes');
+    setTimeout(function() { openThread(clientId, clientName); }, 400);
   }).catch(function() {});
 }
 </script>
