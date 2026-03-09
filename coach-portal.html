@@ -2189,9 +2189,9 @@ function renderNotesList() {
     delBtn.title = 'Eliminar nota';
     delBtn.addEventListener('mouseover', function() { this.style.color = 'var(--red)'; });
     delBtn.addEventListener('mouseout',  function() { this.style.color = 'var(--gray)'; });
-    (function(nid) {
-      delBtn.addEventListener('click', function() { deleteNote(nid); });
-    })(note.id);
+    (function(nid, btn) {
+      btn.addEventListener('click', function() { deleteNote(nid, btn); });
+    })(note.id, delBtn);
     header.appendChild(delBtn);
 
     card.appendChild(header);
@@ -2258,10 +2258,13 @@ function submitNewNote() {
   });
 }
 
-function deleteNote(noteId) {
+function deleteNote(noteId, btn) {
   if (!confirm('Eliminar esta nota permanentemente?')) return;
 
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
+
   apiFetch('DELETE', '/coach/notes?id=' + noteId).then(function(data) {
+    if (btn) { btn.disabled = false; btn.textContent = 'X'; }
     if (data && data.ok) {
       showNotification('Nota eliminada.');
       loadNotes();
@@ -2269,6 +2272,7 @@ function deleteNote(noteId) {
       showNotification('Error: ' + (data && data.error ? data.error : 'No se pudo eliminar'));
     }
   }).catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'X'; }
     showNotification('Error de conexion al eliminar la nota.');
   });
 }

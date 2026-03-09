@@ -18,9 +18,9 @@ require_once __DIR__ . '/../includes/auth.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $validTypes = ['general', 'nutrition', 'training', 'mental'];
 
-// Auth: cualquier admin o coach puede usar este endpoint
+// Auth: solo coaches (y superadmin/admin via requireAdminRole) pueden usar este endpoint
 // (coaches solo ven sus propias notas — filtrado por coach_id)
-$admin = authenticateAdmin();
+$admin = requireAdminRole('coach', 'superadmin', 'admin');
 $coachId = (int) $admin['id'];
 
 $db = getDB();
@@ -30,6 +30,13 @@ if ($method === 'GET') {
     $clientId = isset($_GET['client_id']) ? (int) $_GET['client_id'] : 0;
     if ($clientId <= 0) {
         respondError('client_id requerido', 400);
+    }
+
+    // Verificar que el cliente existe
+    $chkClient = $db->prepare('SELECT id FROM clients WHERE id = ? LIMIT 1');
+    $chkClient->execute([$clientId]);
+    if (!$chkClient->fetchColumn()) {
+        respondError('Cliente no encontrado', 404);
     }
 
     $noteType = $_GET['note_type'] ?? null;
