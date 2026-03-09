@@ -6,7 +6,7 @@
  *   1. email_inactive_7d     — 7 days without check-in
  *   2. email_inactive_14d    — 14 days without check-in
  *   3. email_renewal_reminder — subscription expiring in N days
- *   4. email_streak_milestone — 4 or 7 consecutive check-in weeks
+ *   4. email_streak_milestone — 4 or 7 total check-ins completed (milestone)
  *   5. email_birthday         — client birthday
  *   6. email_welcome_day1     — day 1 after joining
  * ============================================================
@@ -106,7 +106,6 @@ HTML;
  */
 function email_inactive_7d(string $name, string $plan, string $dashUrl): string {
     $fn   = htmlspecialchars(explode(' ', trim($name))[0]);
-    $url  = htmlspecialchars($dashUrl);
     $plan = htmlspecialchars($plan);
 
     $header = _bt_header(strtoupper($plan), 'CHECK-IN');
@@ -146,7 +145,6 @@ HTML;
  */
 function email_inactive_14d(string $name, string $plan, string $dashUrl): string {
     $fn   = htmlspecialchars(explode(' ', trim($name))[0]);
-    $url  = htmlspecialchars($dashUrl);
     $plan = htmlspecialchars($plan);
 
     $header = _bt_header(strtoupper($plan), 'SEGUIMIENTO');
@@ -222,18 +220,18 @@ HTML;
 // ─── Function 4: streak_milestone ────────────────────────────
 
 /**
- * Email celebrating a check-in streak milestone (4 or 7 weeks).
+ * Email celebrating a check-in milestone (4 or 7 total check-ins completed).
  */
 function email_streak_milestone(string $name, string $plan, int $weeks, string $dashUrl): string {
     $fn   = htmlspecialchars(explode(' ', trim($name))[0]);
     $plan = htmlspecialchars($plan);
 
     if ($weeks >= 7) {
-        $message = '7 semanas consecutivas de check-in. Muy pocas personas llegan aqu&iacute;.';
-        $tag     = '7 SEMANAS';
+        $message = '7 check-ins completados. Muy pocas personas llegan aqu&iacute;.';
+        $tag     = '7 CHECK-INS';
     } else {
-        $message = '4 semanas seguidas de check-in. Est&aacute;s construyendo h&aacute;bitos reales.';
-        $tag     = '4 SEMANAS';
+        $message = '4 check-ins completados. Est&aacute;s construyendo h&aacute;bitos reales.';
+        $tag     = '4 CHECK-INS';
     }
 
     $header = _bt_header(strtoupper($plan), $tag);
@@ -260,7 +258,7 @@ function email_streak_milestone(string $name, string $plan, int $weeks, string $
     {$footer}
 HTML;
 
-    return _bt_wrap("{$fn}, eso es disciplina — WellCore Fitness", "{$weeks} semanas de check-in consecutivas. Sigue así.", $body);
+    return _bt_wrap("{$fn}, eso es disciplina — WellCore Fitness", "{$weeks} check-ins completados. Sigue así.", $body);
 }
 
 // ─── Function 5: birthday ────────────────────────────────────
