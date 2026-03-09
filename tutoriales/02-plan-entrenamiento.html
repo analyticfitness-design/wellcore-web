@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Plan de Entrenamiento — WellCore Tutorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0c0c0e; --bg2: #111114; --bg3: #1a1a1e;
+      --border: #2a2a2e; --red: #E31E24; --red-dim: rgba(227,30,36,0.12);
+      --text: #e8e8ec; --text-muted: #888890; --sidebar-w: 260px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    .progress-bar-wrap { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--border); z-index: 1000; }
+    .progress-bar-fill { height: 100%; background: var(--red); width: 0%; transition: width 0.4s ease; }
+    header { position: fixed; top: 3px; left: 0; right: 0; height: 56px; background: rgba(12,12,14,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; z-index: 999; gap: 16px; }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: #fff; line-height: 1; }
+    .logo span { color: var(--red); }
+    .plan-badge { background: var(--red-dim); border: 1px solid var(--red); color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+    .header-title { margin-left: auto; font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .layout { display: flex; margin-top: 59px; flex: 1; }
+    aside { width: var(--sidebar-w); min-height: calc(100vh - 59px); background: var(--bg2); border-right: 1px solid var(--border); position: fixed; top: 59px; left: 0; bottom: 0; overflow-y: auto; padding: 24px 0; }
+    .sidebar-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 0 20px 12px; }
+    .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; cursor: pointer; border-left: 3px solid transparent; transition: all 0.2s; text-decoration: none; color: var(--text-muted); font-size: 13px; font-weight: 500; }
+    .sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+    .sidebar-item.active { border-left-color: var(--red); background: var(--red-dim); color: #fff; }
+    .step-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .sidebar-item.active .step-dot { background: var(--red); }
+    main { margin-left: var(--sidebar-w); flex: 1; padding: 40px 48px; max-width: 820px; }
+    .tutorial-header { margin-bottom: 40px; }
+    .tutorial-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; letter-spacing: 2px; line-height: 1; color: #fff; margin-bottom: 8px; }
+    .tutorial-header p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+    .tutorial-header .step-count { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--red); font-weight: 700; margin-bottom: 12px; display: block; }
+    .step-card { background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 8px; padding: 28px; margin-bottom: 20px; scroll-margin-top: 80px; }
+    .step-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+    .step-number { background: var(--red); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .step-body { font-size: 14px; line-height: 1.75; color: var(--text); }
+    .step-body p { margin-bottom: 12px; }
+    .step-body p:last-child { margin-bottom: 0; }
+    .step-body strong { color: #fff; font-weight: 600; }
+    .step-body ul, .step-body ol { padding-left: 20px; margin: 10px 0 12px; }
+    .step-body li { margin-bottom: 6px; font-size: 14px; line-height: 1.6; }
+    .tip-box { background: rgba(227,30,36,0.08); border: 1px solid rgba(227,30,36,0.25); border-radius: 6px; padding: 14px 16px; margin-top: 16px; display: flex; gap: 10px; align-items: flex-start; }
+    .tip-box i { color: var(--red); margin-top: 2px; font-size: 13px; flex-shrink: 0; }
+    .tip-box p { font-size: 13px; color: var(--text); margin: 0; line-height: 1.6; }
+    .info-box { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.25); border-radius: 6px; padding: 14px 16px; margin-top: 16px; display: flex; gap: 10px; align-items: flex-start; }
+    .info-box i { color: #818cf8; margin-top: 2px; font-size: 13px; flex-shrink: 0; }
+    .info-box p { font-size: 13px; color: var(--text); margin: 0; line-height: 1.6; }
+
+    /* Variable table */
+    .var-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+    .var-table th { background: var(--bg); color: var(--red); font-weight: 700; text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--red); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+    .var-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+    .var-table tr:last-child td { border-bottom: none; }
+    .var-table td:first-child { font-family: 'JetBrains Mono', monospace; color: #fff; font-weight: 700; font-size: 13px; white-space: nowrap; }
+
+    /* Example block */
+    .example-block { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; margin: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.8; }
+    .example-block .ex-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
+    .example-block .ex-red { color: var(--red); }
+    .example-block .ex-dim { color: var(--text-muted); }
+
+    .nav-buttons { display: flex; gap: 12px; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; }
+    .btn-primary { background: var(--red); color: #fff; }
+    .btn-primary:hover { background: #c81a1f; transform: translateY(-1px); }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+    .btn-secondary:hover { border-color: #444; color: var(--text); }
+    .btn-ghost { background: transparent; border: 1px solid var(--red); color: var(--red); }
+    .btn-ghost:hover { background: var(--red-dim); }
+    @media (max-width: 768px) { aside { display: none; } main { margin-left: 0; padding: 24px 20px; } .tutorial-header h1 { font-size: 36px; } }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+
+<header>
+  <div class="logo">WELL<span>CORE</span></div>
+  <div class="plan-badge">Todos los Planes</div>
+  <span class="header-title">Tutorial 2 de 6 &nbsp;·&nbsp; Tu Plan de Entrenamiento</span>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="sidebar-label">Contenido</div>
+    <a class="sidebar-item active" href="#step1">
+      <div class="step-dot">1</div>
+      Cómo leer tu plan
+    </a>
+    <a class="sidebar-item" href="#step2">
+      <div class="step-dot">2</div>
+      Días de entreno vs descanso
+    </a>
+    <a class="sidebar-item" href="#step3">
+      <div class="step-dot">3</div>
+      Registrar tus cargas
+    </a>
+    <a class="sidebar-item" href="#step4">
+      <div class="step-dot">4</div>
+      Progresión semanal
+    </a>
+    <a class="sidebar-item" href="#step5">
+      <div class="step-dot">5</div>
+      Preguntas frecuentes
+    </a>
+  </aside>
+
+  <main>
+    <div class="tutorial-header">
+      <span class="step-count">TUTORIAL 02 &nbsp;/&nbsp; TODOS LOS PLANES</span>
+      <h1>Tu Plan de Entrenamiento</h1>
+      <p>Aprende a leer e interpretar cada variable de tu plan, cómo registrar tus cargas semana a semana y cómo funciona la progresión progresiva.</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step-card" id="step1">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <div class="step-title">Cómo leer tu plan: series, reps, RIR y tempo</div>
+      </div>
+      <div class="step-body">
+        <p>Tu plan de entrenamiento usa un lenguaje técnico preciso. Entender qué significa cada variable es fundamental para ejecutar exactamente lo que tu coach ha programado para ti — ni más ni menos.</p>
+
+        <div class="example-block">
+          <span class="ex-label">Ejemplo de ejercicio en tu plan</span>
+          <span class="ex-red">Press de banca plano</span> &nbsp; <span class="ex-dim">4 × 8-10 @ RIR 2 · Tempo 3-0-1-0</span>
+        </div>
+
+        <table class="var-table">
+          <thead>
+            <tr><th>Variable</th><th>Qué significa</th><th>En el ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>4 × 8-10</td>
+              <td>Series × Rango de repeticiones. Completa las 4 series dentro del rango indicado.</td>
+              <td>4 series de 8 a 10 repeticiones</td>
+            </tr>
+            <tr>
+              <td>RIR 2</td>
+              <td>Repetitions In Reserve. Cuántas reps te quedan en el tanque al terminar la serie. RIR 2 = paras cuando te quedan 2 reps posibles.</td>
+              <td>Paras cuando aún puedes hacer 2 más</td>
+            </tr>
+            <tr>
+              <td>Tempo 3-0-1-0</td>
+              <td>Fase excéntrica – pausa abajo – fase concéntrica – pausa arriba (en segundos).</td>
+              <td>3 seg bajando, sin pausa, 1 seg subiendo, sin pausa</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>El RIR es tu indicador de intensidad. Un RIR alto (3-4) indica semanas de adaptación con bajo estrés. Un RIR bajo (0-1) indica semanas de alta intensidad cerca del fallo. Nunca ignores el RIR indicado.</p>
+        <div class="tip-box">
+          <i class="fa-solid fa-lightbulb"></i>
+          <p><strong>Aprende el RIR con práctica:</strong> Al inicio es difícil calibrar cuántas reps te quedan. Con el tiempo desarrollas el "feeling" muscular. Si dudas, peca de conservador — es mejor acabar con RIR 3 que llegar al fallo cuando se indica RIR 2.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card" id="step2">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <div class="step-title">Los días de entrenamiento vs descanso</div>
+      </div>
+      <div class="step-body">
+        <p>Tu plan indica exactamente qué días entrenas y cuáles son de descanso activo o descanso total. Este diseño no es arbitrario: la frecuencia de entrenamiento por grupo muscular está calculada para maximizar la síntesis proteica muscular y garantizar la recuperación adecuada.</p>
+        <p><strong>Descanso no significa inactividad.</strong> Tus días de descanso pueden incluir caminata suave (20-40 min), movilidad, stretching o actividades de bajo impacto. Lo que debes evitar es ejercicio intenso adicional que compita con la recuperación de tus entrenamientos programados.</p>
+        <p>Tipos de días que verás en tu plan:</p>
+        <ul>
+          <li><strong>Día de Tren Superior (Upper):</strong> Pecho, espalda, hombros, bíceps, tríceps.</li>
+          <li><strong>Día de Tren Inferior (Lower):</strong> Cuádriceps, isquiotibiales, glúteos, pantorrillas.</li>
+          <li><strong>Día Full Body:</strong> Estímulo global del cuerpo con ejercicios compuestos.</li>
+          <li><strong>Descanso Activo:</strong> Cardio suave + movilidad. Tu coach lo especificará.</li>
+          <li><strong>Descanso Total:</strong> Sin ejercicio estructurado. Prioritario para el sistema nervioso.</li>
+        </ul>
+        <div class="info-box">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>Si necesitas mover un día de entrenamiento por compromisos de la semana, consulta con tu coach cuál es la mejor reordenación. No todos los días son intercambiables sin impacto en la recuperación.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card" id="step3">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <div class="step-title">Cómo registrar tus cargas</div>
+      </div>
+      <div class="step-body">
+        <p>El registro de cargas es el historial que hace posible la progresión. Sin datos de lo que levantaste la semana pasada, no puedes saber si estás progresando o estancado. Tu coach usa estos datos para evaluar si el plan está funcionando.</p>
+        <p>Para cada ejercicio, registra en la sección de Entrenamiento de la plataforma:</p>
+        <ul>
+          <li><strong>Peso usado:</strong> En kilogramos o libras, según tu preferencia configurada.</li>
+          <li><strong>Repeticiones reales:</strong> Las que realmente completaste, no las programadas.</li>
+          <li><strong>RIR real:</strong> Cuántas reps sentiste que te quedaban al terminar la última serie.</li>
+          <li><strong>Notas opcionales:</strong> Técnica, dolor, fatiga, condiciones (mala noche previa, etc).</li>
+        </ul>
+
+        <div class="example-block">
+          <span class="ex-label">Ejemplo de registro correcto</span>
+          Press de banca · Serie 1: <span class="ex-red">72.5 kg × 10 reps</span> · RIR real: <span class="ex-red">2</span><br>
+          Press de banca · Serie 2: <span class="ex-red">72.5 kg × 9 reps</span> · RIR real: <span class="ex-red">1</span><br>
+          Press de banca · Serie 3: <span class="ex-red">72.5 kg × 9 reps</span> · RIR real: <span class="ex-red">1</span><br>
+          Press de banca · Serie 4: <span class="ex-red">70 kg × 8 reps</span> · RIR real: <span class="ex-red">2</span> <span class="ex-dim">← bajé peso</span>
+        </div>
+
+        <p>Nota que en el ejemplo se bajó el peso en la serie 4 para mantenerse en el rango de RIR indicado. Esto es <strong>correcto</strong>. Es mejor bajar el peso y mantener la calidad técnica que empujar pesos que comprometan la forma.</p>
+        <div class="tip-box">
+          <i class="fa-solid fa-mobile-screen"></i>
+          <p><strong>Registra inmediatamente después de cada serie.</strong> La memoria muscular de cuánto levantaste se desvanece en minutos. Tener el teléfono o cuaderno al lado del rack no es opcional — es parte del protocolo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card" id="step4">
+      <div class="step-header">
+        <div class="step-number">4</div>
+        <div class="step-title">Progresión de cargas semana a semana</div>
+      </div>
+      <div class="step-body">
+        <p>La progresión de cargas es el principio más importante del entrenamiento de fuerza: <strong>el músculo crece cuando se le da una razón para crecer</strong>. Si entrenas siempre con el mismo peso y las mismas reps, tu cuerpo se adapta y el estímulo deja de producir cambios.</p>
+        <p>Tu coach diseña el plan con ondulación de volumen e intensidad semana a semana. Hay dos tipos de progresión que verás:</p>
+        <ul>
+          <li><strong>Progresión de carga (más peso):</strong> Si en la semana anterior completaste todas las series en el límite superior del rango con RIR mayor al indicado, es señal de que puedes subir el peso la siguiente semana. La regla general para principiantes-intermedios es subir <strong>2.5 kg en tren superior</strong> y <strong>5 kg en tren inferior</strong> cuando se justifica.</li>
+          <li><strong>Progresión de volumen (más reps):</strong> Antes de subir el peso, completa el rango de repeticiones indicado con buena técnica en todas las series. Si el plan dice 8-10 reps y llevas semanas haciendo 8, intenta llegar a 10 antes de aumentar la carga.</li>
+        </ul>
+        <p>Nunca subas peso y volumen al mismo tiempo. Aumenta uno a la vez para mantener el control técnico.</p>
+        <div class="info-box">
+          <i class="fa-solid fa-chart-line"></i>
+          <p>La progresión no tiene que ser semanal. En fases de alto volumen o déficit calórico, mantener la misma carga semana a semana <strong>es progresar</strong> — significa que estás preservando músculo en condiciones desafiantes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step-card" id="step5">
+      <div class="step-header">
+        <div class="step-number">5</div>
+        <div class="step-title">Preguntas frecuentes sobre el plan de entrenamiento</div>
+      </div>
+      <div class="step-body">
+        <p><strong>¿Qué hago si no tengo acceso a un ejercicio del plan?</strong><br>
+        Consulta a tu coach en el check-in con el nombre del ejercicio alternativo disponible en tu gimnasio. Casi siempre hay un sustituto adecuado. No elimines el ejercicio sin reemplazarlo.</p>
+
+        <p><strong>¿Puedo añadir ejercicios extra al plan?</strong><br>
+        En general, no durante las primeras 4 semanas. Tu coach ha calculado el volumen total para tu nivel de recuperación. Añadir trabajo extra puede comprometer la recuperación y distorsionar los resultados. Si quieres añadir algo, menciónalo en el check-in.</p>
+
+        <p><strong>¿Qué hago si me lesiono o siento dolor?</strong><br>
+        Distingue entre <em>fatiga muscular</em> (sensación de quema normal durante el ejercicio) y <em>dolor articular o agudo</em> (señal de alerta). Ante cualquier dolor que no sea fatiga muscular, detén ese ejercicio y notifica a tu coach. No intentes adaptar el ejercicio por tu cuenta.</p>
+
+        <p><strong>¿El calentamiento está incluido en el plan?</strong><br>
+        Sí, salvo que se especifique lo contrario, el plan no incluye el tiempo de calentamiento. Se asume que realizas un calentamiento general (5-10 min de cardio ligero) y calentamiento específico del ejercicio (series de activación con menor carga) antes de las series de trabajo.</p>
+
+        <div class="tip-box">
+          <i class="fa-solid fa-video"></i>
+          <p><strong>Videos de técnica:</strong> Para cada ejercicio en la plataforma hay un video de referencia de técnica. Si tienes dudas sobre la ejecución de un movimiento, mira el video antes de preguntar a tu coach — probablemente ahí está la respuesta.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <a class="btn btn-secondary" href="01-bienvenido.html">
+        <i class="fa-solid fa-arrow-left"></i> Tutorial anterior
+      </a>
+      <a class="btn btn-primary" href="03-checkin-semanal.html">
+        Siguiente tutorial <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <button class="btn btn-ghost" onclick="window.close()" style="margin-left:auto;">
+        <i class="fa-solid fa-xmark"></i> Volver a la Plataforma
+      </button>
+    </div>
+  </main>
+</div>
+
+<script>
+  function updateProgress() {
+    const doc = document.documentElement;
+    const scrollTop = doc.scrollTop || document.body.scrollTop;
+    const scrollHeight = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+    const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  const steps = document.querySelectorAll('.step-card');
+  const sidebarLinks = document.querySelectorAll('.sidebar-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sidebarLinks.forEach(l => { l.classList.remove('active'); if (l.getAttribute('href') === '#' + id) l.classList.add('active'); });
+      }
+    });
+  }, { threshold: 0.4 });
+  steps.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
