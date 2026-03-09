@@ -2110,6 +2110,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <a class="nav-item" onclick="showSection('referidos')" id="nav-referidos">
       <i class="fas fa-share-nodes"></i> Referidos
     </a>
+    <a class="nav-item" onclick="showSection('academia')" id="nav-academia">
+      <i class="fas fa-graduation-cap"></i> Academia
+    </a>
   </nav>
 
   <div class="sidebar-plan">
@@ -4206,6 +4209,66 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
     </section>
 
+    <!-- ===== SECTION: ACADEMIA ===== -->
+    <section id="sec-academia" class="section">
+      <h1 class="section-title">Academia <span>WellCore</span></h1>
+      <p class="section-desc">Contenido educativo exclusivo para tu plan. Videos, guias, articulos y ejercicios seleccionados por nuestros coaches.</p>
+
+      <!-- Filters -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+        <button class="tab-btn active" id="acad-filter-all"     onclick="filterAcad('')">Todo</button>
+        <button class="tab-btn"        id="acad-filter-video"   onclick="filterAcad('video')">&#127909; Videos</button>
+        <button class="tab-btn"        id="acad-filter-pdf"     onclick="filterAcad('pdf')">&#128196; PDFs</button>
+        <button class="tab-btn"        id="acad-filter-article" onclick="filterAcad('article')">&#128203; Articulos</button>
+        <button class="tab-btn"        id="acad-filter-exercise" onclick="filterAcad('exercise')">&#128170; Ejercicios</button>
+      </div>
+
+      <!-- Loading state -->
+      <div id="acad-client-loading" style="text-align:center;padding:40px;color:var(--gray);font-size:.85rem">
+        <i class="fas fa-spinner fa-spin"></i> Cargando academia...
+      </div>
+
+      <!-- Grid -->
+      <div id="acad-client-grid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+
+      <!-- Empty state -->
+      <div id="acad-client-empty" style="display:none;text-align:center;padding:40px;color:var(--gray)">
+        <i class="fas fa-graduation-cap" style="font-size:2rem;margin-bottom:12px;display:block;opacity:.4"></i>
+        No hay contenido disponible para tu plan aun.
+      </div>
+
+      <!-- Pagination -->
+      <div id="acad-client-pagination" style="display:none;justify-content:center;gap:10px;margin-top:24px"></div>
+    </section>
+
+    <!-- Academia: Detail Modal -->
+    <div id="acad-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.88);overflow-y:auto;padding:20px" onclick="closeAcadModal(event)">
+      <div style="max-width:800px;margin:40px auto;background:var(--surface);border:1px solid var(--border);padding:28px;position:relative" onclick="event.stopPropagation()">
+        <button onclick="closeAcadModal()" style="position:absolute;top:14px;right:14px;background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer;line-height:1">&#10005;</button>
+        <div id="acad-modal-type-badge" style="font-size:.72rem;letter-spacing:.1em;color:var(--red);font-weight:600;margin-bottom:8px;text-transform:uppercase"></div>
+        <h2 id="acad-modal-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:8px;line-height:1.2"></h2>
+        <p  id="acad-modal-desc"  style="color:var(--gray);font-size:.85rem;margin-bottom:20px;line-height:1.6"></p>
+        <!-- Video embed -->
+        <div id="acad-modal-video" style="display:none;position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin-bottom:20px">
+          <iframe id="acad-modal-iframe" src="" allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" title="Video academia"></iframe>
+        </div>
+        <!-- PDF link -->
+        <div id="acad-modal-pdf" style="display:none;margin-bottom:20px">
+          <a id="acad-modal-pdf-link" href="#" target="_blank" rel="noopener"
+            style="display:inline-flex;align-items:center;gap:8px;color:var(--red);font-size:.85rem;border:1px solid var(--red);padding:10px 16px">
+            <i class="fas fa-file-pdf"></i> Abrir PDF
+          </a>
+        </div>
+        <!-- Body text (article / exercise) -->
+        <div id="acad-modal-body" style="display:none">
+          <pre id="acad-modal-body-text" style="white-space:pre-wrap;font-family:'Inter',sans-serif;font-size:.85rem;line-height:1.7;color:var(--white);background:var(--surface-2);padding:16px;border:1px solid var(--border);max-height:60vh;overflow-y:auto"></pre>
+        </div>
+        <!-- Tags -->
+        <div id="acad-modal-tags" style="margin-top:16px"></div>
+      </div>
+    </div>
+
   </div><!-- /content-area -->
 </div><!-- /main-wrap -->
 
@@ -4529,7 +4592,8 @@ const SECTION_LABELS = {
   nutricion: 'Nutrición',
   soporte: 'Soporte',
   perfil: 'Mi Perfil',
-  referidos: 'Referidos'
+  referidos: 'Referidos',
+  academia: 'Academia'
 };
 
 function showSection(id) {
@@ -4549,6 +4613,7 @@ function showSection(id) {
   if (id === 'perfil'    && typeof V8 !== 'undefined' && !V8._profileInited)    { V8._profileInited = true; V8.Profile.init('profileTabContent'); }
   if (id === 'referidos' && typeof V8 !== 'undefined' && !V8._referralsInited)  { V8._referralsInited = true; V8.Referrals.init('referralsTabContent'); }
   if (id === 'retos'     && typeof Challenges !== 'undefined' && !Challenges._inited) { Challenges._inited = true; Challenges.init(); }
+  if (id === 'academia'  && !window._acadInited) { window._acadInited = true; loadAcademiaCliente(1); }
 }
 
 // ===== SIDEBAR MOBILE =====
@@ -8818,6 +8883,215 @@ function doLogout() {
 // ===== RUN =====
 // init() is called from auth verification callback above
 </script>
+<!-- ===== ACADEMIA M37 SCRIPT ===== -->
+<script>
+(function() {
+'use strict';
+
+var _filter = '';
+var _page   = 1;
+
+var TYPE_ICONS  = { video: '\uD83C\uDFA5', pdf: '\uD83D\uDCC4', article: '\uD83D\uDCCB', exercise: '\uD83D\uDCAA' };
+var TYPE_LABELS = { video: 'Video', pdf: 'PDF', article: 'Articulo', exercise: 'Ejercicio' };
+
+// DOM helper: create element with optional className and textContent
+function el(tag, opts) {
+  var e = document.createElement(tag);
+  if (opts) {
+    if (opts.cls)   e.className   = opts.cls;
+    if (opts.text)  e.textContent = opts.text;
+    if (opts.style) e.style.cssText = opts.style;
+    if (opts.attr)  Object.keys(opts.attr).forEach(function(k) { e.setAttribute(k, opts.attr[k]); });
+  }
+  return e;
+}
+
+window.filterAcad = function(type) {
+  _filter = type;
+  _page   = 1;
+  ['all','video','pdf','article','exercise'].forEach(function(t) {
+    var btn = document.getElementById('acad-filter-' + t);
+    if (btn) btn.classList.toggle('active', (t === 'all' && !type) || t === type);
+  });
+  loadAcademiaCliente(1);
+};
+
+window.loadAcademiaCliente = function(page) {
+  _page = page || 1;
+  var loading = document.getElementById('acad-client-loading');
+  var grid    = document.getElementById('acad-client-grid');
+  var empty   = document.getElementById('acad-client-empty');
+  var pagDiv  = document.getElementById('acad-client-pagination');
+  if (loading) loading.style.display = 'block';
+  if (grid)    grid.style.display    = 'none';
+  if (empty)   empty.style.display   = 'none';
+  if (pagDiv)  pagDiv.style.display  = 'none';
+
+  var url = '/academy/list.php?page=' + _page + '&per_page=12';
+  if (_filter) url += '&content_type=' + encodeURIComponent(_filter);
+
+  apiFetch('GET', url).then(function(data) {
+    if (loading) loading.style.display = 'none';
+    if (!data || !data.ok || !data.items || !data.items.length) {
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+    renderGrid(data.items);
+    if (grid) grid.style.display = 'grid';
+    renderPagination(data.page, data.pages);
+  }).catch(function() {
+    if (loading) loading.style.display = 'none';
+    if (empty)   empty.style.display   = 'block';
+  });
+};
+
+function renderGrid(items) {
+  var grid = document.getElementById('acad-client-grid');
+  if (!grid) return;
+  // Remove all children
+  while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+  items.forEach(function(item) {
+    var card = el('div', { style: 'background:var(--surface-2);border:1px solid var(--border);padding:20px;cursor:pointer;transition:border-color .15s' });
+    card.addEventListener('mouseenter', function() { card.style.borderColor = 'var(--red)'; });
+    card.addEventListener('mouseleave', function() { card.style.borderColor = 'var(--border)'; });
+    card.addEventListener('click', function() { openAcadItem(item.id); });
+
+    var iconDiv = el('div', { style: 'font-size:1.6rem;margin-bottom:10px' });
+    iconDiv.textContent = TYPE_ICONS[item.content_type] || '\uD83D\uDCCB';
+    card.appendChild(iconDiv);
+
+    var badge = el('div', { style: 'font-size:.68rem;letter-spacing:.1em;color:var(--red);font-weight:600;text-transform:uppercase;margin-bottom:6px' });
+    badge.textContent = TYPE_LABELS[item.content_type] || item.content_type;
+    card.appendChild(badge);
+
+    var title = el('div', { style: 'font-size:.92rem;font-weight:600;margin-bottom:8px;line-height:1.3' });
+    title.textContent = item.title || '';
+    card.appendChild(title);
+
+    if (item.description) {
+      var desc = el('div', { style: 'font-size:.80rem;color:var(--gray);line-height:1.5;margin-bottom:10px' });
+      var short = item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description;
+      desc.textContent = short;
+      card.appendChild(desc);
+    }
+
+    if (item.tags) {
+      var tagWrap = el('div', { style: 'display:flex;flex-wrap:wrap;gap:5px;margin-top:6px' });
+      item.tags.split(',').slice(0, 4).forEach(function(tag) {
+        var span = el('span', { style: 'font-size:.67rem;padding:2px 7px;background:var(--border);color:var(--gray)' });
+        span.textContent = tag.trim();
+        tagWrap.appendChild(span);
+      });
+      card.appendChild(tagWrap);
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+function renderPagination(page, pages) {
+  var pagDiv = document.getElementById('acad-client-pagination');
+  if (!pagDiv || pages <= 1) { if (pagDiv) pagDiv.style.display = 'none'; return; }
+  pagDiv.style.display = 'flex';
+  while (pagDiv.firstChild) pagDiv.removeChild(pagDiv.firstChild);
+
+  if (page > 1) {
+    var prev = el('button', { cls: 'btn-outline', style: 'padding:6px 14px;font-size:.8rem', text: '\u2190 Anterior' });
+    prev.addEventListener('click', function() { loadAcademiaCliente(page - 1); });
+    pagDiv.appendChild(prev);
+  }
+  var info = el('span', { style: 'padding:6px 12px;font-size:.8rem;color:var(--gray)' });
+  info.textContent = page + ' / ' + pages;
+  pagDiv.appendChild(info);
+  if (page < pages) {
+    var next = el('button', { cls: 'btn-outline', style: 'padding:6px 14px;font-size:.8rem', text: 'Siguiente \u2192' });
+    next.addEventListener('click', function() { loadAcademiaCliente(page + 1); });
+    pagDiv.appendChild(next);
+  }
+}
+
+window.openAcadItem = function(id) {
+  apiFetch('GET', '/academy/get.php?id=' + id).then(function(data) {
+    if (!data || !data.ok || !data.item) return;
+    var item      = data.item;
+    var modal     = document.getElementById('acad-modal');
+    var badgeEl   = document.getElementById('acad-modal-type-badge');
+    var titleEl   = document.getElementById('acad-modal-title');
+    var descEl    = document.getElementById('acad-modal-desc');
+    var videoWrap = document.getElementById('acad-modal-video');
+    var videoFr   = document.getElementById('acad-modal-iframe');
+    var pdfWrap   = document.getElementById('acad-modal-pdf');
+    var pdfLink   = document.getElementById('acad-modal-pdf-link');
+    var bodyWrap  = document.getElementById('acad-modal-body');
+    var bodyText  = document.getElementById('acad-modal-body-text');
+    var tagsEl    = document.getElementById('acad-modal-tags');
+
+    badgeEl.textContent = (TYPE_ICONS[item.content_type] || '') + ' ' + (TYPE_LABELS[item.content_type] || item.content_type);
+    titleEl.textContent = item.title || '';
+    descEl.textContent  = item.description || '';
+
+    videoWrap.style.display = 'none';
+    pdfWrap.style.display   = 'none';
+    bodyWrap.style.display  = 'none';
+    videoFr.src             = 'about:blank';
+
+    if (item.content_type === 'video' && item.content_url) {
+      var embedUrl = getEmbedUrl(item.content_url);
+      if (embedUrl) {
+        videoFr.src = embedUrl;
+        videoWrap.style.display = 'block';
+      } else {
+        pdfLink.setAttribute('href', item.content_url);
+        pdfLink.textContent = 'Ver video externo';
+        pdfWrap.style.display = 'block';
+      }
+    } else if (item.content_type === 'pdf' && item.content_url) {
+      pdfLink.setAttribute('href', item.content_url);
+      pdfLink.textContent = 'Abrir PDF';
+      pdfWrap.style.display = 'block';
+    } else if (item.content_body) {
+      bodyText.textContent   = item.content_body;
+      bodyWrap.style.display = 'block';
+    }
+
+    // Tags — only textContent
+    while (tagsEl.firstChild) tagsEl.removeChild(tagsEl.firstChild);
+    if (item.tags) {
+      var tw = el('div', { style: 'display:flex;flex-wrap:wrap;gap:6px' });
+      item.tags.split(',').forEach(function(tag) {
+        var s = el('span', { style: 'font-size:.7rem;padding:3px 9px;background:var(--border);color:var(--gray)' });
+        s.textContent = tag.trim();
+        tw.appendChild(s);
+      });
+      tagsEl.appendChild(tw);
+    }
+
+    modal.style.display          = 'block';
+    document.body.style.overflow = 'hidden';
+  });
+};
+
+window.closeAcadModal = function(evt) {
+  var modal = document.getElementById('acad-modal');
+  if (evt && evt.target !== modal) return;
+  modal.style.display = 'none';
+  document.getElementById('acad-modal-iframe').src = 'about:blank';
+  document.body.style.overflow = '';
+};
+
+function getEmbedUrl(url) {
+  if (!url) return null;
+  var ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if (ytMatch) return 'https://www.youtube-nocookie.com/embed/' + ytMatch[1] + '?rel=0';
+  var vmMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vmMatch) return 'https://player.vimeo.com/video/' + vmMatch[1];
+  if (url.indexOf('/embed/') >= 0 || url.indexOf('player.vimeo') >= 0) return url;
+  return null;
+}
+
+})();
+</script>
 <!-- Photo Lightbox -->
 <div id="photoLightbox" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;cursor:pointer;" onclick="closePhotoLightbox()">
     <button onclick="closePhotoLightbox()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;z-index:100000;width:44px;height:44px;display:flex;align-items:center;justify-content:center;">&times;</button>
@@ -9656,6 +9930,7 @@ document.addEventListener('keydown', function(e) {
 })();
 </script>
 
+<script src="js/challenges.js"></script>
 <script src="js/community.js"></script>
 <script>
 (function() {

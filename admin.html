@@ -2000,6 +2000,9 @@
               <button onclick="loadRiseData()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='var(--surface-3,#222)'" onmouseout="this.style.background='var(--surface-2)'">
                 <span>&#8635;</span> Actualizar datos
               </button>
+              <button onclick="openChallengeModal()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:6px;color:#8b5cf6;font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='rgba(139,92,246,0.18)'" onmouseout="this.style.background='rgba(139,92,246,0.1)'">
+                <span style="font-weight:700">&#127942;</span> Crear Reto Grupal
+              </button>
             </div>
           </div>
           <div class="card">
@@ -2206,6 +2209,65 @@
         <div style="font-size:16px;font-weight:600;color:#22C55E;margin-bottom:8px;">Acceso creado correctamente</div>
         <div id="riseInviteSuccessDetail" style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;"></div>
         <button onclick="closeRiseInviteModal()" style="margin-top:20px;padding:10px 28px;background:#22C55E;border:none;color:#000;font-weight:700;font-size:13px;border-radius:4px;cursor:pointer;">Listo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHALLENGE CREATE MODAL ===== -->
+<div id="challengeModalOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:9200;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#111113;border:1px solid rgba(139,92,246,0.35);border-top:3px solid #8b5cf6;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;border-radius:8px;">
+    <div style="padding:22px 26px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:#8b5cf6;margin-bottom:4px;text-transform:uppercase;">M26 Retos Grupales</div>
+        <div style="font-size:16px;font-weight:600;color:#fff;">Crear Reto Grupal</div>
+      </div>
+      <button onclick="closeChallengeModal()" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1;">&times;</button>
+    </div>
+    <div style="padding:22px 26px;">
+      <div id="challengeModalError" style="display:none;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.3);padding:10px 14px;margin-bottom:16px;font-size:12px;color:#E31E24;font-family:'JetBrains Mono',monospace;letter-spacing:1px;border-radius:4px;"></div>
+      <div id="challengeModalSuccess" style="display:none;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.3);padding:10px 14px;margin-bottom:16px;font-size:12px;color:#22C55E;font-family:'JetBrains Mono',monospace;letter-spacing:1px;border-radius:4px;"></div>
+
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Titulo *</label>
+        <input id="chTitle" type="text" placeholder="Ej: Reto Constancia Marzo" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#8b5cf6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      </div>
+
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Descripcion</label>
+        <textarea id="chDescription" rows="2" placeholder="Descripcion del reto (opcional)" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;resize:vertical;" onfocus="this.style.borderColor='#8b5cf6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div>
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Tipo *</label>
+          <select id="chType" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#8b5cf6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+            <option value="checkins">Check-ins</option>
+            <option value="steps">Pasos diarios</option>
+            <option value="weight_loss">Perdida de peso (kg)</option>
+            <option value="streak">Racha de dias</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Meta *</label>
+          <input id="chGoal" type="number" min="1" step="0.5" placeholder="Ej: 12" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#8b5cf6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+        <div>
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Fecha inicio *</label>
+          <input id="chStartDate" type="date" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#8b5cf6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+        <div>
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Fecha fin *</label>
+          <input id="chEndDate" type="date" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#8b5cf6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button onclick="closeChallengeModal()" style="padding:10px 20px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:5px;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;">Cancelar</button>
+        <button id="chSubmitBtn" onclick="submitChallenge()" style="padding:10px 22px;background:#8b5cf6;border:none;border-radius:5px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Crear Reto</button>
       </div>
     </div>
   </div>
@@ -3885,6 +3947,86 @@ document.addEventListener('click', function(e) {
     V8AdminNotifPanel._open = false;
   }
 });
+
+/* ===== M26: CHALLENGE MODAL ===== */
+function openChallengeModal() {
+  var overlay = document.getElementById('challengeModalOverlay');
+  overlay.style.display = 'flex';
+  document.getElementById('chTitle').value       = '';
+  document.getElementById('chDescription').value = '';
+  document.getElementById('chGoal').value         = '';
+  document.getElementById('chStartDate').value    = '';
+  document.getElementById('chEndDate').value      = '';
+  document.getElementById('challengeModalError').style.display   = 'none';
+  document.getElementById('challengeModalSuccess').style.display = 'none';
+  var btn = document.getElementById('chSubmitBtn');
+  if (btn) { btn.disabled = false; btn.textContent = 'Crear Reto'; }
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeChallengeModal();
+  }, { once: true });
+}
+
+function closeChallengeModal() {
+  document.getElementById('challengeModalOverlay').style.display = 'none';
+}
+
+function submitChallenge() {
+  var errBox  = document.getElementById('challengeModalError');
+  var succBox = document.getElementById('challengeModalSuccess');
+  var btn     = document.getElementById('chSubmitBtn');
+  errBox.style.display  = 'none';
+  succBox.style.display = 'none';
+
+  var title     = document.getElementById('chTitle').value.trim();
+  var desc      = document.getElementById('chDescription').value.trim();
+  var type      = document.getElementById('chType').value;
+  var goal      = parseFloat(document.getElementById('chGoal').value);
+  var startDate = document.getElementById('chStartDate').value;
+  var endDate   = document.getElementById('chEndDate').value;
+
+  if (!title) { errBox.textContent = 'El titulo es requerido.'; errBox.style.display = 'block'; return; }
+  if (!goal || goal <= 0) { errBox.textContent = 'La meta debe ser mayor a 0.'; errBox.style.display = 'block'; return; }
+  if (!startDate || !endDate) { errBox.textContent = 'Fechas inicio y fin requeridas.'; errBox.style.display = 'block'; return; }
+  if (endDate <= startDate) { errBox.textContent = 'La fecha fin debe ser posterior a la fecha inicio.'; errBox.style.display = 'block'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+
+  var token = localStorage.getItem('wc_token') || '';
+  fetch('/api/challenges/admin-manage.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({
+      title:          title,
+      description:    desc || null,
+      challenge_type: type,
+      goal_value:     goal,
+      start_date:     startDate,
+      end_date:       endDate
+    })
+  })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) {
+        succBox.textContent = 'Reto creado exitosamente (ID: ' + data.id + ')';
+        succBox.style.display = 'block';
+        btn.disabled    = false;
+        btn.textContent = 'Crear Reto';
+        setTimeout(function() { closeChallengeModal(); }, 2000);
+      } else {
+        errBox.textContent = data.error || 'Error al crear reto.';
+        errBox.style.display = 'block';
+        btn.disabled    = false;
+        btn.textContent = 'Crear Reto';
+      }
+    })
+    .catch(function() {
+      errBox.textContent = 'Error de red. Intenta de nuevo.';
+      errBox.style.display = 'block';
+      btn.disabled    = false;
+      btn.textContent = 'Crear Reto';
+    });
+}
 </script>
 
 </body>

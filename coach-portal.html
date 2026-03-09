@@ -685,6 +685,9 @@ input,textarea,select{font-family:'Inter',sans-serif}
     <a class="nav-item" onclick="showSection('recursos')" id="nav-recursos">
       <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span> Recursos
     </a>
+    <a class="nav-item" onclick="showSection('academia')" id="nav-academia">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span> Academia
+    </a>
   </nav>
 
   <div class="sidebar-user">
@@ -1197,6 +1200,118 @@ input,textarea,select{font-family:'Inter',sans-serif}
       </div>
     </section>
 
+    <!-- ===== SECTION 8: ACADEMIA ===== -->
+    <section id="sec-academia" class="section v7-reveal">
+      <h1 class="section-title">ACADE<span>//</span>MIA</h1>
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px;line-height:1.6">
+        Gestiona el contenido educativo de la plataforma. Crea videos, PDFs, articulos y ejercicios para tus clientes.
+      </p>
+
+      <!-- Top bar: new content button -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <select id="acad-filter-type" onchange="loadAcademia()" style="background:var(--surface-2);color:var(--white);border:1px solid var(--border);padding:7px 12px;font-size:.82rem;cursor:pointer">
+            <option value="">Todos los tipos</option>
+            <option value="video">Video</option>
+            <option value="pdf">PDF</option>
+            <option value="article">Articulo</option>
+            <option value="exercise">Ejercicio</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="openAcadForm()">+ Nuevo Contenido</button>
+      </div>
+
+      <!-- Content list -->
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-title">// Contenido Publicado</div>
+        <div id="acad-list-loading" style="padding:20px;text-align:center;color:var(--gray);font-size:.82rem">Cargando...</div>
+        <div id="acad-list" style="display:none">
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border)">
+                  <th style="padding:10px 12px;text-align:left;color:var(--gray);font-weight:500">Titulo</th>
+                  <th style="padding:10px 12px;text-align:left;color:var(--gray);font-weight:500">Tipo</th>
+                  <th style="padding:10px 12px;text-align:left;color:var(--gray);font-weight:500">Planes</th>
+                  <th style="padding:10px 12px;text-align:left;color:var(--gray);font-weight:500">Estado</th>
+                  <th style="padding:10px 12px;text-align:left;color:var(--gray);font-weight:500">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="acad-tbody"></tbody>
+            </table>
+          </div>
+          <div id="acad-empty" style="display:none;padding:30px;text-align:center;color:var(--gray);font-size:.82rem">
+            No hay contenido creado aun. Crea el primero con el boton de arriba.
+          </div>
+        </div>
+      </div>
+
+      <!-- Form: create/edit -->
+      <div id="acad-form-wrap" class="card" style="display:none">
+        <div class="card-title" id="acad-form-title">// Nuevo Contenido</div>
+        <input type="hidden" id="acad-edit-id" value="">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+          <div style="grid-column:1/-1">
+            <label style="display:block;font-size:.75rem;color:var(--gray);margin-bottom:5px">Titulo *</label>
+            <input id="acad-title" type="text" placeholder="Ej: Guia de Proteinas para Principiantes"
+              style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:9px 12px;font-size:.85rem">
+          </div>
+          <div style="grid-column:1/-1">
+            <label style="display:block;font-size:.75rem;color:var(--gray);margin-bottom:5px">Descripcion</label>
+            <textarea id="acad-desc" rows="2" placeholder="Descripcion breve del contenido"
+              style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:9px 12px;font-size:.85rem;resize:vertical"></textarea>
+          </div>
+          <div>
+            <label style="display:block;font-size:.75rem;color:var(--gray);margin-bottom:5px">Tipo *</label>
+            <select id="acad-type" onchange="onAcadTypeChange()"
+              style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:9px 12px;font-size:.85rem">
+              <option value="video">Video</option>
+              <option value="pdf">PDF</option>
+              <option value="article">Articulo</option>
+              <option value="exercise">Ejercicio</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:.75rem;color:var(--gray);margin-bottom:5px">Tags (separados por coma)</label>
+            <input id="acad-tags" type="text" placeholder="nutricion,proteinas,principiantes"
+              style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:9px 12px;font-size:.85rem">
+          </div>
+          <div id="acad-url-wrap" style="grid-column:1/-1">
+            <label style="display:block;font-size:.75rem;color:var(--gray);margin-bottom:5px">URL del Contenido</label>
+            <input id="acad-url" type="url" placeholder="https://youtube.com/watch?v=... o URL del PDF"
+              style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:9px 12px;font-size:.85rem">
+          </div>
+          <div id="acad-body-wrap" style="grid-column:1/-1;display:none">
+            <label style="display:block;font-size:.75rem;color:var(--gray);margin-bottom:5px">Contenido (texto/markdown)</label>
+            <textarea id="acad-body" rows="8" placeholder="Escribe el contenido del articulo o ejercicio aqui..."
+              style="width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--white);padding:9px 12px;font-size:.82rem;resize:vertical;font-family:monospace"></textarea>
+          </div>
+          <div style="grid-column:1/-1">
+            <label style="display:block;font-size:.75rem;color:var(--gray);margin-bottom:8px">Planes con acceso</label>
+            <div style="display:flex;gap:16px;flex-wrap:wrap">
+              <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer">
+                <input type="checkbox" id="plan-esencial" value="esencial"> Esencial
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer">
+                <input type="checkbox" id="plan-metodo" value="metodo"> Metodo
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer">
+                <input type="checkbox" id="plan-rise" value="rise"> RISE
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer">
+                <input type="checkbox" id="plan-elite" value="elite"> Elite
+              </label>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+          <button class="btn-primary" onclick="saveAcadContent(false)">Guardar Borrador</button>
+          <button class="btn-primary" style="background:var(--green);color:#000" onclick="saveAcadContent(true)">Publicar</button>
+          <button class="btn-outline" onclick="closeAcadForm()">Cancelar</button>
+        </div>
+      </div>
+    </section>
+
   </div><!-- /content-area -->
 </div><!-- /main-wrap -->
 
@@ -1229,7 +1344,8 @@ var sectionMap = {
   marca: 'Mi Marca',
   perfil: 'Mi Perfil',
   referidos: 'Referidos',
-  recursos: 'Recursos'
+  recursos: 'Recursos',
+  academia: 'Academia'
 };
 
 // ===== AUTH CHECK =====
@@ -1317,6 +1433,7 @@ function showSection(name) {
   if (name === 'referidos') loadReferrals();
   if (name === 'perfil') loadProfile();
   if (name === 'marca') loadBrandData();
+  if (name === 'academia') loadAcademia();
 
   closeSidebar();
 }
@@ -2274,6 +2391,198 @@ function deleteNote(noteId, btn) {
   }).catch(function() {
     if (btn) { btn.disabled = false; btn.textContent = 'X'; }
     showNotification('Error de conexion al eliminar la nota.');
+  });
+}
+
+// ===== ACADEMIA =====
+var acadLoaded = false;
+var acadItems  = [];
+
+function loadAcademia() {
+  var typeFilter = document.getElementById('acad-filter-type') ? document.getElementById('acad-filter-type').value : '';
+  var url = '/academy/admin-manage.php';
+  document.getElementById('acad-list-loading').style.display = 'block';
+  document.getElementById('acad-list').style.display = 'none';
+
+  apiFetch('GET', url).then(function(data) {
+    document.getElementById('acad-list-loading').style.display = 'none';
+    document.getElementById('acad-list').style.display = 'block';
+    if (!data || !data.ok) { renderAcadTable([]); return; }
+    var items = data.items || [];
+    if (typeFilter) {
+      items = items.filter(function(i) { return i.content_type === typeFilter; });
+    }
+    acadItems = items;
+    renderAcadTable(items);
+    acadLoaded = true;
+  }).catch(function() {
+    document.getElementById('acad-list-loading').style.display = 'none';
+    document.getElementById('acad-list').style.display = 'block';
+    renderAcadTable([]);
+  });
+}
+
+var ACAD_TYPE_ICONS = { video: '&#127909;', pdf: '&#128196;', article: '&#128203;', exercise: '&#128170;' };
+var ACAD_TYPE_LABELS = { video: 'Video', pdf: 'PDF', article: 'Articulo', exercise: 'Ejercicio' };
+
+function renderAcadTable(items) {
+  var tbody = document.getElementById('acad-tbody');
+  var empty = document.getElementById('acad-empty');
+  if (!items.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  var html = '';
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    var icon  = ACAD_TYPE_ICONS[item.content_type]  || '&#128203;';
+    var label = ACAD_TYPE_LABELS[item.content_type] || item.content_type;
+    var plans = (item.plan_access || []).join(', ') || '—';
+    var pubLabel = item.is_published
+      ? '<span style="color:var(--green);font-size:.75rem">PUBLICADO</span>'
+      : '<span style="color:var(--gray);font-size:.75rem">BORRADOR</span>';
+    var toggleLabel = item.is_published ? 'Despublicar' : 'Publicar';
+    html += '<tr style="border-bottom:1px solid var(--border)">'
+      + '<td style="padding:10px 12px">' + icon + ' ' + escapeHtml(item.title) + '</td>'
+      + '<td style="padding:10px 12px;color:var(--gray)">' + label + '</td>'
+      + '<td style="padding:10px 12px;color:var(--gray);font-size:.78rem">' + escapeHtml(plans) + '</td>'
+      + '<td style="padding:10px 12px">' + pubLabel + '</td>'
+      + '<td style="padding:10px 12px">'
+      +   '<div style="display:flex;gap:8px;flex-wrap:wrap">'
+      +   '<button class="btn-outline" style="padding:4px 10px;font-size:.75rem" onclick="editAcadItem(' + item.id + ')">Editar</button>'
+      +   '<button class="btn-outline" style="padding:4px 10px;font-size:.75rem" onclick="toggleAcadPublish(' + item.id + ',' + (item.is_published ? 'false' : 'true') + ')">' + toggleLabel + '</button>'
+      +   '<button class="btn-outline" style="padding:4px 10px;font-size:.75rem;color:var(--red);border-color:var(--red)" onclick="deleteAcadItem(' + item.id + ')">Eliminar</button>'
+      +   '</div>'
+      + '</td>'
+      + '</tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function openAcadForm() {
+  document.getElementById('acad-edit-id').value = '';
+  document.getElementById('acad-form-title').textContent = '// Nuevo Contenido';
+  document.getElementById('acad-title').value = '';
+  document.getElementById('acad-desc').value  = '';
+  document.getElementById('acad-type').value  = 'video';
+  document.getElementById('acad-tags').value  = '';
+  document.getElementById('acad-url').value   = '';
+  document.getElementById('acad-body').value  = '';
+  ['esencial','metodo','rise','elite'].forEach(function(p) {
+    document.getElementById('plan-' + p).checked = false;
+  });
+  onAcadTypeChange();
+  document.getElementById('acad-form-wrap').style.display = 'block';
+  document.getElementById('acad-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeAcadForm() {
+  document.getElementById('acad-form-wrap').style.display = 'none';
+}
+
+function onAcadTypeChange() {
+  var type = document.getElementById('acad-type').value;
+  var showUrl  = (type === 'video' || type === 'pdf');
+  var showBody = (type === 'article' || type === 'exercise');
+  document.getElementById('acad-url-wrap').style.display  = showUrl  ? 'block' : 'none';
+  document.getElementById('acad-body-wrap').style.display = showBody ? 'block' : 'none';
+}
+
+function editAcadItem(id) {
+  apiFetch('GET', '/academy/get.php?id=' + id).then(function(data) {
+    if (!data || !data.ok || !data.item) { showNotification('Error al cargar contenido'); return; }
+    var item = data.item;
+    document.getElementById('acad-edit-id').value = item.id;
+    document.getElementById('acad-form-title').textContent = '// Editar Contenido';
+    document.getElementById('acad-title').value = item.title || '';
+    document.getElementById('acad-desc').value  = item.description || '';
+    document.getElementById('acad-type').value  = item.content_type || 'article';
+    document.getElementById('acad-tags').value  = item.tags || '';
+    document.getElementById('acad-url').value   = item.content_url || '';
+    document.getElementById('acad-body').value  = item.content_body || '';
+    var plans = item.plan_access || [];
+    ['esencial','metodo','rise','elite'].forEach(function(p) {
+      document.getElementById('plan-' + p).checked = plans.indexOf(p) >= 0;
+    });
+    onAcadTypeChange();
+    document.getElementById('acad-form-wrap').style.display = 'block';
+    document.getElementById('acad-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+function saveAcadContent(publish) {
+  var title = document.getElementById('acad-title').value.trim();
+  if (!title) { showNotification('El titulo es requerido'); return; }
+
+  var plans = ['esencial','metodo','rise','elite'].filter(function(p) {
+    return document.getElementById('plan-' + p).checked;
+  });
+
+  var payload = {
+    title:        title,
+    description:  document.getElementById('acad-desc').value.trim(),
+    content_type: document.getElementById('acad-type').value,
+    content_url:  document.getElementById('acad-url').value.trim() || null,
+    content_body: document.getElementById('acad-body').value.trim() || null,
+    plan_access:  plans,
+    tags:         document.getElementById('acad-tags').value.trim(),
+    is_published: publish
+  };
+
+  var editId = document.getElementById('acad-edit-id').value;
+  var method, url;
+  if (editId) {
+    method = 'PUT';
+    url    = '/academy/admin-manage.php?id=' + editId;
+  } else {
+    method = 'POST';
+    url    = '/academy/admin-manage.php';
+  }
+
+  apiFetch(method, url, payload).then(function(data) {
+    if (data && data.ok) {
+      showNotification(editId ? 'Contenido actualizado' : 'Contenido creado');
+      closeAcadForm();
+      loadAcademia();
+    } else {
+      showNotification('Error: ' + (data && data.error ? data.error : 'No se pudo guardar'));
+    }
+  }).catch(function() {
+    showNotification('Error de conexion al guardar');
+  });
+}
+
+function toggleAcadPublish(id, publish) {
+  apiFetch('PUT', '/academy/admin-manage.php?id=' + id, { is_published: publish }).then(function(data) {
+    if (data && data.ok) {
+      showNotification(publish ? 'Contenido publicado' : 'Contenido despublicado');
+      loadAcademia();
+    } else {
+      showNotification('Error: ' + (data && data.error ? data.error : 'No se pudo actualizar'));
+    }
+  });
+}
+
+function deleteAcadItem(id) {
+  if (!confirm('Eliminar este contenido permanentemente?')) return;
+  apiFetch('DELETE', '/academy/admin-manage.php?id=' + id).then(function(data) {
+    if (data && data.ok) {
+      showNotification('Contenido eliminado');
+      loadAcademia();
+    } else {
+      showNotification('Error al eliminar');
+    }
   });
 }
 
