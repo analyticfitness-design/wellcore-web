@@ -44,16 +44,14 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('push', function(event) {
   var data = {};
   if (event.data) {
-    try { data = event.data.json(); } catch(e) { data = { body: event.data.text() }; }
+    try { data = event.data.json(); } catch(e) {}
   }
-  var title   = data.title || 'WellCore Fitness';
+  var title = data.title || 'WellCore Fitness';
   var options = {
-    body:  data.body  || 'Tienes una actualizacion en tu portal',
-    icon:  '/images/icon-192.png',
+    body: data.body || 'Tienes una actualización. Toca para ver.',
+    icon: '/images/icon-192.png',
     badge: '/images/icon-192.png',
-    tag:   'wc-push',
-    renotify: true,
-    data:  { url: data.url || '/cliente.html' }
+    data: { url: data.url || '/cliente.html' }
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });

@@ -75,7 +75,8 @@ $privatePem = "-----BEGIN EC PRIVATE KEY-----\n"
 
 $privKey = openssl_pkey_get_private($privatePem);
 if (!$privKey) {
-    respondError('No se pudo cargar la clave VAPID privada: ' . openssl_error_string(), 500);
+    error_log('VAPID key load error: ' . openssl_error_string());
+    respondError('Error de configuración VAPID. Contacta al administrador.', 500);
 }
 
 // Firmar (SHA256 + EC → DER)
@@ -88,23 +89,14 @@ if (!openssl_sign($signingInput, $signatureRaw, $privKey, OPENSSL_ALGO_SHA256)) 
 $signatureB64 = wc_base64url_encode(wc_der_to_p1363($signatureRaw));
 $jwt = $signingInput . '.' . $signatureB64;
 
-// ===== Payload push =====
-$pushPayload = json_encode([
-    'title' => $title,
-    'body'  => $msgBody,
-    'url'   => $url,
-], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-// ===== Enviar con cURL =====
+// ===== Enviar con cURL (silent push — sin payload) =====
 $ch = curl_init($endpoint);
 curl_setopt_array($ch, [
     CURLOPT_POST           => true,
-    CURLOPT_POSTFIELDS     => $pushPayload,
+    CURLOPT_POSTFIELDS     => '',
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_TIMEOUT        => 15,
     CURLOPT_HTTPHEADER     => [
-        'Content-Type: application/json',
-        'Content-Length: ' . strlen($pushPayload),
         'TTL: 86400',
         'Urgency: normal',
         'Authorization: vapid t=' . $jwt . ',k=' . $vapidPublic,
@@ -118,11 +110,15 @@ $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $curlError = curl_error($ch);
 curl_close($ch);
 
-// 410/404 = suscripción caducada
-if ($httpCode === 410 || $httpCode === 404) {
-    $db->prepare("UPDATE push_subscriptions SET is_active = 0 WHERE id = ?")
-       ->execute([(int)$sub['id']]);
-    respondError('Suscripcion expirada — desactivada', 410);
+// 410 = suscripción expirada permanentemente — desactivar
+// 404 = posible error temporal — no desactivar
+if ($httpCode === 410) {
+    $db->prepare('UPDATE push_subscriptions SET is_active = 0 WHERE id = ?')
+       ->execute([$sub['id']]);
+    respondError('Suscripción expirada (410)', 410);
+} elseif ($httpCode === 404) {
+    error_log("Push 404 para suscripción {$sub['id']} — no desactivada");
+    respondError('Push endpoint no encontrado temporalmente (404)', 404);
 }
 
 if ($curlError) {
