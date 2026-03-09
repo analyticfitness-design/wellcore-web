@@ -249,7 +249,7 @@ if ($plan === 'elite') {
         if ($r) $awarded[] = $r;
     }
     if ($daysActive >= 180) {
-        $r = awardIfNew($db, $cid, 'elite_6months', 'Élite de Élite', '6 meses en Elite — eres top tier', 'gem');
+        $r = awardIfNew($db, $cid, 'elite_6months', 'Veterano de Élite', '6 meses en Elite — disciplina y resultados', 'gem');
         if ($r) $awarded[] = $r;
     }
     if ($daysActive >= 365) {
@@ -267,7 +267,7 @@ if ($plan === 'elite') {
     }
     // Photo reviews con IA
     if ($photoReviewCount >= 1) {
-        $r = awardIfNew($db, $cid, 'elite_ai_review_first', 'Primera Revisión AI', 'Tu primera foto analizada con inteligencia artificial', 'robot');
+        $r = awardIfNew($db, $cid, 'elite_ai_review_first', 'Análisis Inteligente', 'Tu primera foto analizada con inteligencia artificial', 'robot');
         if ($r) $awarded[] = $r;
     }
     if ($photoReviewCount >= 5) {
@@ -353,7 +353,7 @@ if ($trigger === 'photo_review' && $plan === 'elite') {
         $prRecheck->execute([$cid]);
         $freshCount = (int)$prRecheck->fetchColumn();
         if ($freshCount >= 1) {
-            $r = awardIfNew($db, $cid, 'elite_ai_review_first', 'Primera Revisión AI', 'Tu primera foto analizada con inteligencia artificial', 'robot');
+            $r = awardIfNew($db, $cid, 'elite_ai_review_first', 'Análisis Inteligente', 'Tu primera foto analizada con inteligencia artificial', 'robot');
             if ($r) $awarded[] = $r;
         }
         if ($freshCount >= 5) {
