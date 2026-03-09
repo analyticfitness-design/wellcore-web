@@ -309,7 +309,7 @@ seedTable(
         ];
 
         $stmt = $db->prepare("
-            INSERT INTO challenges (name, description, challenge_type, target_value, unit, start_date, end_date, plan_access, badge_icon, created_by, active, created_at)
+            INSERT INTO challenges (title, description, challenge_type, goal_value, unit, start_date, end_date, plan_access, badge_icon, created_by, is_active, created_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)
         ");
         foreach ($challenges as $c) {
@@ -320,48 +320,29 @@ seedTable(
 
 // ─── 6. COMMUNITY POSTS ───────────────────────────────────────────────────
 echo "\n--- coach_community_posts ---\n";
-seedTable(
-    $db,
-    'coach_community_posts',
-    "SELECT COUNT(*) FROM coach_community_posts",
-    function (PDO $db) use ($coachId) {
+try {
+    $existingPosts = (int)$db->query("SELECT COUNT(*) FROM coach_community_posts")->fetchColumn();
+    if ($existingPosts >= 5) {
+        echo "  SKIP  coach_community_posts ($existingPosts rows ya existen)\n";
+    } else {
         $posts = [
-            [
-                'content'    => '¡Bienvenidos a la comunidad WellCore! 🔴 Este es el espacio donde compartimos progreso, dudas y logros. Cada semana voy a publicar aquí tips, retos y reflexiones. Regla #1: Aquí celebramos, no comparamos. ¿Quién está listo para los próximos 160 días?',
-                'type'       => 'post',
-                'created_at' => date('Y-m-d H:i:s', strtotime('-3 days')),
-            ],
-            [
-                'content'    => '💡 TIP DE LA SEMANA: El músculo no se construye en el gym — se construye mientras duermes. Si entrenas duro pero duermes 5 horas, estás dejando el 40% de tu progreso sobre la mesa. Prioridad #1 esta semana: 7-9 horas de sueño. ¿Cuántas horas duermes normalmente?',
-                'type'       => 'tip',
-                'created_at' => date('Y-m-d H:i:s', strtotime('-2 days')),
-            ],
-            [
-                'content'    => '🏆 ¿Ya hiciste tu check-in hoy? El Reto "Semana de Fuego" está activo — 7 días sin fallar. Estadística real: los clientes que hacen check-in los primeros 7 días tienen un 78% más de retención al mes. El hábito se construye en los primeros días. ¡Hoy cuenta!',
-                'type'       => 'post',
-                'created_at' => date('Y-m-d H:i:s', strtotime('-1 day')),
-            ],
-            [
-                'content'    => '🔬 DATO CIENTÍFICO: La proteína no es solo para "ponerse grande". Consumir 1.6-2.2g de proteína por kg de peso corporal: ✅ Reduce el hambre hasta un 60% ✅ Preserva músculo en déficit calórico ✅ Aumenta el metabolismo basal ¿Cuánta proteína comes al día? Sé honesto 👇',
-                'type'       => 'tip',
-                'created_at' => date('Y-m-d H:i:s', strtotime('-12 hours')),
-            ],
-            [
-                'content'    => '📸 Recuerda: Las fotos de progreso son TU herramienta, no una comparación. Sube tu foto inicial en la sección "Fotos" del portal — en 30 días verás el cambio aunque la báscula no lo muestre. El cuerpo cambia antes de que los números cambien.',
-                'type'       => 'achievement',
-                'created_at' => date('Y-m-d H:i:s', strtotime('-2 hours')),
-            ],
+            ['¡Bienvenidos a la comunidad WellCore! 🔴 Este es el espacio donde compartimos progreso, dudas y logros. Regla #1: Aquí celebramos, no comparamos. ¿Quién está listo para los próximos 160 días?', 'post', date('Y-m-d H:i:s', strtotime('-4 days'))],
+            ['💡 TIP: El músculo no se construye en el gym — se construye mientras duermes. Si entrenas duro pero duermes 5 horas, estás dejando el 40% de tu progreso sobre la mesa. Prioridad #1: 7-9 horas de sueño. ¿Cuántas horas duermes normalmente?', 'tip', date('Y-m-d H:i:s', strtotime('-3 days'))],
+            ['🏆 ¿Ya hiciste tu check-in hoy? Los clientes que hacen check-in los primeros 7 días tienen 78% más retención al mes. El hábito se construye en los primeros días. ¡Hoy cuenta! Reto activo: Semana de Fuego 🔥', 'post', date('Y-m-d H:i:s', strtotime('-2 days'))],
+            ['🔬 DATO: La proteína no es solo para "ponerse grande". 1.6-2.2g/kg de peso corporal: ✅ Reduce el hambre 60% ✅ Preserva músculo en déficit ✅ Acelera el metabolismo. ¿Cuánta proteína comes al día? Sé honesto 👇', 'tip', date('Y-m-d H:i:s', strtotime('-1 day'))],
+            ['📸 Las fotos de progreso son TU herramienta, no una comparación. Sube tu foto inicial en la sección Fotos del portal — en 30 días verás el cambio aunque la báscula no lo muestre. El cuerpo cambia antes de que los números cambien.', 'achievement', date('Y-m-d H:i:s', strtotime('-2 hours'))],
         ];
-
-        $stmt = $db->prepare("
-            INSERT INTO coach_community_posts (coach_id, content, type, likes, created_at)
-            VALUES (?, ?, ?, 0, ?)
-        ");
+        $stmt = $db->prepare("INSERT INTO coach_community_posts (coach_id, content, type, likes, created_at) VALUES (?, ?, ?, 0, ?)");
         foreach ($posts as $p) {
-            $stmt->execute([$GLOBALS['coachId'], $p['content'], $p['type'], $p['created_at']]);
+            $stmt->execute([$coachId, $p[0], $p[1], $p[2]]);
         }
+        echo "  OK    coach_community_posts (" . count($posts) . " posts)\n";
+        $ok++;
     }
-);
+} catch (\PDOException $e) {
+    $errors[] = "coach_community_posts: " . $e->getMessage();
+    echo "  ERROR coach_community_posts: " . $e->getMessage() . "\n";
+}
 
 // ─── 7. COACH AVAILABILITY ────────────────────────────────────────────────
 echo "\n--- coach_availability ---\n";
