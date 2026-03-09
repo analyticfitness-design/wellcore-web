@@ -142,10 +142,10 @@ function requireSetupAuth(): void {
         }
     }
 
-    // GET secret for migration endpoints — DISABLED (migrations complete)
-    // To re-enable temporarily: uncomment the block below, push, run migration, re-comment
+    // GET secret for migration endpoints — DISABLED (v9 migration complete)
+    // To re-enable temporarily: uncomment the block below, run migration, re-comment
     // $secret = $_GET['secret'] ?? '';
-    // if ($secret && in_array($secret, ['WC_MIGRATE_V2_2026', 'WC_MIGRATE_V3_2026', 'WELLCORE_SETUP_2026', 'WC_AI_SETUP_2026', 'WC_AI_V3_2026', 'WC_WEBHOOK_2026', 'WC_COACH_MIGRATE_2026', 'WC_SHOP_SEED_V3_2026', 'WC_RISE_TICKETS_2026'], true)) {
+    // if ($secret && in_array($secret, ['WC_MIGRATE_V2_2026', 'WC_MIGRATE_V3_2026', 'WELLCORE_SETUP_2026', 'WC_AI_SETUP_2026', 'WC_AI_V3_2026', 'WC_WEBHOOK_2026', 'WC_COACH_MIGRATE_2026', 'WC_SHOP_SEED_V3_2026', 'WC_RISE_TICKETS_2026', 'WC_MIGRATE_V9_2026'], true)) {
     //     return;
     // }
 
