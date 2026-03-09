@@ -18,7 +18,7 @@ $code = $row->fetchColumn();
 
 if (!$code) {
     do {
-        $code = strtoupper(substr(base_convert(bin2hex(random_bytes(4)), 16, 36), 0, 8));
+        $code = strtoupper(str_pad(base_convert(bin2hex(random_bytes(4)), 16, 36), 8, '0', STR_PAD_LEFT));
         $check = $db->prepare("SELECT COUNT(*) FROM clients WHERE referral_code = ?");
         $check->execute([$code]);
     } while ($check->fetchColumn() > 0);

@@ -555,8 +555,13 @@ V8.CheckinAlert = {
   },
 
   scrollToCheckin: function() {
-    var el = document.querySelector('[data-tab="checkins"]') || document.getElementById('tabCheckins');
-    if (el) el.click();
+    // Usar showSection si existe (cliente.html), fallback a click en nav-checkin
+    if (typeof showSection === 'function') {
+      showSection('checkin');
+    } else {
+      var el = document.getElementById('nav-checkin') || document.querySelector('[data-tab="checkins"]');
+      if (el) el.click();
+    }
   }
 };
 

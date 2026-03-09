@@ -21,7 +21,7 @@ function ensureReferralCode(PDO $db, int $clientId): string {
 
     // Generar código único de 8 chars
     do {
-        $new = strtoupper(substr(base_convert(bin2hex(random_bytes(4)), 16, 36), 0, 8));
+        $new = strtoupper(str_pad(base_convert(bin2hex(random_bytes(4)), 16, 36), 8, '0', STR_PAD_LEFT));
         $check = $db->prepare("SELECT COUNT(*) FROM clients WHERE referral_code = ?");
         $check->execute([$new]);
     } while ($check->fetchColumn() > 0);
