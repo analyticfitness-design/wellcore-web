@@ -640,6 +640,74 @@ input,textarea,select{font-family:'Inter',sans-serif}
   .v5-preloader-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
   .v5-preloader-fill{height:100%;background:#E31E24;width:0;animation:preloaderFill 1.2s cubic-bezier(.4,0,.2,1) forwards}
   @keyframes preloaderFill{0%{width:0}100%{width:100%}}
+
+/* ===== V8 PHASE 1 ADDITIONS ===== */
+
+/* Skeleton Loaders */
+.skeleton{
+  background:linear-gradient(90deg,var(--surface) 25%,var(--surface-2) 50%,var(--surface) 75%);
+  background-size:200% 100%;
+  animation:skeletonShimmer 1.4s infinite;
+  border-radius:2px;
+}
+@keyframes skeletonShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.kpi-skeleton{height:24px;margin-top:6px}
+.skeleton-row{height:14px;margin-bottom:8px;width:80%}
+.skeleton-row:nth-child(2){width:60%}
+.skeleton-row:nth-child(3){width:70%}
+
+/* KPI Stagger entrance */
+@keyframes kpiEnter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.kpi-card{opacity:0;animation:kpiEnter .5s cubic-bezier(.22,1,.36,1) forwards}
+.kpi-card:nth-child(1){animation-delay:.05s}
+.kpi-card:nth-child(2){animation-delay:.12s}
+.kpi-card:nth-child(3){animation-delay:.19s}
+.kpi-card:nth-child(4){animation-delay:.26s}
+
+/* Glassmorphism sidebar upgrade */
+.sidebar{
+  background:rgba(17,17,19,0.85);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-right:1px solid rgba(255,255,255,0.06);
+}
+.sidebar-logo{position:relative;overflow:hidden}
+
+/* Canvas partículas en sidebar-logo */
+#sidebar-particles{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.sidebar-logo>*:not(canvas){position:relative;z-index:1}
+
+/* Online pulse animation mejorada */
+@keyframes pulseRing{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.8);opacity:0}}
+.pulse-dot::after{
+  content:'';
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  background:var(--green);
+  opacity:0;
+  animation:pulseRing 2s ease-in-out infinite;
+}
+.pulse-dot{position:relative}
+
+/* Notification panel position fix para coach */
+#clientNotifPanel{
+  position:fixed;
+  top:62px;
+  right:16px;
+  z-index:1000;
+}
+
+/* Resource cards glow */
+.resource-card{
+  transition:border-color .2s,box-shadow .2s;
+}
+
+/* Section reveal mejorado */
+.section.active{
+  animation:sectionFadeIn .35s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes sectionFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 </style>
 <link rel="stylesheet" href="css/wellcore-v5.css">
 <!-- Premium Visual Redesign -->
@@ -650,6 +718,10 @@ input,textarea,select{font-family:'Inter',sans-serif}
 <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
 <!-- WellCore v7 Ultra-Premium Design System 2026 -->
 <link rel="stylesheet" href="css/wellcore-v7.css">
+<!-- V8 Notificaciones -->
+<link rel="stylesheet" href="css/wellcore-v8.css">
+<!-- Lenis smooth scroll (3KB) -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 </head>
 <body>
 
@@ -659,6 +731,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
+    <canvas id="sidebar-particles"></canvas>
     <span class="logo-text">WELLCORE</span>
     <span class="logo-sub">FITNESS</span>
   </div>
@@ -710,12 +783,27 @@ input,textarea,select{font-family:'Inter',sans-serif}
         <div class="pulse-dot"></div>
         Activo
       </div>
+      <!-- V8 Notification Bell -->
+      <div class="notif-bell" id="clientNotifBell" onclick="V8.Notifications.togglePanel()" title="Notificaciones">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-badge" id="clientNotifBadge" style="display:none">0</span>
+      </div>
       <span class="topbar-coach-name" id="topbar-name">Coach</span>
       <button class="btn-logout-top" onclick="doLogout()">
         &rarr; Salir
       </button>
     </div>
   </header>
+
+  <!-- V8 Notification Panel -->
+  <div class="notif-panel" id="clientNotifPanel">
+    <div class="notif-panel-header">
+      <span>Notificaciones</span>
+      <button onclick="V8.Notifications.markAllRead()" style="font-size:.72rem;color:var(--gray);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif">Todas leídas</button>
+    </div>
+    <div class="notif-list" id="clientNotifList">
+    </div>
+  </div>
 
   <!-- CONTENT AREA -->
   <div class="content-area">
@@ -838,7 +926,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
           <button class="btn-outline ticket-filter" data-filter="in_progress" onclick="filterTickets('in_progress',this)">En Progreso</button>
           <button class="btn-outline ticket-filter" data-filter="closed" onclick="filterTickets('closed',this)">Cerrados</button>
         </div>
-        <button class="btn-primary v7-btn-primary" onclick="toggleNewTicket()">+ Nuevo Ticket</button>
+        <button class="btn-primary v7-btn-primary v7-magnetic" onclick="toggleNewTicket()">+ Nuevo Ticket</button>
       </div>
 
       <!-- New Ticket Form (hidden by default) -->
@@ -881,7 +969,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
             <textarea class="form-textarea" id="tk-desc" rows="4" required minlength="20" placeholder="Describe la solicitud en detalle..."></textarea>
           </div>
           <div style="display:flex;gap:12px">
-            <button type="submit" class="btn-primary v7-btn-primary" id="btn-submit-ticket">Enviar Ticket</button>
+            <button type="submit" class="btn-primary v7-btn-primary v7-magnetic" id="btn-submit-ticket">Enviar Ticket</button>
             <button type="button" class="btn-outline v7-btn-ghost" onclick="toggleNewTicket()">Cancelar</button>
           </div>
         </form>
@@ -925,13 +1013,13 @@ input,textarea,select{font-family:'Inter',sans-serif}
     </section>
 
     <!-- ===== SECTION 4: MI MARCA ===== -->
-    <section id="sec-marca" class="section">
-      <h1 class="section-title">MI <span>//</span>MARCA</h1>
+    <section id="sec-marca" class="section v7-reveal">
+      <h1 class="section-title v7-split-word">MI <span>//</span>MARCA</h1>
 
       <div class="brand-layout">
         <!-- Left Column: Controls -->
         <div>
-          <div class="card">
+          <div class="card v7-glow-track">
             <div class="card-title">// Color Principal</div>
             <div class="color-picker-wrap">
               <input type="color" id="brand-color" value="#E31E24">
@@ -939,7 +1027,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
             </div>
           </div>
 
-          <div class="card">
+          <div class="card v7-glow-track">
             <div class="card-title">// Logo</div>
             <div class="upload-area" id="logo-upload-area" onclick="document.getElementById('logo-file').click()">
               <p>Arrastra tu logo aqui o haz click para seleccionar</p>
@@ -949,12 +1037,12 @@ input,textarea,select{font-family:'Inter',sans-serif}
             </div>
           </div>
 
-          <button class="btn-primary v7-btn-primary" id="btn-save-brand" onclick="saveBrand()">Guardar Marca</button>
+          <button class="btn-primary v7-btn-primary v7-magnetic" id="btn-save-brand" onclick="saveBrand()">Guardar Marca</button>
         </div>
 
         <!-- Right Column: Preview -->
         <div>
-          <div class="card">
+          <div class="card v7-glow-track">
             <div class="card-title">// Vista Previa</div>
             <div class="brand-preview" id="brand-preview-box">
               <div class="brand-preview-topbar" id="preview-topbar" style="background:var(--red)"></div>
@@ -1057,8 +1145,8 @@ input,textarea,select{font-family:'Inter',sans-serif}
     </section>
 
     <!-- ===== SECTION 6: REFERIDOS ===== -->
-    <section id="sec-referidos" class="section">
-      <h1 class="section-title">REFERI<span>//</span>DOS</h1>
+    <section id="sec-referidos" class="section v7-reveal">
+      <h1 class="section-title v7-split-word">REFERI<span>//</span>DOS</h1>
 
       <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
         <div class="kpi-card v7-glow-track">
@@ -1075,7 +1163,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </div>
       </div>
 
-      <div class="card">
+      <div class="card v7-glow-track">
         <div class="card-title">// Tu Link de Referido</div>
         <div class="referral-link-wrap">
           <textarea readonly id="referral-link">Cargando...</textarea>
@@ -1083,7 +1171,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </div>
       </div>
 
-      <div class="card">
+      <div class="card v7-glow-track">
         <div class="card-title">// Ultimas Actividades</div>
         <div class="table-wrap">
           <table class="data-table" id="referrals-table">
@@ -1103,7 +1191,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
 
     <!-- ===== SECTION 7: RECURSOS ===== -->
     <section id="sec-recursos" class="section v7-reveal">
-      <h1 class="section-title">RECUR<span>//</span>SOS</h1>
+      <h1 class="section-title v7-split-word">RECUR<span>//</span>SOS</h1>
 
       <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px;line-height:1.6">
         Material exclusivo para coaches WellCore. Herramientas, guias y recursos para maximizar tu impacto con tus clientes.
@@ -1121,7 +1209,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
 
       <div class="resource-grid">
         <!-- 1: Onboarding -->
-        <div class="resource-card">
+        <div class="resource-card v7-glow-track">
           <div class="resource-num">01</div>
           <div class="resource-title">Protocolo de Onboarding</div>
           <div class="resource-desc">Paso a paso para recibir nuevos clientes. Evaluacion inicial, definicion de objetivos, toma de medidas y asignacion del primer plan de entrenamiento.</div>
@@ -1134,7 +1222,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </div>
 
         <!-- 2: Plantillas -->
-        <div class="resource-card">
+        <div class="resource-card v7-glow-track">
           <div class="resource-num">02</div>
           <div class="resource-title">Plantillas de Entrenamiento</div>
           <div class="resource-desc">Templates de periodizacion listos para personalizar. Incluye programas de hipertrofia, fuerza, funcional y perdida de grasa con progresion semanal.</div>
@@ -1147,7 +1235,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </div>
 
         <!-- 3: Nutricion -->
-        <div class="resource-card">
+        <div class="resource-card v7-glow-track">
           <div class="resource-num">03</div>
           <div class="resource-title">Guias de Nutricion</div>
           <div class="resource-desc">Calculadoras de macros, listas de alimentos por objetivo, y templates de planes nutricionales para diferentes perfiles de clientes.</div>
@@ -1160,7 +1248,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </div>
 
         <!-- 4: Branding -->
-        <div class="resource-card">
+        <div class="resource-card v7-glow-track">
           <div class="resource-num">04</div>
           <div class="resource-title">Kit de Marca Personal</div>
           <div class="resource-desc">Construye tu marca como coach. Incluye guia de posicionamiento, templates para redes sociales y material co-branded con WellCore.</div>
@@ -1173,7 +1261,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </div>
 
         <!-- 5: Comunicacion -->
-        <div class="resource-card">
+        <div class="resource-card v7-glow-track">
           <div class="resource-num">05</div>
           <div class="resource-title">Protocolo de Comunicacion</div>
           <div class="resource-desc">Mejores practicas para comunicarte con clientes. Frecuencia de check-ins, manejo de expectativas, y scripts para situaciones comunes.</div>
@@ -1186,7 +1274,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </div>
 
         <!-- 6: Revenue -->
-        <div class="resource-card">
+        <div class="resource-card v7-glow-track">
           <div class="resource-num">06</div>
           <div class="resource-title">Guia de Revenue y Referidos</div>
           <div class="resource-desc">Como maximizar tus ingresos con el sistema de comisiones WellCore. Estrategias de referidos, cross-selling y retencion de clientes.</div>
@@ -2588,10 +2676,87 @@ function deleteAcadItem(id) {
 
 // ===== RUN =====
 init();
+
+// ===== LENIS SMOOTH SCROLL =====
+(function initLenis() {
+  if (!window.Lenis) return;
+  var lenis = new Lenis({ lerp: 0.08, smooth: true });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+})();
+
+// ===== V8 NOTIFICATIONS (coach override) =====
+(function initCoachNotifications() {
+  // Esperar a que V8 esté disponible (carga defer)
+  function tryInit() {
+    if (!window.V8 || !V8.Notifications) {
+      setTimeout(tryInit, 80);
+      return;
+    }
+    // Override load para usar endpoint de coach
+    V8.Notifications.load = function() {
+      var self = this;
+      var token = localStorage.getItem('wc_token');
+      if (!token) return;
+      fetch('/api/coach/notifications.php', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data) return;
+        self._unread = data.unread_count || 0;
+        self._notifications = data.notifications || [];
+        self._updateBadge();
+      })
+      .catch(function() {});
+    };
+    V8.Notifications.init('clientNotifBell', 'clientNotifPanel');
+  }
+  tryInit();
+})();
+
+// ===== CANVAS PARTÍCULAS SIDEBAR =====
+(function initSidebarParticles() {
+  var canvas = document.getElementById('sidebar-particles');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  function resize() {
+    var parent = canvas.parentElement;
+    canvas.width  = parent.offsetWidth;
+    canvas.height = parent.offsetHeight;
+  }
+  resize();
+  var pts = [];
+  for (var i = 0; i < 14; i++) {
+    pts.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.4,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.28,
+      a: Math.random() * 0.45 + 0.15
+    });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pts.forEach(function(p) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(227,30,36,' + p.a + ')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 </script>
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
 <script src="js/wellcore-v7.js" defer></script>
+<script src="js/wellcore-v8.js" defer></script>
 </body>
 </html>
