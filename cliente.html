@@ -6947,8 +6947,18 @@ function prSaveModal(id) {
   var isNew = !prs[id] || val > parseFloat(prs[id].val || 0);
   prs[id] = { val: val, date: today };
   prSave(prs); prCloseModal(); renderPRs();
-  apiFetch('/prs', { method: 'POST', body: JSON.stringify({ exercise_id: id, value: val }) });
-  if (isNew && typeof V6 !== 'undefined' && V6.toast) V6.toast('Nuevo PR registrado 🏆', 'success');
+  apiFetch('/prs', { method: 'POST', body: JSON.stringify({ exercise_id: id, value: val }) })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function() {
+      apiFetch('/community/check-achievements', { method: 'POST', body: JSON.stringify({ trigger: 'pr' }) })
+        .then(function(r2) { return r2.ok ? r2.json() : null; })
+        .then(function(ach) {
+          if (ach && ach.awarded && ach.awarded.length > 0 && typeof V6 !== 'undefined' && V6.toast) {
+            ach.awarded.forEach(function(a) { setTimeout(function(){ V6.toast('🏆 Logro: ' + a.title, 'success'); }, 800); });
+          }
+        }).catch(function(){});
+    }).catch(function(){});
+  if (isNew && typeof V6 !== 'undefined' && V6.toast) V6.toast('Nuevo PR registrado 💪', 'success');
 }
 
 function prCloseModal() {

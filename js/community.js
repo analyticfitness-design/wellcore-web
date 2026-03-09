@@ -358,37 +358,87 @@ var Community = (function() {
     function loadAchievements(targetEl) {
         apiCall('GET', '/api/community/achievements.php').then(function(data) {
             if (!targetEl) return;
-            targetEl.innerHTML = '';
+            while (targetEl.firstChild) targetEl.removeChild(targetEl.firstChild);
+
+            // Header
             var header = document.createElement('div');
-            header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;';
-            var title = document.createElement('div');
-            title.style.cssText = 'font-weight:700;font-size:14px;color:#fff;';
-            title.textContent = 'Logros';
-            var progress = document.createElement('div');
-            progress.style.cssText = "font-size:11px;color:rgba(255,255,255,0.35);font-family:'JetBrains Mono',monospace;";
-            progress.textContent = data.total_earned + '/' + data.total_possible;
-            header.appendChild(title);
-            header.appendChild(progress);
+            header.style.cssText = 'margin-bottom:14px;';
+            var topRow = document.createElement('div');
+            topRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;';
+            var titleEl = document.createElement('div');
+            titleEl.style.cssText = 'font-weight:700;font-size:14px;color:#fff;display:flex;align-items:center;gap:8px;';
+            var trophyI = fa('fa-trophy');
+            trophyI.style.color = '#E31E24';
+            titleEl.appendChild(trophyI);
+            titleEl.appendChild(document.createTextNode('\u00a0Logros'));
+            var progressEl = document.createElement('div');
+            progressEl.style.cssText = "font-size:11px;color:rgba(255,255,255,0.35);font-family:'JetBrains Mono',monospace;letter-spacing:.04em;";
+            progressEl.textContent = data.total_earned + ' / ' + data.total_possible;
+            topRow.appendChild(titleEl);
+            topRow.appendChild(progressEl);
+            header.appendChild(topRow);
+            // Progress bar
+            var pct = data.total_possible > 0 ? Math.round((data.total_earned / data.total_possible) * 100) : 0;
+            var barWrap = document.createElement('div');
+            barWrap.style.cssText = 'height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;';
+            var barFill = document.createElement('div');
+            barFill.style.cssText = 'height:100%;width:' + pct + '%;background:linear-gradient(90deg,#E31E24,#ff6b6b);border-radius:2px;transition:width .6s ease;';
+            barWrap.appendChild(barFill);
+            header.appendChild(barWrap);
             targetEl.appendChild(header);
+
             var grid = document.createElement('div');
-            grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;';
+            grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;';
             (data.earned || []).forEach(function(a) { grid.appendChild(renderBadge(a, false)); });
             (data.locked || []).forEach(function(a) { grid.appendChild(renderBadge(a, true)); });
             targetEl.appendChild(grid);
         });
     }
 
+    // Tier colors por prefijo de tipo de logro
+    var BADGE_TIERS = {
+        elite:    { border: 'rgba(255,215,0,0.4)',  bg: 'rgba(255,215,0,0.08)',  color: '#FFD700' },
+        metodo:   { border: 'rgba(99,179,237,0.4)', bg: 'rgba(99,179,237,0.08)', color: '#63B3ED' },
+        esencial: { border: 'rgba(72,187,120,0.4)', bg: 'rgba(72,187,120,0.08)', color: '#48BB78' },
+        rise:     { border: 'rgba(237,137,54,0.4)', bg: 'rgba(237,137,54,0.08)', color: '#ED8936' },
+    };
+    function getBadgeTier(type) {
+        var t = (type || '').split('_')[0];
+        return BADGE_TIERS[t] || null;
+    }
+
     function renderBadge(a, locked) {
+        var tier      = getBadgeTier(a.achievement_type);
+        var borderCol = locked ? 'rgba(255,255,255,0.06)' : (tier ? tier.border : 'rgba(227,30,36,0.3)');
+        var bgCol     = locked ? 'rgba(255,255,255,0.02)' : (tier ? tier.bg     : 'rgba(227,30,36,0.08)');
+        var iconCol   = locked ? 'rgba(255,255,255,0.2)'  : (tier ? tier.color  : '#E31E24');
+
         var el = document.createElement('div');
-        el.style.cssText = 'padding:12px;border-radius:8px;text-align:center;border:1px solid ' + (locked ? 'rgba(255,255,255,0.06)' : 'rgba(227,30,36,0.3)') + ';background:' + (locked ? 'rgba(255,255,255,0.02)' : 'rgba(227,30,36,0.08)') + ';opacity:' + (locked ? '0.5' : '1') + ';';
+        var shadow = (!locked && tier) ? ';box-shadow:0 0 10px ' + tier.bg : '';
+        el.style.cssText = 'position:relative;padding:12px 8px;border-radius:8px;text-align:center;border:1px solid ' + borderCol + ';background:' + bgCol + ';opacity:' + (locked ? '0.45' : '1') + ';cursor:' + (locked ? 'default' : 'pointer') + ';transition:transform .15s' + shadow + ';';
+        if (!locked) {
+            el.onmouseenter = function() { this.style.transform = 'translateY(-2px)'; };
+            el.onmouseleave = function() { this.style.transform = ''; };
+        }
+        if (a.description) el.title = a.description;
+
         var icon = document.createElement('div');
-        icon.style.cssText = 'font-size:20px;margin-bottom:6px;color:' + (locked ? 'rgba(255,255,255,0.2)' : '#E31E24') + ';';
+        icon.style.cssText = 'font-size:22px;margin-bottom:6px;color:' + iconCol + ';';
         icon.appendChild(fa('fa-' + (a.icon || 'trophy')));
         el.appendChild(icon);
-        var title = document.createElement('div');
-        title.style.cssText = 'font-size:11px;font-weight:700;color:' + (locked ? 'rgba(255,255,255,0.3)' : '#fff') + ';line-height:1.3;';
-        title.textContent = a.title;
-        el.appendChild(title);
+
+        var titleEl = document.createElement('div');
+        titleEl.style.cssText = 'font-size:10px;font-weight:700;color:' + (locked ? 'rgba(255,255,255,0.3)' : '#fff') + ';line-height:1.3;';
+        titleEl.textContent = a.title;
+        el.appendChild(titleEl);
+
+        if (!locked && a.earned_at) {
+            var dateEl = document.createElement('div');
+            dateEl.style.cssText = 'font-size:9px;color:rgba(255,255,255,0.3);margin-top:3px;';
+            var d = new Date(a.earned_at);
+            dateEl.textContent = d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' });
+            el.appendChild(dateEl);
+        }
         if (locked) {
             var lock = document.createElement('div');
             lock.style.cssText = 'font-size:9px;color:rgba(255,255,255,0.2);margin-top:4px;';
