@@ -307,7 +307,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
   transition:all 0.1s linear;
 }
 .btn-outline:hover{border-color:var(--red);color:var(--red)}
-.com-type-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.com-type-btn.active,.vc-filter-btn.active{background:var(--red);border-color:var(--red);color:#fff}
 
 /* ===== CARD ===== */
 .card{
@@ -773,6 +773,12 @@ input,textarea,select{font-family:'Inter',sans-serif}
     </a>
     <a class="nav-item" onclick="showSection('comunidad')" id="nav-comunidad">
       <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg></span> Comunidad
+    </a>
+    <a class="nav-item" onclick="showSection('checkins')" id="nav-checkins">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.9L15 14"/><rect x="1" y="6" width="14" height="12" rx="2"/></svg></span> Check-ins <span id="nav-checkins-badge" style="display:none;background:var(--red);color:#fff;font-size:.65rem;padding:1px 6px;border-radius:99px;margin-left:4px">0</span>
+    </a>
+    <a class="nav-item" onclick="showSection('pods')" id="nav-pods">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> Pods
     </a>
   </nav>
 
@@ -1612,6 +1618,82 @@ input,textarea,select{font-family:'Inter',sans-serif}
       <div id="com-feed"></div>
     </section>
 
+    <!-- ===== SECTION: VIDEO CHECK-INS ===== -->
+    <section id="sec-checkins" class="section v7-reveal">
+      <h1 class="section-title">VIDEO <span>//</span> CHECK-INS</h1>
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:20px">
+        Revisa y responde los check-ins de video e imagen de tus clientes.
+      </p>
+
+      <!-- Filtros -->
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+        <button class="vc-filter-btn btn-outline" data-status="" onclick="setCheckinFilter('')" style="font-size:.75rem;padding:5px 14px">Todos</button>
+        <button class="vc-filter-btn btn-outline" data-status="pending" onclick="setCheckinFilter('pending')" style="font-size:.75rem;padding:5px 14px">⏳ Pendientes</button>
+        <button class="vc-filter-btn btn-outline" data-status="coach_reviewed" onclick="setCheckinFilter('coach_reviewed')" style="font-size:.75rem;padding:5px 14px">✅ Respondidos</button>
+        <button class="vc-filter-btn btn-outline" data-status="ai_reviewed" onclick="setCheckinFilter('ai_reviewed')" style="font-size:.75rem;padding:5px 14px">🤖 IA</button>
+      </div>
+
+      <div id="vc-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+
+      <!-- Modal responder -->
+      <div id="vc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;padding:20px;overflow:auto">
+        <div style="max-width:520px;margin:40px auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <span id="vc-modal-title" style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em"></span>
+            <button onclick="closeCheckinModal()" style="background:none;border:none;color:var(--gray);font-size:1.2rem;cursor:pointer">✕</button>
+          </div>
+          <div id="vc-modal-media" style="margin-bottom:14px;text-align:center"></div>
+          <div id="vc-modal-meta" style="margin-bottom:14px;font-size:.82rem;color:var(--gray);line-height:1.6"></div>
+          <div id="vc-modal-prev-response" style="display:none;margin-bottom:12px;padding:10px 14px;background:var(--bg);border-radius:8px;font-size:.82rem;border-left:3px solid var(--red)"></div>
+          <div id="vc-respond-form">
+            <textarea id="vc-response-text" class="form-textarea" rows="4" placeholder="Escribe tu feedback para el cliente..." style="margin-bottom:12px"></textarea>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button id="btn-vc-ai" class="btn-outline" style="font-size:.78rem" onclick="submitCheckinResponse(true)">🤖 Responder con IA</button>
+              <button id="btn-vc-manual" class="btn-primary v7-btn-primary" style="font-size:.78rem" onclick="submitCheckinResponse(false)">Enviar Respuesta</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: PODS ===== -->
+    <section id="sec-pods" class="section v7-reveal">
+      <h1 class="section-title">PODS <span>//</span> ACCOUNTABILITY</h1>
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:20px">
+        Grupos de accountability para tus clientes. Max 8 miembros por pod.
+      </p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <!-- Lista de pods del coach -->
+        <div>
+          <div class="card-title" style="margin-bottom:12px">// Mis Pods</div>
+          <div id="pods-list">
+            <p style="color:var(--gray);font-size:.84rem;text-align:center;padding:20px 0">Cargando pods...</p>
+          </div>
+        </div>
+
+        <!-- Crear pod -->
+        <div>
+          <div class="card v7-glow-track">
+            <div class="card-title" style="margin-bottom:14px">// Crear Pod</div>
+            <div class="form-group">
+              <label class="form-label">Nombre del Pod</label>
+              <input type="text" class="form-input" id="pod-name" placeholder="Ej: Grupo Elite Mañana" maxlength="80">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Capacidad máxima</label>
+              <select class="form-select" id="pod-max">
+                <option value="4">4 miembros</option>
+                <option value="6">6 miembros</option>
+                <option value="8" selected>8 miembros (max)</option>
+              </select>
+            </div>
+            <button class="btn-primary v7-btn-primary" onclick="createPod()" style="width:100%;margin-top:8px">Crear Pod</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div><!-- /content-area -->
 </div><!-- /main-wrap -->
 
@@ -1670,7 +1752,9 @@ var sectionMap = {
   analytics: 'Analytics',
   mensajes: 'Mensajes',
   revenue: 'Revenue',
-  comunidad: 'Comunidad'
+  comunidad: 'Comunidad',
+  checkins: 'Video Check-ins',
+  pods: 'Pods'
 };
 
 // ===== AUTH CHECK =====
@@ -1763,6 +1847,8 @@ function showSection(name) {
   if (name === 'mensajes')  loadMensajes();
   if (name === 'revenue')   loadRevenue();
   if (name === 'comunidad') loadComunidad();
+  if (name === 'checkins')  loadCheckins();
+  if (name === 'pods')      loadPods();
 
   closeSidebar();
 }
@@ -3440,6 +3526,268 @@ function publishPost() {
   }).catch(function() {
     if (btn) { btn.disabled = false; btn.textContent = 'Publicar'; }
     alert('Error al publicar. Intenta de nuevo.');
+  });
+}
+
+/* =========================================================
+   VIDEO CHECK-INS
+   ========================================================= */
+var _vcFilter = '';
+var _vcCurrentId = 0;
+
+function setCheckinFilter(status) {
+  _vcFilter = status;
+  document.querySelectorAll('.vc-filter-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.status === status);
+  });
+  loadCheckins();
+}
+
+function loadCheckins() {
+  var grid = document.getElementById('vc-grid');
+  if (!grid) return;
+  grid.textContent = '';
+  var loading = document.createElement('p');
+  loading.style.cssText = 'color:var(--gray);font-size:.84rem;padding:24px 0;text-align:center;grid-column:1/-1';
+  loading.textContent = 'Cargando check-ins...';
+  grid.appendChild(loading);
+
+  var qs = _vcFilter ? '?status=' + _vcFilter : '';
+  api.get('video-checkins/list' + qs).then(function(data) {
+    grid.textContent = '';
+    var items = (data && data.items) ? data.items : [];
+
+    // Badge con pendientes
+    var pending = items.filter(function(i){ return i.status === 'pending'; }).length;
+    var badge = document.getElementById('nav-checkins-badge');
+    if (badge) {
+      badge.style.display = pending ? 'inline' : 'none';
+      badge.textContent = pending;
+    }
+
+    if (!items.length) {
+      var empty = document.createElement('p');
+      empty.style.cssText = 'color:var(--gray);font-size:.84rem;padding:32px 0;text-align:center;grid-column:1/-1';
+      empty.textContent = 'No hay check-ins' + (_vcFilter ? ' con ese filtro.' : '.');
+      grid.appendChild(empty);
+      return;
+    }
+
+    var statusIcon = { pending: '⏳', coach_reviewed: '✅', ai_reviewed: '🤖' };
+    var statusLabel = { pending: 'Pendiente', coach_reviewed: 'Respondido', ai_reviewed: 'IA' };
+
+    items.forEach(function(item) {
+      var card = document.createElement('div');
+      card.className = 'card v7-glow-track';
+      card.style.cssText = 'cursor:pointer;padding:0;overflow:hidden';
+      card.addEventListener('click', function() { openCheckinModal(item); });
+
+      // Thumbnail / tipo de media
+      var thumb = document.createElement('div');
+      thumb.style.cssText = 'height:130px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:2.2rem;position:relative';
+      if (item.media_type === 'image' && item.media_url) {
+        var img = document.createElement('img');
+        img.src = item.media_url;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+        img.onerror = function() { img.parentNode.textContent = '🖼️'; };
+        thumb.appendChild(img);
+      } else if (item.media_type === 'video') {
+        thumb.textContent = '🎬';
+      } else {
+        thumb.textContent = '📎';
+      }
+
+      // Badge de status
+      var statusBadge = document.createElement('span');
+      statusBadge.style.cssText = 'position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);color:#fff;font-size:.68rem;padding:3px 8px;border-radius:99px';
+      statusBadge.textContent = (statusIcon[item.status] || '') + ' ' + (statusLabel[item.status] || item.status);
+      thumb.style.position = 'relative';
+      thumb.appendChild(statusBadge);
+
+      // Info
+      var info = document.createElement('div');
+      info.style.cssText = 'padding:12px 14px';
+
+      var clientName = document.createElement('div');
+      clientName.style.cssText = 'font-size:.82rem;color:var(--red);font-weight:600;margin-bottom:2px';
+      clientName.textContent = item.client_name || 'Cliente';
+
+      var exercise = document.createElement('div');
+      exercise.style.cssText = 'font-size:.88rem;font-weight:700;margin-bottom:4px';
+      exercise.textContent = item.exercise_name || 'Sin ejercicio';
+
+      var date = document.createElement('div');
+      date.style.cssText = 'font-size:.72rem;color:var(--gray)';
+      date.textContent = item.created_at ? item.created_at.slice(0,10) : '';
+
+      info.appendChild(clientName);
+      info.appendChild(exercise);
+      info.appendChild(date);
+      card.appendChild(thumb);
+      card.appendChild(info);
+      grid.appendChild(card);
+    });
+  }).catch(function() {
+    grid.textContent = '';
+    var err = document.createElement('p');
+    err.style.cssText = 'color:var(--gray);font-size:.84rem;padding:24px 0;text-align:center;grid-column:1/-1';
+    err.textContent = 'Error cargando check-ins.';
+    grid.appendChild(err);
+  });
+}
+
+function openCheckinModal(item) {
+  _vcCurrentId = item.id;
+  var modal = document.getElementById('vc-modal');
+  var title = document.getElementById('vc-modal-title');
+  var mediaEl = document.getElementById('vc-modal-media');
+  var meta = document.getElementById('vc-modal-meta');
+  var prevResp = document.getElementById('vc-modal-prev-response');
+  var form = document.getElementById('vc-respond-form');
+  var textarea = document.getElementById('vc-response-text');
+
+  if (title) title.textContent = (item.client_name || 'Cliente') + ' — ' + (item.exercise_name || 'Check-in');
+
+  // Media
+  mediaEl.textContent = '';
+  if (item.media_type === 'image' && item.media_url) {
+    var img = document.createElement('img');
+    img.src = item.media_url;
+    img.style.cssText = 'max-width:100%;max-height:260px;border-radius:8px;object-fit:contain';
+    img.onerror = function() { mediaEl.textContent = '🖼️ (imagen no disponible)'; };
+    mediaEl.appendChild(img);
+  } else if (item.media_type === 'video' && item.media_url) {
+    var vid = document.createElement('video');
+    vid.src = item.media_url;
+    vid.controls = true;
+    vid.style.cssText = 'max-width:100%;border-radius:8px';
+    mediaEl.appendChild(vid);
+  }
+
+  // Notas del cliente
+  if (meta) {
+    meta.textContent = '';
+    var lines = [];
+    if (item.notes) lines.push('Notas: ' + item.notes);
+    lines.push('Fecha: ' + (item.created_at || '').slice(0,10));
+    lines.push('Estado: ' + item.status);
+    meta.textContent = lines.join(' | ');
+  }
+
+  // Respuesta previa
+  var existing = item.coach_response || item.ai_response;
+  if (existing) {
+    prevResp.style.display = 'block';
+    prevResp.textContent = (item.ai_used ? '🤖 IA: ' : '✅ Coach: ') + existing;
+    if (form) form.style.display = item.status === 'pending' ? '' : 'none';
+  } else {
+    prevResp.style.display = 'none';
+    if (form) form.style.display = '';
+  }
+
+  if (textarea) textarea.value = '';
+  if (modal) modal.style.display = '';
+}
+
+function closeCheckinModal() {
+  var modal = document.getElementById('vc-modal');
+  if (modal) modal.style.display = 'none';
+  _vcCurrentId = 0;
+}
+
+function submitCheckinResponse(useAi) {
+  var textarea = document.getElementById('vc-response-text');
+  var text = textarea ? textarea.value.trim() : '';
+  if (!useAi && !text) { alert('Escribe una respuesta antes de enviar.'); return; }
+
+  var btnAi = document.getElementById('btn-vc-ai');
+  var btnManual = document.getElementById('btn-vc-manual');
+  if (btnAi) btnAi.disabled = true;
+  if (btnManual) { btnManual.disabled = true; btnManual.textContent = 'Enviando...'; }
+
+  var payload = { checkin_id: _vcCurrentId };
+  if (useAi) {
+    payload.use_ai = true;
+  } else {
+    payload.response = text;
+  }
+
+  var endpoint = 'video-checkins/respond';
+  api.post(endpoint, payload).then(function() {
+    closeCheckinModal();
+    loadCheckins();
+  }).catch(function(e) {
+    if (btnAi) btnAi.disabled = false;
+    if (btnManual) { btnManual.disabled = false; btnManual.textContent = 'Enviar Respuesta'; }
+    alert('Error al enviar respuesta. Intenta de nuevo.');
+  });
+}
+
+/* =========================================================
+   PODS
+   ========================================================= */
+function loadPods() {
+  // El coach ve sus propios pods via endpoint de cliente (usa token de coach)
+  api.get('pods/list').then(function(data) {
+    renderPodsList(data ? data.pods || [] : []);
+  }).catch(function() {
+    renderPodsList([]);
+  });
+}
+
+function renderPodsList(pods) {
+  var container = document.getElementById('pods-list');
+  if (!container) return;
+  container.textContent = '';
+
+  if (!pods.length) {
+    var empty = document.createElement('p');
+    empty.style.cssText = 'color:var(--gray);font-size:.84rem;text-align:center;padding:20px 0';
+    empty.textContent = 'No tienes pods. Crea el primero!';
+    container.appendChild(empty);
+    return;
+  }
+
+  pods.forEach(function(pod) {
+    var card = document.createElement('div');
+    card.className = 'card v7-glow-track';
+    card.style.cssText = 'margin-bottom:12px;padding:14px 16px';
+
+    var header = document.createElement('div');
+    header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px';
+
+    var name = document.createElement('span');
+    name.style.cssText = 'font-weight:700;font-size:.88rem';
+    name.textContent = pod.name || 'Pod';
+
+    var count = document.createElement('span');
+    count.style.cssText = 'font-size:.72rem;color:var(--gray)';
+    count.textContent = (pod.member_count || 0) + '/' + (pod.max_members || 8) + ' miembros';
+
+    header.appendChild(name);
+    header.appendChild(count);
+
+    var msgs = document.createElement('p');
+    msgs.style.cssText = 'font-size:.78rem;color:var(--gray);margin:0';
+    var lastMsg = pod.recent_messages && pod.recent_messages[0];
+    msgs.textContent = lastMsg ? lastMsg.message.slice(0, 60) + (lastMsg.message.length > 60 ? '…' : '') : 'Sin mensajes aún';
+
+    card.appendChild(header);
+    card.appendChild(msgs);
+    container.appendChild(card);
+  });
+}
+
+function createPod() {
+  var nameEl = document.getElementById('pod-name');
+  var maxEl = document.getElementById('pod-max');
+  var name = nameEl ? nameEl.value.trim() : '';
+  if (!name) { alert('Escribe un nombre para el pod.'); return; }
+  api.post('pods/list', { action: 'create', name: name, max_members: parseInt(maxEl ? maxEl.value : 8, 10) }).then(function() {
+    if (nameEl) nameEl.value = '';
+    loadPods();
+  }).catch(function() {
+    alert('Error al crear pod. Intenta de nuevo.');
   });
 }
 
