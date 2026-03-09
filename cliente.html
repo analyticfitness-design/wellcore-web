@@ -3334,6 +3334,14 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <span id="bm-status" style="font-size:.8rem;font-family:'JetBrains Mono',monospace;color:var(--gray)"></span>
         </div>
       </div>
+
+      <!-- ─── MEDIDAS CORPORALES ─── -->
+      <div style="border-top:1px solid var(--border);margin:32px 0 20px;padding-top:24px">
+        <h2 style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin:0;display:flex;align-items:center;gap:10px">
+          <i class="fas fa-ruler-combined" style="color:var(--gold)"></i> Medidas Corporales &amp; Historial
+        </h2>
+      </div>
+
     </section>
 
     <!-- ===== SECTION: FOTOS DE PROGRESO ===== -->
@@ -5078,6 +5086,7 @@ function showSection(id) {
   // ^ replaces defunct V8.Profile/V8.Referrals calls (V8 was never defined)
   if (id === 'retos'     && typeof Challenges !== 'undefined' && !Challenges._inited) { Challenges._inited = true; Challenges.init(); }
   if (id === 'academia'  && !window._acadInited) { window._acadInited = true; loadAcademiaCliente(1); }
+  if (id === 'metricas') loadMetrics();
 }
 
 // ===== SIDEBAR MOBILE =====
@@ -8073,6 +8082,19 @@ function loadProfileForm() {
       if (p.objetivo) document.getElementById('pf-objetivo').value = p.objetivo;
       // Update dashboard KPIs from profile data
       if (p.fecha_inicio) updateDashboardKPIs(p);
+      // Dashboard methodology video
+      if (p.dashboard_video_url) {
+        var slot = document.getElementById('dash-video-slot');
+        var inner = document.getElementById('dash-video-inner');
+        if (slot && inner) {
+          var url = p.dashboard_video_url;
+          // Convert YouTube watch URL to embed
+          var ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+          if (ytMatch) url = 'https://www.youtube.com/embed/' + ytMatch[1] + '?rel=0&modestbranding=1';
+          inner.innerHTML = '<iframe src="' + url + '" style="width:100%;height:100%;border:none;" allowfullscreen loading="lazy"></iframe>';
+          slot.style.display = '';
+        }
+      }
     })
     .catch(function() {
       var saved = JSON.parse(localStorage.getItem('wc_profile_data') || '{}');
