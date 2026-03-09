@@ -1949,6 +1949,256 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   .welcome-plan-badge.metodo { background: rgba(200,16,46,0.1); color: var(--red); border: 1px solid rgba(200,16,46,0.25) }
   .welcome-plan-badge.esencial { background: rgba(255,255,255,0.06); color: var(--gray); border: 1px solid var(--border) }
 
+  /* ═══════════════════════════════════════
+     DASHBOARD PREMIUM — HERO + BENTO
+  ═══════════════════════════════════════ */
+
+  /* Hero card */
+  .dash-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(255,255,255,.07);
+    background: #0d0d11;
+    min-height: 130px;
+    padding: 28px 32px;
+  }
+  .dash-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(227,30,36,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(227,30,36,.028) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+  .dash-hero-glow {
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(227,30,36,.16) 0%, transparent 70%);
+    filter: blur(70px);
+    animation: dashGlowPulse 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .dash-hero-glow2 {
+    position: absolute;
+    left: 20%;
+    bottom: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(227,30,36,.06) 0%, transparent 70%);
+    filter: blur(50px);
+    animation: dashGlowPulse 7s ease-in-out infinite reverse;
+    pointer-events: none;
+  }
+  @keyframes dashGlowPulse {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50%       { opacity: 1;    transform: scale(1.14); }
+  }
+  .dash-hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  .dash-hero-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .dash-hero-greeting {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem;
+    letter-spacing: .04em;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .dash-hero-greeting span { color: var(--red); }
+  .dash-hero-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem;
+    color: var(--gray);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+
+  /* Bento grid */
+  .dash-bento {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1.55fr);
+    gap: 14px;
+    margin-bottom: 16px;
+    align-items: start;
+  }
+
+  /* Ring card */
+  .dash-ring-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--phase-color,var(--red));
+    border-radius: 14px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .4s;
+  }
+  .dash-ring-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 0%, rgba(227,30,36,.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .dash-ring-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .dash-ring-label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .dash-ring-meta {
+    border-top: 1px solid rgba(255,255,255,.05);
+    padding-top: 14px;
+  }
+
+  /* KPI 2×2 tiles */
+  .dash-kpi-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .dash-kpi-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 18px 18px 16px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    cursor: default;
+  }
+  .dash-kpi-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 13px;
+    opacity: 0;
+    transition: opacity .3s;
+    background: radial-gradient(circle at 50% 0%, var(--tile-glow,rgba(227,30,36,.08)) 0%, transparent 65%);
+  }
+  .dash-kpi-tile:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(0,0,0,.35); }
+  .dash-kpi-tile:hover::before { opacity: 1; }
+  .dash-kpi-tile.red   { --tile-glow: rgba(227,30,36,.10);  border-top: 2px solid rgba(227,30,36,.35); }
+  .dash-kpi-tile.cyan  { --tile-glow: rgba(56,189,248,.08); border-top: 2px solid rgba(56,189,248,.25); }
+  .dash-kpi-tile.green { --tile-glow: rgba(52,211,153,.08); border-top: 2px solid rgba(52,211,153,.25); }
+  .dash-kpi-tile.gold  { --tile-glow: rgba(245,158,11,.08); border-top: 2px solid rgba(245,158,11,.25); }
+  .kpi-tile-icon {
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .78rem;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .dash-kpi-tile.red   .kpi-tile-icon { background: rgba(227,30,36,.12); color: var(--red); }
+  .dash-kpi-tile.cyan  .kpi-tile-icon { background: rgba(56,189,248,.10); color: #38bdf8; }
+  .dash-kpi-tile.green .kpi-tile-icon { background: rgba(52,211,153,.10); color: #34d399; }
+  .dash-kpi-tile.gold  .kpi-tile-icon { background: rgba(245,158,11,.10); color: #f59e0b; }
+
+  /* Premium timeline */
+  .dash-timeline {
+    display: flex;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    gap: 0;
+  }
+  .dash-phase {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    position: relative;
+    min-width: 72px;
+  }
+  .dash-phase + .dash-phase::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: calc(-50% + 4px);
+    right: calc(50% + 4px);
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .dash-phase.done + .dash-phase::before  { background: var(--red); }
+  .dash-phase.active + .dash-phase::before { background: var(--border); }
+  .dash-phase-dot {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.12);
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .58rem;
+    color: var(--gray);
+    position: relative;
+    z-index: 1;
+    transition: all .3s;
+  }
+  .dash-phase.done   .dash-phase-dot { background: var(--red); border-color: var(--red); color: #fff; }
+  .dash-phase.active .dash-phase-dot { background: rgba(227,30,36,.14); border-color: var(--red); color: var(--red); box-shadow: 0 0 0 5px rgba(227,30,36,.09); }
+  .dash-phase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .58rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-align: center;
+  }
+  .dash-phase.active .dash-phase-label { color: var(--red); font-weight: 700; }
+  .dash-phase-name { font-size: .7rem; color: var(--gray); text-align: center; }
+  .dash-phase.done   .dash-phase-name { color: rgba(255,255,255,.55); }
+  .dash-phase.active .dash-phase-name { color: var(--white); font-weight: 600; }
+
+  /* Bottom row: Activity + XP side by side */
+  .dash-bottom-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+    align-items: start;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 720px) {
+    .dash-bento       { grid-template-columns: 1fr; }
+    .dash-bottom-row  { grid-template-columns: 1fr; }
+    .dash-hero        { padding: 22px 20px; min-height: auto; }
+    .dash-hero-greeting { font-size: 2rem; }
+  }
+  @media (max-width: 480px) {
+    .dash-kpi-tiles   { grid-template-columns: 1fr 1fr; gap: 9px; }
+    .dash-kpi-tile    { padding: 14px 14px 12px; }
+  }
+
   /* KPI card with icon */
   .kpi-icon {
     width: 36px; height: 36px;
@@ -2180,17 +2430,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <!-- ===== SECTION 1: DASHBOARD ===== -->
     <section id="sec-dashboard" class="section active">
 
-      <!-- Welcome Card -->
-      <div class="welcome-card">
-        <div>
-          <div class="welcome-greeting" id="welcome-greeting">Bienvenido</div>
-          <div class="welcome-meta" id="welcome-date"></div>
-        </div>
-        <div class="welcome-right">
-          <span class="welcome-plan-badge" id="welcome-plan-badge">ESENCIAL</span>
-        </div>
-      </div>
-
       <!-- Renewal Banner (hidden by default, shown via JS) -->
       <div id="renewal-banner" style="display:none;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.3);border-radius:12px;padding:18px 20px;margin-bottom:16px;">
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
@@ -2198,122 +2437,156 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <i class="fas fa-clock" style="color:#fff;font-size:16px;"></i>
           </div>
           <div style="flex:1;min-width:180px;">
-            <div style="font-weight:700;color:#fff;font-size:14px;margin-bottom:2px;">Tu plan vence en <span id="renewal-days">0</span> dias</div>
-            <div style="font-size:12px;color:var(--gray);line-height:1.4;">Completa tu formulario de renovacion para continuar sin interrupciones.</div>
+            <div style="font-weight:700;color:#fff;font-size:14px;margin-bottom:2px;">Tu plan vence en <span id="renewal-days">0</span> días</div>
+            <div style="font-size:12px;color:var(--gray);line-height:1.4;">Completa tu formulario de renovación para continuar sin interrupciones.</div>
           </div>
           <a id="renewal-form-link" href="#" target="_blank" style="display:inline-block;background:var(--red);color:#fff;text-decoration:none;padding:10px 20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:6px;white-space:nowrap;">Renovar Plan</a>
         </div>
       </div>
 
-      <p class="section-desc">Tu resumen de progreso y actividad. Aquí puedes ver cómo vas avanzando en tu programa de entrenamiento personalizado.</p>
-
-      <!-- v8: Renewal Banner (se activa via JS si vence en ≤7 días) -->
+      <!-- v8: Dynamic banners -->
       <div id="renewalBannerContainer"></div>
-      <!-- v8: Check-in Pending Alert -->
       <div id="checkinAlertContainer"></div>
 
-      <div class="kpi-grid">
-        <div class="kpi-card accent-left-red card-hover v7-glow-track">
-          <div class="kpi-icon red"><i class="fas fa-crown" id="kpi-plan-icon"></i></div>
-          <div class="kpi-label">Plan Activo</div>
-          <div class="kpi-value" id="kpi-plan">—</div>
-        </div>
-        <div class="kpi-card accent-left-cyan card-hover v7-glow-track">
-          <div class="kpi-icon cyan"><i class="fas fa-calendar-check"></i></div>
-          <div class="kpi-label">Semanas Activo</div>
-          <div class="kpi-value" id="kpi-semanas" style="font-family:var(--font-data,var(--font-mono));">—</div>
-          <div class="kpi-sub" id="kpi-semanas-sub"></div>
-        </div>
-        <div class="kpi-card accent-left-green card-hover v7-glow-track">
-          <div class="kpi-icon green"><i class="fas fa-fire"></i></div>
-          <div class="kpi-label">Adherencia</div>
-          <div class="kpi-value" id="kpi-adherencia" style="font-family:var(--font-data,var(--font-mono));">—</div>
-          <div class="progress-bar"><div class="progress-fill" id="kpi-adherencia-bar" style="width:0%"></div></div>
-        </div>
-        <div class="kpi-card accent-left-gold card-hover v7-glow-track">
-          <div class="kpi-icon gold"><i class="fas fa-clock"></i></div>
-          <div class="kpi-label">Próxima Entrega</div>
-          <div class="kpi-value" id="kpi-entrega" style="font-family:var(--font-data,var(--font-mono));">—</div>
-          <div class="kpi-sub" id="kpi-entrega-sub"></div>
-        </div>
-      </div>
-
-      <div class="progress-ring-section">
-        <svg width="120" height="120" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="50" fill="none" stroke="#252528" stroke-width="8"/>
-          <circle id="progress-ring" cx="60" cy="60" r="50" fill="none" stroke="#C8102E"
-                  stroke-width="8" stroke-linecap="round"
-                  stroke-dasharray="314" stroke-dashoffset="80"
-                  transform="rotate(-90 60 60)"/>
-        </svg>
-        <div class="ring-label">
-          <span class="ring-pct">74%</span>
-          <span class="ring-sub">semana actual</span>
-        </div>
-        <div style="margin-left:16px">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Estado Programa</div>
-          <div style="font-size:.855rem;color:var(--phase-color);font-weight:600;" id="ring-fase-label">Fase de Ejecución</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gray);margin-top:4px" id="ring-semana-label">—</div>
-          <div id="phase-badge" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--phase-color);border:1px solid var(--phase-color-border);background:var(--phase-color-dim);border-radius:4px;transition:all 0.3s ease;">
-            <i class="fas fa-fire" id="phase-badge-icon"></i>
-            <span id="phase-badge-text">CARGA</span>
+      <!-- ═══ HERO CINEMATIC ═══ -->
+      <div class="dash-hero">
+        <div class="dash-hero-bg"></div>
+        <div class="dash-hero-glow"></div>
+        <div class="dash-hero-glow2"></div>
+        <div class="dash-hero-content">
+          <div class="dash-hero-top">
+            <div>
+              <div class="dash-hero-greeting" id="welcome-greeting">Bienvenido</div>
+              <div class="dash-hero-date" id="welcome-date"></div>
+            </div>
+            <span class="welcome-plan-badge" id="welcome-plan-badge">ESENCIAL</span>
           </div>
         </div>
       </div>
 
-      <div class="timeline-phases">
-        <div class="phase done">
-          <i class="fas fa-stethoscope"></i>
-          <span>F01</span>
-          <p>Diagnóstico</p>
+      <!-- Video metodología (hidden — coach-configurable) -->
+      <div id="dash-video-slot" style="display:none;margin-bottom:18px;">
+        <div style="font-size:.65rem;font-family:'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:8px;display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:16px;height:1px;background:var(--red);"></span>Metodología de tu etapa</div>
+        <div id="dash-video-inner" style="border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#0d0d10;border:1px solid var(--border);"></div>
+      </div>
+
+      <!-- ═══ BENTO GRID ═══ -->
+      <div class="dash-bento">
+
+        <!-- Ring card -->
+        <div class="dash-ring-card v7-glow-track">
+          <div class="dash-ring-inner">
+            <svg width="106" height="106" viewBox="0 0 120 120" style="flex-shrink:0;">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#1c1c21" stroke-width="9"/>
+              <circle id="progress-ring" cx="60" cy="60" r="50" fill="none" stroke="#C8102E"
+                      stroke-width="9" stroke-linecap="round"
+                      stroke-dasharray="314" stroke-dashoffset="80"
+                      transform="rotate(-90 60 60)"/>
+            </svg>
+            <div class="dash-ring-label">
+              <span class="ring-pct">74%</span>
+              <span class="ring-sub">semana actual</span>
+            </div>
+          </div>
+          <div class="dash-ring-meta">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Estado del Programa</div>
+            <div style="font-size:.875rem;color:var(--phase-color,var(--red));font-weight:700;line-height:1.2;" id="ring-fase-label">Fase de Ejecución</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gray);margin-top:4px;" id="ring-semana-label">—</div>
+            <div id="phase-badge" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--phase-color);border:1px solid var(--phase-color-border);background:var(--phase-color-dim);border-radius:4px;transition:all 0.3s ease;">
+              <i class="fas fa-fire" id="phase-badge-icon"></i>
+              <span id="phase-badge-text">CARGA</span>
+            </div>
+          </div>
         </div>
-        <div class="phase done">
-          <i class="fas fa-file-alt"></i>
-          <span>F02</span>
-          <p>Programa</p>
+
+        <!-- KPI tiles 2×2 -->
+        <div class="dash-kpi-tiles">
+          <div class="dash-kpi-tile red v7-glow-track">
+            <div class="kpi-tile-icon"><i class="fas fa-crown" id="kpi-plan-icon"></i></div>
+            <div class="kpi-label">Plan Activo</div>
+            <div class="kpi-value" id="kpi-plan">—</div>
+          </div>
+          <div class="dash-kpi-tile cyan v7-glow-track">
+            <div class="kpi-tile-icon"><i class="fas fa-calendar-check"></i></div>
+            <div class="kpi-label">Semanas Activo</div>
+            <div class="kpi-value" id="kpi-semanas" style="font-family:'JetBrains Mono',monospace;">—</div>
+            <div class="kpi-sub" id="kpi-semanas-sub"></div>
+          </div>
+          <div class="dash-kpi-tile green v7-glow-track">
+            <div class="kpi-tile-icon"><i class="fas fa-fire"></i></div>
+            <div class="kpi-label">Adherencia</div>
+            <div class="kpi-value" id="kpi-adherencia" style="font-family:'JetBrains Mono',monospace;">—</div>
+            <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" id="kpi-adherencia-bar" style="width:0%"></div></div>
+          </div>
+          <div class="dash-kpi-tile gold v7-glow-track">
+            <div class="kpi-tile-icon"><i class="fas fa-clock"></i></div>
+            <div class="kpi-label">Próxima Entrega</div>
+            <div class="kpi-value" id="kpi-entrega" style="font-family:'JetBrains Mono',monospace;">—</div>
+            <div class="kpi-sub" id="kpi-entrega-sub"></div>
+          </div>
         </div>
-        <div class="phase active">
-          <i class="fas fa-running pulse-subtle"></i>
-          <span>F03</span>
-          <p>Ejecución</p>
+
+      </div><!-- /dash-bento -->
+
+      <!-- ═══ TIMELINE PREMIUM ═══ -->
+      <div class="dash-timeline">
+        <div class="dash-phase done">
+          <div class="dash-phase-dot"><i class="fas fa-check" style="font-size:.5rem;"></i></div>
+          <div class="dash-phase-label">F01</div>
+          <div class="dash-phase-name">Diagnóstico</div>
         </div>
-        <div class="phase pending">
-          <i class="fas fa-trophy"></i>
-          <span>F04</span>
-          <p>Resultados</p>
+        <div class="dash-phase done">
+          <div class="dash-phase-dot"><i class="fas fa-check" style="font-size:.5rem;"></i></div>
+          <div class="dash-phase-label">F02</div>
+          <div class="dash-phase-name">Programa</div>
+        </div>
+        <div class="dash-phase active">
+          <div class="dash-phase-dot"><i class="fas fa-running" style="font-size:.55rem;"></i></div>
+          <div class="dash-phase-label">F03</div>
+          <div class="dash-phase-name">Ejecución</div>
+        </div>
+        <div class="dash-phase pending">
+          <div class="dash-phase-dot"><i class="fas fa-trophy" style="font-size:.55rem;"></i></div>
+          <div class="dash-phase-label">F04</div>
+          <div class="dash-phase-name">Resultados</div>
         </div>
       </div>
 
-      <div class="activity-feed">
-        <h3><i class="fas fa-stream" style="margin-right:8px;color:var(--red)"></i>Actividad Reciente</h3>
-        <div id="activity-feed-list">
-          <p style="color:var(--gray);font-size:.855rem;padding:10px 0">Cargando actividad...</p>
-        </div>
-      </div>
+      <!-- ═══ BOTTOM ROW: Activity + XP ═══ -->
+      <div class="dash-bottom-row">
 
-      <!-- v9: XP + Racha Widget -->
-      <div id="xp-widget" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:16px;display:none;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <i class="fas fa-bolt" style="color:#f59e0b;font-size:.9rem;"></i>
-            <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);">Nivel &amp; XP</span>
-          </div>
-          <div id="xp-streak-badge" style="display:none;align-items:center;gap:5px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;color:#ef4444;">
-            <i class="fas fa-fire"></i>
-            <span id="xp-streak-count">0</span> días
+        <div class="activity-feed">
+          <h3><i class="fas fa-stream" style="margin-right:8px;color:var(--red)"></i>Actividad Reciente</h3>
+          <div id="activity-feed-list">
+            <p style="color:var(--gray);font-size:.855rem;padding:10px 0">Cargando actividad...</p>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span id="xp-level-name" style="font-size:.82rem;font-weight:700;color:var(--red);min-width:90px;">Iniciado</span>
-          <div style="flex:1;background:rgba(255,255,255,0.07);border-radius:99px;height:7px;overflow:hidden;">
-            <div id="xp-bar-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#E31E24,#f59e0b);border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);"></div>
+
+        <!-- v9: XP + Racha Widget -->
+        <div id="xp-widget" style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:18px 20px;display:none;align-self:start;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i class="fas fa-bolt" style="color:#f59e0b;font-size:.9rem;"></i>
+              <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);">Nivel &amp; XP</span>
+            </div>
+            <div id="xp-streak-badge" style="display:none;align-items:center;gap:5px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#ef4444;">
+              <i class="fas fa-fire"></i>
+              <span id="xp-streak-count">0</span> días
+            </div>
           </div>
-          <span id="xp-label" style="font-size:.72rem;color:var(--gray);white-space:nowrap;font-family:var(--font-data,monospace);">0 XP</span>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span id="xp-level-name" style="font-size:.82rem;font-weight:700;color:var(--red);min-width:90px;">Iniciado</span>
+            <div style="flex:1;background:rgba(255,255,255,0.07);border-radius:99px;height:7px;overflow:hidden;">
+              <div id="xp-bar-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#E31E24,#f59e0b);border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);"></div>
+            </div>
+            <span id="xp-label" style="font-size:.7rem;color:var(--gray);white-space:nowrap;font-family:monospace;">0 XP</span>
+          </div>
+          <button onclick="WCXp.openLeaderboard()" style="width:100%;padding:7px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--gray);font-size:.73rem;cursor:pointer;margin-top:4px;letter-spacing:.04em;">
+            <i class="fas fa-trophy" style="color:#f59e0b;margin-right:5px;"></i> Ver Ranking XP
+          </button>
         </div>
-        <button onclick="WCXp.openLeaderboard()" style="width:100%;padding:7px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--gray);font-size:.75rem;cursor:pointer;margin-top:4px;letter-spacing:.04em;">
-          <i class="fas fa-trophy" style="color:#f59e0b;margin-right:5px;"></i> Ver Ranking XP
-        </button>
-      </div>
+
+      </div><!-- /dash-bottom-row -->
 
       <!-- v9: XP Leaderboard Modal -->
       <div id="xpLeaderboardModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.78);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
@@ -2349,6 +2622,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <i class="fas fa-chevron-right qa-arrow"></i>
         </div>
       </div>
+
     </section>
 
     <!-- ===== SECTION 2: MI PLAN ===== -->
