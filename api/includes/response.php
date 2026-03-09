@@ -1,4 +1,8 @@
 <?php
+function respondJson(): void {
+    header('Content-Type: application/json; charset=utf-8');
+}
+
 function respond(array $data, int $code = 200): never {
     http_response_code($code);
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
