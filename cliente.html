@@ -427,6 +427,39 @@ input,textarea,select{font-family:'Inter',sans-serif}
   box-shadow:0 0 20px rgba(227,30,36,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .tab-btn.active i{color:var(--red)}
+
+/* ── Tutorial Cards ── */
+.tutorial-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;gap:10px;position:relative;
+  transition:border-color .2s,transform .2s;
+}
+.tutorial-card:hover{border-color:rgba(227,30,36,.35);transform:translateY(-2px)}
+.tcard-badge{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:20px;
+  display:inline-block;align-self:flex-start;
+}
+.tcard-badge-free{background:rgba(34,197,94,.15);color:#22C55E;border:1px solid rgba(34,197,94,.3)}
+.tcard-badge-metodo{background:rgba(251,191,36,.12);color:#FBBF24;border:1px solid rgba(251,191,36,.3)}
+.tcard-badge-elite{background:rgba(168,85,247,.12);color:#A855F7;border:1px solid rgba(168,85,247,.3)}
+.tcard-icon{
+  font-size:1.8rem;color:var(--red);margin:4px 0;
+}
+.tcard-icon-locked{color:var(--gray)!important;opacity:.4}
+.tcard-title{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.03em;margin:0}
+.tcard-desc{font-size:.82rem;color:var(--gray);line-height:1.6;margin:0;flex:1}
+.tcard-steps{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gray);display:flex;align-items:center;gap:6px}
+.tcard-btn{
+  background:var(--red);color:#fff;border:none;padding:10px 16px;border-radius:var(--radius-sm);
+  font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;
+  margin-top:4px;transition:opacity .2s;width:100%;justify-content:center;
+}
+.tcard-btn:hover{opacity:.85}
+.tcard-btn-locked{
+  background:var(--surface-2)!important;color:var(--gray)!important;
+  border:1px solid var(--border)!important;cursor:not-allowed!important;opacity:1!important;
+}
 /* shimmer on active */
 .tab-btn.active::after{
   content:'';position:absolute;top:0;left:-100%;
@@ -4664,33 +4697,127 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <!-- ===== SECTION: ACADEMIA ===== -->
     <section id="sec-academia" class="section">
       <h1 class="section-title">Academia <span>WellCore</span></h1>
-      <p class="section-desc">Contenido educativo exclusivo para tu plan. Videos, guias, articulos y ejercicios seleccionados por nuestros coaches.</p>
+      <p class="section-desc">Contenido educativo exclusivo para tu plan. Videos, guias, articulos y tutoriales seleccionados por nuestros coaches.</p>
 
-      <!-- Filters -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
-        <button class="tab-btn active" id="acad-filter-all"     onclick="filterAcad('')">Todo</button>
-        <button class="tab-btn"        id="acad-filter-video"   onclick="filterAcad('video')">&#127909; Videos</button>
-        <button class="tab-btn"        id="acad-filter-pdf"     onclick="filterAcad('pdf')">&#128196; PDFs</button>
-        <button class="tab-btn"        id="acad-filter-article" onclick="filterAcad('article')">&#128203; Articulos</button>
-        <button class="tab-btn"        id="acad-filter-exercise" onclick="filterAcad('exercise')">&#128170; Ejercicios</button>
+      <!-- Tab navigation -->
+      <div style="display:flex;border-bottom:2px solid var(--border);margin-bottom:24px;gap:0">
+        <button id="acad-tab-contenido" onclick="switchAcadTab('contenido')"
+          style="background:none;border:none;color:var(--white);font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 20px;cursor:pointer;border-bottom:2px solid var(--red);margin-bottom:-2px;transition:all .2s">
+          <i class="fas fa-graduation-cap" style="margin-right:7px"></i>Contenido
+        </button>
+        <button id="acad-tab-tutoriales" onclick="switchAcadTab('tutoriales')"
+          style="background:none;border:none;color:var(--gray);font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 20px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s">
+          <i class="fas fa-map-signs" style="margin-right:7px"></i>Tutoriales
+        </button>
       </div>
 
-      <!-- Loading state -->
-      <div id="acad-client-loading" style="text-align:center;padding:40px;color:var(--gray);font-size:.85rem">
-        <i class="fas fa-spinner fa-spin"></i> Cargando academia...
+      <!-- Panel: Contenido -->
+      <div id="acad-panel-contenido">
+        <!-- Filters -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+          <button class="tab-btn active" id="acad-filter-all"     onclick="filterAcad('')">Todo</button>
+          <button class="tab-btn"        id="acad-filter-video"   onclick="filterAcad('video')">&#127909; Videos</button>
+          <button class="tab-btn"        id="acad-filter-pdf"     onclick="filterAcad('pdf')">&#128196; PDFs</button>
+          <button class="tab-btn"        id="acad-filter-article" onclick="filterAcad('article')">&#128203; Articulos</button>
+          <button class="tab-btn"        id="acad-filter-exercise" onclick="filterAcad('exercise')">&#128170; Ejercicios</button>
+        </div>
+        <!-- Loading state -->
+        <div id="acad-client-loading" style="text-align:center;padding:40px;color:var(--gray);font-size:.85rem">
+          <i class="fas fa-spinner fa-spin"></i> Cargando academia...
+        </div>
+        <!-- Grid -->
+        <div id="acad-client-grid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+        <!-- Empty state -->
+        <div id="acad-client-empty" style="display:none;text-align:center;padding:40px;color:var(--gray)">
+          <i class="fas fa-graduation-cap" style="font-size:2rem;margin-bottom:12px;display:block;opacity:.4"></i>
+          No hay contenido disponible para tu plan aun.
+        </div>
+        <!-- Pagination -->
+        <div id="acad-client-pagination" style="display:none;justify-content:center;gap:10px;margin-top:24px"></div>
       </div>
 
-      <!-- Grid -->
-      <div id="acad-client-grid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+      <!-- Panel: Tutoriales -->
+      <div id="acad-panel-tutoriales" style="display:none">
+        <p style="font-size:.85rem;color:var(--gray);margin-bottom:22px;line-height:1.6">
+          Guías paso a paso para sacar el máximo provecho de la plataforma WellCore.
+          Algunos tutoriales están disponibles solo para planes superiores.
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px" id="tutorials-grid">
 
-      <!-- Empty state -->
-      <div id="acad-client-empty" style="display:none;text-align:center;padding:40px;color:var(--gray)">
-        <i class="fas fa-graduation-cap" style="font-size:2rem;margin-bottom:12px;display:block;opacity:.4"></i>
-        No hay contenido disponible para tu plan aun.
+          <!-- T1: Bienvenido — TODOS -->
+          <div class="tutorial-card" data-min-plan="1" data-url="/tutoriales/01-bienvenido.html">
+            <div class="tcard-badge tcard-badge-free">TODOS</div>
+            <div class="tcard-icon"><i class="fas fa-rocket"></i></div>
+            <h3 class="tcard-title">Bienvenido a WellCore</h3>
+            <p class="tcard-desc">Entiende la metodología, cómo está organizada la plataforma y qué hacer en tu primera semana.</p>
+            <div class="tcard-steps"><i class="fas fa-list-ol"></i> 5 pasos</div>
+            <button class="tcard-btn" onclick="openTutorial('/tutoriales/01-bienvenido.html')">
+              <i class="fas fa-play"></i> Ver tutorial
+            </button>
+          </div>
+
+          <!-- T2: Plan de Entrenamiento — TODOS -->
+          <div class="tutorial-card" data-min-plan="1" data-url="/tutoriales/02-plan-entrenamiento.html">
+            <div class="tcard-badge tcard-badge-free">TODOS</div>
+            <div class="tcard-icon"><i class="fas fa-dumbbell"></i></div>
+            <h3 class="tcard-title">Tu Plan de Entrenamiento</h3>
+            <p class="tcard-desc">Aprende a leer tu plan, entender series, repeticiones y RIR, y cómo progresar semana a semana.</p>
+            <div class="tcard-steps"><i class="fas fa-list-ol"></i> 5 pasos</div>
+            <button class="tcard-btn" onclick="openTutorial('/tutoriales/02-plan-entrenamiento.html')">
+              <i class="fas fa-play"></i> Ver tutorial
+            </button>
+          </div>
+
+          <!-- T3: Check-in Semanal — TODOS -->
+          <div class="tutorial-card" data-min-plan="1" data-url="/tutoriales/03-checkin-semanal.html">
+            <div class="tcard-badge tcard-badge-free">TODOS</div>
+            <div class="tcard-icon"><i class="fas fa-clipboard-check"></i></div>
+            <h3 class="tcard-title">El Check-in Semanal</h3>
+            <p class="tcard-desc">El check-in es tu herramienta más poderosa. Aprende cuándo, cómo y qué datos incluir para mejores resultados.</p>
+            <div class="tcard-steps"><i class="fas fa-list-ol"></i> 5 pasos</div>
+            <button class="tcard-btn" onclick="openTutorial('/tutoriales/03-checkin-semanal.html')">
+              <i class="fas fa-play"></i> Ver tutorial
+            </button>
+          </div>
+
+          <!-- T4: Registrar Métricas — TODOS -->
+          <div class="tutorial-card" data-min-plan="1" data-url="/tutoriales/04-metricas-progreso.html">
+            <div class="tcard-badge tcard-badge-free">TODOS</div>
+            <div class="tcard-icon"><i class="fas fa-chart-line"></i></div>
+            <h3 class="tcard-title">Registrar tu Progreso</h3>
+            <p class="tcard-desc">Los 3 tipos de métricas en WellCore: peso corporal, fotos de progreso y medidas corporales.</p>
+            <div class="tcard-steps"><i class="fas fa-list-ol"></i> 5 pasos</div>
+            <button class="tcard-btn" onclick="openTutorial('/tutoriales/04-metricas-progreso.html')">
+              <i class="fas fa-play"></i> Ver tutorial
+            </button>
+          </div>
+
+          <!-- T5: Calculadoras — MÉTODO+ -->
+          <div class="tutorial-card" data-min-plan="2" data-url="/tutoriales/05-calculadoras-nutricion.html">
+            <div class="tcard-badge tcard-badge-metodo">MÉTODO+</div>
+            <div class="tcard-icon tcard-icon-locked" id="tcard-icon-5"><i class="fas fa-calculator"></i></div>
+            <h3 class="tcard-title">Calculadoras de Nutrición</h3>
+            <p class="tcard-desc">TDEE, macros, hidratación y 1RM. Domina las calculadoras WellCore para optimizar tu nutrición.</p>
+            <div class="tcard-steps"><i class="fas fa-list-ol"></i> 5 pasos</div>
+            <button class="tcard-btn tcard-btn-locked" id="tcard-btn-5" onclick="openTutorial('/tutoriales/05-calculadoras-nutricion.html')">
+              <i class="fas fa-lock"></i> Plan Método requerido
+            </button>
+          </div>
+
+          <!-- T6: Comunidad — TODOS -->
+          <div class="tutorial-card" data-min-plan="1" data-url="/tutoriales/06-comunidad-retos.html">
+            <div class="tcard-badge tcard-badge-free">TODOS</div>
+            <div class="tcard-icon"><i class="fas fa-users"></i></div>
+            <h3 class="tcard-title">Comunidad y Retos</h3>
+            <p class="tcard-desc">Úsate de la comunidad, participa en retos y desbloquea logros para mantenerte motivado.</p>
+            <div class="tcard-steps"><i class="fas fa-list-ol"></i> 5 pasos</div>
+            <button class="tcard-btn" onclick="openTutorial('/tutoriales/06-comunidad-retos.html')">
+              <i class="fas fa-play"></i> Ver tutorial
+            </button>
+          </div>
+
+        </div>
       </div>
-
-      <!-- Pagination -->
-      <div id="acad-client-pagination" style="display:none;justify-content:center;gap:10px;margin-top:24px"></div>
     </section>
 
     <!-- Academia: Detail Modal -->
@@ -5085,7 +5212,7 @@ function showSection(id) {
   if (id === 'referidos' && !window._referralsTabInited)  { window._referralsTabInited = true; initReferralsTab(); }
   // ^ replaces defunct V8.Profile/V8.Referrals calls (V8 was never defined)
   if (id === 'retos'     && typeof Challenges !== 'undefined' && !Challenges._inited) { Challenges._inited = true; Challenges.init(); }
-  if (id === 'academia'  && !window._acadInited) { window._acadInited = true; loadAcademiaCliente(1); }
+  if (id === 'academia'  && !window._acadInited) { window._acadInited = true; loadAcademiaCliente(1); initTutorials(); }
   if (id === 'metricas') loadMetrics();
 }
 
@@ -9703,6 +9830,41 @@ function el(tag, opts) {
   }
   return e;
 }
+
+// ── Academia: tab switcher ──
+window.switchAcadTab = function(tab) {
+  var tabs = ['contenido', 'tutoriales'];
+  tabs.forEach(function(t) {
+    var btn   = document.getElementById('acad-tab-' + t);
+    var panel = document.getElementById('acad-panel-' + t);
+    var isActive = t === tab;
+    if (btn)   { btn.style.color = isActive ? 'var(--white)' : 'var(--gray)'; btn.style.borderBottomColor = isActive ? 'var(--red)' : 'transparent'; }
+    if (panel) panel.style.display = isActive ? '' : 'none';
+  });
+  if (tab === 'contenido' && !window._acadInited) { window._acadInited = true; loadAcademiaCliente(1); }
+};
+
+// ── Academia: open tutorial in new tab ──
+window.openTutorial = function(url) {
+  window.open(url, '_blank', 'noopener');
+};
+
+// ── Academia: apply plan locks to tutorial cards ──
+window.initTutorials = function() {
+  var planLevel = (typeof PLAN_LEVEL !== 'undefined' && typeof clientPlan !== 'undefined') ? (PLAN_LEVEL[clientPlan] || 1) : 1;
+  document.querySelectorAll('.tutorial-card').forEach(function(card) {
+    var minPlan = parseInt(card.getAttribute('data-min-plan') || '1', 10);
+    var btn = card.querySelector('.tcard-btn');
+    var icon = card.querySelector('.tcard-icon');
+    if (planLevel < minPlan) {
+      if (btn)  { btn.classList.add('tcard-btn-locked'); btn.onclick = null; }
+      if (icon) icon.classList.add('tcard-icon-locked');
+    } else {
+      if (btn)  { btn.classList.remove('tcard-btn-locked'); }
+      if (icon) icon.classList.remove('tcard-icon-locked');
+    }
+  });
+};
 
 window.filterAcad = function(type) {
   _filter = type;
