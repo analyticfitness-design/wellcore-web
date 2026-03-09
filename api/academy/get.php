@@ -9,19 +9,23 @@ require_once __DIR__ . '/../includes/auth.php';
 
 requireMethod('GET');
 
-// Auto-detect role: try admin first, then client
-$user = null;
-$isAdmin = false;
-try {
-    $user = authenticateAdmin();
-    $isAdmin = true;
-} catch (Exception $e) {
-    try {
-        $user = authenticateClient();
-    } catch (Exception $e2) {
-        respondError('Acceso denegado', 401);
-    }
+// Auto-detect role: peek user_type in auth_tokens BEFORE calling authenticate*
+// (authenticateAdmin/Client call exit() on failure — try/catch won't work)
+$rawToken = getTokenFromHeader();
+if (!$rawToken) {
+    respondError('Token requerido', 401);
 }
+
+$db = getDB();
+$peekStmt = $db->prepare("SELECT user_type FROM auth_tokens WHERE token = ? AND expires_at > NOW() LIMIT 1");
+$peekStmt->execute([$rawToken]);
+$tokenMeta = $peekStmt->fetch(PDO::FETCH_ASSOC);
+if (!$tokenMeta) {
+    respondError('Token inválido o expirado', 401);
+}
+
+$isAdmin = ($tokenMeta['user_type'] === 'admin');
+$user = $isAdmin ? authenticateAdmin() : authenticateClient();
 
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) {
@@ -51,7 +55,10 @@ if (!$isAdmin) {
     // Clients: must have plan access
     $planAccess = json_decode($row['plan_access'] ?? '[]', true) ?? [];
     $clientPlan = $user['plan'] ?? '';
-    if ($clientPlan && !in_array($clientPlan, $planAccess, true)) {
+    if (!$clientPlan) {
+        respondError('Plan no asignado. Contacta a tu coach.', 403);
+    }
+    if (!in_array($clientPlan, $planAccess, true)) {
         respondError('Tu plan no tiene acceso a este contenido', 403);
     }
 }

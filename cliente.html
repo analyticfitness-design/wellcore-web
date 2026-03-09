@@ -8930,7 +8930,7 @@ window.loadAcademiaCliente = function(page) {
   var url = '/academy/list.php?page=' + _page + '&per_page=12';
   if (_filter) url += '&content_type=' + encodeURIComponent(_filter);
 
-  apiFetch('GET', url).then(function(data) {
+  apiFetch(url).then(function(r) { return r.json(); }).then(function(data) {
     if (loading) loading.style.display = 'none';
     if (!data || !data.ok || !data.items || !data.items.length) {
       if (empty) empty.style.display = 'block';
@@ -9012,7 +9012,7 @@ function renderPagination(page, pages) {
 }
 
 window.openAcadItem = function(id) {
-  apiFetch('GET', '/academy/get.php?id=' + id).then(function(data) {
+  apiFetch('/academy/get.php?id=' + id).then(function(r) { return r.json(); }).then(function(data) {
     if (!data || !data.ok || !data.item) return;
     var item      = data.item;
     var modal     = document.getElementById('acad-modal');
