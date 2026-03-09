@@ -63,7 +63,7 @@ if ($period === 'all') {
             cx.streak_days
         FROM client_xp cx
         JOIN clients c ON c.id = cx.client_id
-        WHERE c.status = 'active'
+        WHERE c.status = 'activo'
           {$coach_filter}
         ORDER BY cx.xp_total DESC
         LIMIT {$limit}
@@ -84,7 +84,7 @@ if ($period === 'all') {
         FROM xp_events xpe
         JOIN clients c  ON c.id = xpe.client_id
         LEFT JOIN client_xp cx ON cx.client_id = xpe.client_id
-        WHERE c.status = 'active'
+        WHERE c.status = 'activo'
           {$date_filter}
           {$coach_filter}
         GROUP BY xpe.client_id, c.name, cx.level, cx.streak_days

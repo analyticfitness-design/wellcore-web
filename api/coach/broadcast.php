@@ -15,7 +15,7 @@ $message = trim($body['message'] ?? '');
 if (!$message) respondError('message requerido', 400);
 if (strlen($message) > 2000) respondError('Mensaje demasiado largo', 400);
 
-$clients = $db->prepare("SELECT id FROM clients WHERE coach_id = ? AND status = 'active'");
+$clients = $db->prepare("SELECT id FROM clients WHERE coach_id = ? AND status = 'activo'");
 $clients->execute([$coach['id']]);
 $rows = $clients->fetchAll();
 if (!$rows) respond(['ok' => true, 'sent' => 0]);

@@ -18,7 +18,7 @@ $db       = getDB();
 $coach_id = $coach['id'];
 
 // Clientes activos del coach
-$active = $db->prepare("SELECT COUNT(*) FROM clients WHERE coach_id = ? AND status = 'active'");
+$active = $db->prepare("SELECT COUNT(*) FROM clients WHERE coach_id = ? AND status = 'activo'");
 $active->execute([$coach_id]);
 $active_count = (int)$active->fetchColumn();
 
@@ -55,7 +55,7 @@ $churn = $db->prepare("
         DATEDIFF(NOW(), MAX(ch.created_at)) AS days_inactive
     FROM clients c
     LEFT JOIN checkins ch ON ch.client_id = c.id
-    WHERE c.coach_id = ? AND c.status = 'active'
+    WHERE c.coach_id = ? AND c.status = 'activo'
     GROUP BY c.id, c.name, c.plan
     HAVING days_inactive >= 14 OR last_checkin IS NULL
     ORDER BY days_inactive DESC
@@ -75,7 +75,7 @@ $top = $db->prepare("
     FROM clients c
     LEFT JOIN checkins ch ON ch.client_id = c.id AND ch.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
     LEFT JOIN client_xp cx ON cx.client_id = c.id
-    WHERE c.coach_id = ? AND c.status = 'active'
+    WHERE c.coach_id = ? AND c.status = 'activo'
     GROUP BY c.id, c.name, c.plan, cx.streak_days, cx.level
     ORDER BY checkins_30d DESC
     LIMIT 10

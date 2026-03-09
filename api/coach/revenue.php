@@ -16,7 +16,7 @@ $cid   = $coach['id'];
 $prices = ['esencial' => 95, 'metodo' => 120, 'elite' => 150, 'rise' => 0];
 
 // MRR actual (clientes activos del coach)
-$activeStmt = $db->prepare("SELECT plan FROM clients WHERE coach_id = ? AND status = 'active'");
+$activeStmt = $db->prepare("SELECT plan FROM clients WHERE coach_id = ? AND status = 'activo'");
 $activeStmt->execute([$cid]);
 $active = $activeStmt->fetchAll();
 $mrr = 0;
@@ -29,7 +29,7 @@ for ($i = 5; $i >= 0; $i--) {
     $stmt = $db->prepare("
         SELECT plan FROM clients
         WHERE coach_id = ?
-          AND status = 'active'
+          AND status = 'activo'
           AND fecha_inicio <= LAST_DAY(DATE_FORMAT(NOW() - INTERVAL ? MONTH, '%Y-%m-01'))
     ");
     $stmt->execute([$cid, $i]);
@@ -48,7 +48,7 @@ $renewStmt = $db->prepare("
              CURDATE()
            ) AS days_left
     FROM clients
-    WHERE coach_id = ? AND status = 'active'
+    WHERE coach_id = ? AND status = 'activo'
     HAVING days_left BETWEEN 0 AND 30
     ORDER BY days_left ASC
     LIMIT 20
