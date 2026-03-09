@@ -1,6 +1,7 @@
 /* WellCore v8 — Service Worker
    Estrategia: Cache-first para assets estaticos, Network-first para API.
-   Cache se actualiza en background (stale-while-revalidate). */
+   Cache se actualiza en background (stale-while-revalidate).
+   M35: Push Notifications VAPID — handlers de push y notificationclick. */
 
 var CACHE_NAME = 'wc-v8-1';
 var STATIC_ASSETS = [
@@ -35,6 +36,40 @@ self.addEventListener('activate', function(event) {
       );
     }).then(function() {
       return self.clients.claim();
+    })
+  );
+});
+
+// ===== M35: Push Notifications =====
+self.addEventListener('push', function(event) {
+  var data = {};
+  if (event.data) {
+    try { data = event.data.json(); } catch(e) { data = { body: event.data.text() }; }
+  }
+  var title   = data.title || 'WellCore Fitness';
+  var options = {
+    body:  data.body  || 'Tienes una actualizacion en tu portal',
+    icon:  '/images/icon-192.png',
+    badge: '/images/icon-192.png',
+    tag:   'wc-push',
+    renotify: true,
+    data:  { url: data.url || '/cliente.html' }
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  var targetUrl = (event.notification.data && event.notification.data.url)
+                ? event.notification.data.url
+                : '/cliente.html';
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(list) {
+      for (var i = 0; i < list.length; i++) {
+        var c = list[i];
+        if (c.url.indexOf(targetUrl) !== -1 && 'focus' in c) return c.focus();
+      }
+      if (clients.openWindow) return clients.openWindow(targetUrl);
     })
   );
 });
