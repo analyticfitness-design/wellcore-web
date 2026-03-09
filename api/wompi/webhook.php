@@ -345,7 +345,7 @@ if ($status === 'approved') {
                     $gRow = $genderRow->fetch(PDO::FETCH_ASSOC);
                     $gender = ($gRow && in_array($gRow['gender'] ?? '', ['female', 'mujer', 'f'], true)) ? 'female' : 'male';
 
-                    $emailHtml = email_rise_payment_confirmed($tx['buyer_name'] ?? $buyerEmail, $gender);
+                    $emailHtml = email_rise_payment_confirmed($buyerName ?: $buyerEmail, $gender);
                     $subjPrefix = ($gender === 'female') ? 'Bienvenida' : 'Bienvenido';
                     sendEmail(
                         $buyerEmail,

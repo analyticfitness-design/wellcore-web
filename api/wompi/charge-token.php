@@ -32,26 +32,18 @@ requireMethod('POST');
 // -------------------------------------------------------
 // AUTENTICACION: admin JWT o token interno de cron
 // -------------------------------------------------------
-$authorized = false;
+$authorized  = false;
+$cronSecret  = getenv('CRON_SECRET') ?: '';
+$givenSecret = $_SERVER['HTTP_X_CRON_SECRET'] ?? '';
 
-// 1. Token interno del cron (X-Cron-Secret header)
-$cronSecret        = env('CRON_SECRET', '');
-$requestCronSecret = $_SERVER['HTTP_X_CRON_SECRET'] ?? '';
-if (!empty($cronSecret) && !empty($requestCronSecret) && hash_equals($cronSecret, $requestCronSecret)) {
+if ($cronSecret && hash_equals($cronSecret, $givenSecret)) {
+    // Llamada desde cron autenticada por secreto compartido
     $authorized = true;
-}
-
-// 2. Admin JWT si no hay cron secret valido
-if (!$authorized) {
-    $token = getTokenFromHeader();
-    if ($token) {
-        try {
-            authenticateAdmin();
-            $authorized = true;
-        } catch (\Throwable $e) {
-            $authorized = false;
-        }
-    }
+    $admin      = ['id' => 0, 'role' => 'cron'];
+} else {
+    // Llamada desde panel admin: authenticateAdmin hace exit() si falla — correcto
+    $admin      = authenticateAdmin();
+    $authorized = true;
 }
 
 if (!$authorized) {

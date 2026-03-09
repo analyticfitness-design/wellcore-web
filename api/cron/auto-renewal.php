@@ -259,15 +259,26 @@ $eligibleClients = $db->query("
     WHERE c.status = 'activo'
       AND c.plan NOT IN ('rise')
       AND DATE_ADD(COALESCE(c.fecha_inicio, c.created_at), INTERVAL 30 DAY)
-          BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)
+          <= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
+      AND DATE_ADD(COALESCE(c.fecha_inicio, c.created_at), INTERVAL 30 DAY)
+          >= DATE_ADD(CURDATE(), INTERVAL -7 DAY)
       AND NOT EXISTS (
           SELECT 1 FROM auto_charge_log acl
           WHERE acl.client_id = c.id
-            AND acl.status = 'success'
-            AND acl.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+            AND acl.status IN ('success', 'pending')
+            AND acl.attempt_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
       )
     ORDER BY pm.created_at DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
+
+// Deduplicar: un cliente con multiples payment_methods activos solo se procesa una vez
+// (el JOIN puede devolver multiples filas por cliente, ORDER BY created_at DESC ya prioriza el mas reciente)
+$seen = [];
+$eligibleClients = array_values(array_filter($eligibleClients, function ($c) use (&$seen) {
+    if (isset($seen[$c['id']])) return false;
+    $seen[$c['id']] = true;
+    return true;
+}));
 
 ar_log('INFO', 'Clientes elegibles encontrados', ['count' => count($eligibleClients)]);
 
