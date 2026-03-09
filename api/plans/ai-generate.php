@@ -56,13 +56,13 @@ $overrides = is_array($body['overrides'] ?? null) ? $body['overrides'] : [];
 $stmtTpl = $db->prepare("
     SELECT id, coach_id, title, description, plan_type, methodology, template_data
     FROM plan_templates
-    WHERE id = ? AND is_active = 1
+    WHERE id = ? AND coach_id = ? AND is_active = 1
 ");
-$stmtTpl->execute([$templateId]);
+$stmtTpl->execute([$templateId, $admin['id']]);
 $template = $stmtTpl->fetch();
 
 if (!$template) {
-    respondError('Plantilla no encontrada o inactiva', 404);
+    respondError('Template no encontrado', 404);
 }
 
 // Decodificar template_data
@@ -122,9 +122,11 @@ $userPrompt .= "- Enfoque del plan: $focus\n";
 
 if (!empty($overrides)) {
     $userPrompt .= "\nAJUSTES ADICIONALES DEL COACH:\n";
+    $overrides = array_slice($overrides, 0, 10);
     foreach ($overrides as $key => $value) {
         if ($value !== null && $value !== '') {
-            $userPrompt .= "- $key: $value\n";
+            $safeVal = substr((string)$value, 0, 500);
+            $userPrompt .= "- $key: $safeVal\n";
         }
     }
 }
@@ -210,7 +212,7 @@ if ($planAiGenerated) {
     $response['ai_model']       = $haikuModel;
     $response['input_tokens']   = $inputTokens;
     $response['output_tokens']  = $outputTokens;
-    $response['estimated_cost_usd'] = ai_calc_cost($inputTokens, $outputTokens);
+    $response['estimated_cost_usd'] = ($inputTokens / 1_000_000 * 0.25) + ($outputTokens / 1_000_000 * 1.25);
 } else {
     $response['fallback_reason'] = $aiError ?? 'Claude no disponible';
     $response['note']            = 'Se retornó el plan base de la plantilla. El plan NO fue generado por IA.';

@@ -193,6 +193,7 @@ if ($method === 'PUT') {
         respondError('No se enviaron campos para actualizar', 400);
     }
 
+    $fields[] = 'updated_at = NOW()';
     $params[] = $id;
     $db->prepare("UPDATE plan_templates SET " . implode(', ', $fields) . " WHERE id = ?")->execute($params);
 
