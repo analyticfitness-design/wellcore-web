@@ -10418,36 +10418,63 @@ if ('serviceWorker' in navigator) {
         var grid = document.createElement('div');
         grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;';
         items.forEach(function(item) {
+          var isInsta = (item.video_url || '').indexOf('instagram.com') !== -1;
           var card = document.createElement('div');
-          card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;';
+          card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s;';
+          card.addEventListener('mouseenter', function() { this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,.35)'; });
+          card.addEventListener('mouseleave', function() { this.style.transform=''; this.style.boxShadow=''; });
+          // Thumbnail — aspect 9:16 para reels, 16:9 para otros
           var thumb = document.createElement('div');
-          thumb.style.cssText = 'aspect-ratio:16/9;background:var(--surface-2);position:relative;overflow:hidden;';
+          var ar = isInsta ? '4/5' : '16/9';
+          thumb.style.cssText = 'aspect-ratio:' + ar + ';background:#111;position:relative;overflow:hidden;';
           if (item.thumbnail_url) {
             var img = document.createElement('img');
+            img.alt = item.title;
+            img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+            img.onerror = function() { this.style.display='none'; };
             img.src = item.thumbnail_url;
-            img.alt = '';
-            img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
             thumb.appendChild(img);
           }
+          // Overlay con gradiente y botón play
           var overlay = document.createElement('div');
-          overlay.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);';
+          overlay.style.cssText = 'position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 50%,transparent 100%);display:flex;align-items:center;justify-content:center;';
+          var playBtn = document.createElement('div');
+          playBtn.style.cssText = 'width:52px;height:52px;border-radius:50%;background:rgba(227,30,36,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.5);';
           var playI = document.createElement('i');
-          playI.className = 'fas fa-play-circle';
-          playI.style.cssText = 'font-size:2.8rem;color:#fff;opacity:0.9;';
-          overlay.appendChild(playI);
+          playI.className = 'fas fa-play';
+          playI.style.cssText = 'font-size:1.1rem;color:#fff;margin-left:3px;';
+          playBtn.appendChild(playI);
+          overlay.appendChild(playBtn);
+          // Badge Instagram
+          if (isInsta) {
+            var badge = document.createElement('div');
+            badge.style.cssText = 'position:absolute;top:10px;right:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);border-radius:6px;padding:3px 7px;display:flex;align-items:center;gap:4px;';
+            var igI = document.createElement('i');
+            igI.className = 'fab fa-instagram';
+            igI.style.cssText = 'font-size:.75rem;color:#fff;';
+            var igTxt = document.createElement('span');
+            igTxt.textContent = 'Reel';
+            igTxt.style.cssText = 'font-size:.65rem;font-weight:700;color:#fff;letter-spacing:.5px;';
+            badge.appendChild(igI);
+            badge.appendChild(igTxt);
+            overlay.appendChild(badge);
+          }
           thumb.appendChild(overlay);
+          // Info
           var info = document.createElement('div');
           info.style.cssText = 'padding:12px 14px;';
           var t = document.createElement('div');
           t.textContent = item.title;
-          t.style.cssText = 'font-size:.85rem;font-weight:600;margin-bottom:4px;';
-          var dur = document.createElement('div');
-          var m = Math.floor((item.duration_sec || 0) / 60);
-          var s = (item.duration_sec || 0) % 60;
-          dur.textContent = m + ':' + String(s).padStart(2, '0') + ' min';
-          dur.style.cssText = 'font-size:.72rem;color:var(--gray);';
+          t.style.cssText = 'font-size:.85rem;font-weight:600;margin-bottom:4px;line-height:1.35;';
           info.appendChild(t);
-          info.appendChild(dur);
+          if (item.duration_sec && item.duration_sec > 0) {
+            var dur = document.createElement('div');
+            var m = Math.floor(item.duration_sec / 60);
+            var s = item.duration_sec % 60;
+            dur.textContent = m + ':' + String(s).padStart(2, '0') + ' min';
+            dur.style.cssText = 'font-size:.72rem;color:var(--gray);';
+            info.appendChild(dur);
+          }
           card.appendChild(thumb);
           card.appendChild(info);
           (function(url) {
