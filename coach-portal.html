@@ -1634,6 +1634,27 @@ function apiFetch(method, path, body) {
   });
 }
 
+// Wrapper para Phase 2/3: api.get('coach/revenue'), api.post('coach/messages', {...})
+// Maneja query strings correctamente: coach/messages?client_id=1 → /api/coach/messages.php?client_id=1
+var api = {
+  _path: function(p) {
+    var q = p.indexOf('?');
+    var base = q >= 0 ? p.slice(0, q) : p;
+    var qs   = q >= 0 ? p.slice(q) : '';
+    return BASE + '/' + base + '.php' + qs;
+  },
+  get: function(p) {
+    var token = localStorage.getItem('wc_token') || '';
+    return fetch(this._path(p), { headers: { 'Authorization': 'Bearer ' + token } })
+      .then(function(r) { if (r.status === 401) { localStorage.removeItem('wc_token'); location.href = 'login.html'; return null; } return r.json(); });
+  },
+  post: function(p, body) {
+    var token = localStorage.getItem('wc_token') || '';
+    return fetch(this._path(p), { method: 'POST', headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function(r) { if (r.status === 401) { localStorage.removeItem('wc_token'); location.href = 'login.html'; return null; } return r.json(); });
+  }
+};
+
 // ===== GLOBAL STATE =====
 var coachData = {};
 var achievementsData = [];
