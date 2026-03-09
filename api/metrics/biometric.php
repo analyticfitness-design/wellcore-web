@@ -5,10 +5,10 @@
  * POST /api/metrics/biometric.php  (JSON body)
  */
 
-require_once __DIR__ . '/../../includes/cors.php';
-require_once __DIR__ . '/../../includes/auth.php';
-require_once __DIR__ . '/../../includes/response.php';
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../includes/cors.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../config/database.php';
 
 $client = authenticateClient();
 $clientId = (int) $client['id'];
