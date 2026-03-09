@@ -9470,7 +9470,9 @@ document.addEventListener('keydown', function(e) {
       var wrap = document.getElementById('bm-sparkline-wrap');
       if (!svg || !wrap) return;
 
-      var weights = rows.map(function(r) { return parseFloat(r.weight_kg); }).filter(function(v) { return !isNaN(v); });
+      var rawPairs = rows.map(function(r) { return { date: r.log_date, val: parseFloat(r.weight_kg) }; })
+                         .filter(function(p) { return !isNaN(p.val); });
+      var weights = rawPairs.map(function(p) { return p.val; });
       if (weights.length < 2) return;
 
       var W = 280, H = 44, pad = 6;
@@ -9501,7 +9503,7 @@ document.addEventListener('keydown', function(e) {
         + '<path d="' + d + '" fill="none" stroke="#C8102E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
         + points.map(function(p, i) {
             return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#C8102E"/>'
-              + '<title>' + rows[i].log_date + ': ' + weights[i] + ' kg</title>';
+              + '<title>' + rawPairs[i].date + ': ' + weights[i] + ' kg</title>';
           }).join('');
 
       wrap.style.display = 'block';
@@ -9538,7 +9540,7 @@ document.addEventListener('keydown', function(e) {
       })
         .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, data: j }; }); })
         .then(function(res) {
-          if (res.ok && res.data.success) {
+          if (res.ok && res.data.data) {
             if (status) { status.style.color = '#22C55E'; status.textContent = '✓ Guardado correctamente'; }
             BM.showSummary(res.data.data);
             BM.loadHistory();

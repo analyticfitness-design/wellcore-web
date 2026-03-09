@@ -157,7 +157,7 @@ if ($method === 'POST') {
     $sel->execute([$clientId, $date]);
     $saved = $sel->fetch();
 
-    respond(['success' => true, 'data' => $saved], 200);
+    respond(['data' => $saved], 200);
 }
 
 // ── Other methods ─────────────────────────────────────────────────────────────
