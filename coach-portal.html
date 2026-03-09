@@ -761,6 +761,9 @@ input,textarea,select{font-family:'Inter',sans-serif}
     <a class="nav-item" onclick="showSection('academia')" id="nav-academia">
       <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span> Academia
     </a>
+    <a class="nav-item" onclick="showSection('analytics')" id="nav-analytics">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span> Analytics
+    </a>
   </nav>
 
   <div class="sidebar-user">
@@ -1400,6 +1403,36 @@ input,textarea,select{font-family:'Inter',sans-serif}
       </div>
     </section>
 
+    <!-- ===== SECTION: ANALYTICS v9 ===== -->
+    <section id="sec-analytics" class="section v7-reveal">
+      <h1 class="section-title">ANA<span>//</span>LYTICS</h1>
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px;line-height:1.6">
+        Retención, engagement y señales de churn de tus clientes. Snapshot guardado automáticamente cada visita.
+      </p>
+
+      <div id="analytics-loading" style="padding:30px;text-align:center;color:var(--gray);font-size:.85rem;"><i class="fas fa-spinner fa-spin"></i> Cargando analytics...</div>
+
+      <div id="analytics-content" style="display:none">
+        <!-- KPIs -->
+        <div class="kpi-grid" id="analytics-kpis" style="margin-bottom:24px"></div>
+
+        <!-- Churn Risk -->
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-title" style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i> Clientes en Riesgo de Churn
+            <span id="churn-count-badge" style="background:rgba(245,158,11,0.15);color:#f59e0b;font-size:.68rem;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:auto;"></span>
+          </div>
+          <div id="churn-list" style="font-size:.82rem;"></div>
+        </div>
+
+        <!-- Top Engaged -->
+        <div class="card">
+          <div class="card-title"><i class="fas fa-fire" style="color:var(--red);"></i> Top Clientes Activos (30 días)</div>
+          <div id="top-engaged-list" style="font-size:.82rem;"></div>
+        </div>
+      </div>
+    </section>
+
   </div><!-- /content-area -->
 </div><!-- /main-wrap -->
 
@@ -1433,7 +1466,8 @@ var sectionMap = {
   perfil: 'Mi Perfil',
   referidos: 'Referidos',
   recursos: 'Recursos',
-  academia: 'Academia'
+  academia: 'Academia',
+  analytics: 'Analytics'
 };
 
 // ===== AUTH CHECK =====
@@ -1516,12 +1550,13 @@ function showSection(name) {
   document.getElementById('topbar-breadcrumb').textContent = sectionMap[name] || name;
 
   // Lazy load sections
-  if (name === 'clientes') loadClients();
-  if (name === 'tickets') loadTickets();
+  if (name === 'clientes')  loadClients();
+  if (name === 'tickets')   loadTickets();
   if (name === 'referidos') loadReferrals();
-  if (name === 'perfil') loadProfile();
-  if (name === 'marca') loadBrandData();
-  if (name === 'academia') loadAcademia();
+  if (name === 'perfil')    loadProfile();
+  if (name === 'marca')     loadBrandData();
+  if (name === 'academia')  loadAcademia();
+  if (name === 'analytics') loadAnalytics();
 
   closeSidebar();
 }
@@ -2752,6 +2787,83 @@ init();
   }
   draw();
 })();
+
+// ===== v9: ANALYTICS =====
+var _analyticsLoaded = false;
+function loadAnalytics() {
+  if (_analyticsLoaded) return;
+  apiFetch('GET', '/coach/analytics.php').then(function(d) {
+    if (!d) return;
+    _analyticsLoaded = true;
+    var loading = document.getElementById('analytics-loading');
+    var content = document.getElementById('analytics-content');
+    if (loading) loading.style.display = 'none';
+    if (content) content.style.display = 'block';
+
+    var s = d.summary || {};
+    var kpis = document.getElementById('analytics-kpis');
+    if (kpis) {
+      var kpiData = [
+        { icon:'fa-users', color:'red', label:'Clientes Activos', val: s.active_clients || 0 },
+        { icon:'fa-exclamation-triangle', color:'gold', label:'Riesgo Churn', val: s.churn_risk_count || 0 },
+        { icon:'fa-check-circle', color:'cyan', label:'Check-ins / Semana', val: s.checkins_week || 0 },
+        { icon:'fa-dollar-sign', color:'green', label:'Ingresos Mes', val: '$' + Number(s.revenue_month || 0).toLocaleString('es-CO') },
+      ];
+      var html = '';
+      kpiData.forEach(function(k) {
+        html += '<div class="kpi-card accent-left-' + k.color + ' card-hover v7-glow-track">' +
+          '<div class="kpi-icon ' + k.color + '"><i class="fas ' + k.icon + '"></i></div>' +
+          '<div class="kpi-label">' + k.label + '</div>' +
+          '<div class="kpi-value" style="font-family:var(--font-data,monospace)">' + k.val + '</div>' +
+          '</div>';
+      });
+      kpis.insertAdjacentHTML('beforeend', html);
+    }
+
+    var churnList = document.getElementById('churn-list');
+    var churnBadge = document.getElementById('churn-count-badge');
+    if (churnBadge) churnBadge.textContent = (d.churn_risk || []).length + ' clientes';
+    if (churnList) {
+      if (!(d.churn_risk || []).length) {
+        churnList.insertAdjacentHTML('beforeend', '<p style="color:var(--gray);padding:12px 0;text-align:center;">Ningún cliente en riesgo. ¡Excelente retención!</p>');
+      } else {
+        var rows = '<table style="width:100%;border-collapse:collapse">';
+        rows += '<tr style="font-size:.7rem;color:var(--gray);border-bottom:1px solid var(--border)"><th style="padding:8px;text-align:left">Cliente</th><th style="padding:8px;text-align:left">Plan</th><th style="padding:8px;text-align:right">Días sin check-in</th></tr>';
+        (d.churn_risk || []).forEach(function(c) {
+          var days = parseInt(c.days_inactive) || 0;
+          var color = days >= 21 ? '#ef4444' : '#f59e0b';
+          rows += '<tr style="border-bottom:1px solid var(--border)">' +
+            '<td style="padding:9px 8px;font-size:.84rem">' + c.name + '</td>' +
+            '<td style="padding:9px 8px;font-size:.78rem;color:var(--gray);text-transform:uppercase">' + (c.plan || '—') + '</td>' +
+            '<td style="padding:9px 8px;text-align:right;font-weight:700;color:' + color + ';font-family:var(--font-data,monospace)">' + days + 'd</td>' +
+            '</tr>';
+        });
+        rows += '</table>';
+        churnList.insertAdjacentHTML('beforeend', rows);
+      }
+    }
+
+    var topList = document.getElementById('top-engaged-list');
+    if (topList) {
+      if (!(d.top_engaged || []).length) {
+        topList.insertAdjacentHTML('beforeend', '<p style="color:var(--gray);padding:12px 0;text-align:center;">Sin datos aún.</p>');
+      } else {
+        var rows2 = '<table style="width:100%;border-collapse:collapse">';
+        rows2 += '<tr style="font-size:.7rem;color:var(--gray);border-bottom:1px solid var(--border)"><th style="padding:8px;text-align:left">Cliente</th><th style="padding:8px;text-align:center">Check-ins</th><th style="padding:8px;text-align:center">Nivel XP</th><th style="padding:8px;text-align:right">Racha</th></tr>';
+        (d.top_engaged || []).forEach(function(c) {
+          rows2 += '<tr style="border-bottom:1px solid var(--border)">' +
+            '<td style="padding:9px 8px;font-size:.84rem">' + c.name + '</td>' +
+            '<td style="padding:9px 8px;text-align:center;font-family:var(--font-data,monospace);color:var(--red)">' + (c.checkins_30d || 0) + '</td>' +
+            '<td style="padding:9px 8px;text-align:center;font-size:.78rem;color:var(--gray)">' + (c.level || 1) + '</td>' +
+            '<td style="padding:9px 8px;text-align:right;font-family:var(--font-data,monospace);color:#f59e0b">' + (c.streak_days || 0) + 'd 🔥</td>' +
+            '</tr>';
+        });
+        rows2 += '</table>';
+        topList.insertAdjacentHTML('beforeend', rows2);
+      }
+    }
+  }).catch(function() {});
+}
 </script>
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
 <script src="js/v5-effects.js" defer></script>

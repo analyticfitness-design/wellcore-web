@@ -2113,6 +2113,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <a class="nav-item" onclick="showSection('academia')" id="nav-academia">
       <i class="fas fa-graduation-cap"></i> Academia
     </a>
+    <a class="nav-item" onclick="showSection('audio')" id="nav-audio">
+      <i class="fas fa-headphones"></i> Audio Coach
+    </a>
+    <a class="nav-item" onclick="showSection('videotips')" id="nav-videotips">
+      <i class="fas fa-video"></i> Tips Coach
+    </a>
+    <a class="nav-item" onclick="showSection('logros')" id="nav-logros">
+      <i class="fas fa-trophy"></i> Logros
+    </a>
   </nav>
 
   <div class="sidebar-plan">
@@ -3597,6 +3606,44 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <div id="communityContainer"></div>
     </section>
 
+    <!-- ===== SECTION v9: AUDIO COACHING ===== -->
+    <section id="sec-audio" class="section">
+      <h1 class="section-title">Audio <span>Coaching</span></h1>
+      <p class="section-desc">Sesiones de audio de tu coach: tips, motivación y guías de entrenamiento. Escúchalos en cualquier momento.</p>
+      <div id="audio-list-container">
+        <div style="color:var(--gray);text-align:center;padding:30px;font-size:.85rem;"><i class="fas fa-spinner fa-spin"></i> Cargando audios...</div>
+      </div>
+      <!-- Sticky player -->
+      <div id="audio-player-bar" style="display:none;position:fixed;bottom:70px;left:0;right:0;z-index:900;background:rgba(10,10,15,0.95);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:10px 20px;display:none;align-items:center;gap:14px;">
+        <button onclick="WCAudio.togglePlay()" id="audio-play-btn" style="background:var(--red);border:none;border-radius:50%;width:36px;height:36px;color:#fff;font-size:.9rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-play" id="audio-play-icon"></i>
+        </button>
+        <div style="flex:1;min-width:0;">
+          <div id="audio-title-bar" style="font-size:.78rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</div>
+          <input type="range" id="audio-seek" min="0" max="100" value="0" oninput="WCAudio.seek(this.value)" style="width:100%;height:3px;accent-color:var(--red);cursor:pointer;margin-top:4px;">
+        </div>
+        <span id="audio-time-bar" style="font-size:.7rem;color:var(--gray);font-family:var(--font-data,monospace);flex-shrink:0;">0:00</span>
+        <button onclick="WCAudio.close()" style="background:none;border:none;color:var(--gray);font-size:.9rem;cursor:pointer;flex-shrink:0;padding:4px;">&#10005;</button>
+        <audio id="audio-element"></audio>
+      </div>
+    </section>
+
+    <!-- ===== SECTION v9: VIDEO TIPS ===== -->
+    <section id="sec-videotips" class="section">
+      <h1 class="section-title">Tips <span>del Coach</span></h1>
+      <p class="section-desc">Videos cortos de tu coach con tips de técnica, motivación y consejos de entrenamiento.</p>
+      <div id="videotips-container">
+        <div style="color:var(--gray);text-align:center;padding:30px;font-size:.85rem;"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION v9: LOGROS ===== -->
+    <section id="sec-logros" class="section">
+      <h1 class="section-title">Mis <span>Logros</span></h1>
+      <p class="section-desc">Comparte tus logros en Instagram Stories. Cada logro desbloqueado genera una imagen lista para compartir.</p>
+      <div id="logros-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;"></div>
+    </section>
+
     <!-- ===== SECTION: NUTRICION ===== -->
     <section id="sec-nutricion" class="section">
       <h1 class="section-title">Nutrición <span>IA</span></h1>
@@ -4649,6 +4696,9 @@ function showSection(id) {
   setActiveBottomNav(bnMap[id] || id);
   closeSidebar();
   if (id === 'seguimiento') loadWeeklyInsight(false);
+  if (id === 'audio'    && typeof WCAudio   !== 'undefined') WCAudio.loadAudioList();
+  if (id === 'videotips'&& typeof WCTips    !== 'undefined') WCTips.loadVideoTips();
+  if (id === 'logros'   && typeof WCLogros  !== 'undefined') WCLogros.loadLogros();
   // v8: lazy init de módulos al primera visita al tab
   if (id === 'perfil'    && typeof V8 !== 'undefined' && !V8._profileInited)    { V8._profileInited = true; V8.Profile.init('profileTabContent'); }
   if (id === 'referidos' && typeof V8 !== 'undefined' && !V8._referralsInited)  { V8._referralsInited = true; V8.Referrals.init('referralsTabContent'); }
@@ -10166,6 +10216,282 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(checkCurrentState).catch(function() {});
   }
 })();
+</script>
+
+<!-- v9: Audio Coach Player -->
+<script>
+(function() {
+  'use strict';
+  var _audioLoaded = false;
+  var _audioEl = null;
+  var _playing = false;
+
+  function getToken() {
+    return sessionStorage.getItem('wc_preview_token') || localStorage.getItem('wc_token') || '';
+  }
+
+  function loadAudioList() {
+    if (_audioLoaded) return;
+    fetch('/api/coach/audio.php', { headers: { 'Authorization': 'Bearer ' + getToken() } })
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(d) {
+        _audioLoaded = true;
+        var container = document.getElementById('audio-list-container');
+        if (!container) return;
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        var items = (d && d.items) || [];
+        if (!items.length) {
+          var empty = document.createElement('div');
+          empty.style.cssText = 'color:var(--gray);text-align:center;padding:40px;font-size:.85rem;';
+          empty.textContent = 'Tu coach aún no ha subido audios.';
+          container.appendChild(empty);
+          return;
+        }
+
+        items.forEach(function(item) {
+          var card = document.createElement('div');
+          card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;margin-bottom:10px;transition:border-color .2s;';
+          card.addEventListener('mouseenter', function() { card.style.borderColor = 'var(--red)'; });
+          card.addEventListener('mouseleave', function() { card.style.borderColor = 'var(--border)'; });
+
+          var playBtn = document.createElement('div');
+          playBtn.style.cssText = 'width:44px;height:44px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;';
+          var icon = document.createElement('i');
+          icon.className = 'fas fa-play';
+          icon.style.color = '#fff';
+          playBtn.appendChild(icon);
+
+          var info = document.createElement('div');
+          info.style.flex = '1';
+          var title = document.createElement('div');
+          title.textContent = item.title;
+          title.style.cssText = 'font-size:.88rem;font-weight:600;';
+          var meta = document.createElement('div');
+          var mins = Math.floor((item.duration_sec || 0) / 60);
+          var secs = (item.duration_sec || 0) % 60;
+          meta.textContent = item.category + ' • ' + mins + ':' + String(secs).padStart(2, '0');
+          meta.style.cssText = 'font-size:.72rem;color:var(--gray);margin-top:3px;';
+          info.appendChild(title);
+          info.appendChild(meta);
+
+          card.appendChild(playBtn);
+          card.appendChild(info);
+
+          (function(url, t) {
+            card.addEventListener('click', function() { playAudio(url, t); });
+          }(item.audio_url, item.title));
+
+          container.appendChild(card);
+        });
+      })
+      .catch(function() {});
+  }
+
+  function playAudio(url, title) {
+    if (!_audioEl) {
+      _audioEl = document.getElementById('audio-element');
+      if (!_audioEl) return;
+      _audioEl.addEventListener('timeupdate', function() {
+        var seek = document.getElementById('audio-seek');
+        var timeEl = document.getElementById('audio-time-bar');
+        if (seek && _audioEl.duration) seek.value = (_audioEl.currentTime / _audioEl.duration) * 100;
+        if (timeEl) {
+          var m = Math.floor(_audioEl.currentTime / 60);
+          var s = Math.floor(_audioEl.currentTime % 60);
+          timeEl.textContent = m + ':' + String(s).padStart(2, '0');
+        }
+      });
+      _audioEl.addEventListener('ended', function() {
+        _playing = false;
+        var icon = document.getElementById('audio-play-icon');
+        if (icon) { icon.className = 'fas fa-play'; }
+      });
+    }
+    _audioEl.src = url;
+    _audioEl.play();
+    _playing = true;
+    var bar = document.getElementById('audio-player-bar');
+    var titleEl = document.getElementById('audio-title-bar');
+    var playIcon = document.getElementById('audio-play-icon');
+    if (bar) bar.style.display = 'flex';
+    if (titleEl) titleEl.textContent = title;
+    if (playIcon) playIcon.className = 'fas fa-pause';
+  }
+
+  function togglePlay() {
+    if (!_audioEl) return;
+    if (_playing) { _audioEl.pause(); _playing = false; } else { _audioEl.play(); _playing = true; }
+    var icon = document.getElementById('audio-play-icon');
+    if (icon) icon.className = _playing ? 'fas fa-pause' : 'fas fa-play';
+  }
+
+  function seek(val) {
+    if (_audioEl && _audioEl.duration) _audioEl.currentTime = (_audioEl.duration * val) / 100;
+  }
+
+  function closePlayer() {
+    if (_audioEl) { _audioEl.pause(); _playing = false; }
+    var bar = document.getElementById('audio-player-bar');
+    if (bar) bar.style.display = 'none';
+  }
+
+  window.WCAudio = { loadAudioList: loadAudioList, togglePlay: togglePlay, seek: seek, close: closePlayer };
+}());
+</script>
+
+<!-- v9: Video Tips + Logros -->
+<script>
+(function() {
+  'use strict';
+  var _tipsLoaded = false;
+  var _logrosLoaded = false;
+
+  function getToken() {
+    return sessionStorage.getItem('wc_preview_token') || localStorage.getItem('wc_token') || '';
+  }
+
+  function loadVideoTips() {
+    if (_tipsLoaded) return;
+    fetch('/api/coach/video-tips.php', { headers: { 'Authorization': 'Bearer ' + getToken() } })
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(d) {
+        _tipsLoaded = true;
+        var container = document.getElementById('videotips-container');
+        if (!container) return;
+        while (container.firstChild) container.removeChild(container.firstChild);
+        var items = (d && d.items) || [];
+        if (!items.length) {
+          var empty = document.createElement('div');
+          empty.style.cssText = 'color:var(--gray);text-align:center;padding:40px;font-size:.85rem;';
+          empty.textContent = 'Tu coach aún no ha subido tips en video.';
+          container.appendChild(empty);
+          return;
+        }
+        var grid = document.createElement('div');
+        grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;';
+        items.forEach(function(item) {
+          var card = document.createElement('div');
+          card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;';
+          var thumb = document.createElement('div');
+          thumb.style.cssText = 'aspect-ratio:16/9;background:var(--surface-2);position:relative;overflow:hidden;';
+          if (item.thumbnail_url) {
+            var img = document.createElement('img');
+            img.src = item.thumbnail_url;
+            img.alt = '';
+            img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+            thumb.appendChild(img);
+          }
+          var overlay = document.createElement('div');
+          overlay.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);';
+          var playI = document.createElement('i');
+          playI.className = 'fas fa-play-circle';
+          playI.style.cssText = 'font-size:2.8rem;color:#fff;opacity:0.9;';
+          overlay.appendChild(playI);
+          thumb.appendChild(overlay);
+          var info = document.createElement('div');
+          info.style.cssText = 'padding:12px 14px;';
+          var t = document.createElement('div');
+          t.textContent = item.title;
+          t.style.cssText = 'font-size:.85rem;font-weight:600;margin-bottom:4px;';
+          var dur = document.createElement('div');
+          var m = Math.floor((item.duration_sec || 0) / 60);
+          var s = (item.duration_sec || 0) % 60;
+          dur.textContent = m + ':' + String(s).padStart(2, '0') + ' min';
+          dur.style.cssText = 'font-size:.72rem;color:var(--gray);';
+          info.appendChild(t);
+          info.appendChild(dur);
+          card.appendChild(thumb);
+          card.appendChild(info);
+          (function(url) {
+            card.addEventListener('click', function() { window.open(url, '_blank', 'noopener'); });
+          }(item.video_url));
+          grid.appendChild(card);
+        });
+        container.appendChild(grid);
+      })
+      .catch(function() {});
+  }
+
+  function loadLogros() {
+    if (_logrosLoaded) return;
+    _logrosLoaded = true;
+    var container = document.getElementById('logros-grid');
+    if (!container) return;
+
+    var LOGROS = [
+      { type: 'checkin_week1', icon: 'fa-fire', color: '#E31E24', label: 'Primera Semana', desc: 'Completaste tu primer check-in' },
+      { type: 'checkin_month1', icon: 'fa-calendar-check', color: '#10b981', label: 'Primer Mes', desc: '30 días en WellCore' },
+      { type: 'streak_7', icon: 'fa-bolt', color: '#f59e0b', label: 'Racha 7 días', desc: '7 días consecutivos' },
+      { type: 'streak_30', icon: 'fa-trophy', color: '#8b5cf6', label: 'Racha 30 días', desc: '30 días sin parar' },
+      { type: 'level_up', icon: 'fa-arrow-up', color: '#06b6d4', label: 'Level Up', desc: 'Subiste de nivel XP' },
+      { type: 'xp_milestone', icon: 'fa-star', color: '#f59e0b', label: 'XP Milestone', desc: 'Alcanzaste 1000+ XP' },
+    ];
+
+    LOGROS.forEach(function(logro) {
+      var card = document.createElement('div');
+      card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;';
+
+      var iconWrap = document.createElement('div');
+      iconWrap.style.cssText = 'width:50px;height:50px;border-radius:50%;background:' + logro.color + '22;display:flex;align-items:center;justify-content:center;';
+      var ic = document.createElement('i');
+      ic.className = 'fas ' + logro.icon;
+      ic.style.color = logro.color;
+      ic.style.fontSize = '1.3rem';
+      iconWrap.appendChild(ic);
+
+      var title = document.createElement('div');
+      title.textContent = logro.label;
+      title.style.cssText = 'font-size:.82rem;font-weight:700;';
+
+      var desc = document.createElement('div');
+      desc.textContent = logro.desc;
+      desc.style.cssText = 'font-size:.72rem;color:var(--gray);';
+
+      var shareBtn = document.createElement('button');
+      shareBtn.style.cssText = 'margin-top:6px;padding:6px 14px;background:' + logro.color + ';border:none;border-radius:6px;color:#fff;font-size:.72rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;';
+      var shareIcon = document.createElement('i');
+      shareIcon.className = 'fab fa-instagram';
+      shareBtn.appendChild(shareIcon);
+      shareBtn.appendChild(document.createTextNode(' Compartir'));
+
+      (function(type) {
+        shareBtn.addEventListener('click', function() { shareLogro(type); });
+      }(logro.type));
+
+      card.appendChild(iconWrap);
+      card.appendChild(title);
+      card.appendChild(desc);
+      card.appendChild(shareBtn);
+      container.appendChild(card);
+    });
+  }
+
+  function shareLogro(type) {
+    fetch('/api/achievements/share.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (sessionStorage.getItem('wc_preview_token') || localStorage.getItem('wc_token') || '') },
+      body: JSON.stringify({ achievement_type: type, achievement_data: {} })
+    })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (d && d.share_url) {
+        var text = '¡Acabo de lograr esto en WellCore Fitness! 💪\n' + d.share_url;
+        if (navigator.share) {
+          navigator.share({ title: 'Mi logro WellCore', text: text, url: d.share_url }).catch(function() {});
+        } else {
+          navigator.clipboard.writeText(text).then(function() {
+            alert('¡Link copiado! Pégalo en tu Instagram Story.');
+          }).catch(function() { window.open(d.share_url, '_blank'); });
+        }
+      }
+    })
+    .catch(function() {});
+  }
+
+  window.WCTips  = { loadVideoTips: loadVideoTips };
+  window.WCLogros = { loadLogros: loadLogros };
+}());
 </script>
 
 <!-- v9: WCXp — XP Widget + Leaderboard Modal -->

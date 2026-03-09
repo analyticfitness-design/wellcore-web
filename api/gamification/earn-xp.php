@@ -105,31 +105,18 @@ try {
     }
 
     // UPSERT client_xp
-    $upsert = $db->prepare("
-        INSERT INTO client_xp (client_id, xp_total, level, streak_days, streak_last_date, streak_protected)
-        VALUES (?, ?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE
-            xp_total = VALUES(xp_total),
-            level = VALUES(level),
-            streak_days = VALUES(streak_days),
-            streak_last_date = CASE WHEN event_streak THEN VALUES(streak_last_date) ELSE streak_last_date END,
-            streak_protected = VALUES(streak_protected)
-    ");
-
-    // Simplificado: siempre actualizar streak_last_date en check-ins
     $streak_date = in_array($event_type, ['checkin', 'video_checkin'], true) ? $today : ($cur['streak_last_date'] ?? null);
 
-    $upsert2 = $db->prepare("
+    $db->prepare("
         INSERT INTO client_xp (client_id, xp_total, level, streak_days, streak_last_date, streak_protected)
         VALUES (?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
-            xp_total        = VALUES(xp_total),
-            level           = VALUES(level),
-            streak_days     = VALUES(streak_days),
+            xp_total         = VALUES(xp_total),
+            level            = VALUES(level),
+            streak_days      = VALUES(streak_days),
             streak_last_date = VALUES(streak_last_date),
             streak_protected = VALUES(streak_protected)
-    ");
-    $upsert2->execute([$client_id, $new_xp, $new_level, $streak_days, $streak_date, $streak_protected]);
+    ")->execute([$client_id, $new_xp, $new_level, $streak_days, $streak_date, $streak_protected]);
 
     // Registrar evento XP
     $ev = $db->prepare("
