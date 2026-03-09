@@ -167,6 +167,15 @@ $customerData  = $transaction['customer_data'] ?? [];
 $buyerName     = trim($customerData['full_name']  ?? '');
 $buyerPhone    = trim($customerData['phone_number'] ?? '');
 
+// Extraer datos del método de pago tokenizable (tarjeta)
+$pmObject    = $transaction['payment_method'] ?? [];
+$pmToken     = trim($pmObject['token'] ?? '');
+$pmExtra     = $pmObject['extra'] ?? [];
+$pmLastFour  = trim($pmExtra['last_four'] ?? '');
+$pmBrand     = trim($pmExtra['brand']     ?? '');
+$pmHolder    = trim($pmExtra['name']      ?? '');
+$pmClientId  = (int) ($transaction['metadata']['client_id'] ?? 0);
+
 if (empty($referenceCode) || empty($wompiTxId)) {
     wc_log($errorLog, 'WARNING', 'Webhook sin referencia o ID de transaccion', $transaction);
     http_response_code(400);
@@ -439,6 +448,47 @@ if ($status === 'approved') {
         wc_log($errorLog, 'WARNING', 'Error insertando en payments MySQL (no critico)', [
             'error' => $payErr->getMessage(),
         ]);
+    }
+
+    // Guardar token de pago para auto-renovacion (solo si el metodo es tokenizable)
+    if (!empty($pmToken)) {
+        try {
+            require_once __DIR__ . '/../config/database.php';
+            $dbPm = getDB();
+
+            // Resolver client_id: desde metadata o desde email
+            $resolvedClientId = $pmClientId;
+            if (!$resolvedClientId && !empty($buyerEmail)) {
+                $pmCStmt = $dbPm->prepare("SELECT id FROM clients WHERE email = ? LIMIT 1");
+                $pmCStmt->execute([$buyerEmail]);
+                $resolvedClientId = (int) $pmCStmt->fetchColumn();
+            }
+
+            if ($resolvedClientId) {
+                $dbPm->prepare("
+                    INSERT IGNORE INTO payment_methods
+                        (client_id, token_id, last_four, card_brand, card_holder, is_active)
+                    VALUES (?, ?, ?, ?, ?, 1)
+                ")->execute([
+                    $resolvedClientId,
+                    $pmToken,
+                    $pmLastFour ?: null,
+                    $pmBrand    ?: null,
+                    $pmHolder   ?: null,
+                ]);
+
+                wc_log($webhookLog, 'INFO', 'Token de pago guardado', [
+                    'client_id' => $resolvedClientId,
+                    'token'     => substr($pmToken, 0, 12) . '...',
+                    'brand'     => $pmBrand,
+                    'last_four' => $pmLastFour,
+                ]);
+            }
+        } catch (\Throwable $pmErr) {
+            wc_log($errorLog, 'WARNING', 'Error guardando token de pago (no critico)', [
+                'error' => $pmErr->getMessage(),
+            ]);
+        }
     }
 
     // Notificar al admin del nuevo registro/pago (con datos contables)
