@@ -1,9 +1,9 @@
-/* WellCore v8 — Service Worker
+/* WellCore v9 — Service Worker
    Estrategia: Cache-first para assets estaticos, Network-first para API.
    Cache se actualiza en background (stale-while-revalidate).
    M35: Push Notifications VAPID — handlers de push y notificationclick. */
 
-var CACHE_NAME = 'wc-v8-1';
+var CACHE_NAME = 'wc-v9-1';
 var STATIC_ASSETS = [
   '/css/wellcore-v5.css',
   '/css/wellcore-v6.css',

@@ -13,5 +13,17 @@
   ],
   "categories": ["health", "fitness"],
   "lang": "es",
-  "dir": "ltr"
+  "dir": "ltr",
+  "shortcuts": [
+    {
+      "name": "Mi Dashboard",
+      "url": "/cliente.html",
+      "icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Check-in Semanal",
+      "url": "/cliente.html#checkin",
+      "icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }
