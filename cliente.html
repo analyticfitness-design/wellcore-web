@@ -6600,11 +6600,11 @@ var VIDEOS = [
   { name:'Press en Máquina (Chest Press)',       muscle:'Pecho',   minPlan:'esencial', youtubeId:'ojlEhV37FkU' },
   { name:'Press con Barra (variación)',          muscle:'Pecho',   minPlan:'esencial', youtubeId:'AANwuvNPPSU' },
   { name:'Fondos en Banco',                      muscle:'Pecho',   minPlan:'esencial', youtubeId:'SswE_mcoZLA' },
-  { name:'Fondos en Banco v2',                   muscle:'Pecho',   minPlan:'esencial', youtubeId:'AJWUCcTZvwY' },
+  { name:'Fondos en Banco v2',                   muscle:'Pecho',   minPlan:'esencial', youtubeId:'AJWUCcTZvwY', thumbFrame:'2' },
   { name:'Press Plano en Smith',                 muscle:'Pecho',   minPlan:'metodo',   youtubeId:'uPP6AJp1sT0' },
   { name:'Press Inclinado con Barra',            muscle:'Pecho',   minPlan:'metodo',   youtubeId:'X2WPUgFQbWk' },
   { name:'Press Inclinado con Mancuernas',       muscle:'Pecho',   minPlan:'metodo',   youtubeId:'1iL_WlAYBAs' },
-  { name:'Press Inclinado con Máquina',          muscle:'Pecho',   minPlan:'metodo',   youtubeId:'jGDYhsGlMCs' },
+  { name:'Press Inclinado con Máquina',          muscle:'Pecho',   minPlan:'metodo',   youtubeId:'jGDYhsGlMCs', thumbFrame:'2' },
   { name:'Press en Smith',                       muscle:'Pecho',   minPlan:'metodo',   youtubeId:'jYrcwuseZaM' },
   { name:'Press de Agarre Cerrado en Banco',     muscle:'Pecho',   minPlan:'metodo',   youtubeId:'Q0n0Q4hxRLA' },
   { name:'Cruce en Polea',                       muscle:'Pecho',   minPlan:'metodo',   youtubeId:'ZGUsf_jioSk' },
@@ -7020,7 +7020,7 @@ function timerComplete() {
 // ── MENTALIDAD ─────────────────────────────────
 // ═══════════════════════════════════════════════
 var BREATH_TECH = [
-  { name:'Box Breathing', tag:'Estrés agudo', tagColor:'#38bdf8', desc:'Inhala 4s · Retén 4s · Exhala 4s · Retén 4s. Activa el nervio vago. Úsala antes de un entrenamiento intenso o situación de presión.', phases:[{label:'Inhala',s:4},{label:'Retén',s:4},{label:'Exhala',s:4},{label:'Retén',s:4}] },
+  { name:'Respiración Cuadrada', tag:'Estrés agudo', tagColor:'#38bdf8', desc:'Inhala 4s · Retén 4s · Exhala 4s · Retén 4s. Activa el nervio vago. Úsala antes de un entrenamiento intenso o situación de presión.', phases:[{label:'Inhala',s:4},{label:'Retén',s:4},{label:'Exhala',s:4},{label:'Retén',s:4}] },
   { name:'4-7-8 Relax', tag:'Pre-sueño', tagColor:'#a78bfa', desc:'Inhala 4s · Retén 7s · Exhala 8s. Reduce cortisol y activa parasimpático. Ideal 30 minutos antes de dormir para maximizar recuperación.', phases:[{label:'Inhala',s:4},{label:'Retén',s:7},{label:'Exhala',s:8}] },
   { name:'Respiración Fisiológica', tag:'Recuperación rápida', tagColor:'#34d399', desc:'Doble inhalación nasal rápida + exhalación lenta. El doble inhale reinicia el estado del CO₂. Úsala entre series de alta intensidad o episodios de ansiedad.', phases:[] }
 ];
@@ -10501,14 +10501,6 @@ if ('serviceWorker' in navigator) {
         while (container.firstChild) container.removeChild(container.firstChild);
 
         var items = (d && d.items) || [];
-        if (!items.length) {
-          var empty = document.createElement('div');
-          empty.style.cssText = 'color:var(--gray);text-align:center;padding:40px;font-size:.85rem;';
-          empty.textContent = 'Tu coach aún no ha subido audios.';
-          container.appendChild(empty);
-          return;
-        }
-
         items.forEach(function(item) {
           var card = document.createElement('div');
           card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;margin-bottom:10px;transition:border-color .2s;';
@@ -10542,6 +10534,62 @@ if ('serviceWorker' in navigator) {
             card.addEventListener('click', function() { playAudio(url, t); });
           }(item.audio_url, item.title));
 
+          container.appendChild(card);
+        });
+
+        // ── Próximos episodios (en construcción) ──
+        var COMING_SOON = [
+          { title:'El Mito del Día Perfecto',                 cat:'mindset',       dur:'~9 min' },
+          { title:'Por Qué Siempre Abandonas en Semana 3',    cat:'hábitos',       dur:'~11 min' },
+          { title:'Cómo Funciona Tu Hambre',                  cat:'nutrición',     dur:'~10 min' },
+          { title:'Dolor vs. Daño: Lo Que Nadie Te Dice',     cat:'técnica',       dur:'~9 min' },
+          { title:'El Sueño Es Tu Anabolizante Más Potente',  cat:'recuperación',  dur:'~10 min' },
+          { title:'Cómo No Necesitar Fuerza de Voluntad',     cat:'hábitos',       dur:'~11 min' },
+          { title:'El Error del 90% Entrenando Pierna',       cat:'técnica',       dur:'~8 min' },
+          { title:'Los Resultados Se Construyen en la Mesa',  cat:'nutrición',     dur:'~10 min' },
+          { title:'La Identidad del Atleta',                  cat:'mindset',       dur:'~13 min' },
+          { title:'Cardio: Cuánto, Cuándo y Por Qué',         cat:'técnica',       dur:'~9 min' },
+          { title:'El Cortisol Te Está Saboteando',           cat:'recuperación',  dur:'~11 min' },
+          { title:'Cómo Leer una Etiqueta Nutricional',       cat:'nutrición',     dur:'~8 min' },
+          { title:'El Principio del Mínimo Efectivo',         cat:'hábitos',       dur:'~10 min' },
+          { title:'Lesiones: El Manual Que Nadie Te Dio',     cat:'técnica',       dur:'~12 min' },
+          { title:'La Conversación Con Tu Cuerpo',            cat:'mindset',       dur:'~12 min' },
+          { title:'El Día Que Decides Ganarlo Todo',          cat:'motivación',    dur:'~10 min' },
+        ];
+
+        var divider = document.createElement('div');
+        divider.style.cssText = 'display:flex;align-items:center;gap:12px;margin:' + (items.length ? '28px' : '8px') + ' 0 16px;';
+        var ln1 = document.createElement('div'); ln1.style.cssText = 'flex:1;height:1px;background:var(--border);';
+        var badge = document.createElement('div');
+        badge.style.cssText = 'font-size:.65rem;font-weight:700;letter-spacing:.1em;color:var(--gray);text-transform:uppercase;white-space:nowrap;padding:4px 12px;border:1px solid var(--border);border-radius:20px;';
+        badge.textContent = 'Próximamente';
+        var ln2 = document.createElement('div'); ln2.style.cssText = 'flex:1;height:1px;background:var(--border);';
+        divider.appendChild(ln1); divider.appendChild(badge); divider.appendChild(ln2);
+        container.appendChild(divider);
+
+        COMING_SOON.forEach(function(ep) {
+          var card = document.createElement('div');
+          card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:8px;opacity:.5;cursor:default;';
+
+          var lockBtn = document.createElement('div');
+          lockBtn.style.cssText = 'width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;';
+          var li = document.createElement('i'); li.className = 'fas fa-lock'; li.style.cssText = 'color:var(--gray);font-size:.7rem;';
+          lockBtn.appendChild(li);
+
+          var info = document.createElement('div'); info.style.flex = '1';
+          var ttl = document.createElement('div');
+          ttl.textContent = ep.title;
+          ttl.style.cssText = 'font-size:.85rem;font-weight:600;color:var(--gray);';
+          var meta = document.createElement('div');
+          meta.textContent = ep.cat + ' • ' + ep.dur;
+          meta.style.cssText = 'font-size:.7rem;color:var(--gray);opacity:.6;margin-top:2px;';
+          info.appendChild(ttl); info.appendChild(meta);
+
+          var chip = document.createElement('span');
+          chip.textContent = 'En construcción';
+          chip.style.cssText = 'font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.04);color:var(--gray);border:1px solid var(--border);white-space:nowrap;flex-shrink:0;';
+
+          card.appendChild(lockBtn); card.appendChild(info); card.appendChild(chip);
           container.appendChild(card);
         });
       })
