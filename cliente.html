@@ -6491,7 +6491,7 @@ var TIMER_MODES = {
 
 function renderTimer() {
   var root = document.getElementById('timer-root');
-  if (!root || root.innerHTML !== '') return;
+  if (!root || root.children.length > 0) return;
   root.innerHTML = '<div style="max-width:480px;margin:0 auto;">' +
     '<div class="timer-mode-grid" id="tmr-modes"></div>' +
     '<div class="timer-stage" id="tmr-stage">' +
@@ -6622,7 +6622,7 @@ var BREATH_STATE = { running:false, iv:null, phaseIdx:0, elapsed:0, techIdx:0 };
 
 function renderMentalidad() {
   var root = document.getElementById('mentalidad-root');
-  if (!root || root.innerHTML !== '') return;
+  if (!root || root.children.length > 0) return;
   var html = '<div class="breath-section">' +
     '<div class="breath-ring">' +
       '<svg width="160" height="160" viewBox="0 0 160 160">' +
@@ -7997,7 +7997,7 @@ if (localStorage.getItem('wc_token')) {
 }
 
 // ── Recipe data (static, no user input)
-var RECIPES = {
+var NUTRI_RECIPES = {
   'pollo-arroz': {
     emoji:'🍗', name:'Pollo + Arroz integral',
     kcal:480, prot:45, carbs:60, fat:9, time:'25min',
@@ -8027,7 +8027,7 @@ function makeEl(tag, css, text) {
 
 function showRecipeDetail(id) {
   var recipeId = id.replace('salmón-batata','salmon-batata');
-  var r = RECIPES[recipeId]; if (!r) return;
+  var r = NUTRI_RECIPES[recipeId]; if (!r) return;
   var modal = document.getElementById('nutri-recipe-modal');
   var body = document.getElementById('nutri-recipe-modal-body');
   while (body.firstChild) body.removeChild(body.firstChild);
