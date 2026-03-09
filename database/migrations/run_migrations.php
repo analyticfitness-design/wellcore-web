@@ -18,7 +18,16 @@ function idx($p,$t,$i){return (int)$p->query("SELECT COUNT(*) FROM information_s
 function ctype($p,$t,$n){$r=$p->query("SELECT COLUMN_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='$t' AND COLUMN_NAME='$n'");return $r?$r->fetchColumn():'';}
 function run($p,$s,$n){try{$p->query($s);echo "OK: $n\n";}catch(Exception $e){echo "ERR[$n]: ".$e->getMessage()."\n";}}
 
-echo "=== Migration 012: auto_message_log ===\n";
+echo "=== Migration 011: CREATE tables for M01/M12/M15/M16/M18/M26/M35/M37 ===\n";
+$sql011 = file_get_contents('/code/database/migrations/011_modules_m01_m12_m15_m16_m18_m26_m35_m37.sql');
+// Strip -- comments and split by semicolon (safe for pure CREATE TABLE files)
+$lines = explode("\n", $sql011);
+$clean = implode("\n", array_filter($lines, fn($l) => !preg_match('/^\s*--/', $l)));
+foreach (array_filter(array_map('trim', explode(';', $clean))) as $stmt) {
+    if ($stmt) run($pdo, $stmt, '011 '.substr(trim(preg_replace('/\s+/',' ',$stmt)),0,60));
+}
+
+echo "\n=== Migration 012: auto_message_log ===\n";
 if(!col($pdo,'auto_message_log','date_sent'))
     run($pdo,"ALTER TABLE auto_message_log ADD COLUMN date_sent DATE DEFAULT NULL","012 date_sent");
 else echo "SKIP: 012 date_sent already exists\n";
