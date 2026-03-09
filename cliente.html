@@ -4111,7 +4111,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
       localStorage.setItem('wc_client_id', clientId);
       localStorage.setItem('wc_client_email', clientEmail);
       document.body.style.visibility = 'visible';
-      if (typeof init === 'function') init();
+      try { if (typeof init === 'function') init(); } catch(e) { console.error('[WC init]', e); }
     })
     .catch(function() {
       if (sessionStorage.getItem('_wc_preview_session')) {
