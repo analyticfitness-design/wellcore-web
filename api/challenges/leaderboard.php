@@ -48,6 +48,10 @@ foreach ($participants as &$p) {
 }
 unset($p);
 
+$challenge['id']                = (int)$challenge['id'];
+$challenge['goal_value']        = (float)$challenge['goal_value'];
+$challenge['participant_count'] = (int)($challenge['participant_count'] ?? 0);
+
 respond([
     'challenge'    => $challenge,
     'participants' => $participants,

@@ -89,12 +89,20 @@ if ($method === 'DELETE') {
         respondError('id requerido', 400);
     }
 
-    $stmt = $db->prepare("UPDATE challenges SET is_active = 0 WHERE id = ?");
-    $stmt->execute([$id]);
+    // Verify the challenge exists first (idempotent soft delete)
+    $check = $db->prepare("SELECT id, is_active FROM challenges WHERE id = ?");
+    $check->execute([$id]);
+    $existing = $check->fetch();
 
-    if ($stmt->rowCount() === 0) {
+    if (!$existing) {
         respondError('Reto no encontrado', 404);
     }
+
+    if ($existing['is_active']) {
+        $stmt = $db->prepare("UPDATE challenges SET is_active = 0 WHERE id = ?");
+        $stmt->execute([$id]);
+    }
+    // If already inactive, just return 200 (idempotent)
 
     respond(['success' => true, 'message' => 'Reto desactivado']);
 }

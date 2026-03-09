@@ -50,37 +50,45 @@ if ($progress >= $goalValue && $completedAt === null) {
     $setCompleted = ', completed_at = NOW()';
 }
 
-// Update progress
-$stmt = $db->prepare("
-    UPDATE challenge_participants
-    SET progress = ?
-    $setCompleted
-    WHERE challenge_id = ? AND client_id = ?
-");
-$stmt->execute([$progress, $challengeId, $clientId]);
+$db->beginTransaction();
+try {
+    // Update progress
+    $stmt = $db->prepare("
+        UPDATE challenge_participants
+        SET progress = ?
+        $setCompleted
+        WHERE challenge_id = ? AND client_id = ?
+    ");
+    $stmt->execute([$progress, $challengeId, $clientId]);
 
-// Recalculate ranks for this challenge
-// Rank by progress DESC (higher progress = better rank), ties share same rank
-$db->prepare("
-    UPDATE challenge_participants cp
-    JOIN (
-        SELECT client_id,
-               RANK() OVER (ORDER BY progress DESC) AS new_rank
+    // Recalculate ranks for this challenge
+    // Rank by progress DESC (higher progress = better rank), ties share same rank
+    $db->prepare("
+        UPDATE challenge_participants cp
+        JOIN (
+            SELECT client_id,
+                   RANK() OVER (ORDER BY progress DESC) AS new_rank
+            FROM challenge_participants
+            WHERE challenge_id = ?
+        ) ranked ON ranked.client_id = cp.client_id
+        SET cp.rank = ranked.new_rank
+        WHERE cp.challenge_id = ?
+    ")->execute([$challengeId, $challengeId]);
+
+    // Fetch updated row
+    $stmt = $db->prepare("
+        SELECT progress, rank, completed_at
         FROM challenge_participants
-        WHERE challenge_id = ?
-    ) ranked ON ranked.client_id = cp.client_id
-    SET cp.rank = ranked.new_rank
-    WHERE cp.challenge_id = ?
-")->execute([$challengeId, $challengeId]);
+        WHERE challenge_id = ? AND client_id = ?
+    ");
+    $stmt->execute([$challengeId, $clientId]);
+    $updated = $stmt->fetch();
 
-// Fetch updated row
-$stmt = $db->prepare("
-    SELECT progress, rank, completed_at
-    FROM challenge_participants
-    WHERE challenge_id = ? AND client_id = ?
-");
-$stmt->execute([$challengeId, $clientId]);
-$updated = $stmt->fetch();
+    $db->commit();
+} catch (\Throwable $e) {
+    $db->rollBack();
+    respondError('Error al actualizar progreso', 500);
+}
 
 respond([
     'success'      => true,
