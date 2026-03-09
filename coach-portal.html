@@ -3094,7 +3094,7 @@ function setTemplate(type) {
 }
 
 function loadMensajes() {
-  api.get('coach/clients').then(function(r) {
+  api.get('coach/clients-list').then(function(r) {
     _msgClients = r.clients || [];
     var list = document.getElementById('msg-client-list');
     if (!list) return;
