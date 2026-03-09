@@ -4435,6 +4435,8 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
       if (!data || data.error || data.type !== 'client') {
         if (sessionStorage.getItem('_wc_preview_session')) {
           // Preview mode: no redirigir a login (causaría loop a admin.html)
+          document.body.style.visibility = 'visible';
+          document.documentElement.style.setProperty('cursor', 'auto', 'important');
           document.body.innerHTML = '<div style="min-height:100vh;background:#0a0a0a;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#fff;"><div style="text-align:center;padding:32px"><div style="color:#C8102E;font-size:2.5rem;margin-bottom:16px;">⚠</div><h2 style="margin:0 0 8px;font-size:1.2rem;">Sesión de preview inválida</h2><p style="color:rgba(255,255,255,.45);margin:0 0 20px;font-size:.85rem;">El token expiró o el cliente está inactivo.<br>Usa "Ver Portal" nuevamente desde el panel admin.</p><a href="/admin.html" style="display:inline-block;padding:8px 20px;background:#C8102E;color:#fff;text-decoration:none;border-radius:8px;font-size:.82rem;font-weight:600;">Volver al panel</a></div></div>';
           return;
         }
@@ -4460,6 +4462,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
       if (sessionStorage.getItem('_wc_preview_session')) {
         // Preview mode: mostrar error en lugar de redirigir a login
         document.body.style.visibility = 'visible';
+        document.documentElement.style.setProperty('cursor', 'auto', 'important');
         var el = document.createElement('div');
         el.style.cssText = 'min-height:100vh;background:#0a0a0a;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#fff;';
         var box = document.createElement('div');
@@ -4475,7 +4478,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
         p.textContent = 'El token expir\u00f3 o el cliente est\u00e1 inactivo. Usa "Ver Portal" nuevamente desde el panel admin.';
         var a = document.createElement('a');
         a.href = '/admin.html';
-        a.style.cssText = 'display:inline-block;padding:8px 20px;background:#C8102E;color:#fff;text-decoration:none;border-radius:8px;font-size:.82rem;font-weight:600';
+        a.style.cssText = 'display:inline-block;padding:8px 20px;background:#C8102E;color:#fff;text-decoration:none;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer';
         a.textContent = 'Volver al panel';
         box.appendChild(icon); box.appendChild(h2); box.appendChild(p); box.appendChild(a);
         el.appendChild(box);
