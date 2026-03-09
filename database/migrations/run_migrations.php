@@ -117,4 +117,12 @@ foreach (array_filter(array_map('trim', explode(';', $clean018))) as $stmt) {
     if ($stmt) run($pdo, $stmt, '018 '.substr(trim(preg_replace('/\s+/',' ',$stmt)),0,60));
 }
 
+echo "\n=== Migration 019: client_profiles bio + avatar_url ===\n";
+if (!col($pdo, 'client_profiles', 'bio'))
+    run($pdo, "ALTER TABLE client_profiles ADD COLUMN bio TEXT DEFAULT NULL", "019 bio");
+else echo "SKIP: 019 bio already exists\n";
+if (!col($pdo, 'client_profiles', 'avatar_url'))
+    run($pdo, "ALTER TABLE client_profiles ADD COLUMN avatar_url VARCHAR(512) DEFAULT NULL", "019 avatar_url");
+else echo "SKIP: 019 avatar_url already exists\n";
+
 echo "\n=== ALL MIGRATIONS DONE ===\n";

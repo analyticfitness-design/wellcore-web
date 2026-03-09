@@ -4703,8 +4703,9 @@ function showSection(id) {
   if (id === 'videotips'&& typeof WCTips    !== 'undefined') WCTips.loadVideoTips();
   if (id === 'logros'   && typeof WCLogros  !== 'undefined') WCLogros.loadLogros();
   // v8: lazy init de módulos al primera visita al tab
-  if (id === 'perfil'    && typeof V8 !== 'undefined' && !V8._profileInited)    { V8._profileInited = true; V8.Profile.init('profileTabContent'); }
-  if (id === 'referidos' && typeof V8 !== 'undefined' && !V8._referralsInited)  { V8._referralsInited = true; V8.Referrals.init('referralsTabContent'); }
+  if (id === 'perfil'    && !window._profileTabInited)    { window._profileTabInited = true; initProfileTab(); }
+  if (id === 'referidos' && !window._referralsTabInited)  { window._referralsTabInited = true; initReferralsTab(); }
+  // ^ replaces defunct V8.Profile/V8.Referrals calls (V8 was never defined)
   if (id === 'retos'     && typeof Challenges !== 'undefined' && !Challenges._inited) { Challenges._inited = true; Challenges.init(); }
   if (id === 'academia'  && !window._acadInited) { window._acadInited = true; loadAcademiaCliente(1); }
 }
@@ -7729,6 +7730,218 @@ function updateDashboardKPIs(profile) {
   var fase = semanas < 2 ? 1 : semanas < 4 ? 2 : semanas < 12 ? 3 : 4;
   var kpiSemanaSub = document.getElementById('kpi-semanas-sub');
   if (kpiSemanaSub) kpiSemanaSub.textContent = 'Fase F0' + fase + ' · ' + phase.label;
+}
+
+// ===== PROFILE TAB (bio + avatar) =====
+function _esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function initProfileTab() {
+  var container = document.getElementById('profileTabContent');
+  if (!container) return;
+  var initials = _esc((clientName || '?').charAt(0).toUpperCase());
+  // Build using safe DOM methods to avoid XSS
+  container.textContent = '';
+  var card = document.createElement('div');
+  card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;';
+
+  // Top row: avatar + info
+  var topRow = document.createElement('div');
+  topRow.style.cssText = 'padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:20px;flex-wrap:wrap;';
+
+  // Avatar wrapper
+  var avWrap = document.createElement('div');
+  avWrap.style.cssText = 'position:relative;width:80px;height:80px;flex-shrink:0;';
+  var avCircle = document.createElement('div');
+  avCircle.id = 'pf-avatar-circle';
+  avCircle.style.cssText = 'width:80px;height:80px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:#fff;overflow:hidden;border:3px solid var(--red);';
+  var avInit = document.createElement('span');
+  avInit.id = 'pf-avatar-init';
+  avInit.textContent = (clientName || '?').charAt(0).toUpperCase();
+  var avImg = document.createElement('img');
+  avImg.id = 'pf-avatar-img'; avImg.alt = '';
+  avImg.style.cssText = 'display:none;width:100%;height:100%;object-fit:cover;';
+  avCircle.appendChild(avInit); avCircle.appendChild(avImg);
+  var camLabel = document.createElement('label');
+  camLabel.title = 'Cambiar foto';
+  camLabel.style.cssText = 'position:absolute;bottom:-2px;right:-2px;width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--surface);z-index:2;';
+  var camIcon = document.createElement('i'); camIcon.className = 'fas fa-camera'; camIcon.style.cssText = 'font-size:10px;color:#fff;pointer-events:none;';
+  var fileInput = document.createElement('input');
+  fileInput.type = 'file'; fileInput.id = 'pf-avatar-file'; fileInput.accept = 'image/jpeg,image/png,image/webp'; fileInput.style.display = 'none';
+  fileInput.addEventListener('change', function() { handleAvatarUpload(this); });
+  camLabel.appendChild(camIcon); camLabel.appendChild(fileInput);
+  avWrap.appendChild(avCircle); avWrap.appendChild(camLabel);
+
+  // Name/plan info
+  var info = document.createElement('div'); info.style.cssText = 'flex:1;min-width:160px;';
+  var nameEl = document.createElement('div'); nameEl.style.cssText = 'font-size:.95rem;font-weight:700;color:var(--text);'; nameEl.id = 'pf-card-name'; nameEl.textContent = clientName || '';
+  var emailEl = document.createElement('div'); emailEl.style.cssText = 'font-size:.78rem;color:var(--gray);margin-top:3px;'; emailEl.textContent = clientEmail || '';
+  var planBadge = document.createElement('span'); planBadge.id = 'pf-card-plan';
+  planBadge.style.cssText = 'display:inline-block;margin-top:8px;font-size:.68rem;padding:3px 9px;border-radius:3px;background:rgba(227,30,36,0.15);color:var(--red);font-weight:700;letter-spacing:1px;'; planBadge.textContent = 'PLAN';
+  info.appendChild(nameEl); info.appendChild(emailEl); info.appendChild(planBadge);
+  topRow.appendChild(avWrap); topRow.appendChild(info);
+
+  // Bio row
+  var bioRow = document.createElement('div'); bioRow.style.cssText = 'padding:16px 20px;';
+  var bioLabel = document.createElement('label'); bioLabel.style.cssText = 'font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:8px;font-weight:600;'; bioLabel.textContent = 'Mi Biografía';
+  var bioTA = document.createElement('textarea'); bioTA.id = 'pf-bio'; bioTA.rows = 3;
+  bioTA.placeholder = 'Cuéntanos sobre ti: tus metas, tu historia, qué te trajo aquí...';
+  bioTA.style.cssText = 'width:100%;box-sizing:border-box;background:var(--surface-2,#111);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;font-size:13px;color:var(--text);resize:vertical;min-height:72px;line-height:1.55;font-family:inherit;';
+  var bioBtn = document.createElement('button'); bioBtn.textContent = 'Guardar Biografía'; bioBtn.onclick = saveBio;
+  bioBtn.style.cssText = 'margin-top:8px;padding:8px 20px;background:var(--red);color:#fff;border:none;border-radius:var(--radius);font-size:12px;cursor:pointer;font-weight:600;letter-spacing:.5px;';
+  bioRow.appendChild(bioLabel); bioRow.appendChild(bioTA); bioRow.appendChild(bioBtn);
+
+  card.appendChild(topRow); card.appendChild(bioRow);
+  container.appendChild(card);
+
+  // Load bio + avatar from API
+  apiFetch('/clients/profile.php')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (!data || !data.profile) return;
+      var p = data.profile;
+      if (p.avatar_url) {
+        var img2 = document.getElementById('pf-avatar-img');
+        var ini2 = document.getElementById('pf-avatar-init');
+        if (img2) { img2.src = p.avatar_url; img2.style.display = 'block'; }
+        if (ini2) ini2.style.display = 'none';
+        var mainAv = document.getElementById('avatar-xl');
+        if (mainAv) { mainAv.style.backgroundImage = 'url(' + encodeURI(p.avatar_url) + ')'; mainAv.style.backgroundSize = 'cover'; mainAv.style.backgroundPosition = 'center'; mainAv.textContent = ''; }
+      }
+      if (p.bio) { var bio2 = document.getElementById('pf-bio'); if (bio2) bio2.value = p.bio; }
+      var planEl = document.getElementById('pf-card-plan');
+      if (planEl && p.plan) planEl.textContent = 'PLAN ' + p.plan.toUpperCase();
+    })
+    .catch(function() {});
+}
+
+function saveBio() {
+  var bioEl = document.getElementById('pf-bio');
+  if (!bioEl) return;
+  apiFetch('/clients/profile', { method: 'PUT', body: JSON.stringify({ bio: bioEl.value.trim() }) })
+    .then(function(r) { return r.json(); })
+    .then(function() { showToast('Biografía guardada', 'success'); })
+    .catch(function() { showToast('Error al guardar', 'error'); });
+}
+
+function handleAvatarUpload(input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  if (file.size > 2 * 1024 * 1024) { showToast('La foto debe ser menor de 2MB', 'error'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img3 = document.getElementById('pf-avatar-img');
+    var ini3 = document.getElementById('pf-avatar-init');
+    if (img3) { img3.src = e.target.result; img3.style.display = 'block'; }
+    if (ini3) ini3.style.display = 'none';
+    var mainAv = document.getElementById('avatar-xl');
+    if (mainAv) { mainAv.style.backgroundImage = 'url(' + e.target.result + ')'; mainAv.style.backgroundSize = 'cover'; mainAv.style.backgroundPosition = 'center'; mainAv.textContent = ''; }
+  };
+  reader.readAsDataURL(file);
+  var fd = new FormData();
+  fd.append('avatar', file);
+  var token = localStorage.getItem('wc_token');
+  fetch('/api/clients/avatar.php', {
+    method: 'POST',
+    headers: token ? { 'Authorization': 'Bearer ' + token } : {},
+    body: fd
+  }).then(function(r) { return r.json(); })
+    .then(function(d) { showToast(d.avatar_url ? 'Foto actualizada' : 'Error al subir', d.avatar_url ? 'success' : 'error'); })
+    .catch(function() { showToast('Error al subir foto', 'error'); });
+}
+
+// ===== REFERRALS TAB =====
+function initReferralsTab() {
+  var container = document.getElementById('referralsTabContent');
+  if (!container) return;
+  container.textContent = '';
+  var loading = document.createElement('div');
+  loading.style.cssText = 'text-align:center;padding:28px;color:var(--gray);font-size:13px;';
+  loading.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+  container.appendChild(loading);
+
+  apiFetch('/client/referrals.php')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      container.textContent = '';
+      if (!data) { var err = document.createElement('p'); err.textContent = 'Error cargando datos.'; err.style.cssText = 'color:var(--gray);text-align:center;padding:28px;'; container.appendChild(err); return; }
+
+      var code = data.referral_code || '';
+      var link = data.referral_link || '';
+      var refs = data.referrals || [];
+      var conv = data.total_converted || 0;
+      var pend = data.reward_pending  || 0;
+      var wrap = document.createElement('div'); wrap.style.cssText = 'display:grid;gap:16px;';
+
+      // Code card
+      var codeCard = document.createElement('div'); codeCard.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;';
+      var codeLabel = document.createElement('div'); codeLabel.style.cssText = 'font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:10px;font-weight:600;'; codeLabel.textContent = 'Tu Código de Referido';
+      var codeRow = document.createElement('div'); codeRow.style.cssText = 'display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;';
+      var codeEl = document.createElement('code'); codeEl.style.cssText = 'font-size:1.8rem;font-family:monospace;font-weight:700;color:var(--red);letter-spacing:4px;'; codeEl.textContent = code;
+      var copyBtn = document.createElement('button'); copyBtn.style.cssText = 'padding:8px 18px;background:var(--red);color:#fff;border:none;border-radius:var(--radius);font-size:12px;cursor:pointer;font-weight:600;'; copyBtn.textContent = 'Copiar Link';
+      copyBtn.addEventListener('click', function() { copyReferralLink(link); });
+      var linkBox = document.createElement('div'); linkBox.style.cssText = 'padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:var(--radius);font-size:11px;color:var(--gray);word-break:break-all;'; linkBox.textContent = link;
+      codeRow.appendChild(codeEl); codeRow.appendChild(copyBtn);
+      codeCard.appendChild(codeLabel); codeCard.appendChild(codeRow); codeCard.appendChild(linkBox);
+
+      // Stats
+      var statsRow = document.createElement('div'); statsRow.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:10px;';
+      [['Invitados', refs.length, 'var(--text)'], ['Convertidos', conv, '#22c55e'], ['Recompensas', pend, '#f59e0b']].forEach(function(s) {
+        var sc = document.createElement('div'); sc.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;text-align:center;';
+        var sv = document.createElement('div'); sv.style.cssText = 'font-size:2rem;font-weight:700;color:' + s[2] + ';'; sv.textContent = s[1];
+        var sl = document.createElement('div'); sl.style.cssText = 'font-size:11px;color:var(--gray);margin-top:4px;'; sl.textContent = s[0];
+        sc.appendChild(sv); sc.appendChild(sl); statsRow.appendChild(sc);
+      });
+
+      // How it works
+      var infoBox = document.createElement('div'); infoBox.style.cssText = 'background:rgba(227,30,36,0.07);border:1px solid rgba(227,30,36,0.2);border-radius:var(--radius-lg);padding:16px;';
+      var infoTitle = document.createElement('div'); infoTitle.style.cssText = 'font-size:13px;font-weight:700;color:var(--red);margin-bottom:6px;'; infoTitle.textContent = '¿Cómo funciona?';
+      var infoText = document.createElement('p'); infoText.style.cssText = 'font-size:13px;color:var(--gray);line-height:1.65;margin:0;'; infoText.textContent = 'Comparte tu enlace. Cuando un amigo se suscriba y pague su primer mes, recibes 1 semana gratis acreditada en tu plan automáticamente.';
+      infoBox.appendChild(infoTitle); infoBox.appendChild(infoText);
+
+      wrap.appendChild(codeCard); wrap.appendChild(statsRow); wrap.appendChild(infoBox);
+
+      // Referral list
+      if (refs.length > 0) {
+        var listCard = document.createElement('div'); listCard.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;';
+        var listHead = document.createElement('div'); listHead.style.cssText = 'padding:12px 20px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);'; listHead.textContent = 'Historial de Referidos';
+        listCard.appendChild(listHead);
+        refs.forEach(function(r) {
+          var row = document.createElement('div'); row.style.cssText = 'padding:11px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;';
+          var ic = document.createElement('i'); ic.className = 'fas fa-user-plus'; ic.style.cssText = 'color:var(--gray);font-size:12px;width:14px;';
+          var em = document.createElement('span'); em.style.cssText = 'flex:1;font-size:13px;'; em.textContent = r.referred_email || 'Invitado';
+          var sc2 = r.status === 'converted' ? '#22c55e' : (r.status === 'pending' ? '#f59e0b' : 'var(--gray)');
+          var st = document.createElement('span'); st.style.cssText = 'font-size:11px;font-weight:700;color:' + sc2 + ';'; st.textContent = r.status === 'converted' ? 'Convertido' : (r.status === 'pending' ? 'Pendiente' : r.status);
+          var dt = document.createElement('span'); dt.style.cssText = 'font-size:11px;color:var(--gray);white-space:nowrap;'; dt.textContent = (r.created_at || '').substring(0, 10);
+          row.appendChild(ic); row.appendChild(em); row.appendChild(st); row.appendChild(dt);
+          listCard.appendChild(row);
+        });
+        wrap.appendChild(listCard);
+      } else {
+        var empty = document.createElement('div'); empty.style.cssText = 'text-align:center;padding:36px;color:var(--gray);';
+        var emptyI = document.createElement('i'); emptyI.className = 'fas fa-share-nodes'; emptyI.style.cssText = 'font-size:2.5rem;margin-bottom:12px;display:block;opacity:.25;';
+        var emptyT = document.createElement('div'); emptyT.style.cssText = 'font-size:14px;'; emptyT.textContent = 'Aún no tienes referidos. ¡Comparte tu código y gana semanas gratis!';
+        empty.appendChild(emptyI); empty.appendChild(emptyT);
+        wrap.appendChild(empty);
+      }
+      container.appendChild(wrap);
+    })
+    .catch(function() {
+      container.textContent = '';
+      var errEl = document.createElement('div'); errEl.style.cssText = 'text-align:center;padding:36px;color:var(--gray);'; errEl.textContent = 'Error al cargar. Intenta de nuevo.';
+      container.appendChild(errEl);
+    });
+}
+
+function copyReferralLink(link) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(link).then(function() { showToast('Enlace copiado', 'success'); }).catch(fallbackCopy);
+  } else { fallbackCopy(); }
+  function fallbackCopy() {
+    var ta = document.createElement('textarea'); ta.value = link; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('Enlace copiado', 'success');
+  }
 }
 
 function saveProfile() {
