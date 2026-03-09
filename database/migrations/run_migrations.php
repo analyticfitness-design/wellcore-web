@@ -95,7 +95,7 @@ if(col($pdo,'challenge_participants','current_value')&&!col($pdo,'challenge_part
     run($pdo,"ALTER TABLE challenge_participants CHANGE COLUMN current_value progress DECIMAL(10,2) UNSIGNED NOT NULL DEFAULT 0","016 current_value->progress");
 else echo "SKIP: 016 current_value rename\n";
 if(!col($pdo,'challenge_participants','rank'))
-    run($pdo,"ALTER TABLE challenge_participants ADD COLUMN rank INT DEFAULT NULL","016 rank");
+    run($pdo,"ALTER TABLE challenge_participants ADD COLUMN `rank` INT DEFAULT NULL","016 rank");
 else echo "SKIP: 016 rank already exists\n";
 if(!col($pdo,'challenge_participants','completed_at'))
     run($pdo,"ALTER TABLE challenge_participants ADD COLUMN completed_at TIMESTAMP NULL DEFAULT NULL","016 completed_at");

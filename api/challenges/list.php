@@ -23,7 +23,7 @@ $stmt = $db->prepare("
         (SELECT COUNT(*) FROM challenge_participants cp WHERE cp.challenge_id = c.id) AS participant_count,
         (SELECT COUNT(*) FROM challenge_participants cp2 WHERE cp2.challenge_id = c.id AND cp2.client_id = ?) AS user_joined,
         (SELECT cp3.progress FROM challenge_participants cp3 WHERE cp3.challenge_id = c.id AND cp3.client_id = ?) AS user_progress,
-        (SELECT cp4.rank FROM challenge_participants cp4 WHERE cp4.challenge_id = c.id AND cp4.client_id = ?) AS user_rank
+        (SELECT cp4.`rank` FROM challenge_participants cp4 WHERE cp4.challenge_id = c.id AND cp4.client_id = ?) AS user_rank
     FROM challenges c
     WHERE c.is_active = 1 AND c.end_date >= CURDATE()
     ORDER BY c.start_date DESC

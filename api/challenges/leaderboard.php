@@ -27,7 +27,7 @@ if (!$challenge) {
 // Fetch top 20, with privacy: show first name only
 $stmt = $db->prepare("
     SELECT
-        cp.rank,
+        cp.`rank`,
         SUBSTRING_INDEX(c.name, ' ', 1) AS first_name,
         cp.progress,
         cp.completed_at,
@@ -35,7 +35,7 @@ $stmt = $db->prepare("
     FROM challenge_participants cp
     JOIN clients c ON c.id = cp.client_id
     WHERE cp.challenge_id = ?
-    ORDER BY cp.rank ASC, cp.progress DESC
+    ORDER BY cp.`rank` ASC, cp.progress DESC
     LIMIT 20
 ");
 $stmt->execute([$clientId, $challengeId]);

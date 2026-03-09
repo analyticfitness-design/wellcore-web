@@ -71,13 +71,13 @@ try {
             FROM challenge_participants
             WHERE challenge_id = ?
         ) ranked ON ranked.client_id = cp.client_id
-        SET cp.rank = ranked.new_rank
+        SET cp.`rank` = ranked.new_rank
         WHERE cp.challenge_id = ?
     ")->execute([$challengeId, $challengeId]);
 
     // Fetch updated row
     $stmt = $db->prepare("
-        SELECT progress, rank, completed_at
+        SELECT progress, `rank`, completed_at
         FROM challenge_participants
         WHERE challenge_id = ? AND client_id = ?
     ");
