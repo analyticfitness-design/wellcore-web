@@ -544,6 +544,55 @@
     }
     .hb-phase.done { color: #22c55e; border-color: rgba(34,197,94,0.2); background: rgba(34,197,94,0.05); }
     .hb-phase.active { color: #E31E24; border-color: rgba(227,30,36,0.3); background: rgba(227,30,36,0.07); }
+    /* Sidebar extras */
+    .hb-nav-item { padding: 6px 14px; }
+    .hb-badge {
+      margin-left: auto;
+      font-size: 6px;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      letter-spacing: 1px;
+    }
+    .hb-badge.elite { background: rgba(227,30,36,0.2); color: #E31E24; }
+    .hb-badge.pro { background: rgba(245,158,11,0.18); color: #f59e0b; }
+    .hb-xp-wrap {
+      padding: 8px 14px 12px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 6px;
+    }
+    .hb-xp-label { font-size: 7px; font-family: var(--font-mono); color: rgba(255,255,255,0.22); letter-spacing: 1px; margin-bottom: 4px; }
+    .hb-xp-track { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+    .hb-xp-fill { height: 3px; background: linear-gradient(90deg, #E31E24, #f59e0b); border-radius: 2px; }
+    /* Dashboard widgets */
+    .hb-widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .hb-widget {
+      background: #111113;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .hb-widget-tag { font-family: var(--font-mono); font-size: 7px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 5px; }
+    .hb-widget-val { font-family: var(--font-data, var(--font-mono)); font-size: 14px; font-weight: 700; color: #fff; line-height: 1; }
+    .hb-widget-val.red { color: #E31E24; }
+    .hb-widget-val.gold { color: #f59e0b; }
+    .hb-widget-sub { font-size: 8px; color: rgba(255,255,255,0.25); margin-top: 3px; }
+    .hb-mini-bar { margin-top: 6px; height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+    .hb-mini-fill { height: 2px; background: #E31E24; border-radius: 2px; }
+    .hb-logros-row { display: flex; gap: 5px; margin-bottom: 10px; }
+    .hb-logro-chip {
+      flex: 1;
+      background: rgba(227,30,36,0.06);
+      border: 1px solid rgba(227,30,36,0.15);
+      border-radius: 5px;
+      padding: 5px 4px;
+      font-size: 7px;
+      font-family: var(--font-mono);
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.3px;
+      text-align: center;
+      white-space: nowrap;
+    }
     @media (max-width: 991px) {
       #hero {
         grid-template-columns: 1fr;
@@ -969,24 +1018,22 @@
     }
 
     /* ============================================================
-       ABOUT
+       ABOUT — COMUNIDAD
     ============================================================ */
     #about {
       background: var(--bg);
       padding: 0;
       border-bottom: 1px solid var(--border);
     }
-    .about-statement-band {
-      padding: 80px 64px 72px;
-      border-bottom: 1px solid var(--border);
+    .community-hdr {
+      padding: 90px 6vw 72px;
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: end;
       gap: 48px;
-      max-width: 100%;
+      border-bottom: 1px solid var(--border);
     }
-    .about-statement-text {}
-    .about-tag {
+    .community-tag {
       font-family: var(--font-mono);
       font-size: 9px;
       letter-spacing: 3px;
@@ -995,111 +1042,189 @@
       display: block;
       margin-bottom: 24px;
     }
-    .about-quote {
+    .community-title {
       font-family: var(--font-head);
       font-size: clamp(48px, 6vw, 80px);
       line-height: 0.93;
       letter-spacing: 1px;
       color: var(--white);
-      max-width: 720px;
     }
-    .about-quote em {
+    .community-title em {
       font-style: normal;
       color: rgba(255,255,255,0.3);
     }
-    .about-band-right {
+    .community-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.7;
+      max-width: 300px;
       text-align: right;
-      padding-bottom: 8px;
     }
-    .about-band-sub {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.25);
-      text-transform: uppercase;
-      line-height: 1.8;
-    }
-    .about-grid {
+    .community-stats-bar {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      min-height: 440px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
     }
-    .about-photo-cell {
-      overflow: hidden;
-      position: relative;
-      border-right: 1px solid var(--border);
-    }
-    .about-photo-cell img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      filter: grayscale(20%) brightness(0.75);
-      transition: transform 0.1s linear, filter 0.1s linear;
-    }
-    .about-photo-cell:hover img {
-      transform: scale(1.04);
-      filter: grayscale(0%) brightness(0.85);
-    }
-    .about-photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, transparent 60%, var(--bg) 100%);
-      pointer-events: none;
-    }
-    .about-text-cell {
-      padding: 48px 44px;
-      border-right: 1px solid var(--border);
+    .community-stat {
+      background: #0a0a0d;
+      padding: 28px 32px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      gap: 16px;
     }
-    .about-text-cell:last-child { border-right: none; }
-    .about-cell-label {
+    .community-stat-n {
+      font-family: var(--font-head);
+      font-size: 28px;
+      color: var(--red);
+      line-height: 1;
+    }
+    .community-stat-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+    }
+    .community-bento {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1px;
+      background: var(--border);
+    }
+    .community-cell {
+      background: #0d0d10;
+      padding: 44px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .community-cell.span-col { grid-column: span 2; }
+    .community-cell-tag {
       font-family: var(--font-mono);
       font-size: 8px;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--red);
-      margin-bottom: 16px;
       display: block;
+      margin-bottom: 20px;
     }
-    .about-cell-title {
+    .community-cell-title {
       font-family: var(--font-head);
-      font-size: 24px;
+      font-size: 22px;
       letter-spacing: 1px;
       color: var(--white);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       line-height: 1.1;
     }
-    .about-cell-desc {
-      font-size: 14px;
-      color: rgba(255,255,255,0.45);
+    .community-cell-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.38);
       line-height: 1.72;
+      max-width: 340px;
     }
-    .about-cell-cta {
-      margin-top: 32px;
+    .comm-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 28px;
     }
+    .comm-feed-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 6px;
+    }
+    .comm-feed-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-size: 11px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .comm-feed-text {
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.4;
+      flex: 1;
+    }
+    .comm-feed-text strong { color: rgba(255,255,255,0.85); }
+    .comm-feed-time {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(255,255,255,0.2);
+      white-space: nowrap;
+    }
+    .comm-leaderboard {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .comm-lb-row { display: flex; align-items: center; gap: 10px; }
+    .comm-lb-rank {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(255,255,255,0.25);
+      width: 18px;
+    }
+    .comm-lb-name { font-size: 12px; color: rgba(255,255,255,0.7); flex: 1; }
+    .comm-lb-xp { font-family: var(--font-mono); font-size: 10px; color: var(--red); }
+    .comm-lb-bar-wrap {
+      width: 60px;
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+    }
+    .comm-lb-bar { height: 3px; background: var(--red); border-radius: 2px; }
+    .comm-retos {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .comm-reto-item {
+      padding: 12px 16px;
+      background: rgba(227,30,36,0.07);
+      border: 1px solid rgba(227,30,36,0.18);
+      border-radius: 6px;
+    }
+    .comm-reto-name {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 6px;
+    }
+    .comm-reto-meta { font-size: 11px; color: rgba(255,255,255,0.3); }
+    .comm-reto-progress {
+      margin-top: 8px;
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+    }
+    .comm-reto-fill { height: 2px; background: var(--red); border-radius: 2px; }
     @media (max-width: 991px) {
-      .about-statement-band {
-        grid-template-columns: 1fr;
-        padding: 56px 32px;
-      }
-      .about-band-right { text-align: left; }
-      .about-grid {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-      .about-photo-cell {
-        height: 300px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .about-text-cell {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        padding: 40px 32px;
-      }
+      .community-hdr { grid-template-columns: 1fr; padding: 56px 32px 48px; }
+      .community-sub { text-align: left; max-width: 100%; }
+      .community-stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .community-bento { grid-template-columns: 1fr; }
+      .community-cell.span-col { grid-column: span 1; }
+      .community-cell { padding: 36px 28px; }
+    }
+    @media (max-width: 576px) {
+      .community-stat { padding: 20px; }
     }
 
     /* ============================================================
@@ -2222,37 +2347,20 @@
       }
 
       /* TRUST section */
-      .trust-layout {
-        flex-direction: column;
-        padding: 60px 20px;
-        gap: 40px;
-      }
-      .trust-left { max-width: 100%; }
-      .trust-statement { font-size: clamp(28px, 8vw, 40px); }
-      .trust-right { width: 100%; }
-      .trust-row { padding: 20px 0; gap: 12px; }
-      .trust-row-title { font-size: 14px; }
-      .trust-row-desc { font-size: 14px; }
+      #trust { padding: 60px 20px; }
+      .trust-hdr { grid-template-columns: 1fr; gap: 12px; margin-bottom: 32px; }
+      .trust-stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-pillars { grid-template-columns: 1fr; }
+      .trust-stat-n { font-size: clamp(40px, 9vw, 56px); }
 
-      /* ABOUT */
-      .about-statement-band {
-        grid-template-columns: 1fr;
-        padding: 48px 20px;
-        gap: 24px;
-      }
-      .about-quote { font-size: clamp(32px, 9vw, 48px); }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-photo-cell {
-        height: 260px;
-        border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-      }
-      .about-text-cell {
-        padding: 32px 20px;
-        border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-      }
-      .about-cell-title { font-size: 28px; }
+      /* ABOUT — comunidad */
+      .community-hdr { grid-template-columns: 1fr; padding: 48px 20px 40px; gap: 20px; }
+      .community-sub { text-align: left; max-width: 100%; }
+      .community-title { font-size: clamp(36px, 9vw, 56px); }
+      .community-stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .community-bento { grid-template-columns: 1fr; }
+      .community-cell.span-col { grid-column: span 1; }
+      .community-cell { padding: 32px 20px; }
 
       /* PROCESO */
       #proceso { padding: 72px 0; }
@@ -2936,20 +3044,31 @@
         <div class="hb-url">app.wellcorefitness.com &mdash; Portal Cliente</div>
       </div>
       <!-- Browser body -->
-      <div class="hero-browser-body">
-        <!-- Sidebar -->
-        <div class="hb-sidebar">
+      <div class="hero-browser-body" style="min-height:520px;">
+        <!-- Sidebar — estructura real -->
+        <div class="hb-sidebar" style="display:flex;flex-direction:column;">
           <div class="hb-sidebar-logo">WELL<span>CORE</span></div>
-          <div class="hb-nav-item active"><i class="fas fa-th-large"></i> Dashboard</div>
-          <div class="hb-nav-item"><i class="fas fa-dumbbell"></i> Entrenamiento</div>
-          <div class="hb-nav-item"><i class="fas fa-camera"></i> Check-in</div>
-          <div class="hb-nav-item"><i class="fas fa-utensils"></i> Nutrici&oacute;n</div>
-          <div class="hb-nav-item"><i class="fas fa-bolt"></i> XP &amp; Logros</div>
-          <div class="hb-nav-item"><i class="fas fa-chart-line"></i> M&eacute;tricas</div>
+          <div class="hb-nav-item active"><i class="fas fa-home"></i> Dashboard</div>
+          <div class="hb-nav-item"><i class="fas fa-dumbbell"></i> Mi Plan</div>
+          <div class="hb-nav-item"><i class="fas fa-chart-line"></i> Seguimiento</div>
+          <div class="hb-nav-item"><i class="fas fa-clipboard-check"></i> Check-in <span class="hb-badge elite">ELITE</span></div>
+          <div class="hb-nav-item"><i class="fas fa-camera"></i> Fotos</div>
+          <div class="hb-nav-item"><i class="fas fa-weight-scale"></i> M&eacute;tricas</div>
+          <div class="hb-nav-item"><i class="fas fa-trophy"></i> Retos</div>
+          <div class="hb-nav-item"><i class="fas fa-utensils"></i> Nutrici&oacute;n <span class="hb-badge pro">PRO</span></div>
+          <div class="hb-nav-item"><i class="fas fa-users"></i> Comunidad</div>
+          <div class="hb-nav-item"><i class="fas fa-graduation-cap"></i> Academia</div>
+          <div class="hb-nav-item"><i class="fas fa-headphones"></i> Audio Coach</div>
+          <div class="hb-nav-item"><i class="fas fa-video"></i> Tips Coach</div>
+          <div class="hb-nav-item"><i class="fas fa-star"></i> Logros</div>
+          <div class="hb-xp-wrap" style="margin-top:auto;">
+            <div class="hb-xp-label">XP &mdash; NIVEL 4 &middot; 2,840</div>
+            <div class="hb-xp-track"><div class="hb-xp-fill" style="width:68%"></div></div>
+          </div>
         </div>
         <!-- Main content -->
         <div class="hb-main">
-          <div class="hb-welcome">Bienvenido, <strong>Carlos &uarr;</strong></div>
+          <div class="hb-welcome">Bienvenido, <strong>Carlos &uarr;</strong> &middot; <span style="color:#f59e0b;font-size:9px;">&#11088; Nivel 4</span></div>
           <div class="hb-kpi-grid">
             <div class="hb-kpi">
               <div class="hb-kpi-label">Plan Activo</div>
@@ -2970,19 +3089,40 @@
           </div>
           <div class="hb-progress-row">
             <div class="hb-ring-mini">
-              <svg width="44" height="44" viewBox="0 0 44 44">
-                <circle cx="22" cy="22" r="18" fill="none" stroke="#252528" stroke-width="4"/>
-                <circle cx="22" cy="22" r="18" fill="none" stroke="#E31E24"
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <circle cx="20" cy="20" r="16" fill="none" stroke="#252528" stroke-width="4"/>
+                <circle cx="20" cy="20" r="16" fill="none" stroke="#E31E24"
                   stroke-width="4" stroke-linecap="round"
-                  stroke-dasharray="113" stroke-dashoffset="30"
-                  transform="rotate(-90 22 22)"/>
+                  stroke-dasharray="100" stroke-dashoffset="27"
+                  transform="rotate(-90 20 20)"/>
               </svg>
             </div>
-            <div class="hb-ring-info">
+            <div class="hb-ring-info" style="flex:1;">
               <div class="hb-ring-pct">74%</div>
               <div class="hb-ring-sub">Progreso Semana</div>
             </div>
+            <div style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25);text-align:right;line-height:1.5;">Check-in<br><span style="color:#22c55e;">Activo</span></div>
           </div>
+          <!-- Widgets -->
+          <div class="hb-widget-row">
+            <div class="hb-widget">
+              <div class="hb-widget-tag">Video Check-in</div>
+              <div class="hb-widget-val red">PENDIENTE</div>
+              <div class="hb-widget-sub">Coach revisa hoy</div>
+            </div>
+            <div class="hb-widget">
+              <div class="hb-widget-tag">Reto Activo</div>
+              <div class="hb-widget-val">18/30</div>
+              <div class="hb-mini-bar"><div class="hb-mini-fill" style="width:60%"></div></div>
+            </div>
+          </div>
+          <!-- Logros recientes -->
+          <div class="hb-logros-row">
+            <div class="hb-logro-chip">&#127942; Primera PR</div>
+            <div class="hb-logro-chip">&#128293; 30 d&iacute;as</div>
+            <div class="hb-logro-chip">&#128200; &minus;3.2kg</div>
+          </div>
+          <!-- Phases -->
           <div class="hb-phases">
             <div class="hb-phase done"><i class="fas fa-check" style="font-size:8px;margin-right:3px;"></i>F01</div>
             <div class="hb-phase done"><i class="fas fa-check" style="font-size:8px;margin-right:3px;"></i>F02</div>
@@ -3087,44 +3227,52 @@
      3. TRUST / VALUE PROPOSITIONS
 ============================================================ -->
 <section id="trust">
-  <div class="trust-layout">
-
-    <!-- LEFT: Statement -->
-    <div class="trust-left v7-reveal" data-aos="fade-right">
-      <span class="trust-eyebrow"><i class="fas fa-flask" aria-hidden="true" style="margin-right:5px;"></i>POR QU&Eacute; WELLCORE FUNCIONA</span>
-      <p class="trust-statement">
-        El <em>80%</em> de los programas fallan porque no fueron dise&ntilde;ados <em>para ti.</em>
-      </p>
-      <p class="trust-footnote">&mdash; METODOLOG&Iacute;A BASADA EN EVIDENCIA CIENT&Iacute;FICA ACTUALIZADA</p>
+  <div class="trust-hdr container" data-aos="fade-up">
+    <div>
+      <span class="label-tag">POR QU&Eacute; WELLCORE FUNCIONA</span>
+      <h2 class="trust-title">Resultados que<br><em>se sostienen.</em></h2>
     </div>
+    <p class="trust-sub">Cada n&uacute;mero es el reflejo de un sistema construido sobre evidencia, no sobre promesas.</p>
+  </div>
 
-    <!-- RIGHT: Data rows -->
-    <div class="trust-right">
+  <div class="trust-stats-grid">
+    <div class="trust-stat-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="trust-stat-n">94%</div>
+      <div class="trust-stat-lbl">Adherencia promedio</div>
+      <p class="trust-stat-ctx">Nuestros clientes mantienen su protocolo semana tras semana. La constancia es el resultado del sistema, no del azar.</p>
+    </div>
+    <div class="trust-stat-card" data-aos="fade-up" data-aos-delay="60">
+      <div class="trust-stat-n">20+</div>
+      <div class="trust-stat-lbl">Clientes en semana 1</div>
+      <p class="trust-stat-ctx">Lanzamiento real. Personas que apostaron desde el primer d&iacute;a por un sistema basado en evidencia, no en promesas.</p>
+    </div>
+    <div class="trust-stat-card" data-aos="fade-up" data-aos-delay="120">
+      <div class="trust-stat-n">8sem</div>
+      <div class="trust-stat-lbl">Primeros resultados</div>
+      <p class="trust-stat-ctx">El promedio de semanas hasta los primeros cambios medibles y visibles. Sin falsas promesas de transformaciones instant&aacute;neas.</p>
+    </div>
+    <div class="trust-stat-card" data-aos="fade-up" data-aos-delay="180">
+      <div class="trust-stat-n">100%</div>
+      <div class="trust-stat-lbl">Personalizado</div>
+      <p class="trust-stat-ctx">No existen plantillas gen&eacute;ricas. Cada programa se construye desde cero para tu fisiolog&iacute;a, historial y objetivos reales.</p>
+    </div>
+  </div>
 
-      <div class="trust-row" data-aos="fade-left" data-aos-delay="0">
-        <span class="trust-row-num">01 /</span>
-        <div class="trust-row-content">
-          <div class="trust-row-title">CIENCIA, NO INTUICI&Oacute;N</div>
-          <p class="trust-row-desc">Cada decisi&oacute;n de tu programa tiene respaldo en investigaci&oacute;n actualizada. Sin bro-science, sin modas. <strong>Solo lo que la evidencia muestra que funciona para tu fisiolog&iacute;a.</strong></p>
-        </div>
-      </div>
-
-      <div class="trust-row" data-aos="fade-left" data-aos-delay="80">
-        <span class="trust-row-num">02 /</span>
-        <div class="trust-row-content">
-          <div class="trust-row-title">ATENCI&Oacute;N 1-1 REAL</div>
-          <p class="trust-row-desc">No eres un n&uacute;mero en un grupo masivo. Tendr&aacute;s atenci&oacute;n directa con tu coach por WhatsApp, ajustes semanales reales y respuesta a tus dudas. <strong>Sin intermediarios. Sin bots.</strong></p>
-        </div>
-      </div>
-
-      <div class="trust-row" data-aos="fade-left" data-aos-delay="160">
-        <span class="trust-row-num">03 /</span>
-        <div class="trust-row-content">
-          <div class="trust-row-title">ENTIENDES EL POR QU&Eacute;</div>
-          <p class="trust-row-desc">No te decimos qu&eacute; hacer y ya. Cuando entiendes la l&oacute;gica detr&aacute;s de tu plan, tu adherencia se dispara y los resultados <strong>se vuelven sostenibles.</strong></p>
-        </div>
-      </div>
-
+  <div class="trust-pillars">
+    <div class="trust-pillar" data-aos="fade-up" data-aos-delay="0">
+      <span class="trust-pillar-num">01</span>
+      <h3 class="trust-pillar-title">CIENCIA,<br>NO INTUICI&Oacute;N</h3>
+      <p class="trust-pillar-desc">Cada decisi&oacute;n de tu programa tiene respaldo en investigaci&oacute;n actualizada. Sin bro-science. Solo lo que la evidencia muestra que funciona para tu fisiolog&iacute;a.</p>
+    </div>
+    <div class="trust-pillar" data-aos="fade-up" data-aos-delay="80">
+      <span class="trust-pillar-num">02</span>
+      <h3 class="trust-pillar-title">ATENCI&Oacute;N<br>1-1 REAL</h3>
+      <p class="trust-pillar-desc">No eres un n&uacute;mero en un grupo masivo. Atenci&oacute;n directa con tu coach por WhatsApp, ajustes semanales reales. Sin intermediarios. Sin bots.</p>
+    </div>
+    <div class="trust-pillar" data-aos="fade-up" data-aos-delay="160">
+      <span class="trust-pillar-num">03</span>
+      <h3 class="trust-pillar-title">ENTIENDES<br>EL POR QU&Eacute;</h3>
+      <p class="trust-pillar-desc">Cuando entiendes la l&oacute;gica detr&aacute;s de tu plan, tu adherencia se dispara y los resultados se vuelven sostenibles a largo plazo.</p>
     </div>
   </div>
 </section>
@@ -3136,49 +3284,163 @@
 ============================================================ -->
 <section id="about">
 
-  <!-- Top statement band -->
-  <div class="about-statement-band v7-reveal" data-aos="fade-up">
-    <div class="about-statement-text">
-      <span class="about-tag">WELLCORE FITNESS &mdash; NUESTRO ENFOQUE</span>
-      <h2 class="about-quote v7-split-word">
-        Sin dogmas.<br>
-        Sin atajos.<br>
-        <em>Solo ciencia aplicada.</em>
+  <!-- Header -->
+  <div class="community-hdr v7-reveal" data-aos="fade-up">
+    <div>
+      <span class="community-tag">WELLCORE FITNESS &mdash; COMUNIDAD</span>
+      <h2 class="community-title v7-split-word">
+        No entrenas<br>
+        solo. <em>Jam&aacute;s.</em>
       </h2>
     </div>
-    <div class="about-band-right">
-      <p class="about-band-sub">
-        Coaches<br>
-        Dise&ntilde;adores<br>
-        Programadores<br>
-        &mdash; WellCore 2026
-      </p>
+    <p class="community-sub">
+      Lanzamos con 20+ personas desde el d&iacute;a uno. Retos, logros, leaderboard y soporte directo en cada paso del camino.
+    </p>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="community-stats-bar">
+    <div class="community-stat">
+      <div class="community-stat-n">20+</div>
+      <div class="community-stat-label">Miembros<br>semana&nbsp;1</div>
+    </div>
+    <div class="community-stat">
+      <div class="community-stat-n">3</div>
+      <div class="community-stat-label">Retos<br>activos</div>
+    </div>
+    <div class="community-stat">
+      <div class="community-stat-n">94%</div>
+      <div class="community-stat-label">Adherencia<br>promedio</div>
+    </div>
+    <div class="community-stat">
+      <div class="community-stat-n">500+</div>
+      <div class="community-stat-label">Logros<br>desbloqueados</div>
     </div>
   </div>
 
-  <!-- Bottom bento grid -->
-  <div class="about-grid">
+  <!-- Bento grid -->
+  <div class="community-bento">
 
-    <!-- Photo cell -->
-    <div class="about-photo-cell" data-aos="fade-right">
-      <img src="images/coach/studio-54.jpg" alt="WellCore Fitness Studio" loading="lazy" decoding="async" width="600" height="400" />
-      <div class="about-photo-overlay"></div>
+    <!-- Feed de actividad -->
+    <div class="community-cell" data-aos="fade-up" data-aos-delay="0">
+      <span class="community-cell-tag">ACTIVIDAD EN VIVO</span>
+      <h3 class="community-cell-title">Tu comunidad<br>en movimiento</h3>
+      <p class="community-cell-desc">Ve en tiempo real qu&eacute; logros est&aacute;n alcanzando tus compa&ntilde;eros. La motivaci&oacute;n colectiva es real.</p>
+      <div class="comm-feed">
+        <div class="comm-feed-item">
+          <div class="comm-feed-avatar">MC</div>
+          <div class="comm-feed-text"><strong>Mar&iacute;a C.</strong> complet&oacute; el reto de 30 d&iacute;as consecutivos</div>
+          <span class="comm-feed-time">2 min</span>
+        </div>
+        <div class="comm-feed-item">
+          <div class="comm-feed-avatar">JR</div>
+          <div class="comm-feed-text"><strong>Juan R.</strong> desbloque&oacute; el logro <em>Primera PR</em></div>
+          <span class="comm-feed-time">14 min</span>
+        </div>
+        <div class="comm-feed-item">
+          <div class="comm-feed-avatar">AP</div>
+          <div class="comm-feed-text"><strong>Andr&eacute;s P.</strong> subi&oacute; al top&nbsp;3 del leaderboard semanal</div>
+          <span class="comm-feed-time">1 h</span>
+        </div>
+        <div class="comm-feed-item">
+          <div class="comm-feed-avatar">LM</div>
+          <div class="comm-feed-text"><strong>Laura M.</strong> registr&oacute; su check-in de la semana&nbsp;8</div>
+          <span class="comm-feed-time">2 h</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Text cell 1 -->
-    <div class="about-text-cell" data-aos="fade-up" data-aos-delay="80">
-      <span class="about-cell-label">Metodolog&iacute;a</span>
-      <h3 class="about-cell-title">EVIDENCIA,<br>NO MITOS</h3>
-      <p class="about-cell-desc">Cada decisi&oacute;n de tu programa &mdash; frecuencia, volumen, intensidad, macros &mdash; tiene un porqu&eacute; basado en investigaci&oacute;n actualizada. No en tendencias de Instagram ni en lo que funcion&oacute; para otro.</p>
+    <!-- Retos grupales -->
+    <div class="community-cell" data-aos="fade-up" data-aos-delay="60">
+      <span class="community-cell-tag">RETOS GRUPALES</span>
+      <h3 class="community-cell-title">Compite.<br>Sup&eacute;rate.</h3>
+      <p class="community-cell-desc">Retos con fecha l&iacute;mite, participantes reales y progreso visible.</p>
+      <div class="comm-retos">
+        <div class="comm-reto-item">
+          <div class="comm-reto-name">RETO 30 D&Iacute;AS SIN EXCUSAS</div>
+          <div class="comm-reto-meta">47 participantes &middot; 12 d&iacute;as restantes</div>
+          <div class="comm-reto-progress"><div class="comm-reto-fill" style="width:60%"></div></div>
+        </div>
+        <div class="comm-reto-item">
+          <div class="comm-reto-name">DESAF&Iacute;O DE FUERZA M&Aacute;XIMA</div>
+          <div class="comm-reto-meta">23 participantes &middot; 3 d&iacute;as restantes</div>
+          <div class="comm-reto-progress"><div class="comm-reto-fill" style="width:88%"></div></div>
+        </div>
+        <div class="comm-reto-item">
+          <div class="comm-reto-name">CONSISTENCIA AGOSTO</div>
+          <div class="comm-reto-meta">61 participantes &middot; Empieza en 2 d&iacute;as</div>
+          <div class="comm-reto-progress"><div class="comm-reto-fill" style="width:5%"></div></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Text cell 2 -->
-    <div class="about-text-cell" data-aos="fade-up" data-aos-delay="160">
-      <span class="about-cell-label">Sistema</span>
-      <h3 class="about-cell-title">DATOS EN<br>TIEMPO REAL</h3>
-      <p class="about-cell-desc">Revisiones semanales, m&eacute;tricas de progreso y ajustes continuos. Tu programa evoluciona contigo &mdash; no esperamos meses para ver si algo funciona. Comunicaci&oacute;n directa por WhatsApp.</p>
-      <div class="about-cell-cta">
-        <a href="planes.html" class="btn-red" style="display:inline-flex;width:fit-content;font-size:11px;padding:12px 24px;"><div class="btn-bg"></div><span class="btn-text">Ver Planes &rarr;</span></a>
+    <!-- Leaderboard -->
+    <div class="community-cell" data-aos="fade-up" data-aos-delay="120">
+      <span class="community-cell-tag">LEADERBOARD</span>
+      <h3 class="community-cell-title">Top de<br>la semana</h3>
+      <p class="community-cell-desc">Acumula XP con cada entrenamiento y escala posiciones.</p>
+      <div class="comm-leaderboard">
+        <div class="comm-lb-row">
+          <span class="comm-lb-rank">01</span>
+          <span class="comm-lb-name">Mar&iacute;a C.</span>
+          <div class="comm-lb-bar-wrap"><div class="comm-lb-bar" style="width:100%"></div></div>
+          <span class="comm-lb-xp">2,840 XP</span>
+        </div>
+        <div class="comm-lb-row">
+          <span class="comm-lb-rank">02</span>
+          <span class="comm-lb-name">Carlos R.</span>
+          <div class="comm-lb-bar-wrap"><div class="comm-lb-bar" style="width:83%"></div></div>
+          <span class="comm-lb-xp">2,360 XP</span>
+        </div>
+        <div class="comm-lb-row">
+          <span class="comm-lb-rank">03</span>
+          <span class="comm-lb-name">Andr&eacute;s P.</span>
+          <div class="comm-lb-bar-wrap"><div class="comm-lb-bar" style="width:71%"></div></div>
+          <span class="comm-lb-xp">2,010 XP</span>
+        </div>
+        <div class="comm-lb-row">
+          <span class="comm-lb-rank">04</span>
+          <span class="comm-lb-name">Laura M.</span>
+          <div class="comm-lb-bar-wrap"><div class="comm-lb-bar" style="width:58%"></div></div>
+          <span class="comm-lb-xp">1,640 XP</span>
+        </div>
+        <div class="comm-lb-row">
+          <span class="comm-lb-rank">05</span>
+          <span class="comm-lb-name">Sof&iacute;a T.</span>
+          <div class="comm-lb-bar-wrap"><div class="comm-lb-bar" style="width:44%"></div></div>
+          <span class="comm-lb-xp">1,240 XP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coach directo (span 2) -->
+    <div class="community-cell span-col" data-aos="fade-up" data-aos-delay="0">
+      <span class="community-cell-tag">COACH DIRECTO</span>
+      <h3 class="community-cell-title">Tu coach siempre disponible.<br><em style="font-style:normal;color:rgba(255,255,255,0.3)">Sin bots. Sin esperas.</em></h3>
+      <p class="community-cell-desc" style="max-width:520px;">Comunicaci&oacute;n directa por WhatsApp con tu coach. Revisiones semanales, ajustes en tiempo real y respuesta a tus dudas de lunes a s&aacute;bado. Eres parte de un equipo que trabaja para que progreses.</p>
+      <div style="margin-top:28px;">
+        <a href="/inscripcion.html" class="btn-red" style="display:inline-flex;width:fit-content;font-size:11px;padding:12px 28px;"><div class="btn-bg"></div><span class="btn-text">Unirte a la comunidad &rarr;</span></a>
+      </div>
+    </div>
+
+    <!-- Logros & progreso -->
+    <div class="community-cell" data-aos="fade-up" data-aos-delay="80">
+      <span class="community-cell-tag">LOGROS &amp; PROGRESO</span>
+      <h3 class="community-cell-title">Cada semana<br>cuenta.</h3>
+      <p class="community-cell-desc">Desbloquea logros, sube de nivel y visualiza tu evoluci&oacute;n semana a semana con documentaci&oacute;n fotogr&aacute;fica y m&eacute;tricas.</p>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(227,30,36,0.07);border:1px solid rgba(227,30,36,0.18);border-radius:6px;">
+          <span style="font-size:16px;">&#127942;</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.7);">Primera PR desbloqueada</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:6px;">
+          <span style="font-size:16px;">&#128293;</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.7);">30 d&iacute;as sin fallar</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:6px;">
+          <span style="font-size:16px;">&#128200;</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.7);">P&eacute;rdida de grasa confirmada</span>
+        </div>
       </div>
     </div>
 
@@ -4326,7 +4588,7 @@
   </div>
   <div class="v6-social-proof-item">
     <i class="fas fa-users"></i>
-    <span><strong>+120 clientes</strong> activos en la plataforma</span>
+    <span><strong>20+ clientes</strong> en nuestra primera semana</span>
   </div>
   <button class="v6-social-proof-close" aria-label="Cerrar">&times;</button>
 </div>
