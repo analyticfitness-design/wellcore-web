@@ -1168,7 +1168,8 @@ function apiFetch(method, path, body) {
   } else if (body) {
     opts.body = body;
   }
-  return fetch(BASE + path, opts).then(function(r) {
+  var url = BASE + path + (path.endsWith('.php') ? '' : '.php');
+  return fetch(url, opts).then(function(r) {
     if (r.status === 401) { localStorage.removeItem('wc_token'); window.location.href = 'login.html'; return null; }
     return r.json();
   });
