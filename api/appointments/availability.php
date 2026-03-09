@@ -17,6 +17,15 @@ $db     = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
+    // Coach puede ver su propio horario con ?manage=1
+    if (!empty($_GET['manage'])) {
+        $coach    = authenticateCoach();
+        $coach_id = $coach['id'];
+        $stmt     = $db->prepare("SELECT day_of_week, time_start, time_end, is_active FROM coach_availability WHERE coach_id = ? ORDER BY day_of_week, time_start");
+        $stmt->execute([$coach_id]);
+        respond(['schedule' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
+    }
+
     $client = authenticateClient();
     if (strtolower($client['plan'] ?? '') !== 'elite') {
         respondError('Booking disponible solo para plan Elite', 403);

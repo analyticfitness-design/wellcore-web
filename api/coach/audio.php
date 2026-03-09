@@ -15,6 +15,15 @@ $db     = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
+    // Coach gestiona sus propios audios con ?manage=1
+    if (!empty($_GET['manage'])) {
+        $coach    = authenticateCoach();
+        $coach_id = $coach['id'];
+        $stmt     = $db->prepare("SELECT id, title, audio_url, duration_sec, category, plan_access, sort_order, is_active FROM coach_audio WHERE coach_id = ? ORDER BY sort_order ASC, created_at DESC");
+        $stmt->execute([$coach_id]);
+        respond(['items' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
+    }
+
     // Acceso cliente — filtra por plan y coach_id del cliente
     $client    = authenticateClient();
     $client_id = $client['id'];
