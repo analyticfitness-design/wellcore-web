@@ -307,6 +307,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
   transition:all 0.1s linear;
 }
 .btn-outline:hover{border-color:var(--red);color:var(--red)}
+.com-type-btn.active{background:var(--red);border-color:var(--red);color:#fff}
 
 /* ===== CARD ===== */
 .card{
@@ -770,6 +771,9 @@ input,textarea,select{font-family:'Inter',sans-serif}
     <a class="nav-item" onclick="showSection('revenue')" id="nav-revenue">
       <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span> Revenue
     </a>
+    <a class="nav-item" onclick="showSection('comunidad')" id="nav-comunidad">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg></span> Comunidad
+    </a>
   </nav>
 
   <div class="sidebar-user">
@@ -1060,6 +1064,64 @@ input,textarea,select{font-family:'Inter',sans-serif}
                 <div class="brand-preview-label">Clientes Activos</div>
               </div>
               <div class="brand-preview-btn" id="preview-btn" style="background:var(--red)">VER MAS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PWA White-Label Configurator -->
+      <div style="margin-top:32px">
+        <div class="card-title" style="margin-bottom:16px">// APP MOVIL (PWA)</div>
+        <div class="brand-layout">
+          <div>
+            <div class="card v7-glow-track" style="margin-bottom:16px">
+              <div class="card-title">Nombre de tu App</div>
+              <input type="text" class="form-input" id="pwa-app-name" maxlength="60"
+                placeholder="Mi App Fitness"
+                oninput="updatePwaPreview()">
+              <p style="font-size:.72rem;color:var(--gray);margin-top:6px">Maximo 60 caracteres. Aparece en la pantalla de inicio del movil.</p>
+            </div>
+
+            <div class="card v7-glow-track" style="margin-bottom:16px">
+              <div class="card-title">Color de Tema</div>
+              <div class="color-picker-wrap">
+                <input type="color" id="pwa-color" value="#E31E24"
+                  oninput="document.getElementById('pwa-color-hex').textContent=this.value;updatePwaPreview()">
+                <span class="color-hex" id="pwa-color-hex">#E31E24</span>
+              </div>
+            </div>
+
+            <div class="card v7-glow-track" style="margin-bottom:16px">
+              <div class="card-title">Subdominio (opcional)</div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <input type="text" class="form-input" id="pwa-subdomain" maxlength="40"
+                  placeholder="tucoach"
+                  style="flex:1"
+                  oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')">
+                <span style="font-size:.78rem;color:var(--gray);white-space:nowrap">.wellcore.app</span>
+              </div>
+              <p style="font-size:.72rem;color:var(--gray);margin-top:6px">Solo letras, numeros y guiones. Min 3, max 40 chars.</p>
+            </div>
+
+            <button class="btn-primary v7-btn-primary v7-magnetic" id="btn-save-pwa" onclick="savePwaConfig()">
+              Guardar App
+            </button>
+          </div>
+
+          <div>
+            <div class="card v7-glow-track">
+              <div class="card-title">// Preview App Movil</div>
+              <div class="brand-preview" style="max-width:240px;margin:0 auto">
+                <div id="pwa-prev-bar" class="brand-preview-topbar" style="background:var(--red)"></div>
+                <div class="brand-preview-card">
+                  <div class="brand-preview-kpi" id="pwa-prev-name" style="font-size:1rem">Mi App</div>
+                  <div class="brand-preview-label">powered by WellCore</div>
+                </div>
+                <div id="pwa-prev-btn" class="brand-preview-btn" style="background:var(--red)">INSTALAR</div>
+              </div>
+              <p style="font-size:.72rem;color:var(--gray);text-align:center;margin-top:12px">
+                Tus clientes podran instalar esta app desde el navegador sin pasar por la App Store.
+              </p>
             </div>
           </div>
         </div>
@@ -1525,6 +1587,31 @@ input,textarea,select{font-family:'Inter',sans-serif}
       </div>
     </section>
 
+    <!-- ===== SECTION: COMUNIDAD ===== -->
+    <section id="sec-comunidad" class="section v7-reveal">
+      <h1 class="section-title">COMU<span>//</span>NIDAD</h1>
+      <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px">
+        Feed privado entre coaches WellCore. Comparte tips, logros y aprende de tus colegas.
+      </p>
+
+      <!-- New post -->
+      <div class="card v7-glow-track" style="margin-bottom:20px">
+        <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:12px">Publicar en la comunidad</div>
+        <div style="display:flex;gap:10px;margin-bottom:10px">
+          <button class="com-type-btn btn-outline" data-type="post" style="font-size:.75rem;padding:5px 14px" onclick="setCommunityType('post')">💬 Post</button>
+          <button class="com-type-btn btn-outline" data-type="tip" style="font-size:.75rem;padding:5px 14px" onclick="setCommunityType('tip')">💡 Tip</button>
+          <button class="com-type-btn btn-outline" data-type="achievement" style="font-size:.75rem;padding:5px 14px" onclick="setCommunityType('achievement')">🏆 Logro</button>
+        </div>
+        <textarea id="com-content" placeholder="¿Qué quieres compartir con la comunidad?" style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:#fff;padding:10px 12px;font-size:.84rem;resize:vertical;min-height:80px;font-family:inherit;box-sizing:border-box"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:10px">
+          <button id="btn-publish-post" class="btn-primary v7-magnetic" onclick="publishPost()">Publicar</button>
+        </div>
+      </div>
+
+      <!-- Feed -->
+      <div id="com-feed"></div>
+    </section>
+
   </div><!-- /content-area -->
 </div><!-- /main-wrap -->
 
@@ -1561,7 +1648,8 @@ var sectionMap = {
   academia: 'Academia',
   analytics: 'Analytics',
   mensajes: 'Mensajes',
-  revenue: 'Revenue'
+  revenue: 'Revenue',
+  comunidad: 'Comunidad'
 };
 
 // ===== AUTH CHECK =====
@@ -1648,11 +1736,12 @@ function showSection(name) {
   if (name === 'tickets')   loadTickets();
   if (name === 'referidos') loadReferrals();
   if (name === 'perfil')    loadProfile();
-  if (name === 'marca')     loadBrandData();
+  if (name === 'marca')     { loadBrandData(); loadPwaConfig(); }
   if (name === 'academia')  loadAcademia();
   if (name === 'analytics') loadAnalytics();
   if (name === 'mensajes')  loadMensajes();
   if (name === 'revenue')   loadRevenue();
+  if (name === 'comunidad') loadComunidad();
 
   closeSidebar();
 }
@@ -2984,7 +3073,7 @@ function setTemplate(type) {
 }
 
 function loadMensajes() {
-  api.get('coach/clients-list').then(function(r) {
+  api.get('coach/clients').then(function(r) {
     _msgClients = r.clients || [];
     var list = document.getElementById('msg-client-list');
     if (!list) return;
@@ -3222,6 +3311,165 @@ function sendRenewalReminder(clientId, clientName) {
     showSection('mensajes');
     setTimeout(function() { openThread(clientId, clientName); }, 400);
   }).catch(function() {});
+}
+
+/* =========================================================
+   COMUNIDAD
+   ========================================================= */
+var _comType = 'post';
+
+function setCommunityType(type) {
+  _comType = type;
+  document.querySelectorAll('.com-type-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.type === type);
+  });
+}
+
+function loadComunidad() {
+  setCommunityType('post');
+  var feed = document.getElementById('com-feed');
+  if (!feed) return;
+  feed.textContent = '';
+  var loading = document.createElement('p');
+  loading.style.cssText = 'color:var(--gray);font-size:.84rem;padding:24px 0;text-align:center';
+  loading.textContent = 'Cargando feed...';
+  feed.appendChild(loading);
+
+  api.get('coach/community').then(function(data) {
+    feed.textContent = '';
+    var posts = (data && data.posts) ? data.posts : [];
+    if (!posts.length) {
+      var empty = document.createElement('p');
+      empty.style.cssText = 'color:var(--gray);font-size:.84rem;padding:24px 0;text-align:center';
+      empty.textContent = 'Aun no hay posts. Se el primero!';
+      feed.appendChild(empty);
+      return;
+    }
+    var typeIcon = { post: '💬', tip: '💡', achievement: '🏆' };
+    posts.forEach(function(p) {
+      var card = document.createElement('div');
+      card.className = 'card v7-glow-track';
+      card.style.cssText = 'margin-bottom:14px;padding:16px 20px';
+
+      var header = document.createElement('div');
+      header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:10px';
+
+      var authorWrap = document.createElement('div');
+      authorWrap.style.cssText = 'display:flex;align-items:center;gap:8px';
+      var icon = document.createElement('span');
+      icon.textContent = typeIcon[p.type] || '💬';
+      var author = document.createElement('span');
+      author.style.cssText = 'font-size:.8rem;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.05em';
+      author.textContent = p.coach_name || 'Coach';
+      authorWrap.appendChild(icon);
+      authorWrap.appendChild(author);
+
+      var meta = document.createElement('div');
+      meta.style.cssText = 'display:flex;align-items:center;gap:12px';
+      var date = document.createElement('span');
+      date.style.cssText = 'font-size:.72rem;color:var(--gray)';
+      date.textContent = p.created_at ? p.created_at.slice(0,10) : '';
+      var likeBtn = document.createElement('button');
+      likeBtn.style.cssText = 'background:none;border:none;color:var(--gray);font-size:.78rem;cursor:pointer;padding:0;display:flex;align-items:center;gap:4px';
+      var likeCount = document.createElement('span');
+      likeCount.className = 'like-count';
+      likeCount.textContent = p.likes || 0;
+      likeBtn.appendChild(document.createTextNode('♥ '));
+      likeBtn.appendChild(likeCount);
+      likeBtn.addEventListener('click', function() {
+        api.post('coach/community?like=1', { post_id: p.id }).then(function() {
+          likeCount.textContent = parseInt(likeCount.textContent, 10) + 1;
+          likeBtn.style.color = 'var(--red)';
+        }).catch(function() {});
+      });
+
+      meta.appendChild(date);
+      meta.appendChild(likeBtn);
+      header.appendChild(authorWrap);
+      header.appendChild(meta);
+
+      var content = document.createElement('p');
+      content.style.cssText = 'font-size:.88rem;line-height:1.6;color:var(--text);margin:0';
+      content.textContent = p.content || '';
+
+      card.appendChild(header);
+      card.appendChild(content);
+      feed.appendChild(card);
+    });
+  }).catch(function() {
+    feed.textContent = '';
+    var err = document.createElement('p');
+    err.style.cssText = 'color:var(--gray);font-size:.84rem;padding:24px 0;text-align:center';
+    err.textContent = 'Error cargando el feed.';
+    feed.appendChild(err);
+  });
+}
+
+function publishPost() {
+  var textarea = document.getElementById('com-content');
+  var content = textarea ? textarea.value.trim() : '';
+  if (!content) return;
+  var btn = document.getElementById('btn-publish-post');
+  if (btn) { btn.disabled = true; btn.textContent = 'Publicando...'; }
+
+  api.post('coach/community', { content: content, type: _comType }).then(function() {
+    if (textarea) textarea.value = '';
+    if (btn) { btn.disabled = false; btn.textContent = 'Publicar'; }
+    loadComunidad();
+  }).catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Publicar'; }
+    alert('Error al publicar. Intenta de nuevo.');
+  });
+}
+
+/* =========================================================
+   PWA CONFIG
+   ========================================================= */
+function loadPwaConfig() {
+  api.get('coach/pwa-config').then(function(data) {
+    var cfg = data && data.config ? data.config : {};
+    var nameEl = document.getElementById('pwa-app-name');
+    var colorEl = document.getElementById('pwa-color');
+    var colorHex = document.getElementById('pwa-color-hex');
+    var subEl = document.getElementById('pwa-subdomain');
+    if (nameEl) nameEl.value = cfg.app_name || '';
+    if (colorEl) { colorEl.value = cfg.color || '#E31E24'; }
+    if (colorHex) colorHex.textContent = cfg.color || '#E31E24';
+    if (subEl) subEl.value = cfg.subdomain || '';
+    updatePwaPreview();
+  }).catch(function() {});
+}
+
+function updatePwaPreview() {
+  var nameEl = document.getElementById('pwa-app-name');
+  var colorEl = document.getElementById('pwa-color');
+  var prevName = document.getElementById('pwa-prev-name');
+  var prevBar = document.getElementById('pwa-prev-bar');
+  var prevBtn2 = document.getElementById('pwa-prev-btn');
+  var name = nameEl ? nameEl.value || 'Mi App' : 'Mi App';
+  var color = colorEl ? colorEl.value : '#E31E24';
+  if (prevName) prevName.textContent = name.slice(0, 16);
+  if (prevBar) prevBar.style.background = color;
+  if (prevBtn2) prevBtn2.style.background = color;
+}
+
+function savePwaConfig() {
+  var nameEl = document.getElementById('pwa-app-name');
+  var colorEl = document.getElementById('pwa-color');
+  var subEl = document.getElementById('pwa-subdomain');
+  var btn = document.getElementById('btn-save-pwa');
+  if (btn) { btn.disabled = true; btn.textContent = 'Guardando...'; }
+  api.post('coach/pwa-config', {
+    app_name:  nameEl ? nameEl.value.trim() : '',
+    color:     colorEl ? colorEl.value : '#E31E24',
+    subdomain: subEl ? subEl.value.trim().toLowerCase() : ''
+  }).then(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Guardar App'; }
+    alert('Configuracion guardada. Tu PWA esta lista.');
+  }).catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Guardar App'; }
+    alert('Error al guardar.');
+  });
 }
 </script>
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
