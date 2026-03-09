@@ -2048,6 +2048,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
 <!-- WellCore v7 Ultra-Premium Design System 2026 -->
 <link rel="stylesheet" href="css/wellcore-v7.css">
+<!-- WellCore v8 Notificaciones, Perfil, Referidos, PWA -->
+<link rel="stylesheet" href="css/wellcore-v8.css">
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#E31E24">
 </head>
 <body>
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
@@ -2096,6 +2101,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <a class="nav-item" onclick="showSection('perfil')" id="nav-perfil">
       <i class="fas fa-user"></i> Mi Perfil
     </a>
+    <a class="nav-item" onclick="showSection('referidos')" id="nav-referidos">
+      <i class="fas fa-share-nodes"></i> Referidos
+    </a>
   </nav>
 
   <div class="sidebar-plan">
@@ -2118,6 +2126,20 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <div class="topbar-center-badge" id="topbar-breadcrumb">Dashboard</div>
     <div class="topbar-right">
       <div class="topbar-plan-badge" id="topbar-plan-badge">ESENCIAL</div>
+      <!-- v8: Notification Bell -->
+      <div class="notif-wrapper">
+        <div class="notif-bell" id="clientNotifBell" onclick="V8.Notifications.togglePanel()" title="Notificaciones">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notif-badge" id="clientNotifBadge" style="display:none">0</span>
+        </div>
+        <div class="notif-panel" id="clientNotifPanel">
+          <div class="notif-panel-header">
+            Notificaciones
+            <button onclick="V8.Notifications.markAllRead()">Marcar todas leídas</button>
+          </div>
+          <div class="notif-list" id="clientNotifList"></div>
+        </div>
+      </div>
       <button class="btn-logout-top" onclick="doLogout()">
         <i class="fas fa-sign-out-alt"></i> <span class="logout-label">Salir</span>
       </button>
@@ -2156,6 +2178,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
 
       <p class="section-desc">Tu resumen de progreso y actividad. Aquí puedes ver cómo vas avanzando en tu programa de entrenamiento personalizado.</p>
+
+      <!-- v8: Renewal Banner (se activa via JS si vence en ≤7 días) -->
+      <div id="renewalBannerContainer"></div>
+      <!-- v8: Check-in Pending Alert -->
+      <div id="checkinAlertContainer"></div>
 
       <div class="kpi-grid">
         <div class="kpi-card accent-left-red card-hover v7-glow-track">
@@ -3670,6 +3697,13 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <h1 class="section-title">Mi <span>Perfil</span></h1>
       <p class="section-desc">Tu información personal y configuración de cuenta. Mantén tus datos actualizados para que tu coach te conozca mejor.</p>
 
+      <!-- v8: Profile card editable (bio, ciudad, nacimiento, referral_code) -->
+      <div id="profileTabContent" style="margin-bottom:28px">
+        <div style="text-align:center;padding:24px;color:var(--gray);font-size:13px">
+          <i class="fas fa-spinner fa-spin"></i> Cargando perfil...
+        </div>
+      </div>
+
       <div class="perfil-top" style="border-left:4px solid var(--red)">
         <div class="avatar-xl" id="avatar-xl" style="box-shadow:0 0 0 3px var(--red),0 0 0 6px var(--red-dim)">C</div>
         <div class="perfil-info">
@@ -4018,6 +4052,18 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       </div>
     </section>
 
+    <!-- ===== SECTION: REFERIDOS (v8) ===== -->
+    <section id="sec-referidos" class="section">
+      <h1 class="section-title">Programa de <span>Referidos</span></h1>
+      <p class="section-desc">Invita a tus amigos a WellCore y gana semanas gratis de suscripción cuando se conviertan en clientes.</p>
+      <!-- v8: contenido dinámico via V8.Referrals.init() -->
+      <div id="referralsTabContent">
+        <div style="text-align:center;padding:40px;color:var(--gray);font-size:13px">
+          <i class="fas fa-spinner fa-spin"></i> Cargando referidos...
+        </div>
+      </div>
+    </section>
+
   </div><!-- /content-area -->
 </div><!-- /main-wrap -->
 
@@ -4115,6 +4161,8 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
       localStorage.setItem('wc_client_email', clientEmail);
       document.body.style.visibility = 'visible';
       try { if (typeof init === 'function') init(); } catch(e) { console.error('[WC init]', e); }
+      // v8: iniciar notificaciones después de auth
+      if (typeof V8 !== 'undefined') { V8.Notifications.init('clientNotifBell', 'clientNotifPanel'); }
     })
     .catch(function() {
       if (sessionStorage.getItem('_wc_preview_session')) {
@@ -4333,7 +4381,8 @@ const SECTION_LABELS = {
   biblioteca: 'Biblioteca',
   nutricion: 'Nutrición',
   soporte: 'Soporte',
-  perfil: 'Mi Perfil'
+  perfil: 'Mi Perfil',
+  referidos: 'Referidos'
 };
 
 function showSection(id) {
@@ -4349,6 +4398,9 @@ function showSection(id) {
   setActiveBottomNav(bnMap[id] || id);
   closeSidebar();
   if (id === 'seguimiento') loadWeeklyInsight(false);
+  // v8: lazy init de módulos al primera visita al tab
+  if (id === 'perfil'    && typeof V8 !== 'undefined' && !V8._profileInited)    { V8._profileInited = true; V8.Profile.init('profileTabContent'); }
+  if (id === 'referidos' && typeof V8 !== 'undefined' && !V8._referralsInited)  { V8._referralsInited = true; V8.Referrals.init('referralsTabContent'); }
 }
 
 // ===== SIDEBAR MOBILE =====
@@ -9204,6 +9256,7 @@ document.addEventListener('keydown', function(e) {
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
 <script src="js/wellcore-v7.js" defer></script>
+<script src="js/wellcore-v8.js" defer></script>
 <script>
 // v6 Skeleton loading — shimmers KPI values while data loads
 (function(){
@@ -9240,6 +9293,14 @@ document.addEventListener('keydown', function(e) {
     });
   }, 5000);
 })();
+</script>
+<!-- v8: PWA Service Worker registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function() {});
+  });
+}
 </script>
 </body>
 </html>

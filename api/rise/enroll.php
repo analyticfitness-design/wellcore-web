@@ -53,14 +53,33 @@ $client_code   = 'rise-' . strtoupper(bin2hex(random_bytes(4)));
 $start_date    = date('Y-m-d');
 $end_date      = date('Y-m-d', strtotime('+30 days'));
 
+// v8: Capturar código de referido si viene en el body
+$referral_code = trim($input['referral_code'] ?? '');
+$referrer_id   = null;
+if ($referral_code !== '') {
+    $rStmt = $db->prepare("SELECT id FROM clients WHERE referral_code = ?");
+    $rStmt->execute([$referral_code]);
+    $referrer = $rStmt->fetchColumn();
+    if ($referrer) $referrer_id = (int)$referrer;
+}
+
 $db->beginTransaction();
 try {
     $stmt = $db->prepare("
-        INSERT INTO clients (client_code, name, email, password_hash, plan, status, created_at)
-        VALUES (?, ?, ?, ?, 'rise', 'activo', NOW())
+        INSERT INTO clients (client_code, name, email, password_hash, plan, status, referred_by, created_at)
+        VALUES (?, ?, ?, ?, 'rise', 'activo', ?, NOW())
     ");
-    $stmt->execute([$client_code, $name, $email, $password_hash]);
+    $stmt->execute([$client_code, $name, $email, $password_hash, $referrer_id]);
     $client_id = $db->lastInsertId();
+
+    // v8: Registrar referido si aplica
+    if ($referrer_id) {
+        $rInsert = $db->prepare("
+            INSERT INTO referrals (referrer_id, referred_email, referred_id, status, created_at)
+            VALUES (?, ?, ?, 'registered', NOW())
+        ");
+        $rInsert->execute([$referrer_id, $email, $client_id]);
+    }
 
     $stmt = $db->prepare("
         INSERT INTO rise_programs

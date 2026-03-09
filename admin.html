@@ -1483,6 +1483,8 @@
 <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
 <!-- WellCore v7 Ultra-Premium Design System 2026 -->
 <link rel="stylesheet" href="css/wellcore-v7.css">
+<!-- WellCore v8 Notificaciones, Perfil, Referidos -->
+<link rel="stylesheet" href="css/wellcore-v8.css">
 </head>
 <body>
 <script src="js/api.js"></script>
@@ -1564,6 +1566,20 @@
       <button class="topbar-hamburger" onclick="toggleMobileSidebar()">&#9776;</button>
       <div class="topbar-title">PANEL ADMIN</div>
       <div class="topbar-spacer"></div>
+      <!-- v8: Admin Notification Bell -->
+      <div class="notif-wrapper" style="margin-right:8px">
+        <div class="notif-bell" id="adminNotifBell" onclick="V8AdminNotifPanel.toggle()" title="Notificaciones admin">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notif-badge" id="adminNotifBadge" style="display:none">0</span>
+        </div>
+        <div class="notif-panel" id="adminNotifPanel">
+          <div class="notif-panel-header">
+            Notificaciones
+            <button onclick="V8AdminNotifPanel.markAll()">Marcar todas leídas</button>
+          </div>
+          <div class="notif-list" id="adminNotifList"></div>
+        </div>
+      </div>
       <div class="topbar-user">
         <div class="avatar" id="adminAvatar">C</div>
         <div class="user-info">
@@ -2459,12 +2475,20 @@
       var btn = document.createElement('button'); btn.className = 'btn btn-sm btn-primary'; btn.textContent = '\u2192 Ver Portal';
       var codeRef = c.client_code || c.id;
       btn.addEventListener('click', function() { viewClientPortal(codeRef); });
+      // v8: Boton notificar cliente
+      var notifBtn = document.createElement('button');
+      notifBtn.className = 'btn btn-sm';
+      notifBtn.style.cssText = 'margin-left:6px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.25);color:#E31E24;';
+      notifBtn.title = 'Enviar notificacion a este cliente';
+      notifBtn.textContent = '\uD83D\uDD14 Notificar';
+      (function(cid, cname){ notifBtn.addEventListener('click', function(){ AdminNotify.openModal(cid, cname); }); })(c.id, c.name);
       var delBtnC = document.createElement('button');
       delBtnC.className = 'btn btn-sm';
       delBtnC.style.cssText = 'margin-left:6px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#EF4444;';
       delBtnC.textContent = '✕';
       (function(cid, cname){ delBtnC.addEventListener('click', function(){ deleteClient(cid, cname); }); })(c.id, c.name);
       tdBtn.appendChild(btn);
+      tdBtn.appendChild(notifBtn);
       tdBtn.appendChild(delBtnC);
 
       [tdName, tdEmail, tdPlan, tdWeeks, tdStatus, tdCI, tdMrr, tdBtn].forEach(function(td) { tr.appendChild(td); });
@@ -3712,6 +3736,156 @@
 </script>
 <script src="js/community.js"></script>
 <script src="js/wellcore-v7.js" defer></script>
+<script src="js/wellcore-v8.js" defer></script>
+
+<!-- v8: Modal de notificación a cliente + panel notif admin -->
+<div id="adminNotifyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center">
+  <div style="background:var(--surface,#13131a);border:1px solid rgba(227,30,36,0.3);border-radius:16px;padding:28px;width:100%;max-width:440px;margin:16px">
+    <h3 style="margin:0 0 6px;font-size:17px">Enviar Notificación</h3>
+    <p id="adminNotifyTarget" style="font-size:13px;color:var(--text-muted,#888);margin:0 0 20px"></p>
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;font-weight:700;color:var(--text-muted,#888);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px">Título *</label>
+      <input type="text" id="adminNotifyTitle" maxlength="160" placeholder="Título de la notificación"
+        style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;font-size:14px;color:#fff;outline:none;box-sizing:border-box">
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;font-weight:700;color:var(--text-muted,#888);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px">Mensaje (opcional)</label>
+      <textarea id="adminNotifyBody" rows="3" placeholder="Mensaje adicional..."
+        style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;font-size:14px;color:#fff;outline:none;resize:none;box-sizing:border-box;font-family:inherit"></textarea>
+    </div>
+    <div style="margin-bottom:20px">
+      <label style="font-size:11px;font-weight:700;color:var(--text-muted,#888);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px">Link (opcional)</label>
+      <input type="text" id="adminNotifyLink" placeholder="/cliente.html#checkin"
+        style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;font-size:14px;color:#fff;outline:none;box-sizing:border-box">
+    </div>
+    <div style="display:flex;gap:10px">
+      <button id="adminNotifySend" onclick="AdminNotify.send()" style="flex:1;background:var(--red,#E31E24);border:none;color:#fff;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer">Enviar</button>
+      <button onclick="AdminNotify.closeModal()" style="padding:11px 20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;cursor:pointer">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// v8: Admin Notify Modal
+var AdminNotify = {
+  _clientId: null,
+  openModal: function(cid, cname) {
+    this._clientId = cid;
+    var modal = document.getElementById('adminNotifyModal');
+    var target = document.getElementById('adminNotifyTarget');
+    if (target) target.textContent = 'Para: ' + cname;
+    document.getElementById('adminNotifyTitle').value = '';
+    document.getElementById('adminNotifyBody').value = '';
+    document.getElementById('adminNotifyLink').value = '';
+    if (modal) modal.style.display = 'flex';
+    setTimeout(function() { document.getElementById('adminNotifyTitle').focus(); }, 100);
+  },
+  closeModal: function() {
+    var modal = document.getElementById('adminNotifyModal');
+    if (modal) modal.style.display = 'none';
+  },
+  send: function() {
+    var title = (document.getElementById('adminNotifyTitle').value || '').trim();
+    var body  = (document.getElementById('adminNotifyBody').value  || '').trim();
+    var link  = (document.getElementById('adminNotifyLink').value  || '').trim();
+    if (!title) { alert('El titulo es obligatorio'); return; }
+    var token = localStorage.getItem('wc_admin_token') || localStorage.getItem('wc_token');
+    if (!token) return;
+    var btn = document.getElementById('adminNotifySend');
+    if (btn) btn.textContent = 'Enviando...';
+    fetch('/api/notifications/create', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: this._clientId, type: 'admin', title: title, body: body || null, link: link || null })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (btn) btn.textContent = 'Enviar';
+      if (d.ok) { AdminNotify.closeModal(); if (typeof showToast === 'function') showToast('Notificacion enviada'); }
+      else { alert(d.error || 'Error al enviar'); }
+    })
+    .catch(function() { if (btn) btn.textContent = 'Enviar'; alert('Error de conexion'); });
+  }
+};
+
+// v8: Admin Notification Panel toggle
+var V8AdminNotifPanel = {
+  _open: false,
+  toggle: function() {
+    var panel = document.getElementById('adminNotifPanel');
+    if (!panel) return;
+    this._open = !this._open;
+    panel.classList.toggle('open', this._open);
+    if (this._open) this._loadList();
+  },
+  _loadList: function() {
+    var token = localStorage.getItem('wc_admin_token') || localStorage.getItem('wc_token');
+    if (!token) return;
+    fetch('/api/notifications/list', { headers: { 'Authorization': 'Bearer ' + token } })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var list = document.getElementById('adminNotifList');
+      if (!list) return;
+      while (list.firstChild) { list.removeChild(list.firstChild); }
+      var items = data.notifications || [];
+      for (var i = 0; i < items.length; i++) {
+        var n = items[i];
+        var item = document.createElement('div');
+        item.className = 'notif-item' + (n.read_at ? '' : ' unread');
+        var title = document.createElement('div'); title.className = 'notif-title'; title.textContent = n.title;
+        var time = document.createElement('div'); time.className = 'notif-time';
+        time.textContent = n.created_at ? (function(d){ var diff=Math.floor((Date.now()-new Date(d).getTime())/60000); return diff<60?'Hace '+diff+' min':'Hace '+Math.floor(diff/60)+'h'; })(n.created_at) : '';
+        item.appendChild(title);
+        if (n.body) { var b = document.createElement('div'); b.className = 'notif-body'; b.textContent = n.body; item.appendChild(b); }
+        item.appendChild(time);
+        list.appendChild(item);
+      }
+      var badge = document.getElementById('adminNotifBadge');
+      if (badge) {
+        var uc = data.unread_count || 0;
+        if (uc > 0) { badge.textContent = uc; badge.style.display = 'flex'; } else { badge.style.display = 'none'; }
+      }
+    })
+    .catch(function() {});
+  },
+  markAll: function() {
+    var token = localStorage.getItem('wc_admin_token') || localStorage.getItem('wc_token');
+    if (!token) return;
+    fetch('/api/notifications/mark-read', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ all: true })
+    }).then(function() {
+      var badge = document.getElementById('adminNotifBadge');
+      if (badge) badge.style.display = 'none';
+      document.querySelectorAll('#adminNotifList .notif-item').forEach(function(el) { el.classList.remove('unread'); });
+    }).catch(function() {});
+  }
+};
+
+// Init admin notif badge on load
+window.addEventListener('load', function() {
+  var token = localStorage.getItem('wc_admin_token') || localStorage.getItem('wc_token');
+  if (!token) return;
+  fetch('/api/notifications/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    var badge = document.getElementById('adminNotifBadge');
+    if (badge && d.unread_count > 0) { badge.textContent = d.unread_count; badge.style.display = 'flex'; }
+  }).catch(function() {});
+});
+
+// Cerrar panel al click fuera
+document.addEventListener('click', function(e) {
+  var bell  = document.getElementById('adminNotifBell');
+  var panel = document.getElementById('adminNotifPanel');
+  if (!bell || !panel || !V8AdminNotifPanel._open) return;
+  if (!bell.contains(e.target) && !panel.contains(e.target)) {
+    panel.classList.remove('open');
+    V8AdminNotifPanel._open = false;
+  }
+});
+</script>
 
 </body>
 </html>
