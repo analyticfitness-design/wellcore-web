@@ -848,109 +848,124 @@
       border-bottom: 1px solid var(--border);
       overflow: hidden;
     }
-    .trust-layout {
+    /* ── TRUST → RESULTADOS REALES ── */
+    #trust { padding: 90px 6vw; }
+    .trust-hdr {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 560px;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 48px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
     }
-    .trust-left {
-      padding: 80px 64px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border-right: 1px solid var(--border);
-      position: relative;
-    }
-    .trust-left::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--red);
-    }
-    .trust-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--red);
-      display: block;
-      margin-bottom: 32px;
-    }
-    .trust-statement {
+    .trust-title {
       font-family: var(--font-head);
-      font-size: clamp(42px, 5.5vw, 72px);
+      font-size: clamp(40px, 4.5vw, 58px);
       line-height: 0.95;
       letter-spacing: 1px;
       color: var(--white);
-      flex: 1;
-      display: flex;
-      align-items: center;
+      margin-top: 16px;
     }
-    .trust-statement em {
-      color: var(--red);
-      font-style: normal;
+    .trust-title em { color: var(--red); font-style: normal; }
+    .trust-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      max-width: 300px;
+      line-height: 1.7;
+      text-align: right;
     }
-    .trust-footnote {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 1px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
+    .trust-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 1px;
     }
-    .trust-right {
-      display: flex;
-      flex-direction: column;
-    }
-    .trust-row {
-      flex: 1;
-      padding: 48px 56px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: flex-start;
-      gap: 32px;
-      transition: background 0.1s linear;
+    .trust-stat-card {
+      background: #09090c;
+      padding: 44px 36px;
       position: relative;
+      overflow: hidden;
     }
-    .trust-row:last-child { border-bottom: none; }
-    .trust-row:hover { background: rgba(227,30,36,0.04); }
-    .trust-row-num {
+    .trust-stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .trust-stat-card:hover::after { transform: scaleX(1); }
+    .trust-stat-n {
+      font-family: var(--font-head);
+      font-size: clamp(52px, 5vw, 72px);
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .trust-stat-n em { color: var(--red); font-style: normal; }
+    .trust-stat-lbl {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 6px;
+    }
+    .trust-stat-ctx {
+      font-size: 11px;
+      color: rgba(255,255,255,0.22);
+      line-height: 1.5;
+    }
+    .trust-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-top: none;
+    }
+    .trust-pillar {
+      background: #0d0d10;
+      padding: 40px 36px;
+      transition: background 0.15s;
+    }
+    .trust-pillar:hover { background: rgba(227,30,36,0.04); }
+    .trust-pillar-num {
       font-family: var(--font-mono);
       font-size: 9px;
       letter-spacing: 2px;
       color: var(--red);
-      flex-shrink: 0;
-      padding-top: 4px;
+      margin-bottom: 20px;
+      display: block;
     }
-    .trust-row-content {}
-    .trust-row-title {
+    .trust-pillar-title {
       font-family: var(--font-head);
-      font-size: 26px;
+      font-size: clamp(22px, 2vw, 30px);
+      line-height: 1;
       letter-spacing: 1px;
       color: var(--white);
-      margin-bottom: 10px;
-      line-height: 1;
+      margin-bottom: 14px;
     }
-    .trust-row-desc {
-      font-size: 14px;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.7;
+    .trust-pillar-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.48);
+      line-height: 1.75;
     }
-    .trust-row-desc strong {
-      color: rgba(255,255,255,0.75);
-      font-weight: 500;
-    }
+    .trust-pillar-desc strong { color: rgba(255,255,255,0.72); font-weight: 500; }
     @media (max-width: 991px) {
-      .trust-layout { grid-template-columns: 1fr; }
-      .trust-left {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        padding: 56px 32px;
-      }
-      .trust-row { padding: 40px 32px; }
+      #trust { padding: 72px 24px; }
+      .trust-hdr { grid-template-columns: 1fr; gap: 16px; }
+      .trust-sub { text-align: left; max-width: 100%; }
+      .trust-stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-pillars { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 576px) {
+      .trust-stat-card { padding: 28px 20px; }
+      .trust-pillar { padding: 28px 20px; }
     }
 
     /* ============================================================
@@ -1323,8 +1338,12 @@
       flex-shrink: 0;
       margin-top: 2px;
     }
+    .plan-features li.locked { color: rgba(255,255,255,0.22); }
+    .plan-features li.locked::before { content: "\2013"; color: rgba(255,255,255,0.18); }
     .plan-card.featured .plan-features li { color: rgba(255,255,255,0.9); }
     .plan-card.featured .plan-features li::before { color: rgba(255,255,255,0.9); }
+    .plan-card.featured .plan-features li.locked { color: rgba(255,255,255,0.32); }
+    .plan-card.featured .plan-features li.locked::before { content: "\2013"; color: rgba(255,255,255,0.25); }
     .btn-plan-cta {
       display: block;
       text-align: center;
@@ -2736,152 +2755,7 @@
   }
 }
 
-/* ============================================================
-   PLAN FEATURES — Herramientas por Plan
-============================================================ */
-#plataforma {
-  padding: 100px 0 80px;
-  background: var(--bg);
-}
-.pf-header {
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto 64px;
-  padding: 0 24px;
-}
-.pf-title {
-  font-family: var(--font-head);
-  font-size: clamp(40px, 5vw, 64px);
-  line-height: 0.95;
-  letter-spacing: 1px;
-  color: var(--white);
-  margin-bottom: 16px;
-}
-.pf-title em {
-  font-style: normal;
-  color: var(--red);
-}
-.pf-sub {
-  font-size: 15px;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.7;
-  max-width: 520px;
-  margin: 0 auto;
-}
-.pf-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  max-width: 1080px;
-  margin: 0 auto;
-}
-.pf-card {
-  background: #0d0d10;
-  padding: 40px 32px;
-  position: relative;
-}
-.pf-card.featured {
-  background: #111115;
-  box-shadow: 0 0 60px rgba(227,30,36,0.06) inset;
-}
-.pf-top-badge {
-  display: inline-block;
-  background: var(--red);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 8px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  margin-bottom: 20px;
-}
-.pf-plan-name {
-  font-family: var(--font-head);
-  font-size: 32px;
-  letter-spacing: 2px;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.pf-plan-price {
-  font-family: var(--font-data, var(--font-mono));
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--red);
-  margin-bottom: 2px;
-  line-height: 1;
-}
-.pf-plan-period {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 28px;
-}
-.pf-divider {
-  height: 1px;
-  background: var(--border);
-  margin-bottom: 24px;
-}
-.pf-features {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 32px;
-}
-.pf-feature-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 9px 0;
-  font-size: 13px;
-  color: rgba(255,255,255,0.62);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  line-height: 1.4;
-}
-.pf-feature-item:last-child { border-bottom: none; }
-.pf-feature-item i {
-  color: #22c55e;
-  font-size: 10px;
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-.pf-feature-item.locked { color: rgba(255,255,255,0.22); }
-.pf-feature-item.locked i { color: rgba(255,255,255,0.18); }
-.pf-card-cta {
-  display: block;
-  text-align: center;
-  padding: 14px 20px;
-  font-family: var(--font-body);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  border: 2px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.55);
-  text-decoration: none;
-  transition: border-color 0.15s, color 0.15s;
-}
-.pf-card-cta:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
-.pf-card.featured .pf-card-cta {
-  background: var(--red);
-  border-color: var(--red);
-  color: #fff;
-}
-.pf-card.featured .pf-card-cta:hover {
-  background: var(--red-dark);
-  border-color: var(--red-dark);
-}
-@media (max-width: 991px) {
-  .pf-grid { grid-template-columns: 1fr; max-width: 440px; }
-  .pf-card { padding: 36px 28px; }
-}
-@media (max-width: 576px) {
-  #plataforma { padding: 72px 0 60px; }
-  .pf-grid { max-width: 100%; margin: 0 16px; }
-  .pf-card { padding: 28px 20px; }
-}
+/* pf-* eliminado — sección consolidada en #planes */
 </style>
 <!-- WellCore v5 Design System -->
 <link rel="stylesheet" href="css/wellcore-v5.css">
@@ -3119,87 +2993,6 @@
       </div>
     </div>
   </div>
-</section>
-
-<!-- ============================================================
-     PLAN FEATURES — Herramientas por Plan
-============================================================ -->
-<section id="plataforma">
-  <div class="container">
-  <div class="pf-header" data-aos="fade-up">
-    <span class="label-tag"><i class="fas fa-layer-group" aria-hidden="true" style="margin-right:5px;"></i>HERRAMIENTAS</span>
-    <h2 class="pf-title">&iquest;Qu&eacute; incluye<br><em>cada plan?</em></h2>
-    <p class="pf-sub">Todas las herramientas disponibles seg&uacute;n tu nivel. Elige el acompa&ntilde;amiento que necesitas.</p>
-  </div>
-  <div class="pf-grid" data-aos="fade-up" data-aos-delay="100">
-
-    <!-- ESENCIAL -->
-    <div class="pf-card">
-      <div class="pf-plan-name">ESENCIAL</div>
-      <div class="pf-plan-price">$399k</div>
-      <div class="pf-plan-period">COP / mes</div>
-      <div class="pf-divider"></div>
-      <ul class="pf-features">
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Plan de entrenamiento personalizado</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Plan nutricional completo</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Evaluaci&oacute;n inicial + diagn&oacute;stico</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Dashboard de progreso</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Check-in semanal por WhatsApp</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Soporte lunes a viernes</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Gu&iacute;a de ejercicios en PDF</li>
-        <li class="pf-feature-item locked"><i class="fas fa-lock"></i>Video check-ins semanales</li>
-        <li class="pf-feature-item locked"><i class="fas fa-lock"></i>Seguimiento biom&eacute;trico</li>
-        <li class="pf-feature-item locked"><i class="fas fa-lock"></i>XP, logros y retos</li>
-      </ul>
-      <a href="/inscripcion.html?plan=esencial" class="pf-card-cta">Comenzar Esencial</a>
-    </div>
-
-    <!-- M&Eacute;TODO (featured) -->
-    <div class="pf-card featured">
-      <div class="pf-top-badge">M&Aacute;S POPULAR</div>
-      <div class="pf-plan-name">M&Eacute;TODO</div>
-      <div class="pf-plan-price">$504k</div>
-      <div class="pf-plan-period">COP / mes</div>
-      <div class="pf-divider"></div>
-      <ul class="pf-features">
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Todo lo de ESENCIAL +</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Dashboard anal&iacute;tico avanzado</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Video check-ins semanales</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Seguimiento biom&eacute;trico diario</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Ajustes quincenales al programa</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Soporte 7 d&iacute;as / WhatsApp prioritario</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Biblioteca de videos de ejercicios</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>An&aacute;lisis de m&eacute;tricas avanzado</li>
-        <li class="pf-feature-item locked"><i class="fas fa-lock"></i>XP, logros y retos</li>
-        <li class="pf-feature-item locked"><i class="fas fa-lock"></i>Video llamada 1:1 con coach</li>
-      </ul>
-      <a href="/inscripcion.html?plan=metodo" class="pf-card-cta">Comenzar M&eacute;todo</a>
-    </div>
-
-    <!-- &Eacute;LITE -->
-    <div class="pf-card">
-      <div class="pf-plan-name">&Eacute;LITE</div>
-      <div class="pf-plan-price">$630k</div>
-      <div class="pf-plan-period">COP / mes</div>
-      <div class="pf-divider"></div>
-      <ul class="pf-features">
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Todo lo de M&Eacute;TODO +</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>XP &amp; sistema de logros gamificado</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Retos y leaderboard de comunidad</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Video llamada 1:1 mensual con coach</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Notificaciones push inteligentes</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>An&aacute;lisis de rendimiento avanzado</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Comunidad VIP + soporte 24/7</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Informe mensual de progreso PDF</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Acceso anticipado a nuevas funciones</li>
-        <li class="pf-feature-item"><i class="fas fa-check"></i>Prioridad m&aacute;xima de atenci&oacute;n</li>
-      </ul>
-      <a href="/inscripcion.html?plan=elite" class="pf-card-cta">Comenzar &Eacute;lite</a>
-    </div>
-
-  </div>
-  </div>
-
 </section>
 
 <hr class="section-rule" />
@@ -3452,6 +3245,7 @@
     <div class="planes-header" data-aos="fade-up">
       <span class="label-tag"><i class="fas fa-layer-group" aria-hidden="true" style="margin-right:5px;"></i>PLANES</span>
       <h2>ELIGE TU PLAN</h2>
+      <p style="font-size:15px;color:rgba(255,255,255,.45);margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65;">Todas las herramientas disponibles seg&uacute;n tu nivel. Elige el acompa&ntilde;amiento que necesitas.</p>
     </div>
     <div class="row g-4 justify-content-center">
 
@@ -3464,13 +3258,17 @@
           <div class="plan-divider"></div>
           <ul class="plan-features">
             <li>Plan de entrenamiento personalizado</li>
-            <li>Plan nutricional adaptado</li>
-            <li>Evaluaci&oacute;n inicial completa</li>
+            <li>Plan nutricional completo</li>
+            <li>Evaluaci&oacute;n inicial + diagn&oacute;stico</li>
+            <li>Dashboard de progreso</li>
             <li>Check-in semanal por WhatsApp</li>
+            <li>Soporte lunes a viernes</li>
             <li>Gu&iacute;a de ejercicios en PDF</li>
-            <li>Soporte por WhatsApp (L-V)</li>
+            <li class="locked">Video check-ins semanales</li>
+            <li class="locked">Seguimiento biom&eacute;trico</li>
+            <li class="locked">XP, logros y retos</li>
           </ul>
-          <a href="/inscripcion.html" class="btn-plan-cta">Comenzar Ahora</a>
+          <a href="/inscripcion.html?plan=esencial" class="btn-plan-cta">Comenzar Esencial</a>
         </div>
       </div>
 
@@ -3483,15 +3281,18 @@
           <div class="plan-price-period">COP / mes</div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
-            <li>Todo lo del plan Esencial</li>
-            <li>Ajustes semanales de plan</li>
-            <li>Videollamada mensual 30 min</li>
-            <li>An&aacute;lisis de progreso con fotos</li>
-            <li>Recetas y gu&iacute;a de comidas en PDF</li>
-            <li>Soporte 7 d&iacute;as / r&aacute;pido</li>
-            <li>Contenido educativo semanal</li>
+            <li>Todo lo de ESENCIAL +</li>
+            <li>Dashboard anal&iacute;tico avanzado</li>
+            <li>Video check-ins semanales</li>
+            <li>Seguimiento biom&eacute;trico diario</li>
+            <li>Ajustes quincenales al programa</li>
+            <li>Soporte 7 d&iacute;as / WhatsApp prioritario</li>
+            <li>Biblioteca de videos de ejercicios</li>
+            <li>An&aacute;lisis de m&eacute;tricas avanzado</li>
+            <li class="locked">XP, logros y retos</li>
+            <li class="locked">Video llamada 1:1 con coach</li>
           </ul>
-          <a href="/inscripcion.html" class="btn-plan-cta">Comenzar Ahora</a>
+          <a href="/inscripcion.html?plan=metodo" class="btn-plan-cta">Comenzar M&eacute;todo</a>
         </div>
       </div>
 
@@ -3503,15 +3304,18 @@
           <div class="plan-price-period">COP / mes</div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
-            <li>Todo lo del plan M&eacute;todo</li>
-            <li>Videollamadas quincenales</li>
-            <li>Periodizaci&oacute;n avanzada 12 semanas</li>
-            <li>An&aacute;lisis de sangre y biomark.</li>
-            <li>Estrategia de largo plazo</li>
-            <li>Acceso prioritario directo</li>
-            <li>Seguimiento hormonal b&aacute;sico</li>
+            <li>Todo lo de M&Eacute;TODO +</li>
+            <li>XP &amp; sistema de logros gamificado</li>
+            <li>Retos y leaderboard de comunidad</li>
+            <li>Video llamada 1:1 mensual con coach</li>
+            <li>Notificaciones push inteligentes</li>
+            <li>An&aacute;lisis de rendimiento avanzado</li>
+            <li>Comunidad VIP + soporte 24/7</li>
+            <li>Informe mensual de progreso PDF</li>
+            <li>Acceso anticipado a nuevas funciones</li>
+            <li>Prioridad m&aacute;xima de atenci&oacute;n</li>
           </ul>
-          <a href="/inscripcion.html" class="btn-plan-cta">Comenzar Ahora</a>
+          <a href="/inscripcion.html?plan=elite" class="btn-plan-cta">Comenzar &Eacute;lite</a>
           <p class="plan-cupos">&#9670; SOLO 5 CUPOS DISPONIBLES</p>
         </div>
       </div>
