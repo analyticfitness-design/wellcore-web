@@ -771,6 +771,7 @@ input,textarea,select{font-family:'Inter',sans-serif}
               <th>Objetivo</th>
               <th>Ultima Actividad</th>
               <th>Sesiones 7d</th>
+              <th>Notas</th>
             </tr>
           </thead>
           <tbody id="clients-tbody">
@@ -778,6 +779,49 @@ input,textarea,select{font-family:'Inter',sans-serif}
         </table>
       </div>
       <div id="clients-empty" class="empty-state" style="display:none">No tienes clientes asignados aun.</div>
+
+      <!-- ===== PANEL DE NOTAS PRIVADAS (M18) ===== -->
+      <div id="notes-panel" style="display:none;margin-top:28px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--white)">
+              NOTAS <span style="color:var(--red)">//</span> <span id="notes-client-name" style="color:var(--gray);font-size:1.2rem"></span>
+            </h2>
+            <p style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gray);letter-spacing:.1em;margin-top:2px">PRIVADAS — Solo visibles para el coach</p>
+          </div>
+          <button onclick="closeNotesPanel()" style="background:none;border:1px solid var(--border);color:var(--gray);padding:5px 14px;font-size:.78rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .1s linear" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--gray)'">X Cerrar</button>
+        </div>
+
+        <!-- Tabs por tipo -->
+        <div style="display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap">
+          <button class="notes-tab active" data-type="all" onclick="filterNotesByType('all',this)" style="padding:6px 16px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.08em;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--white);cursor:pointer;transition:all .1s linear">TODAS</button>
+          <button class="notes-tab" data-type="general" onclick="filterNotesByType('general',this)" style="padding:6px 16px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.08em;border:1px solid rgba(107,114,128,0.4);background:rgba(107,114,128,0.08);color:#9ca3af;cursor:pointer;transition:all .1s linear">GENERAL</button>
+          <button class="notes-tab" data-type="nutrition" onclick="filterNotesByType('nutrition',this)" style="padding:6px 16px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.08em;border:1px solid rgba(16,185,129,0.4);background:rgba(16,185,129,0.08);color:#10b981;cursor:pointer;transition:all .1s linear">NUTRICION</button>
+          <button class="notes-tab" data-type="training" onclick="filterNotesByType('training',this)" style="padding:6px 16px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.08em;border:1px solid rgba(59,130,246,0.4);background:rgba(59,130,246,0.08);color:#3b82f6;cursor:pointer;transition:all .1s linear">ENTRENAMIENTO</button>
+          <button class="notes-tab" data-type="mental" onclick="filterNotesByType('mental',this)" style="padding:6px 16px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.08em;border:1px solid rgba(139,92,244,0.4);background:rgba(139,92,244,0.08);color:#8b5cf4;cursor:pointer;transition:all .1s linear">MENTAL</button>
+        </div>
+
+        <!-- Formulario para agregar nota -->
+        <div class="card" style="margin-bottom:18px;border-left:3px solid var(--red)">
+          <div class="card-title">// Nueva Nota</div>
+          <div style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+            <select id="note-type-select" class="form-select" style="flex:0 0 180px">
+              <option value="general">General</option>
+              <option value="nutrition">Nutricion</option>
+              <option value="training">Entrenamiento</option>
+              <option value="mental">Mental</option>
+            </select>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gray);align-self:center;letter-spacing:.06em">Tipo de nota</span>
+          </div>
+          <textarea id="note-content-input" class="form-textarea" rows="3" placeholder="Escribe tu nota privada aqui... (max 5000 caracteres)" style="margin-bottom:12px;resize:vertical"></textarea>
+          <button onclick="submitNewNote()" id="btn-save-note" class="btn-primary" style="padding:8px 20px;font-size:.82rem">Guardar Nota</button>
+        </div>
+
+        <!-- Lista de notas -->
+        <div id="notes-list">
+          <p class="empty-state" id="notes-loading">Cargando notas...</p>
+        </div>
+      </div>
     </section>
 
     <!-- ===== SECTION 3: TICKETS ===== -->
@@ -1466,6 +1510,23 @@ function loadClients() {
       tdSes.textContent = c.sessions_7d !== undefined ? c.sessions_7d : '--';
       tr.appendChild(tdSes);
 
+      // Notas button — opens notes panel for this client
+      var tdNotes = document.createElement('td');
+      var btnNotes = document.createElement('button');
+      btnNotes.style.cssText = 'background:none;border:1px solid var(--border);color:var(--gray);padding:4px 10px;font-size:.72rem;cursor:pointer;font-family:"JetBrains Mono",monospace;font-weight:600;letter-spacing:.05em;transition:all .1s linear';
+      btnNotes.textContent = '// NOTAS';
+      btnNotes.title = 'Ver notas privadas de ' + (c.name || c.nombre || 'este cliente');
+      (function(clientId, clientName) {
+        btnNotes.addEventListener('mouseover', function() { this.style.borderColor='var(--red)'; this.style.color='var(--red)'; });
+        btnNotes.addEventListener('mouseout', function() { this.style.borderColor='var(--border)'; this.style.color='var(--gray)'; });
+        btnNotes.addEventListener('click', function(e) {
+          e.stopPropagation();
+          openNotesPanel(clientId, clientName);
+        });
+      })(c.id, c.name || c.nombre || 'Cliente');
+      tdNotes.appendChild(btnNotes);
+      tr.appendChild(tdNotes);
+
       tbody.appendChild(tr);
     });
     clientsLoaded = true;
@@ -2013,6 +2074,203 @@ function showTicketDetail(ticket) {
 function closeTicketDetail(e) {
   if (e && e.target !== e.currentTarget) return;
   document.getElementById('ticket-detail-overlay').style.display = 'none';
+}
+
+// ===== NOTAS PRIVADAS DE COACH (M18) =====
+var currentCoachClientId = null;
+var currentCoachClientName = '';
+var allNotes = [];
+var currentNoteTypeFilter = 'all';
+
+var NOTE_COLORS = {
+  general:   { color: '#6b7280', bg: 'rgba(107,114,128,0.08)', border: 'rgba(107,114,128,0.3)',  label: 'GENERAL'       },
+  nutrition:  { color: '#10b981', bg: 'rgba(16,185,129,0.08)',  border: 'rgba(16,185,129,0.3)',   label: 'NUTRICION'     },
+  training:   { color: '#3b82f6', bg: 'rgba(59,130,246,0.08)',  border: 'rgba(59,130,246,0.3)',   label: 'ENTRENAMIENTO' },
+  mental:     { color: '#8b5cf4', bg: 'rgba(139,92,244,0.08)',  border: 'rgba(139,92,244,0.3)',   label: 'MENTAL'        }
+};
+
+function openNotesPanel(clientId, clientName) {
+  currentCoachClientId   = clientId;
+  currentCoachClientName = clientName || 'Cliente';
+
+  document.getElementById('notes-client-name').textContent = currentCoachClientName;
+  document.getElementById('notes-panel').style.display = 'block';
+  document.getElementById('notes-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  currentNoteTypeFilter = 'all';
+  var tabs = document.querySelectorAll('.notes-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+  }
+  var allTab = document.querySelector('.notes-tab[data-type="all"]');
+  if (allTab) allTab.classList.add('active');
+
+  loadNotes();
+}
+
+function closeNotesPanel() {
+  document.getElementById('notes-panel').style.display = 'none';
+  currentCoachClientId   = null;
+  currentCoachClientName = '';
+  allNotes = [];
+}
+
+function loadNotes() {
+  if (!currentCoachClientId) return;
+  var listEl = document.getElementById('notes-list');
+  listEl.textContent = '';
+  var loadingEl = document.createElement('p');
+  loadingEl.className = 'empty-state';
+  loadingEl.textContent = 'Cargando notas...';
+  listEl.appendChild(loadingEl);
+
+  apiFetch('GET', '/coach/notes?client_id=' + currentCoachClientId).then(function(data) {
+    if (!data) return;
+    allNotes = data.notes || [];
+    renderNotesList();
+  }).catch(function() {
+    listEl.textContent = '';
+    var errEl = document.createElement('p');
+    errEl.className = 'empty-state';
+    errEl.style.color = 'var(--red)';
+    errEl.textContent = 'Error al cargar las notas.';
+    listEl.appendChild(errEl);
+  });
+}
+
+function renderNotesList() {
+  var listEl = document.getElementById('notes-list');
+  listEl.textContent = '';
+
+  var filtered = currentNoteTypeFilter === 'all'
+    ? allNotes
+    : allNotes.filter(function(n) { return n.note_type === currentNoteTypeFilter; });
+
+  if (!filtered.length) {
+    var emptyEl = document.createElement('p');
+    emptyEl.className = 'empty-state';
+    emptyEl.textContent = currentNoteTypeFilter === 'all'
+      ? 'No hay notas para este cliente aun. Agrega la primera arriba.'
+      : 'No hay notas de tipo "' + currentNoteTypeFilter + '" para este cliente.';
+    listEl.appendChild(emptyEl);
+    return;
+  }
+
+  filtered.forEach(function(note) {
+    var nc = NOTE_COLORS[note.note_type] || NOTE_COLORS.general;
+
+    var card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-left:3px solid ' + nc.color + ';padding:16px 18px;margin-bottom:12px;position:relative';
+
+    var header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap';
+
+    var typeBadge = document.createElement('span');
+    typeBadge.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.6rem;font-weight:600;letter-spacing:.08em;padding:2px 8px;background:' + nc.bg + ';color:' + nc.color + ';border:1px solid ' + nc.border;
+    typeBadge.textContent = nc.label;
+    header.appendChild(typeBadge);
+
+    if (note.is_private) {
+      var privBadge = document.createElement('span');
+      privBadge.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.6rem;font-weight:600;letter-spacing:.08em;padding:2px 8px;background:rgba(227,30,36,0.08);color:var(--red);border:1px solid rgba(227,30,36,0.2)';
+      privBadge.textContent = 'PRIVADA';
+      header.appendChild(privBadge);
+    }
+
+    var dateEl = document.createElement('span');
+    dateEl.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.65rem;color:var(--gray);margin-left:auto';
+    var rawDate = note.created_at || '';
+    dateEl.textContent = rawDate ? rawDate.replace('T', ' ').substring(0, 10) : '--';
+    header.appendChild(dateEl);
+
+    var delBtn = document.createElement('button');
+    delBtn.style.cssText = 'background:none;border:none;color:var(--gray);font-size:.82rem;cursor:pointer;padding:0 4px;line-height:1;font-weight:700;font-family:"JetBrains Mono",monospace;transition:color .1s linear';
+    delBtn.textContent = 'X';
+    delBtn.title = 'Eliminar nota';
+    delBtn.addEventListener('mouseover', function() { this.style.color = 'var(--red)'; });
+    delBtn.addEventListener('mouseout',  function() { this.style.color = 'var(--gray)'; });
+    (function(nid) {
+      delBtn.addEventListener('click', function() { deleteNote(nid); });
+    })(note.id);
+    header.appendChild(delBtn);
+
+    card.appendChild(header);
+
+    var contentEl = document.createElement('p');
+    contentEl.style.cssText = 'font-size:.85rem;color:var(--white);line-height:1.6;white-space:pre-wrap;word-break:break-word';
+    contentEl.textContent = note.content;
+    card.appendChild(contentEl);
+
+    listEl.appendChild(card);
+  });
+}
+
+function filterNotesByType(type, btn) {
+  currentNoteTypeFilter = type;
+  var tabs = document.querySelectorAll('.notes-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+  }
+  if (btn) btn.classList.add('active');
+  renderNotesList();
+}
+
+function submitNewNote() {
+  if (!currentCoachClientId) {
+    showNotification('Selecciona un cliente primero.');
+    return;
+  }
+  var noteType = document.getElementById('note-type-select').value;
+  var content  = document.getElementById('note-content-input').value.trim();
+
+  if (!content) {
+    showNotification('Escribe el contenido de la nota antes de guardar.');
+    return;
+  }
+  if (content.length > 5000) {
+    showNotification('La nota supera el limite de 5000 caracteres.');
+    return;
+  }
+
+  var btn = document.getElementById('btn-save-note');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+
+  apiFetch('POST', '/coach/notes', {
+    client_id:  currentCoachClientId,
+    note_type:  noteType,
+    content:    content,
+    is_private: true
+  }).then(function(data) {
+    btn.disabled = false;
+    btn.textContent = 'Guardar Nota';
+    if (data && data.ok) {
+      document.getElementById('note-content-input').value = '';
+      showNotification('Nota guardada correctamente.');
+      loadNotes();
+    } else {
+      showNotification('Error: ' + (data && data.error ? data.error : 'No se pudo guardar la nota'));
+    }
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Guardar Nota';
+    showNotification('Error de conexion al guardar la nota.');
+  });
+}
+
+function deleteNote(noteId) {
+  if (!confirm('Eliminar esta nota permanentemente?')) return;
+
+  apiFetch('DELETE', '/coach/notes?id=' + noteId).then(function(data) {
+    if (data && data.ok) {
+      showNotification('Nota eliminada.');
+      loadNotes();
+    } else {
+      showNotification('Error: ' + (data && data.error ? data.error : 'No se pudo eliminar'));
+    }
+  }).catch(function() {
+    showNotification('Error de conexion al eliminar la nota.');
+  });
 }
 
 // ===== RUN =====
