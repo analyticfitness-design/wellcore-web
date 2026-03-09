@@ -6783,6 +6783,8 @@ var PR_DEFS = [
   { id:'pbw', label:'Push-ups',       icon:'💥', unit:'reps', tip:'Máximo sin parar' }
 ];
 
+var prDataLoaded = false;
+
 function prLoad() {
   try { return JSON.parse(localStorage.getItem('wc_prs') || '{}'); } catch(e) { return {}; }
 }
@@ -6798,10 +6800,7 @@ function prTrophyColor(def, val) {
   return null;
 }
 
-function renderPRs() {
-  var root = document.getElementById('prs-root');
-  if (!root) return;
-  var prs = prLoad();
+function _prRenderGrid(root, prs) {
   var cards = PR_DEFS.map(function(def) {
     var rec = prs[def.id], val = rec ? rec.val : null, date = rec ? rec.date : null;
     var trophy = prTrophyColor(def, val);
@@ -6818,6 +6817,24 @@ function renderPRs() {
     '<div class="pr-header"><div class="pr-header-title"><i class="fas fa-trophy" style="color:#FFD700;margin-right:6px;"></i>Mis Records Personales</div>' +
     '<div class="pr-header-sub">Toca cualquier ejercicio para registrar o actualizar tu PR</div></div>' +
     '<div class="pr-grid">' + cards + '</div>';
+}
+
+function renderPRs() {
+  var root = document.getElementById('prs-root');
+  if (!root) return;
+  if (prDataLoaded) { _prRenderGrid(root, prLoad()); return; }
+  root.innerHTML = '<div style="text-align:center;padding:48px;color:var(--gray);font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;">CARGANDO RECORDS...</div>';
+  apiFetch('/prs')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (d && d.prs) prSave(d.prs);
+      prDataLoaded = true;
+      _prRenderGrid(root, prLoad());
+    })
+    .catch(function() {
+      prDataLoaded = true;
+      _prRenderGrid(root, prLoad());
+    });
 }
 
 function prOpenModal(id) {
@@ -6853,6 +6870,7 @@ function prSaveModal(id) {
   var isNew = !prs[id] || val > parseFloat(prs[id].val || 0);
   prs[id] = { val: val, date: today };
   prSave(prs); prCloseModal(); renderPRs();
+  apiFetch('/prs', { method: 'POST', body: JSON.stringify({ exercise_id: id, value: val }) });
   if (isNew && typeof V6 !== 'undefined' && V6.toast) V6.toast('Nuevo PR registrado 🏆', 'success');
 }
 
