@@ -4113,7 +4113,36 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
       document.body.style.visibility = 'visible';
       if (typeof init === 'function') init();
     })
-    .catch(function() { localStorage.removeItem('wc_token'); window.location.replace('login.html'); });
+    .catch(function() {
+      if (sessionStorage.getItem('_wc_preview_session')) {
+        // Preview mode: mostrar error en lugar de redirigir a login
+        document.body.style.visibility = 'visible';
+        var el = document.createElement('div');
+        el.style.cssText = 'min-height:100vh;background:#0a0a0a;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#fff;';
+        var box = document.createElement('div');
+        box.style.cssText = 'text-align:center;padding:32px';
+        var icon = document.createElement('div');
+        icon.style.cssText = 'color:#C8102E;font-size:2.5rem;margin-bottom:16px';
+        icon.textContent = '\u26a0';
+        var h2 = document.createElement('h2');
+        h2.style.cssText = 'margin:0 0 8px;font-size:1.2rem';
+        h2.textContent = 'Sesi\u00f3n de preview inv\u00e1lida';
+        var p = document.createElement('p');
+        p.style.cssText = 'color:rgba(255,255,255,.45);margin:0 0 20px;font-size:.85rem';
+        p.textContent = 'El token expir\u00f3 o el cliente est\u00e1 inactivo. Usa "Ver Portal" nuevamente desde el panel admin.';
+        var a = document.createElement('a');
+        a.href = '/admin.html';
+        a.style.cssText = 'display:inline-block;padding:8px 20px;background:#C8102E;color:#fff;text-decoration:none;border-radius:8px;font-size:.82rem;font-weight:600';
+        a.textContent = 'Volver al panel';
+        box.appendChild(icon); box.appendChild(h2); box.appendChild(p); box.appendChild(a);
+        el.appendChild(box);
+        document.body.textContent = '';
+        document.body.appendChild(el);
+        return;
+      }
+      localStorage.removeItem('wc_token');
+      window.location.replace('login.html');
+    });
 })();
 
 // Coach theme — personalize dashboard with coach branding
@@ -7938,7 +7967,7 @@ function showToastCliente(msg, color) {
 var nutriPhotoBase64 = null;
 
 function checkNutriUsage() {
-  apiFetch('/nutrition/usage')
+  apiFetch('/nutrition/usage.php')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var lockedEl = document.getElementById('nutri-locked');
