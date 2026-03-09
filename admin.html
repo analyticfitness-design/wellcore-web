@@ -1319,6 +1319,164 @@
       .topbar { height: 52px; min-height: 52px; }
       .content { padding: 20px 14px; }
     }
+
+    /* ════════════════════════════════════════════
+       SUPERADMIN COMMAND CENTER
+    ════════════════════════════════════════════ */
+    .sa-command-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .sa-quick-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sa-refresh-btn {
+      background: rgba(227,30,36,0.1);
+      border: 1px solid rgba(227,30,36,0.3);
+      color: #E31E24;
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+    }
+    .sa-refresh-btn:hover { background: rgba(227,30,36,0.22); }
+    .sa-status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22C55E;
+      box-shadow: 0 0 7px rgba(34,197,94,0.7);
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .sa-status-dot.offline { background: #EF4444; box-shadow: 0 0 7px rgba(239,68,68,0.7); }
+    .sa-status-dot.loading { background: #F59E0B; box-shadow: 0 0 7px rgba(245,158,11,0.7); }
+    .sa-status-text { font-size: 11px; color: var(--gray); font-family: var(--font-mono); }
+
+    /* 6-column KPI grid */
+    .sa-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 1300px) { .sa-kpi-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 700px)  { .sa-kpi-grid { grid-template-columns: repeat(2,1fr); } }
+    .sa-kpi-grid .kpi-card { padding: 16px 14px; }
+    .sa-kpi-grid .kpi-value {
+      font-size: 26px;
+      margin: 5px 0 2px;
+      font-family: var(--font-data, var(--font-mono));
+    }
+    .sa-kpi-grid .kpi-label {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .sa-kpi-grid .kpi-footer { font-size: 10px; }
+
+    /* Charts row */
+    .sa-charts-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) { .sa-charts-row { grid-template-columns: 1fr; } }
+    .sa-svg-chart { width: 100%; height: 170px; }
+    .sa-svg-chart svg { display: block; }
+    .sa-delta {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-data, monospace);
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+    .sa-delta.green { background: rgba(34,197,94,0.14); color: #22C55E; }
+    .sa-delta.red   { background: rgba(227,30,36,0.12);  color: #E31E24; }
+    .sa-delta.gold  { background: rgba(245,158,11,0.14); color: #F59E0B; }
+
+    /* Plan donut */
+    .sa-donut-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+    }
+    .sa-donut-legend-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sa-donut-legend-item:last-child { border-bottom: none; }
+    .sa-donut-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    /* At-risk list */
+    .sa-risk-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sa-risk-row:last-child { border-bottom: none; }
+    .sa-risk-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .sa-risk-info { flex: 1; min-width: 0; }
+    .sa-risk-name {
+      font-size: 13px; font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sa-risk-detail { font-size: 11px; color: var(--gray); }
+    .sa-risk-plan-badge {
+      font-size: 10px; font-weight: 700;
+      font-family: var(--font-mono);
+      padding: 2px 7px; border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    /* Activity feed */
+    .sa-activity-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+    .sa-activity-item:last-child { border-bottom: none; }
+    .sa-activity-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; flex-shrink: 0;
+    }
+    .sa-activity-icon.payment { background: rgba(34,197,94,0.15); color: #22C55E; }
+    .sa-activity-icon.client  { background: rgba(99,179,237,0.15); color: #63B3ED; }
+    .sa-activity-text { flex: 1; }
+    .sa-activity-name { font-weight: 600; color: var(--text); }
+    .sa-activity-sub  { color: var(--gray); font-size: 11px; }
+    .sa-activity-time { font-size: 10px; color: var(--gray); font-family: var(--font-mono); }
   </style>
 <!-- v7 Premium Fonts -->
 <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
@@ -1422,62 +1580,118 @@
     <div class="content">
 
       <!-- ─────────────────────────────
-           1. DASHBOARD
+           1. DASHBOARD — COMMAND CENTER
       ───────────────────────────── -->
       <div class="section active" id="section-dashboard">
 
-        <div class="section-title v7-split-word">DASHBOARD</div>
-        <div class="section-sub">VISION GENERAL DEL NEGOCIO &mdash; <span id="todayDate"></span></div>
-
-        <!-- KPI GRID -->
-        <div class="kpi-grid">
-          <div class="kpi-card v7-glow-track">
-            <span class="kpi-icon" style="color:#E31E24;font-weight:700">&#9673;</span>
-            <div class="kpi-label">Clientes Activos</div>
-            <div class="kpi-value" style="font-family:var(--font-data,var(--font-mono));">0</div>
-            <div class="kpi-footer">sin clientes registrados</div>
+        <!-- Command Header -->
+        <div class="sa-command-header">
+          <div>
+            <div class="section-title v7-split-word" style="margin-bottom:2px">COMMAND CENTER</div>
+            <div class="section-sub">SUPERADMIN &mdash; <span id="todayDate"></span></div>
           </div>
-
-          <div class="kpi-card v7-glow-track">
-            <span class="kpi-icon" style="color:#E31E24;font-weight:700">&#9672;</span>
-            <div class="kpi-label">MRR</div>
-            <div class="kpi-value green" style="font-family:var(--font-data,var(--font-mono));">$0</div>
-            <div class="kpi-footer">ingreso mensual recurrente</div>
-          </div>
-
-          <div class="kpi-card v7-glow-track">
-            <span class="kpi-icon" style="color:#E31E24;font-weight:700">&#9671;</span>
-            <div class="kpi-label">Check-ins Pendientes</div>
-            <div class="kpi-value red" style="font-family:var(--font-data,var(--font-mono));">0</div>
-            <div class="kpi-footer">sin check-ins pendientes</div>
-          </div>
-
-          <div class="kpi-card v7-glow-track">
-            <span class="kpi-icon" style="color:#E31E24;font-weight:700">&#9655;</span>
-            <div class="kpi-label">Formularios Nuevos</div>
-            <div class="kpi-value" style="color:var(--gold);font-family:var(--font-data,var(--font-mono));">0</div>
-            <div class="kpi-footer">leads sin contactar</div>
+          <div class="sa-quick-actions">
+            <button class="sa-refresh-btn" onclick="loadDashboardStats()">&#8635; ACTUALIZAR</button>
+            <span class="sa-status-dot" id="saStatusDot"></span>
+            <span class="sa-status-text" id="saStatusText">Cargando...</span>
           </div>
         </div>
 
-        <!-- GRID 2 COLS -->
-        <div class="grid-2">
-          <!-- Ultimos ingresos -->
+        <!-- 6-KPI Grid -->
+        <div class="sa-kpi-grid">
+          <div class="kpi-card v7-glow-track" id="saKpiActivos">
+            <div class="kpi-label"><i class="fa-solid fa-users" style="color:#22C55E;font-size:12px;opacity:.8"></i> Clientes Activos</div>
+            <div class="kpi-value" style="color:#22C55E">0</div>
+            <div class="kpi-footer">cargando...</div>
+          </div>
+          <div class="kpi-card v7-glow-track" id="saKpiMRR">
+            <div class="kpi-label"><i class="fa-solid fa-dollar-sign" style="color:#22C55E;font-size:12px;opacity:.8"></i> MRR</div>
+            <div class="kpi-value" style="color:#22C55E">$0</div>
+            <div class="kpi-footer">ingreso mensual recurrente</div>
+          </div>
+          <div class="kpi-card v7-glow-track" id="saKpiPending">
+            <div class="kpi-label"><i class="fa-solid fa-clipboard-check" style="color:#F59E0B;font-size:12px;opacity:.8"></i> Check-ins</div>
+            <div class="kpi-value" style="color:#F59E0B">0</div>
+            <div class="kpi-footer">pendientes de respuesta</div>
+          </div>
+          <div class="kpi-card v7-glow-track" id="saKpiRisk">
+            <div class="kpi-label"><i class="fa-solid fa-triangle-exclamation" style="color:#E31E24;font-size:12px;opacity:.8"></i> En Riesgo</div>
+            <div class="kpi-value" style="color:#E31E24">0</div>
+            <div class="kpi-footer">+14 días sin check-in</div>
+          </div>
+          <div class="kpi-card v7-glow-track" id="saKpiExpiring">
+            <div class="kpi-label"><i class="fa-solid fa-calendar-xmark" style="color:#F59E0B;font-size:12px;opacity:.8"></i> Renuevan</div>
+            <div class="kpi-value" style="color:#F59E0B">0</div>
+            <div class="kpi-footer">próximos 7 días</div>
+          </div>
+          <div class="kpi-card v7-glow-track" id="saKpiBienestar">
+            <div class="kpi-label"><i class="fa-solid fa-heart" style="color:#E31E24;font-size:12px;opacity:.8"></i> Bienestar</div>
+            <div class="kpi-value" style="color:var(--text)">—/10</div>
+            <div class="kpi-footer">promedio últimos 30 días</div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="sa-charts-row">
+          <!-- Revenue SVG Chart -->
           <div class="card">
             <div class="card-header">
-              <span class="card-title">Ultimos Ingresos</span>
-              <span class="card-count">0 transacciones</span>
+              <span class="card-title">Ingresos Últimos 6 Meses</span>
+              <span class="sa-delta green" id="saTotalMonth">$0 este mes</span>
             </div>
-            <div class="activity-list" id="recentTransactions"></div>
+            <div class="sa-svg-chart" id="saRevenueChart">
+              <div style="text-align:center;padding:60px 0;color:var(--gray);font-size:13px;">Cargando gráfica...</div>
+            </div>
           </div>
+          <!-- Plan Distribution Donut -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Distribución Planes</span>
+            </div>
+            <div class="sa-donut-wrap" id="saPlanDonut">
+              <div style="text-align:center;padding:40px 0;color:var(--gray);font-size:13px;">Cargando...</div>
+            </div>
+          </div>
+        </div>
 
-          <!-- Check-ins pendientes -->
+        <!-- Middle row: At-risk + Pending checkins -->
+        <div class="grid-2">
+          <!-- At-risk clients -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Clientes en Riesgo</span>
+              <span class="kpi-badge" id="saRiskBadge" style="background:rgba(227,30,36,0.1);color:#E31E24;border:1px solid rgba(227,30,36,0.25);border-radius:12px;padding:2px 8px;font-size:11px;">0 en riesgo</span>
+            </div>
+            <div id="saAtRiskList">
+              <div style="text-align:center;padding:30px;color:var(--gray);font-size:13px;">Cargando...</div>
+            </div>
+          </div>
+          <!-- Pending checkins (ID preserved for backward compatibility) -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">Check-ins Sin Responder</span>
-              <span class="kpi-badge"><span style="font-size:5px;color:var(--red)">&#9679;</span> 0 pendientes</span>
+              <span class="kpi-badge" id="saPendingBadge"><span style="font-size:5px;color:var(--red)">&#9679;</span> 0 pendientes</span>
             </div>
             <div id="pendingCheckins"></div>
+          </div>
+        </div>
+
+        <!-- Bottom row: Activity feed + Recent transactions (ID preserved) -->
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Actividad Reciente</span>
+            </div>
+            <div id="saRecentActivity">
+              <div style="text-align:center;padding:30px;color:var(--gray);font-size:13px;">Cargando...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Últimos Ingresos</span>
+              <span class="card-count" id="saTransCount">— transacciones</span>
+            </div>
+            <div class="activity-list" id="recentTransactions"></div>
           </div>
         </div>
 
@@ -3249,8 +3463,232 @@
     btn.textContent = '✉ Enviar Invitación';
   }
 
+  /* ════════════════════════════════════════════════
+     SUPERADMIN COMMAND CENTER — sin innerHTML
+  ════════════════════════════════════════════════ */
+  var SA_STATS = null;
+  function _svgEl(tag,attrs){
+    var e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+    Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});
+    return e;
+  }
+  function fmtSANum(n){
+    n=parseFloat(n)||0;
+    if(n>=1e6) return (n/1e6).toFixed(1)+'M';
+    if(n>=1e3) return (n/1e3).toFixed(1)+'K';
+    return n.toLocaleString('es-CO');
+  }
+  function saKpiSet(id,value,label,footer,color,icon){
+    var el=document.getElementById(id); if(!el) return;
+    while(el.firstChild) el.removeChild(el.firstChild);
+    var ld=document.createElement('div'); ld.className='kpi-label';
+    var ic=document.createElement('i'); ic.className='fa-solid fa-'+icon;
+    ic.style.cssText='color:'+color+';font-size:12px;opacity:.8;margin-right:5px';
+    ld.appendChild(ic); ld.appendChild(document.createTextNode(label));
+    var vd=document.createElement('div'); vd.className='kpi-value';
+    vd.style.cssText='color:'+color+';font-family:var(--font-data,monospace);font-size:26px;margin:5px 0 2px';
+    vd.textContent=value;
+    var fd=document.createElement('div'); fd.className='kpi-footer'; fd.textContent=footer;
+    el.appendChild(ld); el.appendChild(vd); el.appendChild(fd);
+  }
+  function renderRevenueChart(monthly){
+    var el=document.getElementById('saRevenueChart'); if(!el) return;
+    while(el.firstChild) el.removeChild(el.firstChild);
+    if(!monthly.length){
+      var emp=document.createElement('div');
+      emp.style.cssText='text-align:center;padding:60px 0;color:var(--gray);font-size:13px';
+      emp.textContent='Sin datos de ingresos'; el.appendChild(emp); return;
+    }
+    var W=el.offsetWidth||520, H=160, pad={t:18,r:16,b:28,l:52};
+    var amounts=monthly.map(function(m){return parseFloat(m.amount)||0;});
+    var max=Math.max.apply(null,amounts)||1;
+    var pts=monthly.map(function(m,i){
+      return {
+        x: pad.l+(i/Math.max(monthly.length-1,1))*(W-pad.l-pad.r),
+        y: H-pad.b-(parseFloat(m.amount)||0)/max*(H-pad.t-pad.b), m:m
+      };
+    });
+    var svg=_svgEl('svg',{viewBox:'0 0 '+W+' '+H,preserveAspectRatio:'none',style:'width:100%;height:100%;display:block'});
+    var defs=_svgEl('defs',{});
+    var grad=_svgEl('linearGradient',{id:'saRG',x1:'0',y1:'0',x2:'0',y2:'1'});
+    grad.appendChild(_svgEl('stop',{offset:'0%','stop-color':'#E31E24','stop-opacity':'0.35'}));
+    grad.appendChild(_svgEl('stop',{offset:'100%','stop-color':'#E31E24','stop-opacity':'0.02'}));
+    defs.appendChild(grad); svg.appendChild(defs);
+    for(var i=0;i<=4;i++){
+      var gy=pad.t+i*(H-pad.t-pad.b)/4, gv=max-i*max/4;
+      svg.appendChild(_svgEl('line',{x1:pad.l,y1:gy.toFixed(1),x2:W-pad.r,y2:gy.toFixed(1),stroke:'rgba(255,255,255,0.05)','stroke-width':'1'}));
+      var gt=_svgEl('text',{x:pad.l-5,y:gy+4,fill:'rgba(255,255,255,0.3)','font-size':'10','text-anchor':'end'});
+      gt.textContent='$'+fmtSANum(gv); svg.appendChild(gt);
+    }
+    var lD=pts.map(function(p,i){return(i===0?'M':'L')+p.x.toFixed(1)+','+p.y.toFixed(1);}).join(' ');
+    var aD=lD+' L'+pts[pts.length-1].x.toFixed(1)+','+(H-pad.b)+' L'+pts[0].x.toFixed(1)+','+(H-pad.b)+' Z';
+    svg.appendChild(_svgEl('path',{d:aD,fill:'url(#saRG)'}));
+    svg.appendChild(_svgEl('path',{d:lD,stroke:'#E31E24','stroke-width':'2.5',fill:'none','stroke-linecap':'round','stroke-linejoin':'round'}));
+    pts.forEach(function(p){
+      var lt=_svgEl('text',{x:p.x.toFixed(1),y:H-8,fill:'rgba(255,255,255,0.4)','font-size':'10','text-anchor':'middle'});
+      lt.textContent=p.m.label||p.m.ym||''; svg.appendChild(lt);
+      svg.appendChild(_svgEl('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:'4',fill:'#E31E24',stroke:'#14141a','stroke-width':'2'}));
+    });
+    el.appendChild(svg);
+  }
+  function renderPlanDonut(cl){
+    var el=document.getElementById('saPlanDonut'); if(!el) return;
+    while(el.firstChild) el.removeChild(el.firstChild);
+    var plans=[
+      {name:'Elite',    count:parseInt(cl.elite)||0,    color:'#FFD700'},
+      {name:'Método',   count:parseInt(cl.metodo)||0,   color:'#63B3ED'},
+      {name:'Esencial', count:parseInt(cl.esencial)||0, color:'#48BB78'},
+      {name:'RISE',     count:parseInt(cl.rise)||0,     color:'#ED8936'}
+    ];
+    var totalA=plans.reduce(function(s,p){return s+p.count;},0), total=totalA||1;
+    var R=52,r=33,cx=68,cy=68,ang=-Math.PI/2;
+    var svg=_svgEl('svg',{width:'136',height:'136',viewBox:'0 0 136 136'});
+    plans.forEach(function(p){
+      if(!p.count) return;
+      var sw=(p.count/total)*2*Math.PI;
+      var x1=cx+R*Math.cos(ang), y1=cy+R*Math.sin(ang);
+      var x2=cx+R*Math.cos(ang+sw), y2=cy+R*Math.sin(ang+sw);
+      var x3=cx+r*Math.cos(ang+sw), y3=cy+r*Math.sin(ang+sw);
+      var x4=cx+r*Math.cos(ang), y4=cy+r*Math.sin(ang);
+      var lg=sw>Math.PI?'1':'0';
+      var d='M '+x1.toFixed(2)+' '+y1.toFixed(2)+' A '+R+' '+R+' 0 '+lg+' 1 '+x2.toFixed(2)+' '+y2.toFixed(2)
+           +' L '+x3.toFixed(2)+' '+y3.toFixed(2)+' A '+r+' '+r+' 0 '+lg+' 0 '+x4.toFixed(2)+' '+y4.toFixed(2)+' Z';
+      svg.appendChild(_svgEl('path',{d:d,fill:p.color,opacity:'0.9'}));
+      ang+=sw;
+    });
+    var tt=_svgEl('text',{x:'68',y:'63','text-anchor':'middle',fill:'white','font-size':'20','font-weight':'700','font-family':'monospace'});
+    tt.textContent=String(totalA);
+    var tl=_svgEl('text',{x:'68',y:'78','text-anchor':'middle',fill:'rgba(255,255,255,0.4)','font-size':'10'});
+    tl.textContent='activos';
+    svg.appendChild(tt); svg.appendChild(tl); el.appendChild(svg);
+    var legWrap=document.createElement('div'); legWrap.style.cssText='width:100%;padding:0 4px';
+    plans.forEach(function(p){
+      var pct=Math.round(p.count/total*100);
+      var row=document.createElement('div'); row.className='sa-donut-legend-item';
+      var left=document.createElement('div');
+      var dot=document.createElement('span'); dot.className='sa-donut-dot'; dot.style.background=p.color;
+      left.appendChild(dot); left.appendChild(document.createTextNode(p.name));
+      var right=document.createElement('div'); right.style.cssText='font-family:monospace;font-weight:700';
+      right.textContent=p.count+' ';
+      var ps=document.createElement('span'); ps.style.cssText='opacity:0.45;font-weight:400;font-size:11px'; ps.textContent=pct+'%';
+      right.appendChild(ps); row.appendChild(left); row.appendChild(right); legWrap.appendChild(row);
+    });
+    el.appendChild(legWrap);
+  }
+  function renderAtRiskClients(clients){
+    var el=document.getElementById('saAtRiskList'); if(!el) return;
+    while(el.firstChild) el.removeChild(el.firstChild);
+    if(!clients.length){
+      var emp=document.createElement('div');
+      emp.style.cssText='text-align:center;padding:30px;color:var(--gray);font-size:13px';
+      emp.textContent='✓ Sin clientes en riesgo'; el.appendChild(emp); return;
+    }
+    var PC={elite:'#FFD700',metodo:'#63B3ED',esencial:'#48BB78',rise:'#ED8936'};
+    clients.forEach(function(c){
+      var urgency=(c.days_since>21)?'#E31E24':'#F59E0B';
+      var dT=c.days_since!=null?c.days_since+'d sin check-in':'Sin check-ins';
+      var eT=c.days_expiry!=null?(c.days_expiry<=0?'· Expirado':'· Expira en '+c.days_expiry+'d'):'';
+      var pc=PC[c.plan]||'#888';
+      var row=document.createElement('div'); row.className='sa-risk-row';
+      var av=document.createElement('div'); av.className='sa-risk-avatar';
+      av.style.cssText='width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;background:rgba(227,30,36,0.12);border:1px solid '+urgency+';color:'+urgency+';';
+      av.textContent=(c.name||'?')[0].toUpperCase();
+      var inf=document.createElement('div'); inf.className='sa-risk-info';
+      var nm=document.createElement('div');  nm.className='sa-risk-name'; nm.textContent=c.name;
+      var dt=document.createElement('div');  dt.className='sa-risk-detail'; dt.textContent=dT+' '+eT;
+      inf.appendChild(nm); inf.appendChild(dt);
+      var bg=document.createElement('span'); bg.className='sa-risk-plan-badge';
+      bg.style.cssText='background:rgba(0,0,0,0.3);color:'+pc+';border:1px solid '+pc+'44;';
+      bg.textContent=(c.plan||'').toUpperCase();
+      row.appendChild(av); row.appendChild(inf); row.appendChild(bg); el.appendChild(row);
+    });
+  }
+  function renderSAActivity(items){
+    var el=document.getElementById('saRecentActivity'); if(!el) return;
+    while(el.firstChild) el.removeChild(el.firstChild);
+    if(!items.length){
+      var emp=document.createElement('div');
+      emp.style.cssText='text-align:center;padding:20px;color:var(--gray);font-size:13px';
+      emp.textContent='Sin actividad reciente'; el.appendChild(emp); return;
+    }
+    items.forEach(function(item){
+      var isP=item.type==='payment';
+      var div=document.createElement('div'); div.className='sa-activity-item';
+      var icon=document.createElement('div'); icon.className='sa-activity-icon '+(isP?'payment':'client');
+      var ic=document.createElement('i'); ic.className=isP?'fa-solid fa-dollar-sign':'fa-solid fa-user-plus';
+      icon.appendChild(ic);
+      var txt=document.createElement('div'); txt.className='sa-activity-text';
+      var nm=document.createElement('div');  nm.className='sa-activity-name'; nm.textContent=item.name||'-';
+      var sb=document.createElement('div');  sb.className='sa-activity-sub';
+      sb.textContent=isP
+        ?('Pago $'+fmtSANum(item.extra||0)+' — '+(item.detail||'').toUpperCase())
+        :('Nuevo cliente — '+(item.detail||'').toUpperCase());
+      txt.appendChild(nm); txt.appendChild(sb);
+      var tm=document.createElement('div'); tm.className='sa-activity-time';
+      tm.textContent=(item.created_at||'').substring(0,10);
+      div.appendChild(icon); div.appendChild(txt); div.appendChild(tm); el.appendChild(div);
+    });
+  }
+  function renderSADashboard(d){
+    var cl=d.clients||{}, rev=d.revenue||{}, ci=d.checkins||{}, risk=d.risk||{};
+    saKpiSet('saKpiActivos', cl.active||0, 'Clientes Activos',
+      (cl.new_week||0)+' nuevos esta semana','#22C55E','users');
+    saKpiSet('saKpiMRR','$'+fmtSANum(rev.mrr||0),'MRR',
+      '$'+fmtSANum(rev.total_month||0)+' este mes','#22C55E','dollar-sign');
+    saKpiSet('saKpiPending',ci.pending||0,'Check-ins Pendientes',
+      (ci.responded_today||0)+' respondidos hoy',(ci.pending>5?'#E31E24':'#F59E0B'),'clipboard-check');
+    saKpiSet('saKpiRisk',risk.at_risk||0,'En Riesgo','inactivos +14 días',
+      (risk.at_risk>3?'#E31E24':'#F59E0B'),'triangle-exclamation');
+    saKpiSet('saKpiExpiring',risk.expiring_7d||0,'Renuevan Pronto','próximos 7 días',
+      (risk.expiring_7d>0?'#F59E0B':'#22C55E'),'calendar-xmark');
+    var bw=parseFloat(ci.avg_bienestar)||0;
+    saKpiSet('saKpiBienestar',(ci.avg_bienestar||'—')+'/10','Bienestar Promedio',
+      'últimos 30 días',(bw>=7?'#22C55E':bw>=5?'#F59E0B':'#E31E24'),'heart');
+    renderRevenueChart(d.monthly||[]);
+    renderPlanDonut(cl);
+    renderAtRiskClients(d.at_risk_clients||[]);
+    var mapped=(d.pending_checkins||[]).map(function(c){
+      return{id:c.id,client_id:c.client_id,client_name:c.client_name,
+             plan:c.plan,checkin_date:c.checkin_date,bienestar:c.bienestar,
+             coach_reply:null,comentario:c.comentario};
+    });
+    renderPendingCheckins(mapped);
+    renderSAActivity(d.recent_activity||[]);
+    var pb=document.getElementById('saPendingBadge');
+    if(pb){
+      while(pb.firstChild) pb.removeChild(pb.firstChild);
+      var pd=document.createElement('span'); pd.style.cssText='font-size:5px;color:var(--red)';
+      pd.textContent='●'; pb.appendChild(pd);
+      pb.appendChild(document.createTextNode(' '+(ci.pending||0)+' pendientes'));
+    }
+    var rb=document.getElementById('saRiskBadge');
+    if(rb) rb.textContent=(risk.at_risk||0)+' en riesgo';
+    var me=document.getElementById('saTotalMonth');
+    if(me) me.textContent='$'+fmtSANum(rev.total_month||0)+' este mes';
+  }
+  function loadDashboardStats(){
+    var dot=document.getElementById('saStatusDot');
+    var txt=document.getElementById('saStatusText');
+    if(dot){dot.className='sa-status-dot loading';dot.style.background='';dot.style.boxShadow='';}
+    if(txt) txt.textContent='Actualizando...';
+    apiFetch('/admin/dashboard-stats')
+      .then(function(r){return r.json();})
+      .then(function(d){
+        SA_STATS=d; renderSADashboard(d);
+        if(dot){dot.className='sa-status-dot';dot.style.background='#22C55E';dot.style.boxShadow='0 0 7px rgba(34,197,94,0.7)';}
+        if(txt) txt.textContent='En línea';
+        setApiStatus(true);
+      })
+      .catch(function(){
+        if(dot){dot.className='sa-status-dot offline';dot.style.background='';dot.style.boxShadow='';}
+        if(txt) txt.textContent='Sin conexión';
+        setApiStatus(false);
+      });
+  }
+
   /* ─── INIT (called after auth verification) ─── */
   function initApp() {
+    loadDashboardStats();
     loadPagos();
     loadAdminData();
     loadRiseData();
