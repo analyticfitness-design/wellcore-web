@@ -101,4 +101,20 @@ if(!col($pdo,'challenge_participants','completed_at'))
     run($pdo,"ALTER TABLE challenge_participants ADD COLUMN completed_at TIMESTAMP NULL DEFAULT NULL","016 completed_at");
 else echo "SKIP: 016 completed_at already exists\n";
 
+echo "\n=== Migration 017: coach_messages ===\n";
+$sql017 = file_get_contents(__DIR__ . '/017_coach_messages.sql');
+$lines017 = explode("\n", $sql017);
+$clean017 = implode("\n", array_filter($lines017, fn($l) => !preg_match('/^\s*--/', $l)));
+foreach (array_filter(array_map('trim', explode(';', $clean017))) as $stmt) {
+    if ($stmt) run($pdo, $stmt, '017 '.substr(trim(preg_replace('/\s+/',' ',$stmt)),0,60));
+}
+
+echo "\n=== Migration 018: coach_community_posts + coach_pwa_config ===\n";
+$sql018 = file_get_contents(__DIR__ . '/018_coach_community_pwa.sql');
+$lines018 = explode("\n", $sql018);
+$clean018 = implode("\n", array_filter($lines018, fn($l) => !preg_match('/^\s*--/', $l)));
+foreach (array_filter(array_map('trim', explode(';', $clean018))) as $stmt) {
+    if ($stmt) run($pdo, $stmt, '018 '.substr(trim(preg_replace('/\s+/',' ',$stmt)),0,60));
+}
+
 echo "\n=== ALL MIGRATIONS DONE ===\n";
