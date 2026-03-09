@@ -43,7 +43,7 @@ function seedTable(PDO $db, string $table, string $checkSql, callable $insertFn)
     }
 }
 
-$coachId = 1; // daniel.esparza superadmin actúa como coach demo
+$coachId = 3; // coachsilvia — coach real asignado a los clientes demo (id=3 en admins)
 $now     = date('Y-m-d H:i:s');
 $today   = date('Y-m-d');
 
