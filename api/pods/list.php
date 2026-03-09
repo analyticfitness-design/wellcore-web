@@ -16,14 +16,17 @@ $db     = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
-    // Puede ser cliente o coach
+    // Puede ser cliente o coach — usar peekTokenUserType para evitar exit() prematuro
     $coach_id  = null;
     $client_id = null;
 
-    try {
+    $tokenType = peekTokenUserType();
+    if (!$tokenType) respondError('Autenticación requerida', 401);
+
+    if ($tokenType === 'client') {
         $client    = authenticateClient();
         $client_id = $client['id'];
-    } catch (\Exception $e) {
+    } else {
         $coach    = authenticateCoach();
         $coach_id = $coach['id'];
     }

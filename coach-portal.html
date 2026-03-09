@@ -3629,6 +3629,7 @@ function setCheckinFilter(status) {
 }
 
 function loadCheckins() {
+  setCheckinFilter('');  // activa "Todos" visualmente al entrar a la sección
   var grid = document.getElementById('vc-grid');
   if (!grid) return;
   grid.textContent = '';

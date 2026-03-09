@@ -18,10 +18,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
     $is_coach  = false;
     $filter_id = '';
-    try {
+
+    $tokenType = peekTokenUserType();
+    if (!$tokenType) respondError('Autenticación requerida', 401);
+
+    if ($tokenType === 'client') {
         $client    = authenticateClient();
         $filter_id = $client['id'];
-    } catch (\Exception $e) {
+    } else {
         $coach     = authenticateCoach();
         $is_coach  = true;
         $filter_id = $coach['id'];

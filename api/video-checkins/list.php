@@ -20,13 +20,17 @@ $status = $_GET['status'] ?? '';
 
 $valid_statuses = ['pending', 'coach_reviewed', 'ai_reviewed'];
 
-// Intentar autenticar como cliente primero
+// Autenticar por tipo de token — evita exit() prematuro del try-catch
 $is_coach  = false;
 $filter_id = '';
-try {
+
+$tokenType = peekTokenUserType();
+if (!$tokenType) respondError('Autenticación requerida', 401);
+
+if ($tokenType === 'client') {
     $client    = authenticateClient();
     $filter_id = $client['id'];
-} catch (\Exception $e) {
+} else {
     $coach     = authenticateCoach();
     $is_coach  = true;
     $filter_id = $coach['id'];

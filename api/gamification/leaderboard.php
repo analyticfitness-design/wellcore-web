@@ -23,7 +23,10 @@ $viewer_id   = null;
 $viewer_type = null;
 $coach_id    = null;
 
-try {
+$tokenType = peekTokenUserType();
+if (!$tokenType) respondError('Autenticación requerida', 401);
+
+if ($tokenType === 'client') {
     $client      = authenticateClient();
     $viewer_id   = $client['id'];
     $viewer_type = 'client';
@@ -31,15 +34,11 @@ try {
     $r = $db->prepare("SELECT coach_id FROM clients WHERE id = ?");
     $r->execute([$viewer_id]);
     $coach_id = $r->fetchColumn() ?: null;
-} catch (\Exception $e) {
-    try {
-        $coach       = authenticateCoach();
-        $viewer_id   = $coach['id'];
-        $viewer_type = 'coach';
-        $coach_id    = $coach['id'];
-    } catch (\Exception $e2) {
-        respondError('Autenticación requerida', 401);
-    }
+} else {
+    $coach       = authenticateCoach();
+    $viewer_id   = $coach['id'];
+    $viewer_type = 'coach';
+    $coach_id    = $coach['id'];
 }
 
 // Calcular ventana de tiempo

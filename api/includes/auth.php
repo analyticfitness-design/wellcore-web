@@ -154,6 +154,17 @@ function requireSetupAuth(): void {
     exit;
 }
 
+// Lee el user_type del token activo SIN llamar respondError (seguro para dual-auth)
+function peekTokenUserType(): ?string {
+    $token = getTokenFromHeader();
+    if (!$token) return null;
+    $db   = getDB();
+    $stmt = $db->prepare("SELECT user_type FROM auth_tokens WHERE token = ? AND expires_at > NOW()");
+    $stmt->execute([$token]);
+    $row  = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row ? $row['user_type'] : null;
+}
+
 // Optional: require specific plan level
 function requirePlan(array $client, string $minPlan): void {
     $levels = ['esencial' => 1, 'metodo' => 2, 'elite' => 3];
