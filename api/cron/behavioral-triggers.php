@@ -24,7 +24,7 @@ echo "[" . date('Y-m-d H:i:s') . "] Behavioral triggers cron started\n";
 function wasSentToday(PDO $db, int $clientId, string $triggerType): bool {
     $stmt = $db->prepare("
         SELECT id FROM auto_message_log
-        WHERE client_id = ? AND trigger_type = ? AND DATE(sent_at) = CURDATE()
+        WHERE client_id = ? AND trigger_type = ? AND date_sent = CURDATE()
     ");
     $stmt->execute([$clientId, $triggerType]);
     return (bool)$stmt->fetchColumn();
@@ -40,8 +40,8 @@ function wasSentEver(PDO $db, int $clientId, string $triggerType): bool {
 // Helper: registrar trigger enviado
 function logTrigger(PDO $db, int $clientId, string $triggerType): void {
     $stmt = $db->prepare("
-        INSERT IGNORE INTO auto_message_log (client_id, trigger_type, channel)
-        VALUES (?, ?, 'email')
+        INSERT IGNORE INTO auto_message_log (client_id, trigger_type, channel, date_sent)
+        VALUES (?, ?, 'email', CURDATE())
     ");
     $stmt->execute([$clientId, $triggerType]);
 }
@@ -102,27 +102,27 @@ foreach ($clients as $c) {
     $totalCheckins = (int)$c['total_checkins'];
 
     // ── inactive_7d ──────────────────────────────
-    if ($daysSinceCheckin >= 7 && $daysSinceCheckin < 14 && !wasSentToday($db, $cid, 'inactive_7d')) {
+    if ($daysSinceCheckin >= 7 && $daysSinceCheckin < 14 && !wasSentEver($db, $cid, 'inactive_7d')) {
         $html = email_inactive_7d($c['name'], $plan, $dashUrl);
         $fn   = explode(' ', trim($c['name']))[0];
         sendTriggerEmail($db, $email, "Te extrañamos, $fn — ¿Todo bien? 💪", $html, $cid, 'inactive_7d', $sent, $errors);
     }
 
     // ── inactive_14d ─────────────────────────────
-    if ($daysSinceCheckin >= 14 && $daysSinceCheckin < 30 && !wasSentToday($db, $cid, 'inactive_14d')) {
+    if ($daysSinceCheckin >= 14 && $daysSinceCheckin < 30 && !wasSentEver($db, $cid, 'inactive_14d')) {
         $html = email_inactive_14d($c['name'], $plan, $dashUrl);
         $fn   = explode(' ', trim($c['name']))[0];
         sendTriggerEmail($db, $email, "Llevamos 14 días sin saber de ti, $fn", $html, $cid, 'inactive_14d', $sent, $errors);
     }
 
     // ── subscription_7d ──────────────────────────
-    if ($daysToExpiry >= 5 && $daysToExpiry <= 8 && !wasSentToday($db, $cid, 'subscription_7d')) {
+    if ($daysToExpiry >= 5 && $daysToExpiry <= 8 && !wasSentEver($db, $cid, 'subscription_7d')) {
         $html = email_renewal_reminder($c['name'], $plan, $c['subscription_end'], $dashUrl, 7);
         sendTriggerEmail($db, $email, "Tu plan WellCore vence en 7 días — Renueva sin perder tu progreso", $html, $cid, 'subscription_7d', $sent, $errors);
     }
 
     // ── subscription_3d ──────────────────────────
-    if ($daysToExpiry >= 2 && $daysToExpiry <= 4 && !wasSentToday($db, $cid, 'subscription_3d')) {
+    if ($daysToExpiry >= 2 && $daysToExpiry <= 4 && !wasSentEver($db, $cid, 'subscription_3d')) {
         $html = email_renewal_reminder($c['name'], $plan, $c['subscription_end'], $dashUrl, 3);
         sendTriggerEmail($db, $email, "⏰ 3 días para que venza tu plan — Actúa ahora", $html, $cid, 'subscription_3d', $sent, $errors);
     }
