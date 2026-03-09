@@ -295,13 +295,12 @@
        2. HERO
     ============================================================ */
     #hero {
-      min-height: 100vh;
       background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      padding-top: 130px;
+      padding-bottom: 80px;
       position: relative;
       overflow: hidden;
     }
@@ -339,10 +338,221 @@
       position: relative;
       z-index: 2;
       text-align: left;
-      width: 58%;
-      max-width: 680px;
-      margin: 0;
-      padding: 48px 24px 60px 80px;
+      padding: 48px 24px 80px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    /* Hero coach photo — floating between columns */
+    .hero-photo-float {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-52%);
+      width: 540px;
+      height: 580px;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-photo-float img {
+      width: 140%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 52% 12%;
+      margin-left: -20%;
+      display: block;
+      mix-blend-mode: lighten;
+      filter: brightness(0.88) saturate(1.15) contrast(1.08);
+      mask-image: linear-gradient(to bottom, black 55%, transparent 95%);
+      -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 95%);
+      animation: heroMockupRise 1.2s cubic-bezier(0.22,1,0.36,1) forwards 0.5s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    @media (max-width: 1280px) { .hero-photo-float { width: 440px; height: 480px; } }
+    @media (max-width: 991px)  { .hero-photo-float { display: none; } }
+    /* Hero mockup column */
+    .hero-mockup-col {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 80px 80px 24px;
+    }
+    .hero-browser {
+      width: 100%;
+      max-width: 520px;
+      background: #111113;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 40px 120px rgba(227,30,36,0.20), 0 0 0 1px rgba(255,255,255,0.05);
+      animation: heroMockupRise 1s cubic-bezier(0.22,1,0.36,1) forwards 0.8s;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    @keyframes heroMockupRise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-browser-bar {
+      background: #0a0a0a;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hb-dots { display: flex; gap: 6px; }
+    .hb-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .hb-dot.red { background: #E31E24; }
+    .hb-dot.yellow { background: #f59e0b; }
+    .hb-dot.green { background: #22c55e; }
+    .hb-url {
+      flex: 1;
+      background: #1a1a1d;
+      border-radius: 4px;
+      padding: 4px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.5px;
+    }
+    .hero-browser-body {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      min-height: 540px;
+    }
+    .hb-sidebar {
+      background: #0e0e11;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 16px 0;
+    }
+    .hb-sidebar-logo {
+      padding: 4px 16px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+    .hb-sidebar-logo span { color: #E31E24; }
+    .hb-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-body);
+      border-left: 2px solid transparent;
+    }
+    .hb-nav-item.active {
+      color: #fff;
+      border-left-color: #E31E24;
+      background: rgba(227,30,36,0.05);
+    }
+    .hb-nav-item i { font-size: 11px; color: rgba(255,255,255,0.3); }
+    .hb-nav-item.active i { color: #E31E24; }
+    .hb-main {
+      padding: 16px;
+      background: #080809;
+    }
+    .hb-welcome {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 12px;
+    }
+    .hb-welcome strong { color: #fff; }
+    .hb-kpi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .hb-kpi {
+      background: #111113;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .hb-kpi-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 4px;
+    }
+    .hb-kpi-value {
+      font-family: var(--font-data, var(--font-mono));
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .hb-kpi-value.red { color: #E31E24; }
+    .hb-kpi-value.green { color: #22c55e; }
+    .hb-kpi-value.gold { color: #f59e0b; }
+    .hb-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #111113;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .hb-ring-mini {
+      flex-shrink: 0;
+    }
+    .hb-ring-info {}
+    .hb-ring-pct {
+      font-family: var(--font-data, var(--font-mono));
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .hb-ring-sub {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .hb-phases {
+      display: flex;
+      gap: 6px;
+    }
+    .hb-phase {
+      flex: 1;
+      text-align: center;
+      padding: 6px 4px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      background: #111113;
+      color: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .hb-phase.done { color: #22c55e; border-color: rgba(34,197,94,0.2); background: rgba(34,197,94,0.05); }
+    .hb-phase.active { color: #E31E24; border-color: rgba(227,30,36,0.3); background: rgba(227,30,36,0.07); }
+    @media (max-width: 991px) {
+      #hero {
+        grid-template-columns: 1fr;
+        padding-top: 112px;
+      }
+      .hero-mockup-col {
+        display: none;
+      }
+      .hero-inner {
+        padding: 32px 24px 60px 32px;
+      }
     }
 
     /* Metadata row */
@@ -475,8 +685,8 @@
       border-radius: 0;
       display: flex;
       align-items: stretch;
-      margin: 0 auto 36px;
-      max-width: 640px;
+      margin: 0 0 36px;
+      max-width: 480px;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 1.8s;
     }
@@ -511,7 +721,7 @@
     .hero-ctas {
       display: flex;
       gap: 16px;
-      justify-content: center;
+      justify-content: flex-start;
       margin-bottom: 28px;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 2s;
@@ -561,7 +771,7 @@
     .hero-prices {
       display: flex;
       gap: 12px;
-      justify-content: center;
+      justify-content: flex-start;
       flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp 0.7s ease forwards 2.2s;
@@ -592,14 +802,7 @@
 
     /* Hero side photo */
     .hero-side-photo {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 38%;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
+      display: none; /* hidden — replaced by hero-mockup-col browser UI */
     }
     .hero-side-photo img {
       width: 100%;
@@ -2511,6 +2714,438 @@
   #rise { padding: 60px 0; }
   .rise-price { font-size: 40px; }
 }
+
+/* Safety fallback: ensure hero content is visible */
+@media (prefers-reduced-motion: reduce) {
+  .hero-meta, .hero-badge, .hero-headline, .hero-headline-2,
+  .hero-subtitle, .hero-rule, .hero-stats, .hero-ctas, .hero-prices {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   LA PLATAFORMA — Feature Tabs
+============================================================ */
+#plataforma {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 100px 0 0;
+}
+.plataforma-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 60px;
+  padding: 0 24px;
+}
+.plataforma-title {
+  font-family: var(--font-head);
+  font-size: clamp(42px, 5vw, 64px);
+  line-height: 0.95;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.plataforma-title em {
+  font-style: normal;
+  color: var(--red);
+}
+.plataforma-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+}
+.plataforma-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  overflow-x: auto;
+}
+.ptab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 28px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.ptab i { font-size: 12px; }
+.ptab:hover { color: rgba(255,255,255,0.7); }
+.ptab.active { color: var(--white); border-bottom-color: var(--red); }
+/* Panels */
+.plataforma-panel {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: center;
+  max-width: 100%;
+}
+.plataforma-panel.active { display: grid; }
+@media (max-width: 991px) {
+  .plataforma-panel.active { grid-template-columns: 1fr; }
+  .plataforma-feature-info { order: -1; }
+}
+/* Mockup wrap */
+.pmockup-wrap {
+  padding: 60px 48px 60px 64px;
+  border-right: 1px solid var(--border);
+}
+.pmockup-browser {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04), 0 0 60px rgba(227,30,36,0.10);
+}
+.pmb-bar {
+  background: #0a0a0a;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pmb-dots { display: flex; gap: 5px; }
+.pmb-dots span {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+}
+.pmb-dots span:nth-child(1) { background: #E31E24; }
+.pmb-dots span:nth-child(2) { background: #f59e0b; }
+.pmb-dots span:nth-child(3) { background: #22c55e; }
+.pmb-url {
+  flex: 1;
+  background: #1a1a1d;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+}
+.pmb-body {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  min-height: 420px;
+}
+.pmb-sidebar {
+  background: #0e0e11;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  padding: 14px 0;
+}
+.pmb-logo {
+  padding: 4px 14px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 10px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #fff;
+}
+.pmb-logo span { color: #E31E24; }
+.pmb-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  font-family: var(--font-body);
+  border-left: 2px solid transparent;
+  cursor: default;
+}
+.pmb-nav i { font-size: 10px; }
+.pmb-nav.active {
+  color: #fff;
+  border-left-color: #E31E24;
+  background: rgba(227,30,36,0.05);
+}
+.pmb-nav.active i { color: #E31E24; }
+.pmb-main {
+  padding: 14px;
+  background: #080809;
+  overflow: hidden;
+}
+.pmb-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+}
+.pmb-plan-badge {
+  background: rgba(227,30,36,0.12);
+  color: var(--red);
+  border: 1px solid rgba(227,30,36,0.25);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 2px;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.pmb-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.pmb-kpi {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 8px 8px;
+  text-align: center;
+}
+.pmb-kpi-v {
+  font-family: var(--font-data, var(--font-mono));
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.pmb-kpi-l {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.pmb-kpi.red .pmb-kpi-v { color: #E31E24; }
+.pmb-ring-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.pmb-phases-row {
+  display: flex;
+  gap: 5px;
+}
+.pmb-ph {
+  flex: 1;
+  text-align: center;
+  padding: 5px 4px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  background: #111113;
+  color: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 5px;
+}
+.pmb-ph i { margin-right: 3px; font-size: 7px; }
+.pmb-ph.done { color: #22c55e; border-color: rgba(34,197,94,0.2); background: rgba(34,197,94,0.04); }
+.pmb-ph.active { color: #E31E24; border-color: rgba(227,30,36,0.25); background: rgba(227,30,36,0.06); }
+/* Check-in styles */
+.pmb-section-title {
+  font-family: var(--font-head);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.pmb-checkin-form {}
+.pmb-field {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+.pmb-field-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 4px;
+}
+.pmb-field-input {
+  font-size: 12px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pmb-field-tag { font-size: 9px; padding: 2px 6px; border-radius: 3px; }
+.pmb-field-tag.green { background: rgba(34,197,94,0.12); color: #22c55e; }
+.pmb-stars { display: flex; gap: 3px; }
+.star { color: rgba(255,255,255,0.15); font-size: 14px; }
+.star.active { color: #f59e0b; }
+.pmb-field-textarea {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
+  font-style: italic;
+}
+.pmb-submit-btn {
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  cursor: default;
+}
+.pmb-checkin-hist { margin-top: 10px; }
+.pmb-hist-title {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  margin-bottom: 6px;
+}
+.pmb-hist-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 10px;
+}
+.pmb-hist-date { color: rgba(255,255,255,0.4); font-family: var(--font-mono); }
+.pmb-hist-score { color: rgba(255,255,255,0.6); font-weight: 600; }
+.pmb-hist-score.green { color: #22c55e; }
+/* Entrenamiento styles */
+.pmb-trn-progress { margin-bottom: 10px; }
+.pmb-exercise-list {}
+.pmb-ex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  margin-bottom: 4px;
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.pmb-ex.done { background: rgba(34,197,94,0.04); border-color: rgba(34,197,94,0.1); }
+.pmb-ex.active { background: rgba(227,30,36,0.06); border-color: rgba(227,30,36,0.2); }
+.pmb-ex-check {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.3);
+}
+.pmb-ex.done .pmb-ex-check { background: #22c55e; color: #fff; }
+.pmb-ex.active .pmb-ex-check { background: var(--red); color: #fff; }
+.pmb-ex-name { flex: 1; color: rgba(255,255,255,0.7); }
+.pmb-ex.done .pmb-ex-name { color: rgba(255,255,255,0.4); text-decoration: line-through; }
+.pmb-ex.active .pmb-ex-name { color: #fff; font-weight: 600; }
+.pmb-ex-sets {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.5px;
+}
+.pmb-ex.active .pmb-ex-sets { color: var(--red); }
+/* XP styles */
+.pmb-xp-card {
+  background: #111113;
+  border: 1px solid rgba(245,158,11,0.15);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.pmb-xp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.pmb-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.pmb-badge {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 10px 6px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: rgba(255,255,255,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.pmb-badge i { font-size: 14px; color: rgba(255,255,255,0.2); }
+.pmb-badge.unlocked { border-color: rgba(245,158,11,0.2); background: rgba(245,158,11,0.05); }
+.pmb-badge.unlocked i { color: #f59e0b; }
+.pmb-badge.unlocked span { color: rgba(255,255,255,0.6); }
+.pmb-badge.locked { opacity: 0.4; }
+/* Feature info column */
+.plataforma-feature-info {
+  padding: 60px 64px 60px 60px;
+}
+.plataforma-feature-info h3 {
+  font-family: var(--font-head);
+  font-size: clamp(32px, 3.5vw, 48px);
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.plataforma-feature-info p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+.pf-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pf-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+}
+.pf-list li i { color: var(--red); font-size: 12px; flex-shrink: 0; }
+@media (max-width: 991px) {
+  .pmockup-wrap { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .plataforma-feature-info { padding: 40px 24px; }
+  .pmb-body { grid-template-columns: 1fr; }
+  .pmb-sidebar { display: none; }
+  .plataforma-tabs { justify-content: flex-start; }
+  .ptab { padding: 14px 16px; }
+}
 </style>
 <!-- WellCore v5 Design System -->
 <link rel="stylesheet" href="css/wellcore-v5.css">
@@ -2527,19 +3162,7 @@
 <body>
 <!-- v6 Scroll Progress -->
 <div class="v6-scroll-progress"></div>
-<!-- v6 RISE Promo Bar -->
-<div class="v6-promo-bar" id="v6PromoBar">
-  <i class="fas fa-bolt" style="color:#E31E24;"></i>
-  <span>El <strong>Reto RISE 30 Dias</strong> esta abierto</span>
-  <span class="v6-promo-bar-countdown" id="v6PromoCountdown"></span>
-  <a href="/rise-enroll.html" class="v6-promo-bar-cta">Unete Ahora <i class="fas fa-arrow-right"></i></a>
-  <button class="v6-promo-bar-close" aria-label="Cerrar">&times;</button>
-</div>
-<!-- v5 Preloader -->
-<div id="v5-preloader" class="v5-preloader">
-  <div class="v5-preloader-logo">WELL<span>CORE</span></div>
-  <div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div>
-</div>
+<!-- Page Loader (replaces deprecated v5-preloader + v6-promo-bar) -->
 <!-- Page Loader -->
 <div id="page-loader">
   <div>
@@ -2684,6 +3307,347 @@
     </div>
 
   </div>
+
+  <!-- Coach photo — floating center-bottom -->
+  <div class="hero-photo-float" aria-hidden="true">
+    <img src="images/fotos/studio-84.jpg" alt="" width="310" height="224" loading="eager" decoding="async">
+  </div>
+
+  <!-- Hero Mockup — Browser del Dashboard -->
+  <div class="hero-mockup-col">
+    <div class="hero-browser">
+      <!-- Browser bar -->
+      <div class="hero-browser-bar">
+        <div class="hb-dots">
+          <div class="hb-dot red"></div>
+          <div class="hb-dot yellow"></div>
+          <div class="hb-dot green"></div>
+        </div>
+        <div class="hb-url">app.wellcorefitness.com &mdash; Portal Cliente</div>
+      </div>
+      <!-- Browser body -->
+      <div class="hero-browser-body">
+        <!-- Sidebar -->
+        <div class="hb-sidebar">
+          <div class="hb-sidebar-logo">WELL<span>CORE</span></div>
+          <div class="hb-nav-item active"><i class="fas fa-th-large"></i> Dashboard</div>
+          <div class="hb-nav-item"><i class="fas fa-dumbbell"></i> Entrenamiento</div>
+          <div class="hb-nav-item"><i class="fas fa-camera"></i> Check-in</div>
+          <div class="hb-nav-item"><i class="fas fa-utensils"></i> Nutrici&oacute;n</div>
+          <div class="hb-nav-item"><i class="fas fa-bolt"></i> XP &amp; Logros</div>
+          <div class="hb-nav-item"><i class="fas fa-chart-line"></i> M&eacute;tricas</div>
+        </div>
+        <!-- Main content -->
+        <div class="hb-main">
+          <div class="hb-welcome">Bienvenido, <strong>Carlos &uarr;</strong></div>
+          <div class="hb-kpi-grid">
+            <div class="hb-kpi">
+              <div class="hb-kpi-label">Plan Activo</div>
+              <div class="hb-kpi-value red">&Eacute;LITE</div>
+            </div>
+            <div class="hb-kpi">
+              <div class="hb-kpi-label">Adherencia</div>
+              <div class="hb-kpi-value green">94%</div>
+            </div>
+            <div class="hb-kpi">
+              <div class="hb-kpi-label">Semanas</div>
+              <div class="hb-kpi-value">08wk</div>
+            </div>
+            <div class="hb-kpi">
+              <div class="hb-kpi-label">Pr&oacute;x. Entrega</div>
+              <div class="hb-kpi-value gold">3d</div>
+            </div>
+          </div>
+          <div class="hb-progress-row">
+            <div class="hb-ring-mini">
+              <svg width="44" height="44" viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#252528" stroke-width="4"/>
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#E31E24"
+                  stroke-width="4" stroke-linecap="round"
+                  stroke-dasharray="113" stroke-dashoffset="30"
+                  transform="rotate(-90 22 22)"/>
+              </svg>
+            </div>
+            <div class="hb-ring-info">
+              <div class="hb-ring-pct">74%</div>
+              <div class="hb-ring-sub">Progreso Semana</div>
+            </div>
+          </div>
+          <div class="hb-phases">
+            <div class="hb-phase done"><i class="fas fa-check" style="font-size:8px;margin-right:3px;"></i>F01</div>
+            <div class="hb-phase done"><i class="fas fa-check" style="font-size:8px;margin-right:3px;"></i>F02</div>
+            <div class="hb-phase active"><i class="fas fa-fire" style="font-size:8px;margin-right:3px;"></i>F03</div>
+            <div class="hb-phase"><i class="fas fa-trophy" style="font-size:8px;margin-right:3px;"></i>F04</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LA PLATAFORMA — Feature Tabs con Mockups
+============================================================ -->
+<section id="plataforma">
+  <div class="plataforma-header">
+    <span class="label-tag">La Plataforma</span>
+    <h2 class="plataforma-title">Todo lo que necesitas<br><em>en un solo lugar</em></h2>
+    <p class="plataforma-sub">Una plataforma de coaching completa construida para resultados reales &mdash; no una app gen&eacute;rica.</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="plataforma-tabs">
+    <button class="ptab active" data-tab="dashboard">
+      <i class="fas fa-th-large"></i>
+      <span>Dashboard</span>
+    </button>
+    <button class="ptab" data-tab="checkin">
+      <i class="fas fa-camera"></i>
+      <span>Check-ins</span>
+    </button>
+    <button class="ptab" data-tab="entrenamiento">
+      <i class="fas fa-dumbbell"></i>
+      <span>Entrenamiento</span>
+    </button>
+    <button class="ptab" data-tab="xp">
+      <i class="fas fa-bolt"></i>
+      <span>XP &amp; Logros</span>
+    </button>
+  </div>
+
+  <!-- Tab content panels -->
+  <div class="plataforma-panel active" id="ptab-dashboard">
+    <div class="pmockup-wrap">
+      <div class="pmockup-browser">
+        <div class="pmb-bar">
+          <div class="pmb-dots"><span></span><span></span><span></span></div>
+          <div class="pmb-url">app.wellcorefitness.com/dashboard</div>
+        </div>
+        <div class="pmb-body">
+          <div class="pmb-sidebar">
+            <div class="pmb-logo">WELL<span>CORE</span></div>
+            <div class="pmb-nav active"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="pmb-nav"><i class="fas fa-dumbbell"></i> Entrenamiento</div>
+            <div class="pmb-nav"><i class="fas fa-camera"></i> Check-in</div>
+            <div class="pmb-nav"><i class="fas fa-bolt"></i> XP &amp; Logros</div>
+          </div>
+          <div class="pmb-main">
+            <div class="pmb-welcome">
+              <span>Hola, <strong>Carlos</strong> &nbsp;&#128075;</span>
+              <span class="pmb-plan-badge">&Eacute;LITE</span>
+            </div>
+            <div class="pmb-kpi-row">
+              <div class="pmb-kpi red"><div class="pmb-kpi-v">&Eacute;LITE</div><div class="pmb-kpi-l">Plan</div></div>
+              <div class="pmb-kpi"><div class="pmb-kpi-v" style="color:#22c55e;">94%</div><div class="pmb-kpi-l">Adherencia</div></div>
+              <div class="pmb-kpi"><div class="pmb-kpi-v">08</div><div class="pmb-kpi-l">Semanas</div></div>
+              <div class="pmb-kpi"><div class="pmb-kpi-v" style="color:#f59e0b;">3d</div><div class="pmb-kpi-l">Entrega</div></div>
+            </div>
+            <div class="pmb-ring-row">
+              <svg width="52" height="52" viewBox="0 0 52 52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="#1a1a1d" stroke-width="5"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="#E31E24" stroke-width="5"
+                  stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="36"
+                  transform="rotate(-90 26 26)"/>
+              </svg>
+              <div>
+                <div style="font-size:22px;font-weight:700;color:#fff;font-family:var(--font-data,var(--font-mono));">74%</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;">semana actual</div>
+              </div>
+              <div style="margin-left:auto;">
+                <div style="font-size:10px;color:var(--red);font-family:var(--font-mono);letter-spacing:1px;">&#9889; FASE: CARGA</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.3);margin-top:3px;">Semana 3 de 4</div>
+              </div>
+            </div>
+            <div class="pmb-phases-row">
+              <div class="pmb-ph done"><i class="fas fa-check"></i> F01 Diagn&oacute;stico</div>
+              <div class="pmb-ph done"><i class="fas fa-check"></i> F02 Programa</div>
+              <div class="pmb-ph active"><i class="fas fa-fire"></i> F03 Ejecuci&oacute;n</div>
+              <div class="pmb-ph"><i class="fas fa-trophy"></i> F04 Resultados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="plataforma-feature-info">
+      <span class="label-tag">Dashboard en tiempo real</span>
+      <h3>Tu progreso, siempre visible</h3>
+      <p>KPIs en tiempo real, fases del programa, adherencia y pr&oacute;ximas entregas &mdash; todo en un solo vistazo.</p>
+      <ul class="pf-list">
+        <li><i class="fas fa-check-circle"></i> 4 m&eacute;tricas clave siempre visibles</li>
+        <li><i class="fas fa-check-circle"></i> Progreso por semana con ring animado</li>
+        <li><i class="fas fa-check-circle"></i> Timeline de fases del programa</li>
+        <li><i class="fas fa-check-circle"></i> Alertas de renovaci&oacute;n y check-in pendiente</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plataforma-panel" id="ptab-checkin">
+    <div class="pmockup-wrap">
+      <div class="pmockup-browser">
+        <div class="pmb-bar">
+          <div class="pmb-dots"><span></span><span></span><span></span></div>
+          <div class="pmb-url">app.wellcorefitness.com/checkin</div>
+        </div>
+        <div class="pmb-body">
+          <div class="pmb-sidebar">
+            <div class="pmb-logo">WELL<span>CORE</span></div>
+            <div class="pmb-nav"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="pmb-nav active"><i class="fas fa-camera"></i> Check-in</div>
+            <div class="pmb-nav"><i class="fas fa-dumbbell"></i> Entrenamiento</div>
+            <div class="pmb-nav"><i class="fas fa-bolt"></i> XP &amp; Logros</div>
+          </div>
+          <div class="pmb-main">
+            <div class="pmb-section-title"><i class="fas fa-camera" style="color:var(--red);margin-right:8px;"></i>Check-in Semanal</div>
+            <div class="pmb-checkin-form">
+              <div class="pmb-field">
+                <div class="pmb-field-label">Peso actual</div>
+                <div class="pmb-field-input">78.5 kg <span class="pmb-field-tag green">&#9660; -0.8kg</span></div>
+              </div>
+              <div class="pmb-field">
+                <div class="pmb-field-label">Nivel de energ&iacute;a</div>
+                <div class="pmb-stars"><span class="star active">&#9733;</span><span class="star active">&#9733;</span><span class="star active">&#9733;</span><span class="star active">&#9733;</span><span class="star">&#9733;</span></div>
+              </div>
+              <div class="pmb-field">
+                <div class="pmb-field-label">Calidad del sue&ntilde;o</div>
+                <div class="pmb-stars"><span class="star active">&#9733;</span><span class="star active">&#9733;</span><span class="star active">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+              </div>
+              <div class="pmb-field">
+                <div class="pmb-field-label">Notas para el coach</div>
+                <div class="pmb-field-textarea">Esta semana me fue muy bien con la dieta. El entreno del jueves fue dif&iacute;cil...</div>
+              </div>
+              <div class="pmb-submit-btn"><i class="fas fa-paper-plane" style="margin-right:6px;"></i>Enviar Check-in</div>
+            </div>
+            <div class="pmb-checkin-hist">
+              <div class="pmb-hist-title">Historial</div>
+              <div class="pmb-hist-row"><span class="pmb-hist-date">Mar 02</span><span class="pmb-hist-score green">9.2/10</span></div>
+              <div class="pmb-hist-row"><span class="pmb-hist-date">Feb 24</span><span class="pmb-hist-score">8.7/10</span></div>
+              <div class="pmb-hist-row"><span class="pmb-hist-date">Feb 17</span><span class="pmb-hist-score">7.9/10</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="plataforma-feature-info">
+      <span class="label-tag">Seguimiento semanal</span>
+      <h3>Check-ins con tu coach</h3>
+      <p>Cada semana reportas tu progreso directamente a tu coach: peso, energ&iacute;a, sue&ntilde;o, notas y fotos opcionales.</p>
+      <ul class="pf-list">
+        <li><i class="fas fa-check-circle"></i> Formulario r&aacute;pido cada semana</li>
+        <li><i class="fas fa-check-circle"></i> Score semanal calculado autom&aacute;ticamente</li>
+        <li><i class="fas fa-check-circle"></i> Historial completo de check-ins</li>
+        <li><i class="fas fa-check-circle"></i> Tu coach responde en 24h</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plataforma-panel" id="ptab-entrenamiento">
+    <div class="pmockup-wrap">
+      <div class="pmockup-browser">
+        <div class="pmb-bar">
+          <div class="pmb-dots"><span></span><span></span><span></span></div>
+          <div class="pmb-url">app.wellcorefitness.com/entrenamiento</div>
+        </div>
+        <div class="pmb-body">
+          <div class="pmb-sidebar">
+            <div class="pmb-logo">WELL<span>CORE</span></div>
+            <div class="pmb-nav"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="pmb-nav active"><i class="fas fa-dumbbell"></i> Entrenamiento</div>
+            <div class="pmb-nav"><i class="fas fa-camera"></i> Check-in</div>
+            <div class="pmb-nav"><i class="fas fa-bolt"></i> XP &amp; Logros</div>
+          </div>
+          <div class="pmb-main">
+            <div class="pmb-section-title"><i class="fas fa-dumbbell" style="color:var(--red);margin-right:8px;"></i>Plan Semana 3</div>
+            <div class="pmb-trn-progress">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;">Progreso semana</span>
+                <span style="font-size:13px;font-weight:700;color:#fff;">3/4 sesiones</span>
+              </div>
+              <div style="height:5px;background:#1a1a1d;border-radius:3px;overflow:hidden;">
+                <div style="width:75%;height:100%;background:linear-gradient(90deg,#E31E24,#ff4d5a);border-radius:3px;"></div>
+              </div>
+            </div>
+            <div class="pmb-exercise-list">
+              <div class="pmb-ex done"><span class="pmb-ex-check">&#10003;</span><span class="pmb-ex-name">Sentadilla Libre</span><span class="pmb-ex-sets">4&times;8 @ 100kg</span></div>
+              <div class="pmb-ex done"><span class="pmb-ex-check">&#10003;</span><span class="pmb-ex-name">Prensa 45&deg;</span><span class="pmb-ex-sets">3&times;12 @ 180kg</span></div>
+              <div class="pmb-ex done"><span class="pmb-ex-check">&#10003;</span><span class="pmb-ex-name">Extensi&oacute;n Cu&aacute;d.</span><span class="pmb-ex-sets">3&times;15 @ 55kg</span></div>
+              <div class="pmb-ex active"><span class="pmb-ex-check active"><i class="fas fa-play" style="font-size:7px;"></i></span><span class="pmb-ex-name">Curl Femoral</span><span class="pmb-ex-sets">3&times;12 @ 45kg</span></div>
+              <div class="pmb-ex"><span class="pmb-ex-check"></span><span class="pmb-ex-name">Elevaci&oacute;n Gemelo</span><span class="pmb-ex-sets">4&times;20</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="plataforma-feature-info">
+      <span class="label-tag">Plan 100% personalizado</span>
+      <h3>Tu entrenamiento,<br>dise&ntilde;ado para ti</h3>
+      <p>Cada ejercicio, serie, repetici&oacute;n y carga definidos por tu coach seg&uacute;n tu diagn&oacute;stico inicial y evoluci&oacute;n.</p>
+      <ul class="pf-list">
+        <li><i class="fas fa-check-circle"></i> Plan semanal actualizado por tu coach</li>
+        <li><i class="fas fa-check-circle"></i> Seguimiento de cada ejercicio</li>
+        <li><i class="fas fa-check-circle"></i> Cargas y progresi&oacute;n personalizadas</li>
+        <li><i class="fas fa-check-circle"></i> Video tutoriales opcionales</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plataforma-panel" id="ptab-xp">
+    <div class="pmockup-wrap">
+      <div class="pmockup-browser">
+        <div class="pmb-bar">
+          <div class="pmb-dots"><span></span><span></span><span></span></div>
+          <div class="pmb-url">app.wellcorefitness.com/logros</div>
+        </div>
+        <div class="pmb-body">
+          <div class="pmb-sidebar">
+            <div class="pmb-logo">WELL<span>CORE</span></div>
+            <div class="pmb-nav"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="pmb-nav"><i class="fas fa-dumbbell"></i> Entrenamiento</div>
+            <div class="pmb-nav"><i class="fas fa-camera"></i> Check-in</div>
+            <div class="pmb-nav active"><i class="fas fa-bolt"></i> XP &amp; Logros</div>
+          </div>
+          <div class="pmb-main">
+            <div class="pmb-section-title"><i class="fas fa-bolt" style="color:#f59e0b;margin-right:8px;"></i>XP &amp; Gamificaci&oacute;n</div>
+            <div class="pmb-xp-card">
+              <div class="pmb-xp-top">
+                <div>
+                  <div style="font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;">Nivel Actual</div>
+                  <div style="font-size:24px;font-weight:700;color:#f59e0b;">Nivel 7</div>
+                  <div style="font-size:9px;color:rgba(255,255,255,.35);">1,240 / 1,500 XP</div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;">Racha</div>
+                  <div style="font-size:24px;font-weight:700;color:#E31E24;">&#128293; 14d</div>
+                </div>
+              </div>
+              <div style="height:5px;background:#1a1a1d;border-radius:3px;overflow:hidden;margin-top:8px;">
+                <div style="width:83%;height:100%;background:linear-gradient(90deg,#f59e0b,#fcd34d);border-radius:3px;"></div>
+              </div>
+            </div>
+            <div class="pmb-badges-grid">
+              <div class="pmb-badge unlocked"><i class="fas fa-fire"></i><span>Primeros 7d</span></div>
+              <div class="pmb-badge unlocked"><i class="fas fa-dumbbell"></i><span>10 Sesiones</span></div>
+              <div class="pmb-badge unlocked"><i class="fas fa-star"></i><span>Check-in Pro</span></div>
+              <div class="pmb-badge locked"><i class="fas fa-lock"></i><span>30 d&iacute;as</span></div>
+              <div class="pmb-badge locked"><i class="fas fa-lock"></i><span>Meta peso</span></div>
+              <div class="pmb-badge locked"><i class="fas fa-lock"></i><span>Elite Club</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="plataforma-feature-info">
+      <span class="label-tag">Gamificaci&oacute;n</span>
+      <h3>Mant&eacute;n la motivaci&oacute;n<br>con XP &amp; Logros</h3>
+      <p>Sistema de puntos, niveles, rachas y badges para mantener la adherencia alta. Entrenas m&aacute;s, subes de nivel.</p>
+      <ul class="pf-list">
+        <li><i class="fas fa-check-circle"></i> XP por cada check-in y sesi&oacute;n</li>
+        <li><i class="fas fa-check-circle"></i> Rachas diarias con bonificaci&oacute;n</li>
+        <li><i class="fas fa-check-circle"></i> 15+ badges desbloqueables</li>
+        <li><i class="fas fa-check-circle"></i> Leaderboard entre clientes</li>
+      </ul>
+    </div>
+  </div>
+
 </section>
 
 <hr class="section-rule" />
@@ -3532,12 +4496,16 @@
 <script src="js/wellcore-v6.js" defer></script>
 <script src="js/wellcore-v7.js" defer></script>
 <script>
-  /* --- AOS Init --- */
-  AOS.init({
-    duration: 700,
-    offset: 60,
-    once: true,
-    easing: 'ease-out-cubic'
+  /* --- AOS Init (wrapped in DOMContentLoaded so deferred AOS.js is ready) --- */
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 700,
+        offset: 60,
+        once: true,
+        easing: 'ease-out-cubic'
+      });
+    }
   });
 
   /* --- Navbar scroll effect --- */
@@ -3628,6 +4596,22 @@
         var top = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: top, behavior: 'smooth' });
       }
+    });
+  });
+
+  /* ─────────────────────────────────────────────
+     PLATAFORMA TABS
+  ───────────────────────────────────────────── */
+  document.querySelectorAll('.ptab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = this.getAttribute('data-tab');
+      // Remove active from all tabs and panels
+      document.querySelectorAll('.ptab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.plataforma-panel').forEach(function(p) { p.classList.remove('active'); });
+      // Activate selected
+      this.classList.add('active');
+      var panel = document.getElementById('ptab-' + target);
+      if (panel) panel.classList.add('active');
     });
   });
 </script>
