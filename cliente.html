@@ -6960,8 +6960,8 @@ function renderCarta() {
         '<div class="carta-footer"><span>wellcorefitness.com</span><span>2025–2026</span></div>' +
       '</div>' +
       '<div class="carta-actions">' +
-        '<button class="btn btn-carta-share" onclick="cartaShare()"><i class="fas fa-share-nodes" style="margin-right:6px;"></i>Compartir Carta</button>' +
-        '<button class="btn btn-carta-prs" onclick="acadSetTab(\'prs\')"><i class="fas fa-trophy" style="margin-right:6px;"></i>Registrar PRs</button>' +
+        '<button class="carta-btn carta-btn-secondary" onclick="cartaShare()"><i class="fas fa-share-nodes" style="margin-right:6px;"></i>Compartir Carta</button>' +
+        '<button class="carta-btn carta-btn-primary" onclick="acadSetTab(\'prs\')"><i class="fas fa-trophy" style="margin-right:6px;"></i>Registrar PRs</button>' +
       '</div>' +
     '</div>';
 }
@@ -7915,7 +7915,7 @@ function showToastCliente(msg, color) {
   if (typeof showToast === 'function') {
     showToast(msg, color);
   } else {
-    console.log('[WC]', msg);
+    // toast no disponible
   }
 }
 
@@ -8431,7 +8431,7 @@ function applyClientWatermark() {
 }
 
 function checkRenewalStatus() {
-  var token = localStorage.getItem('wc_token') || sessionStorage.getItem('wc_preview_token');
+  var token = localStorage.getItem('wc_token') || sessionStorage.getItem('_wc_eff_token');
   if (!token) return;
   fetch('/api/clients/renewal-status.php', {
     headers: { 'Authorization': 'Bearer ' + token }
