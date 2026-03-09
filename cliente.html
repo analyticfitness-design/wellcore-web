@@ -2282,6 +2282,46 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         </div>
       </div>
 
+      <!-- v9: XP + Racha Widget -->
+      <div id="xp-widget" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:16px;display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-bolt" style="color:#f59e0b;font-size:.9rem;"></i>
+            <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);">Nivel &amp; XP</span>
+          </div>
+          <div id="xp-streak-badge" style="display:none;align-items:center;gap:5px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;color:#ef4444;">
+            <i class="fas fa-fire"></i>
+            <span id="xp-streak-count">0</span> días
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <span id="xp-level-name" style="font-size:.82rem;font-weight:700;color:var(--red);min-width:90px;">Iniciado</span>
+          <div style="flex:1;background:rgba(255,255,255,0.07);border-radius:99px;height:7px;overflow:hidden;">
+            <div id="xp-bar-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#E31E24,#f59e0b);border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);"></div>
+          </div>
+          <span id="xp-label" style="font-size:.72rem;color:var(--gray);white-space:nowrap;font-family:var(--font-data,monospace);">0 XP</span>
+        </div>
+        <button onclick="WCXp.openLeaderboard()" style="width:100%;padding:7px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--gray);font-size:.75rem;cursor:pointer;margin-top:4px;letter-spacing:.04em;">
+          <i class="fas fa-trophy" style="color:#f59e0b;margin-right:5px;"></i> Ver Ranking XP
+        </button>
+      </div>
+
+      <!-- v9: XP Leaderboard Modal -->
+      <div id="xpLeaderboardModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.78);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);width:min(440px,95vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);">
+            <div>
+              <div style="font-weight:700;font-size:.95rem;">Ranking XP Semanal</div>
+              <div style="font-size:.72rem;color:var(--gray);margin-top:2px;" id="xpLbSubtitle">Tu grupo</div>
+            </div>
+            <button onclick="WCXp.closeLeaderboard()" style="background:none;border:none;color:var(--gray);font-size:1.2rem;cursor:pointer;padding:4px;">&#10005;</button>
+          </div>
+          <div style="overflow-y:auto;padding:16px;" id="xpLbContent">
+            <div style="color:var(--gray);text-align:center;padding:30px;"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+          </div>
+        </div>
+      </div>
+
       <!-- Quick Actions -->
       <div class="quick-actions">
         <div class="quick-action-card" onclick="showSection('seguimiento')">
@@ -10126,6 +10166,147 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(checkCurrentState).catch(function() {});
   }
 })();
+</script>
+
+<!-- v9: WCXp — XP Widget + Leaderboard Modal -->
+<script>
+(function() {
+  'use strict';
+
+  var LEVEL_NAMES = ['', 'Iniciado', 'Comprometido', 'Constante', 'Dedicado', 'Elite', 'Leyenda'];
+
+  function getToken() {
+    return sessionStorage.getItem('wc_preview_token') || localStorage.getItem('wc_token') || '';
+  }
+
+  function apiFetch(path, opts) {
+    opts = opts || {};
+    opts.headers = Object.assign(
+      { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + getToken() },
+      opts.headers || {}
+    );
+    return fetch('/api/' + path, opts);
+  }
+
+  function loadStatus() {
+    var token = getToken();
+    if (!token) return;
+    apiFetch('gamification/get-status.php')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(d) {
+        if (!d) return;
+        var widget = document.getElementById('xp-widget');
+        if (widget) widget.style.display = 'block';
+        var fill = document.getElementById('xp-bar-fill');
+        if (fill) fill.style.width = (d.xp_progress_pct || 0) + '%';
+        var lvlEl = document.getElementById('xp-level-name');
+        if (lvlEl) lvlEl.textContent = LEVEL_NAMES[d.level] || 'Nivel ' + d.level;
+        var lblEl = document.getElementById('xp-label');
+        if (lblEl) lblEl.textContent = d.xp_total + ' / ' + (d.xp_next_level || 'MAX') + ' XP';
+        if (d.streak_days > 0) {
+          var badge = document.getElementById('xp-streak-badge');
+          var cnt   = document.getElementById('xp-streak-count');
+          if (badge) badge.style.display = 'flex';
+          if (cnt)   cnt.textContent = d.streak_days;
+        }
+      })
+      .catch(function() {});
+  }
+
+  function openLeaderboard() {
+    var modal   = document.getElementById('xpLeaderboardModal');
+    var content = document.getElementById('xpLbContent');
+    if (!modal || !content) return;
+    modal.style.display = 'flex';
+    while (content.firstChild) content.removeChild(content.firstChild);
+
+    var spinner = document.createElement('div');
+    spinner.style.cssText = 'color:var(--gray);text-align:center;padding:30px;';
+    var icon = document.createElement('i');
+    icon.className = 'fas fa-spinner fa-spin';
+    spinner.appendChild(icon);
+    spinner.appendChild(document.createTextNode(' Cargando...'));
+    content.appendChild(spinner);
+
+    apiFetch('gamification/leaderboard.php?period=week')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(data) {
+        while (content.firstChild) content.removeChild(content.firstChild);
+        if (!data || !data.items || !data.items.length) {
+          var empty = document.createElement('p');
+          empty.style.cssText = 'color:var(--gray);text-align:center;padding:24px;';
+          empty.textContent = 'Sin datos esta semana. Haz tu primer check-in.';
+          content.appendChild(empty);
+          return;
+        }
+        var subtitle = document.getElementById('xpLbSubtitle');
+        if (subtitle && data.my_rank) subtitle.textContent = 'Tu posición: #' + data.my_rank;
+
+        var table = document.createElement('table');
+        table.style.cssText = 'width:100%;border-collapse:collapse;';
+
+        data.items.forEach(function(item) {
+          var row = document.createElement('tr');
+          row.style.cssText = (item.is_me ? 'background:rgba(227,30,36,0.08);font-weight:700;' : '') +
+            'border-bottom:1px solid var(--border);';
+
+          var rankTd = document.createElement('td');
+          rankTd.style.cssText = 'padding:10px 8px;font-size:.82rem;width:30px;';
+          var medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
+          rankTd.textContent = medals[item.rank] || '#' + item.rank;
+          row.appendChild(rankTd);
+
+          var nameTd = document.createElement('td');
+          nameTd.style.cssText = 'padding:10px 8px;font-size:.85rem;';
+          nameTd.textContent = item.name;
+          if (item.is_me) {
+            var youTag = document.createElement('span');
+            youTag.style.cssText = 'font-size:.62rem;color:var(--red);margin-left:5px;';
+            youTag.textContent = 'TÚ';
+            nameTd.appendChild(youTag);
+          }
+          row.appendChild(nameTd);
+
+          var xpTd = document.createElement('td');
+          xpTd.style.cssText = 'padding:10px 8px;text-align:right;font-size:.82rem;font-family:var(--font-data,monospace);color:#f59e0b;';
+          xpTd.textContent = item.xp_period + ' XP';
+          row.appendChild(xpTd);
+
+          var streakTd = document.createElement('td');
+          streakTd.style.cssText = 'padding:10px 8px;text-align:right;font-size:.72rem;color:var(--gray);';
+          streakTd.textContent = item.streak_days + 'd 🔥';
+          row.appendChild(streakTd);
+
+          table.appendChild(row);
+        });
+        content.appendChild(table);
+      })
+      .catch(function() {
+        while (content.firstChild) content.removeChild(content.firstChild);
+        var err = document.createElement('p');
+        err.style.cssText = 'color:var(--gray);text-align:center;padding:24px;';
+        err.textContent = 'Error al cargar el ranking.';
+        content.appendChild(err);
+      });
+  }
+
+  function closeLeaderboard() {
+    var modal = document.getElementById('xpLeaderboardModal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  document.addEventListener('click', function(e) {
+    var modal = document.getElementById('xpLeaderboardModal');
+    if (modal && e.target === modal) closeLeaderboard();
+  });
+
+  // Cargar XP cuando el dashboard esté activo
+  document.addEventListener('DOMContentLoaded', function() {
+    loadStatus();
+  });
+
+  window.WCXp = { loadStatus: loadStatus, openLeaderboard: openLeaderboard, closeLeaderboard: closeLeaderboard };
+}());
 </script>
 </body>
 </html>

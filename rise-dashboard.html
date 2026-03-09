@@ -3828,6 +3828,7 @@
                 applyWatermark(); // Marca de agua con nombre+email del cliente
                 populateRiseProfile();
                 checkRiseRenewal(); // Show renewal banner if <=3 days left
+                loadXpStatus();    // v9: XP bar real desde API
                 checkRiseStatus().then(function(status) {
                     if (status && !status.expired) {
                         loadPlan('training');
@@ -3860,6 +3861,35 @@
                 var linkEl = document.getElementById('rise-renewal-link');
                 if (linkEl && data.form_url) linkEl.href = data.form_url;
                 banner.style.display = 'block';
+            })
+            .catch(function() {});
+        }
+
+        // ─── v9: XP STATUS ─────────────────────────
+        function loadXpStatus() {
+            if (!TOKEN) return;
+            fetch('/api/gamification/get-status.php', {
+                headers: { 'Authorization': 'Bearer ' + TOKEN }
+            })
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(d) {
+                if (!d) return;
+                var fill  = document.querySelector('.v6-xp-fill');
+                var label = document.querySelector('.v6-xp-label');
+                var levelNames = ['', 'Iniciado', 'Comprometido', 'Constante', 'Dedicado', 'Elite', 'Leyenda'];
+                if (fill)  fill.style.setProperty('--v6-xp-percent', d.xp_progress_pct + '%');
+                if (label) {
+                    var lvlName = levelNames[d.level] || 'Nivel ' + d.level;
+                    var nextXp  = d.xp_next_level ? d.xp_next_level + ' XP' : 'Máximo';
+                    label.textContent = lvlName + ' \u00b7 ' + d.xp_total + ' / ' + nextXp;
+                }
+                // Racha
+                var streakEl = document.getElementById('streakCount');
+                var streakBadge = document.getElementById('streakBadge');
+                if (streakEl && d.streak_days > 0) {
+                    streakEl.textContent = d.streak_days;
+                    if (streakBadge) streakBadge.style.display = 'inline-flex';
+                }
             })
             .catch(function() {});
         }
