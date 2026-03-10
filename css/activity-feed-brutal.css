@@ -321,6 +321,10 @@
   display: none;
 }
 
+.activity-feed.collapsed {
+  cursor: pointer;
+}
+
 .activity-feed.collapsed::after {
   content: '🔔';
   position: absolute;
@@ -328,6 +332,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 28px;
+}
+
+.activity-feed.collapsed:hover::after {
+  transform: translate(-50%, -50%) scale(1.15);
+  transition: transform 0.2s ease;
 }
 
 /* Responsive */

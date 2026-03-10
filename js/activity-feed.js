@@ -103,8 +103,13 @@ class ActivityFeed {
   }
 
   attachListeners() {
-    document.getElementById('af-collapse').addEventListener('click', () => this.toggle());
-    document.getElementById('af-close').addEventListener('click', () => this.close());
+    document.getElementById('af-collapse').addEventListener('click', (e) => { e.stopPropagation(); this.toggle(); });
+    document.getElementById('af-close').addEventListener('click', (e) => { e.stopPropagation(); this.close(); });
+
+    // Click en el panel colapsado para expandir
+    this.container.addEventListener('click', () => {
+      if (this.isCollapsed) this.toggle();
+    });
     document.getElementById('af-client-filter').addEventListener('change', (e) => {
       this.filterClientId = e.target.value || null;
       this.updateFeed(true);
