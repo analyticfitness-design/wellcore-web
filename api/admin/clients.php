@@ -172,9 +172,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         }
     }
 
-    if (empty($fields)) respondError('Nada que actualizar', 422);
+    // dashboard_video_url goes to client_profiles (separate table)
+    $videoUrl = null;
+    if (array_key_exists('dashboard_video_url', $body)) {
+        $videoUrl = $body['dashboard_video_url'] ? trim($body['dashboard_video_url']) : null;
+    }
 
-    $values[] = $id;
-    $db->prepare("UPDATE clients SET " . implode(', ', $fields) . " WHERE id = ?")->execute($values);
+    if (empty($fields) && $videoUrl === null) respondError('Nada que actualizar', 422);
+
+    if (!empty($fields)) {
+        $values[] = $id;
+        $db->prepare("UPDATE clients SET " . implode(', ', $fields) . " WHERE id = ?")->execute($values);
+    }
+
+    if ($videoUrl !== null) {
+        $chk = $db->prepare("SELECT id FROM client_profiles WHERE client_id = ?");
+        $chk->execute([$id]);
+        if ($chk->fetchColumn()) {
+            $db->prepare("UPDATE client_profiles SET dashboard_video_url = ? WHERE client_id = ?")->execute([$videoUrl ?: null, $id]);
+        } else {
+            $db->prepare("INSERT INTO client_profiles (client_id, dashboard_video_url) VALUES (?, ?)")->execute([$id, $videoUrl ?: null]);
+        }
+    }
+
     respond(['message' => 'Cliente actualizado']);
 }

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         SELECT c.id, c.client_code, c.name, c.email, c.plan, c.status, c.fecha_inicio,
                p.edad, p.peso, p.altura, p.objetivo, p.ciudad, p.whatsapp,
                p.nivel, p.lugar_entreno, p.dias_disponibles, p.restricciones, p.macros,
-               p.bio, p.avatar_url
+               p.bio, p.avatar_url, p.dashboard_video_url
         FROM clients c
         LEFT JOIN client_profiles p ON p.client_id = c.id
         WHERE c.id = ?
