@@ -336,3 +336,139 @@ HTML;
 
     return _bt_wrap("Bienvenido a WellCore, {$fn} — WellCore Fitness", "Tu plan {$planUpper} está activo. Tu coach ya tiene tu programa listo.", $body);
 }
+
+// ─── Function 7: first_pr ─────────────────────────────────────
+
+function email_first_pr(string $name, string $plan, string $dashUrl): string {
+    $planLabel = strtoupper($plan);
+    $fn = htmlspecialchars(explode(' ', trim($name))[0]);
+    $header = _bt_header($planLabel, 'PR REGISTRADO');
+    $footer = _bt_footer();
+    $cta    = _bt_cta($dashUrl, 'Ver mis PRs');
+    return <<<HTML
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a">
+  <tr><td align="center" style="padding:32px 16px">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#18181b" style="border-radius:12px;overflow:hidden;border:1px solid #2d2d2d">
+      {$header}
+      <tr><td style="padding:36px 40px">
+        <h2 style="color:#E31E24;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px">🏆 ¡PRIMER RÉCORD PERSONAL!</h2>
+        <p style="color:#ffffff;font-size:1.15rem;font-weight:700;margin:0 0 16px">Esto es lo que significa el progreso real, {$fn}.</p>
+        <p style="color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.7;margin:0 0 24px">Registraste tu primer PR en WellCore. Cada número que superas es evidencia de que el trabajo está funcionando. Sigue registrando — en 3 meses, tu yo del futuro te lo agradecerá.</p>
+        {$cta}
+      </td></tr>
+      {$footer}
+    </table>
+  </td></tr>
+</table>
+HTML;
+}
+
+// ─── Function 8: low_bienestar_coach ─────────────────────────
+
+function email_low_bienestar_coach(string $clientName, string $plan, int $bienestar, string $checkinDate): string {
+    $planLabel = strtoupper($plan);
+    $clientNameEsc = htmlspecialchars($clientName);
+    $header = _bt_header($planLabel, 'ALERTA BIENESTAR');
+    $footer = _bt_footer();
+    return <<<HTML
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a">
+  <tr><td align="center" style="padding:32px 16px">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#18181b" style="border-radius:12px;overflow:hidden;border:1px solid #2d2d2d">
+      {$header}
+      <tr><td style="padding:36px 40px">
+        <h2 style="color:#f59e0b;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px">⚠️ ALERTA: BIENESTAR BAJO</h2>
+        <p style="color:#ffffff;font-size:1.1rem;font-weight:700;margin:0 0 16px">Tu cliente <strong>{$clientNameEsc}</strong> reportó bienestar bajo.</p>
+        <div style="background:#111113;border:1px solid #2d2d2d;border-radius:8px;padding:16px;margin-bottom:24px">
+          <div style="color:rgba(255,255,255,.5);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Detalles</div>
+          <div style="color:#fff;font-size:1rem">Bienestar: <strong style="color:#ef4444">{$bienestar}/10</strong></div>
+          <div style="color:rgba(255,255,255,.6);font-size:.85rem;margin-top:4px">Check-in del: {$checkinDate}</div>
+        </div>
+        <p style="color:rgba(255,255,255,.7);font-size:.9rem;line-height:1.7;margin:0">Considera revisar su plan o enviarle un mensaje de apoyo esta semana.</p>
+      </td></tr>
+      {$footer}
+    </table>
+  </td></tr>
+</table>
+HTML;
+}
+
+// ─── Function 9: inactive_30d ─────────────────────────────────
+
+function email_inactive_30d(string $name, string $plan, string $dashUrl): string {
+    $planLabel = strtoupper($plan);
+    $fn = htmlspecialchars(explode(' ', trim($name))[0]);
+    $header = _bt_header($planLabel, 'REACTIVACIÓN');
+    $footer = _bt_footer();
+    $cta    = _bt_cta($dashUrl, 'Retomar mi plan ahora');
+    return <<<HTML
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a">
+  <tr><td align="center" style="padding:32px 16px">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#18181b" style="border-radius:12px;overflow:hidden;border:1px solid #2d2d2d">
+      {$header}
+      <tr><td style="padding:36px 40px">
+        <h2 style="color:#E31E24;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px">30 DÍAS DESPUÉS</h2>
+        <p style="color:#ffffff;font-size:1.15rem;font-weight:700;margin:0 0 16px">{$fn}, llevamos un mes sin saber de ti.</p>
+        <p style="color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.7;margin:0 0 24px">La vida pasa. Los compromisos cambian. Pero tu progreso sigue ahí, esperándote. No necesitas empezar desde cero — solo un paso hoy.</p>
+        {$cta}
+      </td></tr>
+      {$footer}
+    </table>
+  </td></tr>
+</table>
+HTML;
+}
+
+// ─── Function 10: first_checkin_month ────────────────────────
+
+function email_first_checkin_month(string $name, string $plan, string $dashUrl): string {
+    $planLabel = strtoupper($plan);
+    $fn = htmlspecialchars(explode(' ', trim($name))[0]);
+    $mes = ucfirst(strftime('%B') ?: date('F'));
+    $header = _bt_header($planLabel, 'ARRANQUE DEL MES');
+    $footer = _bt_footer();
+    $cta    = _bt_cta($dashUrl, 'Ver mi dashboard');
+    return <<<HTML
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a">
+  <tr><td align="center" style="padding:32px 16px">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#18181b" style="border-radius:12px;overflow:hidden;border:1px solid #2d2d2d">
+      {$header}
+      <tr><td style="padding:36px 40px">
+        <h2 style="color:#E31E24;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px">🚀 PRIMER CHECK-IN DEL MES</h2>
+        <p style="color:#ffffff;font-size:1.15rem;font-weight:700;margin:0 0 16px">¡Así se arranca {$mes}, {$fn}!</p>
+        <p style="color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.7;margin:0 0 24px">Quien reporta en la primera semana del mes tiene 3x más probabilidad de mantener consistencia. Eres de ese grupo. Sigue así.</p>
+        {$cta}
+      </td></tr>
+      {$footer}
+    </table>
+  </td></tr>
+</table>
+HTML;
+}
+
+// ─── Function 11: coach_no_reply ─────────────────────────────
+
+function email_coach_no_reply(string $clientName, string $plan, string $checkinDate): string {
+    $planLabel = strtoupper($plan);
+    $clientNameEsc = htmlspecialchars($clientName);
+    $header = _bt_header($planLabel, 'SIN RESPUESTA');
+    $footer = _bt_footer();
+    return <<<HTML
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a">
+  <tr><td align="center" style="padding:32px 16px">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#18181b" style="border-radius:12px;overflow:hidden;border:1px solid #2d2d2d">
+      {$header}
+      <tr><td style="padding:36px 40px">
+        <h2 style="color:#ef4444;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px">⚠️ CHECK-IN SIN RESPUESTA (+48H)</h2>
+        <p style="color:#ffffff;font-size:1.1rem;font-weight:700;margin:0 0 16px">El check-in de <strong>{$clientNameEsc}</strong> lleva más de 48 horas sin respuesta del coach.</p>
+        <div style="background:#111113;border:1px solid #2d2d2d;border-radius:8px;padding:16px;margin-bottom:24px">
+          <div style="color:#fff;font-size:.9rem">Cliente: <strong>{$clientNameEsc}</strong></div>
+          <div style="color:rgba(255,255,255,.6);font-size:.85rem;margin-top:4px">Check-in enviado: {$checkinDate}</div>
+        </div>
+        <p style="color:rgba(255,255,255,.7);font-size:.9rem;">Por favor revisa el panel admin para asignar respuesta.</p>
+      </td></tr>
+      {$footer}
+    </table>
+  </td></tr>
+</table>
+HTML;
+}

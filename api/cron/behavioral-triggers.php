@@ -59,6 +59,22 @@ function sendTriggerEmail(PDO $db, string $email, string $subject, string $html,
     }
 }
 
+function getCoachEmail(PDO $db, int $clientId): ?string {
+    $stmt = $db->prepare("
+        SELECT u.email FROM clients c
+        JOIN users u ON u.id = c.coach_id
+        WHERE c.id = ?
+        LIMIT 1
+    ");
+    $stmt->execute([$clientId]);
+    return $stmt->fetchColumn() ?: null;
+}
+
+function getSuperadminEmail(PDO $db): ?string {
+    $stmt = $db->query("SELECT email FROM users WHERE role = 'superadmin' LIMIT 1");
+    return $stmt->fetchColumn() ?: null;
+}
+
 // Query principal: clientes activos con datos necesarios
 // subscription_end se deriva de fecha_inicio + 30 días (ciclo mensual estándar)
 $clients = $db->query("
@@ -157,6 +173,94 @@ foreach ($clients as $c) {
         $html = email_welcome_day1($c['name'], $plan, $dashUrl);
         $fn   = explode(' ', trim($c['name']))[0];
         sendTriggerEmail($db, $email, "Tu primer día en WellCore — Aquí empieza todo 🚀", $html, $cid, 'welcome_day1', $sent, $errors);
+    }
+
+    // ── first_pr ─────────────────────────────────
+    // Requires joining personal_records table
+    $prCount = 0;
+    $prStmt = $db->prepare("SELECT COUNT(*) FROM personal_records WHERE client_id = ?");
+    $prStmt->execute([$cid]);
+    $prCount = (int)$prStmt->fetchColumn();
+    if ($prCount >= 1 && !wasSentEver($db, $cid, 'first_pr')) {
+        $fn   = explode(' ', trim($c['name']))[0];
+        $html = email_first_pr($c['name'], $plan, $dashUrl);
+        sendTriggerEmail($db, $email, "🏆 Primer PR registrado, $fn — ¡Eso es progreso real!", $html, $cid, 'first_pr', $sent, $errors);
+    }
+
+    // ── low_bienestar ─────────────────────────────
+    // Last check-in had bienestar < 5 — alert coach via email
+    $lastCheckin = null;
+    $lcStmt = $db->prepare("SELECT bienestar, checkin_date FROM checkins WHERE client_id = ? ORDER BY checkin_date DESC LIMIT 1");
+    $lcStmt->execute([$cid]);
+    $lastCheckin = $lcStmt->fetch();
+    if ($lastCheckin && (int)$lastCheckin['bienestar'] <= 4 && !wasSentToday($db, $cid, 'low_bienestar')) {
+        $html = email_low_bienestar_coach($c['name'], $plan, (int)$lastCheckin['bienestar'], $lastCheckin['checkin_date']);
+        // Send to coach, not client
+        $coachEmail = getCoachEmail($db, $cid);
+        if ($coachEmail) {
+            $fn = explode(' ', trim($c['name']))[0];
+            sendTriggerEmail($db, $coachEmail, "⚠️ Alerta: $fn reportó bienestar bajo (" . $lastCheckin['bienestar'] . "/10)", $html, $cid, 'low_bienestar', $sent, $errors);
+        }
+    }
+
+    // ── subscription_1d ──────────────────────────
+    if ($daysToExpiry >= 0 && $daysToExpiry <= 1 && !wasSentToday($db, $cid, 'subscription_1d')) {
+        $html = email_renewal_reminder($c['name'], $plan, $c['subscription_end'], $dashUrl, 1);
+        $fn = explode(' ', trim($c['name']))[0];
+        sendTriggerEmail($db, $email, "🚨 Tu plan WellCore vence HOY, $fn — Renueva ahora", $html, $cid, 'subscription_1d', $sent, $errors);
+    }
+
+    // ── inactive_30d ─────────────────────────────
+    if ($daysSinceCheckin >= 30 && !wasSentEver($db, $cid, 'inactive_30d')) {
+        $fn   = explode(' ', trim($c['name']))[0];
+        $html = email_inactive_30d($c['name'], $plan, $dashUrl);
+        sendTriggerEmail($db, $email, "Llevamos un mes sin saber de ti, $fn — ¿Regresamos juntos? 💪", $html, $cid, 'inactive_30d', $sent, $errors);
+    }
+
+    // ── milestone_12 ─────────────────────────────
+    if ($totalCheckins === 12 && !wasSentEver($db, $cid, 'milestone_12')) {
+        $fn   = explode(' ', trim($c['name']))[0];
+        $html = email_streak_milestone($c['name'], $plan, 12, $dashUrl);
+        sendTriggerEmail($db, $email, "🎯 12 check-ins completados, $fn — 3 meses de consistencia", $html, $cid, 'milestone_12', $sent, $errors);
+    }
+
+    // ── milestone_24 ─────────────────────────────
+    if ($totalCheckins === 24 && !wasSentEver($db, $cid, 'milestone_24')) {
+        $fn   = explode(' ', trim($c['name']))[0];
+        $html = email_streak_milestone($c['name'], $plan, 24, $dashUrl);
+        sendTriggerEmail($db, $email, "🏅 6 meses de check-ins, $fn — Eres parte del 1% más consistente", $html, $cid, 'milestone_24', $sent, $errors);
+    }
+
+    // ── first_checkin_month ───────────────────────
+    // First check-in of the current calendar month
+    $monthStart = date('Y-m-01');
+    $monthEnd   = date('Y-m-t');
+    $mStmt = $db->prepare("SELECT COUNT(*) FROM checkins WHERE client_id = ? AND checkin_date BETWEEN ? AND ?");
+    $mStmt->execute([$cid, $monthStart, $monthEnd]);
+    $monthCheckins = (int)$mStmt->fetchColumn();
+    if ($monthCheckins === 1 && !wasSentToday($db, $cid, 'first_checkin_month')) {
+        $fn = explode(' ', trim($c['name']))[0];
+        $html = email_first_checkin_month($c['name'], $plan, $dashUrl);
+        sendTriggerEmail($db, $email, "🚀 Arranque del mes perfecto, $fn — Así se hace", $html, $cid, 'first_checkin_month', $sent, $errors);
+    }
+
+    // ── coach_no_reply_48h ────────────────────────
+    // Check-in sent >48h ago with no coach reply — alert superadmin
+    $unanswered = null;
+    $uaStmt = $db->prepare("
+        SELECT id, checkin_date FROM checkins
+        WHERE client_id = ? AND coach_reply IS NULL
+          AND checkin_date <= DATE_SUB(NOW(), INTERVAL 48 HOUR)
+        ORDER BY checkin_date DESC LIMIT 1
+    ");
+    $uaStmt->execute([$cid]);
+    $unanswered = $uaStmt->fetch();
+    if ($unanswered && !wasSentToday($db, $cid, 'coach_no_reply_48h')) {
+        $adminEmail = getSuperadminEmail($db);
+        if ($adminEmail) {
+            $html = email_coach_no_reply($c['name'], $plan, $unanswered['checkin_date']);
+            sendTriggerEmail($db, $adminEmail, "⚠️ Sin respuesta al check-in de {$c['name']} (>{$unanswered['checkin_date']})", $html, $cid, 'coach_no_reply_48h', $sent, $errors);
+        }
     }
 }
 
