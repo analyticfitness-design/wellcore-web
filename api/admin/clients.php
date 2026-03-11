@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     if (!$id) respondError('ID requerido', 422);
 
     $body    = getJsonBody();
-    $allowed = ['name', 'plan', 'status'];
+    $allowed = ['name', 'plan', 'status', 'password'];
     $validPlans    = ['esencial', 'metodo', 'elite'];
     $validStatuses = ['activo', 'inactivo', 'pendiente'];
     $fields  = [];
@@ -167,8 +167,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             if ($f === 'status' && !in_array($body[$f], $validStatuses, true)) {
                 respondError('Status invalido. Valores: activo, inactivo, pendiente', 422);
             }
-            $fields[] = "$f = ?";
-            $values[] = $body[$f];
+
+            // Special handling for password: hash it
+            if ($f === 'password') {
+                $pass = trim($body[$f] ?? '');
+                if (empty($pass)) {
+                    respondError('Contraseña no puede estar vacía', 422);
+                }
+                $fields[] = 'password_hash = ?';
+                $values[] = password_hash($pass, PASSWORD_BCRYPT, ['cost' => 12]);
+            } else {
+                $fields[] = "$f = ?";
+                $values[] = $body[$f];
+            }
         }
     }
 
