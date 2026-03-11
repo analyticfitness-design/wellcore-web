@@ -752,6 +752,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   border-radius:50%;background:var(--red);
   cursor:pointer;border:2px solid #fff;
 }
+.rpe-scale{display:flex;gap:6px;flex-wrap:wrap}
+.rpe-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:.85rem;cursor:pointer;color:var(--gray);transition:all .2s;white-space:nowrap}
+.rpe-btn.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
 .slider-val{
   font-family:'JetBrains Mono',monospace;
   font-size:.9rem;font-weight:600;
@@ -2423,6 +2426,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <a class="nav-item" onclick="showSection('metricas')" id="nav-metricas">
       <i class="fas fa-weight-scale"></i> Métricas
     </a>
+    <a class="nav-item" onclick="showSection('habitos')" id="nav-habitos"><i class="fas fa-check-circle"></i><span>Hábitos</span></a>
 
     <span class="nav-group-label">Social</span>
     <a class="nav-item" onclick="showSection('comunidad')" id="nav-comunidad">
@@ -3214,6 +3218,19 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Check-in form for elite -->
       <div id="checkin-content" style="display:none">
+        <!-- M04: Compliance Widget -->
+        <div id="compliance-widget" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">Esta Semana</div>
+            <div id="compliance-this-week" style="font-size:2rem;font-weight:900;color:var(--white)">—</div>
+            <div id="compliance-this-week-label" style="font-size:.8rem;color:var(--gray)">sin check-in aún</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:6px">Promedio 4 Semanas</div>
+            <div id="compliance-avg" style="font-size:2rem;font-weight:900;color:var(--white)">—</div>
+            <div style="font-size:.8rem;color:var(--gray)">cumplimiento promedio</div>
+          </div>
+        </div>
         <div class="checkin-form">
           <h3>Check-in de esta semana</h3>
 
@@ -3230,6 +3247,24 @@ tr:hover td{background:rgba(255,255,255,0.02)}
               <label>Días entrenados</label>
               <input type="number" id="inp-dias-entrenados" min="0" max="7" value="5" placeholder="5">
             </div>
+          </div>
+
+          <!-- M02: RPE Scale -->
+          <div class="form-group" style="margin-bottom:14px">
+            <label>RPE — Esfuerzo Percibido</label>
+            <div class="rpe-scale" id="rpe-scale">
+              <button type="button" class="rpe-btn" data-val="1" onclick="selectRpe(1)" title="Muy fácil">💤 1</button>
+              <button type="button" class="rpe-btn" data-val="2" onclick="selectRpe(2)" title="Fácil">😴 2</button>
+              <button type="button" class="rpe-btn" data-val="3" onclick="selectRpe(3)" title="Ligero">😌 3</button>
+              <button type="button" class="rpe-btn" data-val="4" onclick="selectRpe(4)" title="Moderado">🙂 4</button>
+              <button type="button" class="rpe-btn" data-val="5" onclick="selectRpe(5)" title="Algo duro">😐 5</button>
+              <button type="button" class="rpe-btn" data-val="6" onclick="selectRpe(6)" title="Duro">😤 6</button>
+              <button type="button" class="rpe-btn" data-val="7" onclick="selectRpe(7)" title="Muy duro">😤 7</button>
+              <button type="button" class="rpe-btn" data-val="8" onclick="selectRpe(8)" title="Intenso">🔥 8</button>
+              <button type="button" class="rpe-btn" data-val="9" onclick="selectRpe(9)" title="Máximo">💀 9</button>
+              <button type="button" class="rpe-btn" data-val="10" onclick="selectRpe(10)" title="Absoluto">💀 10</button>
+            </div>
+            <input type="hidden" id="inp-rpe" value="">
           </div>
 
           <div class="form-group" style="margin-bottom:14px">
@@ -6650,10 +6685,42 @@ function setupCheckin() {
     document.getElementById('checkin-locked').style.display = 'none';
     document.getElementById('checkin-content').style.display = 'block';
     renderCheckins();
+    loadCompliance();
   } else {
     document.getElementById('checkin-locked').style.display = 'block';
     document.getElementById('checkin-content').style.display = 'none';
   }
+}
+
+// M02: RPE selection
+let _selectedRpe = null;
+function selectRpe(val) {
+  _selectedRpe = val;
+  document.getElementById('inp-rpe').value = val;
+  document.querySelectorAll('.rpe-btn').forEach(function(b) {
+    b.classList.toggle('active', parseInt(b.dataset.val) === val);
+  });
+}
+
+// M04: Load compliance data
+function loadCompliance() {
+  apiFetch('/clients/compliance.php')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.current_week) {
+        var pct = data.current_week.compliance_pct;
+        var dias = data.current_week.dias_entrenados;
+        document.getElementById('compliance-this-week').textContent = pct + '%';
+        document.getElementById('compliance-this-week').style.color = pct >= 80 ? '#22c55e' : pct >= 60 ? '#f59e0b' : '#ef4444';
+        document.getElementById('compliance-this-week-label').textContent = dias + '/5 días entrenados';
+      }
+      if (data.avg_compliance_4w !== undefined) {
+        var avg = data.avg_compliance_4w;
+        document.getElementById('compliance-avg').textContent = avg + '%';
+        document.getElementById('compliance-avg').style.color = avg >= 80 ? '#22c55e' : avg >= 60 ? '#f59e0b' : '#ef4444';
+      }
+    })
+    .catch(function() { /* silent */ });
 }
 
 function selectRadio(groupId, labelEl) {
@@ -6678,7 +6745,8 @@ function submitCheckin() {
     nutricion: nutricion ? nutricion.value : 'Parcial',
     comentario: comentarios,
     date: now.toISOString().slice(0, 10),
-    week: now.getFullYear() + '-W' + String(getWeekNumber(now)).padStart(2, '0')
+    week: now.getFullYear() + '-W' + String(getWeekNumber(now)).padStart(2, '0'),
+    rpe: _selectedRpe || undefined
   };
 
   apiFetch('/checkins', { method: 'POST', body: JSON.stringify(payload) })
@@ -6688,7 +6756,11 @@ function submitCheckin() {
       document.getElementById('val-bienestar').textContent = '7';
       document.getElementById('inp-dias-entrenados').value = 5;
       document.getElementById('inp-comentarios').value = '';
+      _selectedRpe = null;
+      document.getElementById('inp-rpe').value = '';
+      document.querySelectorAll('.rpe-btn').forEach(function(b) { b.classList.remove('active'); });
       loadCheckins();
+      loadCompliance();
       showToast('Check-in enviado al coach!', 'success');
       checkAchievements('checkin');
     })
@@ -6811,6 +6883,7 @@ function renderCheckins(checkins) {
     var nutLabel = c.nutricion || 'Parcial';
     var comentario = c.comentario || c.comentarios || '';
     var coachReply = c.coach_reply || '';
+    var rpeVal = c.rpe || null;
 
     var row = document.createElement('div'); row.className = 'checkin-row';
     var summary = document.createElement('div'); summary.className = 'checkin-summary';
@@ -6823,6 +6896,7 @@ function renderCheckins(checkins) {
     var detail = document.createElement('div'); detail.className = 'checkin-detail';
     function addDetailLine(label, value) { var p = document.createElement('p'); var s = document.createElement('strong'); s.textContent = label; p.appendChild(s); p.appendChild(document.createTextNode(' ' + value)); detail.appendChild(p); }
     addDetailLine('Bienestar:', bienestar + '/10');
+    if (rpeVal) addDetailLine('RPE:', rpeVal + '/10');
     addDetailLine('Días entrenados:', diasVal);
     addDetailLine('Nutrición:', nutLabel);
     if (comentario) addDetailLine('Comentarios:', comentario);

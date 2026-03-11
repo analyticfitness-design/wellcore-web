@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $limit = min((int)($_GET['limit'] ?? 8), 52);
     $stmt = $db->prepare("
         SELECT id, week_label, checkin_date, bienestar, dias_entrenados,
-               nutricion, comentario, coach_reply, replied_at, created_at
+               nutricion, comentario, rpe, coach_reply, replied_at, created_at
         FROM checkins WHERE client_id = ?
         ORDER BY checkin_date DESC LIMIT ?
     ");
@@ -32,6 +32,7 @@ $bien = (int)($body['bienestar'] ?? 5);
 $dias = (int)($body['dias']      ?? 0);
 $nutr = $body['nutricion'] ?? 'Parcial';
 $com  = $body['comentario'] ?? '';
+$rpe  = isset($body['rpe']) && $body['rpe'] !== null ? (int)$body['rpe'] : null;
 
 if ($bien < 1 || $bien > 10) {
     respondError('Bienestar debe ser 1-10', 422);
@@ -39,17 +40,21 @@ if ($bien < 1 || $bien > 10) {
 if (!in_array($nutr, ['Si', 'No', 'Parcial'])) {
     respondError('Nutrición inválida', 422);
 }
+if ($rpe !== null && ($rpe < 1 || $rpe > 10)) {
+    respondError('RPE debe ser 1-10', 422);
+}
 
 $stmt = $db->prepare("
-    INSERT INTO checkins (client_id, week_label, checkin_date, bienestar, dias_entrenados, nutricion, comentario)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO checkins (client_id, week_label, checkin_date, bienestar, dias_entrenados, nutricion, comentario, rpe)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ON DUPLICATE KEY UPDATE
         bienestar       = VALUES(bienestar),
         dias_entrenados = VALUES(dias_entrenados),
         nutricion       = VALUES(nutricion),
-        comentario      = VALUES(comentario)
+        comentario      = VALUES(comentario),
+        rpe             = VALUES(rpe)
 ");
-$stmt->execute([$client['id'], $week, $date, $bien, $dias, $nutr, $com]);
+$stmt->execute([$client['id'], $week, $date, $bien, $dias, $nutr, $com, $rpe]);
 
 $checkinId = $db->lastInsertId();
 notifyN8nCheckin($client['id'], (int) $checkinId);
