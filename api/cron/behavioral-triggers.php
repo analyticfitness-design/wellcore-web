@@ -12,6 +12,7 @@ if (php_sapi_name() !== 'cli') {
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/email.php';
 require_once __DIR__ . '/../emails/behavioral-templates.php';
+require_once __DIR__ . '/../includes/web-push.php';
 
 $db    = getDB();
 $today = date('Y-m-d');
@@ -201,6 +202,8 @@ foreach ($clients as $c) {
             $fn = explode(' ', trim($c['name']))[0];
             sendTriggerEmail($db, $coachEmail, "⚠️ Alerta: $fn reportó bienestar bajo (" . $lastCheckin['bienestar'] . "/10)", $html, $cid, 'low_bienestar', $sent, $errors);
         }
+        // Push to client: let them know coach was notified
+        webpush_send_to_client($db, $cid, '💬 Coach notificado', '¡Tu coach fue alertado sobre tu bienestar de hoy. Pronto recibirás apoyo!', '/cliente.html#checkin');
     }
 
     // ── subscription_1d ──────────────────────────
