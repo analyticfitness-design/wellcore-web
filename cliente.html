@@ -3337,25 +3337,25 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       <!-- Habit Toggles -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px" id="habit-grid">
-        <div class="habit-card" data-habit="agua" onclick="toggleHabit('agua')">
+        <div class="habit-card" data-habit="agua" onclick="toggleDailyHabit('agua')">
           <div class="habit-icon">💧</div>
           <div class="habit-label">Agua</div>
           <div class="habit-desc">2+ litros hoy</div>
           <div class="habit-check" id="habit-check-agua">○</div>
         </div>
-        <div class="habit-card" data-habit="sueno" onclick="toggleHabit('sueno')">
+        <div class="habit-card" data-habit="sueno" onclick="toggleDailyHabit('sueno')">
           <div class="habit-icon">😴</div>
           <div class="habit-label">Sueño</div>
           <div class="habit-desc">7+ horas</div>
           <div class="habit-check" id="habit-check-sueno">○</div>
         </div>
-        <div class="habit-card" data-habit="nutricion" onclick="toggleHabit('nutricion')">
+        <div class="habit-card" data-habit="nutricion" onclick="toggleDailyHabit('nutricion')">
           <div class="habit-icon">🥗</div>
           <div class="habit-label">Nutrición</div>
           <div class="habit-desc">Plan seguido</div>
           <div class="habit-check" id="habit-check-nutricion">○</div>
         </div>
-        <div class="habit-card" data-habit="estres" onclick="toggleHabit('estres')">
+        <div class="habit-card" data-habit="estres" onclick="toggleDailyHabit('estres')">
           <div class="habit-icon">🧘</div>
           <div class="habit-label">Estrés</div>
           <div class="habit-desc">Manejo activo</div>
@@ -5229,7 +5229,7 @@ function init() {
   loadMetrics();
 
   // Load habit tracking (M06)
-  loadHabits();
+  loadDailyHabits();
 
   // Load checkins from API if elite plan
   if (PLAN_LEVEL[clientPlan] >= 3) loadCheckins();
@@ -5317,7 +5317,7 @@ function showSection(id) {
   if (id === 'retos'     && typeof Challenges !== 'undefined' && !Challenges._inited) { Challenges._inited = true; Challenges.init(); }
   if (id === 'academia'  && !window._acadInited) { window._acadInited = true; loadAcademiaCliente(1); initTutorials(); }
   if (id === 'metricas') loadMetrics();
-  if (id === 'habitos') loadHabits();
+  if (id === 'habitos') loadDailyHabits();
 }
 
 // ===== SIDEBAR MOBILE =====
@@ -5629,6 +5629,53 @@ function getHabitsDemoContent() {
   });
   return d;
 }
+
+// ===== HABIT TRACKING — M06 =====
+var _dailyHabitState = { agua: false, sueno: false, nutricion: false, estres: false };
+
+async function loadDailyHabits() {
+  try {
+    var data = await api('/clients/habits');
+    _dailyHabitState = data.today || _dailyHabitState;
+    Object.keys(_dailyHabitState).forEach(function(h) { updateDailyHabitCard(h, _dailyHabitState[h]); });
+    var sc = document.getElementById('streak-count');
+    if (sc) sc.textContent = data.streak || 0;
+    if (data.milestone) {
+      var badge = document.getElementById('streak-milestone-badge');
+      var text = document.getElementById('streak-milestone-text');
+      if (badge) badge.style.display = 'flex';
+      if (text) text.textContent = '🏆 ' + data.milestone + ' días';
+    }
+    var allDone = Object.values(_dailyHabitState).every(Boolean);
+    var msg = document.getElementById('habit-complete-msg');
+    if (msg) msg.style.display = allDone ? 'block' : 'none';
+  } catch(e) { /* silent */ }
+}
+
+function updateDailyHabitCard(habit, done) {
+  var card = document.querySelector('.habit-card[data-habit="' + habit + '"]');
+  var check = document.getElementById('habit-check-' + habit);
+  if (!card || !check) return;
+  card.classList.toggle('done', done);
+  check.textContent = done ? '✓' : '○';
+}
+
+async function toggleDailyHabit(habit) {
+  var newVal = !_dailyHabitState[habit];
+  _dailyHabitState[habit] = newVal;
+  updateDailyHabitCard(habit, newVal);
+  try {
+    await api('/clients/habits', 'POST', { habit_type: habit, value: newVal ? 1 : 0 });
+    var allDone = Object.values(_dailyHabitState).every(Boolean);
+    var msg = document.getElementById('habit-complete-msg');
+    if (msg) msg.style.display = allDone ? 'block' : 'none';
+    if (allDone) loadDailyHabits(); // refresh streak
+  } catch(e) {
+    _dailyHabitState[habit] = !newVal; // revert
+    updateDailyHabitCard(habit, !newVal);
+  }
+}
+// ===== END HABIT TRACKING — M06 =====
 
 // ===== SUPPLEMENTS DATA + INTERACTIVE VIEW =====
 var SUPPLEMENTS_DATA = {
