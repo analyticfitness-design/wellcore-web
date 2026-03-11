@@ -2395,11 +2395,14 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <link rel="stylesheet" href="css/wellcore-v7.css">
 <!-- WellCore v8 Notificaciones, Perfil, Referidos, PWA -->
 <link rel="stylesheet" href="css/wellcore-v8.css">
+<!-- WellCore Ultra Premium Visual Layer -->
+<link rel="stylesheet" href="css/wellcore-ultra.css">
 <!-- PWA Manifest -->
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#E31E24">
 </head>
 <body>
+<canvas id="ultra-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.15"></canvas>
 <div id="v5-preloader" class="v5-preloader"><div class="v5-preloader-logo">WELL<span>CORE</span></div><div class="v5-preloader-bar"><div class="v5-preloader-fill"></div></div></div>
 <style>body { visibility: hidden; }</style>
 
@@ -11769,5 +11772,6 @@ if ('serviceWorker' in navigator) {
   window.WCXp = { loadStatus: loadStatus, openLeaderboard: openLeaderboard, closeLeaderboard: closeLeaderboard };
 }());
 </script>
+<script src="js/wellcore-ultra.js" defer></script>
 </body>
 </html>

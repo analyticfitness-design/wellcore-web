@@ -1,0 +1,505 @@
+/* ============================================================
+   WELLCORE FITNESS — ULTRA PREMIUM VISUAL LAYER
+   Builds on top of existing CSS — zero breaking changes
+   Liquid Glass · Canvas Particles · OKLCH · Bento Grid
+   Version: 1.0 | 2026-03-10
+   ============================================================ */
+
+/* ============================================================
+   1. OKLCH + Design Token Enhancement
+   ============================================================ */
+:root {
+  /* OKLCH — vivid on P3 displays */
+  --red-oklch: oklch(0.48 0.24 27deg);
+  --red-p3: color(display-p3 0.89 0.12 0.14);
+  --red-glow-sm: 0 0 20px oklch(0.48 0.24 27deg / 0.35);
+  --red-glow-md: 0 0 40px oklch(0.48 0.24 27deg / 0.4), 0 0 80px oklch(0.48 0.24 27deg / 0.15);
+  --glass-ultra: rgba(255,255,255,0.04);
+  --glass-border-ultra: rgba(255,255,255,0.1);
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+@media (color-gamut: p3) {
+  :root { --accent: var(--red-p3); }
+}
+
+/* ============================================================
+   2. Liquid Glass Cards (iOS 26 style)
+   ============================================================ */
+.section-card,
+.card,
+[class*="kpi-card"],
+[class*="metric-card"],
+.glass-card,
+.checkin-card,
+.plan-card {
+  background: rgba(255,255,255,0.04) !important;
+  backdrop-filter: blur(24px) saturate(1.8) brightness(1.05);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8) brightness(1.05);
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: var(--radius-lg, 16px) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 8px 32px rgba(0,0,0,0.5),
+    0 2px 8px rgba(0,0,0,0.3) !important;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s var(--ease-brand),
+    box-shadow 0.3s var(--ease-brand),
+    border-color 0.3s !important;
+}
+
+/* Specular highlight on top */
+.section-card::before,
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 10%, rgba(255,255,255,0.06) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Red glow on hover */
+.section-card:hover,
+.card:hover {
+  border-color: rgba(227,30,36,0.25) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 8px 32px rgba(0,0,0,0.5),
+    var(--red-glow-sm) !important;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   3. Mouse-tracking radial gradient on interactive cards
+   ============================================================ */
+.card-interactive {
+  position: relative;
+  overflow: hidden;
+}
+.card-interactive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(227,30,36,0.06) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+.card-interactive:hover::before {
+  opacity: 1;
+}
+
+/* ============================================================
+   4. Animated counters (CSS)
+   ============================================================ */
+.stat-number,
+.xp-count,
+[class*="counter-"],
+[class*="-num"],
+[class*="count"] {
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s;
+}
+.stat-animate {
+  animation: stat-pop 0.5s var(--ease-spring) both;
+}
+@keyframes stat-pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================================
+   5. Conic-gradient bienestar ring
+   ============================================================ */
+.bienestar-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--ring-color, #E31E24) calc(var(--pct, 70) * 1%),
+    rgba(255,255,255,0.06) 0%
+  );
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.bienestar-ring::before {
+  content: '';
+  width: 56px;
+  height: 56px;
+  background: var(--surface, #0e0e11);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bienestar-ring-value {
+  position: relative;
+  z-index: 1;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--ring-color, #E31E24);
+}
+
+/* ============================================================
+   6. Section title kinetic underline
+   ============================================================ */
+.section-title,
+h2.sec-heading,
+h3.sec-heading {
+  position: relative;
+  display: inline-block;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #E31E24, rgba(227,30,36,0));
+  transition: width 0.5s var(--ease-brand);
+}
+.section-title.visible::after,
+.section.active .section-title::after {
+  width: 100%;
+}
+
+/* ============================================================
+   7. @starting-style for modals/panels
+   ============================================================ */
+@layer ultra-base {
+  .modal,
+  .panel-overlay,
+  [class*="modal"],
+  [class*="panel-overlay"] {
+    transition: opacity 0.35s var(--ease-brand), transform 0.35s var(--ease-brand);
+  }
+  @starting-style {
+    .modal.open,
+    .panel-overlay.open {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.98);
+    }
+  }
+}
+
+/* ============================================================
+   8. Scroll-driven progress bars (Chrome 115+)
+   ============================================================ */
+@supports (animation-timeline: scroll()) {
+  .progress-fill,
+  [class*="progress-bar"] {
+    animation: progress-fill-anim linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+  @keyframes progress-fill-anim {
+    from { transform: scaleX(0); transform-origin: left; }
+    to   { transform: scaleX(1); transform-origin: left; }
+  }
+}
+
+/* ============================================================
+   9. Ambient gradient blobs
+   ============================================================ */
+.main-content::before {
+  content: '';
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(227,30,36,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  top: -200px;
+  right: -200px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+  animation: blob-drift 8s ease-in-out infinite;
+}
+.main-content::after {
+  content: '';
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(100,50,200,0.04) 0%, transparent 70%);
+  bottom: -100px;
+  left: 20%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(60px);
+  animation: blob-drift 10s ease-in-out infinite reverse;
+}
+@keyframes blob-drift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(20px,-30px) scale(1.1); }
+}
+
+/* ============================================================
+   10. Button shimmer effect
+   ============================================================ */
+.btn-primary,
+.btn-send,
+[class*="btn-cta"],
+.btn-rise {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after,
+[class*="btn-cta"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+.btn-primary:hover::after,
+[class*="btn-cta"]:hover::after {
+  left: 140%;
+}
+
+/* ============================================================
+   11. Intersection Observer reveal classes
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s var(--ease-brand),
+    transform 0.6s var(--ease-brand);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s var(--ease-brand),
+    transform 0.5s var(--ease-brand);
+}
+.reveal-stagger.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   12. Top accent bar / section heading badges
+   ============================================================ */
+.section h2:first-child,
+.section > .section-header,
+.sec-heading-wrapper {
+  padding-top: 4px;
+}
+.sec-heading-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #E31E24;
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   13. Red left bar on active nav items (enhanced)
+   ============================================================ */
+.nav-item.active {
+  position: relative;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #E31E24, rgba(227,30,36,0.3));
+  border-radius: 0 2px 2px 0;
+}
+
+/* ============================================================
+   14. Sidebar logo glow
+   ============================================================ */
+.logo-text,
+.sidebar-logo .wordmark {
+  text-shadow: 0 0 30px rgba(227,30,36,0.25);
+}
+
+/* ============================================================
+   15. Section entrance animation
+   ============================================================ */
+.section {
+  transition: opacity 0.4s ease;
+}
+
+/* ============================================================
+   16. Bento grid
+   ============================================================ */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+.bento-hero {
+  grid-column: span 8;
+  grid-row: span 2;
+}
+.bento-sm {
+  grid-column: span 4;
+}
+.bento-md {
+  grid-column: span 6;
+}
+.bento-full {
+  grid-column: span 12;
+}
+@media (max-width: 768px) {
+  .bento-hero,
+  .bento-sm,
+  .bento-md {
+    grid-column: span 12;
+  }
+}
+
+/* ============================================================
+   17. Prefers reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.15ms !important;
+  }
+}
+
+/* ============================================================
+   BONUS: Sidebar & main-content z-index ensure canvas stays below
+   ============================================================ */
+.sidebar {
+  z-index: 200;
+  position: relative;
+}
+.main-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   BONUS: Enhanced scrollbar styling
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(227,30,36,0.3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(227,30,36,0.55);
+}
+
+/* ============================================================
+   BONUS: Focus-visible ring using brand red
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid rgba(227,30,36,0.7);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   BONUS: XP bar glow enhancement
+   ============================================================ */
+[class*="xp-fill"],
+[class*="xp-bar-fill"] {
+  background: linear-gradient(90deg, #E31E24, #ff4d54) !important;
+  box-shadow: 0 0 12px rgba(227,30,36,0.5);
+}
+
+/* ============================================================
+   BONUS: Activity feed panel ultra refinement
+   ============================================================ */
+.activity-panel,
+.activity-feed-panel {
+  backdrop-filter: blur(32px) saturate(2) brightness(1.05);
+  -webkit-backdrop-filter: blur(32px) saturate(2) brightness(1.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 24px 80px rgba(0,0,0,0.6),
+    var(--red-glow-sm);
+}
+
+/* ============================================================
+   BONUS: Number pulse when stat updates
+   ============================================================ */
+@keyframes value-update-pulse {
+  0%   { color: inherit; }
+  30%  { color: #E31E24; text-shadow: var(--red-glow-sm); }
+  100% { color: inherit; text-shadow: none; }
+}
+.value-updated {
+  animation: value-update-pulse 1.2s ease both;
+}
+
+/* ============================================================
+   BONUS: Topbar glass
+   ============================================================ */
+.topbar,
+.top-bar,
+#topbar {
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  background: rgba(8,8,9,0.8) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+/* ============================================================
+   BONUS: Notification dot pulse
+   ============================================================ */
+@keyframes notif-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(227,30,36,0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(227,30,36,0); }
+}
+.notif-dot,
+.notification-badge,
+[class*="notif-badge"] {
+  animation: notif-pulse 2s ease infinite;
+}
+
+/* ============================================================
+   BONUS: Image avatar ring
+   ============================================================ */
+.user-avatar,
+.avatar-img,
+[class*="user-photo"] {
+  box-shadow:
+    0 0 0 2px rgba(227,30,36,0.5),
+    0 0 20px rgba(227,30,36,0.2);
+}
