@@ -3,8 +3,11 @@
 // Auto-detects local vs production environment
 // Credenciales SIEMPRE desde variables de entorno, nunca hardcodeadas
 
-// Cargar .env para desarrollo local (ignorado por git)
-$_envFile = __DIR__ . '/../.env';
+// Cargar .env (try outside webroot first, then fallback to api/.env for local dev)
+$_envFile = __DIR__ . '/../../.env.secure';  // outside api/ webroot
+if (!file_exists($_envFile)) {
+    $_envFile = __DIR__ . '/../.env';  // local dev fallback
+}
 if (file_exists($_envFile)) {
     foreach (file($_envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $_line) {
         $_line = trim($_line);
