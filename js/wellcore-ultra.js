@@ -313,6 +313,9 @@
         (avoids HTML modifications)
   ---------------------------------------------------------- */
   function initSectionReveal() {
+    // Skip in portal pages — sections use display:none/block toggling,
+    // not scroll-reveal. Adding .reveal breaks them with opacity:0.
+    if (document.querySelector('.sidebar-nav') || document.getElementById('sidebar')) return;
     document.querySelectorAll('.section').forEach(function(s) {
       s.classList.add('reveal');
     });

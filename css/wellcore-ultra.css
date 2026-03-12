@@ -400,7 +400,7 @@ h3.sec-heading {
    ============================================================ */
 .sidebar {
   z-index: 200;
-  position: relative;
+  /* position: relative removed — breaks portal's position:fixed sidebar */
 }
 .main-content {
   position: relative;
