@@ -748,29 +748,31 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
             . "<span style=\"font-family:Arial,Helvetica,sans-serif;font-size:14px;color:{$acent}\">&#10003;</span>"
             . "</td>"
             . "<td style=\"padding:5px 0;\">"
-            . "<span style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;color:rgba(255,255,255,0.8);line-height:1.5;\">{$i}</span>"
+            . "<span style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#d0d0d6;line-height:1.5;\">{$i}</span>"
             . "</td></tr>\n";
     }
 
     $customBlock = '';
     if ($msg) {
-        $customBlock = "<tr><td style=\"padding:0 40px 32px;\">"
-            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-left:3px solid {$acent};background:#111113;\">"
-            . "<tr><td style=\"padding:16px 20px;\">"
+        $customBlock = "<tr><td bgcolor=\"#0a0a0a\" style=\"padding:0 40px 32px;background-color:#0a0a0a;\">"
+            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#111113\" style=\"border-left:3px solid {$acent};background-color:#111113;\">"
+            . "<tr><td bgcolor=\"#111113\" style=\"padding:16px 20px;background-color:#111113;\">"
             . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:2px;color:{$acent};text-transform:uppercase;margin:0 0 8px 0;\">// Mensaje de Daniel</p>"
-            . "<p style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;margin:0;\">{$msg}</p>"
+            . "<p style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#b0b0b8;line-height:1.7;margin:0;\">{$msg}</p>"
             . "</td></tr></table></td></tr>";
     }
 
     $hdr = "linear-gradient(135deg,{$acent} 0%,#7a0a10 100%)";
 
-    $html = "<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"color-scheme\" content=\"dark\"><meta name=\"supported-color-schemes\" content=\"dark\"><title>{$name} — WellCore Fitness</title>"
-        . "<style>:root{color-scheme:dark}body,table,td{background-color:#0a0a0a!important}</style></head>"
-        . "<body style=\"margin:0;padding:0;background-color:#0a0a0a;background:#0a0a0a;\" bgcolor=\"#0a0a0a\">"
+    $html = "<!DOCTYPE html><html lang=\"es\" xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"color-scheme\" content=\"dark only\"><meta name=\"supported-color-schemes\" content=\"dark only\"><title>{$name} — WellCore Fitness</title>"
+        . "<!--[if mso]><style>body,table,td{background:#0a0a0a!important;color:#ffffff!important}</style><![endif]-->"
+        . "</head>"
+        . "<body style=\"margin:0;padding:0;background-color:#0a0a0a;\" bgcolor=\"#0a0a0a\">"
         . "<div style=\"display:none;max-height:0;overflow:hidden;color:#0a0a0a;\">Te invito — {$name} de WellCore Fitness. &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>"
-        . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#0a0a0a\" style=\"background-color:#0a0a0a;\"><tr><td align=\"center\" style=\"padding:32px 16px;\" bgcolor=\"#0a0a0a\">"
+        . "<div style=\"background-color:#0a0a0a;width:100%;margin:0;padding:0;\">"
+        . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#0a0a0a\" style=\"background-color:#0a0a0a;min-width:100%;\"><tr><td align=\"center\" style=\"padding:32px 16px;background-color:#0a0a0a;\" bgcolor=\"#0a0a0a\">"
         . "<table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"max-width:600px;width:100%;background-color:#0a0a0a;\" bgcolor=\"#0a0a0a\">"
-        . "<tr><td style=\"background:{$hdr};padding:0;\">"
+        . "<tr><td bgcolor=\"{$acent}\" style=\"background:{$hdr};background-color:{$acent};padding:0;\">"
         . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
         . "<td style=\"padding:24px 32px;\"><img src=\"https://wellcorefitness.com/images/logo/logo-blanco.png\" alt=\"WellCore Fitness\" width=\"140\" height=\"auto\" style=\"display:block;\"></td>"
         . "<td align=\"right\" style=\"padding:24px 32px;\"><span style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.8);text-transform:uppercase;\">{$tag}</span></td>"
@@ -845,7 +847,7 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
         . "<tr><td bgcolor=\"#0a0a0a\" style=\"padding:24px 40px;background-color:#0a0a0a;border-top:1px solid #1e1e22;\">"
         . "<p style=\"font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#555;line-height:1.6;margin:0;\">&copy; {$year} WellCore Fitness &middot; Daniel Esparza, Coach &middot; info@wellcorefitness.com</p>"
         . "</td></tr>"
-        . "</table></td></tr></table></body></html>";
+        . "</table></td></tr></table></div></body></html>";
 
     return $html;
 }
