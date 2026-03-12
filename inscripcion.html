@@ -1071,13 +1071,16 @@
     });
 
     // --- Conditional lesión detail field ---
-    document.getElementById('tienelesión').addEventListener('change', function() {
-      const details = document.querySelectorAll('.lesión-detail');
-      const show = (this.value === 'si' || this.value === 'cronica');
-      details.forEach(function(d) {
-        d.style.display = show ? 'block' : 'none';
+    var lesionEl = document.getElementById('tienelesión');
+    if (lesionEl) {
+      lesionEl.addEventListener('change', function() {
+        const details = document.querySelectorAll('.lesión-detail');
+        const show = (this.value === 'si' || this.value === 'cronica');
+        details.forEach(function(d) {
+          d.style.display = show ? 'block' : 'none';
+        });
       });
-    });
+    }
 
     // --- Show selected plan info ---
     var planDisplayNames = {

@@ -59,10 +59,10 @@ $rows = $db->prepare("
         g.approved_by,
         g.approved_at,
         g.created_at,
-        -- Costo estimado USD (opus-4-6: $15/M inp, $75/M out)
+        -- Costo estimado USD (sonnet-4-6: $3/M inp, $15/M out)
         ROUND(
-            (g.prompt_tokens     / 1000000 * 15.0) +
-            (g.completion_tokens / 1000000 * 75.0),
+            (g.prompt_tokens     / 1000000 * 3.0) +
+            (g.completion_tokens / 1000000 * 15.0),
             6
         ) AS cost_usd,
         -- Extracto del raw_response (primeros 300 chars)
@@ -71,8 +71,10 @@ $rows = $db->prepare("
     LEFT JOIN clients c ON c.id = g.client_id
     $whereClause
     ORDER BY g.created_at DESC
-    LIMIT $limit OFFSET $offset
+    LIMIT ? OFFSET ?
 ");
+$params[] = $limit;
+$params[] = $offset;
 $rows->execute($params);
 $generations = $rows->fetchAll(PDO::FETCH_ASSOC);
 

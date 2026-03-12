@@ -41,36 +41,11 @@ function err(string $msg, int $code = 400): void {
     exit;
 }
 
-// --- Rate limiting (5 req/hour per IP) ---
-$rateLimitFile = sys_get_temp_dir() . '/wc_invite_redeem_rate.json';
-$clientIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-$ipHash = hash('sha256', $clientIp);
-$now = time();
-$window = 3600;
-$maxReq = 5;
-
-$rateData = [];
-if (file_exists($rateLimitFile)) {
-    $rateData = json_decode(@file_get_contents($rateLimitFile), true) ?: [];
-}
-
-foreach ($rateData as $hash => $entry) {
-    if ($now - $entry['first_request'] > $window) {
-        unset($rateData[$hash]);
-    }
-}
-
-if (isset($rateData[$ipHash]) && $rateData[$ipHash]['count'] >= $maxReq) {
+// --- Rate limiting (5 req/hour per IP — MySQL) ---
+require_once __DIR__ . '/../includes/rate-limit.php';
+if (!rate_limit_check('invite_redeem', 5, 3600)) {
     err('Rate limit exceeded', 429);
 }
-
-if (isset($rateData[$ipHash])) {
-    $rateData[$ipHash]['count']++;
-} else {
-    $rateData[$ipHash] = ['count' => 1, 'first_request' => $now];
-}
-
-@file_put_contents($rateLimitFile, json_encode($rateData, JSON_PRETTY_PRINT), LOCK_EX);
 
 // --- Parse body ---
 $raw = file_get_contents('php://input');

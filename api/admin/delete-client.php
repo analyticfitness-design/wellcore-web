@@ -32,12 +32,40 @@ if (!$client) {
 
 $db->beginTransaction();
 try {
-    // Borrar en orden por FK
-    $db->prepare("DELETE FROM rise_programs WHERE client_id = ?")->execute([$client_id]);
-    $db->prepare("DELETE FROM auth_tokens WHERE user_type = 'client' AND user_id = ?")->execute([$client_id]);
-    $db->prepare("DELETE FROM client_profiles WHERE client_id = ?")->execute([$client_id]);
-    $db->prepare("DELETE FROM checkins WHERE client_id = ?")->execute([$client_id]);
-    $db->prepare("DELETE FROM payments WHERE client_id = ?")->execute([$client_id]);
+    // Borrar todas las tablas relacionadas en orden por FK
+    $tables = [
+        'xp_events'              => 'client_id',
+        'client_xp'              => 'client_id',
+        'challenge_participants'  => 'client_id',
+        'biometric_logs'         => 'client_id',
+        'habit_logs'             => 'client_id',
+        'training_logs'          => 'client_id',
+        'weight_logs'            => 'client_id',
+        'progress_photos'        => 'client_id',
+        'coach_notes'            => 'client_id',
+        'push_subscriptions'     => 'client_id',
+        'notification_log'       => 'client_id',
+        'chat_messages'          => 'client_id',
+        'assigned_plans'         => 'client_id',
+        'referrals'              => 'referrer_id',
+        'video_checkins'         => 'client_id',
+        'academy_progress'       => 'client_id',
+        'rise_programs'          => 'client_id',
+        'auth_tokens'            => null, // special: user_type filter
+        'client_profiles'        => 'client_id',
+        'checkins'               => 'client_id',
+        'payments'               => 'client_id',
+    ];
+
+    foreach ($tables as $table => $column) {
+        if ($table === 'auth_tokens') {
+            $db->prepare("DELETE FROM auth_tokens WHERE user_type = 'client' AND user_id = ?")->execute([$client_id]);
+        } else {
+            $db->prepare("DELETE FROM `{$table}` WHERE `{$column}` = ?")->execute([$client_id]);
+        }
+    }
+
+    // Finalmente borrar el cliente
     $db->prepare("DELETE FROM clients WHERE id = ?")->execute([$client_id]);
 
     $db->commit();
@@ -55,6 +83,7 @@ try {
     ]);
 } catch (PDOException $e) {
     $db->rollBack();
-    respondError('Error al eliminar cliente: ' . $e->getMessage(), 500);
+    error_log('delete-client.php error: ' . $e->getMessage());
+    respondError('Error interno al eliminar cliente', 500);
 }
 ?>

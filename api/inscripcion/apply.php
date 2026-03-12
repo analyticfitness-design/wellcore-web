@@ -74,44 +74,12 @@ if ($whatsapp === '') {
     err('El campo whatsapp es requerido');
 }
 
-// ─── Rate limiting — max 5 por IP por hora ────────────────────────────────────
-$dataDir    = __DIR__ . '/../data';
-$rateLimitFile = $dataDir . '/inscripcion-rate-limit.json';
-
-$clientIp = $_SERVER['HTTP_X_FORWARDED_FOR']
-          ?? $_SERVER['REMOTE_ADDR']
-          ?? '0.0.0.0';
-$ipHash = hash('sha256', $clientIp);
-$now    = time();
-$window = 3600; // 1 hora
-$maxReq = 5;
-
-if (!is_dir($dataDir)) {
-    mkdir($dataDir, 0755, true);
+// ─── Rate limiting — max 5 por IP por hora (MySQL) ────────────────────────────
+$dataDir = __DIR__ . '/../data';
+require_once __DIR__ . '/../includes/rate-limit.php';
+if (!rate_limit_check('inscripcion_apply', 5, 3600)) {
+    err('Límite de solicitudes alcanzado. Máximo 5 inscripciones por hora por IP.', 429);
 }
-
-$rateData = [];
-if (file_exists($rateLimitFile)) {
-    $rateData = json_decode(file_get_contents($rateLimitFile), true) ?: [];
-}
-
-// Limpiar ventanas expiradas
-foreach ($rateData as $hash => $entry) {
-    if ($now - $entry['first_request'] > $window) {
-        unset($rateData[$hash]);
-    }
-}
-
-if (isset($rateData[$ipHash])) {
-    if ($rateData[$ipHash]['count'] >= $maxReq) {
-        err('Límite de solicitudes alcanzado. Máximo 5 inscripciones por hora por IP.', 429);
-    }
-    $rateData[$ipHash]['count']++;
-} else {
-    $rateData[$ipHash] = ['count' => 1, 'first_request' => $now];
-}
-
-file_put_contents($rateLimitFile, json_encode($rateData, JSON_PRETTY_PRINT), LOCK_EX);
 
 // ─── Construir registro ───────────────────────────────────────────────────────
 $timestamp = (int)(microtime(true) * 1000);

@@ -11,8 +11,9 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../includes/cors.php';
 
-respondJson();
+requireMethod('POST');
 
 $client = authenticateClient();
 if (strtolower($client['plan'] ?? '') !== 'elite') {

@@ -26,11 +26,9 @@ if (!$coach) {
 
 $coachId = (int) $coach['admin_id'];
 
-// Hash visitor IP for daily dedup
-$ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-if (str_contains($ip, ',')) {
-    $ip = trim(explode(',', $ip)[0]);
-}
+// Hash visitor IP for daily dedup (use centralized IP detection)
+require_once __DIR__ . '/../includes/rate-limit.php';
+$ip = get_client_ip();
 $visitorHash = hash('sha256', $ip . date('Y-m-d'));
 
 // Check if already tracked today

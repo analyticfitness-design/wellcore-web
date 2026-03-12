@@ -31,8 +31,8 @@ if (!$isCli) {
 
     // Verificar secret interno
     $secret = $_SERVER['HTTP_X_INTERNAL_SECRET'] ?? '';
-    define('AI_INTERNAL_SECRET', 'wc-ai-internal-2026'); // Cambiar en producción
-    if ($secret !== AI_INTERNAL_SECRET) {
+    define('AI_INTERNAL_SECRET', getenv('AI_INTERNAL_SECRET') ?: '');
+    if (!AI_INTERNAL_SECRET || $secret !== AI_INTERNAL_SECRET) {
         http_response_code(403);
         echo json_encode(['error' => 'Forbidden']);
         exit;
@@ -349,7 +349,7 @@ function ai_generate_habitos(array $client, string $profileText, int $genId): ar
 function ai_trigger_ticket_response(string $ticketId, int $clientId): array {
     // Llamar a ticket-response.php de forma interna via require
     // Se hace así para mantener el contexto de DB ya conectado
-    if (!defined('AI_INTERNAL_SECRET')) define('AI_INTERNAL_SECRET', 'wc-ai-internal-2026');
+    if (!defined('AI_INTERNAL_SECRET')) define('AI_INTERNAL_SECRET', getenv('AI_INTERNAL_SECRET') ?: '');
 
     $db   = getDB();
     $stmt = $db->prepare("SELECT id, ticket_type, description, client_name FROM tickets WHERE id = ?");

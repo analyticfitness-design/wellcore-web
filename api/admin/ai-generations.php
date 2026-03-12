@@ -69,8 +69,9 @@ $stmt = $db->prepare("
     LEFT JOIN assigned_plans ap ON ap.ai_generation_id = g.id
     WHERE $whereSQL
     ORDER BY g.created_at DESC
-    LIMIT $limit
+    LIMIT ?
 ");
+$params[] = $limit;
 $stmt->execute($params);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

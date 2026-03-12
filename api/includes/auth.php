@@ -14,9 +14,16 @@ function getClientFingerprint(): string {
 }
 
 function getClientIp(): string {
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-    if (str_contains($ip, ',')) $ip = trim(explode(',', $ip)[0]);
-    return $ip;
+    // Prefer CF-Connecting-IP (Cloudflare) > X-Real-IP (nginx) > X-Forwarded-For > REMOTE_ADDR
+    foreach (['HTTP_CF_CONNECTING_IP', 'HTTP_X_REAL_IP', 'HTTP_X_FORWARDED_FOR'] as $header) {
+        if (!empty($_SERVER[$header])) {
+            $ip = trim(explode(',', $_SERVER[$header])[0]);
+            if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                return $ip;
+            }
+        }
+    }
+    return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 }
 
 function createToken(string $userType, int $userId, bool $isAdmin = false, bool $remember = false): string {

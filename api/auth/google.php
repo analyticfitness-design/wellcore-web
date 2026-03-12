@@ -12,6 +12,7 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../includes/auth.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -68,7 +69,7 @@ if (!$client) {
 
     $ins = $db->prepare("
         INSERT INTO clients (client_code, name, email, password_hash, google_id, plan, status, fecha_inicio)
-        VALUES (?, ?, ?, ?, ?, 'esencial', 'activo', CURDATE())
+        VALUES (?, ?, ?, ?, ?, 'esencial', 'pendiente', CURDATE())
     ");
     $ins->execute([$clientCode, $name, $email, $tempHash, $googleId]);
 
@@ -77,25 +78,19 @@ if (!$client) {
         'name'   => $name,
         'email'  => $email,
         'plan'   => 'esencial',
-        'status' => 'activo',
+        'status' => 'pendiente',
     ];
 }
 
 // Check if client is active
-if (($client['status'] ?? '') === 'inactivo') {
+if (!in_array($client['status'] ?? '', ['activo', 'pendiente'], true)) {
     respondError('Tu cuenta esta inactiva. Contacta a soporte.', 403);
 }
 
-// ── Generate auth token ──────────────────────────────────
+// ── Generate auth token using centralized createToken() ──
 $cid   = (int)$client['id'];
 $plan  = $client['plan'] ?? 'esencial';
-$token = bin2hex(random_bytes(32));
-$hours = ($plan === 'rise') ? 720 : 24; // RISE: 30 days, others: 24h
-
-$db->prepare("
-    INSERT INTO auth_tokens (user_type, user_id, token, expires_at)
-    VALUES ('client', ?, ?, DATE_ADD(NOW(), INTERVAL ? HOUR))
-")->execute([$cid, $token, $hours]);
+$token = createToken('client', $cid);
 
 // ── Determine redirect ───────────────────────────────────
 $redirect = ($plan === 'rise') ? 'rise-dashboard.html' : 'cliente.html';

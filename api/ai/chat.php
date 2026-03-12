@@ -70,6 +70,7 @@ if ($hourlyCount >= $maxPerHour) {
 
 $kbPath = __DIR__ . '/../data/knowledge-base.json';
 $context = '';
+$topMatches = [];
 
 if (file_exists($kbPath)) {
     $kb = json_decode(file_get_contents($kbPath), true) ?: [];

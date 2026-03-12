@@ -17,7 +17,8 @@ require_once __DIR__ . '/../config/database.php';
 requireMethod('GET');
 
 $secret = $_GET['secret'] ?? '';
-if ($secret !== 'WC_WEBHOOK_2026') {
+$expectedSecret = getenv('WEBHOOK_SECRET') ?: '';
+if (!$expectedSecret || $secret !== $expectedSecret) {
     respondError('Unauthorized', 401);
 }
 

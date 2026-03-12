@@ -15,9 +15,9 @@ require_once __DIR__ . '/../config/env.php';
 require_once __DIR__ . '/../includes/response.php';
 
 // Validar secret de cron
-$secret = $_SERVER['HTTP_X_CRON_SECRET'] ?? $_GET['secret'] ?? '';
-$expected = env('CRON_SECRET', 'WC_CRON_2026');
-if ($secret !== $expected) {
+$secret = $_SERVER['HTTP_X_CRON_SECRET'] ?? '';
+$expected = env('CRON_SECRET', '');
+if (!$expected || $secret !== $expected) {
     http_response_code(403);
     echo json_encode(['error' => 'Forbidden']);
     exit;

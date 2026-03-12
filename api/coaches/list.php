@@ -50,8 +50,10 @@ try {
 
     // Paginated results
     $sql = "SELECT * FROM coach_applications" . $where
-         . " ORDER BY created_at DESC LIMIT $limit OFFSET $offset";
+         . " ORDER BY created_at DESC LIMIT ? OFFSET ?";
     $stmt = $db->prepare($sql);
+    $params[] = $limit;
+    $params[] = $offset;
     $stmt->execute($params);
     $applications = $stmt->fetchAll();
 

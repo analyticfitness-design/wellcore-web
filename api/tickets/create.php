@@ -9,15 +9,7 @@
  *   priority, token (required = WellCoreCoach2026)
  */
 
-header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204);
-    exit;
-}
+require_once __DIR__ . '/../includes/cors.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -36,7 +28,7 @@ function ok(array $data): void  { respond(200, array_merge(['ok' => true],  $dat
 function err(string $msg, int $code = 400): void { respond($code, ['ok' => false, 'error' => $msg]); }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const COACH_TOKEN   = 'WellCoreCoach2026';
+$COACH_TOKEN = getenv('COACH_TOKEN') ?: '';
 const SLA_HOURS     = 48;
 const VALID_TYPES   = ['rutina_nueva', 'cambio_rutina', 'nutricion', 'habitos', 'invitacion_cliente', 'otro'];
 const VALID_PLANS   = ['esencial', 'metodo', 'elite'];
@@ -51,7 +43,7 @@ if (!is_array($body)) {
 }
 
 // ─── Validar token ────────────────────────────────────────────────────────────
-if (($body['token'] ?? '') !== COACH_TOKEN) {
+if (!$COACH_TOKEN || ($body['token'] ?? '') !== $COACH_TOKEN) {
     err('Token inválido', 401);
 }
 

@@ -16,11 +16,11 @@ respondJson();
 requireMethod('POST');
 
 // ── Authentication: admin token OR cron secret header ─────────────────────
-$cronSecret    = getenv('CRON_SECRET') ?: 'WC_CRON_RISE2026_PROD_Secure!';
+$cronSecret    = getenv('CRON_SECRET') ?: '';
 $providedSecret = $_SERVER['HTTP_X_CRON_SECRET'] ?? '';
 $isAuthorized  = false;
 
-if ($providedSecret === $cronSecret) {
+if ($cronSecret && $providedSecret === $cronSecret) {
     $isAuthorized = true;
 } else {
     // Fall back to admin Bearer token auth

@@ -12,8 +12,9 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/response.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/cors.php';
 
-respondJson(); // Set Content-Type header
+requireMethod('GET');
 
 // Any admin role can access the activity feed
 $auth = authenticateAdmin();

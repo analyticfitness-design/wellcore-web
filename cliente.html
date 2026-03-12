@@ -5025,7 +5025,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
   const token = localStorage.getItem('wc_token');
   if (!token) { window.location.replace('login.html'); return; }
   fetch('/api/auth/me.php', { headers: { 'Authorization': 'Bearer ' + token } })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       if (!data || data.error || data.type !== 'client') {
         if (sessionStorage.getItem('_wc_preview_session')) {
@@ -5130,7 +5130,7 @@ function checkAchievements(trigger) {
   apiFetch('/community/check-achievements.php', {
     method: 'POST',
     body: JSON.stringify({ trigger: trigger })
-  }).then(function(r) { return r.json(); }).then(function(data) {
+  }).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     if (data && data.awarded && data.awarded.length > 0) {
       data.awarded.forEach(function(a) {
         showToast('Logro desbloqueado: ' + a.title, 'success');
@@ -5678,7 +5678,7 @@ var _dailyHabitState = { agua: false, sueno: false, nutricion: false, estres: fa
 
 async function loadDailyHabits() {
   try {
-    var data = await apiFetch('/clients/habits.php').then(function(r) { return r.json(); });
+    var data = await apiFetch('/clients/habits.php').then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); });
     _dailyHabitState = data.today || _dailyHabitState;
     Object.keys(_dailyHabitState).forEach(function(h) { updateDailyHabitCard(h, _dailyHabitState[h]); });
     var sc = document.getElementById('streak-count');
@@ -5708,7 +5708,7 @@ async function toggleDailyHabit(habit) {
   _dailyHabitState[habit] = newVal;
   updateDailyHabitCard(habit, newVal);
   try {
-    await apiFetch('/clients/habits.php', { method: 'POST', body: JSON.stringify({ habit_type: habit, value: newVal ? 1 : 0 }) }).then(function(r) { return r.json(); });
+    await apiFetch('/clients/habits.php', { method: 'POST', body: JSON.stringify({ habit_type: habit, value: newVal ? 1 : 0 }) }).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); });
     var allDone = Object.values(_dailyHabitState).every(Boolean);
     var msg = document.getElementById('habit-complete-msg');
     if (msg) msg.style.display = allDone ? 'block' : 'none';
@@ -5955,7 +5955,7 @@ function getCoachTip(section, topic) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
     body: JSON.stringify({ exercise: topic, context: section })
-  }).then(function(r) { return r.json(); }).then(function(data) {
+  }).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = '<i class="fas fa-user-md" style="color:#E31E24"></i> Coach Tip';
@@ -6066,7 +6066,7 @@ var _weekGridData = []; // cache for current week
 function loadWeekGrid() {
   var wk = getWeekKey();
   apiFetch('/training/?year=' + wk.year + '&week=' + wk.week)
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       var log = data.log || [];
       _weekGridData = [];
@@ -6293,7 +6293,7 @@ function wlInitForm() {
 
   // Then load from API and overwrite if data exists
   apiFetch('/weights.php?client_id=' + clientId)
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       var entries = data.entries || [];
       // Filter for current week
@@ -6558,7 +6558,7 @@ function saveMetrics() {
   var fields = ['inp-peso','inp-musculo','inp-grasa','inp-pecho','inp-cintura','inp-cadera','inp-muslo','inp-brazo'];
 
   apiFetch('/metrics/index.php', { method: 'POST', body: JSON.stringify(payload) })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function() {
       fields.forEach(function(id) { document.getElementById(id).value = ''; });
       loadMetrics();
@@ -6571,7 +6571,7 @@ function saveMetrics() {
 
 function loadMetrics() {
   apiFetch('/metrics/?limit=20')
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       var metrics = (data.metrics || []).map(function(m) {
         return {
@@ -6864,7 +6864,7 @@ function selectRpe(val) {
 // M04: Load compliance data
 function loadCompliance() {
   apiFetch('/clients/compliance.php')
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       if (data.current_week) {
         var pct = data.current_week.compliance_pct;
@@ -6909,7 +6909,7 @@ function submitCheckin() {
   };
 
   apiFetch('/checkins/index.php', { method: 'POST', body: JSON.stringify(payload) })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function() {
       document.getElementById('slider-bienestar').value = 7;
       document.getElementById('val-bienestar').textContent = '7';
@@ -6950,9 +6950,9 @@ function loadActivityFeed() {
   var ICON_STYLE = 'width:32px;height:32px;border-radius:0;background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.2);display:flex;align-items:center;justify-content:center;color:#E31E24;font-weight:700;font-size:.8rem;flex-shrink:0';
 
   var requests = [
-    apiFetch('/metrics/?limit=3').then(function(r) { return r.json(); }).catch(function() { return { metrics: [] }; }),
+    apiFetch('/metrics/?limit=3').then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).catch(function() { return { metrics: [] }; }),
     PLAN_LEVEL[clientPlan] >= 3
-      ? apiFetch('/checkins/?limit=2').then(function(r) { return r.json(); }).catch(function() { return { checkins: [] }; })
+      ? apiFetch('/checkins/?limit=2').then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).catch(function() { return { checkins: [] }; })
       : Promise.resolve({ checkins: [] })
   ];
   Promise.all(requests).then(function(results) {
@@ -7001,7 +7001,7 @@ function loadActivityFeed() {
 
 function loadCheckins() {
   apiFetch('/checkins/?limit=8')
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) { renderCheckins(data.checkins || []); })
     .catch(function() { renderCheckins(JSON.parse(localStorage.getItem('wc_checkins') || '[]')); });
 }
@@ -8432,7 +8432,7 @@ function highlightCurrentPlan() {
 // ===== PROFILE =====
 function loadProfileForm() {
   apiFetch('/clients/profile.php')
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       var p = data.profile || {};
       document.getElementById('pf-nombre').value   = p.name    || clientName;
@@ -8629,7 +8629,7 @@ function saveBio() {
   var bioEl = document.getElementById('pf-bio');
   if (!bioEl) return;
   apiFetch('/clients/profile.php', { method: 'PUT', body: JSON.stringify({ bio: bioEl.value.trim() }) })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function() { showToast('Biografía guardada', 'success'); })
     .catch(function() { showToast('Error al guardar', 'error'); });
 }
@@ -8655,7 +8655,7 @@ function handleAvatarUpload(input) {
     method: 'POST',
     headers: token ? { 'Authorization': 'Bearer ' + token } : {},
     body: fd
-  }).then(function(r) { return r.json(); })
+  }).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(d) { showToast(d.avatar_url ? 'Foto actualizada' : 'Error al subir', d.avatar_url ? 'success' : 'error'); })
     .catch(function() { showToast('Error al subir foto', 'error'); });
 }
@@ -8768,7 +8768,7 @@ function saveProfile() {
   if (ciudad)   payload.ciudad    = ciudad;
 
   apiFetch('/clients/profile.php', { method: 'PUT', body: JSON.stringify(payload) })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function() {
       if (nombre) {
         document.getElementById('perfil-name').textContent = nombre;
@@ -8869,7 +8869,7 @@ function setBestOption(sel, val) {
 }
 
 function loadIntakeForm() {
-  apiFetch('/clients/intake.php').then(function(r) { return r.json(); }).then(function(data) {
+  apiFetch('/clients/intake.php').then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     var intake = data.profile_intake;
     if (!intake && data.rise_intake) {
       intake = mapRiseIntake(data.rise_intake);
@@ -9096,7 +9096,7 @@ function onUploadComplete(done, errors) {
 }
 
 function loadPhotosGallery() {
-  apiFetch('/photos/list.php?limit=50').then(function(r) { return r.json(); }).then(function(data) {
+  apiFetch('/photos/list.php?limit=50').then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     var container = document.getElementById('photos-gallery');
     if (!data || !data.photos || data.photos.length === 0) {
       container.textContent = '';
@@ -9323,7 +9323,7 @@ function initPhotoReviewUI() {
 }
 
 function loadPhotoReviews() {
-  apiFetch('/ai/photo-reviews-list.php').then(function(r) { return r.json(); }).then(function(data) {
+  apiFetch('/ai/photo-reviews-list.php').then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     if (!data || !data.reviews) return;
     var container = document.getElementById('reviewHistoryContainer');
     var list = document.getElementById('reviewHistoryList');
@@ -9381,7 +9381,7 @@ function requestPhotoReview() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ photo_date: photoDate })
-  }).then(function(r) { return r.json(); }).then(function(data) {
+  }).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     if (data && data.ok) {
       // Store pending review with random delay (30-120 min)
       var delayMin = Math.floor(Math.random() * 91) + 30; // 30-120 minutes
@@ -9497,7 +9497,7 @@ var nutriPhotoBase64 = null;
 
 function checkNutriUsage() {
   apiFetch('/nutrition/usage.php')
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       var lockedEl = document.getElementById('nutri-locked');
       var contentEl = document.getElementById('nutri-content');
@@ -9661,7 +9661,7 @@ function submitNutriAnalysis() {
     },
     body: JSON.stringify(payload)
   })
-  .then(function(r) { return r.json(); })
+  .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
   .then(function(data) {
     btn.disabled = false;
     btn.textContent = 'Analizar';
@@ -9809,7 +9809,7 @@ function loadNutriHistory() {
   fetch(API_BASE + '/nutrition/history.php?days=' + days, {
     headers: { 'Authorization': 'Bearer ' + (token || '') }
   })
-  .then(function(r) { return r.json(); })
+  .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
   .then(function(data) {
     if (!data.ok) return;
     // Update KPIs
@@ -9893,7 +9893,7 @@ function loadWeeklyInsight(force) {
     headers: { 'Authorization': 'Bearer ' + (token || ''), 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: prompt, session_id: 'insight-' + clientId })
   })
-  .then(function(r) { return r.json(); })
+  .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
   .then(function(d) {
     if (d.reply) {
       content.textContent = d.reply;
@@ -10124,7 +10124,7 @@ window.loadAcademiaCliente = function(page) {
   var url = '/academy/list.php?page=' + _page + '&per_page=12';
   if (_filter) url += '&content_type=' + encodeURIComponent(_filter);
 
-  apiFetch(url).then(function(r) { return r.json(); }).then(function(data) {
+  apiFetch(url).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     if (loading) loading.style.display = 'none';
     if (!data || !data.ok || !data.items || !data.items.length) {
       if (empty) empty.style.display = 'block';
@@ -10206,7 +10206,7 @@ function renderPagination(page, pages) {
 }
 
 window.openAcadItem = function(id) {
-  apiFetch('/academy/get.php?id=' + id).then(function(r) { return r.json(); }).then(function(data) {
+  apiFetch('/academy/get.php?id=' + id).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function(data) {
     if (!data || !data.ok || !data.item) return;
     var item      = data.item;
     var modal     = document.getElementById('acad-modal');
@@ -10714,7 +10714,7 @@ document.addEventListener('keydown', function(e) {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (token || '') },
       body: JSON.stringify({ exercise: exerciseName })
     })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       if (data.ok && data.tip) {
         bubble.innerHTML = '<div class="trn-ai-bubble-label">// WellCore Coach</div><div class="trn-ai-bubble-text">' + esc(data.tip) + '</div>';
@@ -10910,7 +10910,7 @@ document.addEventListener('keydown', function(e) {
     loadToday: function() {
       var today = new Date().toISOString().slice(0, 10);
       fetch(BM.apiUrl() + '?date=' + today, { headers: BM.authHeaders() })
-        .then(function(r) { return r.json(); })
+        .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
         .then(function(res) {
           if (res.data) {
             BM.populateForm(res.data);
@@ -10922,7 +10922,7 @@ document.addEventListener('keydown', function(e) {
 
     loadHistory: function() {
       fetch(BM.apiUrl() + '?history=true', { headers: BM.authHeaders() })
-        .then(function(r) { return r.json(); })
+        .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
         .then(function(res) {
           if (res.data && res.data.length > 1) {
             BM.renderSparkline(res.data);

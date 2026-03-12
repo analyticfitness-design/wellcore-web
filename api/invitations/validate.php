@@ -30,38 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     exit;
 }
 
-// --- Rate limiting (10 req/hour per IP) ---
-$rateLimitFile = sys_get_temp_dir() . '/wc_invite_validate_rate.json';
-$clientIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-$ipHash = hash('sha256', $clientIp);
-$now = time();
-$window = 3600;
-$maxReq = 10;
-
-$rateData = [];
-if (file_exists($rateLimitFile)) {
-    $rateData = json_decode(@file_get_contents($rateLimitFile), true) ?: [];
-}
-
-foreach ($rateData as $hash => $entry) {
-    if ($now - $entry['first_request'] > $window) {
-        unset($rateData[$hash]);
-    }
-}
-
-if (isset($rateData[$ipHash]) && $rateData[$ipHash]['count'] >= $maxReq) {
+// --- Rate limiting (10 req/hour per IP — MySQL) ---
+require_once __DIR__ . '/../includes/rate-limit.php';
+if (!rate_limit_check('invite_validate', 10, 3600)) {
     http_response_code(429);
     echo json_encode(['ok' => false, 'error' => 'Rate limit exceeded']);
     exit;
 }
-
-if (isset($rateData[$ipHash])) {
-    $rateData[$ipHash]['count']++;
-} else {
-    $rateData[$ipHash] = ['count' => 1, 'first_request' => $now];
-}
-
-@file_put_contents($rateLimitFile, json_encode($rateData, JSON_PRETTY_PRINT), LOCK_EX);
 
 // --- Validate code ---
 $code = trim($_GET['code'] ?? '');

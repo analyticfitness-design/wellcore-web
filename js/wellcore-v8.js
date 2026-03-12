@@ -56,7 +56,7 @@ V8.Notifications = {
     var token = self._getToken();
     if (!token) return;
     fetch('/api/notifications/list.php', { headers: { 'Authorization': 'Bearer ' + token } })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       self._unread = data.unread_count || 0;
       self._notifications = data.notifications || [];
@@ -198,7 +198,7 @@ V8.Profile = {
     var token = self._getToken();
     if (!token) return;
     fetch('/api/client/profile.php', { headers: { 'Authorization': 'Bearer ' + token } })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       self._data = data.client || {};
       self.render();
@@ -320,7 +320,7 @@ V8.Profile = {
       headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Guardar cambios'; }
       if (msg) {
@@ -358,7 +358,7 @@ V8.Referrals = {
     var token = self._getToken();
     if (!token) return;
     fetch('/api/client/referrals.php', { headers: { 'Authorization': 'Bearer ' + token } })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) { self.render(data); })
     .catch(function() {});
   },
@@ -511,7 +511,7 @@ V8.CheckinAlert = {
     var token = localStorage.getItem('wc_token') || sessionStorage.getItem('wc_preview_token');
     if (!token) return;
     fetch('/api/checkins/index.php?limit=1', { headers: { 'Authorization': 'Bearer ' + token } })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       var checkins = data.checkins || [];
       var needed = checkins.length === 0 ||
@@ -583,7 +583,7 @@ V8.AdminNotifications = {
     var token = self._getToken();
     if (!token) return;
     fetch('/api/notifications/list.php', { headers: { 'Authorization': 'Bearer ' + token } })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(data) {
       self._unread = data.unread_count || 0;
       self._notifications = data.notifications || [];

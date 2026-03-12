@@ -10,8 +10,9 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../includes/cors.php';
 
-respondJson();
+requireMethod('GET');
 
 $db     = getDB();
 $limit  = min(50, max(5, (int)($_GET['limit'] ?? 20)));

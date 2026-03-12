@@ -6,6 +6,7 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/rate-limit.php';
 
 requireMethod('POST');
@@ -14,6 +15,9 @@ requireMethod('POST');
 if (!rate_limit_check('rise_intake', 10, 3600)) {
     respondError('Demasiadas solicitudes. Intenta en unos minutos.', 429);
 }
+
+// Authenticate: require a valid client token
+$client = authenticateClient();
 
 $input = getJsonBody();
 
@@ -40,6 +44,11 @@ if ($stmt->rowCount() === 0) {
 
 $program = $stmt->fetch(PDO::FETCH_ASSOC);
 $client_id = $program['client_id'];
+
+// Verify the program belongs to the authenticated client
+if ((int)$client_id !== (int)$client['id']) {
+    respondError('No autorizado para modificar este programa', 403);
+}
 
 // Mapear años de experiencia a niveles
 $years = intval($input['training']['years'] ?? 0);

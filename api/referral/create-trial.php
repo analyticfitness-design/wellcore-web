@@ -11,10 +11,9 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/response.php';
+require_once __DIR__ . '/../includes/cors.php';
 
-respondJson();
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') respondError('Método no permitido', 405);
+requireMethod('POST');
 
 $client    = authenticateClient();
 $db        = getDB();

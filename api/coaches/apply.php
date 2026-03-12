@@ -116,37 +116,11 @@ if (!isset($body['contract_accepted']) || $body['contract_accepted'] !== true)
 
 $referral = trim($body['referral'] ?? '');
 
-// ─── Rate limiting (max 3 per IP per hour) ────────────────────────────────────
-$clientIp  = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-$ipKey     = md5($clientIp);
-$now       = time();
-$window    = 3600; // 1 hour in seconds
-$maxPerHr  = 3;
-
-$rateData  = readJSON($RATE_LIMIT_FILE, []);
-
-// Clean old entries
-foreach ($rateData as $key => $entry) {
-    if (($now - ($entry['first_request'] ?? 0)) > $window) {
-        unset($rateData[$key]);
-    }
+// ─── Rate limiting (max 3 per IP per hour — MySQL) ────────────────────────────
+require_once __DIR__ . '/../includes/rate-limit.php';
+if (!rate_limit_check('coach_apply', 3, 3600)) {
+    respond(429, ['ok' => false, 'error' => 'Límite de solicitudes alcanzado. Máximo 3 aplicaciones por hora por IP.']);
 }
-
-if (isset($rateData[$ipKey])) {
-    if ($rateData[$ipKey]['count'] >= $maxPerHr) {
-        respond(429, ['ok' => false, 'error' => 'Límite de solicitudes alcanzado. Máximo 3 aplicaciones por hora por IP.']);
-    }
-    $rateData[$ipKey]['count']++;
-    $rateData[$ipKey]['last_request'] = $now;
-} else {
-    $rateData[$ipKey] = [
-        'count'         => 1,
-        'first_request' => $now,
-        'last_request'  => $now,
-    ];
-}
-
-writeJSON($RATE_LIMIT_FILE, $rateData);
 
 // ─── Build & save application ─────────────────────────────────────────────────
 $timestamp = time();
