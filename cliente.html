@@ -2640,6 +2640,24 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
       </div><!-- /dash-bento -->
 
+      <!-- ═══ MISION DEL DIA ═══ -->
+      <div id="daily-mission-card" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:18px 20px;margin-bottom:18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-crosshairs" style="color:var(--red);font-size:.9rem;"></i>
+            <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);">Tu Mision de Hoy</span>
+          </div>
+          <div id="mission-progress-label" style="font-size:.7rem;color:var(--gray);font-family:'JetBrains Mono',monospace;">0/3</div>
+        </div>
+        <div id="mission-items" style="display:flex;flex-direction:column;gap:8px;"></div>
+        <div style="margin-top:10px;background:rgba(255,255,255,0.07);border-radius:99px;height:6px;overflow:hidden;">
+          <div id="mission-bar-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#E31E24,#f59e0b);border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1);"></div>
+        </div>
+        <div id="mission-xp-msg" style="display:none;text-align:center;font-size:.75rem;color:#f59e0b;margin-top:8px;font-weight:600;">
+          <i class="fas fa-bolt"></i> +10 XP por completar todas las misiones
+        </div>
+      </div>
+
       <!-- ═══ TIMELINE PREMIUM ═══ -->
       <div class="dash-timeline">
         <div class="dash-phase done">
@@ -11210,6 +11228,7 @@ document.addEventListener('keydown', function(e) {
     }
 })();
 </script>
+<script src="js/dashboard-smart.js" defer></script>
 <script src="js/chat-coach.js" defer></script>
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
