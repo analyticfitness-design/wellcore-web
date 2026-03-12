@@ -1477,6 +1477,43 @@
     .sa-activity-name { font-weight: 600; color: var(--text); }
     .sa-activity-sub  { color: var(--gray); font-size: 11px; }
     .sa-activity-time { font-size: 10px; color: var(--gray); font-family: var(--font-mono); }
+
+    /* ── Planes IA checkbox style ── */
+    .pia-checkbox {
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      padding: 10px 16px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; font-size: 13px; color: var(--text); transition: all 0.15s;
+      user-select: none;
+    }
+    .pia-checkbox:hover { border-color: rgba(227,30,36,0.4); }
+    .pia-checkbox input { display: none; }
+    .pia-cb-box {
+      width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .pia-checkbox input:checked ~ .pia-cb-box {
+      background: #E31E24; border-color: #E31E24;
+    }
+    .pia-checkbox input:checked ~ .pia-cb-box::after {
+      content: '\2713'; color: #fff; font-size: 11px; font-weight: 700;
+    }
+    .pia-checkbox input:disabled ~ .pia-cb-box { opacity: 0.3; }
+    .pia-checkbox:has(input:disabled) { opacity: 0.4; cursor: not-allowed; }
+
+    /* Intake data grid */
+    .pia-intake-row { display: flex; gap: 4px; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .pia-intake-label { color: var(--gray); min-width: 140px; font-size: 12px; }
+    .pia-intake-value { color: var(--text); font-size: 13px; }
+
+    /* Plan preview tabs */
+    .pia-tab {
+      padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px;
+      background: var(--surface); border: 1px solid var(--border); color: var(--gray);
+      transition: all 0.15s; font-family: inherit;
+    }
+    .pia-tab.active { background: rgba(227,30,36,0.15); border-color: rgba(227,30,36,0.4); color: #E31E24; font-weight: 600; }
+    .pia-tab.error { border-color: rgba(239,68,68,0.3); color: #EF4444; }
   </style>
 <!-- v7 Premium Fonts -->
 <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
@@ -1533,6 +1570,12 @@
         <span class="nav-icon" style="color:#E31E24;font-weight:700">&#9650;</span>
         Reto RISE
         <span class="badge" id="riseBadge" style="background:rgba(227,30,36,0.15);color:#E31E24;border:1px solid rgba(227,30,36,0.3);display:none">0</span>
+      </div>
+
+      <div class="nav-item" data-section="planes-ia">
+        <span class="nav-icon" style="color:#E31E24;font-weight:700">&#9733;</span>
+        Planes IA
+        <span class="badge" id="planesIaBadge" style="background:rgba(227,30,36,0.15);color:#E31E24;border:1px solid rgba(227,30,36,0.3);display:none">0</span>
       </div>
 
       <div class="nav-item" data-section="invitaciones" id="navInvitaciones" style="display:none">
@@ -1815,6 +1858,250 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- ─────────────────────────────
+           PLANES IA — GENERADOR
+      ───────────────────────────── -->
+      <div class="section" id="section-planes-ia">
+
+        <div class="section-title">PLANES IA</div>
+        <div class="section-sub">GENERADOR DE PLANES PERSONALIZADOS CON INTELIGENCIA ARTIFICIAL</div>
+
+        <!-- Step 1: Select Client -->
+        <div class="card" id="piaStep1">
+          <div class="card-header">
+            <span class="card-title">1. Seleccionar Cliente</span>
+          </div>
+          <div style="padding:20px">
+            <select id="piaClientSelect" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;">
+              <option value="">-- Seleccionar cliente --</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Step 2: Client Info + Intake (hidden until client selected) -->
+        <div class="card" id="piaStep2" style="display:none;margin-top:16px">
+          <div class="card-header">
+            <span class="card-title">2. Datos del Cliente</span>
+            <span class="badge" id="piaClientPlan" style="background:rgba(227,30,36,0.15);color:#E31E24;border:1px solid rgba(227,30,36,0.3)"></span>
+          </div>
+          <div style="padding:20px">
+            <!-- Client summary -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px" id="piaClientSummary"></div>
+
+            <!-- Intake data -->
+            <div style="margin-bottom:16px">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:8px;font-weight:600">
+                <span style="color:#E31E24;font-size:8px;margin-right:4px;font-weight:700">//</span>Formulario Inicial (Intake)
+              </div>
+              <div id="piaIntakeData" style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:13px;line-height:1.8;color:rgba(255,255,255,0.7)">
+                <span style="color:var(--gray)">Sin datos de intake disponibles</span>
+              </div>
+            </div>
+
+            <!-- Existing plans status -->
+            <div id="piaExistingPlans" style="display:none;margin-bottom:16px">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:8px;font-weight:600">
+                <span style="color:#E31E24;font-size:8px;margin-right:4px;font-weight:700">//</span>Planes Asignados
+              </div>
+              <div id="piaExistingPlansList" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Configuration (hidden until client selected) -->
+        <div class="card" id="piaStep3" style="display:none;margin-top:16px">
+          <div class="card-header">
+            <span class="card-title">3. Configurar Generacion</span>
+          </div>
+          <div style="padding:20px">
+
+            <!-- Plan types checkboxes -->
+            <div style="margin-bottom:20px">
+              <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:10px;font-weight:600">Tipos de Plan a Generar</label>
+              <div style="display:flex;flex-wrap:wrap;gap:10px" id="piaPlanTypes">
+                <label class="pia-checkbox" id="piaCbEntrenamiento">
+                  <input type="checkbox" value="entrenamiento" checked>
+                  <span class="pia-cb-box"></span>
+                  Entrenamiento
+                </label>
+                <label class="pia-checkbox" id="piaCbNutricion">
+                  <input type="checkbox" value="nutricion" checked>
+                  <span class="pia-cb-box"></span>
+                  Nutricion
+                </label>
+                <label class="pia-checkbox" id="piaCbHabitos">
+                  <input type="checkbox" value="habitos">
+                  <span class="pia-cb-box"></span>
+                  Habitos
+                </label>
+                <label class="pia-checkbox" id="piaCbSuplementacion">
+                  <input type="checkbox" value="suplementacion">
+                  <span class="pia-cb-box"></span>
+                  Suplementacion
+                </label>
+              </div>
+            </div>
+
+            <!-- Methodology selector -->
+            <div style="margin-bottom:20px">
+              <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:6px;font-weight:600">Metodologia de Entrenamiento</label>
+              <select id="piaMethodology" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;">
+                <option value="">Dejar que la IA decida segun el perfil</option>
+                <optgroup label="Periodizacion">
+                  <option value="Periodización Lineal — progresión gradual de volumen e intensidad">Periodizacion Lineal</option>
+                  <option value="Periodización Ondulante Diaria (DUP) — varía intensidad y volumen cada sesión">Periodizacion Ondulante (DUP)</option>
+                  <option value="Periodización por Bloques — fases de acumulación, transmutación y realización">Periodizacion por Bloques</option>
+                  <option value="Periodización Inversa — empezar con intensidad alta y reducir gradualmente">Periodizacion Inversa</option>
+                </optgroup>
+                <optgroup label="Splits de Entrenamiento">
+                  <option value="Push/Pull/Legs (PPL) — dividir por patrones de movimiento, alta frecuencia">Push / Pull / Legs (PPL)</option>
+                  <option value="Upper/Lower Split — tren superior e inferior alternados, 4 días/semana">Upper / Lower Split</option>
+                  <option value="Full Body — cuerpo completo cada sesión, 3 días/semana, ideal principiantes">Full Body</option>
+                  <option value="Torso/Piernas — similar a upper/lower con énfasis en ejercicios compuestos">Torso / Piernas</option>
+                  <option value="Bro Split — un grupo muscular por día, 5-6 días, alto volumen por músculo">Bro Split (1 musculo/dia)</option>
+                </optgroup>
+                <optgroup label="Programas con Evidencia">
+                  <option value="5/3/1 Wendler — progresión mensual basada en porcentajes, énfasis en fuerza">5/3/1 Wendler</option>
+                  <option value="GZCL Method — tier system: T1 fuerza, T2 volumen, T3 accesorios">GZCL Method</option>
+                  <option value="Starting Strength — programa lineal de fuerza para principiantes, enfoque en básicos">Starting Strength (principiantes)</option>
+                  <option value="Juggernaut Method — olas de volumen progresivo, ideal para atletas intermedios">Juggernaut Method</option>
+                </optgroup>
+                <optgroup label="Hipertrofia Avanzada">
+                  <option value="Renaissance Periodization (RP) — volumen MEV→MRV, landmarks de volumen por grupo muscular">Renaissance Periodization (RP)</option>
+                  <option value="Hypertrophy-Specific Training (HST) — carga progresiva con descargas estratégicas, 3x/semana">HST (Hypertrophy-Specific)</option>
+                  <option value="German Volume Training (GVT) — 10x10, alto volumen para hipertrofia extrema">German Volume Training (10x10)</option>
+                  <option value="High Frequency Training — cada músculo 3-4x/semana con volumen moderado por sesión">High Frequency Training</option>
+                </optgroup>
+                <optgroup label="Tecnicas Especializadas">
+                  <option value="Autoregulación RPE/RIR — intensidad basada en esfuerzo percibido, no porcentajes fijos">Autoregulacion (RPE/RIR)</option>
+                  <option value="Cluster Sets — series con micro-descansos intra-serie para mantener calidad">Cluster Sets</option>
+                  <option value="Myo-Reps — series de activación + mini-sets para maximizar estímulo efectivo">Myo-Reps</option>
+                  <option value="Rest-Pause — series extendidas con pausas cortas, máximo reclutamiento motor">Rest-Pause Training</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <!-- Nutrition approach -->
+            <div style="margin-bottom:20px">
+              <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:6px;font-weight:600">Enfoque Nutricional</label>
+              <select id="piaNutritionApproach" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;">
+                <option value="">Dejar que la IA decida segun el perfil</option>
+                <optgroup label="Enfoques Macro-Based">
+                  <option value="Flexible Dieting (IIFYM) — macros objetivo, el cliente elige alimentos">Flexible Dieting (IIFYM)</option>
+                  <option value="Plan de comidas fijo — menú estructurado con porciones exactas">Plan de Comidas Fijo</option>
+                  <option value="Hand-Portion Method (Precision Nutrition) — porciones basadas en la mano, sin pesar">Metodo de Porciones (mano)</option>
+                </optgroup>
+                <optgroup label="Estrategias Caloricas">
+                  <option value="Deficit calórico moderado (-300 a -500 kcal) para pérdida de grasa sostenible">Deficit Moderado (perder grasa)</option>
+                  <option value="Superávit calórico controlado (+200 a +300 kcal) para ganancia muscular limpia">Superavit Controlado (ganar musculo)</option>
+                  <option value="Mantenimiento calórico con recomposición corporal (alto proteína + entrenamiento)">Recomposicion Corporal</option>
+                  <option value="Ciclado calórico — días altos y bajos según entrenamiento">Ciclado Calorico</option>
+                  <option value="Reverse Diet — aumento gradual de calorías post-dieta">Reverse Diet</option>
+                </optgroup>
+                <optgroup label="Patrones Alimentarios">
+                  <option value="Alta proteína (2g/kg+) — priorizar proteína en cada comida">Alta Proteina</option>
+                  <option value="Dieta Mediterránea — basada en plantas, aceite de oliva, pescado, legumbres">Dieta Mediterranea</option>
+                  <option value="Nutrient Timing — distribución estratégica de macros alrededor del entrenamiento">Nutrient Timing (peri-workout)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <!-- Caloric goal -->
+            <div style="margin-bottom:20px">
+              <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:6px;font-weight:600">Objetivo Calorico</label>
+              <select id="piaCaloricGoal" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;">
+                <option value="">Dejar que la IA decida</option>
+                <option value="deficit">Deficit (perder grasa)</option>
+                <option value="mantenimiento">Mantenimiento</option>
+                <option value="superavit">Superavit (ganar musculo)</option>
+                <option value="recomposicion">Recomposicion corporal</option>
+              </select>
+            </div>
+
+            <!-- Training config -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+              <div>
+                <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:6px;font-weight:600">Semanas</label>
+                <select id="piaWeeks" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;">
+                  <option value="4" selected>4 semanas</option>
+                  <option value="6">6 semanas</option>
+                  <option value="8">8 semanas</option>
+                  <option value="12">12 semanas</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:6px;font-weight:600">Sesiones/Semana</label>
+                <select id="piaSessions" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;">
+                  <option value="3">3 sesiones</option>
+                  <option value="4" selected>4 sesiones</option>
+                  <option value="5">5 sesiones</option>
+                  <option value="6">6 sesiones</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Coach notes -->
+            <div style="margin-bottom:20px">
+              <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:6px;font-weight:600">
+                Notas del Coach
+                <span style="color:rgba(255,255,255,0.3);font-weight:400;text-transform:none;letter-spacing:0"> &mdash; instrucciones especificas para la IA</span>
+              </label>
+              <textarea id="piaCoachNotes" rows="5" placeholder="Ej: Enfocarse en gluteos y pierna. Cuidar rodilla derecha, evitar sentadilla profunda. Incluir ejercicios unilaterales. Para nutricion: es intolerante a lactosa, prefiere desayuno rapido..." style="width:100%;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;resize:vertical;min-height:100px;line-height:1.6;"></textarea>
+              <div style="margin-top:6px;font-size:11px;color:var(--gray)">Estas notas se envian directamente a Claude como instrucciones obligatorias. Se mas especifico = mejor resultado.</div>
+            </div>
+
+            <!-- Generate button -->
+            <button id="piaGenerateBtn" onclick="PlanesIA.generate()" style="width:100%;padding:16px;background:#E31E24;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity 0.2s;">
+              <span id="piaGenerateBtnText">&#9733; Generar Planes con IA</span>
+              <span id="piaGenerateSpinner" style="display:none">Generando planes... puede tomar 30-60 segundos</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Results (hidden until generated) -->
+        <div class="card" id="piaStep4" style="display:none;margin-top:16px">
+          <div class="card-header">
+            <span class="card-title">4. Planes Generados</span>
+            <span class="badge" id="piaCostBadge" style="background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.3)"></span>
+          </div>
+          <div style="padding:20px">
+            <!-- Tab navigation for plan types -->
+            <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap" id="piaPlanTabs"></div>
+            <!-- Plan preview content -->
+            <div id="piaPlanPreview" style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:20px;max-height:600px;overflow-y:auto;font-size:13px;line-height:1.7"></div>
+            <!-- Approve/Reject buttons -->
+            <div style="display:flex;gap:12px;margin-top:16px">
+              <button onclick="PlanesIA.approveAll()" style="flex:1;padding:14px;background:#22C55E;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">&#10003; Aprobar y Activar Todos</button>
+              <button onclick="PlanesIA.regenerate()" style="flex:0 0 auto;padding:14px 24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;cursor:pointer;font-family:inherit;">&#8635; Regenerar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending plans queue -->
+        <div class="card" style="margin-top:16px" id="piaPendingCard">
+          <div class="card-header">
+            <span class="card-title">Planes Pendientes de Aprobacion</span>
+            <span class="badge" id="piaPendingBadge" style="background:rgba(250,204,21,0.15);color:#FACC15;border:1px solid rgba(250,204,21,0.3);display:none">0</span>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Tipo</th>
+                  <th>Generado</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="piaPendingBody">
+                <tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <!-- ─────────────────────────────
@@ -4032,5 +4319,293 @@ function submitChallenge() {
 </script>
 
 <script src="js/activity-feed.js"></script>
+
+<script>
+var PlanesIA = (function() {
+  'use strict';
+  var selectedClientId = null;
+  var generatedPlans = {};
+  var activeTab = null;
+
+  var PLAN_ACCESS = {
+    esencial:   ['entrenamiento'],
+    metodo:     ['entrenamiento', 'nutricion'],
+    elite:      ['entrenamiento', 'nutricion', 'habitos', 'suplementacion'],
+    presencial: ['entrenamiento', 'nutricion'],
+    rise:       ['entrenamiento', 'nutricion', 'habitos'],
+  };
+
+  function init() {
+    var sel = document.getElementById('piaClientSelect');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var cid = parseInt(this.value);
+      if (cid > 0) { loadClientData(cid); }
+      else {
+        document.getElementById('piaStep2').style.display = 'none';
+        document.getElementById('piaStep3').style.display = 'none';
+        document.getElementById('piaStep4').style.display = 'none';
+        selectedClientId = null;
+      }
+    });
+    populateClientSelector();
+    loadPendingQueue();
+  }
+
+  function populateClientSelector() {
+    var sel = document.getElementById('piaClientSelect');
+    if (!sel) return;
+    var clients = (typeof LIVE_CLIENTS !== 'undefined' && LIVE_CLIENTS && LIVE_CLIENTS.length) ? LIVE_CLIENTS : [];
+    while (sel.options.length > 1) sel.remove(1);
+    clients.forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name + ' \u2014 ' + (c.plan || '?').toUpperCase() + ' (' + c.email + ')';
+      sel.appendChild(opt);
+    });
+  }
+
+  function loadClientData(clientId) {
+    selectedClientId = clientId;
+    document.getElementById('piaStep2').style.display = '';
+    document.getElementById('piaStep3').style.display = '';
+    document.getElementById('piaStep4').style.display = 'none';
+    generatedPlans = {};
+    apiFetch('/admin/client-intake?client_id=' + clientId)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.error) { showToast('Error: ' + d.error, 'error'); return; }
+        renderClientData(d);
+        configureCheckboxes(d.client.plan);
+      })
+      .catch(function() { showToast('Error cargando datos del cliente', 'error'); });
+  }
+
+  function renderClientData(data) {
+    var c = data.client, p = data.profile, intake = data.intake, plans = data.assigned_plans;
+    document.getElementById('piaClientPlan').textContent = (c.plan || '?').toUpperCase();
+
+    var summary = document.getElementById('piaClientSummary');
+    summary.textContent = '';
+    var fields = [['Nombre', c.name], ['Email', c.email], ['Plan', (c.plan||'?').toUpperCase()],
+      ['Codigo', c.client_code], ['Inicio', c.fecha_inicio||'N/A'], ['Estado', c.status||'activo']];
+    if (p.edad) fields.push(['Edad', p.edad + ' anos']);
+    if (p.peso) fields.push(['Peso', p.peso + ' kg']);
+    if (p.altura) fields.push(['Talla', p.altura + ' cm']);
+    if (p.objetivo) fields.push(['Objetivo', p.objetivo]);
+    fields.forEach(function(f) {
+      var div = document.createElement('div');
+      var lbl = document.createElement('div');
+      lbl.style.cssText = 'font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray);margin-bottom:2px';
+      lbl.textContent = f[0];
+      var val = document.createElement('div');
+      val.style.cssText = 'font-size:13px;color:var(--text)';
+      val.textContent = f[1] || 'N/A';
+      div.appendChild(lbl); div.appendChild(val); summary.appendChild(div);
+    });
+
+    var intakeEl = document.getElementById('piaIntakeData');
+    intakeEl.textContent = '';
+    if (intake && typeof intake === 'object' && Object.keys(intake).length > 0) {
+      var labels = {genero:'Genero',edad:'Edad',peso:'Peso (kg)',talla:'Talla (cm)',objetivo:'Objetivo',experiencia:'Experiencia',
+        dias_entrenamiento:'Dias/semana',equipamiento:'Equipamiento',inicio_semana:'Inicio semana',horario:'Horario',
+        duracion_sesion:'Duracion sesion',rutina_actual:'Rutina actual',tiene_lesion:'Lesion',lesion_detalle:'Detalle lesion',
+        num_comidas:'Comidas/dia',dieta_actual:'Tipo dieta',dia_tipico:'Dia tipico',agua:'Agua',alergias:'Alergias',
+        alimentos_no:'No come',suplementos_actuales:'Suplementos',come_fuera:'Come fuera',horario_trabajo:'Trabajo',
+        sueno:'Sueno',estres:'Estres',expectativas:'Expectativas',notas:'Notas',updated_at:'Actualizado'};
+      for (var key in intake) {
+        if (!intake.hasOwnProperty(key)) continue;
+        var v = intake[key];
+        if (v === null || v === '' || typeof v === 'object') continue;
+        var row = document.createElement('div'); row.className = 'pia-intake-row';
+        var ls = document.createElement('span'); ls.className = 'pia-intake-label'; ls.textContent = (labels[key]||key)+':';
+        var vs = document.createElement('span'); vs.className = 'pia-intake-value'; vs.textContent = String(v);
+        row.appendChild(ls); row.appendChild(vs); intakeEl.appendChild(row);
+      }
+    } else {
+      var nd = document.createElement('span'); nd.style.color = 'var(--gray)';
+      nd.textContent = 'Este cliente no ha completado el formulario inicial.'; intakeEl.appendChild(nd);
+    }
+
+    var plansEl = document.getElementById('piaExistingPlans');
+    var plansListEl = document.getElementById('piaExistingPlansList');
+    plansListEl.textContent = '';
+    if (plans && Object.keys(plans).length > 0) {
+      plansEl.style.display = '';
+      for (var pt in plans) {
+        var info = plans[pt];
+        var badge = document.createElement('span');
+        badge.className = 'badge ' + (info.active ? 'badge-green' : 'badge-yellow');
+        badge.textContent = pt.toUpperCase() + ' v' + info.version + (info.active ? ' (activo)' : ' (pendiente)');
+        plansListEl.appendChild(badge);
+      }
+    } else { plansEl.style.display = 'none'; }
+  }
+
+  function configureCheckboxes(clientPlan) {
+    var allowed = PLAN_ACCESS[clientPlan] || ['entrenamiento'];
+    ['entrenamiento','nutricion','habitos','suplementacion'].forEach(function(type) {
+      var cbLabel = document.getElementById('piaCb' + type.charAt(0).toUpperCase() + type.slice(1));
+      if (!cbLabel) return;
+      var input = cbLabel.querySelector('input');
+      input.disabled = allowed.indexOf(type) < 0;
+      input.checked = allowed.indexOf(type) >= 0;
+    });
+  }
+
+  function generate() {
+    if (!selectedClientId) { showToast('Selecciona un cliente', 'error'); return; }
+    var planTypes = [];
+    document.querySelectorAll('#piaPlanTypes input:checked').forEach(function(cb) { planTypes.push(cb.value); });
+    if (!planTypes.length) { showToast('Selecciona al menos un tipo de plan', 'error'); return; }
+
+    var btn = document.getElementById('piaGenerateBtn');
+    var btnText = document.getElementById('piaGenerateBtnText');
+    var spinner = document.getElementById('piaGenerateSpinner');
+    btn.disabled = true; btnText.style.display = 'none'; spinner.style.display = ''; btn.style.opacity = '0.6';
+
+    apiFetch('/admin/generate-plans', {
+      method: 'POST',
+      body: JSON.stringify({
+        client_id: selectedClientId, plan_types: planTypes,
+        coach_notes: document.getElementById('piaCoachNotes').value.trim(),
+        methodology: document.getElementById('piaMethodology').value,
+        training_config: { weeks: parseInt(document.getElementById('piaWeeks').value)||4, sessions_per_week: parseInt(document.getElementById('piaSessions').value)||4 },
+        nutrition_config: { approach: document.getElementById('piaNutritionApproach').value, caloric_goal: document.getElementById('piaCaloricGoal').value }
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      btn.disabled = false; btnText.style.display = ''; spinner.style.display = 'none'; btn.style.opacity = '';
+      if (d.error) { showToast('Error: ' + d.error, 'error'); return; }
+      generatedPlans = d.plans || {};
+      renderResults(d);
+      loadPendingQueue();
+    })
+    .catch(function() {
+      btn.disabled = false; btnText.style.display = ''; spinner.style.display = 'none'; btn.style.opacity = '';
+      showToast('Error de conexion al generar planes', 'error');
+    });
+  }
+
+  function renderResults(data) {
+    document.getElementById('piaStep4').style.display = '';
+    var cost = data.estimated_cost_usd || 0;
+    document.getElementById('piaCostBadge').textContent = '$' + cost.toFixed(4) + ' USD | ' + (data.input_tokens||0) + ' in / ' + (data.output_tokens||0) + ' out';
+
+    var tabsEl = document.getElementById('piaPlanTabs');
+    tabsEl.textContent = '';
+    var types = Object.keys(generatedPlans);
+    activeTab = null;
+    types.forEach(function(type, i) {
+      var plan = generatedPlans[type];
+      var tab = document.createElement('button');
+      tab.className = 'pia-tab' + (plan.generated ? '' : ' error') + (i === 0 ? ' active' : '');
+      tab.textContent = type.charAt(0).toUpperCase() + type.slice(1) + (plan.generated ? '' : ' (error)');
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.pia-tab').forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active'); showPlanPreview(type);
+      });
+      tabsEl.appendChild(tab);
+      if (i === 0) activeTab = type;
+    });
+    if (activeTab) showPlanPreview(activeTab);
+  }
+
+  function showPlanPreview(type) {
+    activeTab = type;
+    var el = document.getElementById('piaPlanPreview');
+    el.textContent = '';
+    var plan = generatedPlans[type];
+    if (!plan || !plan.generated) {
+      var errDiv = document.createElement('div');
+      errDiv.style.cssText = 'text-align:center;padding:40px;color:#EF4444';
+      errDiv.textContent = 'Error: ' + (plan ? plan.error : 'No disponible');
+      el.appendChild(errDiv); return;
+    }
+    var preview = plan.preview;
+    var titleDiv = document.createElement('div');
+    titleDiv.style.cssText = 'margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)';
+    var titleH = document.createElement('div');
+    titleH.style.cssText = 'font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px';
+    titleH.textContent = preview.title || type.toUpperCase();
+    titleDiv.appendChild(titleH);
+    if (preview.methodology) {
+      var m = document.createElement('div'); m.style.cssText = 'font-size:12px;color:var(--gray)';
+      m.textContent = 'Metodologia: ' + preview.methodology; titleDiv.appendChild(m);
+    }
+    el.appendChild(titleDiv);
+    var pre = document.createElement('pre');
+    pre.style.cssText = 'white-space:pre-wrap;font-size:12px;color:var(--gray);max-height:500px;overflow:auto;background:rgba(0,0,0,0.2);padding:16px;border-radius:8px';
+    pre.textContent = JSON.stringify(preview, null, 2);
+    el.appendChild(pre);
+  }
+
+  function approveAll() {
+    var toApprove = Object.keys(generatedPlans).filter(function(t) { return generatedPlans[t].generated && generatedPlans[t].plan_id; });
+    if (!toApprove.length) { showToast('No hay planes para aprobar', 'error'); return; }
+    var done = 0, total = toApprove.length;
+    toApprove.forEach(function(type) {
+      apiFetch('/ai/render-plan', { method: 'POST', body: JSON.stringify({ plan_id: generatedPlans[type].plan_id }) })
+        .then(function(r) { return r.json(); })
+        .then(function(d) { done++; showToast(d.rendered ? type + ' aprobado' : 'Error ' + type, d.rendered ? undefined : 'error'); if (done >= total) loadPendingQueue(); })
+        .catch(function() { done++; });
+    });
+  }
+
+  function regenerate() { document.getElementById('piaStep4').style.display = 'none'; generate(); }
+
+  function loadPendingQueue() {
+    apiFetch('/admin/ai-generations?status=completed&limit=20')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var items = d.generations || d.data || [];
+        renderPendingQueue(items);
+        var badge = document.getElementById('planesIaBadge');
+        if (items.length > 0) { badge.style.display = ''; badge.textContent = items.length; } else { badge.style.display = 'none'; }
+      }).catch(function() {});
+  }
+
+  function renderPendingQueue(items) {
+    var tbody = document.getElementById('piaPendingBody');
+    tbody.textContent = '';
+    if (!items || !items.length) {
+      var tr = document.createElement('tr'); var td = document.createElement('td');
+      td.colSpan = 5; td.style.cssText = 'text-align:center;color:var(--gray);padding:24px';
+      td.textContent = 'Sin planes pendientes'; tr.appendChild(td); tbody.appendChild(tr); return;
+    }
+    items.forEach(function(g) {
+      var tr = document.createElement('tr');
+      var tdN = document.createElement('td'); tdN.textContent = g.client_name || 'ID ' + g.client_id;
+      var tdT = document.createElement('td'); var tb = document.createElement('span');
+      tb.className = 'badge'; tb.style.cssText = 'background:rgba(227,30,36,0.1);color:#E31E24;border:1px solid rgba(227,30,36,0.2)';
+      tb.textContent = (g.type||'?').toUpperCase(); tdT.appendChild(tb);
+      var tdD = document.createElement('td'); tdD.style.cssText = 'font-size:12px;color:var(--gray)'; tdD.textContent = g.created_at||'';
+      var tdS = document.createElement('td'); var sb = document.createElement('span');
+      sb.className = 'badge badge-yellow'; sb.textContent = g.status||'pending'; tdS.appendChild(sb);
+      var tdA = document.createElement('td'); var aBtn = document.createElement('button');
+      aBtn.className = 'btn btn-sm'; aBtn.style.cssText = 'background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E';
+      aBtn.textContent = 'Aprobar';
+      (function(pid) { aBtn.addEventListener('click', function() {
+        if (!pid) return;
+        apiFetch('/ai/render-plan', { method:'POST', body:JSON.stringify({plan_id:pid}) })
+          .then(function(r){return r.json();}).then(function(d){ showToast(d.rendered?'Aprobado':'Error',d.rendered?undefined:'error'); loadPendingQueue(); });
+      }); })(g.plan_id);
+      tdA.appendChild(aBtn);
+      [tdN,tdT,tdD,tdS,tdA].forEach(function(td){tr.appendChild(td);});
+      tbody.appendChild(tr);
+    });
+  }
+
+  return { init:init, generate:generate, approveAll:approveAll, regenerate:regenerate, loadPendingQueue:loadPendingQueue, populateClientSelector:populateClientSelector };
+})();
+
+(function() {
+  var orig = window.renderClientes;
+  if (typeof orig === 'function') { window.renderClientes = function(c) { orig(c); PlanesIA.populateClientSelector(); }; }
+  setTimeout(function() { PlanesIA.init(); }, 1000);
+})();
+</script>
+
 </body>
 </html>
