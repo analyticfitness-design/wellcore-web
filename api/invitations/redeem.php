@@ -138,9 +138,13 @@ try {
         err('Ya existe una cuenta con este email', 409);
     }
 
-    // Generate client code (race-safe: uses MAX numeric extraction)
-    $maxNum = $db->query("SELECT COALESCE(MAX(CAST(SUBSTRING(client_code, 5) AS UNSIGNED)), 0) FROM clients")->fetchColumn();
-    $clientCode = 'cli-' . str_pad((int)$maxNum + 1, 4, '0', STR_PAD_LEFT);
+    // Generate client code: WC-{PLAN}-{NNN} pattern (matches existing codes)
+    $planUpper = strtoupper($plan);
+    $prefix = "WC-{$planUpper}-";
+    $stmt2 = $db->prepare("SELECT COUNT(*) FROM clients WHERE client_code LIKE ?");
+    $stmt2->execute([$prefix . '%']);
+    $count = (int) $stmt2->fetchColumn();
+    $clientCode = $prefix . str_pad($count + 1, 3, '0', STR_PAD_LEFT);
 
     $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
 
@@ -192,7 +196,5 @@ try {
 } catch (PDOException $e) {
     if ($db->inTransaction()) $db->rollBack();
     error_log('[WellCore] redeem error: ' . $e->getMessage());
-    // Include detail in dev mode for debugging
-    $detail = $e->getMessage();
-    err('Error al crear cuenta: ' . $detail, 500);
+    err('Error al crear cuenta. Intenta de nuevo o contacta soporte.', 500);
 }
