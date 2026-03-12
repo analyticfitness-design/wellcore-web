@@ -177,6 +177,16 @@
   outline: none;
 }
 
+.activity-feed__filter select option {
+  background: #1a1a1e;
+  color: #EEEEF0;
+}
+
+.activity-feed__range select option {
+  background: #1a1a1e;
+  color: #EEEEF0;
+}
+
 /* Events List */
 .activity-feed__list {
   flex: 1;
