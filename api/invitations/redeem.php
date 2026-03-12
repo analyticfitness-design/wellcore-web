@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 /**
  * WellCore Fitness — Redeem Invitation Code (Public)
  * POST /api/invitations/redeem.php
@@ -40,21 +42,16 @@ function err(string $msg, int $code = 400): void {
 }
 
 // --- Rate limiting (5 req/hour per IP) ---
-$dataDir = __DIR__ . '/../data';
-$rateLimitFile = $dataDir . '/invite-redeem-rate-limit.json';
+$rateLimitFile = sys_get_temp_dir() . '/wc_invite_redeem_rate.json';
 $clientIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 $ipHash = hash('sha256', $clientIp);
 $now = time();
 $window = 3600;
 $maxReq = 5;
 
-if (!is_dir($dataDir)) {
-    mkdir($dataDir, 0755, true);
-}
-
 $rateData = [];
 if (file_exists($rateLimitFile)) {
-    $rateData = json_decode(file_get_contents($rateLimitFile), true) ?: [];
+    $rateData = json_decode(@file_get_contents($rateLimitFile), true) ?: [];
 }
 
 foreach ($rateData as $hash => $entry) {
@@ -73,7 +70,7 @@ if (isset($rateData[$ipHash])) {
     $rateData[$ipHash] = ['count' => 1, 'first_request' => $now];
 }
 
-file_put_contents($rateLimitFile, json_encode($rateData, JSON_PRETTY_PRINT), LOCK_EX);
+@file_put_contents($rateLimitFile, json_encode($rateData, JSON_PRETTY_PRINT), LOCK_EX);
 
 // --- Parse body ---
 $raw = file_get_contents('php://input');
