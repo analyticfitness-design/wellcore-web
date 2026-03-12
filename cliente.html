@@ -5049,7 +5049,10 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
       localStorage.setItem('wc_client_id', clientId);
       localStorage.setItem('wc_client_email', clientEmail);
       document.body.style.visibility = 'visible';
-      try { if (typeof init === 'function') init(); } catch(e) { console.error('[WC init]', e); }
+      var _initOk = false;
+      try { if (typeof init === 'function') { init(); _initOk = true; } } catch(e) { console.error('[WC init]', e); }
+      // Ensure dashboard KPIs load even if init() partially fails
+      if (!_initOk) { try { loadProfileForm(); loadActivityFeed(); } catch(e2) { console.error('[WC fallback]', e2); } }
       // v8: iniciar notificaciones después de auth
       if (typeof V8 !== 'undefined') { V8.Notifications.init('clientNotifBell', 'clientNotifPanel'); }
     })
@@ -8303,6 +8306,7 @@ const FILES = [
 
 function renderBiblioteca() {
   var grid = document.getElementById('files-grid');
+  if (!grid) return;
   var planLevel = PLAN_LEVEL[clientPlan] || 1;
   var planLevelMap = { esencial: 1, metodo: 2, elite: 3 };
   var planLabels  = { esencial: 'ESENCIAL', metodo: 'MÉTODO', elite: 'ELITE' };
