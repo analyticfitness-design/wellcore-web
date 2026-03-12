@@ -75,12 +75,45 @@
   border-bottom: 1px solid rgba(42, 42, 47, 0.4);
 }
 
+.activity-feed__count-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
 .activity-feed__count {
   font-size: 12px;
   color: #8b8b96;
-  margin-bottom: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.activity-feed__today-badge {
+  display: inline-block;
+  background: rgba(34, 197, 94, 0.15);
+  color: #22C55E;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+.activity-feed__range select {
+  background: rgba(42, 42, 47, 0.5);
+  border: 1px solid rgba(42, 42, 47, 0.6);
+  color: #EEEEF0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.activity-feed__range select:focus {
+  border-color: #E31E24;
+  outline: none;
 }
 
 .activity-feed__count-number {
@@ -91,8 +124,8 @@
 
 .activity-feed__breakdown {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
 }
 
 .activity-feed__chip {
@@ -258,21 +291,90 @@
   color: #F5C842;
 }
 
-.activity-feed__avatar--academy {
-  background: rgba(6, 182, 212, 0.2);
-  border: 1px solid rgba(6, 182, 212, 0.4);
-  color: #06B6D4;
-}
-
 .activity-feed__avatar--message {
   background: rgba(227, 30, 36, 0.2);
   border: 1px solid rgba(227, 30, 36, 0.4);
   color: #E31E24;
 }
 
+.activity-feed__avatar--training {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #A855F7;
+}
+
+.activity-feed__avatar--weight {
+  background: rgba(251, 146, 60, 0.2);
+  border: 1px solid rgba(251, 146, 60, 0.4);
+  color: #FB923C;
+}
+
+.activity-feed__avatar--xp {
+  background: rgba(250, 204, 21, 0.2);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  color: #FACC15;
+}
+
+.activity-feed__avatar--habit {
+  background: rgba(20, 184, 166, 0.2);
+  border: 1px solid rgba(20, 184, 166, 0.4);
+  color: #14B8A6;
+}
+
+.activity-feed__avatar--photo {
+  background: rgba(236, 72, 153, 0.2);
+  border: 1px solid rgba(236, 72, 153, 0.4);
+  color: #EC4899;
+}
+
+.activity-feed__avatar--community {
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  color: #6366F1;
+}
+
 .activity-feed__client-info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Plan badges */
+.activity-feed__plan-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.activity-feed__plan-badge--esencial {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60A5FA;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.activity-feed__plan-badge--metodo {
+  background: rgba(168, 85, 247, 0.15);
+  color: #C084FC;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.activity-feed__plan-badge--elite {
+  background: rgba(250, 204, 21, 0.15);
+  color: #FDE047;
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.activity-feed__plan-badge--rise {
+  background: rgba(227, 30, 36, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(227, 30, 36, 0.3);
 }
 
 .activity-feed__client-name {
@@ -345,6 +447,23 @@
     width: calc(100vw - 40px);
     max-height: 50vh;
   }
+}
+
+/* Day headers */
+.activity-feed__day-header {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8b8b96;
+  padding: 10px 4px 6px;
+  margin-top: 4px;
+  border-bottom: 1px solid rgba(42, 42, 47, 0.4);
+}
+
+.activity-feed__day-header:first-child {
+  margin-top: 0;
+  padding-top: 4px;
 }
 
 /* Empty state */
