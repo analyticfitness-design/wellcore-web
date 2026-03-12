@@ -233,6 +233,7 @@
     var hasGSAP = typeof window.gsap !== 'undefined';
 
     document.addEventListener('mousemove', function (e) {
+      if (!e.target || !e.target.closest) return;
       var btn = e.target.closest(selector);
       if (!btn) return;
 
@@ -249,6 +250,7 @@
     });
 
     document.addEventListener('mouseleave', function (e) {
+      if (!e.target || !e.target.closest) return;
       var btn = e.target.closest(selector);
       if (!btn) return;
 
@@ -262,6 +264,7 @@
 
     /* Fallback: also listen on mouseout for individual buttons */
     document.addEventListener('mouseout', function (e) {
+      if (!e.target || !e.target.closest) return;
       var btn = e.target.closest(selector);
       if (!btn) return;
       /* Only reset if mouse actually left the button */

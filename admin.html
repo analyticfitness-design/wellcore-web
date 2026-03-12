@@ -4172,7 +4172,7 @@ var V8AdminNotifPanel = {
   _loadList: function() {
     var token = localStorage.getItem('wc_admin_token') || localStorage.getItem('wc_token');
     if (!token) return;
-    fetch('/api/notifications/list', { headers: { 'Authorization': 'Bearer ' + token } })
+    fetch('/api/notifications/list.php', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var list = document.getElementById('adminNotifList');
@@ -4218,7 +4218,7 @@ var V8AdminNotifPanel = {
 window.addEventListener('load', function() {
   var token = localStorage.getItem('wc_admin_token') || localStorage.getItem('wc_token');
   if (!token) return;
-  fetch('/api/notifications/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  fetch('/api/notifications/list.php', { headers: { 'Authorization': 'Bearer ' + token } })
   .then(function(r) { return r.json(); })
   .then(function(d) {
     var badge = document.getElementById('adminNotifBadge');

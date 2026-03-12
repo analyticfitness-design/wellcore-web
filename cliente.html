@@ -8141,7 +8141,7 @@ function prSaveModal(id) {
   apiFetch('/prs', { method: 'POST', body: JSON.stringify({ exercise_id: id, value: val }) })
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function() {
-      apiFetch('/community/check-achievements', { method: 'POST', body: JSON.stringify({ trigger: 'pr' }) })
+      apiFetch('/community/check-achievements.php', { method: 'POST', body: JSON.stringify({ trigger: 'pr' }) })
         .then(function(r2) { return r2.ok ? r2.json() : null; })
         .then(function(ach) {
           if (ach && ach.awarded && ach.awarded.length > 0 && typeof V6 !== 'undefined' && V6.toast) {

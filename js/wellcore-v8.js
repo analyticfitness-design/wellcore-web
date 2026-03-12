@@ -55,7 +55,7 @@ V8.Notifications = {
     var self = this;
     var token = self._getToken();
     if (!token) return;
-    fetch('/api/notifications/list', { headers: { 'Authorization': 'Bearer ' + token } })
+    fetch('/api/notifications/list.php', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       self._unread = data.unread_count || 0;
@@ -582,7 +582,7 @@ V8.AdminNotifications = {
     var self = this;
     var token = self._getToken();
     if (!token) return;
-    fetch('/api/notifications/list', { headers: { 'Authorization': 'Bearer ' + token } })
+    fetch('/api/notifications/list.php', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       self._unread = data.unread_count || 0;
