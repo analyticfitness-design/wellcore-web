@@ -65,6 +65,9 @@ $allowed = [
     'dieta_actual', 'alergias', 'num_comidas', 'exp_macros', 'alimentos_no',
     'horario_trabajo', 'come_fuera', 'estres', 'sueno',
     'como_conocio', 'expectativas', 'genero', 'objetivo',
+    // Presencial intake fields
+    'edad', 'peso', 'talla', 'inicio_semana', 'dia_tipico', 'agua',
+    'suplementos_actuales', 'notas',
     // RISE-specific fields
     'measurements', 'training', 'availability', 'nutrition', 'lifestyle', 'motivation',
 ];
