@@ -176,7 +176,7 @@ $reference = $orderId;
 // -------------------------------------------------------
 // WOMPI: MONTO EN CENTAVOS
 // COP ya viene en pesos enteros, Wompi necesita centavos
-// $399.000 COP = 39.900.000 centavos
+// Ej: $299.000 COP = 29.900.000 centavos
 // -------------------------------------------------------
 $amountInCents = $total * 100;
 

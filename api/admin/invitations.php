@@ -78,9 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $note = trim($body['note'] ?? '');
     $expiresDays = (int)($body['expires_days'] ?? 30);
 
-    $validPlans = ['esencial', 'metodo', 'elite'];
+    $validPlans = ['esencial', 'metodo', 'elite', 'presencial'];
     if (!in_array($plan, $validPlans, true)) {
-        respondError('Plan debe ser: esencial, metodo o elite', 422);
+        respondError('Plan debe ser: esencial, metodo, elite o presencial', 422);
     }
 
     if ($expiresDays < 1 || $expiresDays > 365) {

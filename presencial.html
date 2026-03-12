@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Registro Presencial — WellCore Fitness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;
+  --surface:#111113;
+  --surface-2:#1a1a1e;
+  --red:#E31E24;
+  --orange:#F97316;
+  --orange-dim:rgba(249,115,22,0.12);
+  --orange-border:rgba(249,115,22,0.30);
+  --border:rgba(255,255,255,0.07);
+  --gray:rgba(255,255,255,0.48);
+  --white:#f2f2f4;
+  --green:#22C55E;
+  --radius:12px;
+  --radius-sm:8px;
+  --transition:0.2s ease;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px 16px;
+  line-height:1.5;
+}
+.container{
+  width:100%;
+  max-width:460px;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:32px;
+}
+.logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;
+  letter-spacing:0.08em;
+  color:var(--white);
+  margin-bottom:4px;
+}
+.logo span{
+  color:var(--red);
+}
+.badge{
+  display:inline-block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:0.95rem;
+  letter-spacing:0.12em;
+  color:var(--orange);
+  background:var(--orange-dim);
+  border:1px solid var(--orange-border);
+  padding:4px 16px;
+  border-radius:20px;
+  margin-top:8px;
+}
+.description{
+  margin-top:16px;
+  color:var(--gray);
+  font-size:0.9rem;
+  line-height:1.6;
+}
+
+/* Card */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:32px 28px;
+}
+
+/* Form */
+.field{
+  margin-bottom:20px;
+}
+.field:last-of-type{
+  margin-bottom:24px;
+}
+label{
+  display:block;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:rgba(255,255,255,0.6);
+  margin-bottom:6px;
+}
+label .optional{
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  color:rgba(255,255,255,0.3);
+  font-size:0.75rem;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"]{
+  width:100%;
+  padding:12px 14px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  font-size:0.95rem;
+  outline:none;
+  transition:border-color var(--transition);
+}
+input:focus{
+  border-color:var(--orange);
+}
+input.error{
+  border-color:var(--red);
+}
+.field-error{
+  color:var(--red);
+  font-size:0.78rem;
+  margin-top:4px;
+  min-height:0;
+  display:none;
+}
+.field-error.visible{
+  display:block;
+}
+
+/* Button */
+.btn{
+  width:100%;
+  padding:14px;
+  background:var(--orange);
+  color:#fff;
+  font-family:'Inter',sans-serif;
+  font-size:0.95rem;
+  font-weight:600;
+  border:none;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  transition:background var(--transition), opacity var(--transition);
+  position:relative;
+}
+.btn:hover{
+  background:#ea6c0e;
+}
+.btn:disabled{
+  opacity:0.6;
+  cursor:not-allowed;
+}
+.btn .spinner{
+  display:none;
+  width:18px;
+  height:18px;
+  border:2px solid rgba(255,255,255,0.3);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:spin 0.6s linear infinite;
+  margin:0 auto;
+}
+.btn.loading .btn-text{
+  visibility:hidden;
+}
+.btn.loading .spinner{
+  display:block;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Messages */
+.msg-box{
+  text-align:center;
+  padding:40px 28px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+}
+.msg-box.error-box{
+  border-color:rgba(227,30,36,0.25);
+}
+.msg-box.success-box{
+  border-color:rgba(34,197,94,0.25);
+}
+.msg-icon{
+  font-size:2.4rem;
+  margin-bottom:12px;
+}
+.msg-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;
+  letter-spacing:0.04em;
+  margin-bottom:8px;
+}
+.msg-text{
+  color:var(--gray);
+  font-size:0.88rem;
+  line-height:1.5;
+}
+.api-error{
+  background:rgba(227,30,36,0.08);
+  border:1px solid rgba(227,30,36,0.2);
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  color:var(--red);
+  font-size:0.85rem;
+  margin-bottom:20px;
+  display:none;
+}
+.api-error.visible{
+  display:block;
+}
+
+/* Footer */
+.footer{
+  margin-top:32px;
+  text-align:center;
+  color:rgba(255,255,255,0.25);
+  font-size:0.75rem;
+}
+
+/* Responsive */
+@media(max-width:480px){
+  .card{padding:24px 20px}
+  .logo{font-size:1.7rem}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="logo">WELLCORE <span>FITNESS</span></div>
+    <div class="badge">PLAN PRESENCIAL</div>
+    <p class="description">Bienvenido al programa presencial de WellCore Fitness. Completa tu registro para acceder a tu portal de seguimiento.</p>
+  </div>
+
+  <!-- State: no code -->
+  <div id="state-nocode" class="msg-box error-box" style="display:none">
+    <div class="msg-icon">&#128274;</div>
+    <div class="msg-title">Invitaci&oacute;n requerida</div>
+    <p class="msg-text">Necesitas una invitaci&oacute;n v&aacute;lida para acceder</p>
+  </div>
+
+  <!-- State: invalid code format -->
+  <div id="state-invalid" class="msg-box error-box" style="display:none">
+    <div class="msg-icon">&#10060;</div>
+    <div class="msg-title">C&oacute;digo inv&aacute;lido</div>
+    <p class="msg-text">El c&oacute;digo de invitaci&oacute;n no tiene un formato v&aacute;lido.</p>
+  </div>
+
+  <!-- State: validating -->
+  <div id="state-validating" class="msg-box" style="display:none">
+    <div class="msg-icon">&#9203;</div>
+    <div class="msg-title">Verificando invitaci&oacute;n...</div>
+    <p class="msg-text">Un momento por favor.</p>
+  </div>
+
+  <!-- State: validation error -->
+  <div id="state-validate-error" class="msg-box error-box" style="display:none">
+    <div class="msg-icon">&#10060;</div>
+    <div class="msg-title">Invitaci&oacute;n no v&aacute;lida</div>
+    <p id="validate-error-text" class="msg-text"></p>
+  </div>
+
+  <!-- State: success -->
+  <div id="state-success" class="msg-box success-box" style="display:none">
+    <div class="msg-icon">&#9989;</div>
+    <div class="msg-title">Registro exitoso</div>
+    <p class="msg-text">Tu cuenta ha sido creada. Redirigiendo a tu portal...</p>
+  </div>
+
+  <!-- State: form -->
+  <div id="state-form" style="display:none">
+    <div class="card">
+      <div id="api-error" class="api-error"></div>
+
+      <form id="register-form" novalidate>
+        <div class="field">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+          <div class="field-error" id="error-nombre"></div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+          <div class="field-error" id="error-email"></div>
+        </div>
+
+        <div class="field">
+          <label for="password">Contrase&ntilde;a</label>
+          <input type="password" id="password" name="password" autocomplete="new-password" required>
+          <div class="field-error" id="error-password"></div>
+        </div>
+
+        <div class="field">
+          <label for="password2">Confirmar contrase&ntilde;a</label>
+          <input type="password" id="password2" name="password2" autocomplete="new-password" required>
+          <div class="field-error" id="error-password2"></div>
+        </div>
+
+        <div class="field">
+          <label for="telefono">Tel&eacute;fono <span class="optional">(opcional)</span></label>
+          <input type="tel" id="telefono" name="telefono" autocomplete="tel">
+          <div class="field-error" id="error-telefono"></div>
+        </div>
+
+        <button type="submit" class="btn" id="submit-btn">
+          <span class="btn-text">Crear mi cuenta</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer">&copy; 2026 WellCore Fitness. Todos los derechos reservados.</div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // --- Elements ---
+  var stateNocode = document.getElementById('state-nocode');
+  var stateInvalid = document.getElementById('state-invalid');
+  var stateValidating = document.getElementById('state-validating');
+  var stateValidateError = document.getElementById('state-validate-error');
+  var validateErrorText = document.getElementById('validate-error-text');
+  var stateSuccess = document.getElementById('state-success');
+  var stateForm = document.getElementById('state-form');
+  var form = document.getElementById('register-form');
+  var apiError = document.getElementById('api-error');
+  var submitBtn = document.getElementById('submit-btn');
+
+  var CODE_REGEX = /^[0-9a-f]{32}$/i;
+  var invitationCode = '';
+
+  // --- Helpers ---
+  function show(el) { el.style.display = ''; }
+  function hide(el) { el.style.display = 'none'; }
+
+  function showFieldError(fieldId, msg) {
+    var el = document.getElementById('error-' + fieldId);
+    var input = document.getElementById(fieldId);
+    if (el) {
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+    if (input) input.classList.add('error');
+  }
+
+  function clearFieldError(fieldId) {
+    var el = document.getElementById('error-' + fieldId);
+    var input = document.getElementById(fieldId);
+    if (el) {
+      el.textContent = '';
+      el.classList.remove('visible');
+    }
+    if (input) input.classList.remove('error');
+  }
+
+  function clearAllErrors() {
+    var fields = ['nombre', 'email', 'password', 'password2', 'telefono'];
+    for (var i = 0; i < fields.length; i++) {
+      clearFieldError(fields[i]);
+    }
+    apiError.textContent = '';
+    apiError.classList.remove('visible');
+  }
+
+  function setLoading(loading) {
+    if (loading) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('loading');
+    }
+  }
+
+  function showApiError(msg) {
+    apiError.textContent = msg;
+    apiError.classList.add('visible');
+  }
+
+  // --- Init: read code from URL ---
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get('code');
+
+  if (!code || code.trim() === '') {
+    show(stateNocode);
+    return;
+  }
+
+  code = code.trim();
+
+  if (!CODE_REGEX.test(code)) {
+    show(stateInvalid);
+    return;
+  }
+
+  invitationCode = code;
+
+  // --- Validate code with API ---
+  show(stateValidating);
+
+  fetch('/api/invitations/validate.php?code=' + encodeURIComponent(invitationCode))
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      hide(stateValidating);
+
+      if (!data.valid) {
+        var errorMsg = data.error || 'Esta invitaci\u00f3n no es v\u00e1lida o ya ha sido utilizada.';
+        validateErrorText.textContent = errorMsg;
+        show(stateValidateError);
+        return;
+      }
+
+      if (data.plan && data.plan !== 'presencial') {
+        validateErrorText.textContent = 'Esta invitaci\u00f3n no es para el plan presencial';
+        show(stateValidateError);
+        return;
+      }
+
+      // Code is valid - show form
+      show(stateForm);
+    })
+    .catch(function() {
+      hide(stateValidating);
+      validateErrorText.textContent = 'Error al verificar la invitaci\u00f3n. Int\u00e9ntalo de nuevo m\u00e1s tarde.';
+      show(stateValidateError);
+    });
+
+  // --- Clear individual field errors on input ---
+  var inputFields = ['nombre', 'email', 'password', 'password2', 'telefono'];
+  for (var i = 0; i < inputFields.length; i++) {
+    (function(fieldId) {
+      var input = document.getElementById(fieldId);
+      if (input) {
+        input.addEventListener('input', function() {
+          clearFieldError(fieldId);
+        });
+      }
+    })(inputFields[i]);
+  }
+
+  // --- Form submit ---
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    clearAllErrors();
+
+    var nombre = document.getElementById('nombre').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var password = document.getElementById('password').value;
+    var password2 = document.getElementById('password2').value;
+    var telefono = document.getElementById('telefono').value.trim();
+
+    var hasError = false;
+
+    if (!nombre) {
+      showFieldError('nombre', 'El nombre es obligatorio');
+      hasError = true;
+    }
+
+    if (!email) {
+      showFieldError('email', 'El email es obligatorio');
+      hasError = true;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFieldError('email', 'Ingresa un email v\u00e1lido');
+      hasError = true;
+    }
+
+    if (!password) {
+      showFieldError('password', 'La contrase\u00f1a es obligatoria');
+      hasError = true;
+    } else if (password.length < 6) {
+      showFieldError('password', 'M\u00ednimo 6 caracteres');
+      hasError = true;
+    }
+
+    if (!password2) {
+      showFieldError('password2', 'Confirma tu contrase\u00f1a');
+      hasError = true;
+    } else if (password !== password2) {
+      showFieldError('password2', 'Las contrase\u00f1as no coinciden');
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Submit
+    setLoading(true);
+
+    var body = {
+      code: invitationCode,
+      nombre: nombre,
+      email: email,
+      password: password
+    };
+    if (telefono) {
+      body.telefono = telefono;
+    }
+
+    fetch('/api/invitations/redeem.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+    .then(function(res) { return res.json().then(function(data) { return { status: res.status, data: data }; }); })
+    .then(function(result) {
+      setLoading(false);
+
+      if (result.status >= 400 || result.data.error) {
+        showApiError(result.data.error || 'Error al crear la cuenta. Int\u00e9ntalo de nuevo.');
+        return;
+      }
+
+      // Success
+      if (result.data.token) {
+        localStorage.setItem('wc_token', result.data.token);
+      }
+
+      hide(stateForm);
+      show(stateSuccess);
+
+      setTimeout(function() {
+        window.location.href = '/cliente.html';
+      }, 2000);
+    })
+    .catch(function() {
+      setLoading(false);
+      showApiError('Error de conexi\u00f3n. Verifica tu internet e int\u00e9ntalo de nuevo.');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

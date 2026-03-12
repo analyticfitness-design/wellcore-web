@@ -668,7 +668,7 @@ HTML;
 /**
  * Genera HTML para email de invitación a un prospecto.
  */
-function email_invitation(string $toName, string $plan = 'rise', string $gender = 'male', string $customMsg = ''): string {
+function email_invitation(string $toName, string $plan = 'rise', string $gender = 'male', string $customMsg = '', ?string $invitationCode = null): string {
     $year  = date('Y');
     $fn    = htmlspecialchars($toName ?: 'Amig@');
     $acent = ($gender === 'female') ? '#DC3C64' : '#E31E24';
@@ -688,8 +688,8 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
         'esencial' => [
             'name'  => 'Plan Esencial',
             'tag'   => 'EL PUNTO DE PARTIDA',
-            'cop'   => '$399.000 COP',
-            'usd'   => '~$97 USD',
+            'cop'   => '$299.000 COP',
+            'usd'   => '~$72 USD',
             'link'  => 'https://wellcorefitness.com/inscripcion.html',
             'cta'   => 'Inscribirme al Plan Esencial',
             'desc'  => 'Asesoría de entrenamiento con estructura mensual. Ideal para quienes buscan comenzar con guía profesional y resultados consistentes.',
@@ -698,8 +698,8 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
         'metodo'   => [
             'name'  => 'Plan Método',
             'tag'   => 'ENTRENAMIENTO + NUTRICIÓN',
-            'cop'   => '$504.000 COP',
-            'usd'   => '~$123 USD',
+            'cop'   => '$399.000 COP',
+            'usd'   => '~$97 USD',
             'link'  => 'https://wellcorefitness.com/inscripcion.html',
             'cta'   => 'Inscribirme al Plan Método',
             'desc'  => 'La combinación completa: entrenamiento y asesoría nutricional personalizada. Para quienes quieren maximizar resultados con un enfoque integral.',
@@ -708,12 +708,22 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
         'elite'    => [
             'name'  => 'Plan Elite',
             'tag'   => 'EXPERIENCIA PREMIUM',
-            'cop'   => '$630.000 COP',
-            'usd'   => '~$154 USD',
+            'cop'   => '$549.000 COP',
+            'usd'   => '~$134 USD',
             'link'  => 'https://wellcorefitness.com/inscripcion.html',
             'cta'   => 'Inscribirme al Plan Elite',
             'desc'  => 'Atención 1-a-1 de alta intensidad. Entrenamiento, nutrición y coaching personalizado para quienes exigen lo mejor de sí mismos.',
             'items' => ['Plan de entrenamiento hiperpersonalizado', 'Asesoría nutricional + plan detallado', 'Sesiones de revisión semanales', 'Acceso a plataforma digital', 'Respuesta en menos de 2h (horario laboral)', 'Seguimiento diario de adherencia'],
+        ],
+        'presencial' => [
+            'name'  => 'Entrenamiento Presencial',
+            'tag'   => 'INVITACIÓN EXCLUSIVA',
+            'cop'   => 'Invitación',
+            'usd'   => 'Sin costo',
+            'link'  => 'https://wellcorefitness.com/presencial.html',
+            'cta'   => 'Registrarme ahora',
+            'desc'  => 'Has sido invitado al programa de entrenamiento presencial de WellCore Fitness. Accede a tu plataforma digital personalizada con plan de entrenamiento, seguimiento de progreso y todas las herramientas de la experiencia WellCore.',
+            'items' => ['Plan de entrenamiento personalizado', 'Acceso a plataforma digital completa', 'Seguimiento de progreso y métricas', 'Registro de check-ins semanales', 'Herramientas de nutrición y hábitos'],
         ],
     ];
 
@@ -722,7 +732,11 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
     $tag  = htmlspecialchars($p['tag']);
     $cop  = htmlspecialchars($p['cop']);
     $usd  = htmlspecialchars($p['usd']);
-    $link = htmlspecialchars($p['link']);
+    $link = $p['link'];
+    if ($plan === 'presencial' && $invitationCode) {
+        $link = 'https://wellcorefitness.com/presencial.html?code=' . urlencode($invitationCode);
+    }
+    $link = htmlspecialchars($link);
     $cta  = htmlspecialchars($p['cta']);
     $desc = htmlspecialchars($p['desc']);
 

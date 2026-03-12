@@ -53,31 +53,31 @@ define('WOMPI_WEBHOOK_URL', SITE_URL . '/api/wompi/webhook.php');
 // -------------------------------------------------------
 // PLANES WELLCORE — PRECIOS EN CENTAVOS COP
 // -------------------------------------------------------
-// Wompi trabaja en centavos: $399.000 COP = 39900000 centavos
+// Wompi trabaja en centavos: $299.000 COP = 29900000 centavos
 define('WELLCORE_PLANS', [
     'esencial' => [
         'name'              => 'WellCore Esencial',
         'display'           => 'ESENCIAL',
-        'amount_cop'        => 399000,
-        'amount_in_cents'   => 39900000,
+        'amount_cop'        => 299000,
+        'amount_in_cents'   => 29900000,
         'currency'          => 'COP',
-        'description'       => 'WellCore Fitness - Plan Esencial ($399.000 COP/mes)',
+        'description'       => 'WellCore Fitness - Plan Esencial ($299.000 COP/mes)',
     ],
     'metodo' => [
         'name'              => 'WellCore Metodo',
         'display'           => 'METODO',
-        'amount_cop'        => 504000,
-        'amount_in_cents'   => 50400000,
+        'amount_cop'        => 399000,
+        'amount_in_cents'   => 39900000,
         'currency'          => 'COP',
-        'description'       => 'WellCore Fitness - Plan Metodo ($504.000 COP/mes)',
+        'description'       => 'WellCore Fitness - Plan Metodo ($399.000 COP/mes)',
     ],
     'elite' => [
         'name'              => 'WellCore Elite',
         'display'           => 'ELITE',
-        'amount_cop'        => 630000,
-        'amount_in_cents'   => 63000000,
+        'amount_cop'        => 549000,
+        'amount_in_cents'   => 54900000,
         'currency'          => 'COP',
-        'description'       => 'WellCore Fitness - Plan Elite ($630.000 COP/mes)',
+        'description'       => 'WellCore Fitness - Plan Elite ($549.000 COP/mes)',
     ],
     'rise' => [
         'name'              => 'WellCore RISE 30 Días',

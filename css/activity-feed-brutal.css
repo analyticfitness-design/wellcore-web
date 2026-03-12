@@ -377,6 +377,12 @@
   border: 1px solid rgba(227, 30, 36, 0.3);
 }
 
+.activity-feed__plan-badge--presencial {
+  background: rgba(249, 115, 22, 0.15);
+  color: #FB923C;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
 .activity-feed__client-name {
   font-size: 13px;
   font-weight: 600;
