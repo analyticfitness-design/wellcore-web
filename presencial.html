@@ -130,6 +130,15 @@ input:focus{
 input.error{
   border-color:var(--red);
 }
+/* Override browser autofill light background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 30px var(--surface-2) inset !important;
+  -webkit-text-fill-color:var(--white) !important;
+  border-color:var(--border);
+  transition:background-color 5000s ease-in-out 0s;
+}
 .field-error{
   color:var(--red);
   font-size:0.78rem;
@@ -529,7 +538,14 @@ input.error{
       setLoading(false);
 
       if (result.status >= 400 || result.data.error) {
-        showApiError(result.data.error || 'Error al crear la cuenta. Int\u00e9ntalo de nuevo.');
+        var errMsg = result.data.error || 'Error al crear la cuenta.';
+        // Traducir errores comunes a mensajes claros
+        if (errMsg.indexOf('Ya existe') !== -1) {
+          errMsg = 'Ya existe una cuenta con este email. Si ya tienes cuenta, inicia sesi\u00f3n en wellcorefitness.com/cliente.html';
+        } else if (result.status === 500) {
+          errMsg = 'Error interno del servidor. Contacta a tu coach o escr\u00edbenos a info@wellcorefitness.com';
+        }
+        showApiError(errMsg);
         return;
       }
 
