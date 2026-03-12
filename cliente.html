@@ -4013,10 +4013,22 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             Inicia una conversacion con tu coach
           </div>
         </div>
+        <!-- Typing indicator -->
+        <div id="chat-typing-indicator" style="display:none;align-items:center;gap:6px;padding:4px 12px;">
+          <div style="display:flex;gap:3px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--gray);animation:typingDot 1.2s infinite;"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--gray);animation:typingDot 1.2s infinite .2s;"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--gray);animation:typingDot 1.2s infinite .4s;"></span>
+          </div>
+          <span style="font-size:.72rem;color:var(--gray);">Coach escribiendo...</span>
+        </div>
       </div>
 
       <!-- Chat input -->
       <div style="display:flex;gap:8px;align-items:flex-end;">
+        <button onclick="chatSendPhoto()" style="background:var(--surface);border:1px solid var(--border);color:var(--gray);border-radius:var(--radius);padding:12px;cursor:pointer;font-size:.9rem;" title="Enviar foto">
+          <i class="fas fa-image"></i>
+        </button>
         <textarea id="chat-input" placeholder="Escribe tu mensaje..." rows="2"
           style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;color:var(--white);font-size:.88rem;resize:none;font-family:inherit;"
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage()}"></textarea>
@@ -4024,6 +4036,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           <i class="fas fa-paper-plane"></i> Enviar
         </button>
       </div>
+      <style>@keyframes typingDot{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}</style>
     </section>
 
     <section id="sec-soporte" class="section">
@@ -4554,6 +4567,46 @@ tr:hover td{background:rgba(255,255,255,0.02)}
           Guardar Cambios
         </button>
       </div>
+
+      <!-- ═══ PREFERENCIAS ═══ -->
+      <div class="profile-form" style="margin-top:24px;">
+        <h3 style="display:flex;align-items:center;gap:8px"><i class="fas fa-cog" style="color:var(--red)"></i> Preferencias</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:8px;">
+            <div>
+              <div style="font-size:.85rem;font-weight:600;color:var(--white)">Sonidos</div>
+              <div style="font-size:.72rem;color:var(--gray)">Efectos de sonido al completar acciones</div>
+            </div>
+            <button id="sound-toggle-btn" onclick="toggleSoundPref()" style="background:var(--surface);border:1px solid var(--border);color:var(--gray);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;">ON</button>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:8px;">
+            <div>
+              <div style="font-size:.85rem;font-weight:600;color:var(--white)">Tutorial de bienvenida</div>
+              <div style="font-size:.72rem;color:var(--gray)">Vuelve a ver el tour de funciones</div>
+            </div>
+            <button onclick="if(typeof restartOnboarding==='function')restartOnboarding()" style="background:var(--surface);border:1px solid var(--border);color:var(--gray);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;">Repetir</button>
+          </div>
+        </div>
+      </div>
+      <script>
+      function toggleSoundPref(){
+        if(window.WCSound){
+          var on=WCSound.toggle();
+          var btn=document.getElementById('sound-toggle-btn');
+          if(btn){btn.textContent=on?'ON':'OFF';btn.style.color=on?'#22c55e':'var(--gray)';btn.style.borderColor=on?'#22c55e':'var(--border)';}
+          if(on)WCSound.play('toggleOn');
+        }
+      }
+      (function(){
+        setTimeout(function(){
+          if(window.WCSound){
+            var on=WCSound.isEnabled();
+            var btn=document.getElementById('sound-toggle-btn');
+            if(btn){btn.textContent=on?'ON':'OFF';btn.style.color=on?'#22c55e':'var(--gray)';btn.style.borderColor=on?'#22c55e':'var(--border)';}
+          }
+        },500);
+      })();
+      </script>
 
       <!-- ═══ FORMULARIO INICIAL (INTAKE) ═══ -->
       <div class="profile-form" style="margin-top:24px;">
@@ -5199,6 +5252,7 @@ function checkAchievements(trigger) {
     if (data && data.awarded && data.awarded.length > 0) {
       data.awarded.forEach(function(a) {
         showToast('Logro desbloqueado: ' + a.title, 'success');
+        if (window.WCSound) WCSound.play('celebration');
       });
       if (typeof Community !== 'undefined' && Community.refresh) Community.refresh();
     }
@@ -5778,6 +5832,7 @@ async function toggleDailyHabit(habit) {
     var allDone = Object.values(_dailyHabitState).every(Boolean);
     var msg = document.getElementById('habit-complete-msg');
     if (msg) msg.style.display = allDone ? 'block' : 'none';
+    if (window.WCSound) WCSound.play(newVal ? (allDone ? 'allHabitsComplete' : 'habitComplete') : 'toggleOff');
     if (allDone) loadDailyHabits(); // refresh streak
   } catch(e) {
     _dailyHabitState[habit] = !newVal; // revert
@@ -7068,6 +7123,7 @@ function submitCheckin() {
       loadCheckins();
       if (clientPlan === 'elite') loadCompliance();
       showToast('Check-in enviado al coach!', 'success');
+      if (window.WCSound) WCSound.play('checkinSubmit');
       showCheckinFeedback(bienestarVal, diasVal);
       checkAchievements('checkin');
     })
@@ -9220,6 +9276,7 @@ function onUploadComplete(done, errors) {
   if (errors === 0) {
     status.textContent = done + ' foto(s) subida(s) correctamente.';
     status.style.color = 'var(--green)';
+    if (window.WCSound) WCSound.play('photoUploaded');
     checkAchievements('photo');
   } else {
     status.textContent = done + ' subida(s), ' + errors + ' error(es).';
@@ -11309,9 +11366,11 @@ document.addEventListener('keydown', function(e) {
     }
 })();
 </script>
+<script src="js/sounds.js" defer></script>
 <script src="js/dashboard-smart.js" defer></script>
 <script src="js/celebrations.js" defer></script>
 <script src="js/chat-coach.js" defer></script>
+<script src="js/onboarding-wizard.js" defer></script>
 <script src="js/chat-widget.js" defer></script>
 <script src="js/v5-effects.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>

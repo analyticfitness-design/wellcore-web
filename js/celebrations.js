@@ -96,6 +96,9 @@
 
     document.body.appendChild(overlay);
 
+    // Sound effect
+    if (window.WCSound) WCSound.play('celebration');
+
     // Confetti particles
     if (celeb.icon === 'confetti' || celeb.icon === 'trophy' || celeb.icon === 'gold_star') {
       spawnConfetti(overlay);

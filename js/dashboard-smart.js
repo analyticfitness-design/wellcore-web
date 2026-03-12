@@ -170,12 +170,20 @@
     apiCall('client/daily-mission.php', { method: 'POST', body: { index: index } }).then(function(data) {
       if (!data.ok) return;
       renderMissions(data);
+      if (window.WCSound) {
+        if (data.completed >= data.total) {
+          WCSound.play('allMissionsComplete');
+        } else {
+          WCSound.play('missionComplete');
+        }
+      }
       if (data.xp_gained && data.xp_gained > 0) {
         var xpMsg = document.getElementById('mission-xp-msg');
         if (xpMsg) {
           xpMsg.style.display = 'block';
           xpMsg.textContent = '+' + data.xp_gained + ' XP ganados!';
         }
+        if (window.WCSound) setTimeout(function() { WCSound.play('xpGain'); }, 400);
       }
     }).catch(function() {});
   }

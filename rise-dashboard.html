@@ -2487,6 +2487,7 @@
                 if (data && data.awarded && data.awarded.length > 0) {
                     data.awarded.forEach(function(a) {
                         showToast('Logro desbloqueado: ' + a.title);
+                        if (window.WCSound) WCSound.play('celebration');
                     });
                     if (typeof Community !== 'undefined' && Community.refresh) Community.refresh();
                 }
@@ -2588,6 +2589,7 @@
             } else {
                 showToast('¡Guardado localmente!');
             }
+            if (window.WCSound) WCSound.play('checkinSubmit');
         }
 
         // ─── GUARDAR HÁBITOS VÍA API ─────────────
@@ -2602,6 +2604,7 @@
             if (TOKEN) {
                 const result = await api('POST', '/rise/habits.php', { date: TODAY, habits_json: habitsJson, completed: completed });
                 showToast(result ? '¡Hábitos guardados!' : '¡Guardado localmente!');
+                if (window.WCSound) WCSound.play(completed >= document.querySelectorAll('.habit-check').length ? 'allHabitsComplete' : 'habitComplete');
             } else {
                 showToast('¡Hábitos guardados localmente!');
             }
@@ -2777,6 +2780,7 @@
             if (TOKEN) {
                 const result = await api('POST', '/rise/measurements.php', m);
                 showToast(result ? '¡Medición guardada!' : '¡Guardada localmente!');
+                if (window.WCSound) WCSound.play('success');
                 checkAchievements('measurement');
             } else {
                 showToast('¡Medición guardada localmente!');
@@ -3596,6 +3600,7 @@
                     spinIcon.style.color = 'var(--green)';
                     statusText.textContent = data.message + ' \u2014 ' + date;
                     showToast('\u00a1Fotos guardadas en tu perfil!');
+                    if (window.WCSound) WCSound.play('photoUploaded');
                     checkAchievements('photo');
                     ['photoFront','photoSide','photoBack'].forEach(function(id) {
                         document.getElementById(id).value = '';
@@ -4582,7 +4587,7 @@ document.addEventListener('keydown', function(e) {
       riseTimerSeconds--;
       if (riseTimerSeconds <= 0) {
         closeRiseRestTimer();
-        try { new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgip2teleVkYl9hYeIkJiVloCWr7iyk3pXUWaJn6SQcE44RWV7hHtxZV5jbHd/hn+MlZiZmY+RlZeXk4qBfICGjI+Ph4B9f4WLj42MiYWFho2VmZqZkYiFiIuOjYmBe3d3fYKFhH9+fn+FjJCTkpCLh4WHio2NiYJ9eXl+g4WEgH5+gIWKj5GRj4uHhYaJjI2KhH97eXx/goOBfn5/gYaMj5CPjYmGhIWIi4uIgn56eHt+gIGAfn5/gYWKj5CQjYqHhYWHiouJhH97eXp9gIGAgH5+f4OIjI+Qj4yJhoWGiIqKh4J9enl7foCBgH5+foGFio2PkI6LiIaFhoiKiYWAfXp5e3+AgYB+fn6BhYqOj5CPjImGhYaIioiEf3t5eXx/gIGAfn5+gYWKjo+Qj4yJhoWFh4qKhoF8eXl7fn+AgH5+foKGio6PkI+MiYaFhYiKioaBfHl5e35/gIB+fn6BhYqOj5CQjYmGhYWHioqGgXx5eXt+f4CAf35+gYWKjo+Qj4yJhoWFiIqJhYF8eXl7fn+AgH5+foGFio2Pj4+MiYaFhYiJiYWAfHp5e35/gIB+fn6BhYqNj5CPjImGhYWHiYmFgHx6eXt+f4B/fn5+gYWKjo+Qj4yJhYWFh4mJhYB8enl7fn+Af35+foGFio6PkI+MiYaFhYeJiYWAfHl5e36Af35+fn6BhYqOj5CPjImGhYWHiomFgHx5eXt+gH9+fn5+gYWKjo+Qj4yJhoWFh4mJhYB8eXl7fn+Af35+foGFio6PkJCMiYaFhYeJiYWAfHl5e35/f35+fn6BhYqOj5CPjImGhYWHiYmFgHx6eXt+f4B/fn5+gYWKjo+Qj42JhoWFh4mJhYB8enl7fn9/fn5+foGFio2Pj4+MiYaFhYeJiYWAfHp5e35/f35+fn6BhYqNj4+PjImGhYWHiYmFgHx6eXt+f39+fn5+gYWKjY+Pj4yJhoWFh4mJhYB8enl7fn+Af35+foGFio6Pj4+MiYaFhYeJiYWAfHp5e35/gH9+fn6BhYqOj4+PjImGhYWHiYmFgHx6eXt+f4B/fn5+gYWKjo+Pj4yJhoWFh4mJhYB8enl7fn+Af35+foGFio6Pj4+MiYaFhYeJiYWAfHp5e35/gH9+fn6BhYqOj5CPjImGhYWHiYmF').play(); } catch(e) {}
+        if (window.WCSound) WCSound.play('timerDone');
       } else {
         updateRiseTimerDisplay();
       }
@@ -4982,6 +4987,9 @@ function renderRiseSupplementsInteractive(container) {
     });
 })();
 </script>
+<script src="js/sounds.js" defer></script>
+<script src="js/celebrations.js" defer></script>
+<script src="js/onboarding-wizard.js" defer></script>
 <script src="js/wellcore-v6.js" defer></script>
 <script src="js/wellcore-v7.js" defer></script>
 <script>
