@@ -765,8 +765,9 @@ input,textarea,select{font-family:'Inter',sans-serif}
     <a class="nav-item" onclick="showSection('analytics')" id="nav-analytics">
       <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span> Analytics
     </a>
-    <a class="nav-item" onclick="showSection('mensajes')" id="nav-mensajes">
+    <a class="nav-item" onclick="showSection('mensajes')" id="nav-mensajes" style="position:relative">
       <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span> Mensajes
+      <span id="coach-unread-badge" style="display:none;background:#E31E24;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;font-family:monospace;margin-left:auto;line-height:1.4;">0</span>
     </a>
     <a class="nav-item" onclick="showSection('revenue')" id="nav-revenue">
       <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span> Revenue
@@ -1880,6 +1881,13 @@ function init() {
 
     // Load dashboard data
     loadDashboard();
+
+    // Coach presence heartbeat — update last_seen every 60s
+    function coachHeartbeat() {
+      apiFetch('POST', '/coach/presence.php').catch(function() {});
+    }
+    coachHeartbeat();
+    setInterval(coachHeartbeat, 60000);
   }).catch(function() {
     localStorage.removeItem('wc_token');
     window.location.href = 'login.html';
@@ -3089,6 +3097,27 @@ function deleteAcadItem(id) {
 // ===== RUN =====
 init();
 
+// ===== COACH UNREAD MESSAGES POLLING =====
+(function initCoachUnreadPoll() {
+  function pollCoachUnread() {
+    if (!localStorage.getItem('wc_token')) return;
+    apiFetch('GET', '/chat/unread.php').then(function(data) {
+      if (!data || !data.ok) return;
+      var badge = document.getElementById('coach-unread-badge');
+      if (badge) {
+        if (data.unread > 0) {
+          badge.textContent = data.unread > 99 ? '99+' : data.unread;
+          badge.style.display = 'inline-block';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+    }).catch(function() {});
+  }
+  setTimeout(pollCoachUnread, 3000);
+  setInterval(pollCoachUnread, 15000);
+})();
+
 // ===== LENIS SMOOTH SCROLL =====
 (function initLenis() {
   if (!window.Lenis) return;
@@ -3315,7 +3344,8 @@ function openThread(clientId, clientName) {
   var thread = document.getElementById('msg-thread');
   if (thread) { thread.textContent = ''; }
 
-  api.get('coach/messages?client_id=' + clientId).then(function(r) {
+  // Use new chat endpoints
+  api.get('chat/history?client_id=' + clientId + '&limit=50').then(function(r) {
     var msgs = r.messages || [];
     if (!thread) return;
     thread.textContent = '';
@@ -3327,7 +3357,7 @@ function openThread(clientId, clientName) {
       return;
     }
     msgs.forEach(function(m) {
-      var isCoach = m.direction === 'coach_to_client';
+      var isCoach = m.sender_type === 'coach';
       var row = document.createElement('div');
       row.style.cssText = 'display:flex;justify-content:' + (isCoach ? 'flex-end' : 'flex-start');
       var bubble = document.createElement('div');
@@ -3335,16 +3365,24 @@ function openThread(clientId, clientName) {
         ';color:#fff;border-radius:' + (isCoach ? '12px 12px 2px 12px' : '12px 12px 12px 2px') +
         ';padding:9px 13px;font-size:.83rem;line-height:1.5';
       var txt = document.createElement('div');
-      txt.textContent = m.message;
+      txt.textContent = m.content;
       var time = document.createElement('div');
-      time.style.cssText = 'font-size:.68rem;color:rgba(255,255,255,.5);margin-top:3px;text-align:right';
+      time.style.cssText = 'font-size:.68rem;color:rgba(255,255,255,.5);margin-top:3px;text-align:right;display:flex;align-items:center;gap:4px;justify-content:flex-end';
       time.textContent = String(m.created_at || '').slice(11, 16);
+      if (!isCoach && m.read_at) {
+        var readIcon = document.createElement('span');
+        readIcon.style.cssText = 'color:#22c55e;font-size:.6rem';
+        readIcon.textContent = ' \u2713\u2713';
+        time.appendChild(readIcon);
+      }
       bubble.appendChild(txt);
       bubble.appendChild(time);
       row.appendChild(bubble);
       thread.appendChild(row);
     });
     thread.scrollTop = thread.scrollHeight;
+    // Mark client messages as read
+    api.post('chat/mark-read', { client_id: clientId }).catch(function() {});
   }).catch(function() {
     if (!thread) return;
     thread.textContent = '';
@@ -3364,7 +3402,7 @@ function sendMessage() {
   var name = '';
   var h = document.getElementById('msg-thread-header');
   if (h) name = h.textContent;
-  api.post('coach/messages', { client_id: _msgActiveClient, message: msg })
+  api.post('chat/send', { client_id: _msgActiveClient, message: msg })
     .then(function() { openThread(_msgActiveClient, name); })
     .catch(function() {});
 }
