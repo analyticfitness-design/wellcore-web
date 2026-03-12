@@ -192,5 +192,7 @@ try {
 } catch (PDOException $e) {
     if ($db->inTransaction()) $db->rollBack();
     error_log('[WellCore] redeem error: ' . $e->getMessage());
-    err('Error al crear cuenta', 500);
+    // Include detail in dev mode for debugging
+    $detail = $e->getMessage();
+    err('Error al crear cuenta: ' . $detail, 500);
 }
