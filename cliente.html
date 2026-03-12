@@ -5152,7 +5152,8 @@ function init() {
     var coachTag = document.createElement('span');
     coachTag.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:.6rem;color:var(--gray);margin-left:8px;letter-spacing:.04em';
     coachTag.textContent = 'Coach: ' + window._coachName;
-    document.getElementById('topbar-name').parentNode.appendChild(coachTag);
+    var _tn = document.getElementById('topbar-name');
+    if (_tn && _tn.parentNode) _tn.parentNode.appendChild(coachTag);
   }
   if (window._coachLogo) {
     try {
@@ -5677,7 +5678,7 @@ var _dailyHabitState = { agua: false, sueno: false, nutricion: false, estres: fa
 
 async function loadDailyHabits() {
   try {
-    var data = await api('/clients/habits');
+    var data = await apiFetch('/clients/habits.php').then(function(r) { return r.json(); });
     _dailyHabitState = data.today || _dailyHabitState;
     Object.keys(_dailyHabitState).forEach(function(h) { updateDailyHabitCard(h, _dailyHabitState[h]); });
     var sc = document.getElementById('streak-count');
@@ -5707,7 +5708,7 @@ async function toggleDailyHabit(habit) {
   _dailyHabitState[habit] = newVal;
   updateDailyHabitCard(habit, newVal);
   try {
-    await api('/clients/habits', 'POST', { habit_type: habit, value: newVal ? 1 : 0 });
+    await apiFetch('/clients/habits.php', { method: 'POST', body: JSON.stringify({ habit_type: habit, value: newVal ? 1 : 0 }) }).then(function(r) { return r.json(); });
     var allDone = Object.values(_dailyHabitState).every(Boolean);
     var msg = document.getElementById('habit-complete-msg');
     if (msg) msg.style.display = allDone ? 'block' : 'none';
@@ -8150,12 +8151,12 @@ function prSaveModal(id) {
       apiFetch('/community/check-achievements.php', { method: 'POST', body: JSON.stringify({ trigger: 'pr' }) })
         .then(function(r2) { return r2.ok ? r2.json() : null; })
         .then(function(ach) {
-          if (ach && ach.awarded && ach.awarded.length > 0 && typeof V6 !== 'undefined' && V6.toast) {
-            ach.awarded.forEach(function(a) { setTimeout(function(){ V6.toast('🏆 Logro: ' + a.title, 'success'); }, 800); });
+          if (ach && ach.awarded && ach.awarded.length > 0) {
+            ach.awarded.forEach(function(a) { setTimeout(function(){ showToast('Logro: ' + a.title, 'success'); }, 800); });
           }
         }).catch(function(){});
     }).catch(function(){});
-  if (isNew && typeof V6 !== 'undefined' && V6.toast) V6.toast('Nuevo PR registrado 💪', 'success');
+  if (isNew) showToast('Nuevo PR registrado', 'success');
 }
 
 function prCloseModal() {
@@ -8297,7 +8298,7 @@ function renderCarta() {
     '</div>';
 }
 function cartaShare() {
-  if (typeof V6 !== 'undefined' && V6.toast) V6.toast('Captura la pantalla para compartir tu carta 📸', 'info');
+  showToast('Captura la pantalla para compartir tu carta', 'info');
 }
 
 // ── ARCHIVOS LEGACY ──

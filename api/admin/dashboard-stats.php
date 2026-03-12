@@ -56,13 +56,15 @@ $checkinStats = $db->query("
 
 // ── Risk ──────────────────────────────────────────────────────────────────────
 $atRiskCount = (int)$db->query("
-    SELECT COUNT(DISTINCT c.id)
-    FROM clients c
-    LEFT JOIN checkins ch ON ch.client_id = c.id
-    WHERE c.status = 'activo'
-    GROUP BY c.id
-    HAVING MAX(ch.checkin_date) < DATE_SUB(CURDATE(), INTERVAL 14 DAY)
-        OR MAX(ch.checkin_date) IS NULL
+    SELECT COUNT(*) FROM (
+        SELECT c.id
+        FROM clients c
+        LEFT JOIN checkins ch ON ch.client_id = c.id
+        WHERE c.status = 'activo'
+        GROUP BY c.id
+        HAVING MAX(ch.checkin_date) < DATE_SUB(CURDATE(), INTERVAL 14 DAY)
+            OR MAX(ch.checkin_date) IS NULL
+    ) sub
 ")->fetchColumn();
 
 $expiringSoon = (int)$db->query("

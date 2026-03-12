@@ -104,7 +104,7 @@ if ($existingClient) {
         INSERT INTO clients (client_code, name, email, password_hash, plan, status, fecha_inicio)
         VALUES (?, ?, ?, ?, 'rise', 'activo', ?)
     ");
-    $stmt->execute([$clientCode, $name, $passwordHash, $passwordHash, $fechaInicio]);
+    $stmt->execute([$clientCode, $name, $email, $passwordHash, $fechaInicio]);
     $clientId = (int)$db->lastInsertId();
 
     // Crear perfil base

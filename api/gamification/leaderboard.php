@@ -9,10 +9,12 @@
  */
 
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/response.php';
 
 respondJson();
+requireMethod('GET');
 
 $db     = getDB();
 $period = $_GET['period'] ?? 'week';
