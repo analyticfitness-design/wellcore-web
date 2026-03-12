@@ -41,7 +41,7 @@ runDDL($db, 'ALTER chat_messages ADD read_at', "
 ");
 
 runDDL($db, 'ALTER chat_messages ADD message_type', "
-    ALTER TABLE chat_messages ADD COLUMN message_type ENUM('text','quick_reply','system') DEFAULT 'text'
+    ALTER TABLE chat_messages ADD COLUMN message_type ENUM('text','quick_reply','system','photo') DEFAULT 'text'
 ");
 
 runDDL($db, 'ALTER chat_messages ADD sender_type', "
@@ -54,6 +54,11 @@ runDDL($db, 'ALTER chat_messages ADD sender_id', "
 
 runDDL($db, 'INDEX chat_messages client+sender', "
     ALTER TABLE chat_messages ADD INDEX idx_chat_client_sender (client_id, sender_type, created_at)
+");
+
+// Expand message_type ENUM to include 'photo' (safe to re-run)
+runDDL($db, 'ALTER chat_messages message_type add photo', "
+    ALTER TABLE chat_messages MODIFY COLUMN message_type ENUM('text','quick_reply','system','photo') DEFAULT 'text'
 ");
 
 // ── Coach presence ──────────────────────────────────────────────
