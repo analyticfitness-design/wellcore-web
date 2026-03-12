@@ -13,6 +13,12 @@
  * ============================================================
  */
 
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    echo json_encode(['error' => 'CLI only']);
+    exit;
+}
+
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/email.php';
 require_once __DIR__ . '/../emails/renewal-templates.php';
