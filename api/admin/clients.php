@@ -153,8 +153,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     if (!$id) respondError('ID requerido', 422);
 
     $body    = getJsonBody();
-    $allowed = ['name', 'plan', 'status', 'password'];
-    $validPlans    = ['esencial', 'metodo', 'elite'];
+    $allowed = ['name', 'plan', 'status', 'password', 'fecha_inicio'];
+    $validPlans    = ['esencial', 'metodo', 'elite', 'rise', 'presencial'];
     $validStatuses = ['activo', 'inactivo', 'pendiente'];
     $fields  = [];
     $values  = [];
@@ -166,6 +166,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             }
             if ($f === 'status' && !in_array($body[$f], $validStatuses, true)) {
                 respondError('Status invalido. Valores: activo, inactivo, pendiente', 422);
+            }
+            if ($f === 'fecha_inicio' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $body[$f])) {
+                respondError('fecha_inicio debe ser formato YYYY-MM-DD', 422);
             }
 
             // Special handling for password: hash it
