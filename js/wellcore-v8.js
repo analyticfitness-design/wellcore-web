@@ -141,7 +141,7 @@ V8.Notifications = {
   _clickItem: function(id, link) {
     var token = this._getToken();
     if (!token) return;
-    fetch('/api/notifications/mark-read', {
+    fetch('/api/notifications/mark-read.php', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id })
@@ -162,7 +162,7 @@ V8.Notifications = {
     var self = this;
     var token = this._getToken();
     if (!token) return;
-    fetch('/api/notifications/mark-read', {
+    fetch('/api/notifications/mark-read.php', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
       body: JSON.stringify({ all: true })
@@ -197,7 +197,7 @@ V8.Profile = {
     var self = this;
     var token = self._getToken();
     if (!token) return;
-    fetch('/api/client/profile', { headers: { 'Authorization': 'Bearer ' + token } })
+    fetch('/api/client/profile.php', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       self._data = data.client || {};
@@ -315,7 +315,7 @@ V8.Profile = {
     var msg = document.getElementById('profileSaveMsg');
     if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...'; }
 
-    fetch('/api/client/profile', {
+    fetch('/api/client/profile.php', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -357,7 +357,7 @@ V8.Referrals = {
     var self = this;
     var token = self._getToken();
     if (!token) return;
-    fetch('/api/client/referrals', { headers: { 'Authorization': 'Bearer ' + token } })
+    fetch('/api/client/referrals.php', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(function(r) { return r.json(); })
     .then(function(data) { self.render(data); })
     .catch(function() {});
@@ -510,7 +510,7 @@ V8.CheckinAlert = {
   check: function() {
     var token = localStorage.getItem('wc_token') || sessionStorage.getItem('wc_preview_token');
     if (!token) return;
-    fetch('/api/checkins?limit=1', { headers: { 'Authorization': 'Bearer ' + token } })
+    fetch('/api/checkins/index.php?limit=1', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var checkins = data.checkins || [];

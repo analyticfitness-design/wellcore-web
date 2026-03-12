@@ -1541,7 +1541,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: ce
       var bodyStr = JSON.stringify(payload);
 
       /* Backend: fire-and-forget, no bloquea el flujo */
-      fetch('/api/coaches/apply', {
+      fetch('/api/coaches/apply.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: bodyStr

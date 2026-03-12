@@ -4144,7 +4144,7 @@ var AdminNotify = {
     if (!token) return;
     var btn = document.getElementById('adminNotifySend');
     if (btn) btn.textContent = 'Enviando...';
-    fetch('/api/notifications/create', {
+    fetch('/api/notifications/create.php', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: this._clientId, type: 'admin', title: title, body: body || null, link: link || null })
@@ -4202,7 +4202,7 @@ var V8AdminNotifPanel = {
   markAll: function() {
     var token = localStorage.getItem('wc_admin_token') || localStorage.getItem('wc_token');
     if (!token) return;
-    fetch('/api/notifications/mark-read', {
+    fetch('/api/notifications/mark-read.php', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
       body: JSON.stringify({ all: true })

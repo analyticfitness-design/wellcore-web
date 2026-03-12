@@ -5111,7 +5111,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
   } catch(e) {}
 })();
 
-const PLAN_LEVEL  = { esencial: 1, metodo: 2, elite: 3, presencial: 2 };
+const PLAN_LEVEL  = { esencial: 1, metodo: 2, elite: 3, presencial: 2, rise: 2 };
 
 // ===== M35: VAPID Public Key (Web Push) =====
 const VAPID_PUBLIC_KEY = 'BDFT-BlbGextWpeux4kFpgfR8vebxrYXBquZolnvz74SmijMp6EdXo9C-ji8yoAUcLJjHh65fkGcpVaMrZIRPRE';
@@ -5169,12 +5169,14 @@ function init() {
   }
 
   // Sidebar plan badge
-  const planLabels = { esencial: 'PLAN ESENCIAL', metodo: 'PLAN MÉTODO', elite: 'PLAN ELITE' };
-  document.getElementById('sidebar-plan-badge').textContent = planLabels[clientPlan] || 'PLAN ESENCIAL';
+  const planLabels = { esencial: 'PLAN ESENCIAL', metodo: 'PLAN MÉTODO', elite: 'PLAN ELITE', rise: 'RETO RISE', presencial: 'PLAN PRESENCIAL' };
+  var _spb = document.getElementById('sidebar-plan-badge');
+  if (_spb) _spb.textContent = planLabels[clientPlan] || 'PLAN ESENCIAL';
 
   // KPI plan
-  const kpiLabels = { esencial: 'ESENCIAL', metodo: 'MÉTODO', elite: 'ELITE' };
-  document.getElementById('kpi-plan').textContent = kpiLabels[clientPlan] || 'ESENCIAL';
+  const kpiLabels = { esencial: 'ESENCIAL', metodo: 'MÉTODO', elite: 'ELITE', rise: 'RISE', presencial: 'PRESENCIAL' };
+  var _kp = document.getElementById('kpi-plan');
+  if (_kp) _kp.textContent = kpiLabels[clientPlan] || 'ESENCIAL';
 
   // Welcome card — greeting based on time of day
   (function initWelcome() {
@@ -5210,13 +5212,17 @@ function init() {
   })();
 
   // Avatar initial
-  document.getElementById('avatar-xl').textContent = clientName.charAt(0).toUpperCase();
+  var _avxl = document.getElementById('avatar-xl');
+  if (_avxl) _avxl.textContent = clientName.charAt(0).toUpperCase();
 
   // Perfil fields
-  document.getElementById('perfil-name').textContent = clientName;
-  document.getElementById('perfil-email').textContent = clientEmail;
+  var _pn = document.getElementById('perfil-name');
+  if (_pn) _pn.textContent = clientName;
+  var _pe = document.getElementById('perfil-email');
+  if (_pe) _pe.textContent = clientEmail;
   const planCap = clientPlan.charAt(0).toUpperCase() + clientPlan.slice(1);
-  document.getElementById('perfil-plan-label').textContent = 'Plan Activo: ' + planCap;
+  var _ppl = document.getElementById('perfil-plan-label');
+  if (_ppl) _ppl.textContent = 'Plan Activo: ' + planCap;
 
   // Init tracking
   loadWeekGrid();
@@ -6550,7 +6556,7 @@ function saveMetrics() {
 
   var fields = ['inp-peso','inp-musculo','inp-grasa','inp-pecho','inp-cintura','inp-cadera','inp-muslo','inp-brazo'];
 
-  apiFetch('/metrics', { method: 'POST', body: JSON.stringify(payload) })
+  apiFetch('/metrics/index.php', { method: 'POST', body: JSON.stringify(payload) })
     .then(function(r) { return r.json(); })
     .then(function() {
       fields.forEach(function(id) { document.getElementById(id).value = ''; });
@@ -6901,7 +6907,7 @@ function submitCheckin() {
     rpe: _selectedRpe || undefined
   };
 
-  apiFetch('/checkins', { method: 'POST', body: JSON.stringify(payload) })
+  apiFetch('/checkins/index.php', { method: 'POST', body: JSON.stringify(payload) })
     .then(function(r) { return r.json(); })
     .then(function() {
       document.getElementById('slider-bienestar').value = 7;
@@ -8092,7 +8098,7 @@ function renderPRs() {
   if (!root) return;
   if (prDataLoaded) { _prRenderGrid(root, prLoad()); return; }
   root.innerHTML = '<div style="text-align:center;padding:48px;color:var(--gray);font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;">CARGANDO RECORDS...</div>';
-  apiFetch('/prs')
+  apiFetch('/prs/index.php')
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(d) {
       if (d && d.prs) prSave(d.prs);
@@ -8138,7 +8144,7 @@ function prSaveModal(id) {
   var isNew = !prs[id] || val > parseFloat(prs[id].val || 0);
   prs[id] = { val: val, date: today };
   prSave(prs); prCloseModal(); renderPRs();
-  apiFetch('/prs', { method: 'POST', body: JSON.stringify({ exercise_id: id, value: val }) })
+  apiFetch('/prs/index.php', { method: 'POST', body: JSON.stringify({ exercise_id: id, value: val }) })
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function() {
       apiFetch('/community/check-achievements.php', { method: 'POST', body: JSON.stringify({ trigger: 'pr' }) })
@@ -8308,9 +8314,9 @@ function renderBiblioteca() {
   var grid = document.getElementById('files-grid');
   if (!grid) return;
   var planLevel = PLAN_LEVEL[clientPlan] || 1;
-  var planLevelMap = { esencial: 1, metodo: 2, elite: 3 };
-  var planLabels  = { esencial: 'ESENCIAL', metodo: 'MÉTODO', elite: 'ELITE' };
-  var planClasses = { esencial: 'req-esencial', metodo: 'req-metodo', elite: 'req-elite' };
+  var planLevelMap = { esencial: 1, metodo: 2, elite: 3, presencial: 2, rise: 2 };
+  var planLabels  = { esencial: 'ESENCIAL', metodo: 'MÉTODO', elite: 'ELITE', rise: 'RISE', presencial: 'PRESENCIAL' };
+  var planClasses = { esencial: 'req-esencial', metodo: 'req-metodo', elite: 'req-elite', presencial: 'req-metodo', rise: 'req-metodo' };
   grid.textContent = '';
 
   FILES.forEach(function(f) {
@@ -8621,7 +8627,7 @@ function initProfileTab() {
 function saveBio() {
   var bioEl = document.getElementById('pf-bio');
   if (!bioEl) return;
-  apiFetch('/clients/profile', { method: 'PUT', body: JSON.stringify({ bio: bioEl.value.trim() }) })
+  apiFetch('/clients/profile.php', { method: 'PUT', body: JSON.stringify({ bio: bioEl.value.trim() }) })
     .then(function(r) { return r.json(); })
     .then(function() { showToast('Biografía guardada', 'success'); })
     .catch(function() { showToast('Error al guardar', 'error'); });
@@ -8760,7 +8766,7 @@ function saveProfile() {
   if (objetivo) payload.objetivo  = objetivo;
   if (ciudad)   payload.ciudad    = ciudad;
 
-  apiFetch('/clients/profile', { method: 'PUT', body: JSON.stringify(payload) })
+  apiFetch('/clients/profile.php', { method: 'PUT', body: JSON.stringify(payload) })
     .then(function(r) { return r.json(); })
     .then(function() {
       if (nombre) {
@@ -11293,7 +11299,7 @@ if ('serviceWorker' in navigator) {
         });
       }).then(function(subscription) {
         var sub = subscription.toJSON();
-        return apiFetch('/push/subscribe', {
+        return apiFetch('/push/subscribe.php', {
           method: 'POST',
           body: JSON.stringify({
             endpoint: sub.endpoint,
@@ -11746,7 +11752,7 @@ if ('serviceWorker' in navigator) {
     spinner.appendChild(document.createTextNode(' Cargando...'));
     content.appendChild(spinner);
 
-    apiFetch('gamification/leaderboard.php?period=week')
+    apiFetch('/gamification/leaderboard.php?period=week')
       .then(function(r) { return r.ok ? r.json() : null; })
       .then(function(data) {
         while (content.firstChild) content.removeChild(content.firstChild);
