@@ -44,11 +44,11 @@ for ($i = 5; $i >= 0; $i--) {
 $renewStmt = $db->prepare("
     SELECT id, name, plan, fecha_inicio,
            DATEDIFF(
-             DATE_ADD(fecha_inicio, INTERVAL CEIL(DATEDIFF(CURDATE(), fecha_inicio) / 30) * 30 DAY),
+             DATE_ADD(fecha_inicio, INTERVAL CEIL(DATEDIFF(CURDATE(), COALESCE(fecha_inicio, created_at)) / 30) * 30 DAY),
              CURDATE()
            ) AS days_left
     FROM clients
-    WHERE coach_id = ? AND status = 'activo'
+    WHERE coach_id = ? AND status = 'activo' AND fecha_inicio IS NOT NULL
     HAVING days_left BETWEEN 0 AND 30
     ORDER BY days_left ASC
     LIMIT 20

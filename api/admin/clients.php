@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                    c.fecha_inicio, c.created_at,
                    p.objetivo, p.peso,
                    (SELECT COUNT(*) FROM checkins WHERE client_id = c.id AND coach_reply IS NULL) as pending_checkins,
-                   DATEDIFF(CURDATE(), c.fecha_inicio) DIV 7 as weeks_active
+                   COALESCE(DATEDIFF(CURDATE(), c.fecha_inicio) DIV 7, 0) as weeks_active
             FROM clients c LEFT JOIN client_profiles p ON p.client_id = c.id
             $where
             ORDER BY c.created_at DESC
