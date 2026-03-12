@@ -764,7 +764,7 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
 
     $hdr = "linear-gradient(135deg,{$acent} 0%,#7a0a10 100%)";
 
-    return "<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{$name} — WellCore Fitness</title></head>"
+    $html = "<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{$name} — WellCore Fitness</title></head>"
         . "<body style=\"margin:0;padding:0;background:#0a0a0a;\">"
         . "<div style=\"display:none;max-height:0;overflow:hidden;\">Te invito — {$name} de WellCore Fitness.</div>"
         . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#0a0a0a\"><tr><td align=\"center\" style=\"padding:32px 16px;\">"
@@ -790,30 +790,52 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
         . "<td width=\"33%\" style=\"padding:0 5px 0 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#0a0a0a;border-top:2px solid {$acent};\"><tr><td style=\"padding:14px;\"><div style=\"font-family:'Courier New',Courier,monospace;font-size:8px;color:{$acent};letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;\">Portal Privado</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:11px;color:rgba(255,255,255,0.55);\">Tu plan y progreso siempre disponibles</div></td></tr></table></td>"
         . "<td width=\"33%\" style=\"padding:0 3px;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#0a0a0a;border-top:2px solid {$acent};\"><tr><td style=\"padding:14px;\"><div style=\"font-family:'Courier New',Courier,monospace;font-size:8px;color:{$acent};letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;\">Check-ins</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:11px;color:rgba(255,255,255,0.55);\">Reportes semanales con respuesta real</div></td></tr></table></td>"
         . "<td width=\"33%\" style=\"padding:0 0 0 5px;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#0a0a0a;border-top:2px solid {$acent};\"><tr><td style=\"padding:14px;\"><div style=\"font-family:'Courier New',Courier,monospace;font-size:8px;color:{$acent};letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;\">Coach Directo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:11px;color:rgba(255,255,255,0.55);\">Sin intermediarios, respuesta rápida</div></td></tr></table></td>"
-        . "</tr></table></td></tr>"
-        . "<tr><td style=\"padding:36px 40px;background:#0a0a0a;border-bottom:1px solid #1e1e22;\">"
-        . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Inversión</p>"
-        . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#111113;border:1px solid #1e1e22;\"><tr><td style=\"padding:24px 28px;\">"
-        . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:42px;font-weight:900;color:{$acent};letter-spacing:-1px;line-height:1;margin-bottom:6px;\">{$cop}</div>"
-        . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;\">Pago único · 30 días de acceso</div>"
-        . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:10px;color:#555;margin-top:6px;\">Pagos internacionales: {$usd}</div>"
-        . "</td></tr></table></td></tr>"
-        . $customBlock
-        . "<tr><td style=\"padding:36px 40px;background:#111113;border-bottom:1px solid #1e1e22;\">"
-        . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Cómo inscribirte</p>"
-        . "<h2 style=\"font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;color:#ffffff;text-transform:uppercase;margin:0 0 20px 0;\">3 PASOS SIMPLES</h2>"
-        . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
-        . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-        . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">01</div></td>"
-        . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Haz clic en el botón de abajo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Te lleva directo al formulario de inscripción.</div></td></tr></table></td></tr>"
-        . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-        . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">02</div></td>"
-        . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Completa tu perfil</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Cuéntanos tu objetivo, nivel y disponibilidad — esto personaliza tu plan.</div></td></tr></table></td></tr>"
-        . "<tr><td><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-        . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">03</div></td>"
-        . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Confirma tu pago y empieza</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Pago seguro. En menos de 24h recibes acceso a tu plan y plataforma.</div></td></tr></table></td></tr>"
-        . "</table></td></tr>"
-        . "<tr><td align=\"center\" style=\"padding:40px;background:#0a0a0a;\">"
+        . "</tr></table></td></tr>";
+
+    // Sección de inversión — oculta para presencial (ya pagaron en persona)
+    if ($plan !== 'presencial') {
+        $html .= "<tr><td style=\"padding:36px 40px;background:#0a0a0a;border-bottom:1px solid #1e1e22;\">"
+            . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Inversión</p>"
+            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#111113;border:1px solid #1e1e22;\"><tr><td style=\"padding:24px 28px;\">"
+            . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:42px;font-weight:900;color:{$acent};letter-spacing:-1px;line-height:1;margin-bottom:6px;\">{$cop}</div>"
+            . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;\">Pago único · 30 días de acceso</div>"
+            . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:10px;color:#555;margin-top:6px;\">Pagos internacionales: {$usd}</div>"
+            . "</td></tr></table></td></tr>";
+    }
+
+    $html .= $customBlock;
+
+    // Sección de pasos — personalizada para presencial
+    if ($plan === 'presencial') {
+        $html .= "<tr><td style=\"padding:36px 40px;background:#111113;border-bottom:1px solid #1e1e22;\">"
+            . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Cómo activar tu cuenta</p>"
+            . "<h2 style=\"font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;color:#ffffff;text-transform:uppercase;margin:0 0 20px 0;\">2 PASOS SIMPLES</h2>"
+            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
+            . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
+            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">01</div></td>"
+            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Haz clic en el botón de abajo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Te lleva directo al formulario de registro — sin pagos.</div></td></tr></table></td></tr>"
+            . "<tr><td><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
+            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">02</div></td>"
+            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Crea tu cuenta y listo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Pon tu nombre, email y una contraseña. Al confirmar entras directo a tu plataforma.</div></td></tr></table></td></tr>"
+            . "</table></td></tr>";
+    } else {
+        $html .= "<tr><td style=\"padding:36px 40px;background:#111113;border-bottom:1px solid #1e1e22;\">"
+            . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Cómo inscribirte</p>"
+            . "<h2 style=\"font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;color:#ffffff;text-transform:uppercase;margin:0 0 20px 0;\">3 PASOS SIMPLES</h2>"
+            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
+            . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
+            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">01</div></td>"
+            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Haz clic en el botón de abajo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Te lleva directo al formulario de inscripción.</div></td></tr></table></td></tr>"
+            . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
+            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">02</div></td>"
+            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Completa tu perfil</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Cuéntanos tu objetivo, nivel y disponibilidad — esto personaliza tu plan.</div></td></tr></table></td></tr>"
+            . "<tr><td><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
+            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">03</div></td>"
+            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Confirma tu pago y empieza</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);\">Pago seguro. En menos de 24h recibes acceso a tu plan y plataforma.</div></td></tr></table></td></tr>"
+            . "</table></td></tr>";
+    }
+
+    $html .= "<tr><td align=\"center\" style=\"padding:40px;background:#0a0a0a;\">"
         . "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"background:{$acent};padding:0;\">"
         . "<a href=\"{$link}\" style=\"display:inline-block;font-family:'Courier New',Courier,monospace;font-size:13px;font-weight:700;letter-spacing:2px;color:#ffffff;text-decoration:none;padding:16px 40px;text-transform:uppercase;\">&#8594; {$cta}</a>"
         . "</td></tr></table>"
@@ -823,4 +845,6 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
         . "<p style=\"font-family:Arial,Helvetica,sans-serif;font-size:10px;color:rgba(255,255,255,0.25);line-height:1.6;margin:0;\">&copy; {$year} WellCore Fitness &middot; Daniel Esparza, Coach &middot; info@wellcorefitness.com</p>"
         . "</td></tr>"
         . "</table></td></tr></table></body></html>";
+
+    return $html;
 }
