@@ -2427,7 +2427,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     </a>
     <a class="nav-item" onclick="showSection('checkin')" id="nav-checkin">
       <i class="fas fa-clipboard-check"></i> Check-in
-      <span class="badge-elite">ELITE</span>
     </a>
     <a class="nav-item" onclick="showSection('seguimiento')" id="nav-seguimiento">
       <i class="fas fa-chart-line"></i> Seguimiento
@@ -4119,7 +4118,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
             <i class="fas fa-chevron-down faq-icon"></i>
           </div>
           <div class="faq-a">
-            El check-in semanal es exclusivo del Plan Elite. Cada semana completas un formulario en este portal con tu bienestar general, días entrenados, adherencia nutricional y comentarios. Tu coach revisa la información y ajusta tu programa si es necesario. Es la herramienta más poderosa para optimizar tus resultados.
+            Todos los planes incluyen check-in. El Plan Esencial tiene un micro check-in cada 2 semanas (bienestar + entrenamiento). El Plan Metodo incluye check-in semanal (bienestar, dias, nutricion). El Plan Elite tiene check-in completo semanal con RPE, nutricion detallada y seguimiento avanzado. Tu coach revisa cada check-in y ajusta tu programa.
           </div>
         </div>
       </div>
@@ -6907,15 +6906,94 @@ function renderChart(metrics) {
 
 // ===== CHECK-IN =====
 function setupCheckin() {
-  if (clientPlan === 'elite') {
-    document.getElementById('checkin-locked').style.display = 'none';
-    document.getElementById('checkin-content').style.display = 'block';
-    renderCheckins();
-    loadCompliance();
-  } else {
-    document.getElementById('checkin-locked').style.display = 'block';
-    document.getElementById('checkin-content').style.display = 'none';
+  // All plans now have check-in (Esencial=micro, Metodo=standard, Elite=full)
+  document.getElementById('checkin-locked').style.display = 'none';
+  document.getElementById('checkin-content').style.display = 'block';
+
+  // Adjust form visibility based on plan
+  var rpeSection = document.querySelector('.rpe-scale');
+  var rpeParent = rpeSection ? rpeSection.closest('.form-group') : null;
+  var nutriSection = document.getElementById('radio-nutricion');
+  var nutriParent = nutriSection ? nutriSection.closest('.form-group') : null;
+  var diasInput = document.getElementById('inp-dias-entrenados');
+  var diasParent = diasInput ? diasInput.closest('.form-group') : null;
+  var complianceWidget = document.getElementById('compliance-widget');
+
+  if (clientPlan === 'esencial') {
+    // Micro check-in: bienestar + trained yes/no + optional comment
+    if (rpeParent) rpeParent.style.display = 'none';
+    if (nutriParent) nutriParent.style.display = 'none';
+    if (diasParent) diasParent.style.display = 'none';
+    if (complianceWidget) complianceWidget.style.display = 'none';
+    // Update section title
+    var secTitle = document.querySelector('#sec-checkin .section-title');
+    if (secTitle) secTitle.textContent = 'Micro Check-in';
+    var secDesc = document.querySelector('#sec-checkin .section-desc');
+    if (secDesc) secDesc.textContent = 'Cuentanos como vas en 30 segundos. Tu bienestar importa.';
+  } else if (clientPlan === 'metodo') {
+    // Standard: bienestar + days + nutrition + comment (no RPE)
+    if (rpeParent) rpeParent.style.display = 'none';
+    if (complianceWidget) complianceWidget.style.display = 'none';
   }
+  // Elite: full form (default)
+
+  renderCheckins();
+  if (clientPlan === 'elite') loadCompliance();
+}
+
+// Auto-feedback after check-in submission
+function showCheckinFeedback(bienestar, dias) {
+  // Get previous check-in from history for comparison
+  var historyEl = document.getElementById('checkins-history');
+  if (!historyEl) return;
+
+  var prevBienestar = null;
+  var prevDias = null;
+  try {
+    var prevCards = historyEl.querySelectorAll('[data-bienestar]');
+    if (prevCards.length > 0) {
+      prevBienestar = parseInt(prevCards[0].dataset.bienestar);
+      prevDias = parseInt(prevCards[0].dataset.dias);
+    }
+  } catch(e) {}
+
+  var feedback = document.createElement('div');
+  feedback.style.cssText = 'background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:18px;margin-bottom:16px;animation:fadeIn .4s ease;';
+
+  var lines = [];
+  lines.push('Check-in recibido');
+  if (prevBienestar !== null) {
+    var diff = bienestar - prevBienestar;
+    if (diff > 0) lines.push('Tu bienestar (' + bienestar + '/10) subio vs semana pasada (' + prevBienestar + '/10). Buen ritmo!');
+    else if (diff < 0) lines.push('Tu bienestar bajo a ' + bienestar + '/10 (antes ' + prevBienestar + '/10). Tu coach lo revisara.');
+    else lines.push('Tu bienestar se mantiene en ' + bienestar + '/10. Constancia!');
+  } else {
+    lines.push('Bienestar: ' + bienestar + '/10');
+  }
+  if (dias && prevDias !== null) {
+    if (dias >= prevDias) lines.push('Entrenaste ' + dias + ' dias. Excelente adherencia!');
+    else lines.push('Entrenaste ' + dias + ' dias (antes ' + prevDias + '). Tu coach ajustara el plan.');
+  }
+  lines.push('Tu coach lo revisara pronto.');
+
+  var title = document.createElement('div');
+  title.style.cssText = 'font-weight:700;color:#22c55e;margin-bottom:6px;font-size:.88rem;';
+  title.textContent = lines[0];
+  feedback.appendChild(title);
+
+  for (var i = 1; i < lines.length; i++) {
+    var p = document.createElement('div');
+    p.style.cssText = 'font-size:.82rem;color:var(--gray);line-height:1.6;';
+    p.textContent = lines[i];
+    feedback.appendChild(p);
+  }
+
+  // Insert before the form
+  var form = document.querySelector('#checkin-content .checkin-form');
+  if (form && form.parentNode) form.parentNode.insertBefore(feedback, form);
+
+  // Auto-remove after 15s
+  setTimeout(function() { if (feedback.parentNode) feedback.parentNode.removeChild(feedback); }, 15000);
 }
 
 // M02: RPE selection
@@ -6978,6 +7056,8 @@ function submitCheckin() {
   apiFetch('/checkins/index.php', { method: 'POST', body: JSON.stringify(payload) })
     .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function() {
+      var bienestarVal = parseInt(document.getElementById('slider-bienestar').value);
+      var diasVal = parseInt(document.getElementById('inp-dias-entrenados').value) || 0;
       document.getElementById('slider-bienestar').value = 7;
       document.getElementById('val-bienestar').textContent = '7';
       document.getElementById('inp-dias-entrenados').value = 5;
@@ -6986,8 +7066,9 @@ function submitCheckin() {
       document.getElementById('inp-rpe').value = '';
       document.querySelectorAll('.rpe-btn').forEach(function(b) { b.classList.remove('active'); });
       loadCheckins();
-      loadCompliance();
+      if (clientPlan === 'elite') loadCompliance();
       showToast('Check-in enviado al coach!', 'success');
+      showCheckinFeedback(bienestarVal, diasVal);
       checkAchievements('checkin');
     })
     .catch(function() {
