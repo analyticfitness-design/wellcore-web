@@ -2389,9 +2389,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <!-- Premium Visual Redesign -->
 <link rel="stylesheet" href="css/wellcore-premium.css">
 <link rel="stylesheet" href="css/wellcore-v6.css">
-<!-- v7 Premium Fonts -->
-<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" />
-<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" />
+<!-- v7 Premium Fonts (async to avoid blocking window.load if CDN is down) -->
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/axiforma" media="print" onload="this.media='all'" />
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/din-next-lt-pro" media="print" onload="this.media='all'" />
 <!-- WellCore v7 Ultra-Premium Design System 2026 -->
 <link rel="stylesheet" href="css/wellcore-v7.css">
 <!-- WellCore v8 Notificaciones, Perfil, Referidos, PWA -->

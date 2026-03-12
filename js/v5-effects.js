@@ -9,12 +9,16 @@
   /* ── Preloader ── */
   const preloader = document.getElementById('v5-preloader');
   if (preloader) {
+    function dismissPreloader() {
+      if (preloader.classList.contains('done')) return;
+      preloader.classList.add('done');
+      setTimeout(function () { preloader.remove(); }, 700);
+    }
     window.addEventListener('load', function () {
-      setTimeout(function () {
-        preloader.classList.add('done');
-        setTimeout(function () { preloader.remove(); }, 700);
-      }, 400);
+      setTimeout(dismissPreloader, 400);
     });
+    // Fallback: dismiss after 4s even if window.load hasn't fired (CDN timeout)
+    setTimeout(dismissPreloader, 4000);
   }
 
   /* ── Custom Cursor (solo desktop) ── */
