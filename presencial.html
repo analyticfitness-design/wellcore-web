@@ -245,6 +245,34 @@ input:-webkit-autofill:focus{
   font-size:0.75rem;
 }
 
+/* Select fields */
+.sel-field{
+  width:100%;
+  padding:12px 14px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  font-size:0.95rem;
+  outline:none;
+  transition:border-color var(--transition);
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.sel-field:focus{
+  border-color:var(--orange);
+}
+.sel-field option{
+  background:#1a1a1e;
+  color:#f2f2f4;
+}
+.sel-field:-webkit-autofill{
+  -webkit-box-shadow:0 0 0 30px var(--surface-2) inset !important;
+  -webkit-text-fill-color:var(--white) !important;
+}
+
 /* Responsive */
 @media(max-width:480px){
   .card{padding:24px 20px}
@@ -289,11 +317,94 @@ input:-webkit-autofill:focus{
     <p id="validate-error-text" class="msg-text"></p>
   </div>
 
-  <!-- State: success -->
+  <!-- State: success (brief, then moves to intake) -->
   <div id="state-success" class="msg-box success-box" style="display:none">
     <div class="msg-icon">&#9989;</div>
     <div class="msg-title">Registro exitoso</div>
-    <p class="msg-text">Tu cuenta ha sido creada. Redirigiendo a tu portal...</p>
+    <p class="msg-text">Cuenta creada. Un paso m&aacute;s para personalizar tu plan...</p>
+  </div>
+
+  <!-- State: intake form (post-registration) -->
+  <div id="state-intake" style="display:none">
+    <div class="card">
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:4px">// Paso final</div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--white)">Cu&eacute;ntanos sobre ti</div>
+        <p style="font-size:0.78rem;color:var(--gray);margin-top:6px">Esto nos ayuda a personalizar tu programa de entrenamiento.</p>
+      </div>
+
+      <form id="intake-form" novalidate>
+        <div class="field">
+          <label for="int-genero">G&eacute;nero *</label>
+          <select id="int-genero" class="sel-field" required>
+            <option value="">Seleccionar</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Prefiero no especificar">Prefiero no especificar</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="int-objetivo">Objetivo principal *</label>
+          <select id="int-objetivo" class="sel-field" required>
+            <option value="">Seleccionar</option>
+            <option>Perder grasa corporal</option>
+            <option>Ganar masa muscular</option>
+            <option>Recomposici&oacute;n corporal</option>
+            <option>Mejorar rendimiento atl&eacute;tico</option>
+            <option>Mejorar salud general</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="int-experiencia">Experiencia de entrenamiento *</label>
+          <select id="int-experiencia" class="sel-field" required>
+            <option value="">Seleccionar</option>
+            <option>Principiante (menos de 6 meses)</option>
+            <option>Intermedio (6 meses - 2 a&ntilde;os)</option>
+            <option>Avanzado (m&aacute;s de 2 a&ntilde;os)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="int-dias">D&iacute;as por semana que puedes entrenar *</label>
+          <select id="int-dias" class="sel-field" required>
+            <option value="">Seleccionar</option>
+            <option>2 d&iacute;as</option>
+            <option>3 d&iacute;as</option>
+            <option>4 d&iacute;as</option>
+            <option>5 d&iacute;as</option>
+            <option>6+ d&iacute;as</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="int-equipo">Equipamiento disponible *</label>
+          <select id="int-equipo" class="sel-field" required>
+            <option value="">Seleccionar</option>
+            <option>Gimnasio completo</option>
+            <option>Home gym con pesas</option>
+            <option>Solo peso corporal</option>
+            <option>Mancuernas + bandas</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="int-lesion">Lesiones o condiciones m&eacute;dicas <span class="optional">(opcional)</span></label>
+          <input type="text" id="int-lesion" placeholder="Ej: lesi&oacute;n en rodilla, hernia...">
+        </div>
+
+        <div class="field">
+          <label for="int-expectativas">Qu&eacute; esperas de este programa <span class="optional">(opcional)</span></label>
+          <input type="text" id="int-expectativas" placeholder="Tus metas y expectativas">
+        </div>
+
+        <button type="submit" class="btn" id="intake-btn">
+          <span class="btn-text">Finalizar y entrar a mi portal</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+    </div>
   </div>
 
   <!-- State: form -->
@@ -549,23 +660,84 @@ input:-webkit-autofill:focus{
         return;
       }
 
-      // Success
+      // Success — save token, then show intake form
       if (result.data.token) {
         localStorage.setItem('wc_token', result.data.token);
+        window._wcToken = result.data.token;
       }
 
       hide(stateForm);
       show(stateSuccess);
 
+      // After brief success message, show intake form
       setTimeout(function() {
-        window.location.href = '/cliente.html';
-      }, 2000);
+        hide(stateSuccess);
+        show(document.getElementById('state-intake'));
+      }, 1500);
     })
     .catch(function() {
       setLoading(false);
       showApiError('Error de conexi\u00f3n. Verifica tu internet e int\u00e9ntalo de nuevo.');
     });
   });
+
+  // --- Intake form submit ---
+  var intakeForm = document.getElementById('intake-form');
+  var intakeBtn = document.getElementById('intake-btn');
+
+  if (intakeForm) {
+    intakeForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var genero = document.getElementById('int-genero').value;
+      var objetivo = document.getElementById('int-objetivo').value;
+      var experiencia = document.getElementById('int-experiencia').value;
+      var dias = document.getElementById('int-dias').value;
+      var equipo = document.getElementById('int-equipo').value;
+      var lesion = document.getElementById('int-lesion').value.trim();
+      var expectativas = document.getElementById('int-expectativas').value.trim();
+
+      // Basic validation
+      if (!genero || !objetivo || !experiencia || !dias || !equipo) {
+        alert('Por favor completa todos los campos marcados con *');
+        return;
+      }
+
+      // Disable button
+      intakeBtn.disabled = true;
+      intakeBtn.classList.add('loading');
+
+      var token = window._wcToken || localStorage.getItem('wc_token');
+      var intakeData = {
+        genero: genero,
+        objetivo: objetivo,
+        experiencia: experiencia,
+        dias_entrenamiento: dias,
+        equipamiento: equipo,
+        tiene_lesion: lesion ? 'Si' : 'No',
+        lesion_detalle: lesion,
+        expectativas: expectativas
+      };
+
+      fetch('/api/clients/intake.php', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(intakeData)
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() {
+        // Redirect to client portal
+        window.location.href = '/cliente.html';
+      })
+      .catch(function() {
+        // Even if save fails, redirect — data can be completed later
+        window.location.href = '/cliente.html';
+      });
+    });
+  }
 
 })();
 </script>

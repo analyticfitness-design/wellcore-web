@@ -5108,7 +5108,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
   } catch(e) {}
 })();
 
-const PLAN_LEVEL  = { esencial: 1, metodo: 2, elite: 3 };
+const PLAN_LEVEL  = { esencial: 1, metodo: 2, elite: 3, presencial: 2 };
 
 // ===== M35: VAPID Public Key (Web Push) =====
 const VAPID_PUBLIC_KEY = 'BDFT-BlbGextWpeux4kFpgfR8vebxrYXBquZolnvz74SmijMp6EdXo9C-ji8yoAUcLJjHh65fkGcpVaMrZIRPRE';
@@ -5338,6 +5338,31 @@ function closeSidebar() {
 
 // ===== PLAN TABS =====
 let planTabLoaded = {};
+window.hasRealPlan = false; // Set to true when API confirms real plan exists
+
+function renderPlanPending(container, tabName) {
+  var icons = { entrenamiento:'fa-dumbbell', nutricion:'fa-utensils', habitos:'fa-list-check', suplementacion:'fa-pills', ciclo:'fa-venus', bloodwork:'fa-vial' };
+  var labels = { entrenamiento:'entrenamiento', nutricion:'nutrición', habitos:'hábitos', suplementacion:'suplementos', ciclo:'ciclo', bloodwork:'labs' };
+  container.textContent = '';
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'text-align:center;padding:48px 24px';
+  var iconWrap = document.createElement('div');
+  iconWrap.style.cssText = 'width:56px;height:56px;margin:0 auto 16px;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center';
+  var ic = document.createElement('i');
+  ic.className = 'fas ' + (icons[tabName] || 'fa-clock');
+  ic.style.cssText = 'font-size:20px;color:#E31E24';
+  iconWrap.appendChild(ic);
+  wrap.appendChild(iconWrap);
+  var h = document.createElement('h4');
+  h.style.cssText = "font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#fff;letter-spacing:1px;margin:0 0 6px";
+  h.textContent = 'Pendiente de asignación';
+  wrap.appendChild(h);
+  var p = document.createElement('p');
+  p.style.cssText = 'color:var(--text-sec,#8b8b96);font-size:.82rem;line-height:1.5;max-width:300px;margin:0 auto';
+  p.textContent = 'Tu coach personalizará tu plan de ' + (labels[tabName] || tabName) + ' basado en tus datos. Te notificaremos cuando esté listo.';
+  wrap.appendChild(p);
+  container.appendChild(wrap);
+}
 
 function loadPlanTab(tab) {
   // Tab nav UI
@@ -5354,14 +5379,18 @@ function loadPlanTab(tab) {
   const interactiveTabs = ['nutricion','habitos','suplementacion','ciclo','bloodwork'];
 
   if (planLevel >= required) {
-    // Unlocked — render interactive content
+    // Unlocked — render interactive content (or pending state if no real plan)
     if (!planTabLoaded[tab] && interactiveTabs.indexOf(tab) >= 0) {
-      content.innerHTML = '';
-      if (tab === 'nutricion') renderNutritionInteractive(content);
-      else if (tab === 'habitos') renderHabitsInteractive(content);
-      else if (tab === 'suplementacion') renderSupplementsInteractive(content);
-      else if (tab === 'ciclo') renderCycleInteractive(content);
-      else if (tab === 'bloodwork') renderBloodworkInteractive(content);
+      content.textContent = '';
+      if (!window.hasRealPlan) {
+        renderPlanPending(content, tab);
+      } else {
+        if (tab === 'nutricion') renderNutritionInteractive(content);
+        else if (tab === 'habitos') renderHabitsInteractive(content);
+        else if (tab === 'suplementacion') renderSupplementsInteractive(content);
+        else if (tab === 'ciclo') renderCycleInteractive(content);
+        else if (tab === 'bloodwork') renderBloodworkInteractive(content);
+      }
       planTabLoaded[tab] = true;
     } else if (tab === 'entrenamiento' && !planTabLoaded[tab]) {
       // Check for personal entrenamiento plan (for send button)
@@ -10370,16 +10399,35 @@ document.addEventListener('keydown', function(e) {
     if (!container) return;
     container.innerHTML = '';
 
-    // Show "plan in preparation" banner when using demo data
+    // When no real plan assigned: show waiting state (no demo data)
     if (isUsingDemo) {
-      var banner = document.createElement('div');
-      banner.className = 'trn-demo-banner';
-      banner.innerHTML = '<div class="trn-demo-icon"><i class="fas fa-hard-hat"></i></div>' +
-        '<div class="trn-demo-text">' +
-        '<strong>Tu plan personalizado está en preparación</strong>' +
-        '<span>Tu coach está diseñando un programa a tu medida. Mientras tanto, aquí tienes un programa demo para que inicies tu entrenamiento y vayas calentando motores.</span>' +
-        '</div>';
-      container.appendChild(banner);
+      var waitDiv = document.createElement('div');
+      waitDiv.style.cssText = 'text-align:center;padding:60px 24px';
+      var iconWrap = document.createElement('div');
+      iconWrap.style.cssText = 'width:64px;height:64px;margin:0 auto 20px;background:rgba(227,30,36,0.1);border:1px solid rgba(227,30,36,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center';
+      var icon = document.createElement('i');
+      icon.className = 'fas fa-dumbbell';
+      icon.style.cssText = 'font-size:24px;color:#E31E24';
+      iconWrap.appendChild(icon);
+      waitDiv.appendChild(iconWrap);
+      var h3 = document.createElement('h3');
+      h3.style.cssText = "font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#fff;letter-spacing:1px;margin:0 0 8px";
+      h3.textContent = 'Tu plan está en camino';
+      waitDiv.appendChild(h3);
+      var p = document.createElement('p');
+      p.style.cssText = 'color:var(--text-sec);font-size:.88rem;line-height:1.6;max-width:320px;margin:0 auto 24px';
+      p.textContent = 'Tu coach está diseñando un programa personalizado basado en tus objetivos y datos. Recibirás una notificación cuando esté listo.';
+      waitDiv.appendChild(p);
+      var badge = document.createElement('div');
+      badge.style.cssText = 'display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:8px 16px;font-size:.78rem;color:var(--gray)';
+      var clockIcon = document.createElement('i');
+      clockIcon.className = 'fas fa-clock';
+      clockIcon.style.color = '#E31E24';
+      badge.appendChild(clockIcon);
+      badge.appendChild(document.createTextNode(' Tiempo estimado: 24-48h'));
+      waitDiv.appendChild(badge);
+      container.appendChild(waitDiv);
+      return;
     }
 
     var totalEx = 0, doneEx = 0;
@@ -10753,6 +10801,7 @@ document.addEventListener('keydown', function(e) {
     .then(function(data) {
       if (data && data.plan && data.plan.days && data.plan.days.length > 0) {
         isUsingDemo = false;
+        window.hasRealPlan = true;
         // Map API plan to our format
         TRAINING_DATA.title = data.plan.titulo || data.plan.title || TRAINING_DATA.title;
         TRAINING_DATA.subtitle = data.plan.subtitulo || data.plan.subtitle || TRAINING_DATA.subtitle;
