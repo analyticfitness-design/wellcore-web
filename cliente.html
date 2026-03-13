@@ -5630,7 +5630,7 @@ function renderNutritionInteractive(container) {
   data.meals.forEach(function(m){m.foods.forEach(function(f){totals.cal+=f.cal;totals.prot+=f.prot;totals.carbs+=f.carbs;totals.fat+=f.fat})});
 
   var html = '';
-  if (isUsingDemo || !window.hasRealPlan) {
+  if (!window.hasRealPlan) {
     html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Datos demo — tu plan personalizado aparecerá cuando tu coach lo asigne.</div>';
   }
 
