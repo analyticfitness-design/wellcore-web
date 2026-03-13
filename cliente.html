@@ -5137,6 +5137,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 let clientName  = localStorage.getItem('wc_client_name')  || 'Cliente';
 let clientPlan  = localStorage.getItem('wc_client_plan')  || 'esencial';
 let clientId    = localStorage.getItem('wc_client_id')    || 'demo';
+let clientCode  = localStorage.getItem('wc_client_code')  || '';
 let clientEmail = localStorage.getItem('wc_client_email') || '';
 
 (function(){
@@ -5161,10 +5162,12 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
       clientName  = c.name  || clientName;
       clientPlan  = c.plan  || clientPlan;
       clientId    = c.id    || clientId;
+      clientCode  = c.client_code || clientCode;
       clientEmail = c.email || clientEmail;
       localStorage.setItem('wc_client_name', clientName);
       localStorage.setItem('wc_client_plan', clientPlan);
       localStorage.setItem('wc_client_id', clientId);
+      localStorage.setItem('wc_client_code', clientCode);
       localStorage.setItem('wc_client_email', clientEmail);
       document.body.style.visibility = 'visible';
       var _initOk = false;
@@ -5524,7 +5527,7 @@ function loadPlanTab(tab) {
       planTabLoaded[tab] = true;
     } else if (tab === 'entrenamiento' && !planTabLoaded[tab]) {
       // Check for personal entrenamiento plan (for send button)
-      fetch('planes/' + clientId + '-entrenamiento.html').then(function(r) {
+      fetch('planes/' + (clientCode || clientId) + '-entrenamiento.html').then(function(r) {
         if (!r.ok) throw new Error('not found');
         return r.text();
       }).then(function(html) {
@@ -5626,7 +5629,10 @@ function renderNutritionInteractive(container) {
   var totals = {cal:0,prot:0,carbs:0,fat:0};
   data.meals.forEach(function(m){m.foods.forEach(function(f){totals.cal+=f.cal;totals.prot+=f.prot;totals.carbs+=f.carbs;totals.fat+=f.fat})});
 
-  var html = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Datos demo — tu plan personalizado aparecerá cuando tu coach lo asigne.</div>';
+  var html = '';
+  if (isUsingDemo || !window.hasRealPlan) {
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #E31E24;padding:12px 16px;margin-bottom:18px;font-size:.8rem;color:var(--text-sec)"><i class="fas fa-info-circle" style="color:#E31E24"></i> Datos demo — tu plan personalizado aparecerá cuando tu coach lo asigne.</div>';
+  }
 
   // KPI Bar
   html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">';
@@ -8543,7 +8549,7 @@ function renderBiblioteca() {
       actions.appendChild(btn);
     } else if (f.isPlan) {
       // Detectar si existe plan personalizado via HEAD request
-      var personalFile = 'planes/' + clientId + '-' + f.planType + '.html';
+      var personalFile = 'planes/' + (clientCode || clientId) + '-' + f.planType + '.html';
       btn.textContent = '...';
       btn.disabled = true;
       fetch(personalFile, { method: 'HEAD' })
@@ -10806,7 +10812,7 @@ document.addEventListener('keydown', function(e) {
       // Trigger iframe load if not loaded
       var iframe = document.getElementById('iframe-entrenamiento');
       if (iframe && (!iframe.src || iframe.src === 'about:blank' || iframe.src.indexOf('about:blank') >= 0)) {
-        var personalSrc = 'planes/' + clientId + '-entrenamiento.html';
+        var personalSrc = 'planes/' + (clientCode || clientId) + '-entrenamiento.html';
         var demoSrc = 'planes/demo-entrenamiento.html';
         // Verify personal plan actually exists (check content has plan marker)
         fetch(personalSrc).then(function(r) {
@@ -11009,53 +11015,110 @@ document.addEventListener('keydown', function(e) {
     var token = localStorage.getItem('wc_token');
     if (!token) { renderTraining(); return; }
 
-    // Try to fetch assigned plan
-    fetch('/api/ai/render-plan.php?type=entrenamiento', {
+    // Fetch ALL active assigned plans from client-facing endpoint
+    fetch('/api/plans/get.php', {
       headers: { 'Authorization': 'Bearer ' + token }
     })
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(data) {
-      if (data && data.plan && data.plan.days && data.plan.days.length > 0) {
-        isUsingDemo = false;
+      if (data && data.plans && data.plans.length > 0) {
         window.hasRealPlan = true;
-        // Map API plan to our format
-        TRAINING_DATA.title = data.plan.titulo || data.plan.title || TRAINING_DATA.title;
-        TRAINING_DATA.subtitle = data.plan.subtitulo || data.plan.subtitle || TRAINING_DATA.subtitle;
-        TRAINING_DATA.days = data.plan.days.map(function(d, i) {
-          var group = 'full';
-          var sub = (d.subtitle || d.subtitulo || '').toLowerCase();
-          if (sub.indexOf('superior') >= 0 || sub.indexOf('push') >= 0 || sub.indexOf('pecho') >= 0) group = 'push';
-          else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('leg') >= 0) group = 'legs';
-          else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0) group = 'pull';
 
-          var dayNames = ['LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO'];
-          return {
-            id: 'dia-' + String.fromCharCode(97 + i),
-            day: d.day || dayNames[i] || ('DÍA ' + (i+1)),
-            label: '// sesión ' + String(i+1).padStart(2,'0') + ' de ' + String(data.plan.days.length).padStart(2,'0'),
-            title: d.title || d.titulo || ('DÍA ' + String.fromCharCode(65 + i)),
-            subtitle: d.subtitle || d.subtitulo || '',
-            group: group,
-            stats: d.stats || { volume: (d.exercises || []).reduce(function(a,e){ return a + (e.sets||0); }, 0) + ' series', rpe: '7.5', focus: group.toUpperCase(), muscles: sub.toUpperCase() || 'FULL BODY' },
-            warmup: d.warmup || d.calentamiento || 'Movilidad articular general + activación específica. 8-10 min.',
-            warmupTime: d.warmupTime || '10 min',
-            exercises: (d.exercises || d.ejercicios || []).map(function(e) {
-              return {
-                name: e.name || e.nombre || 'Ejercicio',
-                sets: e.sets || e.series || 3,
-                reps: e.reps || e.repeticiones || 10,
-                rpe: e.rpe || '7/10',
-                rest: e.rest || e.descanso || '90s',
-                notes: e.notes || e.notas || ''
+        data.plans.forEach(function(rawPlan) {
+          // plan_data comes pre-parsed from API; fallback to content string
+          var planContent = rawPlan.plan_data || rawPlan.content;
+          if (typeof planContent === 'string') {
+            try { planContent = JSON.parse(planContent); } catch(e) { planContent = null; }
+          }
+          if (!planContent) return;
+
+          var ptype = rawPlan.plan_type;
+
+          // ── ENTRENAMIENTO ──
+          if (ptype === 'entrenamiento') {
+            var planObj = planContent.entrenamiento || planContent;
+            // Claude generates nested: plan[].days[] (per week). Flatten to first week's days.
+            var days = planObj.days || planObj.dias || [];
+            if (days.length === 0 && planObj.plan && planObj.plan.length > 0) {
+              days = planObj.plan[0].days || [];
+            }
+            if (days.length > 0) {
+              isUsingDemo = false;
+              TRAINING_DATA.title = planObj.titulo || planObj.title || TRAINING_DATA.title;
+              TRAINING_DATA.subtitle = planObj.subtitulo || planObj.subtitle || TRAINING_DATA.subtitle;
+              TRAINING_DATA.days = days.map(function(d, i) {
+                var group = 'full';
+                var sub = (d.subtitle || d.subtitulo || d.focus || '').toLowerCase();
+                if (sub.indexOf('superior') >= 0 || sub.indexOf('push') >= 0 || sub.indexOf('pecho') >= 0) group = 'push';
+                else if (sub.indexOf('inferior') >= 0 || sub.indexOf('pierna') >= 0 || sub.indexOf('leg') >= 0) group = 'legs';
+                else if (sub.indexOf('pull') >= 0 || sub.indexOf('espalda') >= 0) group = 'pull';
+
+                var dayNames = ['LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO'];
+                return {
+                  id: 'dia-' + String.fromCharCode(97 + i),
+                  day: d.day || dayNames[i] || ('DÍA ' + (i+1)),
+                  label: '// sesión ' + String(i+1).padStart(2,'0') + ' de ' + String(days.length).padStart(2,'0'),
+                  title: d.title || d.titulo || d.day || ('DÍA ' + String.fromCharCode(65 + i)),
+                  subtitle: d.subtitle || d.subtitulo || d.focus || '',
+                  group: group,
+                  stats: d.stats || { volume: (d.exercises || d.ejercicios || []).reduce(function(a,e){ return a + (e.sets||e.series||0); }, 0) + ' series', rpe: '7.5', focus: group.toUpperCase(), muscles: sub.toUpperCase() || 'FULL BODY' },
+                  warmup: d.warmup || d.calentamiento || 'Movilidad articular general + activación específica. 8-10 min.',
+                  warmupTime: d.warmupTime || '10 min',
+                  exercises: (d.exercises || d.ejercicios || []).map(function(e) {
+                    return {
+                      name: e.name || e.nombre || e.food || 'Ejercicio',
+                      sets: e.sets || e.series || 3,
+                      reps: e.reps || e.repeticiones || 10,
+                      rpe: e.rpe || '7/10',
+                      rest: e.rest || e.descanso || '90s',
+                      notes: e.notes || e.notas || ''
+                    };
+                  }),
+                  cooldown: d.cooldown || d.vueltaCalma || 'Estiramiento estático 5 min. Respiración diafragmática.'
+                };
+              });
+            }
+          }
+
+          // ── NUTRICIÓN ──
+          if (ptype === 'nutricion') {
+            var nutObj = planContent.nutricion || planContent;
+            var meals = nutObj.meals || nutObj.comidas || [];
+            if (meals.length > 0) {
+              // Map Claude AI format to NUTRITION_DATA format
+              NUTRITION_DATA.targets = {
+                cal: nutObj.calories_target || nutObj.calorias || NUTRITION_DATA.targets.cal,
+                prot: (nutObj.macros && nutObj.macros.protein_g) || NUTRITION_DATA.targets.prot,
+                carbs: (nutObj.macros && nutObj.macros.carbs_g) || NUTRITION_DATA.targets.carbs,
+                fat: (nutObj.macros && nutObj.macros.fat_g) || NUTRITION_DATA.targets.fat
               };
-            }),
-            cooldown: d.cooldown || d.vueltaCalma || 'Estiramiento estático 5 min. Respiración diafragmática.'
-          };
+              NUTRITION_DATA.meals = meals.map(function(m) {
+                var mealName = m.meal || m.name || m.nombre || 'Comida';
+                // Claude format: options[].foods[] or direct foods[]
+                var allFoods = [];
+                if (m.options && m.options.length > 0) {
+                  // Use first option by default
+                  var opt = m.options[0];
+                  allFoods = (opt.foods || []).map(function(f) {
+                    return { name: f.food || f.name || f.nombre, qty: f.portion || f.qty || f.porcion || '', cal: f.calories || f.cal || 0, prot: f.protein || f.prot || 0, carbs: f.carbs || 0, fat: f.fat || 0 };
+                  });
+                } else if (m.foods) {
+                  allFoods = m.foods.map(function(f) {
+                    return { name: f.food || f.name || f.nombre, qty: f.portion || f.qty || f.porcion || '', cal: f.calories || f.cal || 0, prot: f.protein || f.prot || 0, carbs: f.carbs || 0, fat: f.fat || 0 };
+                  });
+                }
+                return { name: mealName, foods: allFoods };
+              });
+            }
+          }
         });
+        // Reset tab cache so interactive tabs re-render with real data
+        if (typeof planTabLoaded !== 'undefined') planTabLoaded = {};
       }
       renderTraining();
     })
-    .catch(function() {
+    .catch(function(err) {
+      console.warn('[WC] tryLoadRealPlan error:', err);
       renderTraining();
     });
   }

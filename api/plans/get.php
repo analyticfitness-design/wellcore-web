@@ -31,17 +31,37 @@ if ($client['plan'] === 'rise' && $type === 'training') {
     $dbType = 'rise';
 }
 
-$sql    = "SELECT id, plan_type, content, version, valid_from, created_at
-           FROM assigned_plans
-           WHERE client_id = ? AND active = 1";
+$sql    = "SELECT ap.id, ap.plan_type, ap.content, ap.version, ap.valid_from, ap.created_at,
+                  ap.ai_generation_id, ag.parsed_json AS plan_json
+           FROM assigned_plans ap
+           LEFT JOIN ai_generations ag ON ag.id = ap.ai_generation_id
+           WHERE ap.client_id = ? AND ap.active = 1";
 $params = [$client['id']];
 
 if ($dbType) {
-    $sql    .= " AND plan_type = ?";
+    $sql    .= " AND ap.plan_type = ?";
     $params[] = $dbType;
 }
-$sql .= " ORDER BY plan_type, version DESC";
+$sql .= " ORDER BY ap.plan_type, ap.version DESC";
 
 $stmt = $db->prepare($sql);
 $stmt->execute($params);
-respond(['plans' => $stmt->fetchAll()]);
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// If content is HTML (from render-plan), prefer plan_json for structured data
+foreach ($rows as &$row) {
+    if (!empty($row['plan_json'])) {
+        $row['plan_data'] = json_decode($row['plan_json'], true);
+    } elseif (!empty($row['content'])) {
+        $decoded = json_decode($row['content'], true);
+        if ($decoded) $row['plan_data'] = $decoded;
+    }
+    // Don't send large HTML content to client API — only plan_data matters
+    if (isset($row['plan_data'])) {
+        unset($row['content']);
+    }
+    unset($row['plan_json'], $row['ai_generation_id']);
+}
+unset($row);
+
+respond(['plans' => $rows]);
