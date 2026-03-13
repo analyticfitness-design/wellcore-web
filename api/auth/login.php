@@ -63,7 +63,7 @@ if ($type === 'admin') {
 }
 
 // Client login
-$stmt = $db->prepare("SELECT id, client_code, name, email, plan, status, password_hash FROM clients WHERE email = ?");
+$stmt = $db->prepare("SELECT id, client_code, name, email, plan, status, password_hash, must_change_password FROM clients WHERE email = ?");
 $stmt->execute([strtolower($identity)]);
 $client = $stmt->fetch();
 
@@ -116,13 +116,14 @@ respond([
     'token'       => $token,
     'expires_in'  => ($remember ? TOKEN_EXPIRY_REMEMBER : TOKEN_EXPIRY_HOURS) * 3600,
     'client'      => [
-        'id'          => $client['id'],
-        'client_code' => $client['client_code'],
-        'name'        => $client['name'],
-        'email'       => $client['email'],
-        'plan'        => $client['plan'],
-        'status'      => $client['status'],
-        'profile'     => $profile ?: null,
+        'id'                   => $client['id'],
+        'client_code'          => $client['client_code'],
+        'name'                 => $client['name'],
+        'email'                => $client['email'],
+        'plan'                 => $client['plan'],
+        'status'               => $client['status'],
+        'must_change_password' => (bool) ($client['must_change_password'] ?? false),
+        'profile'              => $profile ?: null,
     ],
     'coach_theme' => $coachTheme,
 ]);

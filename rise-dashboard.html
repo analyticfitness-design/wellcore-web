@@ -5036,5 +5036,109 @@ document.addEventListener('mousemove', function(e) {
   el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
 });
 </script>
+
+<!-- ============================================================
+     MODAL: Cambio de contraseña obligatorio (primer ingreso)
+     ============================================================ -->
+<div id="changePasswordOverlay" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;font-family:'Inter',Arial,sans-serif;">
+  <div style="background:#111113;border:1px solid #1e1e22;max-width:440px;width:90%;padding:40px 32px;text-align:center;">
+    <div style="width:56px;height:56px;border-radius:50%;background:rgba(227,30,36,0.12);border:1px solid rgba(227,30,36,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <span style="font-size:24px;color:#E31E24;">&#128274;</span>
+    </div>
+    <h2 style="font-size:22px;font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:0.5px;">CAMBIA TU CONTRASEÑA</h2>
+    <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 24px;line-height:1.6;">Por seguridad, debes crear una contraseña personal antes de continuar. La contraseña temporal que recibiste por email dejará de funcionar.</p>
+    <div id="cpError" style="display:none;background:rgba(227,30,36,0.1);border:1px solid rgba(227,30,36,0.3);color:#E31E24;font-size:12px;padding:10px 14px;margin-bottom:16px;text-align:left;"></div>
+    <div style="text-align:left;margin-bottom:12px;">
+      <label style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:6px;">Contraseña temporal (del email)</label>
+      <input type="password" id="cpCurrent" placeholder="Ingresa la contraseña del email" style="width:100%;background:#0a0a0a;border:1px solid #1e1e22;color:#fff;padding:12px 14px;font-size:14px;outline:none;box-sizing:border-box;" />
+    </div>
+    <div style="text-align:left;margin-bottom:12px;">
+      <label style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:6px;">Nueva contraseña</label>
+      <input type="password" id="cpNew" placeholder="Mínimo 6 caracteres" style="width:100%;background:#0a0a0a;border:1px solid #1e1e22;color:#fff;padding:12px 14px;font-size:14px;outline:none;box-sizing:border-box;" />
+    </div>
+    <div style="text-align:left;margin-bottom:20px;">
+      <label style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:6px;">Confirmar nueva contraseña</label>
+      <input type="password" id="cpConfirm" placeholder="Repite la nueva contraseña" style="width:100%;background:#0a0a0a;border:1px solid #1e1e22;color:#fff;padding:12px 14px;font-size:14px;outline:none;box-sizing:border-box;" />
+    </div>
+    <button id="cpSubmitBtn" onclick="submitChangePassword()" style="width:100%;background:#E31E24;color:#fff;border:none;padding:14px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">GUARDAR NUEVA CONTRASEÑA</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Check if must change password on load
+  if (localStorage.getItem('wc_must_change_password') === '1') {
+    setTimeout(function() {
+      var overlay = document.getElementById('changePasswordOverlay');
+      if (overlay) overlay.style.display = 'flex';
+    }, 800);
+  }
+})();
+
+function submitChangePassword() {
+  var currentPw = document.getElementById('cpCurrent').value;
+  var newPw     = document.getElementById('cpNew').value;
+  var confirmPw = document.getElementById('cpConfirm').value;
+  var errEl     = document.getElementById('cpError');
+  var btn       = document.getElementById('cpSubmitBtn');
+
+  errEl.style.display = 'none';
+
+  if (!currentPw) {
+    errEl.textContent = 'Ingresa la contraseña temporal que recibiste por email.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (newPw.length < 6) {
+    errEl.textContent = 'La nueva contraseña debe tener al menos 6 caracteres.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (newPw !== confirmPw) {
+    errEl.textContent = 'Las contraseñas no coinciden.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (newPw === currentPw) {
+    errEl.textContent = 'La nueva contraseña debe ser diferente a la temporal.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'GUARDANDO...';
+
+  var token = localStorage.getItem('wc_token');
+  fetch('/api/client/change-password.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify({
+      current_password: currentPw,
+      new_password: newPw
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      localStorage.removeItem('wc_must_change_password');
+      document.getElementById('changePasswordOverlay').style.display = 'none';
+    } else {
+      errEl.textContent = data.error || 'Error al cambiar la contraseña. Intenta de nuevo.';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'GUARDAR NUEVA CONTRASEÑA';
+    }
+  })
+  .catch(function() {
+    errEl.textContent = 'Error de conexión. Verifica tu internet e intenta de nuevo.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'GUARDAR NUEVA CONTRASEÑA';
+  });
+}
+</script>
 </body>
 </html>

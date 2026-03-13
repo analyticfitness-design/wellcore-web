@@ -70,7 +70,7 @@ function authenticateClient(): array {
 
     $db = getDB();
     $stmt = $db->prepare("
-        SELECT t.user_id, c.id, c.client_code, c.name, c.email, c.plan, c.status
+        SELECT t.user_id, c.id, c.client_code, c.name, c.email, c.plan, c.status, c.must_change_password
         FROM auth_tokens t
         JOIN clients c ON c.id = t.user_id
         WHERE t.token = ? AND t.user_type = 'client' AND t.expires_at > NOW()

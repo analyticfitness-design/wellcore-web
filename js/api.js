@@ -82,6 +82,11 @@ const WC_API = (() => {
           localStorage.setItem('wc_client_email', data.client.email);
           localStorage.setItem('wc_client_plan',  data.client.plan);
           localStorage.setItem('wc_client_id',    data.client.client_code);
+          if (data.client.must_change_password) {
+            localStorage.setItem('wc_must_change_password', '1');
+          } else {
+            localStorage.removeItem('wc_must_change_password');
+          }
         }
         if (data.coach_theme) {
           localStorage.setItem('wc_coach_theme', JSON.stringify(data.coach_theme));

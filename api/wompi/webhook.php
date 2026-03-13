@@ -296,8 +296,8 @@ if ($status === 'approved') {
             $firstName = $nameParts[0] ?? 'Cliente';
 
             $stmt = $db->prepare("
-                INSERT INTO clients (client_code, name, email, password_hash, plan, status, fecha_inicio)
-                VALUES (?, ?, ?, ?, ?, 'activo', CURDATE())
+                INSERT INTO clients (client_code, name, email, password_hash, must_change_password, plan, status, fecha_inicio)
+                VALUES (?, ?, ?, ?, 1, ?, 'activo', CURDATE())
             ");
             $stmt->execute([$clientCode, trim($buyerName) ?: $firstName, $buyerEmail, $passwordHash, $plan]);
             $clientId = $db->lastInsertId();
@@ -588,7 +588,7 @@ function send_welcome_email(
   </td></tr>
   </table>
   <div style="margin-top:10px;padding:10px 14px;background:rgba(227,30,36,.08);border-left:2px solid #E31E24">
-    <div style="font-size:11px;color:#a1a1aa;line-height:1.5">Cambia tu contrasena al ingresar por primera vez.</div>
+    <div style="font-size:11px;color:#a1a1aa;line-height:1.5"><strong style="color:#E31E24;">IMPORTANTE:</strong> Al ingresar por primera vez, el sistema te pedira crear una nueva contrasena personal. La contrasena temporal dejara de funcionar.</div>
   </div>
 </td></tr>
 CRED;
