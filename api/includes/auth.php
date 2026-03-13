@@ -174,7 +174,7 @@ function peekTokenUserType(): ?string {
 
 // Optional: require specific plan level
 function requirePlan(array $client, string $minPlan): void {
-    $levels = ['esencial' => 1, 'metodo' => 2, 'elite' => 3];
+    $levels = ['esencial' => 1, 'metodo' => 2, 'elite' => 3, 'presencial' => 3];
     if (($levels[$client['plan']] ?? 0) < ($levels[$minPlan] ?? 99)) {
         respondError("This feature requires plan: $minPlan", 403, ['required_plan' => $minPlan]);
     }

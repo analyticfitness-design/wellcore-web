@@ -5232,7 +5232,7 @@ let clientEmail = localStorage.getItem('wc_client_email') || '';
   } catch(e) {}
 })();
 
-const PLAN_LEVEL  = { esencial: 1, metodo: 2, elite: 3, presencial: 2, rise: 2 };
+const PLAN_LEVEL  = { esencial: 1, metodo: 2, elite: 3, presencial: 3, rise: 3 };
 
 // ===== M35: VAPID Public Key (Web Push) =====
 const VAPID_PUBLIC_KEY = 'BDFT-BlbGextWpeux4kFpgfR8vebxrYXBquZolnvz74SmijMp6EdXo9C-ji8yoAUcLJjHh65fkGcpVaMrZIRPRE';
@@ -11086,11 +11086,14 @@ document.addEventListener('keydown', function(e) {
             var meals = nutObj.meals || nutObj.comidas || [];
             if (meals.length > 0) {
               // Map Claude AI format to NUTRITION_DATA format
+              // Targets can come from multiple places in the AI response
+              var macros = nutObj.macros || nutObj.macronutrient_distribution || nutObj.daily_macro_targets_adjusted || {};
+              var calStrat = nutObj.caloric_strategy || {};
               NUTRITION_DATA.targets = {
-                cal: nutObj.calories_target || nutObj.calorias || NUTRITION_DATA.targets.cal,
-                prot: (nutObj.macros && nutObj.macros.protein_g) || NUTRITION_DATA.targets.prot,
-                carbs: (nutObj.macros && nutObj.macros.carbs_g) || NUTRITION_DATA.targets.carbs,
-                fat: (nutObj.macros && nutObj.macros.fat_g) || NUTRITION_DATA.targets.fat
+                cal: nutObj.calories_target || calStrat.target_calories || nutObj.daily_macro_targets_adjusted && nutObj.daily_macro_targets_adjusted.total_calories || NUTRITION_DATA.targets.cal,
+                prot: macros.protein_g || NUTRITION_DATA.targets.prot,
+                carbs: macros.carbs_g || NUTRITION_DATA.targets.carbs,
+                fat: macros.fat_g || NUTRITION_DATA.targets.fat
               };
               NUTRITION_DATA.meals = meals.map(function(m) {
                 var mealName = m.meal || m.name || m.nombre || 'Comida';
