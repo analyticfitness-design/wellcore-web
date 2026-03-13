@@ -252,6 +252,22 @@ if ($status === 'approved') {
         'method'    => $paymentMethod,
     ]);
 
+    // Confirmar uso de código de descuento si aplica
+    try {
+        require_once __DIR__ . '/../config/database.php';
+        $dcDb = getDB();
+        $dcUsage = $dcDb->prepare("SELECT discount_code_id FROM discount_code_usage WHERE reference_code = ? AND payment_status = 'pending'");
+        $dcUsage->execute([$referenceCode]);
+        $dcRow = $dcUsage->fetch(PDO::FETCH_ASSOC);
+        if ($dcRow) {
+            $dcDb->prepare("UPDATE discount_code_usage SET payment_status = 'approved' WHERE reference_code = ?")->execute([$referenceCode]);
+            $dcDb->prepare("UPDATE discount_codes SET times_used = times_used + 1 WHERE id = ?")->execute([$dcRow['discount_code_id']]);
+            wc_log($webhookLog, 'INFO', 'Descuento confirmado', ['discount_code_id' => $dcRow['discount_code_id'], 'reference' => $referenceCode]);
+        }
+    } catch (\Throwable $e) {
+        wc_log($webhookLog, 'WARN', 'Error actualizando descuento: ' . $e->getMessage());
+    }
+
     // Crear o activar cliente en MySQL
     $tempPassword = null;
     try {

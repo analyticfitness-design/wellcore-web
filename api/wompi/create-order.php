@@ -94,10 +94,11 @@ if (!is_array($body)) {
     $body = $_POST;
 }
 
-$plan       = sanitize($body['plan']        ?? '');
-$buyerName  = sanitize($body['buyer_name']  ?? '');
-$buyerEmail = strtolower(trim($body['buyer_email'] ?? ''));
-$buyerPhone = sanitize($body['buyer_phone'] ?? '');
+$plan         = sanitize($body['plan']          ?? '');
+$buyerName    = sanitize($body['buyer_name']    ?? '');
+$buyerEmail   = strtolower(trim($body['buyer_email'] ?? ''));
+$buyerPhone   = sanitize($body['buyer_phone']   ?? '');
+$discountCode = strtoupper(trim($body['discount_code'] ?? ''));
 
 // -------------------------------------------------------
 // VALIDACIONES
@@ -123,9 +124,67 @@ $referenceCode = 'WC-' . $plan . '-' . time();
 // -------------------------------------------------------
 // DATOS DEL PLAN
 // -------------------------------------------------------
-$planData      = WELLCORE_PLANS[$plan];
-$amountInCents = $planData['amount_in_cents'];
-$currency      = $planData['currency'];
+$planData        = WELLCORE_PLANS[$plan];
+$originalCents   = $planData['amount_in_cents'];
+$amountInCents   = $originalCents;
+$currency        = $planData['currency'];
+$discountApplied = null;
+
+// -------------------------------------------------------
+// VALIDAR Y APLICAR CÓDIGO DE DESCUENTO
+// -------------------------------------------------------
+if ($discountCode !== '') {
+    require_once __DIR__ . '/../config/database.php';
+    $db = getDB();
+
+    $dcStmt = $db->prepare("SELECT * FROM discount_codes WHERE code = ? AND is_active = 1");
+    $dcStmt->execute([$discountCode]);
+    $dc = $dcStmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$dc) {
+        respondError('Código de descuento no válido.');
+    }
+
+    $now = new DateTime();
+    if ($dc['starts_at'] && new DateTime($dc['starts_at']) > $now) {
+        respondError('Este código aún no está activo.');
+    }
+    if ($dc['expires_at'] && new DateTime($dc['expires_at']) < $now) {
+        respondError('Este código ha expirado.');
+    }
+    if ($dc['max_uses'] > 0 && $dc['times_used'] >= $dc['max_uses']) {
+        respondError('Este código ya fue utilizado.');
+    }
+    if ($dc['applies_to']) {
+        $validPlans = array_map('trim', explode(',', $dc['applies_to']));
+        if (!in_array($plan, $validPlans, true)) {
+            respondError('Este código no aplica para el plan ' . strtoupper($plan) . '.');
+        }
+    }
+
+    // Calcular descuento
+    if ($dc['discount_type'] === 'percent') {
+        $discountCents = (int) round($originalCents * ($dc['discount_value'] / 100));
+    } else {
+        $discountCents = (int) ($dc['discount_value'] * 100);
+    }
+    $discountCents = min($discountCents, $originalCents);
+    $amountInCents = $originalCents - $discountCents;
+
+    // Registrar uso pendiente
+    $db->prepare("INSERT INTO discount_code_usage
+        (discount_code_id, buyer_email, reference_code, plan, original_amount, discount_amount, final_amount)
+        VALUES (?, ?, ?, ?, ?, ?, ?)")
+        ->execute([$dc['id'], $buyerEmail, $referenceCode, $plan, $originalCents, $discountCents, $amountInCents]);
+
+    $discountApplied = [
+        'code'       => $dc['code'],
+        'type'       => $dc['discount_type'],
+        'value'      => (float) $dc['discount_value'],
+        'saved_cents'=> $discountCents,
+        'saved_cop'  => number_format($discountCents / 100, 0, ',', '.'),
+    ];
+}
 
 // -------------------------------------------------------
 // CALCULAR HASH DE INTEGRIDAD WOMPI
@@ -141,7 +200,7 @@ $transaction = [
     'reference_code'        => $referenceCode,
     'plan'                  => $plan,
     'amount_in_cents'       => $amountInCents,
-    'amount_cop'            => $planData['amount_cop'],
+    'amount_cop'            => (int) ($amountInCents / 100),
     'currency'              => $currency,
     'buyer_name'            => $buyerName,
     'buyer_email'           => $buyerEmail,
@@ -171,4 +230,6 @@ echo json_encode([
     'plan_display'   => $planData['display'],
     'plan_desc'      => $planData['description'],
     'sandbox'        => WOMPI_SANDBOX,
+    'discount'       => $discountApplied,
+    'original_amount'=> $originalCents,
 ]);

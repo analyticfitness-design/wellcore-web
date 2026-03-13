@@ -520,6 +520,71 @@
             color: var(--dark);
         }
 
+        /* Discount code */
+        .discount-section {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+        .discount-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--dark); margin-bottom: 10px;
+        }
+        .discount-row {
+            display: flex; gap: 8px; align-items: stretch;
+        }
+        .discount-input {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--white);
+            padding: 11px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+            outline: none;
+            transition: border-color 0.1s linear;
+        }
+        .discount-input::placeholder { color: var(--dark); text-transform: none; letter-spacing: 0.05em; }
+        .discount-input:focus { border-color: var(--red); }
+        .discount-btn {
+            padding: 11px 20px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px; letter-spacing: 0.08em;
+            color: var(--white); background: transparent;
+            border: 1px solid var(--border);
+            cursor: pointer; transition: all 0.1s linear;
+            white-space: nowrap;
+        }
+        .discount-btn:hover { border-color: var(--red); color: var(--red); }
+        .discount-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .discount-msg {
+            margin-top: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 0.1em;
+            line-height: 1.5;
+        }
+        .discount-msg.success { color: #22c55e; }
+        .discount-msg.error { color: var(--red); }
+        .discount-applied {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(34,197,94,0.06);
+            border: 1px solid rgba(34,197,94,0.2);
+            padding: 10px 14px; margin-top: 10px;
+        }
+        .discount-applied-left {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 0.1em; color: #22c55e;
+        }
+        .discount-applied-remove {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--dark); cursor: pointer; background: none; border: none;
+            transition: color 0.1s linear;
+        }
+        .discount-applied-remove:hover { color: var(--red); }
+
         /* Sandbox notice */
         .sandbox-notice {
             background: rgba(227,30,36,0.06);
@@ -735,6 +800,21 @@
                 <a href="#" class="psb-change" onclick="goToStep(1);return false;">Cambiar plan</a>
             </div>
 
+            <!-- Discount code -->
+            <div class="discount-section" id="discountSection">
+                <div class="discount-label">Tienes un codigo de descuento?</div>
+                <div class="discount-row" id="discountRow">
+                    <input class="discount-input" type="text" id="discountInput"
+                        placeholder="Ej: FUNDADOR15" maxlength="30">
+                    <button class="discount-btn" id="discountBtn" onclick="applyDiscount()">APLICAR</button>
+                </div>
+                <div class="discount-msg" id="discountMsg"></div>
+                <div class="discount-applied" id="discountApplied" style="display:none">
+                    <span class="discount-applied-left" id="discountAppliedText"></span>
+                    <button class="discount-applied-remove" onclick="removeDiscount()">Quitar</button>
+                </div>
+            </div>
+
             <!-- Buyer info card -->
             <div class="section-card">
                 <div class="section-card-header">
@@ -855,6 +935,14 @@
                         <span class="psc-label">Divisa</span>
                         <span class="psc-value">COP</span>
                     </div>
+                    <div class="psc-row" id="pay-original-row" style="display:none">
+                        <span class="psc-label">Subtotal</span>
+                        <span class="psc-value" id="pay-original" style="text-decoration:line-through;color:var(--dark)">$399.000</span>
+                    </div>
+                    <div class="psc-row" id="pay-discount-row" style="display:none">
+                        <span class="psc-label" style="color:#22c55e">Descuento</span>
+                        <span class="psc-value" id="pay-discount" style="color:#22c55e">-$0</span>
+                    </div>
                     <div class="psc-row" style="padding-top:16px;margin-top:8px;border-top:1px solid var(--border)">
                         <span class="psc-label" style="color:var(--white);font-size:10px">TOTAL</span>
                         <span class="psc-value total" id="pay-total">$399.000 COP</span>
@@ -945,7 +1033,8 @@
         email:   '',
         whatsapp:'',
         pais:    '',
-        objetivo:''
+        objetivo:'',
+        discount: null  /* { code, type, value, original, discountAmt, final, message } */
     };
 
     /* Pre-select metodo by default */
@@ -963,6 +1052,8 @@
        ================================================================ */
     function selectPlan(planId, advance) {
         state.plan = planId;
+        /* Limpiar descuento si se cambia de plan */
+        if (state.discount) { removeDiscount(); }
         var cards  = document.querySelectorAll('.plan-card');
         cards.forEach(function(c) {
             var isSelected = c.dataset.plan === planId;
@@ -1039,7 +1130,18 @@
         document.getElementById('pay-plan-name').textContent  = pl.name;
         document.getElementById('pay-buyer-name').textContent = state.name;
         document.getElementById('pay-buyer-email').textContent= state.email;
-        document.getElementById('pay-total').textContent       = pl.priceCOP + ' COP';
+
+        if (state.discount) {
+            document.getElementById('pay-original-row').style.display = 'flex';
+            document.getElementById('pay-discount-row').style.display = 'flex';
+            document.getElementById('pay-original').textContent  = '$' + state.discount.originalCOP;
+            document.getElementById('pay-discount').textContent  = '-$' + state.discount.discountCOP;
+            document.getElementById('pay-total').textContent     = '$' + state.discount.finalCOP + ' COP';
+        } else {
+            document.getElementById('pay-original-row').style.display = 'none';
+            document.getElementById('pay-discount-row').style.display = 'none';
+            document.getElementById('pay-total').textContent = pl.priceCOP + ' COP';
+        }
     }
 
     /* ================================================================
@@ -1055,6 +1157,88 @@
         var terms = document.getElementById('termsCheck').checked;
         var btn   = document.getElementById('btnStep2Next');
         btn.disabled = !(name.length >= 3 && validateEmail(email) && terms);
+    }
+
+    /* ================================================================
+       DISCOUNT CODE
+       ================================================================ */
+    function applyDiscount() {
+        var code = document.getElementById('discountInput').value.trim().toUpperCase();
+        var btn  = document.getElementById('discountBtn');
+        var msg  = document.getElementById('discountMsg');
+
+        if (!code) {
+            msg.className = 'discount-msg error';
+            msg.textContent = 'Ingresa un codigo de descuento';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = '...';
+        msg.className = 'discount-msg';
+        msg.textContent = '';
+
+        fetch('/api/wompi/validate-discount.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: code, plan: state.plan })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            btn.disabled = false;
+            btn.textContent = 'APLICAR';
+
+            if (!data.valid) {
+                msg.className = 'discount-msg error';
+                msg.textContent = data.error || 'Codigo no valido';
+                return;
+            }
+
+            /* Guardar descuento en state */
+            state.discount = {
+                code:        data.code,
+                type:        data.discount_type,
+                value:       data.discount_value,
+                original:    data.original_amount,
+                discountAmt: data.discount_amount,
+                final:       data.final_amount,
+                message:     data.message,
+                originalCOP: data.original_cop,
+                discountCOP: data.discount_cop,
+                finalCOP:    data.final_cop
+            };
+
+            /* Actualizar UI */
+            msg.className = 'discount-msg success';
+            msg.textContent = data.message;
+
+            document.getElementById('discountRow').style.display = 'none';
+            var applied = document.getElementById('discountApplied');
+            applied.style.display = 'flex';
+            document.getElementById('discountAppliedText').textContent =
+                data.code + ' — ' + data.message;
+
+            /* Actualizar precio en resumen Step 2 */
+            document.getElementById('psb-price').textContent = '$' + data.final_cop + ' COP';
+        })
+        .catch(function() {
+            btn.disabled = false;
+            btn.textContent = 'APLICAR';
+            msg.className = 'discount-msg error';
+            msg.textContent = 'Error de conexion. Intenta de nuevo.';
+        });
+    }
+
+    function removeDiscount() {
+        state.discount = null;
+        document.getElementById('discountRow').style.display = 'flex';
+        document.getElementById('discountApplied').style.display = 'none';
+        document.getElementById('discountInput').value = '';
+        document.getElementById('discountMsg').textContent = '';
+
+        /* Restaurar precio original */
+        var pl = PLANES[state.plan];
+        document.getElementById('psb-price').textContent = pl.priceCOP + ' COP';
     }
 
     /* ================================================================
@@ -1077,10 +1261,11 @@
         payBtn.appendChild(document.createTextNode(' Preparando pago...'));
 
         var payload = {
-            plan:        state.plan,
-            buyer_name:  state.name,
-            buyer_email: state.email,
-            buyer_phone: state.whatsapp || ''
+            plan:          state.plan,
+            buyer_name:    state.name,
+            buyer_email:   state.email,
+            buyer_phone:   state.whatsapp || '',
+            discount_code: state.discount ? state.discount.code : ''
         };
 
         /* Backend genera referencia + integrity hash (SHA256) y guarda orden pendiente */
