@@ -32,6 +32,7 @@
 
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
+set_time_limit(300); // 5 min — Claude AI can take 60-120s for multi-plan generation
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
