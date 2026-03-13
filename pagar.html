@@ -1040,11 +1040,28 @@
     /* Pre-select metodo by default */
     selectPlan('metodo');
 
-    /* URL param pre-selection: pagar.html?plan=elite */
+    /* URL param pre-selection: pagar.html?plan=elite&discount=FUNDADOR15 */
     (function() {
         var params = new URLSearchParams(window.location.search);
         var p = params.get('plan');
         if (p && PLANES[p]) { selectPlan(p); }
+
+        /* Auto-fill discount code from URL and auto-advance to step 2 */
+        var dc = params.get('discount');
+        if (dc) {
+            window._autoDiscount = dc.toUpperCase();
+            if (p && PLANES[p]) {
+                /* Auto-advance to step 2 so user sees the discount applied */
+                setTimeout(function() {
+                    goToStep(2);
+                    /* Auto-fill and apply discount after step 2 renders */
+                    setTimeout(function() {
+                        document.getElementById('discountInput').value = window._autoDiscount;
+                        applyDiscount();
+                    }, 300);
+                }, 800);
+            }
+        }
     })();
 
     /* ================================================================

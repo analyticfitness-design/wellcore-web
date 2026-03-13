@@ -668,7 +668,7 @@ HTML;
 /**
  * Genera HTML para email de invitación a un prospecto.
  */
-function email_invitation(string $toName, string $plan = 'rise', string $gender = 'male', string $customMsg = '', ?string $invitationCode = null): string {
+function email_invitation(string $toName, string $plan = 'rise', string $gender = 'male', string $customMsg = '', ?string $invitationCode = null, ?array $discountInfo = null): string {
     $year  = date('Y');
     $fn    = htmlspecialchars($toName ?: 'Amig@');
     $acent = ($gender === 'female') ? '#DC3C64' : '#E31E24';
@@ -736,6 +736,10 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
     if ($plan === 'presencial' && $invitationCode) {
         $link = 'https://wellcorefitness.com/presencial.html?code=' . urlencode($invitationCode);
     }
+    // Si hay descuento, enviar directo a pagar.html con plan y código pre-cargado
+    if ($discountInfo && $plan !== 'presencial' && $plan !== 'rise') {
+        $link = 'https://wellcorefitness.com/pagar.html?plan=' . urlencode($plan) . '&discount=' . urlencode($discountInfo['code']);
+    }
     $link = htmlspecialchars($link);
     $cta  = htmlspecialchars($p['cta']);
     $desc = htmlspecialchars($p['desc']);
@@ -797,13 +801,37 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
 
     // Sección de inversión — oculta para presencial (ya pagaron en persona)
     if ($plan !== 'presencial') {
-        $html .= "<tr><td bgcolor=\"#0a0a0a\" style=\"padding:36px 40px;background-color:#0a0a0a;border-bottom:1px solid #1e1e22;\">"
-            . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Inversión</p>"
-            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#111113\" style=\"background-color:#111113;border:1px solid #1e1e22;\"><tr><td style=\"padding:24px 28px;\" bgcolor=\"#111113\">"
-            . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:42px;font-weight:900;color:{$acent};letter-spacing:-1px;line-height:1;margin-bottom:6px;\">{$cop}</div>"
-            . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:11px;color:#8b8b96;letter-spacing:1px;\">Pago único · 30 días de acceso</div>"
-            . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:10px;color:#666;margin-top:6px;\">Pagos internacionales: {$usd}</div>"
-            . "</td></tr></table></td></tr>";
+        if ($discountInfo) {
+            // Con descuento: mostrar precio tachado + precio final + código
+            $origCop  = htmlspecialchars('$' . $discountInfo['original_cop'] . ' COP');
+            $finalCop = htmlspecialchars('$' . $discountInfo['final_cop'] . ' COP');
+            $dcLabel  = htmlspecialchars($discountInfo['label']);
+            $dcCode   = htmlspecialchars($discountInfo['code']);
+            $savedCop = htmlspecialchars('$' . $discountInfo['discount_cop']);
+
+            $html .= "<tr><td bgcolor=\"#0a0a0a\" style=\"padding:36px 40px;background-color:#0a0a0a;border-bottom:1px solid #1e1e22;\">"
+                . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Inversión — Versión Fundador</p>"
+                . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#111113\" style=\"background-color:#111113;border:1px solid #1e1e22;\"><tr><td style=\"padding:24px 28px;\" bgcolor=\"#111113\">"
+                . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:20px;color:#555;text-decoration:line-through;letter-spacing:-1px;line-height:1;margin-bottom:6px;\">{$origCop}</div>"
+                . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:42px;font-weight:900;color:{$acent};letter-spacing:-1px;line-height:1;margin-bottom:6px;\">{$finalCop}</div>"
+                . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:11px;color:#22c55e;letter-spacing:1px;margin-bottom:4px;\">Ahorras {$savedCop} — {$dcLabel}</div>"
+                . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:11px;color:#8b8b96;letter-spacing:1px;\">Pago único · 30 días de acceso</div>"
+                . "</td></tr></table>"
+                . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#0f1a0f\" style=\"background-color:#0f1a0f;border:1px solid #1a3a1a;margin-top:12px;\"><tr><td style=\"padding:14px 20px;\" bgcolor=\"#0f1a0f\">"
+                . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:2px;color:#22c55e;text-transform:uppercase;margin-bottom:4px;\">Tu código de descuento</div>"
+                . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:18px;font-weight:900;letter-spacing:4px;color:#ffffff;\">{$dcCode}</div>"
+                . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#8b8b96;margin-top:4px;\">Se aplica automáticamente al hacer clic en el botón de abajo.</div>"
+                . "</td></tr></table>"
+                . "</td></tr>";
+        } else {
+            $html .= "<tr><td bgcolor=\"#0a0a0a\" style=\"padding:36px 40px;background-color:#0a0a0a;border-bottom:1px solid #1e1e22;\">"
+                . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Inversión</p>"
+                . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#111113\" style=\"background-color:#111113;border:1px solid #1e1e22;\"><tr><td style=\"padding:24px 28px;\" bgcolor=\"#111113\">"
+                . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:42px;font-weight:900;color:{$acent};letter-spacing:-1px;line-height:1;margin-bottom:6px;\">{$cop}</div>"
+                . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:11px;color:#8b8b96;letter-spacing:1px;\">Pago único · 30 días de acceso</div>"
+                . "<div style=\"font-family:'Courier New',Courier,monospace;font-size:10px;color:#666;margin-top:6px;\">Pagos internacionales: {$usd}</div>"
+                . "</td></tr></table></td></tr>";
+        }
     }
 
     $html .= $customBlock;

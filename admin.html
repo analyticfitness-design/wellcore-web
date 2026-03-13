@@ -2383,6 +2383,15 @@
               </div>
             </div>
 
+            <div style="margin-bottom:16px;">
+              <label style="display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray);text-transform:uppercase;margin-bottom:6px;">Codigo de descuento (opcional)</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="text" id="invDiscount" placeholder="Ej: FUNDADOR15" maxlength="30" style="flex:1;background:#0a0a0a;border:1px solid #2a2a2e;color:#fff;padding:10px 14px;font-family:var(--font-mono);font-size:12px;outline:none;box-sizing:border-box;text-transform:uppercase;letter-spacing:1px;">
+                <span id="invDiscountHint" style="font-family:var(--font-mono);font-size:10px;color:var(--gray);white-space:nowrap;"></span>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:#555;margin-top:4px;letter-spacing:0.5px;">Si lo incluyes, el email mostrara el precio con descuento y el codigo al prospecto.</div>
+            </div>
+
             <div style="margin-bottom:20px;">
               <label style="display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gray);text-transform:uppercase;margin-bottom:6px;">Mensaje personalizado (opcional)</label>
               <textarea id="invMsg" rows="3" placeholder="Ej: Hablamos la semana pasada sobre tu objetivo de bajar de peso..." style="width:100%;background:#0a0a0a;border:1px solid #2a2a2e;color:#fff;padding:10px 14px;font-family:var(--font-mono);font-size:12px;outline:none;box-sizing:border-box;resize:vertical;"></textarea>
@@ -3802,13 +3811,14 @@
 
   /* ─── INVITACIONES ─── */
   async function sendInvitation() {
-    var name   = document.getElementById('invName').value.trim();
-    var email  = document.getElementById('invEmail').value.trim();
-    var plan   = document.getElementById('invPlan').value;
-    var gender = document.getElementById('invGender').value;
-    var msg    = document.getElementById('invMsg').value.trim();
-    var fb     = document.getElementById('invFeedback');
-    var btn    = document.getElementById('invSendBtn');
+    var name     = document.getElementById('invName').value.trim();
+    var email    = document.getElementById('invEmail').value.trim();
+    var plan     = document.getElementById('invPlan').value;
+    var gender   = document.getElementById('invGender').value;
+    var msg      = document.getElementById('invMsg').value.trim();
+    var discount = document.getElementById('invDiscount').value.trim().toUpperCase();
+    var fb       = document.getElementById('invFeedback');
+    var btn      = document.getElementById('invSendBtn');
 
     if (!email) { fb.style.display='block'; fb.style.color='#E31E24'; fb.textContent='⚠ El email es obligatorio.'; return; }
 
@@ -3819,16 +3829,18 @@
     try {
       var res  = await apiFetch('/admin/send-invitation', {
         method: 'POST',
-        body: JSON.stringify({ to_name: name, to_email: email, plan: plan, gender: gender, custom_msg: msg })
+        body: JSON.stringify({ to_name: name, to_email: email, plan: plan, gender: gender, custom_msg: msg, discount_code: discount })
       });
       var data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || data.message || 'Error');
       fb.style.display = 'block';
       fb.style.color = '#22C55E';
-      fb.textContent = '✓ Invitación enviada a ' + email;
+      fb.textContent = '✓ Invitación enviada a ' + email + (data.discount_applied ? ' (con descuento ' + data.discount_applied + ')' : '');
       document.getElementById('invEmail').value = '';
       document.getElementById('invName').value = '';
       document.getElementById('invMsg').value = '';
+      document.getElementById('invDiscount').value = '';
+      document.getElementById('invDiscountHint').textContent = '';
     } catch(err) {
       fb.style.display = 'block';
       fb.style.color = '#E31E24';
