@@ -325,7 +325,14 @@ function buildNutritionPrompt(array $config): string {
     $p .= "Ajusta calorías según objetivo (deficit/superavit/mantenimiento).\n";
     $p .= "Distribuye macronutrientes (proteína mínimo 1.6g/kg para hipertrofia).\n";
     $p .= "Crea un menú diario con 2-3 variantes por comida.\n";
-    $p .= "Usa alimentos comunes en Colombia/Latinoamérica.\n";
+    $p .= "IMPORTANTE — LENGUAJE COLOMBIANO:\n";
+    $p .= "- Usa EXCLUSIVAMENTE español colombiano. Nada de 'cacahuetes/cacahuates' (decir 'maní'), ";
+    $p .= "nada de 'quesadillas/tortillas de harina' (usar 'arepas'), nada de 'jamón ibérico' (decir 'jamón').\n";
+    $p .= "- Alimentos comunes en Colombia: arepa, plátano maduro/verde, yuca, papa criolla, ";
+    $p .= "frijoles, lenteja, arroz, pollo, carne de res, mojarra/tilapia, aguacate, maní, panela, ";
+    $p .= "queso campesino, kumis, avena, huevos, hogao, ensalada.\n";
+    $p .= "- Lenguaje sencillo y directo. Evitar tecnicismos innecesarios. ";
+    $p .= "Porciones en medidas prácticas (cucharadas, tazas, unidades, puñados).\n";
     $p .= "Respeta alergias, intolerancias y preferencias del cliente.\n\n";
     $p .= "Retorna SOLO JSON válido con esta estructura:\n";
     $p .= <<<'JSON'
