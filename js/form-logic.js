@@ -18,6 +18,10 @@
   let inviteMode = false;
   let inviteCode = '';
 
+  // Discount redirect state (from email invitation)
+  let pendingDiscount = '';
+  let preselectedPlan = '';
+
   // Step configuration based on plan selection
   const stepsConfig = {
     'completo': [0, 1, 2, 3, 4, 5, 6, 7],      // All steps
@@ -50,8 +54,8 @@
     setupConditionalFields();
     initializeStepIndicators();
 
-    // Check for invite code in URL
-    checkInviteCode();
+    // Check for URL params: invite code, plan preselection, discount
+    checkUrlParams();
   });
 
   // ==================== PLAN SELECTION ====================
@@ -109,33 +113,55 @@
     updateProgressBar();
   }
 
-  // ==================== INVITE CODE DETECTION ====================
+  // ==================== URL PARAMS DETECTION ====================
 
-  function checkInviteCode() {
+  function checkUrlParams() {
     var params = new URLSearchParams(window.location.search);
-    var code = params.get('invite');
 
-    if (!code || !/^[a-f0-9]{32}$/i.test(code)) {
-      // Normal flow
-      showStep(0);
+    // 1) Invite code (presencial flow)
+    var code = params.get('invite');
+    if (code && /^[a-f0-9]{32}$/i.test(code)) {
+      fetch('/api/invitations/validate.php?code=' + encodeURIComponent(code))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.valid && data.plan) {
+            activateInviteMode(code, data.plan);
+          } else {
+            showStep(0);
+          }
+        })
+        .catch(function() {
+          showStep(0);
+        });
       return;
     }
 
-    // Validate invite code against API
-    fetch('/api/invitations/validate.php?code=' + encodeURIComponent(code))
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.valid && data.plan) {
-          activateInviteMode(code, data.plan);
-        } else {
-          // Invalid code — show normal form
-          showStep(0);
-        }
-      })
-      .catch(function() {
-        // API error — show normal form
-        showStep(0);
-      });
+    // 2) Plan preselection + optional discount (from email invitation)
+    var planParam = params.get('plan');
+    var discountParam = params.get('discount');
+
+    if (planParam && ['esencial', 'metodo', 'elite'].indexOf(planParam) !== -1) {
+      preselectedPlan = planParam;
+      pendingDiscount = discountParam ? discountParam.toUpperCase() : '';
+
+      // Auto-select the plan card
+      var targetCard = document.querySelector('.plan-card[data-plan="' + planParam + '"]');
+      if (targetCard) {
+        var btn = targetCard.querySelector('.btn-plan');
+        if (btn) btn.click(); // triggers setupPlanSelection handler
+      }
+
+      console.log('Plan preselected from URL:', planParam, pendingDiscount ? '+ discount: ' + pendingDiscount : '');
+
+      // Auto-advance to step 1 (skip plan selection)
+      setTimeout(function() {
+        nextStep();
+      }, 400);
+      return;
+    }
+
+    // Normal flow
+    showStep(0);
   }
 
   function activateInviteMode(code, plan) {
@@ -767,6 +793,18 @@
   }
 
   function showSuccessMessage() {
+    // For paid plans, redirect to pagar.html after form submission
+    var paidPlans = ['esencial', 'metodo', 'elite'];
+    var activePlan = preselectedPlan || selectedPlan;
+    if (activePlan && paidPlans.indexOf(activePlan) !== -1) {
+      var payUrl = '/pagar.html?plan=' + encodeURIComponent(activePlan);
+      if (pendingDiscount) {
+        payUrl += '&discount=' + encodeURIComponent(pendingDiscount);
+      }
+      window.location.href = payUrl;
+      return;
+    }
+
     // Hide form
     var form = document.getElementById('wellcoreForm');
     if (form) form.style.display = 'none';
@@ -791,12 +829,6 @@
 
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // Optional: Send confirmation email
-    // sendConfirmationEmail(formData.email);
-
-    // Optional: Track conversion
-    // trackConversion('registration_complete', selectedPlan);
   }
 
   function showErrorMessage(message) {

@@ -736,9 +736,9 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
     if ($plan === 'presencial' && $invitationCode) {
         $link = 'https://wellcorefitness.com/presencial.html?code=' . urlencode($invitationCode);
     }
-    // Si hay descuento, enviar directo a pagar.html con plan y código pre-cargado
+    // Si hay descuento, enviar a inscripcion.html con plan y código (se redirige a pagar.html post-formulario)
     if ($discountInfo && $plan !== 'presencial' && $plan !== 'rise') {
-        $link = 'https://wellcorefitness.com/pagar.html?plan=' . urlencode($plan) . '&discount=' . urlencode($discountInfo['code']);
+        $link = 'https://wellcorefitness.com/inscripcion.html?plan=' . urlencode($plan) . '&discount=' . urlencode($discountInfo['code']);
     }
     $link = htmlspecialchars($link);
     $cta  = htmlspecialchars($p['cta']);
@@ -836,35 +836,8 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
 
     $html .= $customBlock;
 
-    // Sección de pasos — personalizada para presencial
-    if ($plan === 'presencial') {
-        $html .= "<tr><td bgcolor=\"#111113\" style=\"padding:36px 40px;background-color:#111113;border-bottom:1px solid #1e1e22;\">"
-            . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Cómo activar tu cuenta</p>"
-            . "<h2 style=\"font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;color:#ffffff;text-transform:uppercase;margin:0 0 20px 0;\">2 PASOS SIMPLES</h2>"
-            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
-            . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background-color:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">01</div></td>"
-            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Haz clic en el botón de abajo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8b8b96;\">Te lleva directo al formulario de registro — sin pagos.</div></td></tr></table></td></tr>"
-            . "<tr><td><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background-color:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">02</div></td>"
-            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Crea tu cuenta y listo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8b8b96;\">Pon tu nombre, email y una contraseña. Al confirmar entras directo a tu plataforma.</div></td></tr></table></td></tr>"
-            . "</table></td></tr>";
-    } else {
-        $html .= "<tr><td bgcolor=\"#111113\" style=\"padding:36px 40px;background-color:#111113;border-bottom:1px solid #1e1e22;\">"
-            . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Cómo inscribirte</p>"
-            . "<h2 style=\"font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;color:#ffffff;text-transform:uppercase;margin:0 0 20px 0;\">3 PASOS SIMPLES</h2>"
-            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
-            . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background-color:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">01</div></td>"
-            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Haz clic en el botón de abajo</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8b8b96;\">Te lleva directo al formulario de inscripción.</div></td></tr></table></td></tr>"
-            . "<tr><td style=\"padding:0 0 16px 0;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background-color:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">02</div></td>"
-            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Completa tu perfil</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8b8b96;\">Cuéntanos tu objetivo, nivel y disponibilidad — esto personaliza tu plan.</div></td></tr></table></td></tr>"
-            . "<tr><td><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
-            . "<td width=\"40\" valign=\"top\"><div style=\"width:32px;height:32px;background-color:{$acent};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:900;color:#fff;text-align:center;line-height:32px;\">03</div></td>"
-            . "<td valign=\"top\" style=\"padding:6px 0 0 10px;\"><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#ffffff;margin-bottom:3px;\">Confirma tu pago y empieza</div><div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8b8b96;\">Pago seguro. En menos de 24h recibes acceso a tu plan y plataforma.</div></td></tr></table></td></tr>"
-            . "</table></td></tr>";
-    }
+    // Sección de pasos — journey visual completo según plan
+    $html .= build_journey_steps($plan, $acent, $discountInfo);
 
     $html .= "<tr><td align=\"center\" bgcolor=\"#0a0a0a\" style=\"padding:40px;background-color:#0a0a0a;\">"
         . "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td bgcolor=\"{$acent}\" style=\"background-color:{$acent};padding:0;border-radius:4px;\">"
@@ -876,6 +849,89 @@ function email_invitation(string $toName, string $plan = 'rise', string $gender 
         . "<p style=\"font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#555;line-height:1.6;margin:0;\">&copy; {$year} WellCore Fitness &middot; Daniel Esparza, Coach &middot; info@wellcorefitness.com</p>"
         . "</td></tr>"
         . "</table></td></tr></table></div></body></html>";
+
+    return $html;
+}
+
+
+// ─────────────────────────────────────────────────────────────
+// JOURNEY STEPS — Visual step-by-step per plan type
+// ─────────────────────────────────────────────────────────────
+
+/**
+ * Genera HTML visual de los pasos del journey según el plan.
+ */
+function build_journey_steps(string $plan, string $acent, ?array $discountInfo = null): string {
+    // Define steps per plan type
+    if ($plan === 'presencial') {
+        $steps = [
+            ['num' => '01', 'title' => 'Haz clic y regístrate', 'desc' => 'Completa el formulario con tus datos básicos y crea tu cuenta en WellCore Fitness. No necesitas realizar ningún pago.'],
+            ['num' => '02', 'title' => 'Accede a tu portal', 'desc' => 'Recibirás tus credenciales por email. Ingresa al portal donde encontrarás tu plan de entrenamiento y herramientas de seguimiento.'],
+        ];
+    } elseif ($plan === 'rise') {
+        $steps = [
+            ['num' => '01', 'title' => 'Completa tu inscripción', 'desc' => 'Llena el formulario de inscripción al Reto RISE con tus datos y objetivos.'],
+            ['num' => '02', 'title' => 'Realiza tu pago', 'desc' => 'Pago seguro con Wompi — tarjeta de crédito, débito, PSE o Nequi. Tu compra está protegida.'],
+            ['num' => '03', 'title' => 'Recibe tu plan', 'desc' => 'En menos de 24 horas recibirás tu plan personalizado y acceso completo al dashboard RISE.'],
+        ];
+    } elseif ($discountInfo) {
+        // Esencial/Metodo/Elite CON descuento
+        $dcCode  = htmlspecialchars($discountInfo['code']);
+        $dcLabel = htmlspecialchars($discountInfo['label']);
+        $steps = [
+            ['num' => '01', 'title' => 'Completa el formulario', 'desc' => 'Llena tu perfil de salud y fitness — experiencia, lesiones, nutrición y objetivos. Esto permite crear tu plan 100% personalizado.'],
+            ['num' => '02', 'title' => 'Tu descuento se aplica solo', 'desc' => "Tu código {$dcCode} ({$dcLabel}) se aplicará automáticamente al llegar a la página de pago. No tienes que ingresarlo manualmente."],
+            ['num' => '03', 'title' => 'Pago seguro con precio especial', 'desc' => 'Paga con tarjeta, PSE o Nequi a través de Wompi. Tu descuento ya estará reflejado en el total.'],
+            ['num' => '04', 'title' => 'Recibe tus credenciales', 'desc' => 'Inmediatamente después del pago recibirás un email con tu usuario, contraseña temporal y enlace al portal.'],
+            ['num' => '05', 'title' => 'Tu coach te contacta', 'desc' => 'En menos de 48 horas tu coach revisará tu perfil y te entregará tu plan personalizado de entrenamiento y nutrición.'],
+        ];
+    } else {
+        // Esencial/Metodo/Elite SIN descuento
+        $steps = [
+            ['num' => '01', 'title' => 'Completa el formulario', 'desc' => 'Llena tu perfil de salud y fitness — experiencia, lesiones, nutrición y objetivos. Esto permite crear tu plan 100% personalizado.'],
+            ['num' => '02', 'title' => 'Realiza tu pago', 'desc' => 'Pago seguro con Wompi — tarjeta de crédito, débito, PSE o Nequi. Tu transacción está 100% protegida.'],
+            ['num' => '03', 'title' => 'Recibe tus credenciales', 'desc' => 'Inmediatamente después del pago recibirás un email con tu usuario, contraseña temporal y enlace al portal.'],
+            ['num' => '04', 'title' => 'Accede a tu portal', 'desc' => 'Ingresa a tu dashboard privado donde verás tu plan, progreso, check-ins y chat directo con tu coach.'],
+            ['num' => '05', 'title' => 'Tu coach te contacta', 'desc' => 'En menos de 48 horas tu coach revisará tu perfil y te entregará tu plan personalizado de entrenamiento y nutrición.'],
+        ];
+    }
+
+    $totalSteps = count($steps);
+    $html = "<tr><td bgcolor=\"#0a0a0a\" style=\"padding:36px 40px;background-color:#0a0a0a;border-bottom:1px solid #1e1e22;\">"
+        . "<p style=\"font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:{$acent};text-transform:uppercase;margin:0 0 6px 0;\">// Tu camino</p>"
+        . "<h2 style=\"font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:900;letter-spacing:1px;color:#ffffff;text-transform:uppercase;margin:0 0 24px 0;\">ASÍ FUNCIONA — {$totalSteps} PASOS</h2>"
+        . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">";
+
+    foreach ($steps as $i => $step) {
+        $num   = htmlspecialchars($step['num']);
+        $title = htmlspecialchars($step['title']);
+        $desc  = htmlspecialchars($step['desc']);
+        $isLast = ($i === $totalSteps - 1);
+
+        // Step number circle
+        $html .= "<tr><td style=\"padding:0;\">"
+            . "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
+            // Number column
+            . "<td width=\"52\" valign=\"top\" style=\"padding:0 16px 0 0;\">"
+            . "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>"
+            . "<td width=\"44\" height=\"44\" align=\"center\" bgcolor=\"{$acent}\" style=\"background-color:{$acent};width:44px;height:44px;border-radius:22px;\">"
+            . "<span style=\"font-family:'Courier New',Courier,monospace;font-size:14px;font-weight:900;color:#ffffff;line-height:44px;\">{$num}</span>"
+            . "</td></tr></table>"
+            // Connector line (except last step)
+            . (!$isLast
+                ? "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0 auto;\"><tr><td width=\"2\" height=\"20\" style=\"background-color:#1e1e22;font-size:0;line-height:0;\">&nbsp;</td></tr></table>"
+                : "")
+            . "</td>"
+            // Content column
+            . "<td valign=\"top\" style=\"padding:2px 0 " . ($isLast ? '0' : '20px') . ";\">"
+            . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#ffffff;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;\">{$title}</div>"
+            . "<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8b8b96;line-height:1.6;\">{$desc}</div>"
+            . "</td>"
+            . "</tr></table>"
+            . "</td></tr>";
+    }
+
+    $html .= "</table></td></tr>";
 
     return $html;
 }
