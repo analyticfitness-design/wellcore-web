@@ -4587,10 +4587,10 @@ var PlanesIA = (function() {
       aBtn.className = 'btn btn-sm'; aBtn.style.cssText = 'background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22C55E';
       aBtn.textContent = 'Aprobar';
       (function(pid) { aBtn.addEventListener('click', function() {
-        if (!pid) return;
+        if (!pid) { showToast('Sin plan_id asociado', 'error'); return; }
         apiFetch('/ai/render-plan', { method:'POST', body:JSON.stringify({plan_id:pid}) })
           .then(function(r){return r.json();}).then(function(d){ showToast(d.rendered?'Aprobado':'Error',d.rendered?undefined:'error'); loadPendingQueue(); });
-      }); })(g.plan_id);
+      }); })(g.assigned_plan_id || g.plan_id);
       tdA.appendChild(aBtn);
       [tdN,tdT,tdD,tdS,tdA].forEach(function(td){tr.appendChild(td);});
       tbody.appendChild(tr);
