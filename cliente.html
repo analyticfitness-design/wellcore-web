@@ -5497,6 +5497,18 @@ function renderPlanPending(container, tabName) {
   container.appendChild(wrap);
 }
 
+// Hide tabs the user can't access based on plan level
+(function hideLockedTabs() {
+  var pl = PLAN_LEVEL[clientPlan] || 1;
+  var tabLevel = { entrenamiento: 1, nutricion: 2, habitos: 1, suplementacion: 1, ciclo: 3, bloodwork: 3 };
+  Object.keys(tabLevel).forEach(function(t) {
+    if (pl < tabLevel[t]) {
+      var btn = document.getElementById('tab-btn-' + t);
+      if (btn) btn.style.display = 'none';
+    }
+  });
+})();
+
 function loadPlanTab(tab) {
   // Tab nav UI
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
