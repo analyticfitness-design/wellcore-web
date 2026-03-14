@@ -2286,6 +2286,9 @@
               <button onclick="openRiseInviteModal()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:6px;color:#22C55E;font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='rgba(34,197,94,0.16)'" onmouseout="this.style.background='rgba(34,197,94,0.08)'">
                 <span style="font-weight:700">&#10009;</span> Invitar a RISE (acceso gratuito)
               </button>
+              <button onclick="openRiseGiftModal()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.25);border-radius:6px;color:#ec4899;font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='rgba(236,72,153,0.16)'" onmouseout="this.style.background='rgba(236,72,153,0.08)'">
+                <span style="font-weight:700">&#127873;</span> Regalar RISE (regalo prepagado)
+              </button>
               <button onclick="loadRiseData()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-size:13px;cursor:pointer;width:100%;transition:background 0.2s" onmouseover="this.style.background='var(--surface-3,#222)'" onmouseout="this.style.background='var(--surface-2)'">
                 <span>&#8635;</span> Actualizar datos
               </button>
@@ -2530,6 +2533,91 @@
         <div style="font-size:16px;font-weight:600;color:#22C55E;margin-bottom:8px;">Acceso creado correctamente</div>
         <div id="riseInviteSuccessDetail" style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;"></div>
         <button onclick="closeRiseInviteModal()" style="margin-top:20px;padding:10px 28px;background:#22C55E;border:none;color:#000;font-weight:700;font-size:13px;border-radius:4px;cursor:pointer;">Listo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL REGALAR RISE ═══ -->
+<div id="riseGiftOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#111113;border:1px solid rgba(236,72,153,0.3);border-top:3px solid #ec4899;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;border-radius:8px;">
+    <div style="padding:24px 28px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:#ec4899;margin-bottom:4px;text-transform:uppercase;">Regalo especial</div>
+        <div style="font-size:16px;font-weight:600;color:#fff;">Regalar Reto RISE</div>
+      </div>
+      <button onclick="closeRiseGiftModal()" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1;" title="Cerrar">&times;</button>
+    </div>
+    <div style="padding:24px 28px;">
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;line-height:1.6;">
+        Envia una invitacion de regalo al Reto RISE. Ideal para novios, esposos, amigos o familiares. El pago ya fue recibido por otro medio.
+      </p>
+      <div id="riseGiftError" style="display:none;background:rgba(227,30,36,0.08);border:1px solid rgba(227,30,36,0.3);padding:10px 14px;margin-bottom:16px;font-size:12px;color:#E31E24;font-family:'JetBrains Mono',monospace;letter-spacing:1px;border-radius:4px;"></div>
+      <form id="riseGiftForm" autocomplete="off">
+        <div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.15);border-radius:8px;padding:16px;margin-bottom:16px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:#ec4899;text-transform:uppercase;margin-bottom:12px;">Quien regala</div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">De:</label>
+            <input id="giftFrom" type="text" placeholder="Ej: Juan Carlos" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#ec4899'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+          </div>
+        </div>
+        <div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.15);border-radius:8px;padding:16px;margin-bottom:16px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:#ec4899;text-transform:uppercase;margin-bottom:12px;">Quien recibe el regalo</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div>
+              <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Para:</label>
+              <input id="giftToName" type="text" placeholder="Ej: Maria Lopez" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#ec4899'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+            </div>
+            <div>
+              <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Email:</label>
+              <input id="giftToEmail" type="email" placeholder="correo@ejemplo.com" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;" onfocus="this.style.borderColor='#ec4899'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+            </div>
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Contrasena temporal</label>
+          <input id="giftPassword" type="text" placeholder="Min. 6 caracteres" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;font-family:'JetBrains Mono',monospace;" onfocus="this.style.borderColor='#ec4899'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Mensaje personalizado</label>
+          <textarea id="giftMessage" rows="3" placeholder="Ej: Feliz cumpleanos mi amor! Este es mi regalo para ti..." style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;resize:vertical;" onfocus="this.style.borderColor='#ec4899'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;">
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Nivel</label>
+            <select id="giftNivel" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;">
+              <option value="principiante">Principiante</option>
+              <option value="intermedio" selected>Intermedio</option>
+              <option value="avanzado">Avanzado</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Modalidad</label>
+            <select id="giftModalidad" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;">
+              <option value="gym">Gym</option>
+              <option value="home">Casa</option>
+              <option value="hybrid" selected>Hibrido</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">Genero</label>
+            <select id="giftGenero" style="width:100%;background:#0d0d0f;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:14px;border-radius:4px;outline:none;">
+              <option value="male">Masculino</option>
+              <option value="female">Femenino</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <button type="button" onclick="closeRiseGiftModal()" style="flex:1;padding:12px;background:var(--surface-2,#1a1a1d);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:13px;border-radius:4px;cursor:pointer;">Cancelar</button>
+          <button type="submit" id="giftSubmitBtn" style="flex:2;padding:12px;background:linear-gradient(135deg,#ec4899,#f472b6);border:none;color:#fff;font-weight:700;font-size:14px;border-radius:4px;cursor:pointer;letter-spacing:1px;">&#127873; Enviar Regalo</button>
+        </div>
+      </form>
+      <div id="riseGiftSuccess" style="display:none;text-align:center;padding:20px 0;">
+        <div style="font-size:40px;margin-bottom:12px;">&#127873;</div>
+        <div style="font-size:16px;font-weight:600;color:#ec4899;margin-bottom:8px;">Regalo enviado correctamente</div>
+        <div id="riseGiftSuccessDetail" style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;"></div>
+        <button onclick="closeRiseGiftModal()" style="margin-top:20px;padding:10px 28px;background:linear-gradient(135deg,#ec4899,#f472b6);border:none;color:#fff;font-weight:700;font-size:13px;border-radius:4px;cursor:pointer;">Listo</button>
       </div>
     </div>
   </div>
@@ -3775,6 +3863,85 @@
   function closeRiseInviteModal() {
     document.getElementById('riseInviteOverlay').style.display = 'none';
   }
+
+  /* ─── REGALO RISE ─── */
+  function openRiseGiftModal() {
+    var overlay = document.getElementById('riseGiftOverlay');
+    overlay.style.display = 'flex';
+    document.getElementById('riseGiftForm').style.display = 'block';
+    document.getElementById('riseGiftSuccess').style.display = 'none';
+    document.getElementById('riseGiftError').style.display = 'none';
+    document.getElementById('riseGiftForm').reset();
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeRiseGiftModal();
+    }, { once: true });
+  }
+
+  function closeRiseGiftModal() {
+    document.getElementById('riseGiftOverlay').style.display = 'none';
+  }
+
+  document.getElementById('riseGiftForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('giftSubmitBtn');
+    var errBox = document.getElementById('riseGiftError');
+    errBox.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Enviando regalo...';
+
+    var fromName  = document.getElementById('giftFrom').value.trim();
+    var toName    = document.getElementById('giftToName').value.trim();
+    var toEmail   = document.getElementById('giftToEmail').value.trim();
+    var password  = document.getElementById('giftPassword').value.trim();
+    var message   = document.getElementById('giftMessage').value.trim();
+    var nivel     = document.getElementById('giftNivel').value;
+    var modalidad = document.getElementById('giftModalidad').value;
+    var genero    = document.getElementById('giftGenero').value;
+
+    if (!fromName || !toName || !toEmail || !password) {
+      errBox.textContent = 'COMPLETA TODOS LOS CAMPOS OBLIGATORIOS';
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '\uD83C\uDF81 Enviar Regalo';
+      return;
+    }
+
+    try {
+      var token = localStorage.getItem('wc_token') || '';
+      var res = await fetch('/api/admin/rise-gift.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ from_name: fromName, name: toName, email: toEmail, password: password, gift_message: message, experience_level: nivel, training_location: modalidad, gender: genero })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || data.message || 'Error desconocido');
+
+      document.getElementById('riseGiftForm').style.display = 'none';
+      var detail = document.getElementById('riseGiftSuccessDetail');
+      detail.textContent = '';
+      var t1 = document.createElement('span');
+      t1.style.color = '#ec4899';
+      t1.textContent = fromName;
+      detail.appendChild(t1);
+      detail.appendChild(document.createTextNode(' le regalo RISE a '));
+      var t2 = document.createElement('span');
+      t2.style.color = '#fff';
+      t2.textContent = toName;
+      detail.appendChild(t2);
+      detail.appendChild(document.createTextNode(' (' + toEmail + ')'));
+      if (data.email_sent) {
+        detail.appendChild(document.createElement('br'));
+        detail.appendChild(document.createTextNode('Email de regalo enviado correctamente'));
+      }
+      document.getElementById('riseGiftSuccess').style.display = 'block';
+      loadRiseData();
+    } catch(err) {
+      errBox.textContent = (err.message || 'Error al enviar regalo').toUpperCase();
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '\uD83C\uDF81 Enviar Regalo';
+    }
+  });
 
   document.getElementById('riseInviteForm').addEventListener('submit', async function(e) {
     e.preventDefault();
