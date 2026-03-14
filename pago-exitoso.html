@@ -940,7 +940,17 @@
     })
     .catch(function(err) {
         console.warn('[WellCore] verify-payment error:', err);
-        showFallbackUI();
+        // Fallback to URL status instead of assuming success
+        if (txStatus === 'APPROVED') {
+            showApprovedUI({ plan: isRise ? 'rise' : '', plan_name: isRise ? 'RISE 30 Días' : '', amount: '', reference: reference });
+            if (isRise) { fetchRiseToken(1); }
+        } else if (txStatus === 'DECLINED' || txStatus === 'VOIDED' || txStatus === 'ERROR') {
+            showDeclinedUI();
+        } else if (txStatus === 'PENDING') {
+            showPendingUI(null);
+        } else {
+            showFallbackUI();
+        }
     });
 
 })();
