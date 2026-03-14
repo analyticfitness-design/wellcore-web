@@ -37,6 +37,12 @@ $stmt = $db->prepare(
 );
 $stmt->execute([$clientId, $token, $fp, $ip, $expires]);
 
+// Audit log: track who impersonated whom
+error_log(sprintf(
+    '[WellCore AUDIT] IMPERSONATE admin_id=%d username=%s -> client_id=%d client_email=%s ip=%s',
+    $admin['id'], $admin['username'] ?? '?', $clientId, $client['email'], $ip
+));
+
 respond([
     'token'      => $token,
     'expires_in' => 3600,
