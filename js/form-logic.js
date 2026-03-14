@@ -139,6 +139,7 @@
     // 2) Plan preselection + optional discount (from email invitation)
     var planParam = params.get('plan');
     var discountParam = params.get('discount');
+    var paidParam = params.get('paid');
 
     if (planParam && ['esencial', 'metodo', 'elite', 'rise'].indexOf(planParam) !== -1) {
       preselectedPlan = planParam;
@@ -798,8 +799,8 @@
   function showSuccessMessage() {
     var activePlan = preselectedPlan || selectedPlan;
 
-    // RISE clients already have an account — redirect to login
-    if (activePlan === 'rise') {
+    // RISE clients or pre-paid clients already have an account — redirect to login
+    if (activePlan === 'rise' || paidParam === '1') {
       window.location.href = '/login.html';
       return;
     }
