@@ -51,6 +51,11 @@ try {
         'video_checkins'         => 'client_id',
         'academy_progress'       => 'client_id',
         'rise_programs'          => 'client_id',
+        'daily_missions'         => 'client_id',
+        'onboarding_steps'       => 'client_id',
+        'weekly_summaries'       => 'client_id',
+        'celebrations'           => 'client_id',
+        'chat_weekly_limits'     => 'client_id',
         'auth_tokens'            => null, // special: user_type filter
         'client_profiles'        => 'client_id',
         'checkins'               => 'client_id',
@@ -58,10 +63,19 @@ try {
     ];
 
     foreach ($tables as $table => $column) {
-        if ($table === 'auth_tokens') {
-            $db->prepare("DELETE FROM auth_tokens WHERE user_type = 'client' AND user_id = ?")->execute([$client_id]);
-        } else {
-            $db->prepare("DELETE FROM `{$table}` WHERE `{$column}` = ?")->execute([$client_id]);
+        try {
+            if ($table === 'auth_tokens') {
+                $db->prepare("DELETE FROM auth_tokens WHERE user_type = 'client' AND user_id = ?")->execute([$client_id]);
+            } else {
+                $db->prepare("DELETE FROM `{$table}` WHERE `{$column}` = ?")->execute([$client_id]);
+            }
+        } catch (PDOException $tableErr) {
+            // Table may not exist yet (not all migrations run) — skip safely
+            if (strpos($tableErr->getMessage(), "doesn't exist") !== false
+                || strpos($tableErr->getMessage(), '42S02') !== false) {
+                continue;
+            }
+            throw $tableErr; // Re-throw real errors
         }
     }
 
