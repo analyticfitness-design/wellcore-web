@@ -72,10 +72,10 @@ function sendRiseWelcomeEmail(string $toEmail, string $toName, string $password,
 
         . '</td></tr></table></td></tr>'
 
-        // CTA BUTTON
+        // CTA BUTTON — link to inscription form first
         . '<tr><td style="background:#111111;padding:32px 40px 0;text-align:center;">'
-        . '<a href="' . $loginUrl . '" style="display:inline-block;background:linear-gradient(135deg,#e31e24 0%,#c01020 100%);color:#ffffff;text-decoration:none;font-size:16px;font-weight:800;padding:18px 52px;border-radius:10px;text-transform:uppercase;letter-spacing:2px;">Iniciar Sesi&oacute;n &rarr;</a>'
-        . '<p style="margin:14px 0 0;font-size:12px;color:#555;"><a href="' . $loginUrl . '" style="color:#555;text-decoration:underline;">' . $loginUrl . '</a></p>'
+        . '<a href="https://wellcorefitness.com/inscripcion.html?plan=rise" style="display:inline-block;background:linear-gradient(135deg,#e31e24 0%,#c01020 100%);color:#ffffff;text-decoration:none;font-size:16px;font-weight:800;padding:18px 52px;border-radius:10px;text-transform:uppercase;letter-spacing:2px;">Completar Inscripci&oacute;n &rarr;</a>'
+        . '<p style="margin:14px 0 0;font-size:12px;color:#555;">Luego podr&aacute;s iniciar sesi&oacute;n en <a href="' . $loginUrl . '" style="color:#555;text-decoration:underline;">' . $loginUrl . '</a></p>'
         . '</td></tr>'
 
         // STEPS
@@ -84,14 +84,18 @@ function sendRiseWelcomeEmail(string $toEmail, string $toName, string $password,
         . '<table width="100%" cellpadding="0" cellspacing="0" border="0">'
         . '<tr><td style="padding-bottom:14px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
         . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#e31e24;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">1</div></td>'
-        . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Inicia sesi&oacute;n con tus credenciales en <strong style="color:#fff;">wellcorefitness.com/login.html</strong></p></td>'
+        . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Completa el <strong style="color:#fff;">formulario de inscripci&oacute;n</strong> con tus datos (click en el bot&oacute;n de arriba)</p></td>'
         . '</tr></table></td></tr>'
         . '<tr><td style="padding-bottom:14px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
         . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#e31e24;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">2</div></td>'
+        . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Inicia sesi&oacute;n con tus credenciales en <strong style="color:#fff;">wellcorefitness.com/login.html</strong></p></td>'
+        . '</tr></table></td></tr>'
+        . '<tr><td style="padding-bottom:14px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
+        . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#e31e24;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">3</div></td>'
         . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Cambia tu contrase&ntilde;a temporal por una segura</p></td>'
         . '</tr></table></td></tr>'
         . '<tr><td><table cellpadding="0" cellspacing="0" border="0"><tr>'
-        . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#e31e24;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">3</div></td>'
+        . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#e31e24;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">4</div></td>'
         . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Accede a tu dashboard RISE y comienza el entrenamiento del D&iacute;a 1</p></td>'
         . '</tr></table></td></tr>'
         . '</table></td></tr>'

@@ -140,15 +140,18 @@
     var planParam = params.get('plan');
     var discountParam = params.get('discount');
 
-    if (planParam && ['esencial', 'metodo', 'elite'].indexOf(planParam) !== -1) {
+    if (planParam && ['esencial', 'metodo', 'elite', 'rise'].indexOf(planParam) !== -1) {
       preselectedPlan = planParam;
       pendingDiscount = discountParam ? discountParam.toUpperCase() : '';
 
-      // Auto-select the plan card
+      // Auto-select the plan card (if it exists in the form)
       var targetCard = document.querySelector('.plan-card[data-plan="' + planParam + '"]');
       if (targetCard) {
         var btn = targetCard.querySelector('.btn-plan');
         if (btn) btn.click(); // triggers setupPlanSelection handler
+      } else {
+        // Plan without a card (e.g. rise) — set selectedPlan directly
+        selectedPlan = planParam;
       }
 
       console.log('Plan preselected from URL:', planParam, pendingDiscount ? '+ discount: ' + pendingDiscount : '');
@@ -793,9 +796,16 @@
   }
 
   function showSuccessMessage() {
+    var activePlan = preselectedPlan || selectedPlan;
+
+    // RISE clients already have an account — redirect to login
+    if (activePlan === 'rise') {
+      window.location.href = '/login.html';
+      return;
+    }
+
     // For paid plans, redirect to pagar.html after form submission
     var paidPlans = ['esencial', 'metodo', 'elite'];
-    var activePlan = preselectedPlan || selectedPlan;
     if (activePlan && paidPlans.indexOf(activePlan) !== -1) {
       var payUrl = '/pagar.html?plan=' + encodeURIComponent(activePlan);
       if (pendingDiscount) {
