@@ -12,6 +12,7 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/cors.php';
+require_once __DIR__ . '/../includes/rate-limit.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -19,6 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['valid' => false, 'error' => 'Method Not Allowed']);
+    exit;
+}
+
+// Rate limit: max 10 validaciones por IP cada 5 minutos
+if (!rate_limit_check('validate_discount', 10, 300)) {
+    http_response_code(429);
+    echo json_encode(['valid' => false, 'error' => 'Demasiados intentos. Espera unos minutos.']);
     exit;
 }
 

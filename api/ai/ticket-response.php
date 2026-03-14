@@ -159,5 +159,6 @@ try {
     try {
         $db->prepare("UPDATE tickets SET ai_status = 'none' WHERE id = ?")->execute([$ticketId]);
     } catch (\Throwable $ignore) {}
-    respondError('Error generando respuesta: ' . $e->getMessage(), 500);
+    error_log('[WellCore AI] ticket-response error: ' . $e->getMessage());
+    respondError('Error generando respuesta. Intenta de nuevo.', 500);
 }

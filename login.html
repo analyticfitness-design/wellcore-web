@@ -694,7 +694,8 @@ function onSuccess(redirect) {
         try {
             var d = JSON.parse(saved);
             if (d.id) document.getElementById('loginId').value = d.id;
-            if (d.pw) document.getElementById('loginPw').value = d.pw;
+            // Clean up legacy entries that stored passwords
+            if (d.pw) localStorage.setItem('wc_remember', JSON.stringify({ id: d.id }));
             document.getElementById('rememberMe').checked = true;
         } catch(e) {}
     }
@@ -712,9 +713,9 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     if (!identifier || !password) return;
     setLoading(true);
 
-    // Save or clear remembered credentials
+    // Save or clear remembered identifier only (NEVER store passwords)
     if (remember) {
-        localStorage.setItem('wc_remember', JSON.stringify({ id: identifier, pw: password }));
+        localStorage.setItem('wc_remember', JSON.stringify({ id: identifier }));
     } else {
         localStorage.removeItem('wc_remember');
     }

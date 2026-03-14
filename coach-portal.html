@@ -3249,7 +3249,7 @@ function loadAnalytics() {
           var days = parseInt(c.days_inactive) || 0;
           var color = days >= 21 ? '#ef4444' : '#f59e0b';
           rows += '<tr style="border-bottom:1px solid var(--border)">' +
-            '<td style="padding:9px 8px;font-size:.84rem">' + c.name + '</td>' +
+            '<td style="padding:9px 8px;font-size:.84rem">' + escHtml(c.name) + '</td>' +
             '<td style="padding:9px 8px;font-size:.78rem;color:var(--gray);text-transform:uppercase">' + (c.plan || '—') + '</td>' +
             '<td style="padding:9px 8px;text-align:right;font-weight:700;color:' + color + ';font-family:var(--font-data,monospace)">' + days + 'd</td>' +
             '</tr>';
@@ -3268,7 +3268,7 @@ function loadAnalytics() {
         rows2 += '<tr style="font-size:.7rem;color:var(--gray);border-bottom:1px solid var(--border)"><th style="padding:8px;text-align:left">Cliente</th><th style="padding:8px;text-align:center">Check-ins</th><th style="padding:8px;text-align:center">Nivel XP</th><th style="padding:8px;text-align:right">Racha</th></tr>';
         (d.top_engaged || []).forEach(function(c) {
           rows2 += '<tr style="border-bottom:1px solid var(--border)">' +
-            '<td style="padding:9px 8px;font-size:.84rem">' + c.name + '</td>' +
+            '<td style="padding:9px 8px;font-size:.84rem">' + escHtml(c.name) + '</td>' +
             '<td style="padding:9px 8px;text-align:center;font-family:var(--font-data,monospace);color:var(--red)">' + (c.checkins_30d || 0) + '</td>' +
             '<td style="padding:9px 8px;text-align:center;font-size:.78rem;color:var(--gray)">' + (c.level || 1) + '</td>' +
             '<td style="padding:9px 8px;text-align:right;font-family:var(--font-data,monospace);color:#f59e0b">' + (c.streak_days || 0) + 'd 🔥</td>' +

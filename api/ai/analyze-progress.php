@@ -253,5 +253,6 @@ try {
 
 } catch (\Exception $e) {
     ai_update_generation($genId, 'failed', $e->getMessage());
-    respondError('Error analizando progreso: ' . $e->getMessage(), 500);
+    error_log('[WellCore AI] analyze-progress error: ' . $e->getMessage());
+    respondError('Error analizando progreso. Intenta de nuevo.', 500);
 }

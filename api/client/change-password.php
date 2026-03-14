@@ -30,15 +30,12 @@ if (!$row) {
     respondError('Cliente no encontrado', 404);
 }
 
-// If must_change_password is set, current_password validation is still required
-// (they know the temp password from the email)
-if (!empty($currentPassword)) {
-    if (!password_verify($currentPassword, $row['password_hash'])) {
-        respondError('La contraseña actual es incorrecta', 401);
-    }
-} elseif (!$row['must_change_password']) {
-    // Only allow empty current_password if must_change_password is true
+// Always require current password — even for must_change_password (user knows temp password from email)
+if (empty($currentPassword)) {
     respondError('Debes ingresar tu contraseña actual', 422);
+}
+if (!password_verify($currentPassword, $row['password_hash'])) {
+    respondError('La contraseña actual es incorrecta', 401);
 }
 
 $newHash = password_hash($newPassword, PASSWORD_DEFAULT, ['cost' => 12]);

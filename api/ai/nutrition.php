@@ -147,5 +147,6 @@ try {
 
 } catch (\Exception $e) {
     ai_update_generation($genId, 'failed', $e->getMessage());
-    respondError('Error generando plan nutricional: ' . $e->getMessage(), 500);
+    error_log('[WellCore AI] nutrition error: ' . $e->getMessage());
+    respondError('Error generando plan nutricional. Intenta de nuevo.', 500);
 }

@@ -70,5 +70,6 @@ try {
         'model'    => $result['model'] ?? 'unknown',
     ]);
 } catch (\Throwable $e) {
-    respondError('Error analizando imagen: ' . $e->getMessage(), 500);
+    error_log('[WellCore AI] ollama-vision error: ' . $e->getMessage());
+    respondError('Error analizando imagen. Intenta de nuevo.', 500);
 }

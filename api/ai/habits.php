@@ -138,5 +138,6 @@ try {
 
 } catch (\Exception $e) {
     ai_update_generation($genId, 'failed', $e->getMessage());
-    respondError('Error generando plan de hábitos: ' . $e->getMessage(), 500);
+    error_log('[WellCore AI] habits error: ' . $e->getMessage());
+    respondError('Error generando plan de hábitos. Intenta de nuevo.', 500);
 }

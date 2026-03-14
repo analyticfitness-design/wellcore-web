@@ -213,7 +213,8 @@ if ($planType === 'rise') {
         $pipeline[] = ['stage' => 'plan_generation', 'status' => 'completed', 'route' => $result['route'] ?? 'unknown', 'model' => $result['model'] ?? 'unknown', 'duration' => round(microtime(true) - $stage2Start, 2)];
     } catch (\Throwable $e) {
         ai_update_generation($genId, 'failed', $e->getMessage());
-        respondError('Error generando plan: ' . $e->getMessage(), 500);
+        error_log('[WellCore AI] generate-plan error: ' . $e->getMessage());
+        respondError('Error generando plan. Intenta de nuevo.', 500);
     }
 
     // Stage 3: validación (router local — puede fallar en producción)
