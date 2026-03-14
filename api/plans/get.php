@@ -56,8 +56,9 @@ foreach ($rows as &$row) {
         $decoded = json_decode($row['content'], true);
         if ($decoded) $row['plan_data'] = $decoded;
     }
-    // Don't send large HTML content to client API — only plan_data matters
-    if (isset($row['plan_data'])) {
+    // Don't send large HTML content when plan_data exists — except RISE plans
+    // which need the rendered HTML for the interactive dashboard view
+    if (isset($row['plan_data']) && ($row['plan_type'] ?? '') !== 'rise') {
         unset($row['content']);
     }
     unset($row['plan_json'], $row['ai_generation_id']);
