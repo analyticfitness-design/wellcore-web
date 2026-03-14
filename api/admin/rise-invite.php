@@ -161,8 +161,8 @@ $end_date      = date('Y-m-d', strtotime('+30 days'));
 $db->beginTransaction();
 try {
     $stmt = $db->prepare("
-        INSERT INTO clients (client_code, name, email, password_hash, plan, status, created_at)
-        VALUES (?, ?, ?, ?, 'rise', 'activo', NOW())
+        INSERT INTO clients (client_code, name, email, password_hash, plan, status, must_change_password, created_at)
+        VALUES (?, ?, ?, ?, 'rise', 'activo', 1, NOW())
     ");
     $stmt->execute([$client_code, $name, $email, $password_hash]);
     $client_id = $db->lastInsertId();
