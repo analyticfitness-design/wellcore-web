@@ -12,52 +12,80 @@ require_once __DIR__ . '/../includes/email.php';
 function sendRiseGiftEmail(string $toEmail, string $toName, string $fromName, string $giftMessage, string $password, string $startDate, string $endDate): bool {
     $formUrl  = 'https://wellcorefitness.com/inscripcion.html?plan=rise&paid=1';
     $loginUrl = 'https://wellcorefitness.com/login.html';
-    $startFmt = date('d/m/Y', strtotime($startDate));
-    $endFmt   = date('d/m/Y', strtotime($endDate));
     $n  = htmlspecialchars($toName,   ENT_QUOTES, 'UTF-8');
     $fn = htmlspecialchars($fromName, ENT_QUOTES, 'UTF-8');
     $e  = htmlspecialchars($toEmail,  ENT_QUOTES, 'UTF-8');
     $p  = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
     $gm = $giftMessage ? htmlspecialchars($giftMessage, ENT_QUOTES, 'UTF-8') : '';
-    // Preserve line breaks in gift message
     $gm = nl2br($gm);
+
+    // CSS animation for confetti (works in Apple Mail, Gmail app, some webmails)
+    $confettiStyle = '<style>'
+        . '@keyframes confetti-fall-1{0%{transform:translateY(-60px) rotate(0deg);opacity:1}100%{transform:translateY(120px) rotate(360deg);opacity:0}}'
+        . '@keyframes confetti-fall-2{0%{transform:translateY(-40px) rotate(0deg);opacity:1}100%{transform:translateY(140px) rotate(-280deg);opacity:0}}'
+        . '@keyframes confetti-fall-3{0%{transform:translateY(-50px) rotate(0deg);opacity:1}100%{transform:translateY(100px) rotate(200deg);opacity:0}}'
+        . '@keyframes confetti-fall-4{0%{transform:translateY(-70px) rotate(0deg);opacity:1}100%{transform:translateY(130px) rotate(-320deg);opacity:0}}'
+        . '@keyframes gift-bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}'
+        . '@keyframes glow-pulse{0%,100%{box-shadow:0 0 20px rgba(236,72,153,0.3)}50%{box-shadow:0 0 40px rgba(236,72,153,0.6)}}'
+        . '</style>';
+
+    $confettiDots = ''
+        . '<div style="position:absolute;top:10px;left:12%;animation:confetti-fall-1 2.5s ease-in-out infinite;font-size:18px;">&#127881;</div>'
+        . '<div style="position:absolute;top:5px;left:30%;animation:confetti-fall-2 3s ease-in-out 0.3s infinite;font-size:16px;">&#10024;</div>'
+        . '<div style="position:absolute;top:15px;left:50%;animation:confetti-fall-3 2.8s ease-in-out 0.6s infinite;font-size:18px;">&#127882;</div>'
+        . '<div style="position:absolute;top:8px;left:70%;animation:confetti-fall-4 2.6s ease-in-out 0.2s infinite;font-size:16px;">&#127873;</div>'
+        . '<div style="position:absolute;top:12px;left:85%;animation:confetti-fall-1 3.2s ease-in-out 0.8s infinite;font-size:14px;">&#10024;</div>'
+        . '<div style="position:absolute;top:3px;left:5%;animation:confetti-fall-3 2.4s ease-in-out 1s infinite;font-size:15px;">&#127881;</div>'
+        . '<div style="position:absolute;top:18px;left:92%;animation:confetti-fall-2 2.7s ease-in-out 0.5s infinite;font-size:17px;">&#127882;</div>';
 
     $html = '<!DOCTYPE html>'
         . '<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">'
-        . '<title>Tienes un regalo especial</title></head>'
+        . '<title>Tienes un regalo especial</title>' . $confettiStyle . '</head>'
         . '<body style="margin:0;padding:0;background-color:#0a0a0a;font-family:\'Helvetica Neue\',Helvetica,Arial,sans-serif;">'
         . '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0a0a0a;padding:40px 16px;"><tr><td align="center">'
         . '<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">'
 
-        // ─── HEADER con regalo ───
-        . '<tr><td style="background:linear-gradient(160deg,#1a0008 0%,#2d0520 40%,#1a000a 100%);border-radius:16px 16px 0 0;padding:48px 40px 40px;text-align:center;border-bottom:3px solid #ec4899;">'
-        . '<div style="font-size:56px;margin-bottom:16px;">&#127873;</div>'
-        . '<div style="display:inline-block;background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.3);border-radius:100px;padding:6px 18px;margin-bottom:16px;">'
-        . '<span style="font-size:11px;font-weight:700;letter-spacing:4px;color:#ec4899;text-transform:uppercase;">Alguien especial te regala</span></div>'
-        . '<h1 style="margin:0 0 8px;font-size:42px;font-weight:900;color:#ffffff;line-height:1.1;letter-spacing:-1px;">Reto <span style="color:#e31e24;">RISE</span></h1>'
-        . '<p style="margin:0;font-size:16px;font-weight:600;color:#ec4899;letter-spacing:2px;">30 D&iacute;as de Transformaci&oacute;n</p>'
+        // ─── HEADER — celebracion maxima con confetti ───
+        . '<tr><td style="background:linear-gradient(160deg,#1a0008 0%,#2d0520 30%,#1a000a 60%,#0d0015 100%);border-radius:16px 16px 0 0;padding:50px 40px 44px;text-align:center;border-bottom:3px solid #ec4899;position:relative;overflow:hidden;">'
+        . $confettiDots
+        . '<div style="font-size:72px;margin-bottom:12px;animation:gift-bounce 2s ease-in-out infinite;">&#127873;</div>'
+        . '<div style="font-size:28px;margin-bottom:12px;">&#127881; &#10024; &#127882; &#10024; &#127881;</div>'
+        . '<div style="display:inline-block;background:rgba(236,72,153,0.2);border:1px solid rgba(236,72,153,0.4);border-radius:100px;padding:8px 24px;margin-bottom:16px;animation:glow-pulse 3s ease-in-out infinite;">'
+        . '<span style="font-size:13px;font-weight:800;letter-spacing:4px;color:#f472b6;text-transform:uppercase;">Tienes un regalo especial</span></div>'
+        . '<h1 style="margin:0 0 8px;font-size:46px;font-weight:900;color:#ffffff;line-height:1.1;letter-spacing:-1px;">Reto <span style="color:#e31e24;">RISE</span></h1>'
+        . '<p style="margin:0 0 6px;font-size:18px;font-weight:700;color:#ec4899;letter-spacing:3px;text-transform:uppercase;">30 D&iacute;as de Transformaci&oacute;n</p>'
+        . '<p style="margin:0;font-size:13px;color:rgba(255,255,255,0.4);">El mejor regalo que alguien puede darte: invertir en ti</p>'
         . '</td></tr>'
 
         // ─── Dedicatoria ───
         . '<tr><td style="background:#111111;padding:40px 40px 0;">'
-        . '<div style="background:linear-gradient(135deg,rgba(236,72,153,0.08),rgba(236,72,153,0.03));border:1px solid rgba(236,72,153,0.2);border-radius:12px;padding:28px 24px;text-align:center;">'
-        . '<p style="margin:0 0 6px;font-size:13px;font-weight:600;color:#ec4899;letter-spacing:2px;text-transform:uppercase;">De: <span style="color:#fff;">' . $fn . '</span></p>'
-        . '<p style="margin:0 0 16px;font-size:13px;font-weight:600;color:#ec4899;letter-spacing:2px;text-transform:uppercase;">Para: <span style="color:#fff;">' . $n . '</span></p>'
-        . '<div style="height:1px;background:linear-gradient(90deg,transparent,rgba(236,72,153,0.3),transparent);margin:0 20px 16px;"></div>';
+        . '<div style="background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(236,72,153,0.03));border:1px solid rgba(236,72,153,0.25);border-radius:14px;padding:32px 28px;text-align:center;position:relative;">'
+        . '<div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#111111;padding:0 16px;"><span style="font-size:22px;">&#128140;</span></div>'
+        . '<p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#ec4899;letter-spacing:3px;text-transform:uppercase;">De</p>'
+        . '<p style="margin:0 0 14px;font-size:22px;font-weight:800;color:#ffffff;">' . $fn . '</p>'
+        . '<p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#ec4899;letter-spacing:3px;text-transform:uppercase;">Para</p>'
+        . '<p style="margin:0 0 18px;font-size:22px;font-weight:800;color:#ffffff;">' . $n . '</p>'
+        . '<div style="height:1px;background:linear-gradient(90deg,transparent,rgba(236,72,153,0.35),transparent);margin:0 10px 18px;"></div>';
 
-    // Mensaje personalizado (si existe)
     if ($gm) {
-        $html .= '<p style="margin:0;font-size:16px;color:#ffffff;line-height:1.8;font-style:italic;">&ldquo;' . $gm . '&rdquo;</p>';
+        $html .= '<p style="margin:0;font-size:17px;color:#ffffff;line-height:1.9;font-style:italic;">&ldquo;' . $gm . '&rdquo;</p>';
     } else {
-        $html .= '<p style="margin:0;font-size:16px;color:#ffffff;line-height:1.8;font-style:italic;">&ldquo;Este regalo es para ti. Porque te mereces la mejor versi&oacute;n de ti.&rdquo;</p>';
+        $html .= '<p style="margin:0;font-size:17px;color:#ffffff;line-height:1.9;font-style:italic;">&ldquo;Este regalo es para ti. Porque te mereces la mejor versi&oacute;n de ti.&rdquo;</p>';
     }
 
     $html .= '</div></td></tr>'
 
-        // ─── Intro ───
+        // ─── Intro motivacional ───
         . '<tr><td style="background:#111111;padding:32px 40px 0;">'
-        . '<p style="margin:0;font-size:16px;line-height:1.8;color:#999999;"><span style="color:#ec4899;font-weight:700;">' . $fn . '</span> te ha regalado el acceso completo al <strong style="color:#ffffff;">Reto RISE 30 d&iacute;as</strong> de WellCore Fitness &mdash; el programa m&aacute;s exigente y efectivo para tu transformaci&oacute;n f&iacute;sica.</p>'
+        . '<p style="margin:0;font-size:16px;line-height:1.9;color:#999999;"><span style="color:#ec4899;font-weight:700;">' . $fn . '</span> te ha regalado el acceso completo al <strong style="color:#ffffff;">Reto RISE 30 d&iacute;as</strong> de WellCore Fitness &mdash; nuestro programa de transformaci&oacute;n f&iacute;sica m&aacute;s completo, con plan de entrenamiento personalizado, seguimiento profesional y acceso a todas las herramientas de la plataforma.</p>'
         . '</td></tr>'
+
+        // ─── Urgencia suave ───
+        . '<tr><td style="background:#111111;padding:20px 40px 0;">'
+        . '<div style="background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.2);border-radius:10px;padding:16px 20px;text-align:center;">'
+        . '<p style="margin:0;font-size:14px;color:#facc15;font-weight:700;">&#9200; Tienes 3 a 5 d&iacute;as para activar tu regalo</p>'
+        . '<p style="margin:6px 0 0;font-size:12px;color:#999;line-height:1.6;">No te preocupes &mdash; los 30 d&iacute;as del reto comienzan a contar desde que recibas tu plan personalizado. &iexcl;Pero no dejes pasar la oportunidad!</p>'
+        . '</div></td></tr>'
 
         // ─── Divider ───
         . '<tr><td style="background:#111111;padding:28px 40px 0;"><div style="height:1px;background:linear-gradient(90deg,transparent,#333,transparent);"></div></td></tr>'
@@ -76,54 +104,74 @@ function sendRiseGiftEmail(string $toEmail, string $toName, string $fromName, st
         . '<div style="font-size:16px;color:#ffffff;font-family:monospace;font-weight:600;">' . $e . '</div></td></tr></table>'
 
         // Password
-        . '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">'
+        . '<table width="100%" cellpadding="0" cellspacing="0" border="0">'
         . '<tr><td style="width:32px;vertical-align:top;padding-right:12px;">'
         . '<div style="width:28px;height:28px;background:rgba(236,72,153,0.12);border-radius:6px;text-align:center;line-height:28px;font-size:14px;">&#128273;</div>'
         . '</td><td><div style="font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Contrase&ntilde;a temporal</div>'
         . '<div style="font-size:16px;color:#ffffff;font-family:monospace;font-weight:600;background:#222;display:inline-block;padding:4px 12px;border-radius:6px;">' . $p . '</div></td></tr></table>'
 
-        // Vigencia
-        . '<table width="100%" cellpadding="0" cellspacing="0" border="0">'
-        . '<tr><td style="width:32px;vertical-align:top;padding-right:12px;">'
-        . '<div style="width:28px;height:28px;background:rgba(236,72,153,0.12);border-radius:6px;text-align:center;line-height:28px;font-size:14px;">&#128197;</div>'
-        . '</td><td><div style="font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Vigencia del reto</div>'
-        . '<div style="font-size:15px;color:#ffffff;font-weight:600;">' . $startFmt . ' <span style="color:#ec4899;">&rarr;</span> ' . $endFmt . '</div>'
-        . '<div style="font-size:12px;color:#666;margin-top:2px;">30 d&iacute;as de acceso completo</div></td></tr></table>'
-
         . '</td></tr></table></td></tr>'
 
-        // ─── CTA — formulario ───
+        // ─── CTA — boton grande ───
         . '<tr><td style="background:#111111;padding:32px 40px 0;text-align:center;">'
-        . '<a href="' . $formUrl . '" style="display:inline-block;background:linear-gradient(135deg,#ec4899 0%,#e31e24 100%);color:#ffffff;text-decoration:none;font-size:16px;font-weight:800;padding:18px 52px;border-radius:10px;text-transform:uppercase;letter-spacing:2px;">Abrir mi Regalo &rarr;</a>'
-        . '<p style="margin:14px 0 0;font-size:12px;color:#555;">Completa tus datos y luego inicia sesi&oacute;n en <a href="' . $loginUrl . '" style="color:#555;text-decoration:underline;">wellcorefitness.com/login.html</a></p>'
+        . '<a href="' . $formUrl . '" style="display:inline-block;background:linear-gradient(135deg,#ec4899 0%,#e31e24 100%);color:#ffffff;text-decoration:none;font-size:17px;font-weight:800;padding:20px 56px;border-radius:12px;text-transform:uppercase;letter-spacing:2px;box-shadow:0 4px 24px rgba(236,72,153,0.3);">Abrir mi Regalo &rarr;</a>'
         . '</td></tr>'
 
-        // ─── Pasos ───
+        // ─── Paso a paso completo ───
         . '<tr><td style="background:#111111;padding:36px 40px 0;">'
-        . '<p style="margin:0 0 20px;font-size:12px;font-weight:700;letter-spacing:3px;color:#555;text-transform:uppercase;">Primeros pasos</p>'
+        . '<p style="margin:0 0 20px;font-size:12px;font-weight:700;letter-spacing:3px;color:#ec4899;text-transform:uppercase;">Tu camino comienza aqu&iacute;</p>'
         . '<table width="100%" cellpadding="0" cellspacing="0" border="0">'
 
-        . '<tr><td style="padding-bottom:14px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
-        . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#ec4899;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">1</div></td>'
-        . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Haz click en <strong style="color:#fff;">&ldquo;Abrir mi Regalo&rdquo;</strong> y completa el formulario con tus datos</p></td>'
+        // Paso 1
+        . '<tr><td style="padding-bottom:16px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
+        . '<td style="width:36px;vertical-align:top;"><div style="width:28px;height:28px;background:linear-gradient(135deg,#ec4899,#e31e24);border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#fff;">1</div></td>'
+        . '<td style="vertical-align:top;padding-left:12px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#ffffff;">Completa tu formulario de inscripci&oacute;n</p>'
+        . '<p style="margin:0;font-size:12px;color:#888;line-height:1.5;">Haz click en &ldquo;Abrir mi Regalo&rdquo; y llena tus datos personales, objetivos y preferencias de entrenamiento.</p></td>'
         . '</tr></table></td></tr>'
 
-        . '<tr><td style="padding-bottom:14px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
-        . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#ec4899;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">2</div></td>'
-        . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Inicia sesi&oacute;n en <strong style="color:#fff;">wellcorefitness.com/login.html</strong> con tus credenciales</p></td>'
+        // Paso 2
+        . '<tr><td style="padding-bottom:16px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
+        . '<td style="width:36px;vertical-align:top;"><div style="width:28px;height:28px;background:linear-gradient(135deg,#ec4899,#e31e24);border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#fff;">2</div></td>'
+        . '<td style="vertical-align:top;padding-left:12px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#ffffff;">Inicia sesi&oacute;n con tus credenciales</p>'
+        . '<p style="margin:0;font-size:12px;color:#888;line-height:1.5;">Usa tu email y contrase&ntilde;a temporal en <strong style="color:#bbb;">wellcorefitness.com/login.html</strong></p></td>'
         . '</tr></table></td></tr>'
 
-        . '<tr><td style="padding-bottom:14px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
-        . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#ec4899;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">3</div></td>'
-        . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Cambia tu contrase&ntilde;a temporal por una segura</p></td>'
+        // Paso 3
+        . '<tr><td style="padding-bottom:16px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
+        . '<td style="width:36px;vertical-align:top;"><div style="width:28px;height:28px;background:linear-gradient(135deg,#ec4899,#e31e24);border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#fff;">3</div></td>'
+        . '<td style="vertical-align:top;padding-left:12px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#ffffff;">Cambia tu contrase&ntilde;a</p>'
+        . '<p style="margin:0;font-size:12px;color:#888;line-height:1.5;">El sistema te pedir&aacute; crear una contrase&ntilde;a segura y personal. Es por tu seguridad.</p></td>'
         . '</tr></table></td></tr>'
 
+        // Paso 4
+        . '<tr><td style="padding-bottom:16px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
+        . '<td style="width:36px;vertical-align:top;"><div style="width:28px;height:28px;background:linear-gradient(135deg,#ec4899,#e31e24);border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#fff;">4</div></td>'
+        . '<td style="vertical-align:top;padding-left:12px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#ffffff;">Sube tus fotos de progreso</p>'
+        . '<p style="margin:0;font-size:12px;color:#888;line-height:1.5;">Desde tu dashboard, sube fotos de frente, lateral y espalda. Son privadas y servir&aacute;n para medir tu transformaci&oacute;n.</p></td>'
+        . '</tr></table></td></tr>'
+
+        // Paso 5
+        . '<tr><td style="padding-bottom:16px;"><table cellpadding="0" cellspacing="0" border="0"><tr>'
+        . '<td style="width:36px;vertical-align:top;"><div style="width:28px;height:28px;background:linear-gradient(135deg,#ec4899,#e31e24);border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#fff;">5</div></td>'
+        . '<td style="vertical-align:top;padding-left:12px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#ffffff;">Recibe tu plan personalizado</p>'
+        . '<p style="margin:0;font-size:12px;color:#888;line-height:1.5;">Tu coach te asignar&aacute; un plan de entrenamiento hecho a tu medida. Los 30 d&iacute;as del reto comienzan desde este momento.</p></td>'
+        . '</tr></table></td></tr>'
+
+        // Paso 6
         . '<tr><td><table cellpadding="0" cellspacing="0" border="0"><tr>'
-        . '<td style="width:32px;vertical-align:top;"><div style="width:24px;height:24px;background:#ec4899;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:800;color:#fff;">4</div></td>'
-        . '<td style="vertical-align:top;padding-left:10px;"><p style="margin:0;font-size:14px;color:#cccccc;line-height:1.6;">Accede a tu dashboard RISE y comienza el D&iacute;a 1</p></td>'
+        . '<td style="width:36px;vertical-align:top;"><div style="width:28px;height:28px;background:linear-gradient(135deg,#ec4899,#e31e24);border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#fff;">6</div></td>'
+        . '<td style="vertical-align:top;padding-left:12px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#ffffff;">&iexcl;Comienza tu transformaci&oacute;n!</p>'
+        . '<p style="margin:0;font-size:12px;color:#888;line-height:1.5;">Registra tus entrenamientos, completa misiones diarias, y disfruta el proceso. &iexcl;Esto es para ti!</p></td>'
         . '</tr></table></td></tr>'
 
         . '</table></td></tr>'
+
+        // ─── Motivacion final ───
+        . '<tr><td style="background:#111111;padding:28px 40px 0;text-align:center;">'
+        . '<div style="background:linear-gradient(135deg,rgba(236,72,153,0.06),rgba(227,30,36,0.06));border:1px solid rgba(236,72,153,0.15);border-radius:10px;padding:20px 24px;">'
+        . '<p style="margin:0;font-size:15px;color:#ffffff;font-weight:600;line-height:1.7;">&ldquo;El mejor proyecto en el que puedes trabajar eres t&uacute;.&rdquo;</p>'
+        . '<p style="margin:8px 0 0;font-size:12px;color:#ec4899;font-weight:600;">&#8212; WellCore Fitness</p>'
+        . '</div></td></tr>'
 
         // ─── Nota seguridad ───
         . '<tr><td style="background:#111111;padding:24px 40px 0;">'
@@ -139,7 +187,7 @@ function sendRiseGiftEmail(string $toEmail, string $toName, string $fromName, st
 
         . '</table></td></tr></table></body></html>';
 
-    $subject = '&#127873; ' . $fn . ' te ha regalado el Reto RISE — WellCore Fitness';
+    $subject = $fn . ' te ha regalado el Reto RISE — WellCore Fitness';
     $result = sendEmail($toEmail, $subject, $html);
     return $result['ok'] ?? false;
 }
